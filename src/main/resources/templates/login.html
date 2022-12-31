@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+    <title>Estepper</title>
+</head>
+<body class="bg-light d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="bg-white border border-1 p-5 rounded-4 ">
+        <form class="form-signin" method="post" th:action="@{/autenticacion}">
+            
+            <h1 class="text-center">Estepper</h1>
+            <div th:if="${param.error}" class="alert alert-error">
+                Código y contraseña no son válidos.
+            </div>
+            <div class="input-group mt-4">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                <input type="text" id="username" placeholder="Código" name="username" class="form-control" aria-label="Username" aria-describedby="basic-addon1" required autofocus/>
+            </div>
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
+                <input type="password" id="password" placeholder="Contraseña" name="password" class="form-control" aria-label="Username" aria-describedby="basic-addon1" required />
+            </div>
+
+            <input name="_csrf" type="hidden" value="312BnKbHfKtUaCCFD36herMU8LAQR-eyIio4fcLzr8Cna4yI5mvgpJOhH8p5W0OxNlOVG4sm3dIkI9GfQBJcS6PKm6LFUuqw"> 
+            
+            <button class="btn btn-info text-white mt-4 w-100" type="submit">Iniciar sesión</button>
+            
+            <p class="text-center mt-5">¿Has olvidado tu código? Pincha <a class="text-decoration-none" href="@{/codigo}">aquí</a> para recibirlo en el correo.</p>
+            
+        </form>                      
+    </div> 
+    <div class="bg-white border border-1 rounded-4 p-5 mt-2">
+        <p class="text-center mt-3">Si no sabes si unirte o no a nuestro proyecto, te recomendamos</p>
+        <p class="text-center">hacer el <a class="text-decoration-none" href="@{/findrisc}">TEST DE FINDRISC.</a></p>   
+    </div> 
+</body>
+</html>
