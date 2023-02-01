@@ -21,40 +21,45 @@ public class HomeController {
     @Autowired
 	private BCryptPasswordEncoder hash;
    
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }     
+
     @GetMapping("/")
     public String index(){
-     return "index";
+  
+        return "index";
+    }
+
+    @GetMapping("/findrisc")
+    public String test(){
+        return "findrisc";
     }
 
     @GetMapping("/register")  //mostrar el formulario de registro
     public String showRegistrationForm(Model model) {
-    model.addAttribute("user", new Usuario());
-            
-    return "registro";
+        model.addAttribute("user", new Usuario());
+                
+        return "registro";
     }
 
     @PostMapping("/process_register") //Procesar el registro
-    public String processRegister(Usuario user) {
-    hash = new BCryptPasswordEncoder();
-    String encodedPassword = hash.encode(user.getContrasenia());
-    user.setContrasenia(encodedPassword);
+    public String processRegister(Usuario user, Model model) { //Model para poder enviar información a la vista
+        hash = new BCryptPasswordEncoder();
+        String encodedPassword = hash.encode(user.getContrasenia());
+        user.setContrasenia(encodedPassword);
 
-    user.setEstadoCuenta(Estado.BAJA);
-    user.setRol(Rol.PARTICIPANTE);
-     
-    repo.save(user);
-     
-     return "register_success";
-    }
+        user.setEstadoCuenta(Estado.BAJA);
+        user.setRol(Rol.PARTICIPANTE);
+        
+        repo.save(user);
 
-    @GetMapping("/contacto_correo")
-    public String contactoCorreo(){
-     return "contacto_correo";
-    }
-
-    @GetMapping("/contacto_telefono")
-    public String contactoTelefono(){
-     return "contacto_telefono";
+        model.addAttribute("nombre", user.getNombre());
+        model.addAttribute("codigo", user.getCodigo());
+        model.addAttribute("estadoCuenta", user.getEstadoCuenta());        
+        
+        return "register_success";
     }
     
 }

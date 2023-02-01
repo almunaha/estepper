@@ -29,6 +29,7 @@ public class CustomUserDetails implements UserDetails{
     @Override
     public String getUsername() {
         // TODO Auto-generated method stub
+        
         String s=Integer.toString(user.getCodigo());
         return s;
     }

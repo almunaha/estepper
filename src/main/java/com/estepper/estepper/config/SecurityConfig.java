@@ -37,6 +37,10 @@ public class SecurityConfig{
     public SecurityFilterChain configure(HttpSecurity http) throws Exception{
         http           
             .authorizeHttpRequests()
+            .requestMatchers("/register**").permitAll()
+            .requestMatchers("/process_register").permitAll()
+            .requestMatchers("/findrisc").permitAll()
+
             .anyRequest()
             .authenticated()
             .and()

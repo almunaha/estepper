@@ -11,22 +11,19 @@
 </head>
 <body class="bg-light d-flex flex-column justify-content-center align-items-center vh-100">
     <div class="container text-center">
-        <p>Felicidades <span sec:authentication="principal.nombre"></span>, ya tienes cuenta en Steper.
-                Tu codigo de usuario es :  <div sec:authentication="name"></div>
-            ¡No lo olvides! Lo necesitaras para acceder a la aplicacion.
+        <p>Felicidades <span th:text="${nombre}"></span>, ya tienes cuenta en Estepper.
+                Tu código de usuario es:  <div th:text="${codigo}"> </div>
+            ¡No lo olvides! Lo necesitarás para acceder a la aplicación.
         </p>
-        <h3>ESTADO DE LA CUENTA: <span sec:authentication="principal.estadoCuenta"></span></h3>
+        <h3>ESTADO DE LA CUENTA: <span th:text="${estadoCuenta}"></span></h3>
         <p>Actualmente tu cuenta esta desactivada, para que el
-             medico te la active tienes que ir a consulta
+             médico te la active tienes que ir a consulta
         </p>
 
-        <p>Contacta con el medico para pedir tu cita</p>
-        <a th:href="@{/contacto_correo}">
-            <button>Contacta por correo</button>
-          </a>
-          <a th:href="@{/contacto_telefono}">
-            <button>Contacta por telefono</button>
-          </a>
+        <p>Contacta con el médico para pedir tu cita</p>
+        
+        <p>Teléfono: +34677543322</p>
+        <p>E-mail: mercedes@madrid.es</p>
 
     </div>
 </body>

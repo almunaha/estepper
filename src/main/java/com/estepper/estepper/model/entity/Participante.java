@@ -1,4 +1,4 @@
-package com.estepper.estepper.model.entity;
+/*package com.estepper.estepper.model.entity;
 
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Rol;
@@ -110,3 +110,4 @@ public class Participante extends Usuario{
         this.sesionesCompletas = sesionesCompletas;
     }
 }
+*/
