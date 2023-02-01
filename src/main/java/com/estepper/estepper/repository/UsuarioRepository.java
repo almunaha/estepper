@@ -9,4 +9,5 @@ import com.estepper.estepper.model.entity.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
         Usuario findByNombre(String nombre); //select * from usuario where nombre = u.nombre 
         Usuario findByCodigo(String codigo);
+
 }
