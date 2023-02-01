@@ -11,3 +11,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
         Usuario findByCodigo(String codigo);
 
 }
+
+

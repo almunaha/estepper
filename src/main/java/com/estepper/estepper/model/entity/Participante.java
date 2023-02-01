@@ -4,15 +4,22 @@ import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Rol;
 import com.estepper.estepper.model.enums.Sexo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "participantes")
 public class Participante extends Usuario{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPaciente;
+    @Column(unique=false)
     private Integer idCoordinador;
     private Integer idGrupo;
     private Integer perdidaDePeso;
