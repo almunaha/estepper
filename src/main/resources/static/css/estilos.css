@@ -1,0 +1,33 @@
+a{
+    text-decoration: none;
+}
+
+#sidebar-container{
+    background-color: #1A5276;
+    color: white;
+    min-height: 100vh; /*altura mínima*/
+    width: 35vh;
+}
+
+#sidebar-container .logo{
+    padding: .875rem 1.25rem; /*arriba y abajo | a los lados*/
+    text-align: center;
+}
+
+#sidebar-container .menu{
+    width: 18rem;
+    color: rgb(151, 149, 149);
+    font-size: 16px;
+
+}
+
+.navbar-expand-lg .navbar-collapse  {
+    flex-direction: row-reverse;
+    position: relative;
+    left: -35px;
+    font-size: 19px;
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu{
+    left: -30px;
+}

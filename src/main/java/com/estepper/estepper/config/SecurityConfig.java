@@ -38,6 +38,7 @@ public class SecurityConfig{
         http           
             .authorizeHttpRequests()
             .requestMatchers("/register**").permitAll()
+            .requestMatchers("/img/logo.png").permitAll()
             .requestMatchers("/process_register").permitAll()
             .requestMatchers("/findrisc").permitAll()
 
