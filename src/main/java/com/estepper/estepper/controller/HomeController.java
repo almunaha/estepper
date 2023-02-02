@@ -54,6 +54,7 @@ public class HomeController {
             model.addAttribute("usuarios", lista);
             return "admin";
         } 
+        
         else return "index";
     }
 
@@ -66,6 +67,7 @@ public class HomeController {
     public String recomendaciones(){
         return "recomendaciones";
     }
+    
     @GetMapping("/register")  //mostrar el formulario de registro
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new Usuario());
