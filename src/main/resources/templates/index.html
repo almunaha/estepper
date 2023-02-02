@@ -15,7 +15,13 @@
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+
+
+    <!--PARA GRÁFICOS-->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <title>Inicio</title>
+
+    
 </head>
 
 <body>
@@ -65,6 +71,36 @@
               </div>
           </nav>
 
+          <div class="container ml-5">
+
+            <div class="row justify-content-md-center">
+            
+              <div class="col">
+                <a class="d-block" th:href="@{/}"><i class="fa-solid fa-list-check"></i> SESIONES</a> 
+        
+                <!--FALTA COGER LAS SESIONES Y ESO, NO SÉ MUY BIEN QUÉ PONER NO ME SALE EL GRÁFICO-->
+              
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar"  style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">1</div>
+                </div>
+          
+
+              </div>
+
+              <div class="col">
+                <a class="d-block" th:href="@{/listado}"><i class="fa-solid fa-bullseye"></i> OBJETIVOS</a>
+                
+              </div>
+
+              <div class="col">
+                <a class="d-block" th:href="@{/listado}"><i class="fa-solid fa-chart-line"></i> PROGRESO</a> 
+              </div>
+
+            </div>
+
+          </div>
+
+
        </div>
 
 
@@ -73,3 +109,8 @@
      
 </body>
 </html>
+
+
+
+
+

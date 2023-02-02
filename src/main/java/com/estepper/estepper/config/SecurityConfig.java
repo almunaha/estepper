@@ -41,6 +41,11 @@ public class SecurityConfig{
             .requestMatchers("/img/logo.png").permitAll()
             .requestMatchers("/process_register").permitAll()
             .requestMatchers("/findrisc").permitAll()
+            .requestMatchers("/recomendaciones").permitAll()
+            .requestMatchers("/img/agua.png").permitAll()
+            .requestMatchers("/img/alimentacion.png").permitAll()
+            .requestMatchers("/img/deporte.png").permitAll()
+            .requestMatchers("/img/descanso.png").permitAll()
 
             .anyRequest()
             .authenticated()
