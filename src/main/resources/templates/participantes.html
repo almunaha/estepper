@@ -64,12 +64,23 @@
                 </div>
             </nav>
 
-            <div>
-                <h4>Listado de participantes</h4> <!-- Tienen que salir los asignados al coordinador y los que estan de baja-->
-            </div>
+            
 
             <div class="p-4" id="participantes">
-                <table class="table">
+                <div>
+                    <h4>Listado de participantes</h4> <!-- Tienen que salir los asignados al coordinador y los que estan de baja-->
+                </div>
+
+                <!-- Buscador de participantes -->
+                <div class="container-fluid">
+                    <form class="d-flex justify-content-end">
+                        <input class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
+
+                    </form>
+                </div>
+                
+                <!-- Tabla de participantes -->
+                <table class="table tablePart">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
@@ -87,13 +98,14 @@
                             <td th:text="${lis.email}"></td>
                             <td th:text="${lis.estadoCuenta}"></td>
                             <td>                                
-                                <a class="btn btn-primary" ><i class="fa-solid fa-folder-open"></i></a>
-                                <a class="btn btn-primary" >Ver expediente</a>
-                                <a class="btn btn-primary" >Editar</a>
+                                <a class="btn" id="btn-part" ><i class="fa-solid fa-folder-open"></i></a>
+                                <a class="btn" id="btn-part">Ver expediente</a>
+                                <a class="btn" id="btn-part" >Editar</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
             </div>
 
         </div>
