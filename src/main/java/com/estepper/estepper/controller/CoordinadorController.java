@@ -17,11 +17,6 @@ public class CoordinadorController {
     @Autowired //inyectar recursos de la clase UsuarioService
     private UsuarioService usuario;
     
-    @GetMapping("/inicio")
-    public String coordinador(){
-        return "coordinador";
-    }   
-
     @GetMapping("/listado")
     public String participantes(Model model){
         List<Usuario> listado = usuario.listadoParticipantes(Rol.PARTICIPANTE);

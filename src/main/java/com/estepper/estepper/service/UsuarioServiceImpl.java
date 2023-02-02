@@ -49,5 +49,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
         return(List<Usuario>) repo.findAllByRol(rol);
     }  
 
-    
+    @Override
+    public Usuario logueado(String codigo){
+        return repo.findByCodigo(codigo);
+    }    
 }

@@ -18,16 +18,36 @@ a{
     width: 18rem;
     color: rgb(151, 149, 149);
     font-size: 16px;
-
 }
 
 .navbar-expand-lg .navbar-collapse  {
-    flex-direction: row-reverse;
+   justify-content: space-between;
+    font-size: 19px;
+}
+
+.navbar-expand-lg .navbar-nav{
     position: relative;
     left: -35px;
-    font-size: 19px;
+}
+
+.navbar-expand-lg .burger{
+    position: relative;
+    left: 16px;
 }
 
 .navbar-expand-lg .navbar-nav .dropdown-menu{
     left: -30px;
+}
+
+.burger .btn{
+    font-size: 21px;
+    background-color: #1A5276;
+    color: white;
+}
+
+/* boton grupos y participantes */
+.utilidades{
+    text-align: center;
+    color: white;
+
 }

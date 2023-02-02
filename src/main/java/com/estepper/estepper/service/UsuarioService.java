@@ -10,4 +10,5 @@ public interface UsuarioService {
     //public Usuario loadUserByName(String nombre);
     public List<Usuario> listado();
     public List<Usuario> listadoParticipantes(Rol rol);
+    public Usuario logueado(String codigo);
 }

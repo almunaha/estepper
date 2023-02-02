@@ -14,7 +14,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
         Usuario findByCodigo(String codigo);
         List <Usuario> findAllByRol(Rol rol);
         List<Usuario> findByApellidos(String apellidos); //Buscar por apelldios
-
 }
 
 

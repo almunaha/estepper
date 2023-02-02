@@ -15,7 +15,7 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <title>Participantes</title>
+    <title>Administración</title>
 </head>
 
 <body>
@@ -31,9 +31,8 @@
             </div>
 
             <div class="menu">
-                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-folder-open"></i> Materiales</a>
+                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-user-pen"></i> Usuarios</a>
+                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-envelope"></i> Mensajes</a>
             </div>
 
         </div>
@@ -42,7 +41,6 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
 
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
@@ -65,10 +63,10 @@
             </nav>
 
             <div>
-                <h4>Listado de participantes</h4> <!-- Tienen que salir los asignados al coordinador y los que estan de baja-->
+                <h4>Listado de usuarios</h4>
             </div>
 
-            <div class="p-4" id="participantes">
+            <div class="p-4">
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -81,17 +79,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="lis:${listado}">
+                        <tr th:each="lis:${usuarios}">
                             <td th:text="${lis.nombre}"></td>
                             <td th:text="${lis.apellidos}"></td>
                             <td th:text="${lis.email}"></td>
                             <td th:text="${lis.estadoCuenta}"></td>
-                            <td>                                
-                                <a class="btn btn-primary" ><i class="fa-solid fa-folder-open"></i></a>
-                                <a class="btn btn-primary" >Ver expediente</a>
-                                <a class="btn btn-primary" >Editar</a>
+                            <td>           
+                                <a class="btn btn-primary" ><i class="fa-solid fa-envelope"></i></a>                    
+                                <a class="btn btn-primary" ><i class="fa-solid fa-trash"></i></a>
+                                <a class="btn btn-primary" ><i class="fa-regular fa-pen-to-square"></i></a>
                             </td>
                         </tr>
+                        
                     </tbody>
                 </table>
             </div>

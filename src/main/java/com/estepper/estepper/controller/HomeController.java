@@ -1,22 +1,31 @@
 package com.estepper.estepper.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Rol;
 import com.estepper.estepper.repository.UsuarioRepository;
+import com.estepper.estepper.service.UsuarioService;
 
 @Controller
 public class HomeController {
 
     @Autowired
-    private UsuarioRepository repo; //inyección de dependencias del usuario dao api
+    private UsuarioRepository repo; //inyección de dependencias del usuario dao api //ESTO NO SE PUEDE AQUÍ CREO
+
+    @Autowired //inyectar recursos de la clase UsuarioService
+    private UsuarioService usuario;
 
     @Autowired
 	private BCryptPasswordEncoder hash;
@@ -27,9 +36,25 @@ public class HomeController {
     }     
 
     @GetMapping("/")
-    public String index(){
-  
-        return "index";
+    public String index(Model model){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario user = usuario.logueado(codigo); //atributos edl logueado
+
+        if(user.getRol().equals(Rol.COORDINADOR)) return "coordinador";
+        else if(user.getRol().equals(Rol.ADMINISTRADOR)){
+            List<Usuario> lista = usuario.listado();
+            model.addAttribute("usuarios", lista);
+            return "admin";
+        } 
+        else return "index";
     }
 
     @GetMapping("/findrisc")
