@@ -62,6 +62,10 @@ public class HomeController {
         return "findrisc";
     }
 
+    @GetMapping("/recomendaciones")
+    public String recomendaciones(){
+        return "recomendaciones";
+    }
     @GetMapping("/register")  //mostrar el formulario de registro
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new Usuario());
