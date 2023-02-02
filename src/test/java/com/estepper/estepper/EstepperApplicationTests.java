@@ -25,7 +25,7 @@ class EstepperApplicationTests {
 	public void crearUsuarioTest() {
 		Usuario us = new Usuario();
 		us.setId(1);
-		us.setNombre("mercedes");
+		us.setNombre("Mercedes");
 		us.setContrasenia(hash.encode("mercedespass"));
 		us.setCodigo(222);
 		us.setApellidos("Martinez Campos");

@@ -1,5 +1,7 @@
 package com.estepper.estepper.service;
 
+import java.util.List;
+
 /*import java.util.ArrayList;
 import java.util.List;*/
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.enums.Rol;
 import com.estepper.estepper.repository.UsuarioRepository;
 
 @Service
-public class UsuarioServiceImpl implements UserDetailsService{
+public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
 
     @Autowired
     private UsuarioRepository repo; //inyección de dependencias del usuario dao api
@@ -35,5 +38,16 @@ public class UsuarioServiceImpl implements UserDetailsService{
         }
         return new CustomUserDetails(user);
     }
+
+    @Override
+    public List<Usuario> listado(){
+        return(List<Usuario>) repo.findAll();
+    }
+
+    @Override
+    public List<Usuario> listadoParticipantes(Rol rol){
+        return(List<Usuario>) repo.findAllByRol(rol);
+    }  
+
     
 }

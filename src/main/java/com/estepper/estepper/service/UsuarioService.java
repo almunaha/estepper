@@ -1,8 +1,13 @@
 package com.estepper.estepper.service;
 
-import com.estepper.estepper.model.entity.Usuario;
+import java.util.List;
 
-//Esta interfaz no haría falta porque vamos a usar la de UserDetailsService que tiene ya java -> borrar
+import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.enums.Rol;
+
+//Operaciones 
 public interface UsuarioService {
-    public Usuario loadUserByName(String nombre);
+    //public Usuario loadUserByName(String nombre);
+    public List<Usuario> listado();
+    public List<Usuario> listadoParticipantes(Rol rol);
 }
