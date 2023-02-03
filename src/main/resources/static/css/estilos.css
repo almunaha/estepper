@@ -1,9 +1,12 @@
+body{
+    background-color: rgb(240, 238, 238);
+}
 a{
     text-decoration: none;
 }
 
 #sidebar-container{
-    background-color: #1A5276;
+    background-color: #13405d;
     color: white;
     min-height: 100vh; /*altura mínima*/
     width: 35vh;
@@ -41,7 +44,7 @@ a{
 
 .burger .btn{
     font-size: 21px;
-    background-color: #1A5276;
+    background-color: #13405d;
     color: white;
 }
 
@@ -49,5 +52,54 @@ a{
 .utilidades{
     text-align: center;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+    min-height: 90vh; /*altura mínima*/
 }
+
+.btn-util{
+    color: rgb(122, 184, 212);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 50px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;    
+
+    min-height: 23vh; /*altura mínima*/
+    width: 40vh;
+    margin: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-util:hover{
+    color: white;
+    background-color: rgb(122, 184, 212);
+}
+
+.layout-util{
+    display: flex;
+    flex-direction: column;
+}
+
+#nombre{
+    color: rgb(122, 184, 212);
+}
+
+/* Botones de acción - tabla participantes */
+
+#participantes{
+    background-color: white;
+    margin:0 auto;
+    width: 90%;
+}
+
+#btn-part{
+    color: white;
+    background-color: #6ca4c7;
+}
+

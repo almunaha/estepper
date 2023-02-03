@@ -63,10 +63,25 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
           </nav>
 
           <div class="utilidades">
-            <a class="d-block" th:href="@{/listaGrupos}"><i class="fa-solid fa-users"></i> GRUPOS</a> 
-            <a class="d-block" th:href="@{/listado}"><i class="fa-solid fa-address-card"></i> PARTICIPANTES</a> 
-          </div>
+            <!-- Botón GRUPOS -->
+            <div class="layout-util">
+              <a class="btn-util" th:href="@{/listaGrupos}">
+                  <i class="fa-solid fa-users"></i> 
+              </a> 
 
+              <h4 id="nombre">GRUPOS</h4>
+            </div>
+
+            <!-- Botón PARTICIPANTES -->
+            <div class="layout-util">
+              <a class="btn-util" th:href="@{/listado}">
+                <i class="fa-solid fa-address-card"></i> 
+              </a> 
+              
+              <h4 id="nombre">PARTICIPANTES</h4>
+            </div>
+
+          </div>
 
        </div>
     </div>
