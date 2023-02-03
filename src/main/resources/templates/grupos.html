@@ -69,12 +69,22 @@
                 </div>
             </nav>
 
-            <div>
-                <h4>Listado de grupos</h4> 
-            </div>
+            <div class="p-4 mt-5" id="grupos">
+                <div>
+                    <h4>Listado de grupos</h4> 
+                </div>
 
-            <div class="p-4" id="grupos">
-                <table class="table">
+                <!-- Buscador de participantes en grupos -->
+                <div class="container-fluid">
+                    <form class="d-flex justify-content-end">
+                        <input class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
+
+                    </form>
+                </div>
+
+                <!-- Tabla de grupos -->
+                
+                <table class=" table tablePart">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
@@ -88,8 +98,8 @@
                             <td th:text="${lis.nombre}"></td>
                             <td th:text="${lis.numParticipantes}"></td>
                             <td>                                
-                                <a class="btn btn-primary" >Ver participantes</a>
-                                <a class="btn btn-primary" >Editar grupo</a>
+                                <a class="btn" id="btn-part">Ver participantes</a>
+                                <a class="btn" id="btn-part">Editar grupo</a>
                             </td>
                         </tr>
                     </tbody>

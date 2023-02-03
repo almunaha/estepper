@@ -92,7 +92,7 @@ a{
 
 /* Botones de acción - tabla participantes */
 
-#participantes{
+#participantes, #grupos{
     background-color: white;
     margin:0 auto;
     width: 90%;
