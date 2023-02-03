@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Rol;
 import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.service.UsuarioService;
+import com.estepper.estepper.service.GrupoService;
 
 @Controller
 public class HomeController {
@@ -26,6 +28,9 @@ public class HomeController {
 
     @Autowired //inyectar recursos de la clase UsuarioService
     private UsuarioService usuario;
+
+    @Autowired //inyectar recursos de la clase GrupoService
+    private GrupoService grupo;
 
     @Autowired
 	private BCryptPasswordEncoder hash;
@@ -55,7 +60,12 @@ public class HomeController {
             return "admin";
         } 
         
-        else return "index";
+        else {
+            List<Grupo> listaGrupos = grupo.listaGrupos();
+            model.addAttribute("grupos", listaGrupos);
+            return "index";
+        }
+        
     }
 
     @GetMapping("/findrisc")

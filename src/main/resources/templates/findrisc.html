@@ -23,6 +23,7 @@
           for (i=0; ele = frm.getElementsByTagName('select')[i]; i++)
             ele.style.display = (ele==frm[obj]) ? 'block' : 'none';
         }
+
     </script>
     
     
@@ -103,23 +104,23 @@
                         <form>
                     
                             <div>3. Perímetro de la cintura medido debajo de las costillas (normalmente a la altura del obligo)</div>
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onclick="activar('select3')" checked>
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onclick="activar('hombre')" checked>
                             <label class="form-check-label" for="flexRadioDefault1">
                               Hombre
                             </label>
 
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onclick="activar('select4')">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onclick="activar('mujer')">
                             <label class="form-check-label" for="flexRadioDefault2">
                               Mujer
                             </label>
 
-                            <select id="select3" class="form-select" name="pc" style="display:block"> 
+                            <select id="select3" class="form-select" name="hombre" style="display:block"> 
                                 <option value = "0">Menos de 94 cm (0 puntos)</option>
                                 <option value = "3">Entre 94 - 102 cm (3 puntos)</option>
                                 <option value = "4">Más de 102 cm (4 puntos)</option>
                             </select>
 
-                            <select id="select4" class="form-select" name="disco" style="display:none"> 
+                            <select id="select4" class="form-select" name="mujer" style="display:none"> 
                                 <option value = "0">Menos de 80 cm (0 puntos)</option>
                                 <option value = "3">Entre 80 - 88 cm (3 puntos)</option>
                                 <option value = "4">Más de 88 cm (4 puntos)</option>
