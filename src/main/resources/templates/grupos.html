@@ -18,6 +18,10 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
+    <!--PARA EL BUSCADOR, sirve cualquiera de los dos, eliminar uno que no sé cuál es mejor en teoría-->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <title>Grupos</title>
 </head>
 
@@ -77,10 +81,25 @@
                 <!-- Buscador de participantes en grupos -->
                 <div class="container-fluid">
                     <form class="d-flex justify-content-end">
-                        <input class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
+                        <input id="filtrarGrupos" class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
 
                     </form>
                 </div>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        (function ($) {
+                            $('#filtrarGrupos').keyup(function () {
+                                var rex = new RegExp($(this).val(), 'i');
+                                $('.buscarGrupos tr').hide();
+                                $('.buscarGrupos tr').filter(function () {
+                                    return rex.test($(this).text());
+                                }).show();
+                            })
+                        }(jQuery));
+                    });
+                </script> 
+
 
                 <!-- Tabla de grupos -->
                 <table class=" table tablePart">
@@ -92,7 +111,7 @@
 
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class = "buscarGrupos">
                         <tr th:each="lis:${listaGrupos}">
                             <td th:text="${lis.nombre}"></td>
                             <td th:text="${lis.numParticipantes}"></td>
