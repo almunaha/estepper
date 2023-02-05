@@ -51,7 +51,8 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Mi perfil</a>
+                                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
+                                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>

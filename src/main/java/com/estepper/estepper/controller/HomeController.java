@@ -67,6 +67,7 @@ public class HomeController {
         else{
             List<Grupo> listaGrupos = grupo.listaGrupos();
             model.addAttribute("grupos", listaGrupos);
+            model.addAttribute("usuario", user);
             if(user.getEstadoCuenta().equals(Estado.ALTA)) return "index";
             else return "baja";
         }        
@@ -82,8 +83,8 @@ public class HomeController {
         return "recomendaciones";
     }
 
-    @GetMapping("/miperfil")
-    public String miperfil(Model model){
+    @GetMapping("/perfil")
+    public String perfil(Model model){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         UserDetails userDetails = null;
@@ -95,7 +96,7 @@ public class HomeController {
 
         Usuario user = usuario.logueado(codigo); 
         model.addAttribute("user", user);
-        return "miperfil";
+        return "perfil";
     }    
 
     @GetMapping("/baja")
