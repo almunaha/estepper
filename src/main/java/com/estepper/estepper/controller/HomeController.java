@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.estepper.estepper.model.entity.Administrador;
+import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.Rol;
 import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.GrupoService;
@@ -50,21 +52,24 @@ public class HomeController {
 
         String codigo = userDetails.getUsername(); //codigo del logueado
 
-        Usuario user = usuario.logueado(codigo); //atributos edl logueado
+        Usuario user = usuario.logueado(codigo); //atributos del logueado
 
-        if(user.getRol().equals(Rol.COORDINADOR)) return "coordinador";
-        else if(user.getRol().equals(Rol.ADMINISTRADOR)){
-            List<Usuario> lista = usuario.listado();
+        if(user instanceof Coordinador){
+            return "coordinador";
+        }
+
+        else if(user instanceof Administrador){
+            List<Usuario> lista = usuario.listadoTotal();
             model.addAttribute("usuarios", lista);
             return "admin";
-        } 
-        else {
+        }
+
+        else{
             List<Grupo> listaGrupos = grupo.listaGrupos();
             model.addAttribute("grupos", listaGrupos);
             if(user.getEstadoCuenta().equals(Estado.ALTA)) return "index";
             else return "baja";
-        }
-        
+        }        
     }
 
     @GetMapping("/findrisc")
@@ -106,13 +111,12 @@ public class HomeController {
     }
 
     @PostMapping("/process_register") //Procesar el registro
-    public String processRegister(Usuario user, Model model) { //Model para poder enviar información a la vista
+    public String processRegister(Participante user, Model model) { //Model para poder enviar información a la vista
         hash = new BCryptPasswordEncoder();
         String encodedPassword = hash.encode(user.getContrasenia());
         user.setContrasenia(encodedPassword);
 
         user.setEstadoCuenta(Estado.BAJA);
-        user.setRol(Rol.PARTICIPANTE);
         
         repo.save(user);
 

@@ -2,7 +2,6 @@ package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
 import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.Rol;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,10 +9,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
+@Inheritance(strategy=InheritanceType.JOINED)
 @Entity
-@Table(name = "usuarios")
+@Table(name="usuarios")
 public class Usuario implements Serializable{
     
     @Id
@@ -25,15 +27,11 @@ public class Usuario implements Serializable{
     private String apellidos;
     private String email;
     private String contrasenia;
-    
-    @Enumerated(value = EnumType.STRING)
-    private Rol rol;
 
     @Enumerated(value = EnumType.STRING)
     private Estado estadoCuenta;
     
-    public Usuario(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia,
-            Rol rol, Estado estadoCuenta) {
+    public Usuario(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -41,7 +39,6 @@ public class Usuario implements Serializable{
         this.email = email;
         this.contrasenia = contrasenia;
         this.estadoCuenta = estadoCuenta;
-        this.rol = rol;
     }
     
     public Usuario() {
@@ -82,12 +79,6 @@ public class Usuario implements Serializable{
     }
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
-    }
-    public Rol getRol() {
-        return rol;
-    }
-    public void setRol(Rol rol) {
-        this.rol = rol;
     }
     public Estado getEstadoCuenta() {
         return estadoCuenta;

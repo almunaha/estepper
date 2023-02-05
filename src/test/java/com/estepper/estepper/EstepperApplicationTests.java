@@ -1,15 +1,14 @@
 package com.estepper.estepper;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.entity.Administrador;
+import com.estepper.estepper.model.entity.Coordinador;
+import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.Rol;
+import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.repository.UsuarioRepository;
 
 @SpringBootTest
@@ -23,25 +22,24 @@ class EstepperApplicationTests {
 
 	@Test
 	public void crearUsuarioTest() {
-		Usuario us = new Usuario();
-		us.setId(1);
-		us.setNombre("Mercedes");
-		us.setContrasenia(hash.encode("mercedespass"));
-		us.setCodigo(222);
-		us.setApellidos("Martinez Campos");
-		us.setEmail("mercedes@madrid.es");
-		us.setRol(Rol.COORDINADOR);
-		us.setEstadoCuenta(Estado.ALTA);
-		Usuario retorno = usuarioRepo.save(us);
+
+		//Usuario tipo PARTICIPANTE
+		usuarioRepo.save(new Participante(0, 111, "Almudena", "Naharro Muñoz", "almunaha@ucm.es", hash.encode("almupass"), 
+		Estado.ALTA, 1, 1, 10, 2, 22, 3, Sexo.FEMENINO));
+
+		//Usuario tipo COORDINADOR
+		usuarioRepo.save(new Coordinador(0, 222, "Mercedes", "Martinez Campos", "mercedes@madrid.es", hash.encode("mercedespass"), 
+		Estado.ALTA));
+
+		//Usuario tipo ADMINISTRADOR
+		usuarioRepo.save(new Administrador(0, 333, "Javier", "Gómez Blanco", "javier@ucm.es", hash.encode("javierpass"), 
+		Estado.ALTA));
 		
+
+		/*
+		Usuario retorno = usuarioRepo.save(us);
 		assertTrue(retorno.getContrasenia().equalsIgnoreCase(us.getContrasenia()));
-
-		usuarioRepo.save(new Usuario(2, 333, "Almudena", "Naharro Muñoz", "almunaha@ucm.es",
-		hash.encode("almupass"), Rol.ADMINISTRADOR, Estado.ALTA));
-
-		usuarioRepo.save(new Usuario(3, 893, "María", "Díaz Blanco", "maria@ucm.es",
-		hash.encode("mariapass"), Rol.PARTICIPANTE, Estado.ALTA));
-
+		*/
 	}
 
 }

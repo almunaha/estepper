@@ -7,19 +7,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.estepper.estepper.model.entity.Usuario;
-import com.estepper.estepper.model.enums.Rol;
-import com.estepper.estepper.service.UsuarioService;
+import com.estepper.estepper.model.entity.Participante;
+
+import com.estepper.estepper.service.ParticipanteService;
 
 @Controller
 public class CoordinadorController {
 
     @Autowired //inyectar recursos de la clase UsuarioService
-    private UsuarioService usuario;
+    private ParticipanteService part;
     
     @GetMapping("/listado")
     public String participantes(Model model){
-        List<Usuario> listado = usuario.listadoParticipantes(Rol.PARTICIPANTE);
+        List<Participante> listado = part.listado();
         model.addAttribute("listado", listado);
 
         return "participantes";

@@ -1,31 +1,34 @@
-/*package com.estepper.estepper.model.entity;
+package com.estepper.estepper.model.entity;
 
 import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.Rol;
 import com.estepper.estepper.model.enums.Sexo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "participantes")
 public class Participante extends Usuario{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPaciente;
-    @Column(unique=false)
+    
+    @Column(unique=false, nullable=true)
     private Integer idCoordinador;
+
+    @Column(unique=false, nullable=true)
     private Integer idGrupo;
+
+    @Column(nullable=true)
     private Integer perdidaDePeso;
+    @Column(nullable=true)
     private Integer asistencia;
+    @Column(nullable=true)
     private Integer edad;
+    @Column(nullable=true)
     private Integer sesionesCompletas;
+    @Column(nullable=true)
     @Enumerated(value = EnumType.STRING)
     private Sexo sexo;
     
@@ -33,11 +36,9 @@ public class Participante extends Usuario{
         super();
     }
 
-    public Participante(Integer idPaciente,Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia,
-    Rol rol, Estado estadoCuenta,Integer idCoordinador,Integer idGrupo,Integer perdidaDePeso,Integer asistencia,
+    public Participante(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Integer idGrupo,Integer perdidaDePeso,Integer asistencia,
     Integer edad, Integer sesionesCompletas,Sexo sexo){
-        super(id, codigo, nombre, apellidos, email, contrasenia, rol, estadoCuenta);
-        this.idPaciente=idPaciente;
+        super(id, codigo, nombre, apellidos, email, contrasenia, estadoCuenta);
         this.idCoordinador=idCoordinador;
         this.idGrupo=idGrupo;
         this.perdidaDePeso=perdidaDePeso;
@@ -68,14 +69,6 @@ public class Participante extends Usuario{
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
-    }
-
-    public Integer getIdPaciente() {
-        return idPaciente;
-    }
-
-    public void setIdPaciente(Integer idPaciente) {
-        this.idPaciente = idPaciente;
     }
 
     public Integer getPerdidaDePeso() {
@@ -110,4 +103,3 @@ public class Participante extends Usuario{
         this.sesionesCompletas = sesionesCompletas;
     }
 }
-*/
