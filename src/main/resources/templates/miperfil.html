@@ -72,14 +72,6 @@
                     align-items: center;
                 }
 
-                .seccion-perfil-usuario .perfil-usuario-header {
-                    width: 100%;
-                    display: flex;
-                    justify-content: center;
-                    background: linear-gradient( rgb(122, 184, 212), transparent);
-                    margin-bottom: 1.25rem;
-                }
-
                 .seccion-perfil-usuario .perfil-usuario-portada {
                     display: block;
                     position: relative;
@@ -191,39 +183,38 @@
             </style>
 <!--MOSTRAR DATOS DEL PERFIL Y BOTÓN EDITAR-->
 
-<section class="seccion-perfil-usuario">
-    <div class="perfil-usuario-header">
-        <div class="perfil-usuario-portada">
-            <div class="perfil-usuario-avatar">
-                <img src="http://localhost/multimedia/relleno/img-c9.png" alt="img-avatar">
-                <button type="button" class="boton-avatar">
-                    <i class="far fa-image"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="perfil-usuario-body">
-        <div class="perfil-usuario-bio">
-            <h3 class="titulo">Nombre y Apellidos</h3>
-        </div>
-        <div class="perfil-usuario-footer">
-            <ul class="lista-datos">
-                <li><i class="icono fas fa-map-signs"></i> Código:</li>
-                <li><i class="icono fas fa-phone-alt"></i> Email:</li>
-            </ul>
-            <ul class="lista-datos">
-                <li><i class="icono fas fa-map-marker-alt"></i> Estado de la cuenta:</li>
-                <li><i class="icono fas fa-calendar-alt"></i> Contraseña:</li>
-            </ul>
-        </div>
-    </div>
-</section>
-        </div>
+            <section class="seccion-perfil-usuario">
+                <div class="perfil-usuario-header">
+                    <div class="perfil-usuario-portada">
+                        <div class="perfil-usuario-avatar">
+                            <img src="http://localhost/multimedia/relleno/img-c9.png" alt="img-avatar">
+                        </div>
+                    </div>
+                </div>
+                <div class="perfil-usuario-body">
+                    <div class="perfil-usuario-bio">
+                        <h3 class="titulo" th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3></div>
+                    </div>
+                    <div class="perfil-usuario-footer">
+                        <ul class="lista-datos">
+                            <li><i class="icono fas fa-map-signs"></i> Código:
+                                <p th:text="${user.codigo}">codigo</p></li>
+                            <li><i class="icono fas fa-phone-alt"></i> Email:
+                                <p th:text="${user.email}">email</p></li>
+                            <li><i class="icono fas fa-map-marker-alt"></i> Estado de la cuenta:
+                                <p th:text="${user.estado_cuenta}">estado_cuenta</p></li>
+                        </ul>
+                    </div>
+                   
+                </div>
+            </section>
+            <button class="btn btn-info text-white mt-4 w-100" th:ref="@{/miperfil}">Editar Perfil</button>
+                    </div>
 
-        </div>
+                    </div>
 
 
-       </div>
+                </div>
 
 
 

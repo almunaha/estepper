@@ -78,7 +78,18 @@ public class HomeController {
     }
 
     @GetMapping("/miperfil")
-    public String miperfil(){
+    public String miperfil(Model model){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario user = usuario.logueado(codigo); 
+        model.addAttribute("user", user);
         return "miperfil";
     }    
 
