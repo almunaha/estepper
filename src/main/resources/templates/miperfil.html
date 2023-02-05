@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>-->
+    <title>Mi Perfil</title>
+
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   
+    <div class="d-flex">
+        <div id="sidebar-container">
+           
+            <div class="logo">
+                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}"/>
+                <h4>Estepper</h4>
+            </div>
+
+            <div class="menu">
+                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-carrot"></i> Alimentación</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-folder-open"></i>  Materiales</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-chart-line"></i> Progreso</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-comments"></i> Foro</a>
+            </div>
+
+        </div>
+
+       <div class="w-100">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
+                
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" th:href="@{/miperfil}">Mi perfil</a>
+                      <div class="dropdown-divider"></div>
+                      <form th:action="@{/logout}" method="post">
+                        <button class = "dropdown-item" type="submit">Cerrar sesión</a>
+                      </form>
+                    </div>
+                  </li>
+                 
+                </ul>
+              </div>
+          </nav>
+
+        
+        
+         <div class="utilidades">
+            <!--CSS PROPIO DE MI PERFIL-->
+            <style type="text/css">
+                .seccion-perfil-usuario .perfil-usuario-body,
+                .seccion-perfil-usuario {
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-header {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    background: linear-gradient( rgb(122, 184, 212), transparent);
+                    margin-bottom: 1.25rem;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-portada {
+                    display: block;
+                    position: relative;
+                    width: 90%;
+                    height: 17rem;
+                    background-image: linear-gradient(45deg, rgba(60, 64, 67, 0.3), #13405d);
+                    border-radius: 0 0 20px 20px;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-portada .boton-portada {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    border: 0;
+                    border-radius: 8px;
+                    padding: 12px 25px;
+                    background-color: rgba(0, 0, 0, .5);
+                    color: #fff;
+                    cursor: pointer;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-portada .boton-portada i {
+                    margin-right: 1rem;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-avatar {
+                    display: flex;
+                    width: 180px;
+                    height: 180px;
+                    align-items: center;
+                    justify-content: center;
+                    border: 7px solid #FFFFFF;
+                    background-color: #DFE5F2;
+                    border-radius: 50%;
+                    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+                    position: absolute;
+                    bottom: -40px;
+                    left: calc(50% - 90px);
+                    z-index: 1;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-avatar img {
+                    width: 100%;
+                    position: relative;
+                    border-radius: 50%;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-avatar .boton-avatar {
+                    position: absolute;
+                    left: -2px;
+                    top: -2px;
+                    border: 0;
+                    background-color: #fff;
+                    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-body {
+                    width: 70%;
+                    position: relative;
+                    max-width: 750px;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-body .titulo {
+                    display: block;
+                    width: 100%;
+                    font-size: 1.75em;
+                    margin-bottom: 0.5rem;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-body .texto {
+                    color: #848484;
+                    font-size: 0.95em;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-footer,
+                .seccion-perfil-usuario .perfil-usuario-bio {
+                    display: flex;
+                    flex-wrap: wrap;
+                    padding: 1.5rem 2rem;
+                    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+                    background-color: #fff;
+                    border-radius: 15px;
+                    width: 100%;
+                }
+
+                .seccion-perfil-usuario .perfil-usuario-bio {
+                    margin-bottom: 1.25rem;
+                    text-align: center;
+                }
+
+                .seccion-perfil-usuario .lista-datos {
+                    width: 50%;
+                    list-style: none;
+                }
+
+                .seccion-perfil-usuario .lista-datos li {
+                    padding: 5px 0;
+                }
+
+                .seccion-perfil-usuario .lista-datos li>.icono {
+                    margin-right: 1rem;
+                    font-size: 1.2rem;
+                    vertical-align: middle;
+                }
+            </style>
+<!--MOSTRAR DATOS DEL PERFIL Y BOTÓN EDITAR-->
+
+<section class="seccion-perfil-usuario">
+    <div class="perfil-usuario-header">
+        <div class="perfil-usuario-portada">
+            <div class="perfil-usuario-avatar">
+                <img src="http://localhost/multimedia/relleno/img-c9.png" alt="img-avatar">
+                <button type="button" class="boton-avatar">
+                    <i class="far fa-image"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="perfil-usuario-body">
+        <div class="perfil-usuario-bio">
+            <h3 class="titulo">Nombre y Apellidos</h3>
+        </div>
+        <div class="perfil-usuario-footer">
+            <ul class="lista-datos">
+                <li><i class="icono fas fa-map-signs"></i> Código:</li>
+                <li><i class="icono fas fa-phone-alt"></i> Email:</li>
+            </ul>
+            <ul class="lista-datos">
+                <li><i class="icono fas fa-map-marker-alt"></i> Estado de la cuenta:</li>
+                <li><i class="icono fas fa-calendar-alt"></i> Contraseña:</li>
+            </ul>
+        </div>
+    </div>
+</section>
+        </div>
+
+        </div>
+
+
+       </div>
+
+
+
+    </div>
+     
+</body>
+</html>

@@ -58,11 +58,11 @@ public class HomeController {
             model.addAttribute("usuarios", lista);
             return "admin";
         } 
-        
         else {
             List<Grupo> listaGrupos = grupo.listaGrupos();
             model.addAttribute("grupos", listaGrupos);
-            return "index";
+            if(user.getEstadoCuenta().equals(Estado.ALTA)) return "index";
+            else return "baja";
         }
         
     }
@@ -76,7 +76,17 @@ public class HomeController {
     public String recomendaciones(){
         return "recomendaciones";
     }
-    
+
+    @GetMapping("/miperfil")
+    public String miperfil(){
+        return "miperfil";
+    }    
+
+    @GetMapping("/baja")
+    public String baja(){
+        return "baja";
+    }
+
     @GetMapping("/register")  //mostrar el formulario de registro
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new Usuario());
