@@ -31,6 +31,7 @@ public class Participante extends Usuario{
     @Column(nullable=true)
     @Enumerated(value = EnumType.STRING)
     private Sexo sexo;
+    public Integer id;
     
     public Participante(){
         super();
