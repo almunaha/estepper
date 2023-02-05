@@ -77,15 +77,15 @@
 
                 <div>
                     <ul>
-                        <li><i class="icono fas fa-map-signs"></i> Código:
-                            <p th:text="${user.codigo}">codigo</p></li>
-                        <li><i class="icono fas fa-phone-alt"></i> Email:
+                        <li><i class="icono fas fa-key"></i> Código: <p th:text="${user.codigo}">codigo</p></li>
+                        <li><i class="icono fas fa-envelope"></i> Email:
                             <p th:text="${user.email}">email</p></li>
-                        <li><i class="icono fas fa-map-marker-alt"></i> Estado de la cuenta:
-                            <p th:text="${user.estado_cuenta}">estado_cuenta</p></li>
+                        <li><i class="icono fas fa-thumbtack"></i> Estado de la cuenta:
+                            <p th:text="${user.estadoCuenta}">estado_cuenta</p></li>
                     </ul>
                 </div>
-                <a class="btn" id="btn-part">Editar Perfil</a>
+                
+                <a class="btn" id="btn-part" th:ref="@{/editarperfil}">Editar</a>
                 
             </div>
 
