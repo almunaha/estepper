@@ -1,6 +1,7 @@
 package com.estepper.estepper.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,7 @@ import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.service.UsuarioService;
+import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.GrupoService;
 
 @Controller
@@ -32,6 +34,9 @@ public class HomeController {
 
     @Autowired //inyectar recursos de la clase GrupoService
     private GrupoService grupo;
+
+    @Autowired
+    private ParticipanteService participante;
 
     @Autowired
 	private BCryptPasswordEncoder hash;
@@ -67,8 +72,12 @@ public class HomeController {
         else{
             List<Grupo> listaGrupos = grupo.listaGrupos();
             model.addAttribute("grupos", listaGrupos);
-            model.addAttribute("usuario", user);
-            if(user.getEstadoCuenta().equals(Estado.ALTA)) return "index";
+            model.addAttribute("user", user);
+            if(user.getEstadoCuenta().equals(Estado.ALTA)){
+                Optional<Participante> part = participante.findById(user.getId());
+                if(part.isPresent()) model.addAttribute("participante", part.get());
+                return "index";
+            }
             else return "baja";
         }        
     }

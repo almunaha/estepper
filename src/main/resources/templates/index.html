@@ -76,9 +76,23 @@
 
           
           <div class="utilidades">
+            <div>
+              <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
+            </div>
+
+          <div>
+              <ul>
+                  <li><i class="icono fas fa-key"></i><span th:text="'Código: ' + ${user.codigo}"/></li>
+                  <li><i class="icono fas fa-envelope"></i><span th:text="'Email: ' + ${user.email}"/></li>
+                  <li><i class="icono fas fa-thumbtack"></i><span th:text="'Estado de la cuenta: ' + ${user.estadoCuenta}"/></li>
+                  <li><i class="icono fas fa-thumbtack"></i><span th:text="'Sexo: ' + ${participante.sexo}"/></li>
+              </ul>
+          </div>
+          
             <div class="row ">
-           
+          
               <div class="col">
+
                 <!-- Botón sesiones -->
                 <div class="layout-util">
                   <a class="btn-util" th:href="@{/}">

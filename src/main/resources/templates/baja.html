@@ -69,6 +69,17 @@
                 </ul>
               </div>
           </nav>
+          <div>
+            <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
+          </div>
+
+        <div>
+            <ul>
+                <li><i class="icono fas fa-key"></i><span th:text="'Código: ' + ${user.codigo}"/></li>
+                <li><i class="icono fas fa-envelope"></i><span th:text="'Email: ' + ${user.email}"/></li>
+                <li><i class="icono fas fa-thumbtack"></i><span th:text="'Estado de la cuenta: ' + ${user.estadoCuenta}"/></li>
+            </ul>
+        </div>
             <p>Actualmente tu cuenta está desactivada, para que pueda empezar este 
                 proyecto debe acudir a su centro médico.
             </p>

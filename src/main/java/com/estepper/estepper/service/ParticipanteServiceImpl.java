@@ -1,6 +1,7 @@
 package com.estepper.estepper.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     @Override
     public List<Participante> listado(){ //¿puedo hacer esto directamten sin pasar por usuario??
         return(List<Participante>) repo.findAll();
+    }
+
+    @Override
+    public Optional<Participante> findById(Integer id) {
+        return repo.findById(id);
     }
     
 }
