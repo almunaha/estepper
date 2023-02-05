@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.estepper.estepper.model.entity.Administrador;
@@ -117,6 +118,14 @@ public class HomeController {
     @GetMapping("/baja")
     public String baja(){
         return "baja";
+    }
+
+    @GetMapping("/sesion2/{id}")
+    public String sesion1(@PathVariable Integer id, Model model){
+
+        model.addAttribute("participante", participante.findById(id));
+        model.addAttribute("user", usuario.findById(id));
+        return "sesion2";
     }
 
     @GetMapping("/sesiones")
