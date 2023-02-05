@@ -105,8 +105,14 @@ public class HomeController {
 
         Usuario user = usuario.logueado(codigo); 
         model.addAttribute("user", user);
+        
         return "perfil";
     }    
+
+    @PostMapping("/process_perfil")
+    public void processPerfil(Participante user, Model model) {
+       // repo.update(user);
+    }
 
     @GetMapping("/baja")
     public String baja(){
