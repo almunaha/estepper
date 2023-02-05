@@ -23,8 +23,8 @@ public class Usuario implements Serializable{
     private Integer id;
     @Column(unique=true)
     private Integer codigo;
-    private String nombre;
-    private String apellidos;
+    public String nombre;
+    public String apellidos;
     private String email;
     private String contrasenia;
 

@@ -70,14 +70,22 @@
             </nav>
 
             <div>
-                <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
+                <!-- NO ME SALE EL NOMBRE NI APELLIDO
+                    <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
+                -->
+                <h3>María López</h3>
             </div>
             <div>
                 <ul>
                     <li><a class="dropdown-item" th:href="@{/findrisc}">Test de Findrisc</a></li>
+                    <!-- EN VEZ DE ESE URL UNO CON /ID Y AGREGARLO A COORDCONTROLLER-->
                 </ul>
             </div>
         
+            <div>
+                <a class="btn" id="btn-part" th:href="@{/activarcuenta}">Activar cuenta</a>
+                <a class="btn" id="btn-part" th:href="@{/eliminarcuenta}">Eliminar cuenta</a>
+            </div>
         </div>
     </div>
 
