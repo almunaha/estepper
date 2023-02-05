@@ -1,6 +1,7 @@
 package com.estepper.estepper.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +42,11 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     @Override
     public Usuario logueado(String codigo){
         return repo.findByCodigo(codigo);
+    }
+
+    @Override
+    public Optional<Usuario> findById(Integer id) {
+        return repo.findById(id);
     }
     
 }

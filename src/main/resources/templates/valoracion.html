@@ -69,64 +69,15 @@
                 </div>
             </nav>
 
-            
-
-            <div class="p-4 mt-5" id="participantes">
-                <div>
-                    <h4>Listado de participantes</h4> <!-- Tienen que salir los asignados al coordinador y los que estan de baja-->
-                </div>
-
-                <!-- Buscador de participantes -->
-                <div class="container-fluid">
-                    <form class="d-flex justify-content-end">
-                        <input id="filtrarParticipantes"  class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
-
-                    </form>
-                </div>
-
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        (function ($) {
-                            $('#filtrarParticipantes').keyup(function () {
-                                var rex = new RegExp($(this).val(), 'i');
-                                $('.buscarParticipantes tr').hide();
-                                $('.buscarParticipantes tr').filter(function () {
-                                    return rex.test($(this).text());
-                                }).show();
-                            })
-                        }(jQuery));
-                    });
-                </script> 
-                
-                <!-- Tabla de participantes -->
-                <table class="table tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellidos</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
-
-                        </tr>
-                    </thead>
-                    <tbody class = "buscarParticipantes">
-                        <tr th:each="lis:${listado}">
-                            <td th:text="${lis.nombre}"></td>
-                            <td th:text="${lis.apellidos}"></td>
-                            <td th:text="${lis.email}"></td>
-                            <td th:text="${lis.estadoCuenta}"></td>
-                            <td>                                
-                                <a class="btn" id="btn-part" th:href="@{'/valoracion/' + ${lis.id}}" ><i class="fa-solid fa-folder-open"></i></a>
-                                <a class="btn" id="btn-part">Ver expediente</a>
-                                <a class="btn" id="btn-part" >Editar</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
+            <div>
+                <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
             </div>
-
+            <div>
+                <ul>
+                    <li><a class="dropdown-item" th:href="@{/findrisc}">Test de Findrisc</a></li>
+                </ul>
+            </div>
+        
         </div>
     </div>
 
