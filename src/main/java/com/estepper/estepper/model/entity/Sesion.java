@@ -33,6 +33,10 @@ public class Sesion implements Serializable{
 
     //fichas con json
 
+    public Sesion(){
+    
+    }
+
     public Sesion(Integer id, Integer idPaciente, EstadoSesion estado, String observaciones, Asistencia asistencia, double cmsPerdidos, double pesoPerdido){
         this.id = id;
         this.idPaciente = idPaciente;
