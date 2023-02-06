@@ -42,7 +42,16 @@
                 <input type="password" th:field="*{contrasenia}" class="form-control" required/>
             </div>
 
-            <button class="btn btn-info text-white mt-4 w-100" type="submit">Registrarse</button>
+            <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Registrarse</button>
+            <script language="JavaScript">
+            function myFunction() {
+                if(confirm("Desea guardar los datos?")){
+                alert("Datos guardados exitosamente");
+                }else{
+                alert("Usted cancelo la acción para guardar");
+                }
+            }
+            </script>
             
             <p class="text-center mt-5">¿Ya estás registrado? Pincha <a class="text-decoration-none" th:href="@{/login}">aquí</a> para iniciar sesión.</p>
             

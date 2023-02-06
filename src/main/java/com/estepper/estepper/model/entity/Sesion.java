@@ -31,6 +31,8 @@ public class Sesion implements Serializable{
 
     private double pesoPerdido;
 
+    private String sesionesString;
+
     //fichas con json
 
     public Sesion(){
