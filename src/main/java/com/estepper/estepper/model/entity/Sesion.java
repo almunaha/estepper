@@ -1,10 +1,17 @@
 package com.estepper.estepper.model.entity;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.ParseException;
+
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONObject;
 
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.EstadoSesion;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,13 +40,16 @@ public class Sesion implements Serializable{
 
     private String sesionesString;
 
+
+    
     //fichas con json
 
     public Sesion(){
     
     }
 
-    public Sesion(Integer id, Integer idPaciente, EstadoSesion estado, String observaciones, Asistencia asistencia, double cmsPerdidos, double pesoPerdido){
+    public Sesion(Integer id, Integer idPaciente, EstadoSesion estado, String observaciones,
+     Asistencia asistencia, double cmsPerdidos, double pesoPerdido,String sesioneString){
         this.id = id;
         this.idPaciente = idPaciente;
         this.estado = estado;
@@ -47,6 +57,7 @@ public class Sesion implements Serializable{
         this.asistencia = asistencia;
         this.cmsPerdidos = cmsPerdidos;
         this.pesoPerdido = pesoPerdido;
+        this.sesionesString=sesioneString;
     }
 
     public Integer getId() {
@@ -104,6 +115,32 @@ public class Sesion implements Serializable{
     public void setPesoPerdido(double pesoPerdido) {
         this.pesoPerdido = pesoPerdido;
     }
+
+    public String jsonToString(String file) throws IOException{
+       /* try {
+            JSONParser parser = new JSONParser();
+            //Use JSONObject for simple JSON and JSONArray for array of JSON.
+            JSONObject data = (JSONObject) parser.parse(
+                  new FileReader("file"));//path to the JSON file.
+    
+            String json = data.toString();
+            return json;
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }*/ 
+        String result;  
+        result = new String(Files.readAllBytes(Paths.get(file)));  
+        return result;  
+
+    }
+
+    public JSONObject StringToJSON(String string){
+        JSONObject json = new JSONObject(string);
+        //System.out.println(json.toString());  
+        return json;
+        
+    }
+ 
 
     
 }
