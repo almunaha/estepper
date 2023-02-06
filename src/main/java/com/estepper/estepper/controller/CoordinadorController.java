@@ -31,9 +31,10 @@ public class CoordinadorController {
     } 
 
     @GetMapping("/valoracion/{id}")
-    public String fasedevaloracion(@PathVariable Integer id, Model model){
-        model.addAttribute("participante", part.findById(id));
-        model.addAttribute("user", user.findById(id));
+    public String fasedevaloracion(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("participante", part.findById(id).get());
+        model.addAttribute("user", user.findById(id).get());
+        model.addAttribute("idparticipante", id);
         return "valoracion";
     }
 }

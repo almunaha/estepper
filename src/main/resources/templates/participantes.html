@@ -106,6 +106,7 @@
                             <th scope="col">Apellidos</th>
                             <th scope="col">Email</th>
                             <th scope="col">Estado</th>
+                            <th scope="col">Id</th>
                             <th scope="col">Acciones</th>
 
                         </tr>
@@ -116,6 +117,7 @@
                             <td th:text="${lis.apellidos}"></td>
                             <td th:text="${lis.email}"></td>
                             <td th:text="${lis.estadoCuenta}"></td>
+                            <td th:text="${lis.id}"></td>
                             <td>                                
                                 <a class="btn" id="btn-part" th:href="@{'/valoracion/' + ${lis.id}}" ><i class="fa-solid fa-folder-open"></i></a>
                                 <a class="btn" id="btn-part">Ver expediente</a>

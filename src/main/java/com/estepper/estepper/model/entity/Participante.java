@@ -31,6 +31,7 @@ public class Participante extends Usuario{
     @Column(nullable=true)
     @Enumerated(value = EnumType.STRING)
     private Sexo sexo;
+    @Column
     public Integer id;
     
     public Participante(){
@@ -102,5 +103,9 @@ public class Participante extends Usuario{
 
     public void setSesionesCompletas(Integer sesionesCompletas) {
         this.sesionesCompletas = sesionesCompletas;
+    }
+
+    public Integer getId(){
+        return id;
     }
 }
