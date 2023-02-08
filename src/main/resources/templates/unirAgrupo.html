@@ -19,7 +19,21 @@
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <title>Participantes</title>
+
+    <title>unirAgrupo</title>
+
+    <script type="text/javascript">
+
+        //añadir al grupo seleccionado el participante correspondiente y actualizar la tabla de grupos
+        //FALTA POR HACERLA, ADEMÁS CREO QUE SE HARÍA EN EL GRUPOSERVICEIMPL
+        function unirAunGrupo() {
+            document.getElementById('grupoElegido').value = total;
+
+
+        }
+
+       
+    </script>
 </head>
 
 <body>
@@ -72,61 +86,39 @@
             
 
             <div class="p-4 mt-5" id="participantes">
+             
+             
                 <div>
-                    <h4>Listado de participantes</h4> <!-- Tienen que salir los asignados al coordinador y los que estan de baja-->
+                    <h4 th:text="'AÑADIR A UN GRUPO A: ' +${participante.nombre} + ' ' + ${participante.apellidos}"></h4>
                 </div>
-
-                <!-- Buscador de participantes -->
-                <div class="container-fluid">
-                    <form class="d-flex justify-content-end">
-                        <input id="filtrarParticipantes"  class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
-
-                    </form>
-                </div>
-
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        (function ($) {
-                            $('#filtrarParticipantes').keyup(function () {
-                                var rex = new RegExp($(this).val(), 'i');
-                                $('.buscarParticipantes tr').hide();
-                                $('.buscarParticipantes tr').filter(function () {
-                                    return rex.test($(this).text());
-                                }).show();
-                            })
-                        }(jQuery));
-                    });
-                </script> 
-                
-                <!-- Tabla de participantes -->
-                <table class="table tablePart">
+           
+          
+                <table class=" table tablePart">
                     <thead class="thead-dark">
                         <tr>
+                          
+                            <th scope="col">Selecciona uno</th>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Apellidos</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Id</th>  <!--VER SI QUITARLO MÁS ADELANTE-->
-                            <th scope="col">Acciones</th>
-
+                            <th scope="col">Número de participantes</th>
                         </tr>
                     </thead>
-                    <tbody class = "buscarParticipantes">
-                        <tr th:each="lis:${listado}">
-                            <td th:text="${lis.nombre}"></td>
-                            <td th:text="${lis.apellidos}"></td>
-                            <td th:text="${lis.email}"></td>
-                            <td th:text="${lis.estadoCuenta}"></td>
-                            <td th:text="${lis.id}"></td>
-                            <td>                                
-                                <a class="btn" id="btn-part"><i class="fa-solid fa-folder-open"></i></a>
-                                <a class="btn" id="btn-part"th:href="@{'/valoracion/' + ${lis.id}}" >Ver expediente</a>
-                                <a class="btn" id="btn-part" >Editar</a>
-                                <a class="btn" id="btn-part" th:href="@{'/unirAgrupo/' + ${lis.id}}" >Añadir a un grupo</a></li>
+                    <tbody class = "buscarGrupos">
+                        
+                        <tr th:each="lis:${listaGrupos}">
+                            <td class="a-center ">
+                                <input type="radio" class="form-check-input" name="grupoElegido" value="${lis.id}" id="grupoElegido">
                             </td>
+                            <td th:text="${lis.nombre}"></td>
+                            <td th:text="${lis.numParticipantes}"></td>
                         </tr>
                     </tbody>
+
                 </table>
+
+                <button class="btn btn-info text-white mt-4 w-100" type="sumar" onclick="unirAunGrupo()">AÑADIR AL GRUPO</button>
+
+                <!--FALTA LA PARTE DE AÑADIR A UN NUEVO GRUPO-->
+
 
             </div>
 
@@ -136,3 +128,7 @@
 </body>
 
 </html>
+
+
+
+

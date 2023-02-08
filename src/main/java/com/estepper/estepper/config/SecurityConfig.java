@@ -46,6 +46,7 @@ public class SecurityConfig{
             .requestMatchers("/img/alimentacion.png").permitAll()
             .requestMatchers("/img/deporte.png").permitAll()
             .requestMatchers("/img/descanso.png").permitAll()
+          
 
             .anyRequest()
             .authenticated()
