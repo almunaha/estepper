@@ -34,6 +34,7 @@
     <!-- MENÚ -->
     <div id="sidebar-container">
 
+
       <div class="logo">
         <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
         <h4>Estepper</h4>
@@ -113,23 +114,33 @@
         </div>
       </nav>
 
+      <div style="text-align: center;">
+
+        <div style="margin: 20px; color: #13405d;">
+          <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
+        </div>
+
+        <div style="display: flex; text-align: left;">
+          <ul style="list-style: none;margin-right: 200px;margin-left: 150px;">
+            <li><i class="icono fas fa-key"></i><span th:text="' Código: ' + ${user.codigo}" /></li>
+            <li><i class="icono fas fa-envelope"></i><span th:text="' Email: ' + ${user.email}" /></li>
+            <li><i class="icono fas fa-thumbtack"></i><span th:text="' Estado de la cuenta: ' + ${user.estadoCuenta}" />
+            </li>
+            <li><i class="icono fas fa-anchor"></i><span th:text="' Sexo: ' + ${participante.sexo}" /></li>
+          </ul>
+          <ul style="list-style: none;">
+            <li><i class="icono fas fa-bug"></i><span th:text="' Edad: ' + ${participante.edad}" /></li>
+            <li><i class="icono fas fa-list-alt"></i><span th:text="' Asistencia: ' + ${participante.asistencia}" />
+            </li>
+            <li><i class="icono fas fa-weight"></i><span
+                th:text="' Pérdida de peso: ' + ${participante.perdidaDePeso}" /></li>
+            <li><i class="icono fas fa-people-carry"></i><span th:text="' Grupo: ' + ${participante.idGrupo}" />
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <div class="utilidades">
-
-        <!-- Lo comengo porque no se ve bien, descuadra todo y creo que no debería ir aquí
-            <div>
-              <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
-            </div>
-
-          <div>
-              <ul>
-                  <li><i class="icono fas fa-key"></i><span th:text="'Código: ' + ${user.codigo}"/></li>
-                  <li><i class="icono fas fa-envelope"></i><span th:text="'Email: ' + ${user.email}"/></li>
-                  <li><i class="icono fas fa-thumbtack"></i><span th:text="'Estado de la cuenta: ' + ${user.estadoCuenta}"/></li>
-                  <li><i class="icono fas fa-thumbtack"></i><span th:text="'Sexo: ' + ${participante.sexo}"/></li>
-              </ul>
-          </div>
-           -->
 
         <div class="row ">
 
@@ -208,7 +219,8 @@
                       aria-valuemax="5">3</div>
                   </div>
                   <h5 class="card-title text-black mt-2">3 de 5 objetivos cumplidos</h5>
-                  <p class="card-text text-black">Cada vez queda menos para alcanzar todos tus objetivos. ¡No te rindas!
+                  <p class="card-text text-black">Cada vez queda menos para alcanzar todos tus objetivos. ¡No te
+                    rindas!
                   </p>
 
                 </div>
@@ -221,6 +233,7 @@
             <!-- Botón progreso -->
             <div class="layout-util">
               <a class="btn-util" th:href="@{/progreso}">
+
                 <i class="fa-solid fa-chart-line"></i>
               </a>
 

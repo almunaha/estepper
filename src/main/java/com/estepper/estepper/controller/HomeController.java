@@ -59,7 +59,7 @@ public class HomeController {
         String codigo = userDetails.getUsername(); //codigo del logueado
 
         Usuario user = usuario.logueado(codigo); //atributos del logueado
-
+        model.addAttribute("user", user);
         if(user instanceof Coordinador){
             return "coordinador";
         }
@@ -73,7 +73,6 @@ public class HomeController {
         else{
             List<Grupo> listaGrupos = grupo.listaGrupos();
             model.addAttribute("grupos", listaGrupos);
-            model.addAttribute("user", user);
             if(user.getEstadoCuenta().equals(Estado.ALTA)){
                 Optional<Participante> part = participante.findById(user.getId());
                 if(part.isPresent()) model.addAttribute("participante", part.get());
@@ -108,6 +107,18 @@ public class HomeController {
         model.addAttribute("user", user);
         
         return "perfil";
+    }    
+
+    @GetMapping("/mostrarperfil/{id}")
+    public String mostrarperfil(@PathVariable("id") Integer id, Model model){
+        Usuario elusuario = usuario.findById(id).get();
+        model.addAttribute("user", elusuario);
+        if(elusuario instanceof Participante) {
+            model.addAttribute("participante",  participante.findById(id).get());
+            return "mostrarperfilParticipante";
+        }
+        else return "mostrarperfil";
+        
     }    
 
     @PostMapping("/process_perfil")
