@@ -45,7 +45,7 @@ public class SecurityConfig{
             .requestMatchers("/img/agua.png").permitAll()
             .requestMatchers("/img/alimentacion.png").permitAll()
             .requestMatchers("/img/deporte.png").permitAll()
-            .requestMatchers("/img/descanso.png").permitAll()
+            .requestMatchers("/img/descanso.png").permitAll()          
           
 
             .anyRequest()
@@ -67,6 +67,7 @@ public class SecurityConfig{
             .and()
             .formLogin();
 */
+        http.headers().frameOptions().disable();
 
         return http.build();
 

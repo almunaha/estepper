@@ -1,98 +1,137 @@
 <!DOCTYPE html>
 
-<html lang="es"
- xmlns:th="https://www.thymeleaf.org"
- xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
-    rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/signin.css}">
-    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}"> 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/signin.css}">
+  <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}">
+  <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+  <script src="/js/menu.js"></script>
+
+  <!--PARA GRÁFICOS-->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto">
+
+  <title>Inicio</title>
 
 
-    <!--PARA GRÁFICOS-->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto">
-
-    <title>Inicio</title>
-
-    
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-   
-    <div class="d-flex">
-        <div id="sidebar-container">
-           
-            <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}"/>
-                <h4>Estepper</h4>
-            </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
-            <div class="menu">
-                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-carrot"></i> Alimentación</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-folder-open"></i>  Materiales</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-chart-line"></i> Progreso</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-comments"></i> Foro</a>
-            </div>
+  <div class="d-flex">
+    <!-- MENÚ -->
+    <div id="sidebar-container">
 
-        </div>
+      <div class="logo">
+        <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+        <h4>Estepper</h4>
+      </div>
 
-       <div class="w-100">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <ul>
+        <li>
+          <a th:href="@{/}">
+            <i class="fa-solid fa-house"></i>
+            <span class="nombre-enlaces">Inicio</span>
+          </a>
+        </li>
 
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
-                
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
-                    </a>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-person-hiking"></i>
+            <span class="nombre-enlaces">Actividades</span>
+          </a>
+        </li>
 
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
-                      <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
-                      <div class="dropdown-divider"></div>
-                      <form th:action="@{/logout}" method="post">
-                        <button class = "dropdown-item" type="submit">Cerrar sesión</a>
-                      </form>
-                    </div>
-                  </li>
-                 
-                </ul>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-carrot"></i>
+            <span class="nombre-enlaces">Alimentación</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-folder-open"></i>
+            <span class="nombre-enlaces">Materiales</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:href="@{/progreso}">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="nombre-enlaces">Progreso</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-comments"></i>
+            <span class="nombre-enlaces">Foro</span>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="w-100">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
+                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
+                <div class="dropdown-divider"></div>
+                <form th:action="@{/logout}" method="post">
+                  <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
               </div>
-          </nav>
+            </li>
 
-       
-
-        <div>
-            <ul>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion1/' + ${part.id}}" >Sesión 1</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion2/' + ${part.id}}" >Sesión 2</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion3/' + ${part.id}}" >Sesión 3</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion4/' + ${part.id}}" >Sesión 4</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion5/' + ${part.id}}" >Sesión 5</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion6/' + ${part.id}}" >Sesión 6</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion7/' + ${part.id}}" >Sesión 7</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion8/' + ${part.id}}" >Sesión 8</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion9/' + ${part.id}}" >Sesión 9</a></li>
-                <li><a class="btn" id="btn-part" th:href="@{'/sesion10/' + ${part.id}}" >Sesión 10</a></li>
-            </ul>
+          </ul>
         </div>
+      </nav>
+
+
+
+      <div>
+        <ul>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion1/' + ${part.id}}">Sesión 1</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion2/' + ${part.id}}">Sesión 2</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion3/' + ${part.id}}">Sesión 3</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion4/' + ${part.id}}">Sesión 4</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion5/' + ${part.id}}">Sesión 5</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion6/' + ${part.id}}">Sesión 6</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion7/' + ${part.id}}">Sesión 7</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion8/' + ${part.id}}">Sesión 8</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion9/' + ${part.id}}">Sesión 9</a></li>
+          <li><a class="btn" id="btn-part" th:href="@{'/sesion10/' + ${part.id}}">Sesión 10</a></li>
+        </ul>
+      </div>
     </div>
 
-    </div>
-     
+  </div>
+
 </body>
+
 </html>
