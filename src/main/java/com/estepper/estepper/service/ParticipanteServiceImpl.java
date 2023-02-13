@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.repository.ParticipanteRepository;
 
 @Service
@@ -23,6 +24,20 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     @Override
     public Optional<Participante> findById(Integer id) {
         return repo.findById(id);
+    }
+
+    @Override
+    public Participante getParticipante(Integer id){
+        return repo.findById(id).get();
+    }   
+
+    @Override
+    public void update(Integer idParticipante, Grupo grupo){
+        repo.update(idParticipante, grupo);
+    }   
+
+    public List<Participante> listadoGrupo (Grupo grupo){
+        return repo.findByGrupo(grupo);
     }
 
 

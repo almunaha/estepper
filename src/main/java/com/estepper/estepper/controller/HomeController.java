@@ -82,10 +82,11 @@ public class HomeController {
         }        
     }
 
-    @GetMapping("/findrisc")
+     @GetMapping("/findrisc")
     public String test(){
         return "findrisc";
     }
+
 
     @GetMapping("/recomendaciones")
     public String recomendaciones(){

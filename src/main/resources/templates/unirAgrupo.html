@@ -98,34 +98,116 @@
                     <h4 th:text="'AÑADIR A UN GRUPO A: ' +${participante.nombre} + ' ' + ${participante.apellidos}"></h4>
                 </div>
            
-          
-                <table class=" table tablePart">
+               
+           
+                <table class="table tablePart">
                     <thead class="thead-dark">
                         <tr>
-                          
-                            <th scope="col">Selecciona uno</th>
+                            <!--<th scope="col">Selecciona uno</th>-->
                             <th scope="col">Nombre</th>
                             <th scope="col">Número de participantes</th>
+                            <th scope="col">ACCIÓN DE MIERDA</th>
                         </tr>
                     </thead>
                     <tbody class = "buscarGrupos">
                         
                         <tr th:each="lis:${listaGrupos}">
-                            <td class="a-center ">
+                            <!--<td class="a-center ">
                                 <input type="radio" class="form-check-input" name="grupoElegido" value="${lis.id}" id="grupoElegido">
-                            </td>
+                            </td>-->
                             <td th:text="${lis.nombre}"></td>
                             <td th:text="${lis.numParticipantes}"></td>
+                            <td><a class="btn" id="btn-part" th:href="@{'/actualizarGrupos/' + ${participante.id} + '/' + ${lis.id}}" >Seleccionar</a></td>
+
                         </tr>
                     </tbody>
 
                 </table>
 
-                <button class="btn btn-info text-white mt-4 w-100" type="unir">AÑADIR AL GRUPO</button>
+           
 
+
+                <!--<a class="btn" id="btn-part" th:href="@{'/actualizarGrupos/' + ${participante.id}}" >AÑADIR AL GRUPO</a></li>-->
+
+                
+
+                <!--     <a class="btn" id="btn-part" th:href="@{'/actualizarGrupos/' + ${participante.id}}" >AÑADIR AL GRUPO</a></li> -->
                 <!--FALTA LA PARTE DE AÑADIR A UN NUEVO GRUPO-->
 
                 
+                
+                <!--<script type="text/javascript">
+                    
+                    var action = /*[[@{/sesiones}]]*/ '/sesiones';
+                    $("grupoElegido").change(function(){
+                        if($(this).val() == "9"){
+                            $("ruta").attr("action",action);
+                        }
+
+                    });
+                            
+                        
+                    
+
+                    /*
+                    function devuelveRuta() {
+                    document.getElementById('send').addEventListener('click', (e) => {
+                        e.preventDefault()
+
+                        console.log(document.getElementById('grupoElegido').value);
+                        if(document.getElementById('grupoElegido').value == '9')
+                            formulario.setAttribute('th:action', "@{'/sesiones'}");
+                            document.getElementById('ruta').submit()
+
+                        })
+                    }
+                    */
+
+                </script>
+
+                -->
+          
+
+                <!-- <form th:action="@{'/actualizarGrupos/' + ${participante.id}}" th:object="${grupo}" method="post"> -->
+
+                <!-- 
+                 <form th:action="@{'/findrisc'}" th:object="${grupo}" method="post" id="ruta">
+
+                    
+                    <div class="m-3">
+
+                        <strong>ID participante: </strong> <td th:text="${participante.id}"></td>
+                        <strong>ID grupo participante: </strong> <td th:text="${participante.idGrupo}"></td>
+
+                        <div class="form-group row">
+                            <label class="col-form-label ">Selecciona el grupo al que quieres añadir al participante: </label>
+                           
+                                <tr th:each="lis:${listaGrupos}">
+                                    <div>
+                                        <td class="a-center ">
+                                            <input type="radio" class="form-check-input" name="grupoElegido" value="${lis.id}" id="grupoElegido">
+                                        </td>
+                    
+                                        <strong>Grupo: </strong> <td th:text="${lis.nombre}"></td>
+                                        <strong>Número de participantes: </strong> <td th:text="${lis.numParticipantes}"></td>
+                                        <strong>Identificador de grupo: </strong> <td th:text="${lis.id}" ></td>
+                                        
+                                    </div>
+                                </tr>
+                          
+
+                        </div>
+
+                        <div class="text-center p">
+                            <button type="submit"  class="btn" id="send">Añadir</button>
+                        </div>
+                    </div>
+               </form>
+
+            -->
+           
+
+          
 
             </div>
 

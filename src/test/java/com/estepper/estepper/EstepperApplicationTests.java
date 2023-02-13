@@ -34,7 +34,7 @@ class EstepperApplicationTests {
 
 		//Usuario tipo PARTICIPANTE
 		usuarioRepo.save(new Participante(0, 111, "Almudena", "Naharro Muñoz", "almunaha@ucm.es", hash.encode("almupass"), 
-		Estado.ALTA, 1, 1, 10, 2, 22, 3, Sexo.FEMENINO));
+		Estado.ALTA, 1, null, 10, 2, 22, 3, Sexo.FEMENINO));
 
 		//Usuario tipo COORDINADOR
 		usuarioRepo.save(new Coordinador(0, 222, "Mercedes", "Martinez Campos", "mercedes@madrid.es", hash.encode("mercedespass"), 

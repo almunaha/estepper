@@ -80,7 +80,22 @@
               <h3>VISTA DE UN GRUPO, FALTA POR HACER</h3>
           
                 
+                 <table class=" table tablePart">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Participantes del grupo</th>
 
+
+                        </tr>
+                    </thead>
+                    <tbody class = "buscarGrupos">
+                        <tr th:each="lis:${listadoParticipantesGrupo}">
+                            <td th:text="${lis.nombre}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <strong>Número total de participantes: </strong><p th:text="${total}"></p>
             
 
             </div>

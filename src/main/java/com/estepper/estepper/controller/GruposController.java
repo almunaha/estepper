@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.service.GrupoService;
+import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.service.ParticipanteService;
 
 
@@ -65,6 +66,7 @@ public class GruposController {
        return modelo;
     }
 
+    //ESTE ESTABA BIEN CON LO DE ANTES
     @GetMapping("/unirAgrupo/{id}")
     public String unirAgrupo(@PathVariable("id") Integer id, Model model){
         model.addAttribute("participante", part.findById(id).get());
@@ -77,13 +79,47 @@ public class GruposController {
         return "unirAgrupo";
     }  
 
+    
+    /*@GetMapping("/actualizarGrupos/{idP}/{idG}")
+    public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG, Model model){
+        //List<Grupo> listaGrupos = grupo.listaGrupos();
+        //model.addAttribute("listaGrupos", listaGrupos);
+
+        Grupo gr = grupo.getGrupo(idG);
+        Participante pa = part.getParticipante(idP);
+
+        pa.setGrupo(gr);
+
+       // pa.setIdGrupo(idG);
+        gr.setNumParticipantes(gr.getNumParticipantes() + 1);
+        
+        
+        return"redirect:/listaGrupos";
+    } 
+    */
+
+   /* @PostMapping("/actualizarGrupos/{idP}/{idG}")
+    public String actualizarGrupos(@PathVariable(name = "idP") Integer id, @PathVariable(name = "idG") Integer idG,Model model){
+        List<Grupo> listaGrupos = grupo.listaGrupos();
+        model.addAttribute("listaGrupos", listaGrupos);
+        
+        return"redirect:/listaGrupos";
+    } */
+
+
+
     @GetMapping("/unGrupo/{idGrupo}")
     public String unGrupo(@PathVariable("idGrupo") Integer idGrupo, Model model){
 
-        model.addAttribute("grupo", user.findById(idGrupo).get());
+        Grupo g = grupo.getGrupo(idGrupo);
+        model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
+        model.addAttribute("total", g.getNumParticipantes());
+        //model.addAttribute("grupo", user.findById(idGrupo).get());
      
         return "unGrupo";
     }  
+
+   
 
 }
 
