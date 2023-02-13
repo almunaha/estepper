@@ -8,12 +8,14 @@ import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Sesion;
+import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.repository.SesionRepository;
 import com.estepper.estepper.repository.UsuarioRepository;
+import com.estepper.estepper.repository.GrupoRepository;
 
 @SpringBootTest
 class EstepperApplicationTests {
@@ -22,9 +24,10 @@ class EstepperApplicationTests {
 	private UsuarioRepository usuarioRepo;
 	@Autowired
 	private SesionRepository sesionRepo;
-
 	@Autowired
 	private BCryptPasswordEncoder hash;
+	@Autowired
+	private GrupoRepository grupoRepo;
 
 	@Test
 	public void crearUsuarioTest() {
@@ -52,6 +55,11 @@ class EstepperApplicationTests {
 	public void crearSesionTest() {
 		sesionRepo.save(new Sesion(0,1,EstadoSesion.BLOQUEADA,"no",Asistencia.NO,0.0,0.0,"-"));
 		
+	}
+
+	@Test
+	public void crearGrupo(){
+	    grupoRepo.save(new Grupo(9,999,"Las saltimbanquis",2));
 	}
 
 }

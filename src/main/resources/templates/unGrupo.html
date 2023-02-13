@@ -12,7 +12,6 @@
     <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
-    <script src="/js/menu.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
@@ -21,8 +20,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-    <title>unirAgrupo</title>
+    <title>Grupo</title>
 
+   
 </head>
 
 <body>
@@ -36,37 +36,20 @@
                 <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
-        
-            <ul>
-                <li>
-                    <a th:href="@{/}">
-                        <i class="fa-solid fa-house"></i>
-                        <span class="nombre-enlaces">Inicio</span>
-                    </a>
-                </li>
-        
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-person-hiking"></i>
-                        <span class="nombre-enlaces">Actividades</span>
-                    </a>
-                </li>
-        
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-folder-open"></i>
-                        <span class="nombre-enlaces">Materiales</span>
-                    </a>
-                </li>      
-            </ul>
-        
+
+            <div class="menu">
+                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-folder-open"></i> Materiales</a>
+            </div>
+
         </div>
 
         <div class="w-100">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+                    <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
 
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
@@ -94,38 +77,11 @@
             <div class="p-4 mt-5" id="participantes">
              
              
-                <div>
-                    <h4 th:text="'AÑADIR A UN GRUPO A: ' +${participante.nombre} + ' ' + ${participante.apellidos}"></h4>
-                </div>
-           
+              <h3>VISTA DE UN GRUPO, FALTA POR HACER</h3>
           
-                <table class=" table tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                          
-                            <th scope="col">Selecciona uno</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Número de participantes</th>
-                        </tr>
-                    </thead>
-                    <tbody class = "buscarGrupos">
-                        
-                        <tr th:each="lis:${listaGrupos}">
-                            <td class="a-center ">
-                                <input type="radio" class="form-check-input" name="grupoElegido" value="${lis.id}" id="grupoElegido">
-                            </td>
-                            <td th:text="${lis.nombre}"></td>
-                            <td th:text="${lis.numParticipantes}"></td>
-                        </tr>
-                    </tbody>
-
-                </table>
-
-                <button class="btn btn-info text-white mt-4 w-100" type="unir">AÑADIR AL GRUPO</button>
-
-                <!--FALTA LA PARTE DE AÑADIR A UN NUEVO GRUPO-->
-
                 
+
+            
 
             </div>
 

@@ -14,12 +14,14 @@ import jakarta.persistence.Table;
 public class Grupo implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //porque va a ser incrementable
     private Integer id;
     @Column(unique=true)
     private Integer codigo;
+    @Column(unique=true)
     private String nombre;
-    private Integer numParticipantes;
+    @Column
+    private Integer numParticipantes; //VER CÓMO HACER QUE SEA 0 POR DEFECTO, A NO SER QUE AÑADAN PARTICIPANTES
 
     
     public Grupo(Integer id, Integer codigo, String nombre, Integer numParticipantes) {
@@ -56,7 +58,6 @@ public class Grupo implements Serializable{
     public void setNumParticipantes(Integer numParticipantes) {
         this.numParticipantes = numParticipantes;
     }
-
 
   
 }

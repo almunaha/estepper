@@ -7,7 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,6 +34,10 @@ public class Participante extends Usuario{
     private Sexo sexo;
     @Column
     public Integer id;
+
+    @ManyToOne
+    @JoinColumn(name="grupo_id")
+    private Grupo grupo; //decimos que un grupo se va a poder unir con muchos participantes
     
     public Participante(){
         super();
@@ -107,5 +112,13 @@ public class Participante extends Usuario{
 
     public Integer getId(){
         return id;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 }
