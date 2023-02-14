@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import com.estepper.estepper.model.enums.Sexo;
 
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Grupo;

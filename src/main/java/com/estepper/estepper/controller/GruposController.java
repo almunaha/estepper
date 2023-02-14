@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.service.GrupoService;
-import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.service.ParticipanteService;
 
 
