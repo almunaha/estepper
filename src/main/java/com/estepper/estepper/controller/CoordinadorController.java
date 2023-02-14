@@ -16,7 +16,7 @@ import com.estepper.estepper.service.UsuarioService;
 @Controller
 public class CoordinadorController {
 
-    @Autowired //inyectar recursos de la clase UsuarioService
+    @Autowired //inyectar recursos de la clase ParticipanteService
     private ParticipanteService part;
     
     @Autowired //inyectar recursos de la clase UsuarioService

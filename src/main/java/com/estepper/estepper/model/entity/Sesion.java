@@ -1,13 +1,10 @@
 package com.estepper.estepper.model.entity;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.ParseException;
 
-import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
 
 import com.estepper.estepper.model.enums.Asistencia;
@@ -15,6 +12,8 @@ import com.estepper.estepper.model.enums.EstadoSesion;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -23,8 +22,12 @@ import jakarta.persistence.Table;
 public class Sesion implements Serializable{
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer idPaciente;
+
+    private Integer numSesion;
+
+    private Integer idParticipante;
 
     @Enumerated(value = EnumType.STRING)
     private EstadoSesion estado;
@@ -38,26 +41,20 @@ public class Sesion implements Serializable{
 
     private double pesoPerdido;
 
-    private String sesionesString;
-
-
-    
-    //fichas con json
-
     public Sesion(){
     
     }
 
-    public Sesion(Integer id, Integer idPaciente, EstadoSesion estado, String observaciones,
-     Asistencia asistencia, double cmsPerdidos, double pesoPerdido,String sesioneString){
+    public Sesion(Integer id, Integer numSesion, Integer idParticipante, EstadoSesion estado, String observaciones,
+     Asistencia asistencia, double cmsPerdidos, double pesoPerdido){
         this.id = id;
-        this.idPaciente = idPaciente;
+        this.numSesion = numSesion;
+        this.idParticipante = idParticipante;
         this.estado = estado;
         this.observaciones = observaciones;
         this.asistencia = asistencia;
         this.cmsPerdidos = cmsPerdidos;
         this.pesoPerdido = pesoPerdido;
-        this.sesionesString=sesioneString;
     }
 
     public Integer getId() {
@@ -68,12 +65,20 @@ public class Sesion implements Serializable{
         this.id = id;
     }
 
-    public Integer getIdPaciente() {
-        return idPaciente;
+     public Integer getNumSesion() {
+        return numSesion;
     }
 
-    public void setIdPaciente(Integer idPaciente) {
-        this.idPaciente = idPaciente;
+    public void setNumSesion(Integer numSesion) {
+        this.numSesion = numSesion;
+    }
+
+    public Integer getIdParticipante() {
+        return idParticipante;
+    }
+
+    public void setIdParticipante(Integer idParticipante) {
+        this.idParticipante = idParticipante;
     }
 
     public EstadoSesion getEstado() {

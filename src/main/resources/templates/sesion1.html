@@ -113,33 +113,35 @@
         </div>
       </nav>
 
-      <div class="layout-sesiones p-4 mt-3">
-        
-        <div><h3></h3></div>
-    
+      <!--ESTA VISTA ES PARA TODAS LAS SESIONES IGUALES!! CON ASISTENCIA FICHAS ETC-->
 
-      <!-- Botones sesiones -->
-      <!-- Poner con borde por donde va y las bloqueadas más claras!! -->
-      
-      <div class="btn-sesiones p-4 mr-5">
-        <ul>
-          <li><a class="btn-part" th:href="@{'/sesion1/' + ${part.id}}">Sesión 1</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion2/' + ${part.id}}">Sesión 2</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion3/' + ${part.id}}">Sesión 3</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion4/' + ${part.id}}">Sesión 4</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion5/' + ${part.id}}">Sesión 5</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion6/' + ${part.id}}">Sesión 6</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion7/' + ${part.id}}">Sesión 7</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion8/' + ${part.id}}">Sesión 8</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion9/' + ${part.id}}">Sesión 9</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion10/' + ${part.id}}">Sesión 10</a></li>
-        </ul>
+      <div class="layout-sesion p-4 mt-3">
+        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}">Sesión 1</h3> <!-- Poner según sea el numsesion-->
+        <form>
+          <label for="asistencia">Asistencia</label>
+          <div>
+            <select id="asistencia">
+              <option>Si</option>
+              <option>No</option>
+              <option>Justificado</option>
+            </select>
+          </div>
+
+          <div><label for="observaciones">Observaciones</label></div>
+          <div><textarea id="observaciones"></textarea></div>
+
+          <div><label>Tareas:</label></div>
+          <div>
+            <ul th:each="ficha : ${fichas}">
+              <li><a th:href="@{'/ficha0'}" th:text="${ficha.id}"></a></li> <!-- añadir atributo numero ficha en FICHA en la bd y tb el href que sea el que venga-->
+
+            </ul>
+          </div>
+
+          <button>Guardar</button>
+        </form>
+
       </div>
-
-     
-      </div>
-
-
 
 
     </div>

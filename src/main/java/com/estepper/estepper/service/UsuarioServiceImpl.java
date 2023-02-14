@@ -49,4 +49,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
         return repo.findById(id);
     }
     
+    @Override
+    public void eliminarUsuario(Usuario u){
+        repo.delete(u);
+    }
 }

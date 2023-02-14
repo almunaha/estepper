@@ -1,5 +1,7 @@
 package com.estepper.estepper.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ public class SesionServiceImpl implements SesionService{
 
     public void guardar(Sesion s){
         repo.save(s); 
+    }
+
+    public Sesion buscarSesion(Integer id, Integer numSesion){ //hacerlo en una sola consulta mejor
+        return repo.findByIdParticipante(id);
     }
     
 }

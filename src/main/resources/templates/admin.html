@@ -31,7 +31,7 @@
                 <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
-        
+
             <ul>
                 <li>
                     <a th:href="@{/}">
@@ -39,15 +39,15 @@
                         <span class="nombre-enlaces">Usuarios</span>
                     </a>
                 </li>
-        
+
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-envelope"></i>
                         <span class="nombre-enlaces">Mensajes</span>
                     </a>
-                </li>   
+                </li>
             </ul>
-        
+
         </div>
 
         <div class="w-100">
@@ -77,37 +77,62 @@
                 </div>
             </nav>
 
-            <div>
-                <h4>Listado de usuarios</h4>
-            </div>
+            <div class="p-4 mt-5" id="participantes">
 
-            <div class="p-4">
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellidos</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
+                <div>
+                    <h4>Listado de usuarios</h4>
+                </div>
+                
+                 <!-- Buscador de usuarios --> 
+                 <div class="container-fluid">
+                    <form class="d-flex justify-content-end">
+                        <input id="filtrarParticipantes"  class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="lis:${usuarios}">
-                            <td th:text="${lis.nombre}"></td>
-                            <td th:text="${lis.apellidos}"></td>
-                            <td th:text="${lis.email}"></td>
-                            <td th:text="${lis.estadoCuenta}"></td>
-                            <td>           
-                                <a class="btn btn-primary" ><i class="fa-solid fa-envelope"></i></a>                    
-                                <a class="btn btn-primary" ><i class="fa-solid fa-trash"></i></a>
-                                <a class="btn btn-primary" ><i class="fa-regular fa-pen-to-square"></i></a>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
+                    </form>
+                </div>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        (function ($) {
+                            $('#filtrarParticipantes').keyup(function () {
+                                var rex = new RegExp($(this).val(), 'i');
+                                $('.buscarParticipantes tr').hide();
+                                $('.buscarParticipantes tr').filter(function () {
+                                    return rex.test($(this).text());
+                                }).show();
+                            })
+                        }(jQuery));
+                    });
+                </script> 
+
+                <div class="p-4">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellidos</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="lis:${usuarios}">
+                                <td th:text="${lis.nombre}"></td>
+                                <td th:text="${lis.apellidos}"></td>
+                                <td th:text="${lis.email}"></td>
+                                <td th:text="${lis.estadoCuenta}"></td>
+                                <td>
+                                    <a class="btn btn-primary"><i class="fa-solid fa-envelope"></i></a>
+                                    <a class="btn btn-primary"><i class="fa-solid fa-trash"></i></a>
+                                    <a class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>

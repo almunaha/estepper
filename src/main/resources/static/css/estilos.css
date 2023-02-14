@@ -199,3 +199,10 @@ a{
     background-color: #6ca4c7;
 }
 
+/* Administrador */
+.flex-usuarios{
+    display: flex;
+    
+
+}
+

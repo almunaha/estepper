@@ -112,29 +112,78 @@
           </ul>
         </div>
       </nav>
-
-      <div class="layout-sesiones p-4 mt-3">
-        
-        <div><h3></h3></div>
-    
-
-      <!-- Botones sesiones -->
-      <!-- Poner con borde por donde va y las bloqueadas más claras!! -->
       
-      <div class="btn-sesiones p-4 mr-5">
+      <div class="layout-ficha0 p-4 mt-3">
+        <h3 style="text-align: center;">FICHA 0</h3>
+        <h4 style="text-align: center;">TALLER DE CAMBIO TERAPÉUTICO DE ESTILO DE VIDA</h4>
+    
+         <!-- Tabla de FICHA 0 -->
+         <table class="table-ficha0">
+            <thead class="thead-ficha0">
+                <tr>
+                    <th scope="col">SESIÓN</th>
+                    <th scope="col">FECHA</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr>
+                    <td>1ª sesión: Presentación, alimentación, nutrición y actividad física: primeros conceptos</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>2ª sesión: Dieta saludable</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>3ª sesión: Ejercicio físico</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>4ª sesión: Tener como aliados a nuestros pensamientos y emociones</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>5ª sesión: Compra saludable</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>6ª sesión: Cocina y menús saludables</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>7ª sesión: Prevención de recaídas</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>8ª sesión: Evaluando y planificando el mantenimiento</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>9ª sesión de recuerdo: Caminando solos I. Ocasiones especiales 
+                        Seguimiento, valoración de dificultades y éxitos</td>
+                    <td><input type="date"></input></td>
+                </tr>
+                <tr>
+                    <td>10ª sesión de recuerdo: Caminando solos II. Seguimiento, valoración de dificultades y éxitos</td>
+                    <td><input type="date"></input></td>
+                </tr>
+            </tbody>
+        </table>
+      
+        <h5>OBJETIVOS</h5>
+
         <ul>
-          <li><a class="btn-part" th:href="@{'/sesion1/' + ${part.id}}">Sesión 1</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion2/' + ${part.id}}">Sesión 2</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion3/' + ${part.id}}">Sesión 3</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion4/' + ${part.id}}">Sesión 4</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion5/' + ${part.id}}">Sesión 5</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion6/' + ${part.id}}">Sesión 6</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion7/' + ${part.id}}">Sesión 7</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion8/' + ${part.id}}">Sesión 8</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion9/' + ${part.id}}">Sesión 9</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion10/' + ${part.id}}">Sesión 10</a></li>
+            <li>Contribuir a mejorar la calidad de vida global a través de <strong>la adquisición de hábitos saludables y de la modificación de las conductas</strong> relacionadas con la
+                alimentación y la actividad física, en sentido favorable a la salud.
+            </li>
+            Se pretende que los/las participantes, al finalizar el taller, consigan:
+
+            <li>Realizar una dieta adecuada, según el patrón de dieta mediterránea. Aumentar la puntuación del cuestionario que mide la adherencia a la misma, en <strong>al menos
+                dos puntos.</strong>
+            </li>
+            <li>Realizar <strong>30 minutos de actividad física moderada</strong>, al menos cinco días a la semana.</li>
+            <li><strong>Disminuir entre el 5% y el 10& de peso</strong>, en caso de sobrepeso y obesidad, en seis meses.</li>
         </ul>
-      </div>
 
      
       </div>

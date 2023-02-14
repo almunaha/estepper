@@ -2,6 +2,7 @@ package com.estepper.estepper.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.estepper.estepper.model.entity.Sesion;
 
@@ -9,6 +10,8 @@ import com.estepper.estepper.model.entity.Sesion;
 //Hacen los métodos CRUD
 //@Repository
 public interface SesionRepository extends JpaRepository<Sesion, Integer>{
-    //Sesion findById(Integer id);
-    Sesion findByIdPaciente(Integer idPaciente);
+    Sesion findByIdParticipante(Integer idParticipante);
+    Sesion findByNumSesion(Integer numSesion);
+    
+
 }

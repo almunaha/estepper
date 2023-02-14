@@ -131,29 +131,6 @@ public class HomeController {
         return "baja";
     }
 
-    @GetMapping("/sesion2/{id}")
-    public String sesion1(@PathVariable Integer id, Model model){
-
-        model.addAttribute("participante", participante.findById(id));
-        model.addAttribute("user", usuario.findById(id));
-        return "sesion2";
-    }
-
-    @GetMapping("/sesiones")
-    public String sesiones(Model model){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-        }
-
-        String codigo = userDetails.getUsername(); //codigo del logueado
-
-        Usuario user = usuario.logueado(codigo); 
-        model.addAttribute("part", user);
-        return "sesiones";
-    }
     @GetMapping("/register")  //mostrar el formulario de registro
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new Usuario());

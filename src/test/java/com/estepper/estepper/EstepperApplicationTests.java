@@ -50,7 +50,7 @@ class EstepperApplicationTests {
 
 	@Test
 	public void crearSesionTest() {
-		sesionRepo.save(new Sesion(0,1,EstadoSesion.BLOQUEADA,"no",Asistencia.NO,0.0,0.0,"-"));
+		sesionRepo.save(new Sesion(0,1,1,EstadoSesion.BLOQUEADA,"no",Asistencia.NO,0.0,0.0));
 		
 	}
 

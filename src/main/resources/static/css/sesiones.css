@@ -1,0 +1,68 @@
+.layout-sesiones{
+
+}
+
+.btn-sesiones ul{
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-template-rows: 150px 150px ;
+
+}
+
+.btn-sesiones ul li .btn-part {
+    font-size: 40px;
+    color: white;
+    background-color: #6ca4c7;
+    padding: 15px;
+    width: 80px;
+    border: 1px solid;
+    border-color: #6ca4c7;
+    border-radius: 6px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.btn-sesiones ul li #bloqueada{
+    color: #6ca4c7;
+    background-color: white;
+    opacity: 0.5;
+}
+
+.btn-sesiones ul li .btn-part:hover{
+    color: white;
+    background-color: #436a82;
+    border-color: #436a82;
+} 
+
+/* Sesión individual */
+.layout-sesiones{
+
+}
+
+/* fichas */
+
+/* FICHA 0 */
+.layout-ficha0 {
+   
+}
+
+.layout-ficha0 h3{
+    background-color: #e4b383;
+    color: white;
+    padding: 4px;
+}
+
+.table-ficha0{
+    background-color: white;
+    padding: 4px;
+    width: 100%;
+    vertical-align: top;
+}
+
+.thead-ficha0{
+    text-align:center;
+    background-color: blue;
+    color: white;
+}
+
+/* FICHA 1*/

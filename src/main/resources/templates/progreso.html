@@ -13,12 +13,18 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
+
 
     <!--PARA GRÁFICOS-->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto">
+
+    <!-- Dashboard progreso -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <title>Progreso</title>
 
@@ -110,6 +116,123 @@
                     </ul>
                 </div>
             </nav>
+
+            <!-- DASHBOARD -->
+           
+            <div class="layout-progreso">
+
+                <!-- PESO -->
+                <div class="progreso-datos">
+                    <canvas id="grafica" width="400" height="300"></canvas>
+
+                    <script>
+                        let canvas = document.getElementById("grafica").getContext("2d");
+
+                        var chart = new Chart(canvas, {
+                            type: "line",
+                            data: {
+                                datasets: [
+                                    {
+                                        label: "Peso",
+                                        borderColor: 'rgb(75, 192, 192)',
+                                    }
+                                ]
+                            },
+                            options:{
+                                scales:{
+                                    y:{
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        })
+
+                        let url = 'http://localhost:7070/usuarios' //API REST
+                        const response = await fetch(url)
+                        const barChartData = await response.json()
+
+                        console.log(barChartData)
+                        
+                        
+                    </script>
+                </div>
+
+                <!-- ÍNDICE CORPORAL -->
+                <div class="progreso-datos">
+                    <canvas id="grafica2" width="400" height="300"></canvas>
+
+                    <script>
+                        let canvas2 = document.getElementById("grafica2").getContext("2d");
+
+                        var chart = new Chart(canvas2, {
+                            type: "line",
+                            data: {
+                                labels: ["febrero", "marzo", "abril", "mayo"],
+                                datasets: [
+                                    {
+                                        label: "Índice corporal",
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        data: [24, 22, 20, 18]
+                                    }
+                                ]
+                            }
+                        })
+                    </script>
+                </div>
+
+                <!-- PERÍMETRO ABDOMINAL -->
+                <div class="progreso-datos">
+                    <canvas id="grafica3" width="400" height="300"></canvas>
+
+                    <script>
+                        let canvas3 = document.getElementById("grafica3").getContext("2d");
+
+                        var chart = new Chart(canvas3, {
+                            type: "line",
+                            data: {
+                                labels: ["febrero", "marzo", "abril", "mayo"],
+                                datasets: [
+                                    {
+                                        label: "Perímetro abdominal",
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        data: [79, 74, 70, 65]
+                                    }
+                                ]
+                            }
+                        })
+                    </script>
+                </div>
+
+               <!-- ACTIVIDAD FÍSICA -->
+                <div class="progreso-datos">
+                    <canvas id="grafica4" width="400" height="300"></canvas>
+
+                    <script>
+                        let canvas4 = document.getElementById("grafica4").getContext("2d");
+
+                        var chart = new Chart(canvas4, {
+                            type: "doughnut",
+                            data: {
+                                labels: ["febrero", "marzo", "abril", "mayo"],
+                                datasets: [
+                                    {
+                                        label: "Actividad física",
+                                        backgroundColor: [
+                                            'rgb(75, 192, 192)',
+                                            'rgb(75, 100, 192)',
+                                            'rgb(1, 2, 192)',
+                                            'rgb(250, 150, 0)'
+                                        ],
+                                        data: [2, 5, 8, 10]
+                                    }
+                                ]
+                            }
+                        })
+                    </script>
+                </div>
+
+                <!-- PASOS -->
+            </div>
 
         </div>
 
