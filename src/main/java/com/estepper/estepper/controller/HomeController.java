@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -122,14 +123,13 @@ public class HomeController {
     }    
 
     @PostMapping("/process_perfil/{id}")
-    public String processPerfil(@PathVariable("id") Integer id, Model model) {
-       Usuario elusuario = usuario.findById(id).get();
-         repo.update(elusuario.nombre, elusuario.apellidos, elusuario.id);
-       if(elusuario instanceof Participante){
-        Participante elparticipante = participante.findById(id).get();
-         repoPart.update1(elparticipante.sexo, elparticipante.id);
-       }
-       return index(model);
+    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante participante, Model model) {
+         
+       if(user instanceof Participante){
+         repo.update(participante.nombre, participante.apellidos, participante.id);
+         repoPart.update1(participante.sexo, participante.id);
+       } else repo.update(user.nombre, user.apellidos, user.id);
+       return "redirect:/";
     }
 
     @GetMapping("/baja")
