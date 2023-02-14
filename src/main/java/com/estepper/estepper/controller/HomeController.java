@@ -19,6 +19,7 @@ import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.repository.ParticipanteRepository;
 import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -38,6 +39,9 @@ public class HomeController {
 
     @Autowired
     private ParticipanteService participante;
+
+    @Autowired
+    private ParticipanteRepository repoPart;
 
     @Autowired
 	private BCryptPasswordEncoder hash;
@@ -92,21 +96,16 @@ public class HomeController {
         return "recomendaciones";
     }
 
-    @GetMapping("/perfil")
-    public String perfil(Model model){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
+    @GetMapping("/perfil/{id}")
+    public String perfil(@PathVariable("id") Integer id, Model model){
+        Usuario elusuario = usuario.findById(id).get();
+        model.addAttribute("user", elusuario);
+        if(elusuario instanceof Participante) {
+            model.addAttribute("participante",  participante.findById(id).get());
+            return "editarperfilParticipante";
         }
-
-        String codigo = userDetails.getUsername(); //codigo del logueado
-
-        Usuario user = usuario.logueado(codigo); 
-        model.addAttribute("user", user);
+        else return "editarperfil";
         
-        return "perfil";
     }    
 
     @GetMapping("/mostrarperfil/{id}")
@@ -121,9 +120,14 @@ public class HomeController {
         
     }    
 
-    @PostMapping("/process_perfil")
-    public void processPerfil(Participante user, Model model) {
-       // repo.update(user);
+    @PostMapping("/process_perfil/{id}")
+    public void processPerfil(@PathVariable("id") Integer id, Model model) {
+       Usuario elusuario = usuario.findById(id).get();
+         repo.update(elusuario.nombre, elusuario.apellidos, elusuario.id);
+       if(elusuario instanceof Participante){
+        Participante elparticipante = participante.findById(id).get();
+         repoPart.update(elparticipante.sexo, elparticipante.id);
+       }
     }
 
     @GetMapping("/baja")

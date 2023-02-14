@@ -3,8 +3,12 @@ package com.estepper.estepper.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import com.estepper.estepper.model.entity.Usuario;
+
+import jakarta.transaction.Transactional;
 
 //@Repository
 //LOS repository son los DAO, que acceden a la bd  -> los que hacen las consultas a PHPYMYADMIN
@@ -12,7 +16,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
         Usuario findByNombre(String nombre); //select * from usuario where nombre = u.nombre 
         Usuario findByCodigo(String codigo);
         List<Usuario> findByApellidos(String apellidos); //Buscar por apelldios
-       // Usuario update(Usuario user);
+        @Modifying
+        @Transactional
+        @Query("UPDATE Usuario u SET u.nombre = :nombre, u.apellidos = :apellidos WHERE u.id = :id")
+        void update(String nombre, String apellidos, Integer id);
+
 }
 
 

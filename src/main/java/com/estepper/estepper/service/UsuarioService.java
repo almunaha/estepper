@@ -10,4 +10,5 @@ public interface UsuarioService {
     public List<Usuario> listadoTotal();
     public Usuario logueado(String codigo);
     public Optional<Usuario> findById(Integer id);
+    public void update(String nombre, String apellidos, Integer id);
 }

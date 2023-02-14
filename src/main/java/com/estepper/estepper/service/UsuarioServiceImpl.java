@@ -48,5 +48,11 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     public Optional<Usuario> findById(Integer id) {
         return repo.findById(id);
     }
+
+    @Override
+    public void update(String nombre, String apellidos, Integer id) {
+        repo.update(nombre, apellidos, id);
+        
+    }
     
 }

@@ -30,7 +30,7 @@ public class Participante extends Usuario{
     private Integer sesionesCompletas;
     @Column(nullable=true)
     @Enumerated(value = EnumType.STRING)
-    private Sexo sexo;
+    public Sexo sexo;
     @Column
     public Integer id;
     

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="es"
+ xmlns:th="https://www.thymeleaf.org"
+ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/signin.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+
+    <title>Editar Perfil</title>
+</head>
+
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <div class="d-flex">
+        <div id="sidebar-container">
+
+            <div class="logo">
+                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}"/>
+                <h4>Estepper</h4>
+            </div>
+
+            <div class="menu">
+                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-carrot"></i> Alimentación</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-folder-open"></i>  Materiales</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-chart-line"></i> Progreso</a>
+                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-comments"></i> Foro</a>
+            </div>
+
+        </div>
+
+        <div class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3">
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
+
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
+                                <a class="dropdown-item" th:href="@{'/contrasenia/' + ${user.id}}">Cambiar contraseña</a>
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="bg-white border border-1 p-5 rounded-4 ">
+                <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${user.id}}" th:object="${participante">
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nombre: </label>
+                        <input type="text" th:field="*{nombre}" class="form-control" required/>
+                    </div>
+        
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Apellidos: </label>
+                        <input type="text" th:field="*{apellidos}" class="form-control" required/>
+                    </div>
+        
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Correo: </label>
+                        <input type="email" th:field="*{email}" class="form-control" required/>
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Sexo: </label>
+                        <input type="sexo" th:field="*{sexo}" class="form-control" required/>
+                    </div>
+        
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Edad: </label>
+                        <input type="email" th:field="*{edad}" class="form-control" required/>
+                    </div>
+
+                    <button class="btn btn-info text-white mt-4 w-100" type="submit">Editar perfil</button>
+                    
+                </form>                      
+            </div> 
+
+        </div>
+    </div>
+
+</body>
+
+</html>
