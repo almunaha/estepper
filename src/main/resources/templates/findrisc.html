@@ -73,6 +73,23 @@
 
        
     </script>
+
+    <!--Calcular IMC -->
+    <script>
+        function imc(){
+            //convertir lo que teclea el usuario a un double
+            var num1 = parseFloat(document.getElementById('peso').value);
+            var num2 = parseFloat(document.getElementById('altura').value);
+
+            if(num1 == '') num1 = 0.0;
+            if(num2 == '') num2 = 0.0;
+
+            var resultado = (num1/(num2*num2))*10000;
+
+            document.getElementById('resultado').value = resultado.toFixed(2);
+        }
+
+    </script>
     
 
 </head>
@@ -97,6 +114,17 @@
                         </select>
 
                         <label for="select2" class="form-label">2. Índice de masa corporal (IMC)</label>
+                        <label for="peso">Peso (kg): </label>
+                        <input type="text" id="peso">
+                        
+                        <label for="altura">Altura (cm): </label>
+                        <input type="text" id="altura">
+
+                        <input type="button" value="Calcular" onclick="imc()">
+
+                        <label for="resultado">Resultado (IMC): </label>
+                        <input type="float" name="resultado" id="resultado" readonly=""> 
+
                         <select id="select2" class="form-select"> 
                             <option value = "0">Menos de 25 Kg/m<sup>2</sup> (0 puntos)</option>
                             <option value = "1">Entre 25-30 Kg/m<sup>2</sup> (1 punto)</option>
