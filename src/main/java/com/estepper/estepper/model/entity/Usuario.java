@@ -25,8 +25,8 @@ public class Usuario implements Serializable{
     private Integer codigo;
     public String nombre;
     public String apellidos;
-    private String email;
-    private String contrasenia;
+    public String email;
+    public String contrasenia;
 
     @Enumerated(value = EnumType.STRING)
     private Estado estadoCuenta;

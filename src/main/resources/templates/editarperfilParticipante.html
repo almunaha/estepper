@@ -90,6 +90,11 @@
                     </div>
 
                     <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Contraseña: </label>
+                        <input type="password" placeholder="********" th:field="*{contrasenia}"/>
+                    </div>
+
+                    <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Sexo: </label>
                         <select th:field="*{sexo}"class="form-control" required>
                             <option th:value="MASCULINO" th:text="MASCULINO"></option>

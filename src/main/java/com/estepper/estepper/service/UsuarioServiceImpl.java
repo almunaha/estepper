@@ -50,8 +50,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
-    public void update(String nombre, String apellidos, Integer id) {
-        repo.update(nombre, apellidos, id);
+    public void update(String nombre, String apellidos, String email, String contrasenia, Integer id) {
+        repo.update(nombre, apellidos, email, contrasenia, id);
         
     }
     

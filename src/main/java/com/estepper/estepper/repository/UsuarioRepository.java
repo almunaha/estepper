@@ -18,8 +18,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
         List<Usuario> findByApellidos(String apellidos); //Buscar por apelldios
         @Modifying
         @Transactional
-        @Query("UPDATE Usuario u SET u.nombre = :nombre, u.apellidos = :apellidos WHERE u.id = :id")
-        void update(String nombre, String apellidos, Integer id);
+        @Query("UPDATE Usuario u SET u.nombre = :nombre, u.apellidos = :apellidos, u.email = :email, u.contrasenia = :contrasenia WHERE u.id = :id")
+        void update(String nombre, String apellidos, String email, String contrasenia, Integer id);
 
 }
 

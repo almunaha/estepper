@@ -126,9 +126,9 @@ public class HomeController {
     public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante participante) {
          
        if(repoPart.findById(id).isPresent()){
-         repo.update(participante.nombre, participante.apellidos, participante.id);
+         repo.update(participante.nombre, participante.apellidos, participante.getEmail(), participante.getContrasenia(), participante.id);
          repoPart.update1(participante.edad, participante.id);
-       } else repo.update(user.nombre, user.apellidos, user.id);
+       } else repo.update(user.nombre, user.apellidos, user.getEmail(), user.getContrasenia(), user.id);
        return "redirect:/";
     }
 
