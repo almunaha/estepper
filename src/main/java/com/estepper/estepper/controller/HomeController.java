@@ -49,7 +49,7 @@ public class HomeController {
     @GetMapping("/login")
     public String login(){
         return "login";
-    }     
+    }
 
     @GetMapping("/")
     public String index(Model model){
@@ -86,10 +86,11 @@ public class HomeController {
         }        
     }
 
-    @GetMapping("/findrisc")
+     @GetMapping("/findrisc")
     public String test(){
         return "findrisc";
     }
+
 
     @GetMapping("/recomendaciones")
     public String recomendaciones(){
@@ -126,7 +127,7 @@ public class HomeController {
          repo.update(elusuario.nombre, elusuario.apellidos, elusuario.id);
        if(elusuario instanceof Participante){
         Participante elparticipante = participante.findById(id).get();
-         repoPart.update(elparticipante.sexo, elparticipante.id);
+         repoPart.update1(elparticipante.sexo, elparticipante.id);
        }
     }
 

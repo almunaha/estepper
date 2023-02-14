@@ -17,6 +17,17 @@ public class GrupoServiceImpl implements GrupoService{
     @Override
     public List<Grupo> listaGrupos() {
         return(List<Grupo>) repo.findAll();
+    }  
+
+    @Override
+    public Grupo getGrupo(Integer id){
+        return repo.findById(id).get();
+    }    
+
+    
+    @Override
+    public void updateParticipantes(Integer idGrupo, Integer numParticipantes){
+        repo.update(idGrupo, numParticipantes);
     }    
 
 

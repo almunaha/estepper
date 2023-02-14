@@ -1,26 +1,119 @@
 body{
     background-color: rgb(240, 238, 238);
 }
+
 a{
     text-decoration: none;
 }
 
-#sidebar-container{
+#sidebar-container{ /* menu lateral abierto*/
     background-color: #13405d;
     color: white;
     min-height: 100vh; /*altura mínima*/
     width: 35vh;
+    transition: all 0.5s ease;
+    padding: 6px 14px;
+}
+
+#sidebar-container.active{
+    width: 10vh;
 }
 
 #sidebar-container .logo{
     padding: .875rem 1.25rem; /*arriba y abajo | a los lados*/
     text-align: center;
+    pointer-events: none;
 }
 
-#sidebar-container .menu{
-    width: 18rem;
-    color: rgb(151, 149, 149);
+#sidebar-container .logo img{
+    opacity: 1;
+    pointer-events: none;
+    width: 75px;
+    height: 75px;
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+#sidebar-container.active .logo img{
+    opacity: 1;
+    width: 52px;
+    height: 53px;
+    transition: all 0.5s ease;
+    position: relative;
+    right: 23px;
+}
+
+#sidebar-container .logo h4{
+    opacity: 1;
+    transition: all 0.8s ease;
+}
+
+#sidebar-container.active .logo h4{
+    opacity: 0;
+    transition: all 0.1s ease;
+}
+
+#sidebar-container ul{
+   margin-top: 20px;
+   padding-left: 0
+}
+
+#sidebar-container ul li{
+    list-style: none;
+    height: 50px;
+    width: 100%;
+    position: relative;
+    line-height: 50px;
+    border-radius: 12px;
+}
+
+#sidebar-container ul li a{
+    color: white;
+    display: flex;
+    align-items: center;
     font-size: 16px;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+}
+
+#sidebar-container ul li a:hover{
+    background: white;
+    opacity: 0.8;
+    color: #13405d;
+}
+
+#sidebar-container ul li a i{
+    height: 55px;
+    min-width: 55px;
+    border-radius: 12px;
+    line-height: 55px;
+    text-align: center;
+    transition: all 0.1s ease;
+}
+
+#sidebar-container.active ul li a i{
+    height: 50px;
+    min-width: 50px;
+    border-radius: 12px;
+    line-height: 50px;
+    text-align: center;
+    position: relative;
+    right: 1.7px;
+    font-size: 20px;
+    transition: all 0.1s ease;
+}
+
+#sidebar-container .nombre-enlaces{
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.2s ease;
+}
+
+#sidebar-container.active .nombre-enlaces{
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+
 }
 
 .navbar-expand-lg .navbar-collapse  {
@@ -43,9 +136,12 @@ a{
 }
 
 .burger .btn{
-    font-size: 21px;
-    background-color: #13405d;
-    color: white;
+    font-size: 26px;
+    color: black;
+}
+
+.burger .btn:hover{
+    background-color: rgb(237, 237, 237);
 }
 
 /* boton grupos y participantes */

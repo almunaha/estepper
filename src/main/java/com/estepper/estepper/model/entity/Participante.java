@@ -7,7 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,8 +18,8 @@ public class Participante extends Usuario{
     @Column(unique=false, nullable=true)
     private Integer idCoordinador;
 
-    @Column(unique=false, nullable=true)
-    private Integer idGrupo;
+    //@Column(unique=false, nullable=true)
+   // private Integer idGrupo;
 
     @Column(nullable=true)
     private Integer perdidaDePeso;
@@ -33,16 +34,20 @@ public class Participante extends Usuario{
     public Sexo sexo;
     @Column
     public Integer id;
+
+    @ManyToOne
+    @JoinColumn(name="idGrupo")
+    private Grupo grupo; //decimos que un grupo se va a poder unir con muchos participantes
     
     public Participante(){
         super();
     }
 
-    public Participante(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Integer idGrupo,Integer perdidaDePeso,Integer asistencia,
+    public Participante(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Integer perdidaDePeso,Integer asistencia,
     Integer edad, Integer sesionesCompletas,Sexo sexo){
         super(id, codigo, nombre, apellidos, email, contrasenia, estadoCuenta);
         this.idCoordinador=idCoordinador;
-        this.idGrupo=idGrupo;
+        this.grupo=grupo;
         this.perdidaDePeso=perdidaDePeso;
         this.asistencia=asistencia;
         this.edad=edad;
@@ -58,12 +63,12 @@ public class Participante extends Usuario{
         this.idCoordinador = idCoordinador;
     }
 
-    public Integer getIdGrupo() {
-        return idGrupo;
+    /*public Integer getIdGrupo() {
+        return grupo.getId();
     }
     public void setIdGrupo(Integer idGrupo) {
-        this.idGrupo = idGrupo;
-    }
+        this.grupo.setId(idGrupo);
+    }*/
 
     public Sexo getSexo() {
         return sexo;
@@ -107,5 +112,13 @@ public class Participante extends Usuario{
 
     public Integer getId(){
         return id;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 }

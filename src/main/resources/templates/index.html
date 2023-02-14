@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" th:href="@{/css/estilos.css}">
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-
+  <script src="/js/menu.js"></script>
 
   <!--PARA GRÁFICOS-->
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -26,35 +26,72 @@
 </head>
 
 <body>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
   <div class="d-flex">
+    <!-- MENÚ -->
     <div id="sidebar-container">
+
 
       <div class="logo">
         <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
         <h4>Estepper</h4>
       </div>
 
-      <div class="menu">
-        <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
-        <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
-        <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-carrot"></i> Alimentación</a>
-        <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-folder-open"></i> Materiales</a>
-        <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-chart-line"></i> Progreso</a>
-        <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-comments"></i> Foro</a>
-      </div>
+      <ul>
+        <li>
+          <a th:href="@{/}">
+            <i class="fa-solid fa-house"></i>
+            <span class="nombre-enlaces">Inicio</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-person-hiking"></i>
+            <span class="nombre-enlaces">Actividades</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-carrot"></i>
+            <span class="nombre-enlaces">Alimentación</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-folder-open"></i>
+            <span class="nombre-enlaces">Materiales</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:href="@{/progreso}">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="nombre-enlaces">Progreso</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-comments"></i>
+            <span class="nombre-enlaces">Foro</span>
+          </a>
+        </li>
+
+      </ul>
 
     </div>
+
 
     <div class="w-100">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
+          <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
@@ -77,6 +114,30 @@
           </ul>
         </div>
       </nav>
+      <div style="text-align: center;">
+
+        <div style="margin: 20px; color: #13405d;">
+          <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
+        </div>
+
+        <div style="display: flex; text-align: left;">
+          <ul style="list-style: none;margin-right: 200px;margin-left: 150px;">
+            <li><i class="icono fas fa-key"></i><span th:text="' Código: ' + ${user.codigo}" /></li>
+            <li><i class="icono fas fa-envelope"></i><span th:text="' Email: ' + ${user.email}" /></li>
+            <li><i class="icono fas fa-thumbtack"></i><span th:text="' Estado de la cuenta: ' + ${user.estadoCuenta}" />
+            </li>
+            <li><i class="icono fas fa-anchor"></i><span th:text="' Sexo: ' + ${participante.sexo}" /></li>
+          </ul>
+          <ul style="list-style: none;">
+            <li><i class="icono fas fa-bug"></i><span th:text="' Edad: ' + ${participante.edad}" /></li>
+            <li><i class="icono fas fa-list-alt"></i><span th:text="' Asistencia: ' + ${participante.asistencia}" />
+            </li>
+            <li><i class="icono fas fa-weight"></i><span
+                th:text="' Pérdida de peso: ' + ${participante.perdidaDePeso}" /></li>
+            <li><i class="icono fas fa-people-carry"></i><span th:text="' Grupo: ' + ${participante.idGrupo}" /></li>
+          </ul>
+        </div>
+      </div>
 
       <div class="utilidades">
 
@@ -157,7 +218,8 @@
                       aria-valuemax="5">3</div>
                   </div>
                   <h5 class="card-title text-black mt-2">3 de 5 objetivos cumplidos</h5>
-                  <p class="card-text text-black">Cada vez queda menos para alcanzar todos tus objetivos. ¡No te rindas!
+                  <p class="card-text text-black">Cada vez queda menos para alcanzar todos tus objetivos. ¡No te
+                    rindas!
                   </p>
 
                 </div>
@@ -169,7 +231,8 @@
           <div class="col">
             <!-- Botón progreso -->
             <div class="layout-util">
-              <a class="btn-util" th:href="@{/}">
+              <a class="btn-util" th:href="@{/progreso}">
+
                 <i class="fa-solid fa-chart-line"></i>
               </a>
 

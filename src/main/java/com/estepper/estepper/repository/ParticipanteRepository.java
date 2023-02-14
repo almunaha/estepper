@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.estepper.estepper.model.enums.Sexo;
 
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Grupo;
 
 import jakarta.transaction.Transactional;
 
@@ -16,9 +17,16 @@ import jakarta.transaction.Transactional;
 public interface ParticipanteRepository extends JpaRepository<Participante, Integer> {
     List<Participante> findAll();
     Optional<Participante> findById(Integer id);
+    
+    @Modifying 
+    @Transactional
+    @Query("update Participante SET grupo = :grupo WHERE id = :idParticipante")
+    void update(Integer idParticipante, Grupo grupo);
+
+    List<Participante> findByGrupo(Grupo grupo);
     @Modifying
     @Transactional
     @Query("UPDATE Participante p SET p.sexo = :sexo WHERE p.id = :id")
-    void update(Sexo sexo, Integer id);
+    void update1(Sexo sexo, Integer id);
 
 }

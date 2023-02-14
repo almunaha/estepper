@@ -1,0 +1,53 @@
+<!-- ponerlo más adelante para tener menos codigo repetido-->
+<div id="sidebar-container">
+
+    <div class="logo">
+        <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+        <h4>Estepper</h4>
+    </div>
+
+    <ul>
+        <li>
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+                <span class="nombre-enlaces">Inicio</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-person-hiking"></i>
+                <span class="nombre-enlaces">Actividades</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-carrot"></i>
+                <span class="nombre-enlaces">Alimentación</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-folder-open"></i>
+                <span class="nombre-enlaces">Materiales</span>
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/progreso}">
+                <i class="fa-solid fa-chart-line"></i>
+                <span class="nombre-enlaces">Progreso</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-comments"></i>
+                <span class="nombre-enlaces">Foro</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>

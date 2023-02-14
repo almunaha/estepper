@@ -1,32 +1,35 @@
 <!DOCTYPE html>
+
 <html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/signin.css}">
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
 
-    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+    <!--PARA GRÁFICOS-->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto">
 
-    <!--PARA EL BUSCADOR, sirve cualquiera de los dos, eliminar uno que no sé cuál es mejor en teoría-->
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Progreso</title>
 
-    <title>Fase de Valoración</title>
+
 </head>
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
     <div class="d-flex">
         <div id="sidebar-container">
 
@@ -34,7 +37,7 @@
                 <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
-        
+
             <ul>
                 <li>
                     <a th:href="@{/}">
@@ -42,30 +45,52 @@
                         <span class="nombre-enlaces">Inicio</span>
                     </a>
                 </li>
-        
+
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-person-hiking"></i>
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
                 </li>
-        
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-carrot"></i>
+                        <span class="nombre-enlaces">Alimentación</span>
+                    </a>
+                </li>
+
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-folder-open"></i>
                         <span class="nombre-enlaces">Materiales</span>
                     </a>
-                </li>      
+                </li>
+
+                <li>
+                    <a th:href="@{/progreso}">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="nombre-enlaces">Progreso</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-comments"></i>
+                        <span class="nombre-enlaces">Foro</span>
+                    </a>
+                </li>
+
             </ul>
-        
+
         </div>
+
         <div class="w-100">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -86,22 +111,9 @@
                 </div>
             </nav>
 
-            <div>
-                    <h3 th:text="${participante.nombre} + '' + ${participante.apellidos}">Nombre</h3>
-            </div>
-            <div>
-                <ul>
-                    <li><a class="dropdown-item" th:href="@{/findrisc}">Test de Findrisc</a></li>
-                    <!-- EN VEZ DE ESE URL UNO CON /ID Y AGREGARLO A COORDCONTROLLER-->
-                </ul>
-            </div>
-        
-            <div>
-                <a class="btn" id="btn-part" th:href="@{/activarcuenta}">Activar cuenta</a>
-                <a class="btn" id="btn-part" th:href="@{/eliminarcuenta}">Eliminar cuenta</a>
-            </div>
         </div>
-    </div>
+
+
 
 </body>
 

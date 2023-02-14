@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+    <script src="/js/menu.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
@@ -23,25 +24,37 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <div class="d-flex">
+
         <div id="sidebar-container">
 
             <div class="logo">
                 <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
-
-            <div class="menu">
-                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-user-pen"></i> Usuarios</a>
-                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-envelope"></i> Mensajes</a>
-            </div>
-
+        
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-user-pen"></i>
+                        <span class="nombre-enlaces">Usuarios</span>
+                    </a>
+                </li>
+        
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span class="nombre-enlaces">Mensajes</span>
+                    </a>
+                </li>   
+            </ul>
+        
         </div>
 
         <div class="w-100">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
