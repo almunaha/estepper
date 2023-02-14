@@ -48,6 +48,12 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     public Optional<Usuario> findById(Integer id) {
         return repo.findById(id);
     }
+
+    @Override
+    public void update(String nombre, String apellidos, String email, String contrasenia, Integer id) {
+        repo.update(nombre, apellidos, email, contrasenia, id);
+        
+    }
     
     @Override
     public void eliminarUsuario(Usuario u){

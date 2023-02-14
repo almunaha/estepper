@@ -1,11 +1,8 @@
 package com.estepper.estepper.model.entity;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-import org.json.JSONObject;
+import java.io.Serializable;
+
 
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.EstadoSesion;
@@ -41,11 +38,13 @@ public class Sesion implements Serializable{
 
     private double pesoPerdido;
 
+
     public Sesion(){
     
     }
 
     public Sesion(Integer id, Integer numSesion, Integer idParticipante, EstadoSesion estado, String observaciones,
+
      Asistencia asistencia, double cmsPerdidos, double pesoPerdido){
         this.id = id;
         this.numSesion = numSesion;
@@ -120,32 +119,6 @@ public class Sesion implements Serializable{
     public void setPesoPerdido(double pesoPerdido) {
         this.pesoPerdido = pesoPerdido;
     }
-
-    public String jsonToString(String file) throws IOException{
-       /* try {
-            JSONParser parser = new JSONParser();
-            //Use JSONObject for simple JSON and JSONArray for array of JSON.
-            JSONObject data = (JSONObject) parser.parse(
-                  new FileReader("file"));//path to the JSON file.
-    
-            String json = data.toString();
-            return json;
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }*/ 
-        String result;  
-        result = new String(Files.readAllBytes(Paths.get(file)));  
-        return result;  
-
-    }
-
-    public JSONObject StringToJSON(String string){
-        JSONObject json = new JSONObject(string);
-        //System.out.println(json.toString());  
-        return json;
-        
-    }
- 
 
     
 }

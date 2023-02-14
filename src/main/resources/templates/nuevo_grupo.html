@@ -91,55 +91,38 @@
 
             <div class="p-4 mt-5" id="grupos">
                 <div>
-                    <h4>Listado de grupos</h4> 
+                    <h4>Crear un nuevo grupo</h4> 
                 </div>
 
-                <!-- Buscador de participantes en grupos -->
-                <div class="container-fluid">
-                    <form class="d-flex justify-content-end">
-                        <input id="filtrarGrupos" class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
+                <!--ESTA ES LA BASE, A PARTIR DE AQUÍ PONERLO COMO QUIERA-->
 
-                    </form>
-                </div>
+               <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
+                    <div class="m-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{nombre}" class="form-control" required/>
+                            </div>
+                            <label class="col-form-label col-sm-4">Código del nuevo grupo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{codigo}" class="form-control" required/>
+                            </div>
+                            <label class="col-form-label col-sm-4">Número de participantes del nuevo grupo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{numParticipantes}" class="form-control" required/>
+                            </div>
 
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        (function ($) {
-                            $('#filtrarGrupos').keyup(function () {
-                                var rex = new RegExp($(this).val(), 'i');
-                                $('.buscarGrupos tr').hide();
-                                $('.buscarGrupos tr').filter(function () {
-                                    return rex.test($(this).text());
-                                }).show();
-                            })
-                        }(jQuery));
-                    });
-                </script> 
+                            <!--CAMBIARLO PARA QUE PUEDAS AÑADIR TAMBIÉN PARTICIPANTES AL GRUPO DIRECTAMENTE-->
+                            <!--CAMBIARLO PARA QUE EL NÚMERO DE PARTICIPANTES NO LO AÑADAS TÚ, SINO QUE SI NO AÑADES A NADIE SEA 0, Y SI AÑADES A ALGUIEN SEA 1 Y ASÍ...-->
+                        </div>
+                        <div class="text-center p">
+                            <button type="submit" class="btn" id="btn-part">Añadir</button>
+                        </div>
+                    </div>
+               </form>
+            
+                
 
-
-                <!-- Tabla de grupos -->
-                <table class=" table tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Número de participantes</th>
-                            <th scope="col">Acciones</th>
-
-                        </tr>
-                    </thead>
-                    <tbody class = "buscarGrupos">
-                        <tr th:each="lis:${listaGrupos}">
-                            <td th:text="${lis.nombre}"></td>
-                            <td th:text="${lis.numParticipantes}"></td>
-                            <td>                                
-                                <a class="btn" id="btn-part" th:href="@{'/unGrupo/' + ${lis.id}}">Ver grupo</a>
-                                <a class="btn" id="btn-part" th:href="@{'/grupos/editar/' + ${lis.id}} ">Editar grupo</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                    <a class="btn" id="btn-part" th:href="@{/grupos/nuevo}">Crear un grupo nuevo</a>
             </div>
 
         </div>

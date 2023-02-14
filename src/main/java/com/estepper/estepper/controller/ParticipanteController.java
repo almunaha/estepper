@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
@@ -33,6 +32,7 @@ public class ParticipanteController {
 
     @Autowired 
     private FichaService f;
+
 
     @GetMapping("/menu")
     public String menu(){

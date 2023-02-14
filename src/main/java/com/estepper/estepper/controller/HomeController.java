@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -19,6 +20,7 @@ import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.repository.ParticipanteRepository;
 import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -38,6 +40,9 @@ public class HomeController {
 
     @Autowired
     private ParticipanteService participante;
+
+    @Autowired
+    private ParticipanteRepository repoPart;
 
     @Autowired
 	private BCryptPasswordEncoder hash;
@@ -82,31 +87,27 @@ public class HomeController {
         }        
     }
 
-    @GetMapping("/findrisc")
+     @GetMapping("/findrisc")
     public String test(){
         return "findrisc";
     }
+
 
     @GetMapping("/recomendaciones")
     public String recomendaciones(){
         return "recomendaciones";
     }
 
-    @GetMapping("/perfil")
-    public String perfil(Model model){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
+    @GetMapping("/perfil/{id}")
+    public String perfil(@PathVariable("id") Integer id, Model model){
+        Usuario elusuario = usuario.findById(id).get();
+        model.addAttribute("user", elusuario);
+        if(elusuario instanceof Participante) {
+            model.addAttribute("participante",  participante.findById(id).get());
+            return "editarperfilParticipante";
         }
-
-        String codigo = userDetails.getUsername(); //codigo del logueado
-
-        Usuario user = usuario.logueado(codigo); 
-        model.addAttribute("user", user);
+        else return "editarperfil";
         
-        return "perfil";
     }    
 
     @GetMapping("/mostrarperfil/{id}")
@@ -121,9 +122,14 @@ public class HomeController {
         
     }    
 
-    @PostMapping("/process_perfil")
-    public void processPerfil(Participante user, Model model) {
-       // repo.update(user);
+    @PostMapping("/process_perfil/{id}")
+    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante participante) {
+         
+       if(repoPart.findById(id).isPresent()){
+         repo.update(participante.nombre, participante.apellidos, participante.getEmail(), participante.getContrasenia(), participante.id);
+         repoPart.update1(participante.edad, participante.id);
+       } else repo.update(user.nombre, user.apellidos, user.getEmail(), user.getContrasenia(), user.id);
+       return "redirect:/";
     }
 
     @GetMapping("/baja")

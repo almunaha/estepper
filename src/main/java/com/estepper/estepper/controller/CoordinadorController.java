@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Grupo;
 
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.UsuarioService;
+import com.estepper.estepper.service.GrupoService;
 
 @Controller
 public class CoordinadorController {
@@ -21,6 +23,9 @@ public class CoordinadorController {
     
     @Autowired //inyectar recursos de la clase UsuarioService
     private UsuarioService user;
+
+    @Autowired //inyectar recursos de la clase GrupoService
+    private GrupoService grupo;
 
     @GetMapping("/listado")
     public String participantes(Model model){
@@ -37,4 +42,22 @@ public class CoordinadorController {
         model.addAttribute("idparticipante", id);
         return "valoracion";
     }
+
+    @GetMapping("/actualizarGrupos/{idP}/{idG}")
+    public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG, Model model){
+        //List<Grupo> listaGrupos = grupo.listaGrupos();
+        //model.addAttribute("listaGrupos", listaGrupos);
+
+
+        Grupo g = grupo.getGrupo(idG);
+
+        part.update(idP,g);
+        Integer participantes = g.getNumParticipantes()+1;
+        grupo.updateParticipantes(idG, participantes);
+ 
+        //grupo.setNumParticipantes(grupo.getNumParticipantes() + 1);
+        
+        
+        return"redirect:/listaGrupos";
+    } 
 }

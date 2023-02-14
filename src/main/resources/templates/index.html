@@ -101,8 +101,9 @@
               </a>
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
-                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
+                <a class="dropdown-item" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
+                <a class="dropdown-item" th:href="@{'/contrasenia/' + ${user.id}}">Cambiar contraseña</a>
+                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                 <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                   <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -113,7 +114,6 @@
           </ul>
         </div>
       </nav>
-
       <div style="text-align: center;">
 
         <div style="margin: 20px; color: #13405d;">
@@ -134,8 +134,7 @@
             </li>
             <li><i class="icono fas fa-weight"></i><span
                 th:text="' Pérdida de peso: ' + ${participante.perdidaDePeso}" /></li>
-            <li><i class="icono fas fa-people-carry"></i><span th:text="' Grupo: ' + ${participante.idGrupo}" />
-            </li>
+            <li><i class="icono fas fa-people-carry"></i><span th:text="' Grupo: ' + ${participante.grupo}" /></li>
           </ul>
         </div>
       </div>
