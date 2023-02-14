@@ -26,7 +26,7 @@ public class Participante extends Usuario{
     @Column(nullable=true)
     private Integer asistencia;
     @Column(nullable=true)
-    private Integer edad;
+    public Integer edad;
     @Column(nullable=true)
     private Integer sesionesCompletas;
     @Column(nullable=true)

@@ -26,7 +26,7 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     List<Participante> findByGrupo(Grupo grupo);
     @Modifying
     @Transactional
-    @Query("UPDATE Participante p SET p.sexo = :sexo WHERE p.id = :id")
-    void update1(Sexo sexo, Integer id);
+    @Query("UPDATE Participante p SET p.edad = :edad WHERE p.id = :id")
+    void update1(Integer edad, Integer id);
 
 }

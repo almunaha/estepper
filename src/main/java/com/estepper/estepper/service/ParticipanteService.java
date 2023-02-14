@@ -13,5 +13,5 @@ public interface ParticipanteService {
     public Participante getParticipante(Integer id); //prueba
     public void update(Integer idParticipante, Grupo grupo);
     public List<Participante> listadoGrupo(Grupo grupo);
-    public void update1(Sexo sexo, Integer id);
+    public void update1(Integer edad, Integer id);
 }

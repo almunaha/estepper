@@ -39,8 +39,8 @@ public class ParticipanteServiceImpl implements ParticipanteService{
         return repo.findByGrupo(grupo);
     }
     @Override
-    public void update1(Sexo sexo, Integer id) {
-        repo.update1(sexo, id);
+    public void update1(Integer edad, Integer id) {
+        repo.update1(edad, id);
         
     }
 }

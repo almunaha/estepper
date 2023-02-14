@@ -123,11 +123,11 @@ public class HomeController {
     }    
 
     @PostMapping("/process_perfil/{id}")
-    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante participante, Model model) {
+    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante participante) {
          
-       if(user instanceof Participante){
+       if(repoPart.findById(id).isPresent()){
          repo.update(participante.nombre, participante.apellidos, participante.id);
-         repoPart.update1(participante.sexo, participante.id);
+         repoPart.update1(participante.edad, participante.id);
        } else repo.update(user.nombre, user.apellidos, user.id);
        return "redirect:/";
     }
