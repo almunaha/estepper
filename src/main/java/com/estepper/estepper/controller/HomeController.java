@@ -122,13 +122,14 @@ public class HomeController {
     }    
 
     @PostMapping("/process_perfil/{id}")
-    public void processPerfil(@PathVariable("id") Integer id, Model model) {
+    public String processPerfil(@PathVariable("id") Integer id, Model model) {
        Usuario elusuario = usuario.findById(id).get();
          repo.update(elusuario.nombre, elusuario.apellidos, elusuario.id);
        if(elusuario instanceof Participante){
         Participante elparticipante = participante.findById(id).get();
          repoPart.update1(elparticipante.sexo, elparticipante.id);
        }
+       return index(model);
     }
 
     @GetMapping("/baja")

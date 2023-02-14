@@ -91,12 +91,15 @@
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Sexo: </label>
-                        <input type="sexo" th:field="*{sexo}" class="form-control" required/>
+                        <select th:field="*{sexo}"class="form-control" required>
+                            <option th:value="MASCULINO" th:text="MASCULINO"></option>
+                            <option th:value="FEMENINO" th:text="FEMENINO"></option>
+                        </select> 
                     </div>
         
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Edad: </label>
-                        <input type="email" th:field="*{edad}" class="form-control" required/>
+                        <input type="number" th:field="*{edad}" class="form-control" required/>
                     </div>
 
                     <button class="btn btn-info text-white mt-4 w-100" type="submit">Editar perfil</button>
