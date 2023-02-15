@@ -51,14 +51,14 @@ public class ParticipanteController {
 
         Usuario user = usuario.logueado(codigo); 
         model.addAttribute("part", user);
-                
+        model.addAttribute("user", getUsuario());        
         return "sesiones";
     }
 
     @GetMapping("/sesion1/{id}")
     public String sesion1(@PathVariable Integer id, Model model){
         //necesito idParticipante y numSesion para saber el id de la sesión correspondiente
-        
+        model.addAttribute("user", getUsuario());
         //sesión seleccionada
         Sesion sesion = ses.buscarSesion(1, 1); 
         model.addAttribute("sesion", sesion); 
@@ -82,4 +82,17 @@ public class ParticipanteController {
         return "progreso";
     }
 
+    public Usuario getUsuario(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario user = usuario.logueado(codigo);
+        return user;
+    }
 }

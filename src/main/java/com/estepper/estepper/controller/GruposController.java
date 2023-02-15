@@ -3,6 +3,8 @@ package com.estepper.estepper.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -38,13 +41,14 @@ public class GruposController {
     public String grupos(Model model){
         List<Grupo> listaGrupos = grupo.listaGrupos();
         model.addAttribute("listaGrupos", listaGrupos);
-        
+        model.addAttribute("user", getUsuario());
         return "grupos";
     } 
 
     @GetMapping("/grupos/nuevo")
     public String mostrarFormularioDeNuevoProducto(Model model){
         model.addAttribute("grupo", new Grupo());
+        model.addAttribute("user", getUsuario());
         return "nuevo_grupo";
     }
 
@@ -57,7 +61,7 @@ public class GruposController {
     @GetMapping("/grupos/editar/{id}")
     public ModelAndView mostrarFormularioDeEditarGrupo(@PathVariable(name = "id") Integer id){
        ModelAndView modelo = new ModelAndView("editar_grupo");
-
+        
        Grupo gr = grupo.getGrupo(id);
      
        modelo.addObject("grupo", gr);
@@ -86,10 +90,24 @@ public class GruposController {
         model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
         model.addAttribute("total", g.getNumParticipantes());
         model.addAttribute("nombreGrupo", g.getNombre());
+        model.addAttribute("user", getUsuario());
      
         return "unGrupo";
     }  
 
+    public Usuario getUsuario(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario usuario = user.logueado(codigo);
+        return usuario;
+    }
    
 
 }
