@@ -1,14 +1,11 @@
 package com.estepper.estepper.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.repository.SesionRepository;
 
-//crear métodos y lógica
 @Service
 public class SesionServiceImpl implements SesionService{
 

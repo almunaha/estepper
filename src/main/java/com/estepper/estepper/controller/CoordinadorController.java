@@ -3,12 +3,15 @@ package com.estepper.estepper.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Grupo;
 
 import com.estepper.estepper.service.ParticipanteService;
@@ -31,7 +34,17 @@ public class CoordinadorController {
     public String participantes(Model model){
         List<Participante> listado = part.listado();
         model.addAttribute("listado", listado);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario usuario = user.logueado(Integer.parseInt(codigo)); //atributos del logueado
+        model.addAttribute("user", usuario);
         return "participantes";
     } 
 
@@ -45,19 +58,14 @@ public class CoordinadorController {
 
     @GetMapping("/actualizarGrupos/{idP}/{idG}")
     public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG, Model model){
-        //List<Grupo> listaGrupos = grupo.listaGrupos();
-        //model.addAttribute("listaGrupos", listaGrupos);
-
-
+       Participante usuario = part.findById(idP).get();
+        model.addAttribute("user", usuario);
         Grupo g = grupo.getGrupo(idG);
 
-        part.update(idP,g);
+        part.update(idP,usuario.edad, g);
         Integer participantes = g.getNumParticipantes()+1;
         grupo.updateParticipantes(idG, participantes);
- 
-        //grupo.setNumParticipantes(grupo.getNumParticipantes() + 1);
-        
-        
+   
         return"redirect:/listaGrupos";
     } 
 }

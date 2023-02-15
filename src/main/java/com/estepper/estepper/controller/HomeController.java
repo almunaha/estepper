@@ -2,6 +2,7 @@ package com.estepper.estepper.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,7 +64,7 @@ public class HomeController {
 
         String codigo = userDetails.getUsername(); //codigo del logueado
 
-        Usuario user = usuario.logueado(codigo); //atributos del logueado
+        Usuario user = usuario.logueado(Integer.parseInt(codigo)); //atributos del logueado
         model.addAttribute("user", user);
         if(user instanceof Coordinador){
             return "coordinador";
@@ -127,7 +128,7 @@ public class HomeController {
          
        if(repoPart.findById(id).isPresent()){
          repo.update(participante.nombre, participante.apellidos, participante.getEmail(), participante.getContrasenia(), participante.id);
-         repoPart.update1(participante.edad, participante.id);
+         repoPart.update(participante.id, participante.edad, participante.getGrupo());
        } else repo.update(user.nombre, user.apellidos, user.getEmail(), user.getContrasenia(), user.id);
        return "redirect:/";
     }
@@ -149,7 +150,11 @@ public class HomeController {
         hash = new BCryptPasswordEncoder();
         String encodedPassword = hash.encode(user.getContrasenia());
         user.setContrasenia(encodedPassword);
-
+        Integer elcodigo = new Random().nextInt(100000 + 1);
+        while(usuario.logueado(elcodigo) != null){
+            elcodigo = new Random().nextInt(100000 + 1);
+        }
+        user.setCodigo(elcodigo);
         user.setEstadoCuenta(Estado.BAJA);
         
         repo.save(user);

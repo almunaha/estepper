@@ -101,8 +101,6 @@
               </a>
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
-                <a class="dropdown-item" th:href="@{'/contrasenia/' + ${user.id}}">Cambiar contraseña</a>
                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                 <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
@@ -152,11 +150,7 @@
               </a>
 
               <h4 id="nombre">SESIONES</h4>
-              <!--  VER QUÉ PONER, FALTA RELLENARLO TODO CON LOS DATOS ADECUADOS Y NO INVENTADOS
-                    <div class="progress ">
-                    <div class="progress-bar" role="progressbar"  style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">1</div>
-                  </div>
-                  -->
+ 
 
               <div class="chart1" id="chart1"></div>
 
@@ -171,17 +165,6 @@
 
                   labels: ['Sesiones completadas', 'Sesiones pendientes'],
 
-                  /*responsive: [{
-                    breakpoint: 480,
-                    options: {
-                      chart: {
-                        width: 380
-                      },
-                      legend: {
-                        position: 'bottom'
-                      }s
-                    }
-                  }]*/
 
                 };
 
@@ -247,7 +230,7 @@
                     type: "radialBar",
                   },
 
-                  series: [67], //poner aquí el porcentaje, por ejmplo en función del número de sesión
+                  series: [67], //porcentaje
                   colors: ["#20E647"],
                   plotOptions: {
                     radialBar: {

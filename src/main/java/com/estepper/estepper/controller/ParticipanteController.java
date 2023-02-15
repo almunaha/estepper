@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.estepper.estepper.model.entity.Ficha;
-import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.service.FichaService;
@@ -50,16 +49,16 @@ public class ParticipanteController {
 
         String codigo = userDetails.getUsername(); //codigo del logueado
 
-        Usuario user = usuario.logueado(codigo); 
+        Usuario user = usuario.logueado(Integer.parseInt(codigo)); 
         model.addAttribute("part", user);
-                
+        model.addAttribute("user", getUsuario());        
         return "sesiones";
     }
 
     @GetMapping("/sesion1/{id}")
     public String sesion1(@PathVariable Integer id, Model model){
         //necesito idParticipante y numSesion para saber el id de la sesión correspondiente
-        
+        model.addAttribute("user", getUsuario());
         //sesión seleccionada
         Sesion sesion = ses.buscarSesion(1, 1); 
         model.addAttribute("sesion", sesion); 
@@ -83,4 +82,17 @@ public class ParticipanteController {
         return "progreso";
     }
 
+    public Usuario getUsuario(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario user = usuario.logueado(Integer.parseInt(codigo));
+        return user;
+    }
 }

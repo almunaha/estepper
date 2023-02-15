@@ -14,10 +14,9 @@ import jakarta.transaction.Transactional;
 //LOS repository son los DAO, que acceden a la bd  -> los que hacen las consultas a PHPYMYADMIN
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
         Usuario findByNombre(String nombre); //select * from usuario where nombre = u.nombre 
-        Usuario findByCodigo(String codigo);
+        Usuario findByCodigo(Integer codigo);
         List<Usuario> findByApellidos(String apellidos); //Buscar por apelldios
 
-       // Usuario update(Usuario user);
        void delete(Usuario usuario);
 
         @Modifying

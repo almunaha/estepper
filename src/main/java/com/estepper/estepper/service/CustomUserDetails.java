@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.estepper.estepper.model.entity.Usuario;
 
-//se utiliza?
 public class CustomUserDetails implements UserDetails{
 
     private Usuario user;

@@ -15,11 +15,7 @@
             
             <h1 class="text-center">Registro</h1>
             <div th:if="${param.error}" class="alert alert-error">
-                Código y contraseña no son válidos.
-            </div>
-            <div class="input-group mt-2">
-                <label class="col-4 col-form-label">Código: </label>
-                <input type="text" th:field="*{codigo}" class="form-control" required/>
+                Contraseña no es válida.
             </div>
 
             <div class="input-group mt-2">

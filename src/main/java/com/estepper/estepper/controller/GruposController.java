@@ -3,6 +3,8 @@ package com.estepper.estepper.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
 
 
-import com.estepper.estepper.service.UsuarioService;//no estoy segura de si lo necesito
+import com.estepper.estepper.service.UsuarioService;
 
 @Controller
 public class GruposController {
@@ -38,13 +41,14 @@ public class GruposController {
     public String grupos(Model model){
         List<Grupo> listaGrupos = grupo.listaGrupos();
         model.addAttribute("listaGrupos", listaGrupos);
-        
+        model.addAttribute("user", getUsuario());
         return "grupos";
     } 
 
     @GetMapping("/grupos/nuevo")
     public String mostrarFormularioDeNuevoProducto(Model model){
         model.addAttribute("grupo", new Grupo());
+        model.addAttribute("user", getUsuario());
         return "nuevo_grupo";
     }
 
@@ -57,7 +61,7 @@ public class GruposController {
     @GetMapping("/grupos/editar/{id}")
     public ModelAndView mostrarFormularioDeEditarGrupo(@PathVariable(name = "id") Integer id){
        ModelAndView modelo = new ModelAndView("editar_grupo");
-
+        
        Grupo gr = grupo.getGrupo(id);
      
        modelo.addObject("grupo", gr);
@@ -65,7 +69,7 @@ public class GruposController {
        return modelo;
     }
 
-    //ESTE ESTABA BIEN CON LO DE ANTES
+    
     @GetMapping("/unirAgrupo/{id}")
     public String unirAgrupo(@PathVariable("id") Integer id, Model model){
         model.addAttribute("participante", part.findById(id).get());
@@ -78,34 +82,6 @@ public class GruposController {
         return "unirAgrupo";
     }  
 
-    
-    /*@GetMapping("/actualizarGrupos/{idP}/{idG}")
-    public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG, Model model){
-        //List<Grupo> listaGrupos = grupo.listaGrupos();
-        //model.addAttribute("listaGrupos", listaGrupos);
-
-        Grupo gr = grupo.getGrupo(idG);
-        Participante pa = part.getParticipante(idP);
-
-        pa.setGrupo(gr);
-
-       // pa.setIdGrupo(idG);
-        gr.setNumParticipantes(gr.getNumParticipantes() + 1);
-        
-        
-        return"redirect:/listaGrupos";
-    } 
-    */
-
-   /* @PostMapping("/actualizarGrupos/{idP}/{idG}")
-    public String actualizarGrupos(@PathVariable(name = "idP") Integer id, @PathVariable(name = "idG") Integer idG,Model model){
-        List<Grupo> listaGrupos = grupo.listaGrupos();
-        model.addAttribute("listaGrupos", listaGrupos);
-        
-        return"redirect:/listaGrupos";
-    } */
-
-
 
     @GetMapping("/unGrupo/{idGrupo}")
     public String unGrupo(@PathVariable("idGrupo") Integer idGrupo, Model model){
@@ -114,11 +90,24 @@ public class GruposController {
         model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
         model.addAttribute("total", g.getNumParticipantes());
         model.addAttribute("nombreGrupo", g.getNombre());
-        //model.addAttribute("grupo", user.findById(idGrupo).get());
+        model.addAttribute("user", getUsuario());
      
         return "unGrupo";
     }  
 
+    public Usuario getUsuario(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario usuario = user.logueado(Integer.parseInt(codigo));
+        return usuario;
+    }
    
 
 }
