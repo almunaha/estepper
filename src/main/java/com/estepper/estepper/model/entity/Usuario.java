@@ -23,19 +23,17 @@ public class Usuario implements Serializable{
     public Integer id;
     @Column(unique=true)
     private Integer codigo;
-    public String nombre;
-    public String apellidos;
+    public String nickname;
     public String email;
     public String contrasenia;
 
     @Enumerated(value = EnumType.STRING)
     private Estado estadoCuenta;
     
-    public Usuario(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta) {
+    public Usuario(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta) {
         this.id = id;
         this.codigo = codigo;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
+        this.nickname = nickname;
         this.email = email;
         this.contrasenia = contrasenia;
         this.estadoCuenta = estadoCuenta;
@@ -56,18 +54,13 @@ public class Usuario implements Serializable{
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
-    public String getNombre() {
-        return nombre;
+    public String getNickname() {
+        return nickname;
     }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
-    public String getApellidos() {
-        return apellidos;
-    }
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
+
     public String getEmail() {
         return email;
     }

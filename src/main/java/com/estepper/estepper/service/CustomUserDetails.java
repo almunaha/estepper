@@ -52,7 +52,7 @@ public class CustomUserDetails implements UserDetails{
     }
 
     public String getNombre() {
-        return user.getNombre();
+        return user.getNickname();
     }
 
     public String getEstadoCuenta() {

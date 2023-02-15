@@ -127,9 +127,9 @@ public class HomeController {
     public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante participante) {
          
        if(repoPart.findById(id).isPresent()){
-         repo.update(participante.nombre, participante.apellidos, participante.getEmail(), participante.getContrasenia(), participante.id);
+         repo.update(participante.nickname, participante.getEmail(), participante.getContrasenia(), participante.id);
          repoPart.update(participante.id, participante.edad, participante.getGrupo());
-       } else repo.update(user.nombre, user.apellidos, user.getEmail(), user.getContrasenia(), user.id);
+       } else repo.update(user.nickname, user.getEmail(), user.getContrasenia(), user.id);
        return "redirect:/";
     }
 
@@ -159,7 +159,7 @@ public class HomeController {
         
         repo.save(user);
 
-        model.addAttribute("nombre", user.getNombre());
+        model.addAttribute("nickname", user.getNickname());
         model.addAttribute("codigo", user.getCodigo());
         model.addAttribute("estadoCuenta", user.getEstadoCuenta());        
         

@@ -33,29 +33,29 @@ class EstepperApplicationTests {
 	public void crearUsuarioTest() {
 
 		//Usuario tipo PARTICIPANTE
-		usuarioRepo.save(new Participante(0, 111, "Almudena", "Naharro Muñoz", "almunaha@ucm.es", hash.encode("almupass"), 
+		usuarioRepo.save(new Participante(0, 111, "Almudena", "almunaha@ucm.es", hash.encode("almupass"), 
 		Estado.ALTA, 1, null, 10, 2, 22, 3, Sexo.FEMENINO));
 
-		usuarioRepo.save(new Participante(1, 444, "Inés", "Hernández Hurtado", "ineher02@ucm.es", hash.encode("inespass"), 
+		usuarioRepo.save(new Participante(1, 444, "Inés", "ineher02@ucm.es", hash.encode("inespass"), 
 		Estado.ALTA, 1, null, 5, 2, 22, 3, Sexo.FEMENINO));
 
-		usuarioRepo.save(new Participante(2, 555, "Patricia", "Plata Barroso", "pplata@ucm.es", hash.encode("patripass"), 
+		usuarioRepo.save(new Participante(2, 555, "Patricia",  "pplata@ucm.es", hash.encode("patripass"), 
 		Estado.ALTA, 1, null, 5, 2, 22, 3, Sexo.FEMENINO));
 
-		usuarioRepo.save(new Participante(3, 666, "Placi", "Hernández Muñoz", "placi@gmail.com", hash.encode("placipass"), 
+		usuarioRepo.save(new Participante(3, 666, "Placi",  "placi@gmail.com", hash.encode("placipass"), 
 		Estado.ALTA, 1, null, 5, 2, 55, 3, Sexo.FEMENINO));
 		
-		usuarioRepo.save(new Participante(4, 777, "Diana", "Hurtado Camarasa", "diana@gmail.com", hash.encode("mamapass"), 
+		usuarioRepo.save(new Participante(4, 777, "Diana",  "diana@gmail.com", hash.encode("mamapass"), 
 		Estado.ALTA, 1, null, 5, 2, 54, 3, Sexo.FEMENINO));
 
 
 
 		//Usuario tipo COORDINADOR
-		usuarioRepo.save(new Coordinador(0, 222, "Mercedes", "Martinez Campos", "mercedes@madrid.es", hash.encode("mercedespass"), 
+		usuarioRepo.save(new Coordinador(0, 222, "Mercedes",  "mercedes@madrid.es", hash.encode("mercedespass"), 
 		Estado.ALTA));
 
 		//Usuario tipo ADMINISTRADOR
-		usuarioRepo.save(new Administrador(0, 333, "Javier", "Gómez Blanco", "javier@ucm.es", hash.encode("javierpass"), 
+		usuarioRepo.save(new Administrador(0, 333, "Javier",  "javier@ucm.es", hash.encode("javierpass"), 
 		Estado.ALTA));
 		
 

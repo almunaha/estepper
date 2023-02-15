@@ -43,9 +43,9 @@ public class Participante extends Usuario{
         super();
     }
 
-    public Participante(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Integer perdidaDePeso,Integer asistencia,
+    public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Integer perdidaDePeso,Integer asistencia,
     Integer edad, Integer sesionesCompletas,Sexo sexo){
-        super(id, codigo, nombre, apellidos, email, contrasenia, estadoCuenta);
+        super(id, codigo, nickname, email, contrasenia, estadoCuenta);
         this.idCoordinador=idCoordinador;
         this.grupo=grupo;
         this.perdidaDePeso=perdidaDePeso;

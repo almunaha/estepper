@@ -12,6 +12,6 @@ public interface UsuarioService {
 
     public void eliminarUsuario(Usuario usuario);
 
-    public void update(String nombre, String apellidos, String email, String contrasenia, Integer id);
+    public void update(String nickname, String email, String contrasenia, Integer id);
 
 }
