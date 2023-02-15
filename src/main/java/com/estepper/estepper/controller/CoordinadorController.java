@@ -45,19 +45,13 @@ public class CoordinadorController {
 
     @GetMapping("/actualizarGrupos/{idP}/{idG}")
     public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG, Model model){
-        //List<Grupo> listaGrupos = grupo.listaGrupos();
-        //model.addAttribute("listaGrupos", listaGrupos);
-
 
         Grupo g = grupo.getGrupo(idG);
 
         part.update(idP,g);
         Integer participantes = g.getNumParticipantes()+1;
         grupo.updateParticipantes(idG, participantes);
- 
-        //grupo.setNumParticipantes(grupo.getNumParticipantes() + 1);
-        
-        
+   
         return"redirect:/listaGrupos";
     } 
 }

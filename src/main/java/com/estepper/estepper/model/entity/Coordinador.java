@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="coordinadores")
-public class Coordinador extends Usuario{ //habrá que añadir atributos nuevos o métodos
+public class Coordinador extends Usuario{ 
 
     public Coordinador(){
         super();

@@ -21,7 +21,7 @@ public class Grupo implements Serializable{
     @Column(unique=true)
     private String nombre;
     @Column
-    private Integer numParticipantes; //VER CÓMO HACER QUE SEA 0 POR DEFECTO, A NO SER QUE AÑADAN PARTICIPANTES
+    private Integer numParticipantes; 
 
     
     public Grupo(Integer id, Integer codigo, String nombre, Integer numParticipantes) {

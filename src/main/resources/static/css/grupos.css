@@ -3,7 +3,6 @@
     margin-left: 100px;
     margin-right: 100px;
     display: flex;
-    /*align-items: center;*/
     align-content: center;
     align-items: flex-end;
   
@@ -26,7 +25,7 @@
     margin:auto;
     margin-top:10px;
     display: flex;
-    flex-wrap: wrap; /*Para q cuanndo no quepa se ponga debajo*/
+    flex-wrap: wrap; /*Para que cuando no quepa se ponga debajo*/
     justify-content: center;
 }
 

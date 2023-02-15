@@ -8,8 +8,7 @@ import com.estepper.estepper.model.entity.Grupo;
 
 import jakarta.transaction.Transactional;
 
-//@Repository
-//LOS repository son los DAO, que acceden a la bd  -> los que hacen las consultas a PHPYMYADMIN
+
 public interface GrupoRepository extends JpaRepository<Grupo, Integer>{
         
     Grupo findByNombre(String nombre); //select * from grupo where nombre = g.nombre 

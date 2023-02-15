@@ -17,7 +17,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
         Usuario findByCodigo(String codigo);
         List<Usuario> findByApellidos(String apellidos); //Buscar por apelldios
 
-       // Usuario update(Usuario user);
        void delete(Usuario usuario);
 
         @Modifying

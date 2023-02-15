@@ -37,7 +37,7 @@ public class Participante extends Usuario{
 
     @ManyToOne
     @JoinColumn(name="idGrupo")
-    private Grupo grupo; //decimos que un grupo se va a poder unir con muchos participantes
+    private Grupo grupo; 
     
     public Participante(){
         super();
@@ -62,13 +62,6 @@ public class Participante extends Usuario{
     public void setIdCoordinador(Integer idCoordinador) {
         this.idCoordinador = idCoordinador;
     }
-
-    /*public Integer getIdGrupo() {
-        return grupo.getId();
-    }
-    public void setIdGrupo(Integer idGrupo) {
-        this.grupo.setId(idGrupo);
-    }*/
 
     public Sexo getSexo() {
         return sexo;

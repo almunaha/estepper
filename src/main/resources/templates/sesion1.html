@@ -113,10 +113,8 @@
         </div>
       </nav>
 
-      <!--ESTA VISTA ES PARA TODAS LAS SESIONES IGUALES!! CON ASISTENCIA FICHAS ETC-->
-
       <div class="layout-sesion p-4 mt-3">
-        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}">Sesión 1</h3> <!-- Poner según sea el numsesion-->
+        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}">Sesión 1</h3> 
         <form>
           <label for="asistencia">Asistencia</label>
           <div>
@@ -133,7 +131,7 @@
           <div><label>Tareas:</label></div>
           <div>
             <ul th:each="ficha : ${fichas}">
-              <li><a th:href="@{'/ficha0'}" th:text="${ficha.id}"></a></li> <!-- añadir atributo numero ficha en FICHA en la bd y tb el href que sea el que venga-->
+              <li><a th:href="@{'/ficha0'}" th:text="${ficha.id}"></a></li> 
 
             </ul>
           </div>
