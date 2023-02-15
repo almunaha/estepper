@@ -73,7 +73,10 @@ class EstepperApplicationTests {
 
 	@Test
 	public void crearGrupo(){
-	    grupoRepo.save(new Grupo(9,999,"Las saltimbanquis",0));
+	    grupoRepo.save(new Grupo(1,990,"Las saltimbanquis",0));
+		grupoRepo.save(new Grupo(2,991,"Los viajeros disfrutones",0));
+		grupoRepo.save(new Grupo(3,992,"Los escarabajos",0));
+		grupoRepo.save(new Grupo(4,993,"Los súper deportistas",0));
 	}
 
 }
