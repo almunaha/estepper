@@ -43,7 +43,7 @@ public class CoordinadorController {
 
         String codigo = userDetails.getUsername(); //codigo del logueado
 
-        Usuario usuario = user.logueado(codigo); //atributos del logueado
+        Usuario usuario = user.logueado(Integer.parseInt(codigo)); //atributos del logueado
         model.addAttribute("user", usuario);
         return "participantes";
     } 

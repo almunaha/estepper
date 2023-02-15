@@ -17,9 +17,9 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     @Autowired
     private UsuarioRepository repo; //inyección de dependencias del usuario dao api
 
-    @Override
     public UserDetails loadUserByUsername(String codigo) throws UsernameNotFoundException {
-        Usuario user = repo.findByCodigo(codigo);
+        
+        Usuario user = repo.findByCodigo(Integer.parseInt(codigo));
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
@@ -32,7 +32,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
-    public Usuario logueado(String codigo){
+    public Usuario logueado(Integer codigo){
         return repo.findByCodigo(codigo);
     }
 

@@ -49,7 +49,7 @@ public class ParticipanteController {
 
         String codigo = userDetails.getUsername(); //codigo del logueado
 
-        Usuario user = usuario.logueado(codigo); 
+        Usuario user = usuario.logueado(Integer.parseInt(codigo)); 
         model.addAttribute("part", user);
         model.addAttribute("user", getUsuario());        
         return "sesiones";
@@ -92,7 +92,7 @@ public class ParticipanteController {
 
         String codigo = userDetails.getUsername(); //codigo del logueado
 
-        Usuario user = usuario.logueado(codigo);
+        Usuario user = usuario.logueado(Integer.parseInt(codigo));
         return user;
     }
 }

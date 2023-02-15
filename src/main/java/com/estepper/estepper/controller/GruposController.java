@@ -105,7 +105,7 @@ public class GruposController {
 
         String codigo = userDetails.getUsername(); //codigo del logueado
 
-        Usuario usuario = user.logueado(codigo);
+        Usuario usuario = user.logueado(Integer.parseInt(codigo));
         return usuario;
     }
    
