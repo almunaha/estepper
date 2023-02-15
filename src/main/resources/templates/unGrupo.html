@@ -99,6 +99,7 @@
                         </div>
                         <div class="descripcion">
                             <h2 th:text="${lis.nickname}"></h2>
+                            <h3 th:text="${lis.codigo}"></h3>
                             <p th:text="${lis.edad} + ' ' + años"></p>
                             <a class="botonGr" th:href="@{'/mostrarperfil/' + ${lis.id}}">Ver perfil</a>
 

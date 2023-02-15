@@ -120,6 +120,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Alias</th>
+                            <th scope="col">Codigo</th>
                             <th scope="col">Email</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Acciones</th>
@@ -129,6 +130,7 @@
                     <tbody class = "buscarParticipantes">
                         <tr th:each="lis:${listado}">
                             <td th:text="${lis.nickname}"></td>
+                            <td th:text="${lis.codigo}"></td>
                             <td th:text="${lis.email}"></td>
                             <td th:text="${lis.estadoCuenta}"></td>
                             <td>                                
