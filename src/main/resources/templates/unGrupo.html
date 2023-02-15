@@ -11,6 +11,8 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/grupos.css}"> 
+
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
@@ -73,32 +75,59 @@
             </nav>
 
             
+            <div class="contenido-grupos p-4 mt-5">
 
-            <div class="p-4 mt-5" id="participantes">
-             
-             
-              <h3>VISTA DE UN GRUPO, FALTA POR HACER</h3>
-          
-                
-                 <table class=" table tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Participantes del grupo</th>
+                <div class="encabezado-grupo">
 
-
-                        </tr>
-                    </thead>
-                    <tbody class = "buscarGrupos">
-                        <tr th:each="lis:${listadoParticipantesGrupo}">
-                            <td th:text="${lis.nombre}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <strong>Número total de participantes: </strong><p th:text="${total}"></p>
+                    <h3 th:text="'GRUPO: ' + ${nombreGrupo}"></h3>
+                    <strong th:text="'Número total de participantes: ' +${total}"></strong>
             
+                </div>
+
+               
+                
 
             </div>
+
+            <div class="container-cards">
+
+                <tr th:each="lis:${listadoParticipantesGrupo}">
+            
+                    <div class="cardi">
+                        <div class="cover">
+                            <img src="/img/p1.png" alt="">
+                            <div class="img-back"></div>
+                        </div>
+                        <div class="descripcion">
+                            <h2 th:text="${lis.nombre}"></h2>
+                            <p th:text="${lis.edad} + ' ' + años"></p>
+                            <!--<input type="button" value="Ver perfil completo">-->
+                            <a class="botonGr" th:href="@{'/mostrarperfil/' + ${lis.id}}">Ver perfil</a>
+
+                        </div>
+                    </div>
+                
+                </tr>
+        
+
+            </div>
+
+           
+
+
+           
+                  
+
+          
+                
+
+        
+            
+            
+           
+        
+            
+            
 
         </div>
     </div>

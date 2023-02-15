@@ -36,6 +36,20 @@ class EstepperApplicationTests {
 		usuarioRepo.save(new Participante(0, 111, "Almudena", "Naharro Muñoz", "almunaha@ucm.es", hash.encode("almupass"), 
 		Estado.ALTA, 1, null, 10, 2, 22, 3, Sexo.FEMENINO));
 
+		usuarioRepo.save(new Participante(1, 444, "Inés", "Hernández Hurtado", "ineher02@ucm.es", hash.encode("inespass"), 
+		Estado.ALTA, 1, null, 5, 2, 22, 3, Sexo.FEMENINO));
+
+		usuarioRepo.save(new Participante(2, 555, "Patricia", "Plata Barroso", "pplata@ucm.es", hash.encode("patripass"), 
+		Estado.ALTA, 1, null, 5, 2, 22, 3, Sexo.FEMENINO));
+
+		usuarioRepo.save(new Participante(3, 666, "Placi", "Hernández Muñoz", "placi@gmail.com", hash.encode("placipass"), 
+		Estado.ALTA, 1, null, 5, 2, 55, 3, Sexo.FEMENINO));
+		
+		usuarioRepo.save(new Participante(4, 777, "Diana", "Hurtado Camarasa", "diana@gmail.com", hash.encode("mamapass"), 
+		Estado.ALTA, 1, null, 5, 2, 54, 3, Sexo.FEMENINO));
+
+
+
 		//Usuario tipo COORDINADOR
 		usuarioRepo.save(new Coordinador(0, 222, "Mercedes", "Martinez Campos", "mercedes@madrid.es", hash.encode("mercedespass"), 
 		Estado.ALTA));
@@ -59,7 +73,7 @@ class EstepperApplicationTests {
 
 	@Test
 	public void crearGrupo(){
-	    grupoRepo.save(new Grupo(9,999,"Las saltimbanquis",2));
+	    grupoRepo.save(new Grupo(9,999,"Las saltimbanquis",0));
 	}
 
 }

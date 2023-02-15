@@ -1,0 +1,121 @@
+.contenido-grupos{
+    background-color: rgb(255, 250, 250);
+    margin-left: 100px;
+    margin-right: 100px;
+    display: flex;
+    /*align-items: center;*/
+    align-content: center;
+    align-items: flex-end;
+  
+}
+
+
+.encabezado-grupo{
+    border-left: thick solid #5ec1c5;
+    border-left-width: 10px;
+
+}
+
+.btn-group{
+    align-items: self-end;
+}
+
+
+.container-cards{
+    max-width: 1200px;
+    margin:auto;
+    margin-top:10px;
+    display: flex;
+    flex-wrap: wrap; /*Para q cuanndo no quepa se ponga debajo*/
+    justify-content: center;
+}
+
+.cardi{
+    width: 210px;
+    margin:10px;
+    transition: all 300ms;
+}
+
+.cardi:hover{
+    width:240px;
+}
+
+.cardi .cover{
+    width: 100%;
+    height: 250px;;
+    position: relative;
+    overflow: hidden;
+}
+
+.cardi .cover img{
+    width:210px;
+    display:block;
+    margin:auto;
+    position:relative;
+    top:40px;
+    z-index:1;
+    filter: drop-shadow(5px 5px 4 px rgba(0,0,0,0.5));
+    transition: all 400ms;
+}
+
+.cardi:hover .cover img{
+    top: 0px;
+    filter:none;
+}
+
+.cardi .img-back{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    bottom:-80px;
+    left:0;
+    background-size: cover;
+    border-radius: 20px;
+    transition: all 300ms;
+}
+
+.cardi .img-back{
+    background-image: url(/img/bg1.png);
+}
+
+
+.cardi:hover .img-back{
+    bottom: -40px;
+}
+
+.cardi .descripcion{
+    background:white;
+    margin-top: -10px;
+    padding: 20px;
+    border-radius: 0px 0px 20px 20px;
+    transition: all 300ms;
+}
+
+.cardi:hover .descripcion{
+    padding:40px;
+}
+
+.cardi .descripcion h2{
+    margin-top: 10px;
+}
+
+.cardi .descripcion p{
+    margin-top: 10px;
+}
+
+.botonGr{
+    padding: 10px 25px;
+    margin-top: 20px;
+    border:none;
+    background: #4988bb;
+    color:white;
+    font-size: 14px;
+    cursor:pointer;
+    border-radius: 8px;
+    transition: all 300ms;
+}
+
+.botonGr:hover{
+    background: #2f5b80;
+}
+
