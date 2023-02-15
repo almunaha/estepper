@@ -127,7 +127,7 @@ public class HomeController {
          
        if(repoPart.findById(id).isPresent()){
          repo.update(participante.nombre, participante.apellidos, participante.getEmail(), participante.getContrasenia(), participante.id);
-         repoPart.update1(participante.edad, participante.id);
+         repoPart.update(participante.id, participante.edad, participante.getGrupo());
        } else repo.update(user.nombre, user.apellidos, user.getEmail(), user.getContrasenia(), user.id);
        return "redirect:/";
     }

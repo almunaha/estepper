@@ -10,7 +10,6 @@ public interface ParticipanteService {
     public List<Participante> listado();
     public Optional<Participante> findById(Integer id);   
     public Participante getParticipante(Integer id); 
-    public void update(Integer idParticipante, Grupo grupo);
+    public void update(Integer idParticipante, Integer edad, Grupo grupo);
     public List<Participante> listadoGrupo(Grupo grupo);
-    public void update1(Integer edad, Integer id);
 }

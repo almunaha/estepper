@@ -58,10 +58,11 @@ public class CoordinadorController {
 
     @GetMapping("/actualizarGrupos/{idP}/{idG}")
     public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG, Model model){
-        model.addAttribute("user", user.findById(idP).get());
+       Participante usuario = part.findById(idP).get();
+        model.addAttribute("user", usuario);
         Grupo g = grupo.getGrupo(idG);
 
-        part.update(idP,g);
+        part.update(idP,usuario.edad, g);
         Integer participantes = g.getNumParticipantes()+1;
         grupo.updateParticipantes(idG, participantes);
    
