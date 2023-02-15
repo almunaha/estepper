@@ -84,9 +84,9 @@
             if(num1 == '') num1 = 0.0;
             if(num2 == '') num2 = 0.0;
 
-            var resultado = (num1/(num2*num2))*10000;
+            var resultado = (num1/(num2*num2));
 
-            document.getElementById('resultado').value = resultado.toFixed(2);
+            document.getElementById('imc').value = resultado.toFixed(2);
         }
 
     </script>
@@ -122,8 +122,8 @@
 
                         <input type="button" value="Calcular" onclick="imc()">
 
-                        <label for="resultado">Resultado (IMC): </label>
-                        <input type="float" name="resultado" id="resultado" readonly=""> 
+                        <label for="imc">Resultado (IMC): </label>
+                        <input type="float" name="imc" id="imc" readonly=""> 
 
                         <select id="select2" class="form-select"> 
                             <option value = "0">Menos de 25 Kg/m<sup>2</sup> (0 puntos)</option>
