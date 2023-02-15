@@ -21,6 +21,9 @@ public class Participante extends Usuario{
     //@Column(unique=false, nullable=true)
    // private Integer idGrupo;
 
+   @Column(nullable=true)
+   private String fotoParticipante;
+
     @Column(nullable=true)
     private Integer perdidaDePeso;
     @Column(nullable=true)
@@ -44,7 +47,7 @@ public class Participante extends Usuario{
     }
 
     public Participante(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Integer perdidaDePeso,Integer asistencia,
-    Integer edad, Integer sesionesCompletas,Sexo sexo){
+    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante){
         super(id, codigo, nombre, apellidos, email, contrasenia, estadoCuenta);
         this.idCoordinador=idCoordinador;
         this.grupo=grupo;
@@ -53,6 +56,7 @@ public class Participante extends Usuario{
         this.edad=edad;
         this.sesionesCompletas=sesionesCompletas;
         this.sexo=sexo;
+        this.fotoParticipante=fotoParticipante;
 
     }
 
@@ -114,4 +118,14 @@ public class Participante extends Usuario{
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
+
+    public String getFotoParticipante() {
+        return fotoParticipante;
+    }
+
+    public void setFotoParticipante(String fotoParticipante) {
+        this.fotoParticipante = fotoParticipante;
+    }
+
+    
 }
