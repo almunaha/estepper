@@ -33,6 +33,7 @@
 
         function calcularValoresRespuesta() {
             var total = 0;
+            
             $(".form-select").each(function() {
                 if (isNaN(parseFloat($(this).val()))) {
                 total += 0;
@@ -40,6 +41,12 @@
                 total += parseFloat($(this).val());
             }
             });
+
+            var perimetro = 0;
+            if(document.getElementById('flexRadioDefault1').checked) perimetro = parseFloat(document.getElementById('select4').value);
+            else perimetro = parseFloat(document.getElementById('select3').value);
+
+            total -= perimetro;
       
             document.getElementById('resultado').value = total;
             document.getElementById('resultado').innerHTML='La puntuación obtenida es: '+ total;
