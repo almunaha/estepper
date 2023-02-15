@@ -42,8 +42,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
-    public void update(String nombre, String apellidos, String email, String contrasenia, Integer id) {
-        repo.update(nombre, apellidos, email, contrasenia, id);
+    public void update(String nickname, String email, String contrasenia, Integer id) {
+        repo.update(nickname, email, contrasenia, id);
         
     }
     

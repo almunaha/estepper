@@ -51,11 +51,11 @@ class EstepperApplicationTests {
 
 
 		//Usuario tipo COORDINADOR
-		usuarioRepo.save(new Coordinador(0, 222, "Mercedes", "Martinez Campos", "mercedes@madrid.es", hash.encode("mercedespass"), 
+		usuarioRepo.save(new Coordinador(0, 222, "Mercedes",  "mercedes@madrid.es", hash.encode("mercedespass"), 
 		Estado.ALTA));
 
 		//Usuario tipo ADMINISTRADOR
-		usuarioRepo.save(new Administrador(0, 333, "Javier", "Gómez Blanco", "javier@ucm.es", hash.encode("javierpass"), 
+		usuarioRepo.save(new Administrador(0, 333, "Javier",  "javier@ucm.es", hash.encode("javierpass"), 
 		Estado.ALTA));
 		
 
