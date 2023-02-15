@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+
     <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>-->
     <title>Findrisc</title>
 
@@ -31,6 +33,7 @@
 
         function calcularValoresRespuesta() {
             var total = 0;
+            
             $(".form-select").each(function() {
                 if (isNaN(parseFloat($(this).val()))) {
                 total += 0;
@@ -38,6 +41,12 @@
                 total += parseFloat($(this).val());
             }
             });
+
+            var perimetro = 0;
+            if(document.getElementById('flexRadioDefault1').checked) perimetro = parseFloat(document.getElementById('select4').value);
+            else perimetro = parseFloat(document.getElementById('select3').value);
+
+            total -= perimetro;
       
             document.getElementById('resultado').value = total;
             document.getElementById('resultado').innerHTML='La puntuación obtenida es: '+ total;
@@ -71,6 +80,23 @@
 
        
     </script>
+
+    <!--Calcular IMC -->
+    <script>
+        function imc(){
+            //convertir lo que teclea el usuario a un double
+            var num1 = parseFloat(document.getElementById('peso').value);
+            var num2 = parseFloat(document.getElementById('altura').value);
+
+            if(num1 == '') num1 = 0.0;
+            if(num2 == '') num2 = 0.0;
+
+            var resultado = (num1/(num2*num2));
+
+            document.getElementById('imc').value = resultado.toFixed(2);
+        }
+
+    </script>
     
 
 </head>
@@ -95,6 +121,17 @@
                         </select>
 
                         <label for="select2" class="form-label">2. Índice de masa corporal (IMC)</label>
+                        <label for="peso">Peso (kg): </label>
+                        <input type="text" id="peso">
+                        
+                        <label for="altura">Altura (cm): </label>
+                        <input type="text" id="altura">
+
+                        <input type="button" value="Calcular" onclick="imc()">
+
+                        <label for="imc">Resultado (IMC): </label>
+                        <input type="float" name="imc" id="imc" readonly=""> 
+
                         <select id="select2" class="form-select"> 
                             <option value = "0">Menos de 25 Kg/m<sup>2</sup> (0 puntos)</option>
                             <option value = "1">Entre 25-30 Kg/m<sup>2</sup> (1 punto)</option>
