@@ -101,6 +101,8 @@
                                 th:text="' Grupo: ' + ${participante.grupo}" /></li>
                     </ul>
                 </div>
+
+                <a class="btn" id="btn-part"th:href="@{'/perfil/' + ${user.id}}" >Editar perfil</a>
             </div>
 
         </div>
