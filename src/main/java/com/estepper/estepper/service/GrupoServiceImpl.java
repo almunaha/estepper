@@ -28,6 +28,11 @@ public class GrupoServiceImpl implements GrupoService{
     @Override
     public void updateParticipantes(Integer idGrupo, Integer numParticipantes){
         repo.update(idGrupo, numParticipantes);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        repo.delete(repo.findById(id).get());
     }    
 
 
