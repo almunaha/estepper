@@ -28,6 +28,11 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         //FINDRISC
         Findrisc findrisc = new Findrisc(0, id, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo");
         repo.save(findrisc);
+    }
+
+    @Override
+    public void crearFormulariosNuevos(Integer id){
+        //COMPROBAR QUE NO ESTÉN CREADOS YA
         //CLASIFICACION
         //ANTECEDENTES
         //ALIMENTACION

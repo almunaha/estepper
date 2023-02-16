@@ -131,6 +131,10 @@ public class ParticipanteController {
         findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes, findrisc.puntuacion,
         findrisc.escalarriesgo);
 
+        if((findrisc.puntosedad >= 35) & (findrisc.puntuacion >= 15)){
+            fasevaloracion.crearFormulariosNuevos(findrisc.idParticipante);
+        }
+
        return "redirect:/";
     }
 
