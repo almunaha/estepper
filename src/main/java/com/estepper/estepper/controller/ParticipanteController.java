@@ -70,7 +70,7 @@ public class ParticipanteController {
         //necesito idParticipante y numSesion para saber el id de la sesión correspondiente
         model.addAttribute("user", getUsuario());
         //sesión seleccionada
-        Sesion sesion = ses.buscarSesion(1, 1); 
+        Sesion sesion = ses.buscarSesion(participante.findById(id), 1); 
         model.addAttribute("sesion", sesion); 
 
         //lista de fichas de la sesión seleccionada a través del idSesion

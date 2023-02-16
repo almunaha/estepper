@@ -79,7 +79,7 @@
                 <div class="encabezado-grupo">
 
                     <h3 th:text="'GRUPO: ' + ${nombreGrupo}"></h3>
-                    <strong th:text="'Número total de participantes: ' +${total}"></strong>
+                    <strong th:text="'Número total de participantes: ' + ${total}"></strong>
             
                 </div>
 
@@ -93,7 +93,7 @@
                 <tr th:each="lis:${listadoParticipantesGrupo}">
             
                     <div class="cardi">
-                        <div class="cover"> +
+                        <div class="cover"> 
                             <img th:src="${lis.fotoParticipante}" alt="avatar">
                             <div class="img-back"></div>
                         </div>
