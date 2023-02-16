@@ -123,10 +123,23 @@
                         <label class="col-4 col-form-label">IMC: </label>
                         <input type="number" th:field="*{imc}" class="form-control" />
                     </div>
-                    <button class="btn btn-info text-white mt-4 w-100" type="submit">Guardar</button>
+                    <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Guardar</button>
+                    <script language="JavaScript">
+                        function myFunction() {
+                            if(confirm("Desea guardar los datos?")){
+                            alert("Datos guardados exitosamente");
+                            }else{
+                            alert("Usted cancelo la acción para guardar");
+                            }
+                        }
+                    </script>
                     
                 </form>                      
             </div> 
+
+            <div style="float: right;">
+                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
+                </div>
 
         </div>
     </div>
