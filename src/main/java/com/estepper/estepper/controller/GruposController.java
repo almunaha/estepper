@@ -65,6 +65,7 @@ public class GruposController {
        Grupo gr = grupo.getGrupo(id);
      
        modelo.addObject("grupo", gr);
+       modelo.addObject("user", getUsuario());
 
        return modelo;
     }
