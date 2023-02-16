@@ -35,7 +35,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -93,10 +93,8 @@
                 <tr th:each="lis:${listadoParticipantesGrupo}">
             
                     <div class="cardi">
-                        <div class="cover"> <!--NO BORRAR ESTOS COMENTARIOS QUE NECESITAMOS VER QUE PILLE EL AVATAR CUANDO FUNCIONE EL EDITAR PERFIL-->
-                            <!--<img src="/img/p1.png" alt="">-->
-                            <!--<img src="${lis.fotoParticipante}" alt="">-->
-                            <img src="/img/avatar1.png" alt="">
+                        <div class="cover"> +
+                            <img th:src="${lis.fotoParticipante}" alt="avatar">
                             <div class="img-back"></div>
                         </div>
                         <div class="descripcion">

@@ -112,30 +112,6 @@
           </ul>
         </div>
       </nav>
-      <div style="text-align: center;">
-
-        <div style="margin: 20px; color: #13405d;">
-          <h3 th:text="${user.nickname}">Nombre</h3>
-        </div>
-
-        <div style="display: flex; text-align: left;">
-          <ul style="list-style: none;margin-right: 200px;margin-left: 150px;">
-            <li><i class="icono fas fa-key"></i><span th:text="' Código: ' + ${user.codigo}" /></li>
-            <li><i class="icono fas fa-envelope"></i><span th:text="' Email: ' + ${user.email}" /></li>
-            <li><i class="icono fas fa-thumbtack"></i><span th:text="' Estado de la cuenta: ' + ${user.estadoCuenta}" />
-            </li>
-            <li><i class="icono fas fa-anchor"></i><span th:text="' Sexo: ' + ${participante.sexo}" /></li>
-          </ul>
-          <ul style="list-style: none;">
-            <li><i class="icono fas fa-bug"></i><span th:text="' Edad: ' + ${participante.edad}" /></li>
-            <li><i class="icono fas fa-list-alt"></i><span th:text="' Asistencia: ' + ${participante.asistencia}" />
-            </li>
-            <li><i class="icono fas fa-weight"></i><span
-                th:text="' Pérdida de peso: ' + ${participante.perdidaDePeso}" /></li>
-            <li><i class="icono fas fa-people-carry"></i><span th:text="' Grupo: ' + ${participante.grupo.id}" /></li>
-          </ul>
-        </div>
-      </div>
 
       <div class="utilidades">
 
