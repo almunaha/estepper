@@ -24,6 +24,7 @@ import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ParticipanteService;
+import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.GrupoService;
 
 @Controller
@@ -34,6 +35,9 @@ public class HomeController {
 
     @Autowired //inyectar recursos de la clase GrupoService
     private GrupoService grupo;
+
+    @Autowired
+    private FaseValoracionService fasevaloracion;
 
     @Autowired
     private ParticipanteService participante; 
@@ -153,6 +157,7 @@ public class HomeController {
         user.setEstadoCuenta(Estado.BAJA);
         user.setFotoParticipante("/img/p1.png");
         usuario.guardar(user); 
+        fasevaloracion.crearFormularios(user.id);
 
         model.addAttribute("nickname", user.getNickname());
         model.addAttribute("codigo", user.getCodigo());

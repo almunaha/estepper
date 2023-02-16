@@ -8,13 +8,32 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="exploracion")
-public class Exploracion {
+public class Exploracion extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private Integer idParticipante;
+    private String primeravez;
+    private Integer peso;
+    private Integer cmcintura;
+    private Integer talla;
+    private Integer edad;
+    private Integer imc;  
 
+    public Exploracion(){}
+
+    public Exploracion(Integer id, Integer idParticipante,String primeravez, Integer peso, Integer cmcintura, Integer talla, Integer edad, Integer imc ){
+        super(id, idParticipante);
+        this.primeravez = primeravez;
+        this.peso = peso;
+        this.cmcintura = cmcintura;
+        this.talla = talla;
+        this.edad = edad;
+        this.imc = imc;
+    }
+
+    
     public Integer getId() {
         return id;
     }
@@ -79,24 +98,5 @@ public class Exploracion {
         this.imc = imc;
     }
 
-    private String primeravez;
-    private Integer peso;
-    private Integer cmcintura;
-    private Integer talla;
-    private Integer edad;
-    private Integer imc;  
-
-    public Exploracion(){}
-
-    public Exploracion(Integer id, Integer idParticipante,String primeravez, Integer peso, Integer cmcintura, Integer talla, Integer edad, Integer imc ){
-        this.id = id;
-        this.idParticipante = idParticipante;
-        this.primeravez = primeravez;
-        this.peso = peso;
-        this.cmcintura = cmcintura;
-        this.talla = talla;
-        this.edad = edad;
-        this.imc = imc;
-    }
     
 }
