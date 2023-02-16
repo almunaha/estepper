@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.estepper.estepper.model.entity.Usuario;
 
 public interface UsuarioService {
+    public void guardar(Usuario u);
     public List<Usuario> listadoTotal();
     public Usuario logueado(Integer codigo);
     public Optional<Usuario> findById(Integer id);

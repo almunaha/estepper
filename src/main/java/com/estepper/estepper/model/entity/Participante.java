@@ -39,7 +39,7 @@ public class Participante extends Usuario{
     public Integer id;
 
     @ManyToOne
-    @JoinColumn(name="idGrupo")
+    @JoinColumn(name="idGrupo", nullable=true)
     private Grupo grupo; 
     
     public Participante(){
@@ -117,6 +117,15 @@ public class Participante extends Usuario{
 
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
+    }
+
+    public Integer getIdGrupo() {
+        if(grupo == null){
+            return 0;
+        }
+        else{
+            return grupo.getId();
+        } 
     }
 
     public String getFotoParticipante() {

@@ -22,17 +22,12 @@ import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.repository.ParticipanteRepository;
-import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.GrupoService;
 
 @Controller
 public class HomeController {
-
-    @Autowired
-    private UsuarioRepository repo; //inyección de dependencias del usuario dao api //ESTO NO SE PUEDE AQUÍ CREO
 
     @Autowired //inyectar recursos de la clase UsuarioService
     private UsuarioService usuario;
@@ -41,10 +36,7 @@ public class HomeController {
     private GrupoService grupo;
 
     @Autowired
-    private ParticipanteService participante;
-
-    @Autowired
-    private ParticipanteRepository repoPart;
+    private ParticipanteService participante; 
 
     @Autowired
 	private BCryptPasswordEncoder hash;
@@ -125,12 +117,14 @@ public class HomeController {
     }    
 
     @PostMapping("/process_perfil/{id}")
-    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante participante) {
-         
-       if(repoPart.findById(id).isPresent()){
-         repo.update(participante.nickname, participante.getEmail(), participante.getContrasenia(), participante.id);
-         repoPart.update(participante.id, participante.edad, participante.getGrupo());
-       } else repo.update(user.nickname, user.getEmail(), user.getContrasenia(), user.id);
+    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante p) {
+        
+        usuario.update(user.nickname, user.email, hash.encode(user.contrasenia), user.id);
+
+        if(p!=null) { 
+            participante.updateParticipante(p.edad, p.sexo, id);
+        }
+
        return "redirect:/";
     }
 
@@ -158,7 +152,7 @@ public class HomeController {
         user.setCodigo(elcodigo);
         user.setEstadoCuenta(Estado.BAJA);
         
-        repo.save(user);
+        usuario.guardar(user); 
 
         model.addAttribute("nickname", user.getNickname());
         model.addAttribute("codigo", user.getCodigo());

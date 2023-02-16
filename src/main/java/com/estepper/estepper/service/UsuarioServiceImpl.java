@@ -38,6 +38,11 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
+    public void guardar(Usuario u){
+        repo.save(u);
+    }
+
+    @Override
     public List<Usuario> listadoTotal(){
         return(List<Usuario>) repo.findAll();
     }
