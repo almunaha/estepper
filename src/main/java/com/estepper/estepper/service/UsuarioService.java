@@ -11,6 +11,7 @@ public interface UsuarioService {
     public Optional<Usuario> findById(Integer id);
 
     public void eliminarUsuario(Usuario usuario);
+    public void recuperarCodigo(String correo);
 
     public void update(String nickname, String email, String contrasenia, Integer id);
 
