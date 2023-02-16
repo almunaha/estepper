@@ -10,6 +10,7 @@ public interface GrupoService {
     public List<Grupo> listaGrupos();
     public Grupo getGrupo(Integer id); 
     public void updateParticipantes(Integer idGrupo, Integer numParticipantes);
+    public void delete(Integer id);
 
 }
 

@@ -85,6 +85,7 @@
             //convertir lo que teclea el usuario a un double
             var num1 = parseFloat(document.getElementById('peso').value);
             var num2 = parseFloat(document.getElementById('altura').value);
+            num2 = num2/100;
 
             if(num1 == '') num1 = 0.0;
             if(num2 == '') num2 = 0.0;
