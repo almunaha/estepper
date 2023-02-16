@@ -12,6 +12,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,7 +26,9 @@ public class Sesion implements Serializable{
 
     private Integer numSesion;
 
-    private Integer idParticipante;
+    @ManyToOne
+    @JoinColumn(name="idParticipante", nullable=true)
+    private Participante participante; 
 
     @Enumerated(value = EnumType.STRING)
     private EstadoSesion estado;
@@ -43,12 +47,12 @@ public class Sesion implements Serializable{
     
     }
 
-    public Sesion(Integer id, Integer numSesion, Integer idParticipante, EstadoSesion estado, String observaciones,
+    public Sesion(Integer id, Integer numSesion, Participante participante, EstadoSesion estado, String observaciones,
 
      Asistencia asistencia, double cmsPerdidos, double pesoPerdido){
         this.id = id;
         this.numSesion = numSesion;
-        this.idParticipante = idParticipante;
+        this.participante = participante;
         this.estado = estado;
         this.observaciones = observaciones;
         this.asistencia = asistencia;
@@ -72,12 +76,16 @@ public class Sesion implements Serializable{
         this.numSesion = numSesion;
     }
 
-    public Integer getIdParticipante() {
-        return idParticipante;
+    public Participante getParticipante() {
+        return participante;
     }
 
-    public void setIdParticipante(Integer idParticipante) {
-        this.idParticipante = idParticipante;
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
+    }
+
+    public Integer getIdParticipante(){
+        return participante.id;
     }
 
     public EstadoSesion getEstado() {

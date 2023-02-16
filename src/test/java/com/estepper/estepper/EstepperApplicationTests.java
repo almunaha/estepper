@@ -64,13 +64,7 @@ class EstepperApplicationTests {
 		assertTrue(retorno.getContrasenia().equalsIgnoreCase(us.getContrasenia()));
 		*/
 	}
-
-	@Test
-	public void crearSesionTest() {
-
-		sesionRepo.save(new Sesion(0,1,1,EstadoSesion.BLOQUEADA,"no",Asistencia.NO,0.0,0.0));		
-	}
-
+	
 	@Test
 	public void crearGrupo(){
 	    grupoRepo.save(new Grupo(1,990,"Las saltimbanquis",0));

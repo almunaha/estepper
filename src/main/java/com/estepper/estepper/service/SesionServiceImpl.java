@@ -1,8 +1,11 @@
 package com.estepper.estepper.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.repository.SesionRepository;
 
@@ -16,8 +19,8 @@ public class SesionServiceImpl implements SesionService{
         repo.save(s); 
     }
 
-    public Sesion buscarSesion(Integer id, Integer numSesion){ //hacerlo en una sola consulta mejor
-        return repo.findByIdParticipante(id);
+    public Sesion buscarSesion(Optional <Participante> participante, Integer numSesion){ //hacerlo en una sola consulta mejor
+        return repo.findByParticipante(participante);
     }
     
 }

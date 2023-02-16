@@ -35,8 +35,9 @@ public class Participante extends Usuario{
     @Column(nullable=true)
     @Enumerated(value = EnumType.STRING)
     public Sexo sexo;
+    
     @Column
-    public Integer id;
+    public Integer id; //diría que este sobra
 
     @ManyToOne
     @JoinColumn(name="idGrupo", nullable=true)

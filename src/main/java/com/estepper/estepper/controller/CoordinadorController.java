@@ -20,6 +20,7 @@ import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Grupo;
 
 import com.estepper.estepper.service.ParticipanteService;
+import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.GrupoService;
 
@@ -34,6 +35,9 @@ public class CoordinadorController {
 
     @Autowired // inyectar recursos de la clase GrupoService
     private GrupoService grupo;
+
+    @Autowired
+    private SesionService sesion;
 
     @GetMapping("/listado")
     public String participantes(Model model) {
@@ -77,8 +81,11 @@ public class CoordinadorController {
             grupo.updateParticipantes(idG, participantes);
 
             // crear las sesiones del participante
+            Sesion s;
             for (int i = 1; i <= 10; i++) {
-              new Sesion(0, i, idP, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
+              s = new Sesion(0, i, usuario, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
+              sesion.guardar(s);
+              
             }
         } else if ((usuario.getIdGrupo() != idG) && (usuario.getIdGrupo() != null)) { // El usuario ya está en un grupo
                                                                                       // distinto al que le quieres

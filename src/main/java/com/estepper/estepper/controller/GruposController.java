@@ -55,7 +55,7 @@ public class GruposController {
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(Grupo grupo){
-        grupoRepository.save(grupo);
+        grupoRepository.save(grupo); //hay que cambiar a service!!
         return"redirect:/listaGrupos";
     }
 
