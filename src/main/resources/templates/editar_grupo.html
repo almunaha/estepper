@@ -115,8 +115,17 @@
                             </div>
                         </div>
                         <div class="text-center p">
-                            <button type="submit" class="btn" id="btn-part">Editar</button>
+                            <button type="submit" class="btn" id="btn-part" onclick=myFunction()>Editar</button>
                         </div>
+                        <script language="JavaScript">
+                            function myFunction() {
+                                if(confirm("Desea guardar los datos?")){
+                                alert("Datos guardados exitosamente");
+                                }else{
+                                alert("Usted cancelo la acción para guardar");
+                                }
+                            }
+                        </script>
                     </div>
                </form>
             
