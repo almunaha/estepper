@@ -12,6 +12,5 @@ import com.estepper.estepper.model.entity.Sesion;
 public interface SesionRepository extends JpaRepository<Sesion, Integer>{
     Sesion findByIdParticipante(Integer idParticipante);
     Sesion findByNumSesion(Integer numSesion);
-    
 
 }

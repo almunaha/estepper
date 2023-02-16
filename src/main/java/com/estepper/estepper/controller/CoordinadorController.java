@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Sesion;
+import com.estepper.estepper.model.enums.Asistencia;
+import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.entity.Grupo;
 
 import com.estepper.estepper.service.ParticipanteService;
+import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.GrupoService;
 
@@ -26,6 +30,9 @@ public class CoordinadorController {
 
     @Autowired //inyectar recursos de la clase GrupoService
     private GrupoService grupo;
+
+    @Autowired
+    private SesionService sesion;
 
     @GetMapping("/listado")
     public String participantes(Model model){
@@ -51,7 +58,15 @@ public class CoordinadorController {
 
         Grupo g = grupo.getGrupo(idG);
 
+        //meter participante en un grupo
         part.update(idP,g);
+
+        //crear las sesiones del participante
+        Sesion s;
+        for(int i=1; i<=10; i++){
+            s = new Sesion(0, i, idP, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
+        }
+
         Integer participantes = g.getNumParticipantes()+1;
         grupo.updateParticipantes(idG, participantes);
  

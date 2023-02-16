@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Grupo;
 
 import jakarta.transaction.Transactional;
@@ -27,5 +28,9 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     @Transactional
     @Query("UPDATE Participante p SET p.edad = :edad WHERE p.id = :id")
     void update1(Integer edad, Integer id);
+    @Modifying
+    @Transactional
+    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo WHERE p.id = :id")
+    void updateParticipante(Integer edad, Sexo sexo, Integer id);
 
 }

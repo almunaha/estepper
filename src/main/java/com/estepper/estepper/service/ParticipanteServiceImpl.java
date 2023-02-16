@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.repository.ParticipanteRepository;
 
@@ -41,5 +42,10 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     public void update1(Integer edad, Integer id) {
         repo.update1(edad, id);
         
+    }
+
+    @Override
+    public void updateParticipante(Integer edad, Sexo sexo, Integer id){
+        repo.updateParticipante(edad, sexo, id);
     }
 }
