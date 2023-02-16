@@ -30,5 +30,12 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         //ALIMENTACION
         //ACTIVIDAD FISICA
     }
+
+    @Override
+    public void updateExploracion(String primeravez, Integer peso, Integer talla, Integer cmcintura, Integer edad,
+            Integer imc, Integer id) {
+        repo.updateExploracion(primeravez, peso, talla, cmcintura, edad, imc, id);
+        
+    }
     
 }

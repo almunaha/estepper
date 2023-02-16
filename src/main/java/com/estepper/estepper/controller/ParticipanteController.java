@@ -7,6 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.FaseValoracion;
@@ -94,6 +96,14 @@ public class ParticipanteController {
         model.addAttribute("exploracion", exploracion);
         return "exploracion";
 
+    }
+
+    @PostMapping("/process_exploracion/{id}")
+    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Exploracion exploracion) {
+        
+        fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, exploracion.id);
+
+       return "redirect:/";
     }
     @GetMapping("/ficha0")
     public String ficha0(){

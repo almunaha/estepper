@@ -11,15 +11,15 @@ import jakarta.persistence.Table;
 public class Exploracion extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    public Integer id;
 
     private Integer idParticipante;
-    private String primeravez;
-    private Integer peso;
-    private Integer cmcintura;
-    private Integer talla;
-    private Integer edad;
-    private Integer imc;  
+    public String primeravez;
+    public Integer peso;
+    public Integer cmcintura;
+    public Integer talla;
+    public Integer edad;
+    public Integer imc;  
 
     public Exploracion(){}
 
