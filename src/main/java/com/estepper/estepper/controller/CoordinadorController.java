@@ -77,9 +77,8 @@ public class CoordinadorController {
             grupo.updateParticipantes(idG, participantes);
 
             // crear las sesiones del participante
-            Sesion s;
             for (int i = 1; i <= 10; i++) {
-              s = new Sesion(0, i, idP, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
+              new Sesion(0, i, idP, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
             }
         } else if ((usuario.getIdGrupo() != idG) && (usuario.getIdGrupo() != null)) { // El usuario ya está en un grupo
                                                                                       // distinto al que le quieres
