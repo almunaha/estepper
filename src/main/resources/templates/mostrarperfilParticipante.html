@@ -35,7 +35,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -82,6 +82,7 @@
                 </div>
 
                 <div style="display: flex; text-align: left;">
+                    <img  width="100" th:src="${user.fotoParticipante}" />
                     <ul style="list-style: none;margin-right: 200px;margin-left: 150px;">
                         <li><i class="icono fas fa-key"></i><span th:text="' Código: ' + ${user.codigo}" /></li>
                         <li><i class="icono fas fa-envelope"></i><span th:text="' Email: ' + ${user.email}" /></li>

@@ -14,5 +14,5 @@ public interface ParticipanteService {
     public void update(Integer idParticipante, Integer edad, Grupo grupo);
     public List<Participante> listadoGrupo(Grupo grupo);
     public void update1(Integer edad, Integer id);
-    public void updateParticipante(Integer edad, Sexo sexo, Integer id);
+    public void updateParticipante(Integer edad, Sexo sexo, String fotoParticipante, Integer id);
 }

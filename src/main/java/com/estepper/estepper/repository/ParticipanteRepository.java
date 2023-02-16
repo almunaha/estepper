@@ -31,7 +31,7 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     void update1(Integer edad, Integer id);
     @Modifying
     @Transactional
-    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo WHERE p.id = :id")
-    void updateParticipante(Integer edad, Sexo sexo, Integer id);
+    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo, p.fotoParticipante = :fotoParticipante WHERE p.id = :id")
+    void updateParticipante(Integer edad, Sexo sexo, String fotoParticipante, Integer id);
 
 }

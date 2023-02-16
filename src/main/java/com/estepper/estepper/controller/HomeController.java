@@ -122,7 +122,7 @@ public class HomeController {
         usuario.update(user.nickname, user.email, hash.encode(user.contrasenia), user.id);
 
         if(p!=null) { 
-            participante.updateParticipante(p.edad, p.sexo, id);
+            participante.updateParticipante(p.edad, p.sexo, p.getFotoParticipante(), id);
         }
 
        return "redirect:/";
@@ -151,7 +151,7 @@ public class HomeController {
         }
         user.setCodigo(elcodigo);
         user.setEstadoCuenta(Estado.BAJA);
-        
+        user.setFotoParticipante("/img/p1.png");
         usuario.guardar(user); 
 
         model.addAttribute("nickname", user.getNickname());

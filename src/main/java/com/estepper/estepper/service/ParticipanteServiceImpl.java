@@ -45,7 +45,7 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }
 
     @Override
-    public void updateParticipante(Integer edad, Sexo sexo, Integer id){
-        repo.updateParticipante(edad, sexo, id);
+    public void updateParticipante(Integer edad, Sexo sexo, String fotoParticipante, Integer id){
+        repo.updateParticipante(edad, sexo, fotoParticipante, id);
     }
 }
