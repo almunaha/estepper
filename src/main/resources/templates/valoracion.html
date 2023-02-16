@@ -85,15 +85,31 @@
                 </div>
             </nav>
 
+            <div class="p-4 mt-5" id="participantes">
             <div>
                     <h3 th:text="${participante.nickname} + ': ' + ${participante.codigo}">Nombre</h3>
             </div>
-            <div>
-                <ul>
-                    <li><a class="dropdown-item" th:href="@{/findrisc}">Test de Findrisc</a></li>
-                </ul>
+            <!-- LISTADO DE FORMULARIOS DE LA FASE DE VALORACIÓN-->
+            <table class="table tablePart">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Formulario</th>
+                        <th scope="col">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody class = "buscarParticipantes">
+                    <tr>
+                        <td th:text="Exploración"></td>
+                        <td>                                
+                            <a class="btn" id="btn-part" th:href="@{'/exploracion/' + ${participante.id}}" ><i class="fa-solid fa-eye"></i></a>
+                            <a class="btn" id="btn-part"><i class="fa-solid fa-pen-to-square"></i></a>
+                        </td>
+                        <!--AÑADIR TDS CON LOS OTROS 4 FORMULARIOS-->
+                    </tr>
+                </tbody>
+            </table>
             </div>
-        
             <div>
                 <a class="btn" id="btn-part" th:href="@{/activarcuenta}">Activar cuenta</a>
                 <a class="btn" id="btn-part" th:href="@{/eliminarcuenta}">Eliminar cuenta</a>
