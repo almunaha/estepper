@@ -8,9 +8,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import com.estepper.estepper.model.entity.FaseValoracion;
+import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
+import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
@@ -22,6 +26,9 @@ public class ParticipanteController {
 
     @Autowired
     private ParticipanteService participante;
+
+    @Autowired
+    private FaseValoracionService fasevaloracion;
 
     @Autowired //inyectar recursos de la clase UsuarioService
     private UsuarioService usuario;
@@ -72,6 +79,22 @@ public class ParticipanteController {
         return "sesion1";
     }
 
+    @GetMapping("/exploracion/{id}")
+    public String exploracion(@PathVariable Integer id, Model model){
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("participante", participante.findById(id).get());
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(id);
+        Exploracion exploracion = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Exploracion) {
+                exploracion = (Exploracion) formularios.get(i);
+            }
+        }
+
+        model.addAttribute("exploracion", exploracion);
+        return "exploracion";
+
+    }
     @GetMapping("/ficha0")
     public String ficha0(){
         return "ficha0";
