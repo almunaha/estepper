@@ -2,6 +2,10 @@ package com.estepper.estepper.controller;
 
 import java.util.List;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -62,10 +66,19 @@ public class CoordinadorController {
         model.addAttribute("user", usuario);
         Grupo g = grupo.getGrupo(idG);
 
-        part.update(idP,usuario.edad, g);
-        Integer participantes = g.getNumParticipantes()+1;
-        grupo.updateParticipantes(idG, participantes);
-   
+        if(usuario.getIdGrupo() == idG){ //El usuario ya está en ese grupo
+
+            //mandar alerta ajax
+        }
+        else if(usuario.getIdGrupo() == 0){ //El usuario aún no está en ningún grupo
+            part.update(idP,usuario.edad, g);
+            Integer participantes = g.getNumParticipantes()+1;
+            grupo.updateParticipantes(idG, participantes);
+        }
+        else if((usuario.getIdGrupo() != idG) && (usuario.getIdGrupo() != null)  ){ //El usuario ya está en un grupo distinto al que le quieres añadir
+            //mandar alerta ajax
+        }
+
         return"redirect:/listaGrupos";
     } 
 }
