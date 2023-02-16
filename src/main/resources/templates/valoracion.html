@@ -16,7 +16,7 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <!--PARA EL BUSCADOR, sirve cualquiera de los dos, eliminar uno que no sé cuál es mejor en teoría-->
+    <!--PARA EL BUSCADOR-->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -73,8 +73,7 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
-                                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -87,18 +86,20 @@
             </nav>
 
             <div>
-                    <h3 th:text="${participante.nombre} + '' + ${participante.apellidos}">Nombre</h3>
+                    <h3 th:text="${participante.nickname} + ': ' + ${participante.codigo}">Nombre</h3>
             </div>
             <div>
                 <ul>
                     <li><a class="dropdown-item" th:href="@{/findrisc}">Test de Findrisc</a></li>
-                    <!-- EN VEZ DE ESE URL UNO CON /ID Y AGREGARLO A COORDCONTROLLER-->
                 </ul>
             </div>
         
             <div>
                 <a class="btn" id="btn-part" th:href="@{/activarcuenta}">Activar cuenta</a>
                 <a class="btn" id="btn-part" th:href="@{/eliminarcuenta}">Eliminar cuenta</a>
+            </div>
+            <div style="float: right;">
+                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
             </div>
         </div>
     </div>

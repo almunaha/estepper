@@ -19,6 +19,21 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <title>Editar Perfil</title>
+
+    <script type="text/javascript">
+        function elegirAvatar(sw) {
+            var pic;
+            if(sw == 0){
+                pic = "/img/avatar1.png";
+            }
+            else{
+                pic = "/img/avatar2.png";
+            }
+            document.getElementById('avatar').src = pic;
+        }
+
+    </script>
+
 </head>
 
 
@@ -58,8 +73,6 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
-                                <a class="dropdown-item" th:href="@{'/contrasenia/' + ${user.id}}">Cambiar contraseña</a>
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
@@ -72,16 +85,24 @@
                 </div>
             </nav>
 
+
             <div class="bg-white border border-1 p-5 rounded-4 ">
+                <!--
+                <img id="avatar" width="100" height="300" src="/img/avatar1.png" alt="av1">
+                <p>
+                <button onclick="elegirAvatar(1)" type="btn">Avatar 1</button>
+                <button onclick="elegirAvatar(0)" type="btn">Avatar 2</button>
+                </p>
+
+                <label for="myfile">Select a file:</label>
+                <input type="file" id="myfile" name="myfile">
+
+            -->
+
                 <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${participante.id}}" th:object="${participante}">
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Nombre: </label>
-                        <input type="text" th:field="*{nombre}" class="form-control" required/>
-                    </div>
-        
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Apellidos: </label>
-                        <input type="text" th:field="*{apellidos}" class="form-control" required/>
+                        <label class="col-4 col-form-label">Alias: </label>
+                        <input type="text" th:field="*{nickname}" class="form-control" required/>
                     </div>
         
                     <div class="input-group mt-2">
@@ -107,6 +128,81 @@
                         <input type="number" th:field="*{edad}" class="form-control" required/>
                     </div>
 
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Avatar: </label>
+                        <select id="avatar" class="form-select" th:field="*{fotoParticipante}"> 
+                            <option value = "/img/p1.png">Sin avatar</option>
+                            <option value = "/img/avatar1.png">Avatar 1</option>
+                            <option value = "/img/avatar2.png">Avatar 2</option>
+                            <option value = "/img/avatar3.png">Avatar 3</option>
+                            <option value = "/img/avatar4.png">Avatar 4</option>
+                            <option value = "/img/avatar5.png">Avatar 5</option>
+                            <option value = "/img/avatar6.png">Avatar 6</option>
+                            <option value = "/img/avatar7.png">Avatar 7</option>
+                            <option value = "/img/avatar8.png">Avatar 8</option>
+                            <option value = "/img/avatar9.png">Avatar 9</option>
+                            <option value = "/img/avatar10.png">Avatar 10</option>
+                        </select>
+                        <!--<input type="imagen" th:field="*{fotoParticipante}" class="form-control"/>-->
+
+                        <!--<img id="avatar" width="100" height="300" src="/img/avatar1.png" alt="av1">
+                        <p>
+                        <button onclick="elegirAvatar(1)" type="radio">Avatar 1</button>
+                        <button onclick="elegirAvatar(0)" type="radio">Avatar 2</button>
+                        </p>-->
+
+                    </div>
+
+
+                    <div class="avatares" >
+
+                        <div class="avatar">
+                            <img src="/img/avatar1.png" width="100%" heigh="100" alt="">
+                            <p class="numerito">1<p>
+                        </div>
+
+
+                        <div class="avatar">
+                            <img src="/img/avatar2.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito"> 2 </p>
+                        </div>
+                        <div class="avatar">
+                            <img src="/img/avatar3.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito"> 3 </p>
+                        </div>
+                        <div class="avatar">
+                            <img src="/img/avatar4.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito"> 4 </p>
+                        </div>
+                        <div class="avatar">
+                            <img src="/img/avatar5.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito"> 5 </p>
+                        </div>
+                        <div class="avatar">
+                            <img src="/img/avatar6.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito"> 6 </p>
+                        </div>
+                        <div class="avatar">
+                            <img src="/img/avatar7.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito">7</p>
+                        </div>
+                        <div class="avatar">
+                            <img src="/img/avatar8.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito"> 8 </p>
+                        </div>
+                        <div class="avatar">
+                            <img src="/img/avatar9.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito"> 9</p>
+                        </div>
+                        <div class="avatar">
+                            <img src="/img/avatar10.png" width="100%" heigh="100%" alt="">
+                            <p class="numerito"> 10 </p>
+                        </div>
+
+                    </div>
+
+                 
+                   
                     <button class="btn btn-info text-white mt-4 w-100" type="submit">Editar perfil</button>
                     
                 </form>                      

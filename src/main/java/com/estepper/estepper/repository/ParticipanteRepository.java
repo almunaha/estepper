@@ -20,10 +20,11 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     
     @Modifying 
     @Transactional
-    @Query("update Participante SET grupo = :grupo WHERE id = :idParticipante")
-    void update(Integer idParticipante, Grupo grupo);
+    @Query("update Participante SET grupo = :grupo, edad = :edad WHERE id = :idParticipante")
+    void update(Integer idParticipante, Integer edad, Grupo grupo);
 
     List<Participante> findByGrupo(Grupo grupo);
+    
     @Modifying
     @Transactional
     @Query("UPDATE Participante p SET p.edad = :edad WHERE p.id = :id")

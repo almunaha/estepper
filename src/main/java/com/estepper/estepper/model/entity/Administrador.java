@@ -6,13 +6,13 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="administradores")
-public class Administrador extends Usuario{ //habrá que añadir atributos nuevos
+public class Administrador extends Usuario{ 
 
     public Administrador(){
         super();
     }
     
-    public Administrador(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta){
-        super(id, codigo, nombre, apellidos, email, contrasenia, estadoCuenta);
+    public Administrador(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta){
+        super(id, codigo, nickname, email, contrasenia, estadoCuenta);
     }
 }

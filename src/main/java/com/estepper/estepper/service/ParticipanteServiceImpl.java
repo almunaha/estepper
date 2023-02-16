@@ -17,7 +17,7 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     private ParticipanteRepository repo; //inyección de dependencias del participante dao api
 
     @Override
-    public List<Participante> listado(){ //¿puedo hacer esto directamten sin pasar por usuario??
+    public List<Participante> listado(){ 
         return(List<Participante>) repo.findAll();
     }
 
@@ -31,8 +31,8 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }   
 
     @Override
-    public void update(Integer idParticipante, Grupo grupo){
-        repo.update(idParticipante, grupo);
+    public void update(Integer idParticipante, Integer edad, Grupo grupo){
+        repo.update(idParticipante, edad, grupo);
     }   
 
     public List<Participante> listadoGrupo (Grupo grupo){

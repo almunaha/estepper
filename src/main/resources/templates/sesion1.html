@@ -100,8 +100,7 @@
               </a>
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
-                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
+                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                 <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                   <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -113,10 +112,8 @@
         </div>
       </nav>
 
-      <!--ESTA VISTA ES PARA TODAS LAS SESIONES IGUALES!! CON ASISTENCIA FICHAS ETC-->
-
       <div class="layout-sesion p-4 mt-3">
-        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}">Sesión 1</h3> <!-- Poner según sea el numsesion-->
+        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}">Sesión 1</h3> 
         <form>
           <label for="asistencia">Asistencia</label>
           <div>
@@ -133,7 +130,7 @@
           <div><label>Tareas:</label></div>
           <div>
             <ul th:each="ficha : ${fichas}">
-              <li><a th:href="@{'/ficha0'}" th:text="${ficha.id}"></a></li> <!-- añadir atributo numero ficha en FICHA en la bd y tb el href que sea el que venga-->
+              <li><a th:href="@{'/ficha0'}" th:text="${ficha.id}"></a></li> 
 
             </ul>
           </div>

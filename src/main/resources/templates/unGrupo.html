@@ -11,11 +11,13 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/grupos.css}"> 
+
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <!--PARA EL BUSCADOR, sirve cualquiera de los dos, eliminar uno que no sé cuál es mejor en teoría-->
+    <!--PARA EL BUSCADOR-->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -59,8 +61,7 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
-                                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -73,32 +74,61 @@
             </nav>
 
             
+            <div class="contenido-grupos p-4 mt-5">
 
-            <div class="p-4 mt-5" id="participantes">
-             
-             
-              <h3>VISTA DE UN GRUPO, FALTA POR HACER</h3>
-          
-                
-                 <table class=" table tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Participantes del grupo</th>
+                <div class="encabezado-grupo">
 
-
-                        </tr>
-                    </thead>
-                    <tbody class = "buscarGrupos">
-                        <tr th:each="lis:${listadoParticipantesGrupo}">
-                            <td th:text="${lis.nombre}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <strong>Número total de participantes: </strong><p th:text="${total}"></p>
+                    <h3 th:text="'GRUPO: ' + ${nombreGrupo}"></h3>
+                    <strong th:text="'Número total de participantes: ' +${total}"></strong>
             
+                </div>
+
+               
+                
 
             </div>
+
+            <div class="container-cards">
+
+                <tr th:each="lis:${listadoParticipantesGrupo}">
+            
+                    <div class="cardi">
+                        <div class="cover"> <!--NO BORRAR ESTOS COMENTARIOS QUE NECESITAMOS VER QUE PILLE EL AVATAR CUANDO FUNCIONE EL EDITAR PERFIL-->
+                            <!--<img src="/img/p1.png" alt="">-->
+                            <!--<img src="${lis.fotoParticipante}" alt="">-->
+                            <img src="/img/avatar1.png" alt="">
+                            <div class="img-back"></div>
+                        </div>
+                        <div class="descripcion">
+                            <h2 th:text="${lis.nickname}"></h2>
+                            <h3 th:text="${lis.codigo}"></h3>
+                            <p th:text="${lis.edad} + ' ' + años"></p>
+                            <a class="botonGr" th:href="@{'/mostrarperfil/' + ${lis.id}}">Ver perfil</a>
+
+                        </div>
+                    </div>
+                
+                </tr>
+        
+               
+            </div>
+            <div style="float: right;">
+            <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
+            </div>
+
+           
+                  
+
+          
+                
+
+        
+            
+            
+           
+        
+            
+            
 
         </div>
     </div>

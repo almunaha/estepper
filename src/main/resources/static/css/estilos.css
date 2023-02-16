@@ -206,3 +206,14 @@ a{
 
 }
 
+/*AVATARES*/
+
+.avatares{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.numerito{
+    margin-left: 40%;
+}

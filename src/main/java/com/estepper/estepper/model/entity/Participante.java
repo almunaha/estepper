@@ -21,6 +21,9 @@ public class Participante extends Usuario{
     //@Column(unique=false, nullable=true)
    // private Integer idGrupo;
 
+   @Column(nullable=true)
+   private String fotoParticipante;
+
     @Column(nullable=true)
     private Integer perdidaDePeso;
     @Column(nullable=true)
@@ -36,16 +39,16 @@ public class Participante extends Usuario{
     public Integer id;
 
     @ManyToOne
-    @JoinColumn(name="idGrupo")
-    private Grupo grupo; //decimos que un grupo se va a poder unir con muchos participantes
+    @JoinColumn(name="idGrupo", nullable=true)
+    private Grupo grupo; 
     
     public Participante(){
         super();
     }
 
-    public Participante(Integer id, Integer codigo, String nombre, String apellidos, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Integer perdidaDePeso,Integer asistencia,
-    Integer edad, Integer sesionesCompletas,Sexo sexo){
-        super(id, codigo, nombre, apellidos, email, contrasenia, estadoCuenta);
+    public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Integer perdidaDePeso,Integer asistencia,
+    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante){
+        super(id, codigo, nickname, email, contrasenia, estadoCuenta);
         this.idCoordinador=idCoordinador;
         this.grupo=grupo;
         this.perdidaDePeso=perdidaDePeso;
@@ -53,6 +56,7 @@ public class Participante extends Usuario{
         this.edad=edad;
         this.sesionesCompletas=sesionesCompletas;
         this.sexo=sexo;
+        this.fotoParticipante=fotoParticipante;
 
     }
 
@@ -62,13 +66,6 @@ public class Participante extends Usuario{
     public void setIdCoordinador(Integer idCoordinador) {
         this.idCoordinador = idCoordinador;
     }
-
-    /*public Integer getIdGrupo() {
-        return grupo.getId();
-    }
-    public void setIdGrupo(Integer idGrupo) {
-        this.grupo.setId(idGrupo);
-    }*/
 
     public Sexo getSexo() {
         return sexo;
@@ -121,4 +118,23 @@ public class Participante extends Usuario{
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
+
+    public Integer getIdGrupo() {
+        if(grupo == null){
+            return 0;
+        }
+        else{
+            return grupo.getId();
+        } 
+    }
+
+    public String getFotoParticipante() {
+        return fotoParticipante;
+    }
+
+    public void setFotoParticipante(String fotoParticipante) {
+        this.fotoParticipante = fotoParticipante;
+    }
+
+    
 }

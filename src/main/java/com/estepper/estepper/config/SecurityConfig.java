@@ -19,16 +19,12 @@ public class SecurityConfig{
     @Autowired
     private UsuarioServiceImpl usuarioDetailsService;
 
-   /*@Autowired
-   private BCryptPasswordEncoder hash;*/
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        //auth.userDetailsService(usuarioDetailsService).passwordEncoder(hash);
         auth.userDetailsService(usuarioDetailsService);
     }
 
@@ -40,6 +36,8 @@ public class SecurityConfig{
             .requestMatchers("/register**").permitAll()
             .requestMatchers("/img/logo.png").permitAll()
             .requestMatchers("/process_register").permitAll()
+            .requestMatchers("/process_recuperarCodigo").permitAll()
+            .requestMatchers("/recuperarcodigo").permitAll()
             .requestMatchers("/findrisc").permitAll()
             .requestMatchers("/recomendaciones").permitAll()
             .requestMatchers("/img/agua.png").permitAll()
@@ -61,12 +59,7 @@ public class SecurityConfig{
             //permitir logout a todos
             .and().logout().permitAll();
             ;
-        /*http  redirigir según el rol del usuario 
-            .authorizeHttpRequests()
-            .requestMatchers("/").hasRole("participante")
-            .and()
-            .formLogin();
-*/
+
         http.headers().frameOptions().disable();
 
         return http.build();

@@ -13,17 +13,15 @@ import jakarta.transaction.Transactional;
 //@Repository
 //LOS repository son los DAO, que acceden a la bd  -> los que hacen las consultas a PHPYMYADMIN
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
-        Usuario findByNombre(String nombre); //select * from usuario where nombre = u.nombre 
-        Usuario findByCodigo(String codigo);
-        List<Usuario> findByApellidos(String apellidos); //Buscar por apelldios
+        Usuario findByNickname(String nickname); //select * from usuario where nombre = u.nombre 
+        Usuario findByCodigo(Integer codigo);
 
-       // Usuario update(Usuario user);
        void delete(Usuario usuario);
 
         @Modifying
         @Transactional
-        @Query("UPDATE Usuario u SET u.nombre = :nombre, u.apellidos = :apellidos, u.email = :email, u.contrasenia = :contrasenia WHERE u.id = :id")
-        void update(String nombre, String apellidos, String email, String contrasenia, Integer id);
+        @Query("UPDATE Usuario u SET u.nickname = :nickname, u.email = :email, u.contrasenia = :contrasenia WHERE u.id = :id")
+        void update(String nickname, String email, String contrasenia, Integer id);
 
 
 }

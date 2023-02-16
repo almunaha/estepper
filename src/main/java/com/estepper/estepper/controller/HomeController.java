@@ -2,6 +2,7 @@ package com.estepper.estepper.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
@@ -55,7 +57,7 @@ public class HomeController {
 
         String codigo = userDetails.getUsername(); //codigo del logueado
 
-        Usuario user = usuario.logueado(codigo); //atributos del logueado
+        Usuario user = usuario.logueado(Integer.parseInt(codigo)); //atributos del logueado
         model.addAttribute("user", user);
         if(user instanceof Coordinador){
             return "coordinador";
@@ -117,12 +119,12 @@ public class HomeController {
     @PostMapping("/process_perfil/{id}")
     public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante p) {
         
-        usuario.update(user.nombre, user.apellidos, user.email, hash.encode(user.contrasenia), user.id);
+        usuario.update(user.nickname, user.email, hash.encode(user.contrasenia), user.id);
 
         if(p!=null) { 
             participante.updateParticipante(p.edad, p.sexo, id);
         }
-        
+
        return "redirect:/";
     }
 
@@ -143,16 +145,30 @@ public class HomeController {
         hash = new BCryptPasswordEncoder();
         String encodedPassword = hash.encode(user.getContrasenia());
         user.setContrasenia(encodedPassword);
-
+        Integer elcodigo = new Random().nextInt(100000 + 1);
+        while(usuario.logueado(elcodigo) != null){
+            elcodigo = new Random().nextInt(100000 + 1);
+        }
+        user.setCodigo(elcodigo);
         user.setEstadoCuenta(Estado.BAJA);
         
         usuario.guardar(user); 
 
-        model.addAttribute("nombre", user.getNombre());
+        model.addAttribute("nickname", user.getNickname());
         model.addAttribute("codigo", user.getCodigo());
         model.addAttribute("estadoCuenta", user.getEstadoCuenta());        
         
         return "register_success";
     }
     
+    @GetMapping("/recuperarcodigo")
+    public String recuperarCodigo(){
+        return "recuperarCodigo";
+    }
+
+    @PostMapping("/process_recuperarCodigo")
+    public String procesoRecuperarCodigo(@RequestParam(value = "correo") String correo){
+        usuario.recuperarCodigo(correo);
+        return "redirect:/login";
+    }
 }

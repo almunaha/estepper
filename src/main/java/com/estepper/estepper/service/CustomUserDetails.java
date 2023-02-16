@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.estepper.estepper.model.entity.Usuario;
 
-//se utiliza?
 public class CustomUserDetails implements UserDetails{
 
     private Usuario user;
@@ -53,7 +52,7 @@ public class CustomUserDetails implements UserDetails{
     }
 
     public String getNombre() {
-        return user.getNombre();
+        return user.getNickname();
     }
 
     public String getEstadoCuenta() {

@@ -5,15 +5,15 @@ import java.util.Optional;
 
 import com.estepper.estepper.model.entity.Usuario;
 
-//Operaciones 
 public interface UsuarioService {
     public void guardar(Usuario u);
     public List<Usuario> listadoTotal();
-    public Usuario logueado(String codigo);
+    public Usuario logueado(Integer codigo);
     public Optional<Usuario> findById(Integer id);
 
     public void eliminarUsuario(Usuario usuario);
+    public void recuperarCodigo(String correo);
 
-    public void update(String nombre, String apellidos, String email, String contrasenia, Integer id);
+    public void update(String nickname, String email, String contrasenia, Integer id);
 
 }

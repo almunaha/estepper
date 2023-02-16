@@ -95,8 +95,6 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
-                                <a class="dropdown-item" th:href="@{'/contrasenia/' + ${user.id}}">Cambiar contraseña</a>
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
@@ -112,13 +110,8 @@
             <div class="bg-white border border-1 p-5 rounded-4 ">
                 <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${user.id}}" th:object="${user}">
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Nombre: </label>
-                        <input type="text" th:field="*{nombre}" class="form-control" required />
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Apellidos: </label>
-                        <input type="text" th:field="*{apellidos}" class="form-control" required />
+                        <label class="col-4 col-form-label">Alias: </label>
+                        <input type="text" th:field="*{nickname}" class="form-control" required />
                     </div>
 
                     <div class="input-group mt-2">

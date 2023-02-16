@@ -64,9 +64,7 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
-                                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
-                                <a class="dropdown-item" th:ref="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -80,7 +78,7 @@
             <div style="text-align: center;">
 
                 <div style="margin: 20px; color: #13405d;">
-                    <h3 th:text="${user.nombre} + ' ' + ${user.apellidos}">Nombre</h3>
+                    <h3 th:text="${user.nickname}">Nombre</h3>
                 </div>
 
                 <div style="display: flex; text-align: center;">
@@ -93,7 +91,9 @@
                     </ul>
                   
                 </div>
+                <a class="btn" id="btn-part"th:href="@{'/perfil/' + ${user.id}}" >Editar perfil</a>
             </div>
+            
 
         </div>
 
