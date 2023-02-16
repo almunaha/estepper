@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
@@ -166,4 +167,14 @@ public class HomeController {
         return "register_success";
     }
     
+    @GetMapping("/recuperarcodigo")
+    public String recuperarCodigo(){
+        return "recuperarCodigo";
+    }
+
+    @PostMapping("/process_recuperarCodigo")
+    public String procesoRecuperarCodigo(@RequestParam(value = "correo") String correo){
+        //usuario.recuperarCodigo(correo);
+        return "redirect:/login";
+    }
 }

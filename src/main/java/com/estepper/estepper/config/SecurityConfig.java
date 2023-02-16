@@ -36,6 +36,8 @@ public class SecurityConfig{
             .requestMatchers("/register**").permitAll()
             .requestMatchers("/img/logo.png").permitAll()
             .requestMatchers("/process_register").permitAll()
+            .requestMatchers("/process_recuperarCodigo").permitAll()
+            .requestMatchers("/recuperarcodigo").permitAll()
             .requestMatchers("/findrisc").permitAll()
             .requestMatchers("/recomendaciones").permitAll()
             .requestMatchers("/img/agua.png").permitAll()
