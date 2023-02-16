@@ -101,7 +101,7 @@
 
                 <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${participante.id}}" th:object="${participante}">
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Nombre: </label>
+                        <label class="col-4 col-form-label">Alias: </label>
                         <input type="text" th:field="*{nickname}" class="form-control" required/>
                     </div>
         
