@@ -78,7 +78,8 @@ public class ParticipanteController {
     }
 
     @GetMapping("/progreso")
-    public String progreso(){
+    public String progreso(Model model){
+        model.addAttribute("user", getUsuario());
         return "progreso";
     }
 
