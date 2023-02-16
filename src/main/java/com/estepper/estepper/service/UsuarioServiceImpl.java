@@ -51,4 +51,10 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     public void eliminarUsuario(Usuario u){
         repo.delete(u);
     }
+
+    @Override
+    public void recuperarCodigo(String correo) {
+        
+        
+    }
 }

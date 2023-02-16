@@ -174,7 +174,7 @@ public class HomeController {
 
     @PostMapping("/process_recuperarCodigo")
     public String procesoRecuperarCodigo(@RequestParam(value = "correo") String correo){
-        //usuario.recuperarCodigo(correo);
+        usuario.recuperarCodigo(correo);
         return "redirect:/login";
     }
 }
