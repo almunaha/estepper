@@ -7,13 +7,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
-import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.entity.Grupo;
-import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.Sexo;
-import com.estepper.estepper.repository.SesionRepository;
 import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.repository.GrupoRepository;
 
@@ -22,8 +18,6 @@ class EstepperApplicationTests {
 
 	@Autowired
 	private UsuarioRepository usuarioRepo;
-	@Autowired
-	private SesionRepository sesionRepo;
 	@Autowired
 	private BCryptPasswordEncoder hash;
 	@Autowired
