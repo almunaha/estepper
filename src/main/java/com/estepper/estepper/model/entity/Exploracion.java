@@ -13,7 +13,6 @@ public class Exploracion extends FaseValoracion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
-    private Integer idParticipante;
     public String primeravez;
     public Integer peso;
     public Integer cmcintura;
@@ -40,14 +39,6 @@ public class Exploracion extends FaseValoracion {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getIdParticipante() {
-        return idParticipante;
-    }
-
-    public void setIdParticipante(Integer idParticipante) {
-        this.idParticipante = idParticipante;
     }
 
     public String getPrimeravez() {

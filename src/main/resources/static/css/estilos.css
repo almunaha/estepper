@@ -6,6 +6,10 @@ a{
     text-decoration: none;
 }
 
+#ojo:hover{
+    color: grey;
+}
+
 #sidebar-container{ /* menu lateral abierto*/
     background-color: #13405d;
     color: white;

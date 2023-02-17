@@ -69,7 +69,7 @@ public class ParticipanteController {
         //necesito idParticipante y numSesion para saber el id de la sesión correspondiente
         model.addAttribute("user", getUsuario());
         //sesión seleccionada
-        Sesion sesion = ses.buscarSesion(participante.findById(id), 1); 
+        Sesion sesion = ses.buscarSesion(participante.findById(id), 1); //cambiar segun sesion
         model.addAttribute("sesion", sesion); 
 
         //lista de fichas de la sesión seleccionada a través del idSesion
@@ -99,7 +99,7 @@ public class ParticipanteController {
     }
 
     @PostMapping("/process_exploracion/{id}")
-    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Exploracion exploracion) {
+    public String processExploracion(@PathVariable("id") Integer id, @ModelAttribute Exploracion exploracion) {
         
         fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, exploracion.id);
 
