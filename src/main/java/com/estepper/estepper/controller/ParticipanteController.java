@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.FaseValoracion;
 import com.estepper.estepper.model.entity.Exploracion;
+import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
@@ -105,6 +106,38 @@ public class ParticipanteController {
 
        return "redirect:/";
     }
+
+    @GetMapping("/findrisc/{id}")
+    public String findrisc(@PathVariable Integer id, Model model){
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("participante", participante.findById(id).get());
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(id);
+        Findrisc findrisc = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Findrisc) {
+                findrisc = (Findrisc) formularios.get(i);
+            }
+        }
+
+        model.addAttribute("findrisc", findrisc);
+        return "findriscPart";
+
+    }
+
+    @PostMapping("/process_findrisc/{id}")
+    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Findrisc findrisc) {
+        
+        fasevaloracion.updateFindrisc(findrisc.id,findrisc.idParticipante,findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura, findrisc.ptosactfisica,
+        findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes, findrisc.puntuacion,
+        findrisc.escalarriesgo);
+
+        if((findrisc.puntosedad >= 35) & (findrisc.puntuacion >= 15)){
+            fasevaloracion.crearFormulariosNuevos(findrisc.idParticipante);
+        }
+
+       return "redirect:/";
+    }
+
     @GetMapping("/ficha0")
     public String ficha0(){
         return "ficha0";

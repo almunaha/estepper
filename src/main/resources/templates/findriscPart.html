@@ -18,7 +18,7 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <title>Formulario de Exploración</title>
+    <title>Formulario de Findrisc</title>
 
 </head>
 
@@ -89,40 +89,80 @@
 
             <div class="bg-white border border-1 p-5 rounded-4 ">
 
-                <form class="form-perfil" method="post" th:action="@{'/process_exploracion/' + ${participante.id}}" th:object="${exploracion}">
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">¿Es la primera vez que acude al programa? </label>
-                        <select th:field="*{primeravez}"class="form-control" >
-                            <option th:value="si" th:text="SÍ"></option>
-                            <option th:value="no" th:text="NO"></option>
-                        </select> 
-                    </div>
+                <form class="form-perfil" method="post" th:action="@{'/process_findrisc/' + ${participante.id}}" th:object="${findrisc}">
         
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Peso (kg): </label>
-                        <input type="number" th:field="*{peso}" class="form-control" />
+                        <label class="col-4 col-form-label">Edad: </label>
+                        <input type="number" th:field="*{puntosedad}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Perímetro de cintura (cm): </label>
-                        <input type="number" th:field="*{cmcintura}" class="form-control" />
+                        <input type="number" th:field="*{puntoscmcintura}" class="form-control" />
                     </div>
 
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Talla/Altura (cm): </label>
-                        <input type="number" th:field="*{talla}" class="form-control" />
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Edad: </label>
-                        <input type="number" th:field="*{edad}" class="form-control" />
-                    </div>
-                  
-                    <!-- FALTA QUE SE CALCULE IMC DIRECTAMENTE-->
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">IMC: </label>
-                        <input type="number" th:field="*{imc}" class="form-control" />
+                        <input type="number" th:field="*{puntosimc}" class="form-control" />
                     </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">¿Realiza habitualmente al menos 30 minutos de actividad física en el trabajo y/o en el tiempo libre? </label>
+                        <select th:field="*{ptosactfisica}"class="form-control" >
+                            <option th:value=0 th:text="SÍ"></option>
+                            <option th:value=2 th:text="NO"></option>
+                        </select> 
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">¿Con qué frecuencia consume verduras o fruta? </label>
+                        <select th:field="*{ptosfrecfruta}"class="form-control" >
+                            <option th:value=0 th:text="|A diario|"></option>
+                            <option th:value=1 th:text="|No a diario|"></option>
+                        </select> 
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">¿Toma medicación para la presión regularmente? </label>
+                        <select th:field="*{ptosmedicacion}"class="form-control" >
+                            <option th:value=2 th:text="SÍ"></option>
+                            <option th:value=0 th:text="NO"></option>
+                        </select> 
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">¿Le han encontrado alguna vez valores de glucosa (azucar) altos? </label>
+                        <select th:field="*{ptosglucosa}"class="form-control" >
+                            <option th:value=5 th:text="SÍ"></option>
+                            <option th:value=0 th:text="NO"></option>
+                        </select> 
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">¿Alguno de sus familiares allegados y otros parientes han sido diagnosticados de diabetes (tipo 1 o tipo 2)? </label>
+                        <select th:field="*{ptosdiabetes}"class="form-control" >
+                            <option th:value=5 th:text="|SÍ: Padres, hermanos o hijos propios|"></option>
+                            <option th:value=3 th:text="|SÍ: Abuelos, tíos, primos, hermanos|"></option>
+                            <option th:value=0 th:text="NO"></option>
+                        </select> 
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Puntuación de Findrisc: </label>
+                        <input type="number" th:field="*{puntuacion}" class="form-control" />
+                    </div>
+                  
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">¿Alguno de sus familiares allegados y otros parientes han sido diagnosticados de diabetes (tipo 1 o tipo 2)? </label>
+                        <select th:field="*{escalarriesgo}"class="form-control" >
+                            <option th:value="Bajo" th:text="Bajo"></option>
+                            <option th:value="Alto" th:text="Alto"></option>
+                            <option th:value="|Ligeramente elevado|" th:text="|Ligeramente elevado|"></option>
+                            <option th:value="Moderado" th:text="Moderado"></option>
+                            <option th:value="|Muy alto|" th:text="|Muy alto|"></option>
+                        </select> 
+                    </div>
+                    
                     <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Guardar</button>
                     <script language="JavaScript">
                         function myFunction() {
@@ -136,7 +176,7 @@
                     
                 </form>                      
             </div> 
-
+            
             <div style="float: right;">
                 <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
                 </div>
