@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,9 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.service.UsuarioService;
+
+import jakarta.validation.constraints.Null;
+
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.GrupoService;
@@ -113,7 +118,16 @@ public class HomeController {
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
         if(elusuario instanceof Participante) {
-            model.addAttribute("participante",  participante.findById(id).get());
+            Participante p = participante.findById(id).get();
+            model.addAttribute("participante",  p);
+
+            //Nombre del grupo
+            String grupo = "No asignado";
+
+            if(p.getGrupo() != null )  grupo =  p.getGrupo().getNombre();
+
+            model.addAttribute("grupo", grupo);
+
             return "mostrarperfilParticipante";
         }
         else return "mostrarperfil";
@@ -129,7 +143,7 @@ public class HomeController {
             participante.updateParticipante(p.edad, p.sexo, p.getFotoParticipante(), id);
         }
 
-       return "redirect:/";
+       return "redirect:/mostrarperfil/{id}";
     }
 
     @GetMapping("/baja")
@@ -146,17 +160,24 @@ public class HomeController {
 
     @PostMapping("/process_register") //Procesar el registro
     public String processRegister(Participante user, Model model) { //Model para poder enviar información a la vista
+                
         hash = new BCryptPasswordEncoder();
         String encodedPassword = hash.encode(user.getContrasenia());
         user.setContrasenia(encodedPassword);
+
         Integer elcodigo = new Random().nextInt(100000 + 1);
+
+        //comprobar que no existe un usuario con ese codigo
         while(usuario.logueado(elcodigo) != null){
             elcodigo = new Random().nextInt(100000 + 1);
         }
+
         user.setCodigo(elcodigo);
         user.setEstadoCuenta(Estado.BAJA);
         user.setFotoParticipante("/img/p1.png");
+        
         usuario.guardar(user); 
+
         fasevaloracion.crearFormularios(user.id);
 
         model.addAttribute("nickname", user.getNickname());

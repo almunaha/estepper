@@ -17,7 +17,7 @@
 
 <body class="bg-light d-flex flex-column justify-content-center align-items-center vh-100">
     <div class="bg-white border border-1 p-5 rounded-4" style="width: 30%">
-        <form class="form-signin" method="post" th:action="@{/process_register}" th:object="${user}">
+        <form class="form-signin" id="form-registro" method="post" th:action="@{/process_register}" th:object="${user}">
 
             <h2 class="text-center mb-4">Registro</h2>
             <div th:if="${param.error}" class="alert alert-error">
@@ -27,13 +27,13 @@
             <label>Alias/Nickname </label>
             <div class="input-group mt-2">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
-                <input type="text" h:field="*{nickname}" class="form-control" required />
+                <input type="text" th:field="*{nickname}" class="form-control" required />
             </div>
 
             <label class="mt-3">Correo electrónico </label>
             <div class="input-group mt-2">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
-                <input type="email" th:field="*{email}" class="form-control" required />
+                <input type="email" th:field="*{email}" class="form-control" id="email" required />
             </div>
 
             <label class="mt-3">Contraseña </label>
@@ -52,16 +52,61 @@
                     id="ojo2"><i class="fa-solid fa-eye-slash" onmouseover="this.style.color = '#aaa'" onmouseout="this.style.color = '#000'"></i></span>
             </div>
 
-            <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Registrarse</button>
+            <button class="btn btn-info text-white mt-4 w-100" type="submit" id="btn-registro">Registrarse</button>
 
             <script language="JavaScript">
-                function myFunction() {
+                //validar nombre solo letras
+                //validar que no exista ese correo Y SEA CORREO
+                //cambiar servidor
+                //ESTA EN PROCESO
 
-                    if (document.getElementById('pass1').value != document.getElementById('pass2').value) {
-                        alert("Las contraseñas no coinciden.")
+
+                    const formulario = $('form-registro');
+                    var pass1 = document.getElementById('pass1').value;
+                    var pass2 = document.getElementById('pass2').value;
+
+                    formulario.submit(function (event) {
+                        event.preventDefault();
+
+                        if (pass1 == pass2) {
+
+                           // $('#error_form').hide();
+                            event.currentTarget.submit();
+
+
+                        } else {
+                            alert("contraseñas no coinciden")
+                            //$('#error_form').show();
+                        }
+                    });
+                  
+                
+
+               const form = document.getElementById('#form-registro');
+               const email = document.getElementById('#email');
+               const parrafoE = document.getElementById('#errorEmail');
+               const parrafoP = document.getElementById('#errorPass');
+
+               
+
+              /* form.addEventListener("submit", e=>{
+                    e.preventDefault()
+                    let regexEmail = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"; //expresión regular para email para controlar que ponga .com .es etc
+                    let entrar = false;
+                    
+                    if(!regexEmail.test(email.value)){ //validar email
+                        entrar = true;
+                        parrafoE.innerHTML = '<p> El email no es válido </p>';
                     }
-                }
 
+                    if (document.getElementById('#pass1').value != document.getElementById('#pass2').value) { //validar contraseña
+                        entrar = true;
+                        parrafoP.innerHTML = '<p> Las contraseñas no coinciden </p>';
+                    }
+               }
+               )     */           
+
+               /* Mostrar y ocultar contraseñas */
                 const ojo = document.querySelector("#ojo");
 
                 ojo.addEventListener('click', function () {
