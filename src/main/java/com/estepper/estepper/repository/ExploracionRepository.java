@@ -12,8 +12,8 @@ import com.estepper.estepper.model.enums.Sexo;
    public interface ExploracionRepository extends JpaRepository<Exploracion, Integer>{
         @Modifying
         @Transactional
-        @Query("UPDATE Exploracion e SET e.primeravez = :primeravez, e.sexo = :sexo, e.peso = :peso, e.talla = :talla, e.cmcintura = :cmcintura, e.edad = :edad, e.imc = :imc WHERE id = :id")
-        void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad, Integer imc, Integer id);
+        @Query("UPDATE Exploracion e SET e.primeravez = :primeravez, e.sexo = :sexo, e.peso = :peso, e.talla = :talla, e.cmcintura = :cmcintura, e.edad = :edad, e.imc = :imc WHERE e.idParticipante = :idParticipante")
+        void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad, Integer imc, Integer idParticipante);
 
         Exploracion findByIdParticipante(Integer idParticipante);
    }

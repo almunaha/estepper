@@ -57,10 +57,10 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     }
 
     @Override
-    public void updateFindrisc(Integer id,Integer idParticipante,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica,
+    public void updateFindrisc(Integer id,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica,
     Integer ptosfrecfruta, Integer ptosmedicacion, Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion,
     String escalarriesgo){
-        repoF.updateFindrisc(id, idParticipante, puntosedad, puntosimc, puntoscmcintura, ptosactfisica, ptosfrecfruta, ptosmedicacion, ptosglucosa, ptosdiabetes, puntuacion, escalarriesgo);
+        repoF.updateFindrisc(id, puntosedad, puntosimc, puntoscmcintura, ptosactfisica, ptosfrecfruta, ptosmedicacion, ptosglucosa, ptosdiabetes, puntuacion, escalarriesgo);
     }
     
     @Override
