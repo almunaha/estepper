@@ -111,7 +111,7 @@ public class ParticipanteController {
         fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.sexo, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, id);
         fasevaloracion.actualizarFindrisc(exploracion, findrisc);
 
-       return "redirect:/";
+        return "redirect:/valoracion/{id}";
     }
 
     @GetMapping("/findrisc/{id}")
@@ -148,7 +148,7 @@ public class ParticipanteController {
             fasevaloracion.crearFormulariosNuevos(findrisc.idParticipante);
         }
 
-       return "redirect:/";
+        return "redirect:/valoracion/{id}";
     }
 
     @GetMapping("/activarcuenta/{id}")
@@ -166,7 +166,7 @@ public class ParticipanteController {
         }
         fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().id);
 
-       return "redirect:/";
+       return "redirect:/valoracion/{id}";
     }
 
     @GetMapping("/eliminarcuenta/{id}")

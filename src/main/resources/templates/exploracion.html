@@ -136,7 +136,7 @@
                             var altura = parseInt(document.getElementById('altura').value);
                             altura = altura/100;
                             var resultado = peso/(altura*altura);
-                            document.getElementById('imc').value = resultado.toFixed(2);
+                            document.getElementById('imc').value = resultado.toFixed(0);
                         }
                       
                         document.getElementById('peso').addEventListener('input', calcularpuntuacion);
