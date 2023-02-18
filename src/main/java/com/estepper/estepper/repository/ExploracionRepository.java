@@ -16,6 +16,11 @@ import com.estepper.estepper.model.enums.Sexo;
         void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad, Integer imc, Integer idParticipante);
 
         Exploracion findByIdParticipante(Integer idParticipante);
+
+        @Modifying
+        @Transactional
+        @Query("DELETE FROM Exploracion e WHERE e.idParticipante = :idParticipante")
+        void deleteByIdParticipante(Integer idParticipante);
    }
 
 

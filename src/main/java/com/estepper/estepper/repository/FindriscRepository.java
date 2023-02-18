@@ -14,6 +14,11 @@ import com.estepper.estepper.model.entity.Findrisc;
         void updateFindrisc(Integer idParticipante,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica,
         Integer ptosfrecfruta, Integer ptosmedicacion, Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion,
         String escalarriesgo);
+
+        @Modifying
+        @Transactional
+        @Query("DELETE FROM Findrisc e WHERE e.idParticipante = :idParticipante")
+        void deleteByIdParticipante(Integer idParticipante);
     }
 
 

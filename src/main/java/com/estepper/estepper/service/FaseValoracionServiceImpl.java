@@ -123,8 +123,8 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
 
     @Override
     public void eliminarcuenta(Integer id){
-        repoE.deleteById(id);
-        repoF.deleteById(id);
+        repoE.deleteByIdParticipante(id);
+        repoF.deleteByIdParticipante(id);
         repoP.deleteById(id);
     }
 }

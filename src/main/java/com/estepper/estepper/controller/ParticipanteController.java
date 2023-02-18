@@ -151,7 +151,7 @@ public class ParticipanteController {
        return "redirect:/";
     }
 
-    @PostMapping("/activarcuenta/{id}")
+    @GetMapping("/activarcuenta/{id}")
     public String processActCuenta(@PathVariable("id") Integer id) {
         List<FaseValoracion> formularios = fasevaloracion.faseValoracion(id);
         Findrisc findrisc = null;
@@ -169,10 +169,9 @@ public class ParticipanteController {
        return "redirect:/";
     }
 
-    @PostMapping("/eliminarcuenta/{id}")
+    @GetMapping("/eliminarcuenta/{id}")
     public String processElimCuenta(@PathVariable("id") Integer id) {
         fasevaloracion.eliminarcuenta(id);
-        usuario.eliminarUsuario(usuario.findById(id).get());
 
        return "redirect:/";
     }
