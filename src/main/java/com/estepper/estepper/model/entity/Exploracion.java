@@ -20,7 +20,9 @@ public class Exploracion extends FaseValoracion {
     public Integer edad;
     public Integer imc;  
 
-    public Exploracion(){}
+    public Exploracion(){
+        super();
+    }
 
     public Exploracion(Integer id, Integer idParticipante,String primeravez, Integer peso, Integer cmcintura, Integer talla, Integer edad, Integer imc ){
         super(id, idParticipante);
