@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.repository.UsuarioRepository;
+import com.estepper.estepper.model.enums.Estado;
 
 @Service
 public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
@@ -58,8 +59,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
-    public void update(String nickname, String email, String contrasenia, Integer id) {
-        repo.update(nickname, email, contrasenia, id);
+    public void update(String nickname, String email, String contrasenia, Estado estado, Integer id) {
+        repo.update(nickname, email, contrasenia, estado, id);
         
     }
     

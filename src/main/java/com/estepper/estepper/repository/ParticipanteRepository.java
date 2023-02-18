@@ -17,21 +17,11 @@ import jakarta.transaction.Transactional;
 public interface ParticipanteRepository extends JpaRepository<Participante, Integer> {
     List<Participante> findAll();
     Optional<Participante> findById(Integer id);
-    
-    @Modifying 
-    @Transactional
-    @Query("update Participante SET grupo = :grupo, edad = :edad WHERE id = :idParticipante")
-    void update(Integer idParticipante, Integer edad, Grupo grupo);
-
     List<Participante> findByGrupo(Grupo grupo);
     
     @Modifying
     @Transactional
-    @Query("UPDATE Participante p SET p.edad = :edad WHERE p.id = :id")
-    void update1(Integer edad, Integer id);
-    @Modifying
-    @Transactional
-    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo, p.fotoParticipante = :fotoParticipante WHERE p.id = :id")
-    void updateParticipante(Integer edad, Sexo sexo, String fotoParticipante, Integer id);
+    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo, p.fotoParticipante = :fotoParticipante, p.grupo = :grupo, p.asistencia = :asistencia, p.idCoordinador = :idCoor, p.perdidaDePeso = :perdidadepeso, p.sesionesCompletas = :sesionescompletas WHERE p.id = :id")
+    void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Integer perdidadepeso, Integer sesionescompletas, Integer id);
 
 }

@@ -31,21 +31,12 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }   
 
     @Override
-    public void update(Integer idParticipante, Integer edad, Grupo grupo){
-        repo.update(idParticipante, edad, grupo);
-    }   
+    public void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Integer perdidadepeso, Integer sesionescompletas, Integer id){
+        repo.update(edad, sexo, fotoParticipante, grupo, asistencia, idCoor, perdidadepeso, sesionescompletas, id);
+    }
 
+    @Override
     public List<Participante> listadoGrupo (Grupo grupo){
         return repo.findByGrupo(grupo);
-    }
-    @Override
-    public void update1(Integer edad, Integer id) {
-        repo.update1(edad, id);
-        
-    }
-
-    @Override
-    public void updateParticipante(Integer edad, Sexo sexo, String fotoParticipante, Integer id){
-        repo.updateParticipante(edad, sexo, fotoParticipante, id);
     }
 }

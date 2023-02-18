@@ -101,9 +101,15 @@ public class ParticipanteController {
 
     @PostMapping("/process_exploracion/{id}")
     public String processExploracion(@PathVariable("id") Integer id, @ModelAttribute Exploracion exploracion) {
-        
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(id);
+        Findrisc findrisc = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Findrisc) {
+                findrisc = (Findrisc) formularios.get(i);
+            }
+        }
         fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.sexo, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, id);
-        fasevaloracion.actualizarFindrisc(exploracion);
+        fasevaloracion.actualizarFindrisc(exploracion, findrisc);
 
        return "redirect:/";
     }
@@ -158,7 +164,7 @@ public class ParticipanteController {
                 exploracion = (Exploracion) formularios.get(i);
             }
         }
-        fasevaloracion.activarcuenta(exploracion, findrisc, id);
+        fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().id);
 
        return "redirect:/";
     }

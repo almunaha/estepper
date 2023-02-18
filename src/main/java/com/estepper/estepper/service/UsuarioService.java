@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.enums.Estado;
 
 public interface UsuarioService {
     public void guardar(Usuario u);
@@ -14,6 +15,6 @@ public interface UsuarioService {
     public void eliminarUsuario(Usuario usuario);
     public void recuperarCodigo(String correo);
 
-    public void update(String nickname, String email, String contrasenia, Integer id);
+    public void update(String nickname, String email, String contrasenia, Estado estado, Integer id);
 
 }

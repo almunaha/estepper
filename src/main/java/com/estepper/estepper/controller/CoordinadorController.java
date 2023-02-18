@@ -76,7 +76,7 @@ public class CoordinadorController {
 
             // mandar alerta ajax
         } else if (usuario.getIdGrupo() == 0) { // El usuario aún no está en ningún grupo
-            part.update(idP, usuario.edad, g);
+            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g, usuario.getAsistencia(), usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
             grupo.updateParticipantes(idG, participantes);
 

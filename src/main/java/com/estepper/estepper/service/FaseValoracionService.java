@@ -16,7 +16,7 @@ public interface FaseValoracionService {
     Integer ptosfrecfruta, Integer ptosmedicacion, Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion,
     String escalarriesgo);
     public Exploracion findByIdParticipante(Integer id);
-    public void actualizarFindrisc(Exploracion exploracion);
-    public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id);
+    public void actualizarFindrisc(Exploracion exploracion, Findrisc findrisc);
+    public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id, Integer idCoor);
     public void eliminarcuenta(Integer id);
 }

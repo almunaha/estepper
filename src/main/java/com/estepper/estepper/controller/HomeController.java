@@ -133,10 +133,10 @@ public class HomeController {
     @PostMapping("/process_perfil/{id}")
     public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante p) {
         
-        usuario.update(user.nickname, user.email, hash.encode(user.contrasenia), user.id);
+        usuario.update(user.nickname, user.email, hash.encode(user.contrasenia), user.estadoCuenta, user.id);
 
         if(p!=null) { 
-            participante.updateParticipante(p.edad, p.sexo, p.getFotoParticipante(), id);
+            participante.update(p.edad, p.sexo, p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(), p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas() ,id);
         }
 
        return "redirect:/mostrarperfil/{id}";
