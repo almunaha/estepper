@@ -13,6 +13,8 @@ import com.estepper.estepper.model.entity.Exploracion;
         @Transactional
         @Query("UPDATE Exploracion SET primeravez = :primeravez, peso = :peso, talla = :talla, cmcintura = :cmcintura, edad = :edad, imc = :imc WHERE id = :id")
         void updateExploracion(String primeravez, Integer peso, Integer talla, Integer cmcintura, Integer edad, Integer imc, Integer id);
+
+        Exploracion findByIdParticipante(Integer idParticipante);
    }
 
 

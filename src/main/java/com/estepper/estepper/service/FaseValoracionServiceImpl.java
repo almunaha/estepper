@@ -62,4 +62,24 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         repoF.updateFindrisc(id, idParticipante, puntosedad, puntosimc, puntoscmcintura, ptosactfisica, ptosfrecfruta, ptosmedicacion, ptosglucosa, ptosdiabetes, puntuacion, escalarriesgo);
     }
     
+    @Override
+    public Exploracion findByIdParticipante(Integer id){
+        return repoE.findByIdParticipante(id);
+
+    }
+
+    @Override
+    public void actualizarFindrisc(Exploracion exploracion){
+        //IMPLEMENTAR
+    }
+
+    @Override
+    public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id){
+        //IMPLEMENTAR
+    }
+
+    @Override
+    public void eliminarcuenta(Integer id){
+        //IMPLEMENTAR
+    }
 }

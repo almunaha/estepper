@@ -27,7 +27,6 @@ public class SecurityConfig{
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(usuarioDetailsService);
     }
-
     
    @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception{
