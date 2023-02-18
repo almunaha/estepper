@@ -33,6 +33,11 @@ public class GrupoServiceImpl implements GrupoService{
     @Override
     public void delete(Integer id) {
         repo.delete(repo.findById(id).get());
+    }   
+    
+    @Override
+    public void save(Grupo grupo) {
+        repo.save(grupo);
     }    
 
 

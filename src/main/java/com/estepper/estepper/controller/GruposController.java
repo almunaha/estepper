@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Usuario;
-import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
 
@@ -27,9 +26,6 @@ public class GruposController {
 
     @Autowired //inyectar recursos de la clase GrupoService
     private GrupoService grupo;
-
-    @Autowired 
-    private GrupoRepository grupoRepository; //PREGUNTAR SI ESTO SE PUEDE HACER
 
     @Autowired 
     private ParticipanteService part;
@@ -54,8 +50,8 @@ public class GruposController {
     }
 
     @PostMapping("/grupos/guardar")
-    public String guardarGrupo(Grupo grupo){
-        grupoRepository.save(grupo); //hay que cambiar a service!!
+    public String guardarGrupo(Grupo elgrupo){
+        grupo.save(elgrupo); 
         return"redirect:/listaGrupos";
     }
 

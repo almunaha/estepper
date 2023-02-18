@@ -43,24 +43,14 @@ public class CoordinadorController {
     public String participantes(Model model) {
         List<Participante> listado = part.listado();
         model.addAttribute("listado", listado);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-        }
-
-        String codigo = userDetails.getUsername(); // codigo del logueado
-
-        Usuario usuario = user.logueado(Integer.parseInt(codigo)); // atributos del logueado
-        model.addAttribute("user", usuario);
+        model.addAttribute("user", getUsuario());
         return "participantes";
     }
 
     @GetMapping("/valoracion/{id}")
     public String fasedevaloracion(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("participante", part.findById(id).get());
-        model.addAttribute("user", user.findById(id).get());
+        model.addAttribute("user", getUsuario());
         model.addAttribute("idparticipante", id);
         return "valoracion";
     }
@@ -69,7 +59,7 @@ public class CoordinadorController {
     public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG,
             Model model) {
         Participante usuario = part.findById(idP).get();
-        model.addAttribute("user", usuario);
+        model.addAttribute("user", getUsuario());
         Grupo g = grupo.getGrupo(idG);
 
         if (usuario.getIdGrupo() == idG) { // El usuario ya está en ese grupo
@@ -94,5 +84,19 @@ public class CoordinadorController {
         }
 
         return "redirect:/listaGrupos";
+    }
+
+    public Usuario getUsuario(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario usuario = user.logueado(Integer.parseInt(codigo));
+        return usuario;
     }
 }
