@@ -99,6 +99,14 @@
                     </div>
         
                     <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Género: </label>
+                        <select th:field="*{sexo}"class="form-control" >
+                            <option th:value="MASCULINO" th:text="MASCULINO"></option>
+                            <option th:value="FEMENINO" th:text="FEMENINO"></option>
+                        </select> 
+                    </div>
+
+                    <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Peso (kg): </label>
                         <input type="number" th:field="*{peso}" class="form-control" />
                     </div>

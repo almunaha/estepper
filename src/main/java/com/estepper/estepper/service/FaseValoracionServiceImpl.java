@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.estepper.estepper.model.entity.FaseValoracion;
 import com.estepper.estepper.model.entity.Findrisc;
+import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.repository.FaseValoracionRepository;
 import com.estepper.estepper.repository.ExploracionRepository;
@@ -32,7 +33,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     @Override
     public void crearFormularios(Integer id){
         //EXPLORACIÓN
-        Exploracion exploracion = new Exploracion(0, id, "no", 0, 0, 0, 0, 0);
+        Exploracion exploracion = new Exploracion(0, id, Sexo.MASCULINO, "no", 0, 0, 0, 0, 0);
         repoE.save(exploracion);
         //FINDRISC
         Findrisc findrisc = new Findrisc(0, id, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo");
@@ -49,9 +50,9 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     }
 
     @Override
-    public void updateExploracion(String primeravez, Integer peso, Integer talla, Integer cmcintura, Integer edad,
+    public void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad,
             Integer imc, Integer id) {
-        repoE.updateExploracion(primeravez, peso, talla, cmcintura, edad, imc, id);
+        repoE.updateExploracion(primeravez, sexo, peso, talla, cmcintura, edad, imc, id);
         
     }
 

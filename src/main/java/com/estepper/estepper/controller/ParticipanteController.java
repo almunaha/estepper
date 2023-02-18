@@ -102,7 +102,7 @@ public class ParticipanteController {
     @PostMapping("/process_exploracion/{id}")
     public String processExploracion(@PathVariable("id") Integer id, @ModelAttribute Exploracion exploracion) {
         
-        fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, exploracion.id);
+        fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.sexo, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, exploracion.id);
         fasevaloracion.actualizarFindrisc(exploracion);
 
        return "redirect:/";
