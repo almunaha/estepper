@@ -76,66 +76,25 @@
                 </div>
             </nav>
 
-            <div class="p-4 mt-5" id="participantes">
-
-                <div>
-                    <h4>Listado de usuarios</h4>
-                    <a th:href="@{'/nuevoCoordinador'}">Nuevo coordinador</a>
+        <div class="crearCoordinador bg-white p-5" style="width: 30%">
+            <form method="post" th:action="@{/process_coordinador}" th:object="${coordinador}">
+                <div class="mb-3">
+                    <label>Nickname</label>
+                    <input type="text" th:field="*{nickname}">
                 </div>
-                
-                 <!-- Buscador de usuarios --> 
-                 <div class="container-fluid">
-                    <form class="d-flex justify-content-end">
-                        <input id="filtrarParticipantes"  class="form-control me-2 light-table-filter w-25" data-table="tablePart" type="text" placeholder="Buscar...">
-
-                    </form>
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="text" th:field="*{email}" id="exampleInputPassword1">
                 </div>
-
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        (function ($) {
-                            $('#filtrarParticipantes').keyup(function () {
-                                var rex = new RegExp($(this).val(), 'i');
-                                $('.buscarParticipantes tr').hide();
-                                $('.buscarParticipantes tr').filter(function () {
-                                    return rex.test($(this).text());
-                                }).show();
-                            })
-                        }(jQuery));
-                    });
-                </script> 
-
-                <div class="p-4">
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Alias</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Rol</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="lis:${usuarios}">
-                                <td th:text="${lis.nickname}"></td>
-                                <td th:text="${lis.email}"></td>
-                                <td></td>
-                                <td th:text="${lis.estadoCuenta}"></td>
-                                <td>
-                                    <a class="btn btn-primary"><i class="fa-solid fa-envelope"></i></a>
-                                    <a class="btn btn-primary"  th:href="@{'/eliminarUsuario/' + ${lis.id}} "><i class="fa-solid fa-trash"></i></a>
-                                    <a class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+                <div class="mb-3">
+                    <label>Contraseña</label>
+                    <input type="text" th:field="*{contrasenia}">
                 </div>
-            </div>
-
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
         </div>
+
+
     </div>
 
 </body>

@@ -39,14 +39,56 @@
                 <h4>Estepper</h4>
             </div>
 
-            <div class="menu">
-                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-carrot"></i> Alimentación</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-folder-open"></i> Materiales</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-chart-line"></i> Progreso</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-comments"></i> Foro</a>
-            </div>
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                      <i class="fa-solid fa-pen"></i>
+                      <span class="nombre-enlaces">Cuaderno</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-carrot"></i>
+                        <span class="nombre-enlaces">Alimentación</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span class="nombre-enlaces">Materiales</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/progreso}">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="nombre-enlaces">Progreso</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-comments"></i>
+                        <span class="nombre-enlaces">Foro</span>
+                    </a>
+                </li>
+
+            </ul>
 
         </div>
 

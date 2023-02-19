@@ -60,12 +60,11 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     @Override
     public void update(String nickname, String email, String contrasenia, Integer id) {
         repo.update(nickname, email, contrasenia, id);
-        
     }
-    
+
     @Override
-    public void eliminarUsuario(Usuario u){
-        repo.delete(u);
+    public void eliminar(Integer id){
+        repo.deleteById(id);
     }
 
     @Override

@@ -36,7 +36,7 @@
     <div id="sidebar-container">
 
       <div class="logo">
-        <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+        <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
         <h4>Estepper</h4>
       </div>
 
@@ -45,6 +45,13 @@
           <a th:href="@{/}">
             <i class="fa-solid fa-house"></i>
             <span class="nombre-enlaces">Inicio</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-pen"></i>
+            <span class="nombre-enlaces">Cuaderno</span>
           </a>
         </li>
 
@@ -113,28 +120,30 @@
       </nav>
 
       <div class="layout-sesiones p-4 mt-3">
-        
-        <div><h3></h3></div>
-    
 
-      <!-- Botones sesiones -->
-    
-      <div class="btn-sesiones p-4 mr-5">
-        <ul>
-          <li><a class="btn-part" th:href="@{'/sesion1/' + ${part.id}}">Sesión 1</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion2/' + ${part.id}}">Sesión 2</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion3/' + ${part.id}}">Sesión 3</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion4/' + ${part.id}}">Sesión 4</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion5/' + ${part.id}}">Sesión 5</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion6/' + ${part.id}}">Sesión 6</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion7/' + ${part.id}}">Sesión 7</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion8/' + ${part.id}}">Sesión 8</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion9/' + ${part.id}}">Sesión 9</a></li>
-          <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion10/' + ${part.id}}">Sesión 10</a></li>
-        </ul>
-      </div>
+        <div>
+          <h3></h3>
+        </div>
 
-     
+
+        <!-- Botones sesiones -->
+
+        <div class="btn-sesiones p-4 mr-5">
+          <ul>
+            <li><a class="btn-part" th:href="@{'/sesion1/' + ${part.id}}">Sesión 1</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion2/' + ${part.id}}">Sesión 2</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion3/' + ${part.id}}">Sesión 3</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion4/' + ${part.id}}">Sesión 4</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion5/' + ${part.id}}">Sesión 5</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion6/' + ${part.id}}">Sesión 6</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion7/' + ${part.id}}">Sesión 7</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion8/' + ${part.id}}">Sesión 8</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion9/' + ${part.id}}">Sesión 9</a></li>
+            <li><a class="btn-part" id="bloqueada" th:href="@{'/sesion10/' + ${part.id}}">Sesión 10</a></li>
+          </ul>
+        </div>
+
+
       </div>
 
 

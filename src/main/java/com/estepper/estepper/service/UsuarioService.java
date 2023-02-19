@@ -10,8 +10,8 @@ public interface UsuarioService {
     public List<Usuario> listadoTotal();
     public Usuario logueado(Integer codigo);
     public Optional<Usuario> findById(Integer id);
+    public void eliminar(Integer id);
 
-    public void eliminarUsuario(Usuario usuario);
     public void recuperarCodigo(String correo);
 
     public void update(String nickname, String email, String contrasenia, Integer id);

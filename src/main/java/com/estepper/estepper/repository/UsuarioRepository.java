@@ -14,8 +14,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
         Usuario findByNickname(String nickname); //select * from usuario where nombre = u.nombre 
         Usuario findByCodigo(Integer codigo);
         Usuario findByEmail(String email);
-
-       void delete(Usuario usuario);
+        void deleteById(Integer id);
 
         @Modifying
         @Transactional
