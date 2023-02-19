@@ -14,14 +14,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.estepper.estepper.model.entity.FaseValoracion;
 import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Findrisc;
+import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
+import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.enums.TipoProgreso;
+
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
+import com.estepper.estepper.service.ProgresoService;
+
 
 import org.springframework.ui.Model;
 @Controller
@@ -41,6 +47,9 @@ public class ParticipanteController {
 
     @Autowired 
     private FichaService f;
+
+    @Autowired
+    private ProgresoService pro;
 
 
     @GetMapping("/menu")
@@ -65,21 +74,22 @@ public class ParticipanteController {
         return "sesiones";
     }
 
-    @GetMapping("/sesion1/{id}")
-    public String sesion1(@PathVariable Integer id, Model model){
+    @GetMapping("/sesion/{num}")
+    public String sesion1(@PathVariable Integer num, Model model){
         //necesito idParticipante y numSesion para saber el id de la sesión correspondiente
         model.addAttribute("user", getUsuario());
+        Participante p = participante.findById(getUsuario().id).get();
         //sesión seleccionada
-        Sesion sesion = ses.buscarSesion(participante.findById(id), 1); //cambiar segun sesion
+        Sesion sesion = ses.buscarSesion(p, num); //cambiar segun sesion
         model.addAttribute("sesion", sesion); 
 
         //lista de fichas de la sesión seleccionada a través del idSesion
         List<Ficha> fichas = f.fichasSesion(sesion.getId());
         model.addAttribute("fichas", fichas);
         
-        model.addAttribute("participante", participante.findById(id)); //coger participante 
+        model.addAttribute("participante", participante.findById(1)); //coger participante 
 
-        return "sesion1";
+        return "sesion";
     }
 
     @GetMapping("/exploracion/{id}")
@@ -181,13 +191,7 @@ public class ParticipanteController {
         return "ficha0";
     }
 
-    @GetMapping("/progreso")
-    public String progreso(Model model){
-        model.addAttribute("user", getUsuario());
-        return "progreso";
-    }
-
-    public Usuario getUsuario(){
+     public Usuario getUsuario(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         UserDetails userDetails = null;
@@ -200,4 +204,32 @@ public class ParticipanteController {
         Usuario user = usuario.logueado(Integer.parseInt(codigo));
         return user;
     }
+
+    //PROGRESO:
+
+    @GetMapping("/progreso")
+    public String progreso(Model model){
+        model.addAttribute("user", getUsuario());
+        return "progreso";
+    }  
+
+    @GetMapping("/registrarPeso")
+    public String registrarPeso(Model model){
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("progreso", new Progreso());
+        return "registrarPeso";
+    }
+
+    @PostMapping("/process_peso")
+    public String process_peso(Progreso progreso, Model model){
+        Participante p = participante.findById(getUsuario().id).get();
+        progreso.setParticipante(p);
+        progreso.setTipo(TipoProgreso.PESO);
+
+        pro.guardar(progreso);
+
+        return "redirect:/progreso";
+
+    }
+
 }

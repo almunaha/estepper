@@ -29,6 +29,7 @@ public class AdminController {
     @Autowired
 	private BCryptPasswordEncoder hash;
 
+
     @GetMapping("/eliminarUsuario/{id}")
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model){
         //eliminar usuario
@@ -40,7 +41,7 @@ public class AdminController {
         List<Usuario> lista = listadoUsuarios();
         model.addAttribute("usuarios", lista);
        
-        return "admin";
+        return "redirect:/";
     }
 
     @GetMapping("/nuevoCoordinador")
