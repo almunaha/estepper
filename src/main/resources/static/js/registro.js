@@ -71,7 +71,8 @@ $(document).ready(function () {
 
 
     $("#form-registro").submit(function (event) {
-
+        //faltaría validar que ese correo no exista
+        
         event.preventDefault();
 
         if (campos.nick && campos.email && campos.pass1) {  //si está todo bien
