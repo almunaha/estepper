@@ -24,7 +24,9 @@ public class Findrisc extends FaseValoracion {
     public Integer puntuacion;
     public String escalarriesgo;
 
-    public Findrisc(){}
+    public Findrisc(){
+        super();
+    }
 
     public Findrisc(Integer id,Integer idParticipante,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica,
                     Integer ptosfrecfruta, Integer ptosmedicacion, Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion,

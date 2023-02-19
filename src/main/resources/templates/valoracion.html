@@ -94,7 +94,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Formulario</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Editar</th>
 
                     </tr>
                 </thead>
@@ -103,15 +103,13 @@
                         <div>
                         <td th:text="Exploración"></td>
                         <td>                                
-                            <a class="btn" id="btn-part" th:href="@{'/exploracion/' + ${participante.id}}" ><i class="fa-solid fa-eye"></i></a>
-                            <a class="btn" id="btn-part"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="btn" id="btn-part" th:href="@{'/exploracion/' + ${participante.id}}" ><i class="fa-solid fa-pen-to-square"></i></a>
                         </td>
                         </div>
                         <div>
                         <td th:text="Findrisc"></td>
                         <td>                                
-                            <a class="btn" id="btn-part" th:href="@{'/findrisc/' + ${participante.id}}" ><i class="fa-solid fa-eye"></i></a>
-                            <a class="btn" id="btn-part"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="btn" id="btn-part" th:href="@{'/findrisc/' + ${participante.id}}" ><i class="fa-solid fa-pen-to-square"></i></a>
                         </td>
                         </div>
                         <!--AÑADIR TDS CON LOS OTROS 3 FORMULARIOS-->
@@ -120,8 +118,8 @@
             </table>
             </div>
             <div>
-                <a class="btn" id="btn-part" th:href="@{'/activarcuenta/' + ${participante.id}">Activar cuenta</a>
-                <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}">Eliminar cuenta</a>
+                <a class="btn" id="btn-part" th:href="@{'/activarcuenta/' + ${participante.id}}">Activar cuenta</a>
+                <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}}">Eliminar cuenta</a>
             </div>
             <div style="float: right;">
                 <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 

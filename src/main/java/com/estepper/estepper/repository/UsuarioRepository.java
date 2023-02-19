@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.enums.Estado;
 
 import jakarta.transaction.Transactional;
 
@@ -18,8 +19,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
         @Modifying
         @Transactional
-        @Query("UPDATE Usuario u SET u.nickname = :nickname, u.email = :email, u.contrasenia = :contrasenia WHERE u.id = :id")
-        void update(String nickname, String email, String contrasenia, Integer id);
+        @Query("UPDATE Usuario u SET u.nickname = :nickname, u.email = :email, u.contrasenia = :contrasenia, u.estadoCuenta = :estadoCuenta WHERE u.id = :id")
+        void update(String nickname, String email, String contrasenia, Estado estadoCuenta, Integer id);
 
 
 }

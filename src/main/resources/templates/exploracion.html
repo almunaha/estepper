@@ -99,8 +99,16 @@
                     </div>
         
                     <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Género: </label>
+                        <select th:field="*{sexo}"class="form-control" >
+                            <option th:value="MASCULINO" th:text="MASCULINO"></option>
+                            <option th:value="FEMENINO" th:text="FEMENINO"></option>
+                        </select> 
+                    </div>
+
+                    <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Peso (kg): </label>
-                        <input type="number" th:field="*{peso}" class="form-control" />
+                        <input id="peso" type="number" th:field="*{peso}" step="1" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
@@ -110,7 +118,7 @@
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Talla/Altura (cm): </label>
-                        <input type="number" th:field="*{talla}" class="form-control" />
+                        <input id="altura" type="number" th:field="*{talla}" step="1" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
@@ -118,11 +126,24 @@
                         <input type="number" th:field="*{edad}" class="form-control" />
                     </div>
                   
-                    <!-- FALTA QUE SE CALCULE IMC DIRECTAMENTE-->
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">IMC: </label>
-                        <input type="number" th:field="*{imc}" class="form-control" />
+                        <input id="imc" type="number" th:field="*{imc}" class="form-control" />
                     </div>
+                    <script>
+                        function calcularpuntuacion() {
+                            var peso = parseInt(document.getElementById('peso').value);
+                            var altura = parseInt(document.getElementById('altura').value);
+                            altura = altura/100;
+                            var resultado = peso/(altura*altura);
+                            document.getElementById('imc').value = resultado.toFixed(0);
+                        }
+                      
+                        document.getElementById('peso').addEventListener('input', calcularpuntuacion);
+                        document.getElementById('altura').addEventListener('input', calcularpuntuacion);
+                      
+                      </script>
+
                     <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Guardar</button>
                     <script language="JavaScript">
                         function myFunction() {

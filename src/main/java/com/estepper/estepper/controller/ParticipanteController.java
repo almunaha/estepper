@@ -101,10 +101,17 @@ public class ParticipanteController {
 
     @PostMapping("/process_exploracion/{id}")
     public String processExploracion(@PathVariable("id") Integer id, @ModelAttribute Exploracion exploracion) {
-        
-        fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, exploracion.id);
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(id);
+        Findrisc findrisc = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Findrisc) {
+                findrisc = (Findrisc) formularios.get(i);
+            }
+        }
+        fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.sexo, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, id);
+        fasevaloracion.actualizarFindrisc(exploracion, findrisc);
 
-       return "redirect:/";
+        return "redirect:/valoracion/{id}";
     }
 
     @GetMapping("/findrisc/{id}")
@@ -125,15 +132,46 @@ public class ParticipanteController {
     }
 
     @PostMapping("/process_findrisc/{id}")
-    public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Findrisc findrisc) {
-        
-        fasevaloracion.updateFindrisc(findrisc.id,findrisc.idParticipante,findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura, findrisc.ptosactfisica,
+    public String processFindrisc(@PathVariable("id") Integer id, @ModelAttribute Findrisc findrisc){
+        fasevaloracion.updateFindrisc(id,findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura, findrisc.ptosactfisica,
         findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes, findrisc.puntuacion,
         findrisc.escalarriesgo);
 
-        if((findrisc.puntosedad >= 35) & (findrisc.puntuacion >= 15)){
+        Exploracion exploracion = null;
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(id);
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Exploracion) {
+                exploracion = (Exploracion) formularios.get(i);
+            }
+        }
+        if((exploracion.edad >= 35) & (findrisc.puntuacion >= 15)){
             fasevaloracion.crearFormulariosNuevos(findrisc.idParticipante);
         }
+
+        return "redirect:/valoracion/{id}";
+    }
+
+    @GetMapping("/activarcuenta/{id}")
+    public String processActCuenta(@PathVariable("id") Integer id) {
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(id);
+        Findrisc findrisc = null;
+        Exploracion exploracion = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Findrisc) {
+                findrisc = (Findrisc) formularios.get(i);
+            }
+            if(formularios.get(i) instanceof Exploracion) {
+                exploracion = (Exploracion) formularios.get(i);
+            }
+        }
+        fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().id);
+
+       return "redirect:/valoracion/{id}";
+    }
+
+    @GetMapping("/eliminarcuenta/{id}")
+    public String processElimCuenta(@PathVariable("id") Integer id) {
+        fasevaloracion.eliminarcuenta(id);
 
        return "redirect:/";
     }

@@ -1,5 +1,7 @@
 package com.estepper.estepper.model.entity;
 
+import com.estepper.estepper.model.enums.Sexo;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,10 +21,13 @@ public class Exploracion extends FaseValoracion {
     public Integer talla;
     public Integer edad;
     public Integer imc;  
+    public Sexo sexo;
 
-    public Exploracion(){}
+    public Exploracion(){
+        super();
+    }
 
-    public Exploracion(Integer id, Integer idParticipante,String primeravez, Integer peso, Integer cmcintura, Integer talla, Integer edad, Integer imc ){
+    public Exploracion(Integer id, Integer idParticipante, Sexo sexo, String primeravez, Integer peso, Integer cmcintura, Integer talla, Integer edad, Integer imc ){
         super(id, idParticipante);
         this.primeravez = primeravez;
         this.peso = peso;
@@ -87,6 +92,14 @@ public class Exploracion extends FaseValoracion {
 
     public void setImc(Integer imc) {
         this.imc = imc;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
     }
 
     

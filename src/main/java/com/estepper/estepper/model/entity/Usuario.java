@@ -28,7 +28,7 @@ public class Usuario implements Serializable{
     public String contrasenia;
 
     @Enumerated(value = EnumType.STRING)
-    private Estado estadoCuenta;
+    public Estado estadoCuenta;
     
     public Usuario(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta) {
         this.id = id;

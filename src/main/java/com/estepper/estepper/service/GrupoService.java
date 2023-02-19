@@ -11,6 +11,7 @@ public interface GrupoService {
     public Grupo getGrupo(Integer id); 
     public void updateParticipantes(Integer idGrupo, Integer numParticipantes);
     public void delete(Integer id);
+    public void save(Grupo grupo);
 
 }
 
