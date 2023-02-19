@@ -149,8 +149,7 @@ public class HomeController {
 
     @GetMapping("/register")  //mostrar el formulario de registro
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new Usuario());
-                
+        model.addAttribute("user", new Usuario());                
         return "registro";
     }
 
@@ -174,7 +173,7 @@ public class HomeController {
         
         usuario.guardar(user); 
 
-        fasevaloracion.crearFormularios(user.id);
+        fasevaloracion.crearFormularios(participante.findById(user.id).get());
 
         model.addAttribute("nickname", user.getNickname());
         model.addAttribute("codigo", user.getCodigo());

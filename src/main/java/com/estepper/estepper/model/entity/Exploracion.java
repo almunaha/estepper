@@ -27,8 +27,8 @@ public class Exploracion extends FaseValoracion {
         super();
     }
 
-    public Exploracion(Integer id, Integer idParticipante, Sexo sexo, String primeravez, Integer peso, Integer cmcintura, Integer talla, Integer edad, Integer imc ){
-        super(id, idParticipante);
+    public Exploracion(Integer id, Participante participante, Sexo sexo, String primeravez, Integer peso, Integer cmcintura, Integer talla, Integer edad, Integer imc ){
+        super(id, participante);
         this.primeravez = primeravez;
         this.peso = peso;
         this.cmcintura = cmcintura;

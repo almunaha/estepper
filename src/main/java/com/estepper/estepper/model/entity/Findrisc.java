@@ -12,7 +12,6 @@ public class Findrisc extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
-    public Integer idParticipante;
     public Integer puntosedad;
     public Integer puntosimc;
     public Integer puntoscmcintura;
@@ -28,10 +27,10 @@ public class Findrisc extends FaseValoracion {
         super();
     }
 
-    public Findrisc(Integer id,Integer idParticipante,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica,
+    public Findrisc(Integer id, Participante participante,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica,
                     Integer ptosfrecfruta, Integer ptosmedicacion, Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion,
                     String escalarriesgo){
-        super(id, idParticipante);
+        super(id, participante);
         this.puntosedad = puntosedad;
         this.puntosimc = puntosimc;
         this.puntoscmcintura = puntoscmcintura;
@@ -132,16 +131,6 @@ public class Findrisc extends FaseValoracion {
     public void setEscalarriesgo(String escalarriesgo) {
         this.escalarriesgo = escalarriesgo;
     }
-
-    public Integer getIdParticipante() {
-        return idParticipante;
-    }
-
-    public void setIdParticipante(Integer idParticipante) {
-        this.idParticipante = idParticipante;
-    }
-
-    
 
     
 }

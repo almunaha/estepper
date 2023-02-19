@@ -1,5 +1,6 @@
 package com.estepper.estepper.model.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import jakarta.persistence.FetchType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Inheritance(strategy=InheritanceType.JOINED)
 @Entity
@@ -16,17 +23,18 @@ public class FaseValoracion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer idParticipante;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="idParticipante")
+    private Participante participante; 
 
     public FaseValoracion(){}
 
-    public FaseValoracion(Integer id, Integer idParticipante){
+    public FaseValoracion(Integer id, Participante participante){
         this.id = id;
-        this.idParticipante = idParticipante;
-
+        this.participante = participante;
     }
 
-    
     public Integer getId() {
         return id;
     }
@@ -36,11 +44,15 @@ public class FaseValoracion {
     }
 
     public Integer getIdParticipante() {
-        return idParticipante;
+        return participante.id;
     }
 
-    public void setIdParticipante(Integer idParticipante) {
-        this.idParticipante = idParticipante;
+    public Participante getParticipante(){
+        return participante;
+    }
+
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
     }
 
     

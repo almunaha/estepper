@@ -7,20 +7,21 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.enums.Sexo;
+import com.estepper.estepper.model.entity.Participante;
 
 
    public interface ExploracionRepository extends JpaRepository<Exploracion, Integer>{
         @Modifying
         @Transactional
-        @Query("UPDATE Exploracion e SET e.primeravez = :primeravez, e.sexo = :sexo, e.peso = :peso, e.talla = :talla, e.cmcintura = :cmcintura, e.edad = :edad, e.imc = :imc WHERE e.idParticipante = :idParticipante")
-        void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad, Integer imc, Integer idParticipante);
+        @Query("UPDATE Exploracion e SET e.primeravez = :primeravez, e.sexo = :sexo, e.peso = :peso, e.talla = :talla, e.cmcintura = :cmcintura, e.edad = :edad, e.imc = :imc WHERE e.participante = :participante")
+        void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad, Integer imc, Participante participante);
 
-        Exploracion findByIdParticipante(Integer idParticipante);
+        Exploracion findByParticipante(Participante participante);
 
         @Modifying
         @Transactional
-        @Query("DELETE FROM Exploracion e WHERE e.idParticipante = :idParticipante")
-        void deleteByIdParticipante(Integer idParticipante);
+        @Query("DELETE FROM Exploracion e WHERE e.participante = :participante")
+        void deleteByParticipante(Participante participante);
    }
 
 

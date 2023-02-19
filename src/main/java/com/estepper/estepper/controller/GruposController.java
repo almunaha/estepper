@@ -20,7 +20,7 @@ import com.estepper.estepper.service.ParticipanteService;
 
 
 import com.estepper.estepper.service.UsuarioService;
-
+ //yo pasaria todo esto a CoordinadorController para no tener tantos
 @Controller
 public class GruposController {
 

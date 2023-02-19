@@ -12,133 +12,65 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
+    <!-- para jquery-->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/registro.js"></script>
+
     <title>Registro</title>
 </head>
 
 <body class="bg-light d-flex flex-column justify-content-center align-items-center vh-100">
     <div class="bg-white border border-1 p-5 rounded-4" style="width: 30%">
-        <form class="form-signin" id="form-registro" method="post" th:action="@{/process_register}" th:object="${user}">
 
-            <h2 class="text-center mb-4">Registro</h2>
-            <div th:if="${param.error}" class="alert alert-error">
-                Contraseña no es válida.
-            </div>
+        <form class="form-signin" id="form-registro" method="post" th:action="@{/process_register}" th:object="${user}">
+            <h2 class="text-center mb-3">Registro</h2>
 
             <label>Alias/Nickname </label>
             <div class="input-group mt-2">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
-                <input type="text" th:field="*{nickname}" class="form-control" required />
+                <input type="text" th:field="*{nickname}" class="form-control" id="nickname" required />
             </div>
+            <div id="error_nick"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Mínimo de 3 caracteres obligatorios</p></div>
 
             <label class="mt-3">Correo electrónico </label>
             <div class="input-group mt-2">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
                 <input type="email" th:field="*{email}" class="form-control" id="email" required />
             </div>
+            <div id="error_email"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> El correo electrónico no es válido</p></div>
 
             <label class="mt-3">Contraseña </label>
             <div class="input-group mt-2">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
-                <input type="password" id="pass1" th:field="*{contrasenia}" class="form-control" style="border-right: 0;" required />
+                <input type="password" id="pass1" th:field="*{contrasenia}" class="form-control"
+                    style="border-right: 0;" required />
                 <span class="input-group-text" style="background-color:white; border-left-style: none; cursor: pointer"
-                    id="ojo"><i class="fa-solid fa-eye-slash" onmouseover="this.style.color = '#aaa'" onmouseout="this.style.color = '#000'"></i></span>
+                    id="ojo"><i class="fa-solid fa-eye-slash" onmouseover="this.style.color = '#aaa'"
+                        onmouseout="this.style.color = '#000'"></i></span>
             </div>
+            <div id="error_pass1"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Mínimo de 8 caracteres obligatorios</p></div>
 
             <label class="mt-3">Confirma tu contraseña </label>
             <div class="input-group mt-2">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
-                <input type="password" id="pass2" class="form-control" style="border-right: 0;" required />
-                <span class="input-group-text" style="background-color:white; border-left-style: none; cursor: pointer; "
-                    id="ojo2"><i class="fa-solid fa-eye-slash" onmouseover="this.style.color = '#aaa'" onmouseout="this.style.color = '#000'"></i></span>
+                <input type="password" id="pass2" name="contrasenia2" class="form-control" style="border-right: 0;" required />
+                <span class="input-group-text"
+                    style="background-color:white; border-left-style: none; cursor: pointer; " id="ojo2"><i
+                        class="fa-solid fa-eye-slash" onmouseover="this.style.color = '#aaa'"
+                        onmouseout="this.style.color = '#000'"></i></span>
             </div>
+            <div id="error_pass2"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Las contraseñas no coinciden</p></div>
 
             <button class="btn btn-info text-white mt-4 w-100" type="submit" id="btn-registro">Registrarse</button>
 
-            <script language="JavaScript">
-                //validar nombre solo letras
-                //validar que no exista ese correo Y SEA CORREO
-                //cambiar servidor
-                //ESTA EN PROCESO
-
-/*
-                    const formulario = $('form-registro');
-                    var pass1 = document.getElementById('pass1').value;
-                    var pass2 = document.getElementById('pass2').value;
-
-                    formulario.submit(function (event) {
-                        event.preventDefault();
-
-                        if (pass1 == pass2) {
-
-                           // $('#error_form').hide();
-                            event.currentTarget.submit();
-
-
-                        } else {
-                            alert("contraseñas no coinciden")
-                            //$('#error_form').show();
-                        }
-                    });
-                  
-                
-
-               const form = document.getElementById('#form-registro');
-               const email = document.getElementById('#email');
-               const parrafoE = document.getElementById('#errorEmail');
-               const parrafoP = document.getElementById('#errorPass');
-
-               
-*/
-              /* form.addEventListener("submit", e=>{
-                    e.preventDefault()
-                    let regexEmail = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"; //expresión regular para email para controlar que ponga .com .es etc
-                    let entrar = false;
-                    
-                    if(!regexEmail.test(email.value)){ //validar email
-                        entrar = true;
-                        parrafoE.innerHTML = '<p> El email no es válido </p>';
-                    }
-
-                    if (document.getElementById('#pass1').value != document.getElementById('#pass2').value) { //validar contraseña
-                        entrar = true;
-                        parrafoP.innerHTML = '<p> Las contraseñas no coinciden </p>';
-                    }
-               }
-               )     */           
-
-               /* Mostrar y ocultar contraseñas */
-                const ojo = document.querySelector("#ojo");
-
-                ojo.addEventListener('click', function () {
-                    if (this.previousElementSibling.type === 'password') {
-                        this.previousElementSibling.type = "text";
-                    }
-
-                    else if (this.previousElementSibling.type === 'text') {
-                        this.previousElementSibling.type = "password";
-                    }
-                })
-
-                const ojo2 = document.querySelector("#ojo2");
-
-                ojo2.addEventListener('click', function () {
-                    if (this.previousElementSibling.type === 'password') {
-                        this.previousElementSibling.type = "text";
-                    }
-
-                    else if (this.previousElementSibling.type === 'text') {
-                        this.previousElementSibling.type = "password";
-                    }
-                })
-
-            </script>
-
-            <p class="text-center mt-5">¿Ya estás registrado?</p>
+            <p class="text-center mt-3">¿Ya estás registrado?</p>
             <p class="text-center">Pincha <a class="text-decoration-none" th:href="@{/login}">aquí</a> para iniciar
                 sesión.</p>
 
         </form>
     </div>
+
 </body>
 
 </html>

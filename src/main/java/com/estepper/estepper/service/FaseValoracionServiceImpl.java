@@ -11,11 +11,13 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Exploracion;
+import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.repository.FaseValoracionRepository;
 import com.estepper.estepper.repository.ExploracionRepository;
 import com.estepper.estepper.repository.FindriscRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
 import com.estepper.estepper.repository.UsuarioRepository;
+
 
 @Service
 public class FaseValoracionServiceImpl implements FaseValoracionService {
@@ -36,22 +38,22 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     private UsuarioRepository repoU;
 
     @Override
-    public List<FaseValoracion> faseValoracion(Integer id) {
-        return repoV.findByIdParticipante(id);
+    public List<FaseValoracion> faseValoracion(Participante participante) {
+        return repoV.findByParticipante(participante);
     }
 
     @Override
-    public void crearFormularios(Integer id){
+    public void crearFormularios(Participante participante){
         //EXPLORACIÓN
-        Exploracion exploracion = new Exploracion(0, id, Sexo.MASCULINO, "no", 0, 0, 0, 0, 0);
+        Exploracion exploracion = new Exploracion(0, participante, Sexo.MASCULINO, "no", 0, 0, 0, 0, 0);
         repoE.save(exploracion);
         //FINDRISC
-        Findrisc findrisc = new Findrisc(0, id, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo");
+        Findrisc findrisc = new Findrisc(0, participante, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo");
         repoF.save(findrisc);
     }
 
     @Override
-    public void crearFormulariosNuevos(Integer id){
+    public void crearFormulariosNuevos(Participante participante){
         //COMPROBAR QUE NO ESTÉN CREADOS YA
         //CLASIFICACION
         //ANTECEDENTES
@@ -61,21 +63,21 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
 
     @Override
     public void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad,
-            Integer imc, Integer id) {
-        repoE.updateExploracion(primeravez, sexo, peso, talla, cmcintura, edad, imc, id);
+            Integer imc, Participante participante) {
+        repoE.updateExploracion(primeravez, sexo, peso, talla, cmcintura, edad, imc, participante);
         
     }
 
     @Override
-    public void updateFindrisc(Integer id,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica,
+    public void updateFindrisc(Participante participante,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica,
     Integer ptosfrecfruta, Integer ptosmedicacion, Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion,
     String escalarriesgo){
-        repoF.updateFindrisc(id, puntosedad, puntosimc, puntoscmcintura, ptosactfisica, ptosfrecfruta, ptosmedicacion, ptosglucosa, ptosdiabetes, puntuacion, escalarriesgo);
+        repoF.updateFindrisc(participante, puntosedad, puntosimc, puntoscmcintura, ptosactfisica, ptosfrecfruta, ptosmedicacion, ptosglucosa, ptosdiabetes, puntuacion, escalarriesgo);
     }
     
     @Override
-    public Exploracion findByIdParticipante(Integer id){
-        return repoE.findByIdParticipante(id);
+    public Exploracion findByParticipante(Participante participante){
+        return repoE.findByParticipante(participante);
 
     }
 
@@ -103,7 +105,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
             else findrisc.setPuntoscmcintura(102);
         }
 
-        repoF.updateFindrisc(findrisc.idParticipante, findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura, findrisc.ptosactfisica, findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes, findrisc.puntuacion, findrisc.escalarriesgo);
+        repoF.updateFindrisc(findrisc.getParticipante(), findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura, findrisc.ptosactfisica, findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes, findrisc.puntuacion, findrisc.escalarriesgo);
     }
 
     @Override
@@ -122,9 +124,10 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     }
 
     @Override
-    public void eliminarcuenta(Integer id){
-        repoE.deleteByIdParticipante(id);
-        repoF.deleteByIdParticipante(id);
-        repoP.deleteById(id);
+    public void eliminarcuenta(Participante participante){
+        repoE.deleteByParticipante(participante);
+        repoF.deleteByParticipante(participante);
+        repoF.deleteByParticipante(participante);
+        repoP.delete(participante);
     }
 }
