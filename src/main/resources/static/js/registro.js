@@ -3,9 +3,9 @@ $(document).ready(function () {
 
     //campos a validar
     const campos = { //si cambia a true es porque está correcto
-        nickname: false,
+        nick: false,
         email: false,
-        password: false,
+        pass1: false,
     }
 
     //expresiones regulares
@@ -49,11 +49,11 @@ $(document).ready(function () {
 	const validarPassword = () => { //validar si las contraseñas coinciden
 		if ($('#pass1').val() !== $('#pass2').val()) {
 			$('#error_pass2').show();
-			campos['password'] = false;
+			campos['pass1'] = false;
 
 		} else {
 			$('#error_pass2').hide();
-			campos['password'] = true;
+			campos['pass1'] = true;
 		}
 	}
 
@@ -73,7 +73,9 @@ $(document).ready(function () {
     $("#form-registro").submit(function (event) {
 
         event.preventDefault();
-        if (campos.nickname && campos.email && campos.password) {  //si está todo bien
+        event.currentTarget.submit();
+
+        if (campos.nick && campos.email && campos.pass1) {  //si está todo bien
             event.currentTarget.submit();
         }
 
