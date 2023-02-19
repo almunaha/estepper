@@ -73,7 +73,6 @@ $(document).ready(function () {
     $("#form-registro").submit(function (event) {
 
         event.preventDefault();
-        event.currentTarget.submit();
 
         if (campos.nick && campos.email && campos.pass1) {  //si está todo bien
             event.currentTarget.submit();
