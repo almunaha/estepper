@@ -14,6 +14,7 @@ import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.enums.Asistencia;
+import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoSesion;
 
 import com.estepper.estepper.model.entity.Usuario;
@@ -23,6 +24,7 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.GrupoService;
+
 
 @Controller
 public class CoordinadorController {
@@ -55,6 +57,8 @@ public class CoordinadorController {
         return "valoracion";
     }
 
+
+
     @GetMapping("/actualizarGrupos/{idP}/{idG}")
     public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG,
             Model model) {
@@ -62,29 +66,36 @@ public class CoordinadorController {
         model.addAttribute("user", getUsuario());
         Grupo g = grupo.getGrupo(idG);
 
-        if (usuario.getIdGrupo() == idG) { // El usuario ya está en ese grupo
+        if(usuario.getEstadoCuenta() == Estado.ALTA){
 
-            // mandar alerta ajax
-        } else if (usuario.getIdGrupo() == 0) { // El usuario aún no está en ningún grupo
-            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g, usuario.getAsistencia(), usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
-            Integer participantes = g.getNumParticipantes() + 1;
-            grupo.updateParticipantes(idG, participantes);
+            if (usuario.getIdGrupo() == idG) { // El usuario ya está en ese grupo
 
-            // crear las sesiones del participante
-            Sesion s;
-            for (int i = 1; i <= 10; i++) {
-              s = new Sesion(0, i, usuario, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
-              sesion.guardar(s);
-              
+                // mandar alerta ajax que diga que el usuario ya está en ese grupo
+            } else if (usuario.getIdGrupo() == 0) { // El usuario aún no está en ningún grupo
+                part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g, usuario.getAsistencia(), usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
+                Integer participantes = g.getNumParticipantes() + 1;
+                grupo.updateParticipantes(idG, participantes);
+
+                // crear las sesiones del participante
+                Sesion s;
+                for (int i = 1; i <= 10; i++) {
+                s = new Sesion(0, i, usuario, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
+                sesion.guardar(s);
+                
+                }
+            } else if ((usuario.getIdGrupo() != idG) && (usuario.getIdGrupo() != null)) { // El usuario ya está en un grupo
+                                                                                        // distinto al que le quieres
+                                                                                        // añadir
+                // mandar alerta ajax que diga que el usuario ya pertenece a otro grupo
             }
-        } else if ((usuario.getIdGrupo() != idG) && (usuario.getIdGrupo() != null)) { // El usuario ya está en un grupo
-                                                                                      // distinto al que le quieres
-                                                                                      // añadir
-            // mandar alerta ajax
+        }
+        else{ //El usuario no está dado de alta asique no se le puede añadir a un grupo
+            //mandar alera ajax que diga que no se puede añadir a un grupo a un usuario que no está dado de alta
         }
 
         return "redirect:/listaGrupos";
     }
+    
 
     public Usuario getUsuario(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -115,6 +115,12 @@
                     });
                 </script> 
                 
+
+                <!--BOTÓN DE FILTRADO -->
+
+                <button id="btn-filtrarALTA">ALTA</button>
+                <button id="btn-filtrarBAJA">BAJA</button>
+
                 <!-- Tabla de participantes -->
                 <table class="table tablePart">
                     <thead class="thead-dark">
@@ -145,7 +151,63 @@
                     </tbody>
                 </table>
                
+            <!--FUNCIÓN PARA FILTRAR POR ESTADO-->
 
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    const btnFiltrarALTA = document.getElementById('btn-filtrarALTA');
+                    const btnFiltrarBAJA = document.getElementById('btn-filtrarBAJA');
+                    const tablaParticipantes = document.querySelector('.tablePart tbody');
+            
+                    btnFiltrarALTA.addEventListener('click', function() {
+                        const estadoActivo = 'ALTA';
+                        
+            
+                        for (let i = 0; i < tablaParticipantes.rows.length; i++) {
+                            const estadoTabla = tablaParticipantes.rows[i].cells[4].textContent;
+                            if (estadoTabla !== estadoActivo) {
+                                tablaParticipantes.rows[i].style.display = "none";
+                            } else {
+                                tablaParticipantes.rows[i].style.display = "";
+                            }
+                        }
+                    });
+
+                    btnFiltrarBAJA.addEventListener('click', function() {
+                        const estadoActivo = 'BAJA';
+                        
+                        for (let i = 0; i < tablaParticipantes.rows.length; i++) {
+                            const estadoTabla = tablaParticipantes.rows[i].cells[4].textContent;
+                            if (estadoTabla !== estadoActivo) {
+                                tablaParticipantes.rows[i].style.display = "none";
+                            } else {
+                                tablaParticipantes.rows[i].style.display = "";
+                            }
+                        }
+                    });
+                });
+            </script>
+
+            <!--PARA PAGINACIÓN, FALTA HACERLO BIEN, ACORDARME-->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+
+            
             </div>
             <div style="float: right; margin-right: 60px; margin-top: 60px;">
                 <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
