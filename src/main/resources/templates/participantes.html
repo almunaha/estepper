@@ -141,11 +141,18 @@
                             <td th:text="${lis.codigo}"></td>
                             <td th:text="${lis.email}"></td>
                             <td th:text="${lis.estadoCuenta}"></td>
-                            <td>                                
-                                <a class="btn" id="btn-part"><i class="fa-solid fa-folder-open"></i></a>
+                            <td>
+                                <!--BOTONES SIN ICONOS ni tooltip-->                          
+                                <!--<a class="btn" id="btn-part"><i class="fa-solid fa-folder-open"></i></a>
                                 <a class="btn" id="btn-part"th:href="@{'/valoracion/' + ${lis.id}}" >Ver expediente</a>
                                 <a class="btn" id="btn-part" >Editar</a>
-                                <a class="btn" id="btn-part" th:href="@{'/unirAgrupo/' + ${lis.id}}" >Añadir a un grupo</a></li>
+                                <a class="btn" id="btn-part" th:href="@{'/unirAgrupo/' + ${lis.id}}" >Añadir a un grupo</a></li>-->
+
+                                <!--BOTONES CON ICONOS Y TOOLTIP-->  
+                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"  title="Materiales"><i class="fa-solid fa-folder-open"></i></a>
+                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"  title="Ver expediente"th:href="@{'/valoracion/' + ${lis.id}}" ><i class="fa-solid fa-id-card-clip"></i></a>
+                                <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"  title="Añadir a un grupo" th:href="@{'/unirAgrupo/' + ${lis.id}}"><i class="fa-solid fa-user-plus"></i></a></li>
                             </td>
                         </tr>
                     </tbody>

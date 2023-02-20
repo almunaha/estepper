@@ -248,5 +248,18 @@ a{
     color: white;
 }
 
+/*BOTONCITOS ICONOS CON LO DE ARRIBA*/
+
+#btn-icono{
+    color: #6ca4c7;
+}
+
+.btn-icono:hover{
+    color: white;
+    background-color: rgb(122, 184, 212);
+}
+
+
+
 
 
