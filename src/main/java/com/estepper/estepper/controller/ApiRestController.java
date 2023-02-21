@@ -1,4 +1,4 @@
-/*package com.estepper.estepper.controller;
+package com.estepper.estepper.controller;
 
 import java.util.List;
 
@@ -16,10 +16,10 @@ import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.service.UsuarioService;
 
-//Controlador de recursos 
+//Controlador de recursos
 @RestController
 @RequestMapping("/usuarios")
-public class RestController {
+public class ApiRestController {
 
     @Autowired
     private UsuarioService usuario;
@@ -29,6 +29,20 @@ public class RestController {
         return usuario.listadoTotal();
     }
 
+    public Usuario getUsuario(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario user = usuario.logueado(Integer.parseInt(codigo));
+        return user;
+    }
+
  
     
-}*/
+}

@@ -24,7 +24,6 @@ public class FaseValoracion {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="idParticipante")
     private Participante participante; 
 

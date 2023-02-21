@@ -19,8 +19,8 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     Optional<Participante> findById(Integer id);
     List<Participante> findByGrupo(Grupo grupo);
     
-    @Modifying
-    @Transactional
+    @Modifying //modifca la base de datos
+    @Transactional //la consulta se ejecuta en una transacción
     @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo, p.fotoParticipante = :fotoParticipante, p.grupo = :grupo, p.asistencia = :asistencia, p.idCoordinador = :idCoor, p.perdidaDePeso = :perdidadepeso, p.sesionesCompletas = :sesionescompletas WHERE p.id = :id")
     void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Integer perdidadepeso, Integer sesionescompletas, Integer id);
 

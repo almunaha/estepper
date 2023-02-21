@@ -125,7 +125,11 @@
                             <tr th:each="lis:${usuarios}">
                                 <td th:text="${lis.nickname}"></td>
                                 <td th:text="${lis.email}"></td>
-                                <td></td>
+                                <td>
+                                    <span th:if="${lis instanceof T(com.estepper.estepper.model.entity.Participante)}">Participante</span>
+                                    <span th:if="${lis instanceof T(com.estepper.estepper.model.entity.Coordinador)}">Coordinador</span>
+                                    <span th:if="${lis instanceof T(com.estepper.estepper.model.entity.Administrador)}">Administrador</span>
+                                </td>
                                 <td th:text="${lis.estadoCuenta}"></td>
                                 <td>
                                     <a class="btn btn-primary"><i class="fa-solid fa-envelope"></i></a>

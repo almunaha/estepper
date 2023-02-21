@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.entity.Participante;
+
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.UsuarioService;
 
 import org.springframework.ui.Model;
@@ -27,13 +30,20 @@ public class AdminController {
     private UsuarioService usuario;
 
     @Autowired
+    private FaseValoracionService fasevaloracion;
+
+    @Autowired
 	private BCryptPasswordEncoder hash;
 
 
     @GetMapping("/eliminarUsuario/{id}")
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model){
         //eliminar usuario
-        usuario.eliminar(id);
+        if(usuario.findById(id).get() instanceof Participante){
+            fasevaloracion.eliminarcuenta((Participante) usuario.findById(id).get());
+        } 
+
+        else usuario.eliminar(id);
 
         //pasar usuario logueado y listado
         model.addAttribute("user", usuarioLogueado());
