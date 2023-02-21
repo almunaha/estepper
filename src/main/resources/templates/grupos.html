@@ -129,15 +129,44 @@
                         <tr th:each="lis:${listaGrupos}">
                             <td th:text="${lis.nombre}"></td>
                             <td th:text="${lis.numParticipantes}"></td>
-                            <td>                                
-                                <a class="btn" id="btn-part" th:href="@{'/unGrupo/' + ${lis.id}}">Ver grupo</a>
-                                <a class="btn" id="btn-part" th:href="@{'/grupos/editar/' + ${lis.id}} ">Editar grupo</a>
-                                <a class="btn" id="btn-part" th:href="@{'/grupos/eliminar/'+ ${lis.id}}">Eliminar grupo</a>
+                            <td>   
 
+                                <!--LOS BOTONES SIN ICONOS-->
+                                <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver grupo" th:href="@{'/unGrupo/' + ${lis.id}}">Ver grupo</a>-->
+                                <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar grupo" th:href="@{'/grupos/editar/' + ${lis.id}} ">Editar grupo</a>-->
+                                <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar grupo" th:href="@{'/grupos/eliminar/'+ ${lis.id}}">Eliminar grupo</a>-->
+
+                                <!--LOS BOTONES CON ICONOS-->
+                                <a class="fa-solid fa-eye fa-2x" id="btn-icono" data-bs-toggle="tooltip" title="Ver grupo" th:href="@{'/unGrupo/' + ${lis.id}}"></a>
+                                <a class="fa-solid fa-pen-to-square fa-2x" id="btn-icono" data-bs-toggle="tooltip"  title="Editar grupo" th:href="@{'/grupos/editar/' + ${lis.id}} "></a>
+                                <a class="fa-solid fa-trash-can fa-2x" id="btn-icono" data-bs-toggle="tooltip"  title="Eliminar grupo" th:href="@{'/grupos/eliminar/'+ ${lis.id}}"></a>
+                               
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
+            
+
+                <!--PARA PAGINACIÓN, ACORDARME DE HACERLO BIEN-->
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
 
                     <a class="btn" id="btn-part" th:href="@{/grupos/nuevo}">Crear un grupo nuevo</a>
                     <div style="float: right;">

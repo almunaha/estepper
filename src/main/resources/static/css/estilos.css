@@ -221,3 +221,45 @@ a{
 .numerito{
     margin-left: 40%;
 }
+
+/*BOTONES FILTRADO*/
+
+#btn-filtrarALTA, #btn-filtrarBAJA {
+    padding: 5px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2px solid #505b83;
+    border-radius: 45%;
+
+}
+  
+#btn-filtrarALTA:hover {
+    background-color: #434b6a;
+    color: white;
+}
+
+#btn-filtrarBAJA:hover {
+    background-color: #434b6a;
+    color: white;
+}
+
+/*BOTONCITOS ICONOS CON LO DE ARRIBA*/
+
+#btn-icono{
+    color: #6ca4c7;
+}
+
+.btn-icono:hover{
+    color: white;
+    background-color: rgb(122, 184, 212);
+}
+
+
+
+
+

@@ -113,8 +113,52 @@
                             })
                         }(jQuery));
                     });
-                </script> 
+                </script>
                 
+               
+  
+                
+                <!--BOTÓN DE FILTRADO -->
+
+                <button id="btn-filtrarALTA">ALTA</button>
+                <button id="btn-filtrarBAJA">BAJA</button>
+
+                 <!--ALERTA MODAL -->
+
+                 <div class="modal fade" id="alertaModal1" tabindex="-1" aria-labelledby="alertaModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="alertaModalLabel"><i class="fa-solid fa-triangle-exclamation" style="color: goldenrod;"></i> No se ha podido completar la acción </h5>
+                    
+                            </div>
+                            <div class="modal-body">
+                            <p>No puedes añadir un participante dado de baja a un grupo. Primero necesitas darle de alta</p>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="float:right" >Cerrar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="modal fade" id="alertaModal2" tabindex="-1" aria-labelledby="alertaModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="alertaModalLabel"><i class="fa-solid fa-triangle-exclamation" style="color: goldenrod;"></i> No se ha podido completar la acción </h5>
+                    
+                            </div>
+                            <div class="modal-body">
+                            <p>El participante ya pertenece a un grupo.</p>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="float:right" >Cerrar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+             
+
                 <!-- Tabla de participantes -->
                 <table class="table tablePart">
                     <thead class="thead-dark">
@@ -123,6 +167,7 @@
                             <th scope="col">Alias</th>
                             <th scope="col">Código</th>
                             <th scope="col">Email</th>
+                            <th scope="col" id="columnaGrupo">Id Grupo</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Acciones</th>
 
@@ -134,18 +179,107 @@
                             <td th:text="${lis.nickname}"></td>
                             <td th:text="${lis.codigo}"></td>
                             <td th:text="${lis.email}"></td>
+                            <td th:text="${lis.idGrupo}" id="columnaGr"></td>
                             <td th:text="${lis.estadoCuenta}"></td>
-                            <td>                                
-                                <a class="btn" id="btn-part"><i class="fa-solid fa-folder-open"></i></a>
-                                <a class="btn" id="btn-part"th:href="@{'/valoracion/' + ${lis.id}}" >Ver expediente</a>
-                                <a class="btn" id="btn-part" >Editar</a>
-                                <a class="btn" id="btn-part" th:href="@{'/unirAgrupo/' + ${lis.id}}" >Añadir a un grupo</a></li>
+                            <td>
+                                <!--BOTONES CON ICONOS Y TOOLTIP-->  
+                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"  title="Materiales"><i class="fa-solid fa-folder-open"></i></a>
+                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"  title="Ver expediente"th:href="@{'/valoracion/' + ${lis.id}}" ><i class="fa-solid fa-id-card-clip"></i></a>
+                                <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn btn-unir" id="btn-part" data-bs-toggle="tooltip"  title="Añadir a un grupo" th:href="@{'/unirAgrupo/' + ${lis.id}}"><i class="fa-solid fa-user-plus"></i></a></li>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                
+            <!--FUNCIÓN PARA FILTRAR POR ESTADO-->
 
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    const btnFiltrarALTA = document.getElementById('btn-filtrarALTA');
+                    const btnFiltrarBAJA = document.getElementById('btn-filtrarBAJA');
+                    const btn_unir = document.getElementById('btn-unir');
+                    const tablaParticipantes = document.querySelector('.tablePart tbody');
+            
+                    btnFiltrarALTA.addEventListener('click', function() {
+                        const estadoActivo = 'ALTA';
+                        
+            
+                        for (let i = 0; i < tablaParticipantes.rows.length; i++) {
+                            const estadoTabla = tablaParticipantes.rows[i].cells[5].textContent;
+                            if (estadoTabla !== estadoActivo) {
+                                tablaParticipantes.rows[i].style.display = "none";
+                            } else {
+                                tablaParticipantes.rows[i].style.display = "";
+                            }
+                        }
+                    });
+
+                    btnFiltrarBAJA.addEventListener('click', function() {
+                        const estadoActivo = 'BAJA';
+                        
+                        for (let i = 0; i < tablaParticipantes.rows.length; i++) {
+                            const estadoTabla = tablaParticipantes.rows[i].cells[5].textContent;
+                            if (estadoTabla !== estadoActivo) {
+                                tablaParticipantes.rows[i].style.display = "none";
+                            } else {
+                                tablaParticipantes.rows[i].style.display = "";
+                            }
+                        }
+                    });
+
+                });
+
+            </script>
+
+
+            <script>
+                $(document).ready(function(){
+
+                    const tablaParticipantes = document.querySelector('.tablePart tbody');
+
+                   $('#columnaGrupo').hide();
+                    for (let i = 0; i < tablaParticipantes.rows.length; i++) {
+                        tablaParticipantes.rows[i].cells[4].style.display = "none";
+                    }
+                    
+
+                    $('.btn-unir').click(function(event){
+                        var idGrupo = $(this).closest('tr').find('td:eq(4)').text(); 
+                        var estado = $(this).closest('tr').find('td:eq(5)').text();
+                        if(estado == 'BAJA'){
+                            event.preventDefault(); //evitar la acción por defecto del botón
+                            $('#alertaModal1').modal('show');
+                        }
+                        else if (idGrupo !== '0') { 
+                            event.preventDefault(); 
+                            $('#alertaModal2').modal('show');
+                        }
+                    });
+                });
+            </script>
+
+
+            <!--PARA PAGINACIÓN, FALTA HACERLO BIEN, ACORDARME-->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+
+            
             </div>
             <div style="float: right; margin-right: 60px; margin-top: 60px;">
                 <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
