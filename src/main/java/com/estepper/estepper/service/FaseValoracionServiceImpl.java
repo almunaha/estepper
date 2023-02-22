@@ -11,12 +11,13 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Exploracion;
-import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.repository.FaseValoracionRepository;
 import com.estepper.estepper.repository.ExploracionRepository;
 import com.estepper.estepper.repository.FindriscRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
 import com.estepper.estepper.repository.UsuarioRepository;
+import com.estepper.estepper.repository.ClasificacionRepository;
 
 
 @Service
@@ -37,6 +38,9 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     @Autowired
     private UsuarioRepository repoU;
 
+    @Autowired
+    private ClasificacionRepository repoC;
+
     @Override
     public List<FaseValoracion> faseValoracion(Participante participante) {
         return repoV.findByParticipante(participante);
@@ -55,7 +59,10 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     @Override
     public void crearFormulariosNuevos(Participante participante){
         //COMPROBAR QUE NO ESTÉN CREADOS YA
+
         //CLASIFICACION
+        Clasificacion clasificacion = new Clasificacion(0, participante, "no", 0, 0, 0, 0, 0, 0, 0.0, "no", 0, "no", "", "no", "", "no" );
+        repoC.save(clasificacion);
         //ANTECEDENTES
         //ALIMENTACION
         //ACTIVIDAD FISICA
@@ -127,7 +134,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     public void eliminarcuenta(Participante participante){
         repoE.deleteByParticipante(participante);
         repoF.deleteByParticipante(participante);
-        repoF.deleteByParticipante(participante);
+        repoC.deleteByParticipante(participante);
         repoP.delete(participante);
     }
 }
