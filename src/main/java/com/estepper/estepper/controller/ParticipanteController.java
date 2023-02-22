@@ -19,6 +19,8 @@ import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Clasificacion;
+
 import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.service.FaseValoracionService;
@@ -161,6 +163,30 @@ public class ParticipanteController {
         return "redirect:/valoracion/{id}";
     }
 
+    @GetMapping("/clasificacion/{id}")
+    public String clasificacion(@PathVariable Integer id, Model model){
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("participante", participante.findById(id).get());
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
+        Clasificacion clasificacion = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Clasificacion) {
+                clasificacion = (Clasificacion) formularios.get(i);
+            }
+        }
+
+        model.addAttribute("clasificacion", clasificacion);
+        return "clasificacion";
+
+    }
+
+    @PostMapping("/process_clasificacion/{id}")
+    public String processClasificacion(@PathVariable("id") Integer id, @ModelAttribute Clasificacion clasificacion){
+        fasevaloracion.updateClasificacion(clasificacion, participante.findById(id).get());
+
+        return "redirect:/valoracion/{id}";
+    }
+    
     @GetMapping("/activarcuenta/{id}")
     public String processActCuenta(@PathVariable("id") Integer id) {
         List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());

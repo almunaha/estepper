@@ -105,6 +105,11 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     }
     
     @Override
+    public void updateClasificacion(Clasificacion clasificacion, Participante participante){
+        repoC.updateClasificacion(clasificacion.analiticahecha, clasificacion.glucemia, clasificacion.colesterol, clasificacion.ldl, clasificacion.sog, clasificacion.hdl, clasificacion.trigliceridos, clasificacion.hbA1c, clasificacion.pediranalitica, clasificacion.clasificacionusuario, clasificacion.montesa, clasificacion.motivomontesa, clasificacion.taller, clasificacion.motivotaller, clasificacion.actividadfisica, participante);
+    }
+    
+    @Override
     public Exploracion findByParticipante(Participante participante){
         return repoE.findByParticipante(participante);
 
