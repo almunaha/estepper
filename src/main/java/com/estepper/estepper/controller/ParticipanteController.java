@@ -215,6 +215,7 @@ public class ParticipanteController {
 
     @GetMapping("/registrarPeso")
     public String registrarPeso(Model model){
+        //que solo se pueda fecha actual o anterior
         model.addAttribute("user", getUsuario());
         model.addAttribute("progreso", new Progreso());
         return "registrarPeso";
