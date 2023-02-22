@@ -14,6 +14,7 @@ import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Antecedentes;
 import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.AlimentacionVal;
+import com.estepper.estepper.model.entity.ActividadFisica;
 import com.estepper.estepper.repository.FaseValoracionRepository;
 import com.estepper.estepper.repository.ExploracionRepository;
 import com.estepper.estepper.repository.FindriscRepository;
@@ -22,6 +23,7 @@ import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.repository.ClasificacionRepository;
 import com.estepper.estepper.repository.AntecedentesRepository;
 import com.estepper.estepper.repository.AlimentacionValRepository;
+import com.estepper.estepper.repository.ActividadFisicaRepository;
 
 
 @Service
@@ -50,6 +52,9 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
 
     @Autowired
     private AlimentacionValRepository repoAl;
+
+    @Autowired
+    private ActividadFisicaRepository repoAF;
 
     @Override
     public List<FaseValoracion> faseValoracion(Participante participante) {
@@ -80,6 +85,8 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
             AlimentacionVal alimentacion = new AlimentacionVal(0, participante, "no", 0, 0, 0, 0, 0 , 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"no",0,0,0,0,"baja");
             repoAl.save(alimentacion);
             //ACTIVIDAD FISICA
+            ActividadFisica actfisica = new ActividadFisica(0, participante, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"moderada");
+            repoAF.save(actfisica);
         }
     }
 
@@ -152,6 +159,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         repoC.deleteByParticipante(participante);
         repoA.deleteByParticipante(participante);
         repoAl.deleteByParticipante(participante);
+        repoAF.deleteByParticipante(participante);
         repoP.delete(participante);
     }
 }
