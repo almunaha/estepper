@@ -11,12 +11,19 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Exploracion;
-import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Antecedentes;
+import com.estepper.estepper.model.entity.Clasificacion;
+import com.estepper.estepper.model.entity.AlimentacionVal;
+import com.estepper.estepper.model.entity.ActividadFisica;
 import com.estepper.estepper.repository.FaseValoracionRepository;
 import com.estepper.estepper.repository.ExploracionRepository;
 import com.estepper.estepper.repository.FindriscRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
 import com.estepper.estepper.repository.UsuarioRepository;
+import com.estepper.estepper.repository.ClasificacionRepository;
+import com.estepper.estepper.repository.AntecedentesRepository;
+import com.estepper.estepper.repository.AlimentacionValRepository;
+import com.estepper.estepper.repository.ActividadFisicaRepository;
 
 
 @Service
@@ -37,6 +44,18 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     @Autowired
     private UsuarioRepository repoU;
 
+    @Autowired
+    private ClasificacionRepository repoC;
+
+    @Autowired
+    private AntecedentesRepository repoA;
+
+    @Autowired
+    private AlimentacionValRepository repoAl;
+
+    @Autowired
+    private ActividadFisicaRepository repoAF;
+
     @Override
     public List<FaseValoracion> faseValoracion(Participante participante) {
         return repoV.findByParticipante(participante);
@@ -55,10 +74,20 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     @Override
     public void crearFormulariosNuevos(Participante participante){
         //COMPROBAR QUE NO ESTÉN CREADOS YA
-        //CLASIFICACION
-        //ANTECEDENTES
-        //ALIMENTACION
-        //ACTIVIDAD FISICA
+        if(repoC.findByParticipante(participante) == null){
+            //CLASIFICACION
+            Clasificacion clasificacion = new Clasificacion(0, participante, "no", 0, 0, 0, 0, 0, 0, 0.0, "no", 0, "no", "", "no", "", "no" );
+            repoC.save(clasificacion);
+            //ANTECEDENTES
+            Antecedentes antecedentes = new Antecedentes(0, participante, "no", "no", "no", "no", "no", "no", "no", "no", 0, 0);
+            repoA.save(antecedentes);
+            //ALIMENTACION
+            AlimentacionVal alimentacion = new AlimentacionVal(0, participante, "no", 0, 0, 0, 0, 0 , 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"no",0,0,0,0,"baja");
+            repoAl.save(alimentacion);
+            //ACTIVIDAD FISICA
+            ActividadFisica actfisica = new ActividadFisica(0, participante, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"moderada");
+            repoAF.save(actfisica);
+        }
     }
 
     @Override
@@ -127,7 +156,10 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     public void eliminarcuenta(Participante participante){
         repoE.deleteByParticipante(participante);
         repoF.deleteByParticipante(participante);
-        repoF.deleteByParticipante(participante);
+        repoC.deleteByParticipante(participante);
+        repoA.deleteByParticipante(participante);
+        repoAl.deleteByParticipante(participante);
+        repoAF.deleteByParticipante(participante);
         repoP.delete(participante);
     }
 }

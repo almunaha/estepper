@@ -3,6 +3,8 @@ package com.estepper.estepper.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.time.*; 
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
-import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
@@ -27,6 +28,8 @@ import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.GrupoService;
+import com.estepper.estepper.service.ProgresoService;
+
 
 @Controller
 public class HomeController {
@@ -34,14 +37,14 @@ public class HomeController {
     @Autowired //inyectar recursos de la clase UsuarioService
     private UsuarioService usuario;
 
-    @Autowired //inyectar recursos de la clase GrupoService
-    private GrupoService grupo;
-
     @Autowired
     private FaseValoracionService fasevaloracion;
 
     @Autowired
     private ParticipanteService participante; 
+
+    @Autowired
+    private ProgresoService progreso; 
 
     @Autowired
 	private BCryptPasswordEncoder hash;
@@ -74,9 +77,16 @@ public class HomeController {
             return "admin";
         }
 
-        else{
-            List<Grupo> listaGrupos = grupo.listaGrupos();
-            model.addAttribute("grupos", listaGrupos);
+        else{ //PARTICIPANTE
+           // LocalDate datosSemana = LocalDate.now().minusDays(7); //Buscar fechas de una semana atrás
+
+           // List<Progreso> datos = progreso.findByFechaAfter(datosSemana);
+           // String datos ="";
+
+          /*  if (datos.isEmpty()) {
+                model.addAttribute("mostrarAlerta", true);
+            }*/
+    
             if(user.getEstadoCuenta().equals(Estado.ALTA)){
                 Optional<Participante> part = participante.findById(user.getId());
                 if(part.isPresent()) model.addAttribute("participante", part.get());

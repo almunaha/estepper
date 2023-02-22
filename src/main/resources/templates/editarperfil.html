@@ -107,26 +107,31 @@
                 </div>
             </nav>
 
-            <div class="bg-white border border-1 p-5 rounded-4 ">
-                <div><h3 style="text-align: center; margin-bottom: 25px;">Editar perfil</h3></div>
+            <div class="layout-edit">
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 25px;">Editar perfil</h3>
+                </div>
 
                 <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${user.id}}" th:object="${user}">
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Alias: </label>
+                        <label class="col-2 col-form-label">Alias</label>
                         <input type="text" th:field="*{nickname}" class="form-control" required />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Correo: </label>
+                        <label class="col-2 col-form-label">Correo</label>
                         <input type="email" th:field="*{email}" class="form-control" required />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Contraseña: </label>
-                        <input type="password" placeholder="********" th:field="*{contrasenia}"/>
+                        <label class="col-2 col-form-label">Contraseña</label>
+                        <input type="password" class="form-control" placeholder="**********" th:field="*{contrasenia}"/>
                     </div>
 
-                    <button class="btn btn-info text-white mt-4 w-100" type="submit">Guardar</button>
+                    <div style="display: flex; justify-content: center;">
+                        <a th:href="@{'/mostrarperfil/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px;">Cancelar</a>
+                       <button class="btn mt-4" id="btn-edit" type="submit">Guardar</button>
+                    </div>
 
                 </form>
             </div>
