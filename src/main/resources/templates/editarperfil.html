@@ -108,6 +108,8 @@
             </nav>
 
             <div class="bg-white border border-1 p-5 rounded-4 ">
+                <div><h3 style="text-align: center; margin-bottom: 25px;">Editar perfil</h3></div>
+
                 <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${user.id}}" th:object="${user}">
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Alias: </label>
@@ -124,7 +126,7 @@
                         <input type="password" placeholder="********" th:field="*{contrasenia}"/>
                     </div>
 
-                    <button class="btn btn-info text-white mt-4 w-100" type="submit">Editar perfil</button>
+                    <button class="btn btn-info text-white mt-4 w-100" type="submit">Guardar</button>
 
                 </form>
             </div>

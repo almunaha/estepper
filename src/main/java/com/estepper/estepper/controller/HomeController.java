@@ -132,11 +132,18 @@ public class HomeController {
 
     @PostMapping("/process_perfil/{id}")
     public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user, @ModelAttribute Participante p) {
-        
-        usuario.update(user.nickname, user.email, hash.encode(user.contrasenia), user.estadoCuenta, user.id);
 
-        if(p!=null) { 
-            participante.update(p.edad, p.sexo, p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(), p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas() ,id);
+        Usuario orig = usuario.findById(user.id).get(); //usuario antes de editarlo
+
+        if(user.contrasenia == "") user.contrasenia = orig.contrasenia; //si no se ha cambiado la contraseña
+        else user.contrasenia = hash.encode(user.contrasenia);
+
+        usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.id);
+
+        if(orig instanceof Participante) { //si es un participante
+            Participante part = participante.findById(id).get();
+
+            participante.update(p.edad, p.sexo, p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(), part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), id);
         }
 
        return "redirect:/mostrarperfil/{id}";
