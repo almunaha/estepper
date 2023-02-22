@@ -1,13 +1,24 @@
 package com.estepper.estepper.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.Participante;
@@ -42,10 +53,22 @@ public class CoordinadorController {
     private SesionService sesion;
 
     @GetMapping("/listado")
-    public String participantes(Model model) {
-        List<Participante> listado = part.listado();
+    public String participantes(@RequestParam Map<String, Object> params, Model model) {
+
+        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) -1) : 0;
+        PageRequest pageable = PageRequest.of(page, 6); //define página solicitada y tamaño de la página, se inicializa a cero
+        Page<Participante> paginaPart = part.paginas(pageable); //listado de páginas de 6 participantes cada una
+        int totalPags = paginaPart.getTotalPages(); //total de páginas
+
+        if(totalPags > 0){
+            List<Integer> paginas = IntStream.rangeClosed(1, totalPags).boxed().collect(Collectors.toList()); //listado con los números de las páginas
+            model.addAttribute("paginas", paginas);
+        }
+
+        List<Participante> listado = paginaPart.getContent();
         model.addAttribute("listado", listado);
         model.addAttribute("user", getUsuario());
+
         return "participantes";
     }
 
