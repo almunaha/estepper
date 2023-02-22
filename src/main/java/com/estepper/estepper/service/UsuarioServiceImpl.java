@@ -5,8 +5,8 @@ import java.util.Optional;
 import java.util.Properties;
 
 import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -26,8 +26,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     @Autowired
     private UsuarioRepository repo; //inyección de dependencias del usuario dao api
 
-    final String correoEstepper = "proyectoestepper@gmail.com";
-    final String contrasenia = "estepperPAI2023";
+    final String correoEstepper = "997788153381-tm7ucmdhpcng9vv8g92pft5105jqe450.apps.googleusercontent.com";
+    final String contrasenia = "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";
 
     public UserDetails loadUserByUsername(String codigo) throws UsernameNotFoundException {
         
@@ -83,20 +83,16 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     private void mandarcorreo(String correo, String texto) {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-        new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(correoEstepper, contrasenia);
-            }
-        });
+       
 
         try {
+
+            Properties props = new Properties();
+            props.put("mail.imap.ssl.enable", "true"); // required for Gmail
+            props.put("mail.imap.auth.mechanisms", "XOAUTH2");
+            Session session = Session.getInstance(props);
+            Store store = session.getStore("imap");
+            store.connect("imap.gmail.com", correoEstepper, contrasenia);
 
             // Define message
             MimeMessage message = new MimeMessage(session);
@@ -107,6 +103,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
             // Envia el mensaje
             Transport.send(message);
         } catch (Exception e) {
+            e.printStackTrace();
         }
                 
     }
