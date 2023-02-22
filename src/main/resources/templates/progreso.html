@@ -98,7 +98,7 @@
         </div>
 
         <div class="w-100">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -129,8 +129,14 @@
 
                 <!-- PESO -->
                 <div class="progreso-datos">
-                    <a th:href="@{/registrarPeso}"><i class="fa-solid fa-circle-plus" style="cursor: pointer;"></i></a>
+                    <div class="header-progreso">
+                        <h3>Peso</h3>
+                        <a class="btn-plus" th:href="@{/registrarPeso}"><i class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
+                    </div>
                     <canvas id="grafica" width="400" height="300"></canvas>
+                    <div style="display: flex; justify-content: center;">
+                        <a class="btn-reg" th:href="@{/registro/peso}">Ver registros</a>
+                    </div>
 
                     <script>
                         let canvas = document.getElementById("grafica").getContext("2d");
@@ -138,10 +144,11 @@
                         var chart = new Chart(canvas, {
                             type: "line",
                             data: {
+                                labels: ["febrero", "marzo", "abril", "mayo"],
                                 datasets: [
                                     {
-                                        label: "Peso",
-                                        borderColor: 'rgb(75, 192, 192)',
+                                        borderColor: 'rgb(251, 179, 116)',
+                                        data: [24, 22, 20, 18]
                                     }
                                 ]
                             },
@@ -152,14 +159,15 @@
                                     }
                                 }
                             }
-                        })
+                        });
 
-                        let url = 'http://localhost:7070/usuarios' //API REST
+                       /* let url = 'http://localhost:7070/usuarios' //API REST
                         const response = await fetch(url)
                         const barChartData = await response.json()
 
-                        console.log(barChartData)
+                        console.log(barChartData)*/
                     </script>
+
                 </div>
 
                 <!-- ÍNDICE CORPORAL -->

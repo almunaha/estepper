@@ -10,10 +10,40 @@
 .progreso-datos{
     border: 1.5px solid #95a4ad;
     border-radius: 25px;
-    width: 60%;
-    height: 270px;
+    width: 75%;
+    height: 430px;
     padding: 15px;
     box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
     align-items: center;
     background-color: white;
+}
+
+.header-progreso{
+    display:flex; 
+    justify-content: space-between;
+}
+
+.btn-reg{
+    font-size: 15px; 
+    background-color: grey;
+    color: white;
+    width: 30%;
+    border-radius: 5px;
+    margin-top: 5px;
+    text-align: center;
+    padding: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.btn-plus {
+    font-size: 22px; 
+    color: rgb(251, 179, 116);
+}
+
+.btn-plus:hover {
+    color: black;
+}
+
+.btn-reg:hover {
+    transform: scale(1.1);
 }
