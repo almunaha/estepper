@@ -120,6 +120,11 @@ a{
 
 }
 
+#header{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+/* estos hay que pasarlo a ids*/
 .navbar-expand-lg .navbar-collapse  {
    justify-content: space-between;
     font-size: 19px;
@@ -249,6 +254,102 @@ a{
 
 
 
+/*PRUEBAS PERFIL*/
+
+.cuerpoPerfil{
+    /*background-color: #afc0cb;*/
+    /*height: 600px;*/
+    max-height:fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4%;
+    margin-bottom: 5%;
+    flex-direction: column;
+}
+
+.cardi2{
+    width: 90%;
+    height: 500px;
+    background: #fff;
+    border-radius:20px;
+    position: relative;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.13);
+}
+
+.cardi2::before{
+    content: "";
+    position: absolute;
+    top:5%;
+    width: 95%;
+    height: 160px;
+    z-index: 1;
+    border-radius: 20px 20px 0 0;
+    background: #13405d;
+    box-shadow: 0 0 20px rgba(0,0,0,0.13);
+    transform-origin: bottom;
+    transition: transform .4s;
+
+}
+
+
+.cardi2 .imagenPerfil{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    z-index: 10;
+    transform: translateY(50px);
+    border:10px solid #fff;
+    overflow: hidden;
+    position: absolute;
+    background: #fff;
+}
+
+.cardi2 .imagenPerfil .img{
+    width: 120%;
+    height: 120%;
+    transform: translate(-8%,-8%);
+
+    border-right: 5px solid white;
+
+}
+
+.contenidoPerfil{
+    width: 100%;
+    height: 80%;
+    transform: translateY(170px);
+    display: flex;
+    flex-direction: column;
+    z-index:20;
+    align-items: center;
+}
+
+
+.contenidoPerfil p{
+    margin:0 0;
+}
+
+.centroPerfil{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.box{
+    padding: 10px 30px;
+    border-radius: 10px;
+    text-align: center;
+    /*display: none;*/
+
+    
+
+}
+
 /* EDITAR PERFIL */
 
 .layout-edit{
@@ -325,6 +426,7 @@ a{
 #btn-modal{
     cursor: pointer;
 }
+
 
 
 
