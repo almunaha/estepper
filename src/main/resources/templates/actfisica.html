@@ -92,7 +92,7 @@
             <div th:unless="${actfisica == null}" class="bg-white border border-1 p-5 rounded-4 ">
 
                 <form class="form-perfil" method="post" th:action="@{'/process_actfisica/' + ${participante.id}}" th:object="${actfisica}">
-        
+                    
                     <label class="col-4 col-form-label"><h4>ACTIVIDAD FÍSICA VIGOROSA (A.F.V)</h4></label>
                     <label class="col-4 col-form-label">Piense acerca de todas aquellas actividades vigorosas que usted realizó en los últimos 7 días. Actividades vigorosas son las que requieren un esfuerzo físico fuerte y le hacen respirar mucho más fuerte de lo normal. Piense sólamente en esas actividades que usted hizo por lo menos 10' continuos.</label>
                     <label class="col-4 col-form-label">1.- Durante los últimos 7 días. ¿Cuántos días realizó A.F.V. como levantar objetos pesados, excavar, aeróbicos o pedalear rápido en la bicicleta?</label>
@@ -168,6 +168,8 @@
                         <input id="metscaminar" type="number" th:field="*{metscaminar}" class="form-control" />
                     </div>
 
+
+
                     <label class="col-4 col-form-label"><h4>SENTADO</h4></label>
                     <label class="col-4 col-form-label">La última pregunta se refieree al tiemppo que usted permaneció sentado/a en la semana en los últimos 7 días. Incluya el tiempo sentado/a en el trabajo, la casa mirando la televisión, estudiando y en su tiempo libre, esto puedo incluir tiempo sentado/a en un escritorio, visitando amigos, leyendo o permanecer sentado/a o acostado/a</label>
                     <label class="col-4 col-form-label">7.- Durante los últimos 7 días. ¿Cuánto tiempo permaneció sentado/a en un día en la semana?</label>
@@ -190,12 +192,87 @@
 
                     <label class="col-4 col-form-label"><h4>NIVEL DE ACTIVIDAD FÍSICA</h4></label>
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Clasificación nivel actividad físicaa</label>
+                        <label class="col-4 col-form-label">Clasificación nivel actividad física</label>
                         <select id="clasificacion" th:field="*{clasificacion}" class="form-control">
                             <option value="moderada">Moderada</option>
                             <option value="vigorosa">Vigorosa</option>
                         </select>
                     </div>
+                    <script>
+                        function calcularmetsafv() {
+                            var minafv = parseInt(document.getElementById('minafv').value);
+                            var vecesafv = parseInt(document.getElementById('vecesafv').value);
+                            var resultado = 8*vecesafv*minafv; 
+                            document.getElementById('metsafv').value = resultado;
+                            calcularmetstotales();
+                        
+                        }
+                      
+                        function calcularminafv(){
+                            var horaafv = parseInt(document.getElementById('horaafv').value);
+                            document.getElementById('minafv').value = (horaafv*60);
+                            calcularmetsafv();
+                        }
+                        document.getElementById('minafv').addEventListener('input', calcularmetsafv);
+                        document.getElementById('horaafv').addEventListener('input', calcularminafv);
+                        document.getElementById('vecesafv').addEventListener('input', calcularmetsafv);
+                        
+                        function calcularmetsafm() {
+                            var minafm = parseInt(document.getElementById('minafm').value);
+                            var vecesafm = parseInt(document.getElementById('vecesafm').value);
+                            var resultado = 4*vecesafm*minafm; 
+                            document.getElementById('metsafm').value = resultado;
+                            calcularmetstotales();
+                        
+                        }
+                      
+                        function calcularminafm(){
+                            var horaafm = parseInt(document.getElementById('horaafm').value);
+                            document.getElementById('minafm').value = (horaafm*60);
+                            calcularmetsafm();
+                        }
+                        document.getElementById('minafm').addEventListener('input', calcularmetsafm);
+                        document.getElementById('horaafm').addEventListener('input', calcularminafm);
+                        document.getElementById('vecesafm').addEventListener('input', calcularmetsafm);
+
+                        function calcularmetscaminar() {
+                            var mincaminar = parseInt(document.getElementById('mincaminar').value);
+                            var vecescaminar = parseInt(document.getElementById('vecescaminar').value);
+                            var resultado = 3.3*vecescaminar*mincaminar; 
+                            document.getElementById('metscaminar').value = resultado;
+                            calcularmetstotales();
+                        
+                        }
+                      
+                        function calcularmincaminar(){
+                            var horacaminar = parseInt(document.getElementById('horacaminar').value);
+                            document.getElementById('mincaminar').value = (horacaminar*60);
+                            calcularmetscaminar();
+                        }
+                        document.getElementById('mincaminar').addEventListener('input', calcularmetscaminar);
+                        document.getElementById('horacaminar').addEventListener('input', calcularmincaminar);
+                        document.getElementById('vecescaminar').addEventListener('input', calcularmetscaminar);
+                        
+                        function calcularmetstotales() {
+                            var metscaminar = parseInt(document.getElementById('metscaminar').value);
+                            var metsafv = parseInt(document.getElementById('metsafv').value);
+                            var metsafm = parseInt(document.getElementById('metsafm').value);
+                            var resultado = metscaminar + metsafm + metsafv; 
+                            document.getElementById('metstotales').value = resultado;
+                            calcularclasificacion();
+                        }    
+
+                        function calcularclasificacion() {
+                            var metstotales = parseInt(document.getElementById('metstotales').value);
+                            var resultado;
+                            if(metstotales > 1500) resultado = "vigorosa";
+                            else "moderada";
+                            document.getElementById('clasificacion').value = resultado;
+                        
+                        }  
+
+                      
+                    </script>
 
                     <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Guardar</button>
                     <script language="JavaScript">

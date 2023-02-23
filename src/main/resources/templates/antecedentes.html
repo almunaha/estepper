@@ -143,6 +143,28 @@
                     </div>
 
                     <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">E.C.V.</label>
+                        <select id="ecv" th:field="*{ecv}" class="form-control">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Pat. Sensorial</label>
+                        <select id="patsensorial" th:field="*{patsensorial}" class="form-control">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Especificar: </label>
+                        
+                        <input id="especificar" type="text" th:field="*{especificar}" class="form-control" />
+                    </div>
+
+                    <div class="input-group mt-2">
                         <label class="col-4 col-form-label">¿Fuma actualmente?</label>
                         <select id="fuma" th:field="*{fuma}" class="form-control">
                             <option value="si">Sí</option>

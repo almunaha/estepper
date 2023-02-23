@@ -76,16 +76,16 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         //COMPROBAR QUE NO ESTÉN CREADOS YA
         if(repoC.findByParticipante(participante) == null){
             //CLASIFICACION
-            Clasificacion clasificacion = new Clasificacion(0, participante, "no", 0, 0, 0, 0, 0, 0, 0.0, "no", 0, "no", "", "no", "", "no" );
+            Clasificacion clasificacion = new Clasificacion(0, participante, "no", 0, 0, 0, 0, 0, 0, 0, "no", 0, "no", "", "no", "", "no" );
             repoC.save(clasificacion);
             //ANTECEDENTES
-            Antecedentes antecedentes = new Antecedentes(0, participante, "no", "no", "no", "no", "no", "no", "no", "no", 0, 0);
+            Antecedentes antecedentes = new Antecedentes(0, participante, "no", "no", "no", "no", "no", "no", "no", "no", "", "no", "no", 0, 0);
             repoA.save(antecedentes);
             //ALIMENTACION
             AlimentacionVal alimentacion = new AlimentacionVal(0, participante, "no", 0, 0, 0, 0, 0 , 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"no",0,0,0,0,"baja");
             repoAl.save(alimentacion);
             //ACTIVIDAD FISICA
-            ActividadFisica actfisica = new ActividadFisica(0, participante, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"moderada");
+            ActividadFisica actfisica = new ActividadFisica(0, participante, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"moderada");
             repoAF.save(actfisica);
         }
     }
@@ -111,7 +111,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
 
     @Override
     public void updateAntecedentes(Antecedentes antecedentes, Participante participante){
-        repoA.updateAntecedentes(antecedentes.hta,antecedentes.tiroides,antecedentes.patmental, antecedentes.dislipemias, antecedentes.patmuscesq, antecedentes.medicacion, antecedentes.fuma, antecedentes.dejardefumar, antecedentes.tasistolica, antecedentes.tadiastolica, participante);
+        repoA.updateAntecedentes(antecedentes.hta,antecedentes.tiroides,antecedentes.patmental, antecedentes.dislipemias, antecedentes.patmuscesq, antecedentes.medicacion, antecedentes.ecv, antecedentes.patsensorial, antecedentes.especificar, antecedentes.fuma, antecedentes.dejardefumar, antecedentes.tasistolica, antecedentes.tadiastolica, participante);
     }
 
     @Override
@@ -180,7 +180,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
 
     @Override
     public void updateActividadFisica(ActividadFisica actfisica, Participante participante) {
-        repoAF.updateActividadFisica(actfisica.vecesafv, actfisica.horaafv, actfisica.minafv, actfisica.metsafv, actfisica.vecesafm, actfisica.horaafm, actfisica.minafm, actfisica.metsafm, actfisica.vecescaminar, actfisica.horacaminar, actfisica.mincaminar, actfisica.metscaminar, actfisica.vecessentado, actfisica.horasentado, actfisica.minsentado, actfisica.metstotales, actfisica.clasificacion, participante);
+        repoAF.updateActividadFisica(actfisica.vecesafv, actfisica.horaafv, actfisica.minafv, actfisica.metsafv, actfisica.vecesafm, actfisica.horaafm, actfisica.minafm, actfisica.metsafm, actfisica.vecescaminar, actfisica.horacaminar, actfisica.mincaminar, actfisica.metscaminar, actfisica.horasentado, actfisica.minsentado, actfisica.metstotales, actfisica.clasificacion, participante);
         
     }
 }

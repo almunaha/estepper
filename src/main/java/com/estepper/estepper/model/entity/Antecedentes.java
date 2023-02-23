@@ -19,6 +19,9 @@ public class Antecedentes extends FaseValoracion {
     public String dislipemias;
     public String patmuscesq;
     public String medicacion;
+    public String ecv;
+    public String patsensorial;
+    public String especificar;
     public String fuma;
     public String dejardefumar;
     public Integer tasistolica;
@@ -28,7 +31,7 @@ public class Antecedentes extends FaseValoracion {
         super();
     }
 
-    public Antecedentes(Integer id, Participante participante, String hta, String tiroides, String patmental, String dislipemias, String patmuscesq, String medicacion, String fuma, String dejardefumar, Integer tasistolica, Integer tadiastolica) {
+    public Antecedentes(Integer id, Participante participante, String hta, String tiroides, String patmental, String dislipemias, String patmuscesq, String medicacion, String ecv, String patsensorial, String especificar, String fuma, String dejardefumar, Integer tasistolica, Integer tadiastolica) {
         super(id, participante);
         this.hta = hta; 
         this.tiroides = tiroides;
@@ -40,6 +43,9 @@ public class Antecedentes extends FaseValoracion {
         this.dejardefumar = dejardefumar;
         this.tasistolica = tasistolica;
         this.tadiastolica = tadiastolica;
+        this.ecv = ecv;
+        this.patsensorial = patsensorial;
+        this.especificar = especificar;
     }
 
     public Integer getId() {
@@ -128,6 +134,30 @@ public class Antecedentes extends FaseValoracion {
 
     public void setTadiastolica(Integer tadiastolica) {
         this.tadiastolica = tadiastolica;
+    }
+
+    public String getEcv() {
+        return ecv;
+    }
+
+    public void setEcv(String ecv) {
+        this.ecv = ecv;
+    }
+
+    public String getPatsensorial() {
+        return patsensorial;
+    }
+
+    public void setPatsensorial(String patsensorial) {
+        this.patsensorial = patsensorial;
+    }
+
+    public String getEspecificar() {
+        return especificar;
+    }
+
+    public void setEspecificar(String especificar) {
+        this.especificar = especificar;
     }
 
     
