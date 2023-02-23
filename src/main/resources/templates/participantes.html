@@ -98,7 +98,6 @@
                     <form class="d-flex justify-content-end">
                         <input id="filtrarParticipantes" class="form-control me-2 light-table-filter w-25"
                             data-table="tablePart" type="text" placeholder="Buscar...">
-
                     </form>
                 </div>
 
@@ -115,9 +114,6 @@
                         }(jQuery));
                     });
                 </script>
-
-
-
 
                 <!--BOTÓN DE FILTRADO -->
 
@@ -207,8 +203,7 @@
                     </tbody>
                 </table>
 
-                <!--PARA PAGINACIÓN, FALTA HACERLO BIEN, ACORDARME-->
-
+                <!--PAGINACIÓN-->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li class="page-item" th:each="page: ${paginas}">
@@ -216,9 +211,6 @@
                         </li>
                     </ul>
                 </nav>
-
-
-
 
                 <!--FUNCIÓN PARA FILTRAR POR ESTADO-->
 

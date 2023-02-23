@@ -15,9 +15,13 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 
+    <!-- para jquery-->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
-
+    <script src="/js/progreso.js"></script>
 
     <!--PARA GRÁFICOS-->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -125,20 +129,61 @@
 
             <!-- DASHBOARD -->
 
-            <div class="layout-progreso">
+            <div class="layout-progreso p-5">
 
                 <!-- PESO -->
                 <div class="progreso-datos">
                     <div class="header-progreso">
                         <h3>Peso</h3>
-                        <a class="btn-plus" th:href="@{/registrarPeso}"><i class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
+                        <a class="btn-plus"><i class="fa-solid fa-circle-plus"
+                                style="cursor: pointer; float:right;"></i></a>
                     </div>
+
+                    <!-- Ver registros -->
+                    <div class="pesoTabla" style="overflow-y:auto; ">
+                        <table class="table tablePart">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="lis:${peso}">
+                                    <td th:text="${lis.dato} + ' kg'"></td>
+                                    <td th:text="${#dates.format(lis.fecha, 'dd MMM yyyy')}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Ver gráfica -->
                     <canvas id="grafica" width="400" height="300"></canvas>
-                    <div style="display: flex; justify-content: center;">
-                        <a class="btn-reg" th:href="@{/registro/peso}">Ver registros</a>
+
+                    <!-- Botones para cambiar de vista-->
+                    <div class="botones-prog">
+                        <button class="btn-reg" id="registroPeso">Ver registros</button>
+                        <button class="btn-reg" id="graficaPeso">Ver gráfica</button>
+                    </div>
+
+                    <!-- Registar peso -->
+                    <div class="bg-white p-5" style="width: 30%" id="form-peso">
+                        <form method="post" th:action="@{/process_peso}" th:object="${progreso}">
+                            <div class="mb-3">
+                                <label>Fecha</label>
+                                <input type="date" th:field="*{fecha}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label>Peso</label>
+                                <input type="text" th:field="*{dato}" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </form>
                     </div>
 
                     <script>
+
                         let canvas = document.getElementById("grafica").getContext("2d");
 
                         var chart = new Chart(canvas, {
@@ -152,20 +197,20 @@
                                     }
                                 ]
                             },
-                            options:{
-                                scales:{
-                                    y:{
+                            options: {
+                                scales: {
+                                    y: {
                                         beginAtZero: true
                                     }
                                 }
                             }
                         });
 
-                       /* let url = 'http://localhost:7070/usuarios' //API REST
-                        const response = await fetch(url)
-                        const barChartData = await response.json()
-
-                        console.log(barChartData)*/
+                        /* let url = 'http://localhost:7070/usuarios' //API REST
+                         const response = await fetch(url)
+                         const barChartData = await response.json()
+ 
+                         console.log(barChartData)*/
                     </script>
 
                 </div>
