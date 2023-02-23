@@ -236,16 +236,13 @@ public class ParticipanteController {
     @GetMapping("/progreso")
     public String progreso(Model model){
         model.addAttribute("user", getUsuario());
+        Participante p = participante.findById(getUsuario().id).get();
+        List<Progreso> peso = pro.datos(p, TipoProgreso.PESO); 
+        model.addAttribute("peso", peso);
+        model.addAttribute("progreso", new Progreso());
+
         return "progreso";
     }  
-
-    @GetMapping("/registrarPeso")
-    public String registrarPeso(Model model){
-        //que solo se pueda fecha actual o anterior
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("progreso", new Progreso());
-        return "registrarPeso";
-    }
 
     @PostMapping("/process_peso")
     public String process_peso(Progreso progreso, Model model){

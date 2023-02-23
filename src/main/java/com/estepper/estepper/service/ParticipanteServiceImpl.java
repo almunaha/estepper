@@ -5,6 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Grupo;
@@ -38,5 +41,10 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     @Override
     public List<Participante> listadoGrupo (Grupo grupo){
         return repo.findByGrupo(grupo);
+    }
+
+    @Override
+    public Page<Participante> paginas(Pageable pageable){
+        return(Page<Participante>) repo.findAll(pageable);
     }
 }
