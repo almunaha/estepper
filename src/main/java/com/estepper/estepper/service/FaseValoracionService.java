@@ -5,6 +5,8 @@ import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Clasificacion;
+import com.estepper.estepper.model.entity.AlimentacionVal;
+import com.estepper.estepper.model.entity.Antecedentes;
 
 import com.estepper.estepper.model.enums.Sexo;
 
@@ -17,6 +19,8 @@ public interface FaseValoracionService {
     public void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad, Integer imc, Participante participante);
     public void updateFindrisc(Participante participante,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica, Integer ptosfrecfruta, Integer ptosmedicacion, Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion, String escalarriesgo);
     public void updateClasificacion(Clasificacion clasificacion, Participante participante);
+    public void updateAntecedentes(Antecedentes antecedentes, Participante participante);
+    public void updateAlimentacionVal(AlimentacionVal alimentacion, Participante participante);
     public Exploracion findByParticipante(Participante participante);
     public void actualizarFindrisc(Exploracion exploracion, Findrisc findrisc);
     public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id, Integer idCoor);

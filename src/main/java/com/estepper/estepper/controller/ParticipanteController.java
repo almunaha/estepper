@@ -20,6 +20,8 @@ import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Clasificacion;
+import com.estepper.estepper.model.entity.Antecedentes;
+import com.estepper.estepper.model.entity.AlimentacionVal;
 
 import com.estepper.estepper.model.enums.TipoProgreso;
 
@@ -183,6 +185,54 @@ public class ParticipanteController {
     @PostMapping("/process_clasificacion/{id}")
     public String processClasificacion(@PathVariable("id") Integer id, @ModelAttribute Clasificacion clasificacion){
         fasevaloracion.updateClasificacion(clasificacion, participante.findById(id).get());
+
+        return "redirect:/valoracion/{id}";
+    }
+
+    @GetMapping("/antecedentes/{id}")
+    public String antecedentes(@PathVariable Integer id, Model model){
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("participante", participante.findById(id).get());
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
+        Antecedentes antecedentes = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Antecedentes) {
+                antecedentes = (Antecedentes) formularios.get(i);
+            }
+        }
+
+        model.addAttribute("antecedentes", antecedentes);
+        return "antecedentes";
+
+    }
+
+    @PostMapping("/process_antecedentes/{id}")
+    public String processantecedentes(@PathVariable("id") Integer id, @ModelAttribute Antecedentes antecedentes){
+        fasevaloracion.updateAntecedentes(antecedentes, participante.findById(id).get());
+
+        return "redirect:/valoracion/{id}";
+    }
+
+    @GetMapping("/alimentacionval/{id}")
+    public String alimentacionval(@PathVariable Integer id, Model model){
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("participante", participante.findById(id).get());
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
+        AlimentacionVal alimentacionval = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof AlimentacionVal) {
+                alimentacionval = (AlimentacionVal) formularios.get(i);
+            }
+        }
+
+        model.addAttribute("alimentacionval", alimentacionval);
+        return "alimentacionval";
+
+    }
+
+    @PostMapping("/process_alimentacionval/{id}")
+    public String processalimentacionval(@PathVariable("id") Integer id, @ModelAttribute AlimentacionVal alimentacionval){
+        fasevaloracion.updateAlimentacionVal(alimentacionval, participante.findById(id).get());
 
         return "redirect:/valoracion/{id}";
     }

@@ -110,6 +110,11 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     }
 
     @Override
+    public void updateAntecedentes(Antecedentes antecedentes, Participante participante){
+        repoA.updateAntecedentes(antecedentes.hta,antecedentes.tiroides,antecedentes.patmental, antecedentes.dislipemias, antecedentes.patmuscesq, antecedentes.medicacion, antecedentes.fuma, antecedentes.dejardefumar, antecedentes.tasistolica, antecedentes.tadiastolica, participante);
+    }
+
+    @Override
     public Exploracion findByParticipante(Participante participante){
         return repoE.findByParticipante(participante);
 
@@ -166,5 +171,10 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         repoAl.deleteByParticipante(participante);
         repoAF.deleteByParticipante(participante);
         repoP.delete(participante);
+    }
+
+    @Override
+    public void updateAlimentacionVal(AlimentacionVal alimentacion, Participante participante) {
+        repoAl.updateAlimentacionVal(alimentacion.aceite, alimentacion.ptosaceite, alimentacion.racaceite, alimentacion.ptosracaceite, alimentacion.racverdura, alimentacion.ptosracverdura, alimentacion.racfruta, alimentacion.ptosracfruta, alimentacion.raccarne, alimentacion.ptosraccarne, alimentacion.racmantequilla, alimentacion.ptosracmantequilla, alimentacion.racbebidas, alimentacion.ptosracbebidas, alimentacion.racvino, alimentacion.ptosracvino, alimentacion.raclegumbres, alimentacion.ptosraclegumbres, alimentacion.racpescado, alimentacion.ptosracpescado, alimentacion.racreposteria, alimentacion.ptosracreposteria, alimentacion.racfrutosecos, alimentacion.ptosracfrutosecos, alimentacion.carneblanca, alimentacion.ptoscarneblanca, alimentacion.racsofrito, alimentacion.ptosracsofrito, alimentacion.puntuacion, alimentacion.adherencia, participante);
     }
 }
