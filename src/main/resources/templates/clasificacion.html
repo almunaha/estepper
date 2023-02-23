@@ -86,8 +86,10 @@
                 </div>
             </nav>
 
-
-            <div class="bg-white border border-1 p-5 rounded-4 ">
+            <div th:if="${clasificacion == null}">
+                <h2>Necesita rellenar los formularios de Exploración y de Findrisc para acceder a este formulario.</h2>
+            </div>
+            <div th:unless="${clasificacion == null}" class="bg-white border border-1 p-5 rounded-4 ">
 
                 <form class="form-perfil" method="post" th:action="@{'/process_clasificacion/' + ${participante.id}}" th:object="${clasificacion}">
         
@@ -138,7 +140,7 @@
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">HbA1c(%): </label>
                         
-                        <input id="hb" type="number" th:field="*{hbA1c}" class="form-control" />
+                        <input id="hb" type="double" th:field="*{hbA1c}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
@@ -151,7 +153,7 @@
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">CLASIFICACIÓN DEL USUARIO</label>
-                        <select id="clasificacion" th:field="*{clasificacion}" class="form-control">
+                        <select id="clasificacion" th:field="*{clasificacionusuario}" class="form-control">
                             <option value=1>RELLENAR</option>
                             <option value=2>RELLENAR</option>
                             <option value=3>T.F. > 14, normoglucemia e I.M.C >= 27</option>

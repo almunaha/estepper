@@ -157,7 +157,7 @@ public class ParticipanteController {
             }
         }
         if((exploracion.edad >= 35) & (findrisc.puntuacion >= 15)){
-            fasevaloracion.crearFormulariosNuevos(findrisc.getParticipante());
+            fasevaloracion.crearFormulariosNuevos(participante.findById(id).get());
         }
 
         return "redirect:/valoracion/{id}";
