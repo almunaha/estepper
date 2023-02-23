@@ -21,6 +21,7 @@ import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.Antecedentes;
+import com.estepper.estepper.model.entity.ActividadFisica;
 import com.estepper.estepper.model.entity.AlimentacionVal;
 
 import com.estepper.estepper.model.enums.TipoProgreso;
@@ -233,6 +234,30 @@ public class ParticipanteController {
     @PostMapping("/process_alimentacionval/{id}")
     public String processalimentacionval(@PathVariable("id") Integer id, @ModelAttribute AlimentacionVal alimentacionval){
         fasevaloracion.updateAlimentacionVal(alimentacionval, participante.findById(id).get());
+
+        return "redirect:/valoracion/{id}";
+    }
+
+    @GetMapping("/actfisica/{id}")
+    public String actfisica(@PathVariable Integer id, Model model){
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("participante", participante.findById(id).get());
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
+        ActividadFisica actfisica = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof ActividadFisica) {
+                actfisica = (ActividadFisica) formularios.get(i);
+            }
+        }
+
+        model.addAttribute("actfisica", actfisica);
+        return "actfisica";
+
+    }
+
+    @PostMapping("/process_actfisica/{id}")
+    public String processactfisica(@PathVariable("id") Integer id, @ModelAttribute ActividadFisica actfisica){
+        fasevaloracion.updateActividadFisica(actfisica, participante.findById(id).get());
 
         return "redirect:/valoracion/{id}";
     }

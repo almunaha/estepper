@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang="es"
+ xmlns:th="https://www.thymeleaf.org"
+ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/signin.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+
+    <title>Formulario de Actividad Física</title>
+
+</head>
+
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <div class="d-flex">
+        <div id="sidebar-container">
+
+            <div class="logo">
+                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}"/>
+                <h4>Estepper</h4>
+            </div>
+
+            
+          <ul>
+            <li>
+                <a th:href="@{/}">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="nombre-enlaces">Inicio</span>
+                </a>
+            </li>
+    
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-person-hiking"></i>
+                    <span class="nombre-enlaces">Actividades</span>
+                </a>
+            </li>
+    
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span class="nombre-enlaces">Materiales</span>
+                </a>
+            </li>      
+        </ul>
+
+        </div>
+
+        <div class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
+
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div th:if="${actfisica == null}">
+                <h2>Necesita rellenar los formularios de Exploración y de Findrisc para acceder a este formulario.</h2>
+            </div>
+            <div th:unless="${actfisica == null}" class="bg-white border border-1 p-5 rounded-4 ">
+
+                <form class="form-perfil" method="post" th:action="@{'/process_actfisica/' + ${participante.id}}" th:object="${actfisica}">
+        
+                    <label class="col-4 col-form-label"><h4>ACTIVIDAD FÍSICA VIGOROSA (A.F.V)</h4></label>
+                    <label class="col-4 col-form-label">Piense acerca de todas aquellas actividades vigorosas que usted realizó en los últimos 7 días. Actividades vigorosas son las que requieren un esfuerzo físico fuerte y le hacen respirar mucho más fuerte de lo normal. Piense sólamente en esas actividades que usted hizo por lo menos 10' continuos.</label>
+                    <label class="col-4 col-form-label">1.- Durante los últimos 7 días. ¿Cuántos días realizó A.F.V. como levantar objetos pesados, excavar, aeróbicos o pedalear rápido en la bicicleta?</label>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº días/semana: </label>
+                        
+                        <input id="vecesafv" type="number" th:field="*{vecesafv}" class="form-control" />
+                    </div>
+                    <label class="col-4 col-form-label">2.- ¿Cuánto tiempo en total usualmente le tomó realizar A.F.V. en uno de esos días que las realizó?</label>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº horas/día: </label>
+                        
+                        <input id="horaafv" type="number" th:field="*{horaafv}" class="form-control" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº minutos/día: </label>
+                        
+                        <input id="minafv" type="number" th:field="*{minafv}" class="form-control" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Vigorosa METS-minuto/semana: </label>
+                        
+                        <input id="metsafv" type="number" th:field="*{metsafv}" class="form-control" />
+                    </div>
+
+                    <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Guardar</button>
+                    <script language="JavaScript">
+                        function myFunction() {
+                            if(confirm("Desea guardar los datos?")){
+                            alert("Datos guardados exitosamente");
+                            }else{
+                            alert("Usted cancelo la acción para guardar");
+                            }
+                        }
+                    </script>
+                    
+                </form>                      
+            </div> 
+            
+            <div style="float: right;">
+                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

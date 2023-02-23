@@ -177,4 +177,10 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     public void updateAlimentacionVal(AlimentacionVal alimentacion, Participante participante) {
         repoAl.updateAlimentacionVal(alimentacion.aceite, alimentacion.ptosaceite, alimentacion.racaceite, alimentacion.ptosracaceite, alimentacion.racverdura, alimentacion.ptosracverdura, alimentacion.racfruta, alimentacion.ptosracfruta, alimentacion.raccarne, alimentacion.ptosraccarne, alimentacion.racmantequilla, alimentacion.ptosracmantequilla, alimentacion.racbebidas, alimentacion.ptosracbebidas, alimentacion.racvino, alimentacion.ptosracvino, alimentacion.raclegumbres, alimentacion.ptosraclegumbres, alimentacion.racpescado, alimentacion.ptosracpescado, alimentacion.racreposteria, alimentacion.ptosracreposteria, alimentacion.racfrutosecos, alimentacion.ptosracfrutosecos, alimentacion.carneblanca, alimentacion.ptoscarneblanca, alimentacion.racsofrito, alimentacion.ptosracsofrito, alimentacion.puntuacion, alimentacion.adherencia, participante);
     }
+
+    @Override
+    public void updateActividadFisica(ActividadFisica actfisica, Participante participante) {
+        repoAF.updateActividadFisica(actfisica.vecesafv, actfisica.horaafv, actfisica.minafv, actfisica.metsafv, actfisica.vecesafm, actfisica.horaafm, actfisica.minafm, actfisica.metsafm, actfisica.vecescaminar, actfisica.horacaminar, actfisica.mincaminar, actfisica.metscaminar, actfisica.vecessentado, actfisica.horasentado, actfisica.minsentado, actfisica.metstotales, actfisica.clasificacion, participante);
+        
+    }
 }
