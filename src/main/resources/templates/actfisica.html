@@ -118,6 +118,85 @@
                         <input id="metsafv" type="number" th:field="*{metsafv}" class="form-control" />
                     </div>
 
+                    <label class="col-4 col-form-label"><h4>ACTIVIDAD FÍSICA MODERADA (A.F.M)</h4></label>
+                    <label class="col-4 col-form-label">Piense acerca de todas aquellas actividades vigorosas que usted realizó en los últimos 7 días. Actividades moderadas son las que requieren un esfuerzo físico moderado y le hacen respirar algo más fuerte de lo normal. Piense sólamente en esas actividades que usted hizo por lo menos 10' continuos.</label>
+                    <label class="col-4 col-form-label">3.- Durante los últimos 7 días. ¿Cuántos días realizó A.F.M. tal como cargar objetos livianos, pedalear en bicicleta a paso regular o jugar a doble de tenis?</label>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº días/semana: </label>
+                        
+                        <input id="vecesafv" type="number" th:field="*{vecesafm}" class="form-control" />
+                    </div>
+                    <label class="col-4 col-form-label">4.- Usualmente, ¿cuánto tiempo dedica usted en uno de esos días haciendo A.F.M.? </label>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº horas/día: </label>
+                        
+                        <input id="horaafm" type="number" th:field="*{horaafm}" class="form-control" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº minutos/día: </label>
+                        
+                        <input id="minafm" type="number" th:field="*{minafm}" class="form-control" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Moderada METS-minuto/semana: </label>
+                        
+                        <input id="metsafm" type="number" th:field="*{metsafm}" class="form-control" />
+                    </div>
+
+                    <label class="col-4 col-form-label"><h4>CAMINANDO</h4></label>
+                    <label class="col-4 col-form-label">Piense acerca del tiempo que usted dedicó a caminar en los últimos 7 días. Esto incluye trabajo en la casa, caminatas para ir de un sitio a otro, o cualquier otra caminata que usted hizo únicamente por recreación, deporte, ejercicio o placer.</label>
+                    <label class="col-4 col-form-label">5.- Durante los últimos 7 días. ¿Cuántos días caminó al menos 10' continuos?</label>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº días/semana: </label>
+                        
+                        <input id="vecescaminar" type="number" th:field="*{vecescaminar}" class="form-control" />
+                    </div>
+                    <label class="col-4 col-form-label">6.- Usualmente, ¿durante cuánto tiempo caminó, un día cualquiera? </label>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº horas/día: </label>
+                        
+                        <input id="horacaminar" type="number" th:field="*{horacaminar}" class="form-control" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº minutos/día: </label>
+                        
+                        <input id="mincaminar" type="number" th:field="*{mincaminar}" class="form-control" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Caminar METS-minuto/semana: </label>
+                        
+                        <input id="metscaminar" type="number" th:field="*{metscaminar}" class="form-control" />
+                    </div>
+
+                    <label class="col-4 col-form-label"><h4>SENTADO</h4></label>
+                    <label class="col-4 col-form-label">La última pregunta se refieree al tiemppo que usted permaneció sentado/a en la semana en los últimos 7 días. Incluya el tiempo sentado/a en el trabajo, la casa mirando la televisión, estudiando y en su tiempo libre, esto puedo incluir tiempo sentado/a en un escritorio, visitando amigos, leyendo o permanecer sentado/a o acostado/a</label>
+                    <label class="col-4 col-form-label">7.- Durante los últimos 7 días. ¿Cuánto tiempo permaneció sentado/a en un día en la semana?</label>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº horas/día: </label>
+                        
+                        <input id="horasentado" type="number" th:field="*{horasentado}" class="form-control" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nº minutos/día: </label>
+                        
+                        <input id="minsentado" type="number" th:field="*{minsentado}" class="form-control" />
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">METs totales: </label>
+                        
+                        <input id="metstotales" type="number" th:field="*{metstotales}" class="form-control" />
+                    </div>
+
+                    <label class="col-4 col-form-label"><h4>NIVEL DE ACTIVIDAD FÍSICA</h4></label>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Clasificación nivel actividad físicaa</label>
+                        <select id="clasificacion" th:field="*{clasificacion}" class="form-control">
+                            <option value="moderada">Moderada</option>
+                            <option value="vigorosa">Vigorosa</option>
+                        </select>
+                    </div>
+
                     <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Guardar</button>
                     <script language="JavaScript">
                         function myFunction() {
