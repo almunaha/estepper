@@ -59,6 +59,11 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }
 
     @Override
+    public List<Materiales> materialesGrupo(Grupo grupo){
+        return repoM.findByGrupo(grupo);
+    }
+
+    @Override
     public void eliminarMaterial(Integer id){
         repoM.deleteById(id);
     }

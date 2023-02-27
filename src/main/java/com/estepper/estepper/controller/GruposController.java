@@ -1,5 +1,8 @@
 package com.estepper.estepper.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +11,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.entity.Materiales;
+import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -98,6 +106,44 @@ public class GruposController {
      
         return "unGrupo";
     }  
+
+    //MATERIALES:
+    @GetMapping("/materialesGrupo/{id}")
+    public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
+        Usuario elusuario = getUsuario();
+        model.addAttribute("user", elusuario);
+        model.addAttribute("listado", part.materialesGrupo(grupo.getGrupo(id)));
+        Materiales material = new Materiales();
+        model.addAttribute("material", material);
+        model.addAttribute("id", id);
+        return "materialesGrupo";
+    }
+
+    @PostMapping("/process_materialGrupo/{id}")
+    public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
+            Grupo elgrupo = grupo.getGrupo(id);
+            material.setGrupo(elgrupo);
+            if(!file.isEmpty()){
+                Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
+                String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                try {
+                    byte[] bytesArc = file.getBytes(); 
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesArc);
+                    material.setLink(file.getOriginalFilename());
+                } catch (Exception e) {
+                }
+                List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
+                for(int i = 0; i < losparticipantes.size(); i++){
+                    material.setParticipante(losparticipantes.get(i));
+                    part.updateMaterial(material);
+                }
+                    
+                
+
+            }
+        return "redirect:/";
+    }
 
     public Usuario getUsuario(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
