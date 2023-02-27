@@ -330,6 +330,11 @@ public class ParticipanteController {
         return "redirect:/progreso";
     }
 
+    @GetMapping("/objetivos")
+    public String objetivos(Model model){
+        model.addAttribute("user", getUsuario());
+        return "objetivos";
+    }  
     //MATERIALES:
     @GetMapping("/eliminarMaterial/{id}")
     public String processElimMaterial(@PathVariable("id") Integer id) {
