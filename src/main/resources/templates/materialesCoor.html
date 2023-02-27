@@ -90,7 +90,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                     <td th:text="${lis.titulo}"></td>
                     <td th:text="${lis.descripcion}"></td>
                     <td>
-                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="${lis.link}" download="${lis.titulo}"title="Descargar"><i class="fa-solid fa-arrow-down-to-line"></i></a>
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="${lis.link}" download="${lis.titulo}"title="Descargar"><i class="fa-solid fa-download"></i></a>
                         <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 </tr>
@@ -112,7 +112,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                   </div>
                   <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
                   <div class="col-sm-8 mb-2">
-                      <input type="file" th:name="enlace" accept=".jpeg, .jpg,.pdf, .doc" class="form-control" required/>
+                      <input type="file" th:name="file" class="form-control" required/>
                   </div>
 
               </div>
