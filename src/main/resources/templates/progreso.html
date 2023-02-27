@@ -134,7 +134,7 @@
                 <!-- PESO -->
                 <div class="progreso-datos">
                     <div class="header-progreso">
-                        <h3>Peso</h3>
+                        <h4>Peso</h4>
                         <a class="btn-plus"><i class="fa-solid fa-circle-plus"
                                 style="cursor: pointer; float:right;"></i></a>
                     </div>
@@ -158,7 +158,7 @@
                     </div>
 
                     <!-- Ver gráfica -->
-                    <canvas id="grafica" width="400" height="300"></canvas>
+                    <div><canvas id="grafica" width="400" height="300"></canvas></div>
 
                     <!-- Botones para cambiar de vista-->
                     <div class="botones-prog">
@@ -198,6 +198,7 @@
                                 ]
                             },
                             options: {
+                                responsive: true,
                                 scales: {
                                     y: {
                                         beginAtZero: true
@@ -213,10 +214,19 @@
                          console.log(barChartData)*/
                     </script>
 
+                    </script>
+
                 </div>
 
                 <!-- ÍNDICE CORPORAL -->
                 <div class="progreso-datos">
+
+                    <div class="header-progreso">
+                        <h4>Índice corporal</h4>
+                        <a class="btn-plus"><i class="fa-solid fa-circle-plus"
+                                style="cursor: pointer; float:right;"></i></a>
+                    </div>
+
                     <canvas id="grafica2" width="400" height="300"></canvas>
 
                     <script>
@@ -240,6 +250,12 @@
 
                 <!-- PERÍMETRO ABDOMINAL -->
                 <div class="progreso-datos">
+                    <div class="header-progreso">
+                        <h4>Perímetro abdominal</h4>
+                        <a class="btn-plus"><i class="fa-solid fa-circle-plus"
+                                style="cursor: pointer; float:right;"></i></a>
+                    </div>
+
                     <canvas id="grafica3" width="400" height="300"></canvas>
 
                     <script>
@@ -263,7 +279,12 @@
 
                 <!-- ACTIVIDAD FÍSICA -->
                 <div class="progreso-datos">
-                    <canvas id="grafica4" width="400" height="300"></canvas>
+                    <div class="header-progreso">
+                        <h4>Actividad física</h4>
+                        <a class="btn-plus"><i class="fa-solid fa-circle-plus"
+                                style="cursor: pointer; float:right;"></i></a>
+                    </div>
+                    <!--<canvas id="grafica4" width="400" height="300"></canvas>-->
 
                     <script>
                         let canvas4 = document.getElementById("grafica4").getContext("2d");
