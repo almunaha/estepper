@@ -232,4 +232,10 @@ public class ParticipanteController {
 
     }
 
+    @GetMapping("/objetivos")
+    public String objetivos(Model model){
+        model.addAttribute("user", getUsuario());
+        return "objetivos";
+    }  
+
 }
