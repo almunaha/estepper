@@ -50,19 +50,13 @@
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
                 </li>
-        
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-folder-open"></i>
-                        <span class="nombre-enlaces">Materiales</span>
-                    </a>
-                </li>      
+      
             </ul>
         
         </div>
 
         <div class="w-100">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -140,6 +134,7 @@
                                 <a class="fa-solid fa-eye fa-2x" id="btn-icono" data-bs-toggle="tooltip" title="Ver grupo" th:href="@{'/unGrupo/' + ${lis.id}}"></a>
                                 <a class="fa-solid fa-pen-to-square fa-2x" id="btn-icono" data-bs-toggle="tooltip"  title="Editar grupo" th:href="@{'/grupos/editar/' + ${lis.id}} "></a>
                                 <a class="fa-solid fa-trash-can fa-2x" id="btn-icono" data-bs-toggle="tooltip"  title="Eliminar grupo" th:href="@{'/grupos/eliminar/'+ ${lis.id}}"></a>
+                                <a class="fa-solid fa-folder-open fa-2x" id="btn-icono" data-bs-toggle="tooltip" title="Materiales" th:href="@{'/materialesGrupo/' + ${lis.id}}"></a>
                                
                             </td>
                         </tr>

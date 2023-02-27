@@ -20,7 +20,7 @@ public class Clasificacion extends FaseValoracion {
     public Integer sog;
     public Integer hdl;
     public Integer trigliceridos;
-    public double hbA1c;
+    public float hbA1c;
     public String pediranalitica;
     public Integer clasificacionusuario;
     public String montesa;
@@ -33,7 +33,7 @@ public class Clasificacion extends FaseValoracion {
         super();
     }
 
-    public Clasificacion(Integer id, Participante participante, String analiticahecha, Integer glucemia, Integer colesterol, Integer ldl, Integer sog, Integer hdl, Integer trigliceridos, double hbA1c, String pediranalitica, Integer clasificacionusuario, String montesa, String motivomontesa, String taller, String motivotaller, String actividadfisica){
+    public Clasificacion(Integer id, Participante participante, String analiticahecha, Integer glucemia, Integer colesterol, Integer ldl, Integer sog, Integer hdl, Integer trigliceridos, float hbA1c, String pediranalitica, Integer clasificacionusuario, String montesa, String motivomontesa, String taller, String motivotaller, String actividadfisica){
         super(id, participante);
         this.analiticahecha = analiticahecha;
         this.glucemia = glucemia;
@@ -116,7 +116,7 @@ public class Clasificacion extends FaseValoracion {
         this.trigliceridos = trigliceridos;
     }
 
-    public double getHbA1c() {
+    public float getHbA1c() {
         return hbA1c;
     }
 

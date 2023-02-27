@@ -6,12 +6,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
+import com.estepper.estepper.model.entity.Exploracion;
+import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.repository.GrupoRepository;
+import com.estepper.estepper.repository.ExploracionRepository;
+import com.estepper.estepper.repository.FindriscRepository;
 
 @SpringBootTest
 class EstepperApplicationTests {
@@ -23,26 +27,21 @@ class EstepperApplicationTests {
 	@Autowired
 	private GrupoRepository grupoRepo;
 
+	@Autowired
+	private FindriscRepository findriscRepo;
+
+	@Autowired
+	private ExploracionRepository exploracionRepo;
+
 	@Test
 	public void crearUsuarioTest() {
 
 		//Usuario tipo PARTICIPANTE
-		usuarioRepo.save(new Participante(0, 111, "Almudena",  "almunaha@ucm.es", hash.encode("almupass"), 
-		Estado.ALTA, 1, null, 10, 2, 22, 3, Sexo.FEMENINO,"/img/p1.png"));
-
-		usuarioRepo.save(new Participante(1, 444, "Inés","ineher02@ucm.es", hash.encode("inespass"), 
-		Estado.ALTA, 1, null, 5, 2, 22, 3, Sexo.FEMENINO,"/img/p1.png"));
-
-		usuarioRepo.save(new Participante(2, 555, "Patricia", "pplata@ucm.es", hash.encode("patripass"), 
-		Estado.ALTA, 1, null, 5, 2, 22, 3, Sexo.FEMENINO,"/img/p1.png"));
-
-		usuarioRepo.save(new Participante(3, 666, "Placi",  "placi@gmail.com", hash.encode("placipass"), 
-		Estado.ALTA, 1, null, 5, 2, 55, 3, Sexo.FEMENINO,"/img/p1.png"));
+		Participante almu = usuarioRepo.save(new Participante(0, 111, "Almudena",  "almunaha@ucm.es", hash.encode("almupass"), 
+		Estado.BAJA, null, null, 0, 0, 0, 0, null,"/img/p1.png"));
+		exploracionRepo.save(new Exploracion(0, almu, Sexo.MASCULINO, "no", 0, 0, 0, 0, 0));
+		findriscRepo.save(new Findrisc(0, almu, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo"));
 		
-		usuarioRepo.save(new Participante(4, 777, "Diana",  "diana@gmail.com", hash.encode("mamapass"), 
-		Estado.ALTA, 1, null, 5, 2, 54, 3, Sexo.FEMENINO,"/img/p1.png"));
-
-
 
 		//Usuario tipo COORDINADOR
 		usuarioRepo.save(new Coordinador(0, 222, "Mercedes",  "mercedes@madrid.es", hash.encode("mercedespass"), 

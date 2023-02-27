@@ -12,8 +12,8 @@ import com.estepper.estepper.model.entity.Participante;
    public interface AntecedentesRepository extends JpaRepository<Antecedentes, Integer>{
         @Modifying
         @Transactional
-        @Query("UPDATE Antecedentes a SET a.hta = :hta, a.tiroides = :tiroides, a.patmental = :patmental, a.dislipemias = :dislipemias, a.patmuscesq = :patmuscesq, a.medicacion = :medicacion, a.fuma = :fuma, a.dejardefumar = :dejardefumar, a.tasistolica = :tasistolica, a.tadiastolica = :tadiastolica WHERE a.participante = :participante")
-        void updateAntecedentes(String hta, String tiroides, String patmental, String dislipemias, String patmuscesq, String medicacion, String fuma, String dejardefumar, Integer tasistolica, Integer tadiastolica, Participante participante);
+        @Query("UPDATE Antecedentes a SET a.hta = :hta, a.tiroides = :tiroides, a.patmental = :patmental, a.dislipemias = :dislipemias, a.patmuscesq = :patmuscesq, a.medicacion = :medicacion, a.ecv = :ecv, a.patsensorial = :patsensorial, a.especificar = :especificar, a.fuma = :fuma, a.dejardefumar = :dejardefumar, a.tasistolica = :tasistolica, a.tadiastolica = :tadiastolica WHERE a.participante = :participante")
+        void updateAntecedentes(String hta, String tiroides, String patmental, String dislipemias, String patmuscesq, String medicacion, String ecv, String patsensorial, String especificar, String fuma, String dejardefumar, Integer tasistolica, Integer tadiastolica, Participante participante);
 
         Antecedentes findByParticipante(Participante participante);
 

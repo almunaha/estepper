@@ -58,7 +58,7 @@
         </li>
 
         <li>
-          <a href="#">
+          <a th:href="@{'/materiales/' + ${user.id}}">
             <i class="fa-solid fa-folder-open"></i>
             <span class="nombre-enlaces">Materiales</span>
           </a>
@@ -82,7 +82,7 @@
     </div>
 
        <div class="w-100">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>

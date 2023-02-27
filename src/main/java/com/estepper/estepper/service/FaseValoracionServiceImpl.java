@@ -76,16 +76,16 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         //COMPROBAR QUE NO ESTÉN CREADOS YA
         if(repoC.findByParticipante(participante) == null){
             //CLASIFICACION
-            Clasificacion clasificacion = new Clasificacion(0, participante, "no", 0, 0, 0, 0, 0, 0, 0.0, "no", 0, "no", "", "no", "", "no" );
+            Clasificacion clasificacion = new Clasificacion(0, participante, "no", 0, 0, 0, 0, 0, 0, 0, "no", 0, "no", "", "no", "", "no" );
             repoC.save(clasificacion);
             //ANTECEDENTES
-            Antecedentes antecedentes = new Antecedentes(0, participante, "no", "no", "no", "no", "no", "no", "no", "no", 0, 0);
+            Antecedentes antecedentes = new Antecedentes(0, participante, "no", "no", "no", "no", "no", "no", "no", "no", "", "no", "no", 0, 0);
             repoA.save(antecedentes);
             //ALIMENTACION
             AlimentacionVal alimentacion = new AlimentacionVal(0, participante, "no", 0, 0, 0, 0, 0 , 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"no",0,0,0,0,"baja");
             repoAl.save(alimentacion);
             //ACTIVIDAD FISICA
-            ActividadFisica actfisica = new ActividadFisica(0, participante, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"moderada");
+            ActividadFisica actfisica = new ActividadFisica(0, participante, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"moderada");
             repoAF.save(actfisica);
         }
     }
@@ -104,6 +104,16 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         repoF.updateFindrisc(participante, puntosedad, puntosimc, puntoscmcintura, ptosactfisica, ptosfrecfruta, ptosmedicacion, ptosglucosa, ptosdiabetes, puntuacion, escalarriesgo);
     }
     
+    @Override
+    public void updateClasificacion(Clasificacion clasificacion, Participante participante){
+        repoC.updateClasificacion(clasificacion.analiticahecha, clasificacion.glucemia, clasificacion.colesterol, clasificacion.ldl, clasificacion.sog, clasificacion.hdl, clasificacion.trigliceridos, clasificacion.hbA1c, clasificacion.pediranalitica, clasificacion.clasificacionusuario, clasificacion.montesa, clasificacion.motivomontesa, clasificacion.taller, clasificacion.motivotaller, clasificacion.actividadfisica, participante);
+    }
+
+    @Override
+    public void updateAntecedentes(Antecedentes antecedentes, Participante participante){
+        repoA.updateAntecedentes(antecedentes.hta,antecedentes.tiroides,antecedentes.patmental, antecedentes.dislipemias, antecedentes.patmuscesq, antecedentes.medicacion, antecedentes.ecv, antecedentes.patsensorial, antecedentes.especificar, antecedentes.fuma, antecedentes.dejardefumar, antecedentes.tasistolica, antecedentes.tadiastolica, participante);
+    }
+
     @Override
     public Exploracion findByParticipante(Participante participante){
         return repoE.findByParticipante(participante);
@@ -161,5 +171,16 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         repoAl.deleteByParticipante(participante);
         repoAF.deleteByParticipante(participante);
         repoP.delete(participante);
+    }
+
+    @Override
+    public void updateAlimentacionVal(AlimentacionVal alimentacion, Participante participante) {
+        repoAl.updateAlimentacionVal(alimentacion.aceite, alimentacion.ptosaceite, alimentacion.racaceite, alimentacion.ptosracaceite, alimentacion.racverdura, alimentacion.ptosracverdura, alimentacion.racfruta, alimentacion.ptosracfruta, alimentacion.raccarne, alimentacion.ptosraccarne, alimentacion.racmantequilla, alimentacion.ptosracmantequilla, alimentacion.racbebidas, alimentacion.ptosracbebidas, alimentacion.racvino, alimentacion.ptosracvino, alimentacion.raclegumbres, alimentacion.ptosraclegumbres, alimentacion.racpescado, alimentacion.ptosracpescado, alimentacion.racreposteria, alimentacion.ptosracreposteria, alimentacion.racfrutosecos, alimentacion.ptosracfrutosecos, alimentacion.carneblanca, alimentacion.ptoscarneblanca, alimentacion.racsofrito, alimentacion.ptosracsofrito, alimentacion.puntuacion, alimentacion.adherencia, participante);
+    }
+
+    @Override
+    public void updateActividadFisica(ActividadFisica actfisica, Participante participante) {
+        repoAF.updateActividadFisica(actfisica.vecesafv, actfisica.horaafv, actfisica.minafv, actfisica.metsafv, actfisica.vecesafm, actfisica.horaafm, actfisica.minafm, actfisica.metsafm, actfisica.vecescaminar, actfisica.horacaminar, actfisica.mincaminar, actfisica.metscaminar, actfisica.horasentado, actfisica.minsentado, actfisica.metstotales, actfisica.clasificacion, participante);
+        
     }
 }

@@ -25,7 +25,6 @@ public class ActividadFisica extends FaseValoracion {
     public Integer horacaminar;
     public Integer mincaminar;
     public Integer metscaminar;
-    public Integer vecessentado;
     public Integer horasentado;
     public Integer minsentado;
     public Integer metstotales;
@@ -35,7 +34,7 @@ public class ActividadFisica extends FaseValoracion {
         super();
     }
 
-    public ActividadFisica(Integer id, Participante participante, Integer vecesafv, Integer horaafv, Integer minafv, Integer metsafv, Integer vecesafm, Integer horaafm, Integer minafm, Integer metsafm, Integer vecescaminar, Integer horacaminar, Integer mincaminar, Integer metscaminar, Integer vecessentado, Integer horasentado, Integer minsentado, Integer metstotales, String clasificacion){
+    public ActividadFisica(Integer id, Participante participante, Integer vecesafv, Integer horaafv, Integer minafv, Integer metsafv, Integer vecesafm, Integer horaafm, Integer minafm, Integer metsafm, Integer vecescaminar, Integer horacaminar, Integer mincaminar, Integer metscaminar, Integer horasentado, Integer minsentado, Integer metstotales, String clasificacion){
         super(id, participante);
         this.vecesafv = vecesafv;
         this.horaafv = horaafv;
@@ -49,7 +48,6 @@ public class ActividadFisica extends FaseValoracion {
         this.horacaminar = horacaminar;
         this.mincaminar = mincaminar;
         this.metscaminar = metscaminar;
-        this.vecessentado = vecessentado;
         this.horasentado = horasentado;
         this.minsentado = minsentado;
         this.metstotales = metstotales;
@@ -158,14 +156,6 @@ public class ActividadFisica extends FaseValoracion {
 
     public void setMetscaminar(Integer metscaminar) {
         this.metscaminar = metscaminar;
-    }
-
-    public Integer getVecessentado() {
-        return vecessentado;
-    }
-
-    public void setVecessentado(Integer vecessentado) {
-        this.vecessentado = vecessentado;
     }
 
     public Integer getHorasentado() {

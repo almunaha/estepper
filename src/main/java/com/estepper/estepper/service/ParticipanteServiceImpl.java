@@ -5,16 +5,24 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.repository.ParticipanteRepository;
+import com.estepper.estepper.repository.MaterialesRepository;
 
 @Service
 public class ParticipanteServiceImpl implements ParticipanteService{
 
     @Autowired
     private ParticipanteRepository repo; //inyección de dependencias del participante dao api
+
+    @Autowired 
+    private MaterialesRepository repoM;
 
     @Override
     public List<Participante> listado(){ 
@@ -38,5 +46,42 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     @Override
     public List<Participante> listadoGrupo (Grupo grupo){
         return repo.findByGrupo(grupo);
+    }
+
+    @Override
+    public Page<Participante> paginas(Pageable pageable){
+        return(Page<Participante>) repo.findAll(pageable);
+    }
+
+    @Override
+    public List<Materiales> materiales(Integer id){
+        return repoM.findByParticipante(repo.findById(id).get());
+    }
+
+    @Override
+    public List<Materiales> materialesGrupo(Grupo grupo){
+        List<Materiales> todos = repoM.findByGrupo(grupo);
+        for(int i = todos.size()-1; i > 0 ; i--){
+            if(todos.get(i-1).getLink().equals(todos.get(i).getLink()) ){
+                todos.remove(i);
+            }
+        }
+        return todos;
+    }
+
+    @Override
+    public void eliminarMaterial(Integer id){
+        repoM.deleteById(id);
+    }
+
+    @Override
+    public void eliminarMaterialGrupo(Integer id){
+        Materiales material = repoM.findById(id).get();
+        repoM.deleteByGrupoAndLink(material.getGrupo(), material.getLink());
+    }
+
+    @Override
+    public void updateMaterial(Materiales material) {
+        repoM.save(material);
     }
 }

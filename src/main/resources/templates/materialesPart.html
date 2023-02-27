@@ -21,7 +21,7 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto">
 
-  <title>Inicio</title>
+  <title>Mis Materiales</title>
 
 
 </head>
@@ -118,37 +118,29 @@
           </ul>
         </div>
       </nav>
+        <table class="table tablePart">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Acciones</th>
 
-      <div class="layout-sesion p-4 mt-3">
-        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}">Sesión 1</h3> 
-        <form>
-          <label for="asistencia">Asistencia</label>
-          <div>
-            <select id="asistencia">
-              <option>Si</option>
-              <option>No</option>
-              <option>Justificado</option>
-            </select>
-          </div>
-
-          <div><label for="observaciones">Observaciones</label></div>
-          <div><textarea id="observaciones"></textarea></div>
-
-          <!-- <div><label>Tareas:</label></div>
-          <div>
-            <ul th:each="ficha : ${fichas}">
-              <li><a th:href="@{'/ficha0'}" th:text="${ficha.id}"></a></li> 
-
-            </ul>
-          </div> -->
-
-          <button>Guardar</button>
-        </form>
-
-      </div>
-
-
-    </div>
+                </tr>
+            </thead>
+            <tbody class="buscarParticipantes">
+                <div th:if="${listado.empty}"><h4>Su coordinador no ha añadido ningún material aún</h4></div>
+                <div th:unless="${listado.empty}">
+                <tr th:each="lis:${listado}">
+                    <td th:text="${lis.titulo}"></td>
+                    <td th:text="${lis.descripcion}"></td>
+                    <td>
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/materiales/' + ${lis.link}}" download="${lis.titulo}"title="Descargar"><i class="fa-solid fa-download"></i></a>
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
+                    </td>
+                </tr>
+                </div>
+            </tbody>
+        </table>
 
   </div>
 
