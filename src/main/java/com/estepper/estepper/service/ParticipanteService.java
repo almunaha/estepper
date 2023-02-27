@@ -18,6 +18,8 @@ public interface ParticipanteService {
     public void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Integer perdidadepeso, Integer sesionescompletas, Integer id);
     public Page<Participante> paginas(Pageable pageable);
     public List<Materiales> materiales(Integer id);
+    public List<Materiales> materialesGrupo(Grupo grupo);
     public void eliminarMaterial(Integer id);
+    public void eliminarMaterialGrupo(Integer id);
     public void updateMaterial(Materiales material);
 }

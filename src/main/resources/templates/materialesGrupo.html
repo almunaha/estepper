@@ -91,7 +91,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                     <td th:text="${lis.descripcion}"></td>
                     <td>
                       <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/materiales/' + ${lis.link}}" download="${lis.titulo}"title="Descargar"><i class="fa-solid fa-download"></i></a>
-                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterialGrupo/' + ${lis.id}}" title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 </tr>
                 </div>
@@ -99,7 +99,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
         </table>
 
         
-        <form th:action="@{'/process_material/' + ${id}}" th:object="${material}" method="post" enctype="multipart/form-data">
+        <form th:action="@{'/process_materialGrupo/' + ${id}}" th:object="${material}" method="post" enctype="multipart/form-data">
           <div class="m-3">
               <div class="form-group row">
                   <label class="col-form-label col-sm-4">Título:</label>

@@ -59,8 +59,25 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }
 
     @Override
+    public List<Materiales> materialesGrupo(Grupo grupo){
+        List<Materiales> todos = repoM.findByGrupo(grupo);
+        for(int i = todos.size()-1; i > 0 ; i--){
+            if(todos.get(i-1).getLink().equals(todos.get(i).getLink()) ){
+                todos.remove(i);
+            }
+        }
+        return todos;
+    }
+
+    @Override
     public void eliminarMaterial(Integer id){
         repoM.deleteById(id);
+    }
+
+    @Override
+    public void eliminarMaterialGrupo(Integer id){
+        Materiales material = repoM.findById(id).get();
+        repoM.deleteByGrupoAndLink(material.getGrupo(), material.getLink());
     }
 
     @Override

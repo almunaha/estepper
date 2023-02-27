@@ -250,16 +250,21 @@ public class HomeController {
     }
 
     @PostMapping("/process_material/{id}")
-    public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material,
-            @RequestParam(value = "enlace") MultipartFile enlace) {
-        // material.setLink("materiales/" + enlace.getOriginalFilename());
-        material.setParticipante(participante.findById(id).get());
-        material.setGrupo(material.getParticipante().getGrupo());
-        participante.updateMaterial(material);
-        // Path rutaArchivo = Paths.get("materiales/" + enlace.getOriginalFilename());
-        // try{Files.write(rutaArchivo, enlace.getBytes());}catch (IOException e) {
-        // Manejar la excepción
-        // }
+    public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
+            material.setParticipante(participante.findById(id).get());
+            material.setGrupo(participante.findById(id).get().getGrupo());
+            if(!file.isEmpty()){
+                Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
+                String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                try {
+                    byte[] bytesArc = file.getBytes(); 
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesArc);
+                    material.setLink(file.getOriginalFilename());
+                    participante.updateMaterial(material);
+                } catch (Exception e) {
+                }
+            }
         return "redirect:/";
     }
 
