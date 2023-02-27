@@ -1,16 +1,21 @@
 package com.estepper.estepper.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.Set;
 
-import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +23,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.repository.UsuarioRepository;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.gmail.GmailScopes;
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.model.Message;
 import com.estepper.estepper.model.enums.Estado;
 
 @Service
@@ -26,8 +43,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     @Autowired
     private UsuarioRepository repo; //inyección de dependencias del usuario dao api
 
-    final String correoEstepper = "997788153381-tm7ucmdhpcng9vv8g92pft5105jqe450.apps.googleusercontent.com";
-    final String contrasenia = "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";
+    final String correoEstepper = "proyectoestepper@gmail.com";
 
     public UserDetails loadUserByUsername(String codigo) throws UsernameNotFoundException {
         
@@ -78,30 +94,47 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
         } else {
             texto = "Ha intentado recuperar sus datos de Estepper sin estar registrado. Acceda a estepper.com para registrarse.";
         }
-        mandarcorreo(correo, texto);
+        try{
+        mandarcorreo(correo, texto);}catch(Exception e){e.printStackTrace();}
        
     }
 
-    private void mandarcorreo(String correo, String texto) {
-       
+    private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException{
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(UsuarioServiceImpl.class.getResourceAsStream("/client_secret_997788153381-j7h2r75bek6g35no8jmsmfq729cgc1g1.apps.googleusercontent.com.json")));
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory, clientSecrets, Set.of(GmailScopes.GMAIL_SEND))
+        .setDataStoreFactory(new FileDataStoreFactory(Paths.get("tokens").toFile()))
+        .setAccessType("offline")
+        .build();
 
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("Estepper");
+        return credential;
+    }
+    private void mandarcorreo(String correo, String bodyText) throws Exception {
+       String messageSubject = "Recuperación de datos - Estepper";
+        NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+        Gmail service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory))
+        .setApplicationName("Estepper")
+        .build();
+
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props);
+        // Define message
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(correoEstepper));
+        message.setSubject(messageSubject);
+        message.addRecipient(javax.mail.Message.RecipientType.TO,new InternetAddress(correo));
+        message.setText(bodyText);
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        message.writeTo(buffer);
+        byte[] rawMessageBytes = buffer.toByteArray();
+        String encodedEmail = Base64.encodeBase64URLSafeString(rawMessageBytes);
+        Message email = new Message();
+            email.setRaw(encodedEmail);
         try {
-
-            Properties props = new Properties();
-            props.put("mail.imap.ssl.enable", "true"); // required for Gmail
-            props.put("mail.imap.auth.mechanisms", "XOAUTH2");
-            Session session = Session.getInstance(props);
-            Store store = session.getStore("imap");
-            store.connect("imap.gmail.com", correoEstepper, contrasenia);
-
-            // Define message
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(correoEstepper));
-            message.setSubject("Recuperación de datos");
-            message.addRecipient(Message.RecipientType.TO,new InternetAddress(correo));
-            message.setText(texto);
-            // Envia el mensaje
-            Transport.send(message);
+            email = service.users().messages().send("other", email).execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
