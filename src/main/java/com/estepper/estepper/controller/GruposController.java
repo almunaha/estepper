@@ -145,6 +145,13 @@ public class GruposController {
         return "redirect:/";
     }
 
+    @GetMapping("/eliminarMaterialGrupo/{id}")
+    public String processElimMaterial(@PathVariable("id") Integer id) {
+        part.eliminarMaterialGrupo(id);
+
+       return "redirect:/";
+    }
+
     public Usuario getUsuario(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
