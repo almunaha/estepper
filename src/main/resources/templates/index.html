@@ -119,11 +119,11 @@
         </div>
       </nav>
 
-      <div th:if="${mostrarAlerta}">
+      <div th:if="${recordatorio}">
         <script th:inline="javascript">
-           setTimeout(function() {
-            alert("No se han introducido datos en la última semana.");
-        }, 1000); // 1000 milisegundos = 1 segundos
+           setTimeout(function() { //temporizador, al pasar un segundo salta la alerta
+            alert("No se ha registrado el peso en la última semana."); 
+          }, 1000); 
         </script>
      </div>
 

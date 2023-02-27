@@ -9,7 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
@@ -29,6 +28,15 @@
 
     <!-- Dashboard progreso -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"
+        integrity="sha256-JG6hsuMjFnQ2spWq0UiaDRJBaarzhFbUxiUTxQDA9Lk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"
+        integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"
+        integrity="sha256-J2sc79NPV/osLcIpzL3K8uJyAD7T5gaEFKlLDM18oxY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"
+        integrity="sha256-CfcERD4Ov4+lKbWbYqXD6aFM9M51gN4GUEtDhkWABMo=" crossorigin="anonymous"></script>
+
 
     <title>Progreso</title>
 
@@ -135,13 +143,13 @@
                 <div class="progreso-datos">
                     <div class="header-progreso">
                         <h4>Peso</h4>
-                        <a class="btn-plus"><i class="fa-solid fa-circle-plus"
-                                style="cursor: pointer; float:right;"></i></a>
+                        <a class="btn-plus" data-bs-toggle="tooltip" title="Registrar peso"><i
+                                class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
                     </div>
 
                     <!-- Ver registros -->
                     <div class="pesoTabla" style="overflow-y:auto; ">
-                        <table class="table tablePart">
+                        <table class="table tablePart" id="tablaPeso">
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col"></th>
@@ -158,7 +166,7 @@
                     </div>
 
                     <!-- Ver gráfica -->
-                    <div><canvas id="grafica" width="400" height="300"></canvas></div>
+                    <div><canvas id="grafica" width="300" height="200"></canvas></div>
 
                     <!-- Botones para cambiar de vista-->
                     <div class="botones-prog">
@@ -184,36 +192,36 @@
 
                     <script>
 
-                        let canvas = document.getElementById("grafica").getContext("2d");
+                        let graficaPeso = document.getElementById("grafica").getContext("2d");
 
-                        var chart = new Chart(canvas, {
+                        var peso = new Chart(graficaPeso, {
                             type: "line",
                             data: {
-                                labels: ["febrero", "marzo", "abril", "mayo"],
                                 datasets: [
                                     {
-                                        borderColor: 'rgb(251, 179, 116)',
-                                        data: [24, 22, 20, 18]
+                                        label: "Peso",
+                                        borderColor: 'rgb(75, 192, 192)',
                                     }
                                 ]
                             },
                             options: {
-                                responsive: true,
                                 scales: {
                                     y: {
                                         beginAtZero: true
                                     }
                                 }
                             }
-                        });
+                        })
 
-                        /* let url = 'http://localhost:7070/usuarios' //API REST
-                         const response = await fetch(url)
-                         const barChartData = await response.json()
- 
-                         console.log(barChartData)*/
-                    </script>
-
+                        let url = 'http://localhost:7070/progreso/peso'; //petición http
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                for (i in data) {
+                                    peso.data['labels'].push(data[i].fecha);
+                                    peso.data['datasets'][0].data.push(data[i].dato);
+                                }
+                            })
                     </script>
 
                 </div>
@@ -256,7 +264,7 @@
                                 style="cursor: pointer; float:right;"></i></a>
                     </div>
 
-                    <canvas id="grafica3" width="400" height="300"></canvas>
+                    <!--<canvas id="grafica3" width="400" height="300"></canvas>-->
 
                     <script>
                         let canvas3 = document.getElementById("grafica3").getContext("2d");

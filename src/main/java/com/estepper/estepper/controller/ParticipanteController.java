@@ -328,7 +328,6 @@ public class ParticipanteController {
         pro.guardar(progreso);
 
         return "redirect:/progreso";
-
     }
 
     //MATERIALES:

@@ -15,17 +15,17 @@ $(document).ready(function () {
         $("#grafica").show();
         $(".pesoTabla").hide();
         $("#form-peso").hide();
-     });
+    });
 
-     $(".btn-plus").click(function () {
+    $(".btn-plus").click(function () {
         $("#grafica").hide();
         $(".pesoTabla").hide();
         $("#registroPeso").hide();
         $("#graficaPeso").hide();
         $(".btn-plus").hide();
         $("#form-peso").show();
-     });
-
+    });
 
     
-   });
+
+});
