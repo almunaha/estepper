@@ -133,6 +133,8 @@
 
           <div class="col">
 
+            <h3 th:text="${participante.sesionesCompletas} + '' + 'sesiones completas'"></h3>
+
             <!-- Botón sesiones -->
             <div class="layout-util">
               <a class="btn-util" th:href="@{/sesiones}">
@@ -146,8 +148,11 @@
 
               <script>
 
+                var sesionesCompletas = parseInt("${participante.sesionesCompletas}");
+                console.log(sesionesCompletas); 
+
                 var options = {
-                  series: [1, 9],
+                  series: [ sesionesCompletas, 9],
                   chart: {
                     width: 420,
                     type: 'pie',
@@ -157,8 +162,6 @@
 
 
                 };
-
-
 
                 var chart = new ApexCharts(document.querySelector("#chart1"), options);
                 chart.render();
@@ -172,7 +175,7 @@
           <div class="col">
             <!-- Botón objetivos -->
             <div class="layout-util">
-              <a class="btn-util" th:href="@{/}">
+              <a class="btn-util" th:href="@{/objetivos}">
                 <i class="fa-solid fa-bullseye"></i>
               </a>
 
