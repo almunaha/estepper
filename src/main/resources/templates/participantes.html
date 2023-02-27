@@ -49,13 +49,6 @@
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-folder-open"></i>
-                        <span class="nombre-enlaces">Materiales</span>
-                    </a>
-                </li>
             </ul>
 
         </div>
@@ -189,8 +182,6 @@
                             <td th:text="${lis.estadoCuenta}"></td>
                             <td>
                                 <!--BOTONES CON ICONOS Y TOOLTIP-->
-                                <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Materiales"><i
-                                        class="fa-solid fa-folder-open"></i></a>
                                 <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Ver expediente"
                                     th:href="@{'/valoracion/' + ${lis.id}}"><i class="fa-solid fa-id-card-clip"></i></a>
                                 <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Editar"><i

@@ -331,4 +331,12 @@ public class ParticipanteController {
 
     }
 
+    //MATERIALES:
+    @GetMapping("/eliminarMaterial/{id}")
+    public String processElimMaterial(@PathVariable("id") Integer id) {
+        participante.eliminarMaterial(id);
+
+       return "redirect:/";
+    }
+
 }

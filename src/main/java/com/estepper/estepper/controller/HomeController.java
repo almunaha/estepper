@@ -209,4 +209,18 @@ public class HomeController {
         usuario.recuperarCodigo(correo);
         return "redirect:/login";
     }
+
+    //MATERIALES:
+    @GetMapping("/materiales/{id}")
+    public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
+        Usuario elusuario = usuario.findById(id).get();
+        model.addAttribute("user", elusuario);
+        if(elusuario instanceof Coordinador){
+            return "materialesCoor";
+        } 
+        else{
+            model.addAttribute("listado", participante.materiales(id));
+            return "materialesPart";
+        }
+    }
 }
