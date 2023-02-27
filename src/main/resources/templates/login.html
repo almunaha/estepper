@@ -34,7 +34,7 @@
                 <span class="input-group-text"
                     style="background-color:white; border-left-style: none; cursor: pointer; " id="ojo"><i
                         class="fa-solid fa-eye-slash" onmouseover="this.style.color = '#aaa'"
-                        onmouseout="this.style.color = '#000'"></i></span>
+                        id="iconoOjo" onmouseout="this.style.color = '#000'"></i></span>
             </div>
 
             <input name="_csrf" type="hidden"
@@ -45,14 +45,20 @@
 
         <script>
             const ojo = document.querySelector("#ojo");
+            const iconoOjo = document.getElementById('iconoOjo');
 
             ojo.addEventListener('click', function () {
+                
                 if (this.previousElementSibling.type === 'password') {
                     this.previousElementSibling.type = "text";
+                    iconoOjo.classList.remove('fa-eye-slash');
+                    iconoOjo.classList.add('fa-eye');
                 }
 
                 else if (this.previousElementSibling.type === 'text') {
                     this.previousElementSibling.type = "password";
+                    iconoOjo.classList.remove('fa-eye');                
+                    iconoOjo.classList.add('fa-eye-slash'); 
                 }
             })
         </script>
