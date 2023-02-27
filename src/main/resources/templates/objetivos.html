@@ -26,7 +26,7 @@
     <!-- Dashboard progreso -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <title>Progreso</title>
+    <title>Objetivos</title>
 
 
 </head>
@@ -74,7 +74,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a th:href="@{'/materiales/' + ${user.id}}">
                         <i class="fa-solid fa-folder-open"></i>
                         <span class="nombre-enlaces">Materiales</span>
                     </a>
