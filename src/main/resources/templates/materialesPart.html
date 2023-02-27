@@ -118,9 +118,6 @@
           </ul>
         </div>
       </nav>
-      <!-- AÑADIR AQUÍ LA LISTA DE MATERIALES Y HACER TH:EACH -> titulo, descripcion, ver(link) y eliminar-->
-      
-        <!-- Tabla de participantes -->
         <table class="table tablePart">
             <thead class="thead-dark">
                 <tr>
@@ -137,11 +134,8 @@
                     <td th:text="${lis.titulo}"></td>
                     <td th:text="${lis.descripcion}"></td>
                     <td>
-                        <!--FALTA AÑADIR TH:REF Y NOMBRES POR DEBAJO indexar lo de ver con id del material o link directamente-->
-                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Ver"><i
-                                class="fa-solid fa-id-card-clip"></i></a>
-                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i
-                                class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="${lis.link}" download="${lis.titulo}"title="Descargar"><i class="fa-solid fa-arrow-down-to-line"></i></a>
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 </tr>
                 </div>
