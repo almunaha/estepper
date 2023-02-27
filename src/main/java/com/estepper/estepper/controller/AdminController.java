@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Usuario;
+
+import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.enums.Estado;
@@ -33,64 +35,73 @@ public class AdminController {
     private FaseValoracionService fasevaloracion;
 
     @Autowired
-	private BCryptPasswordEncoder hash;
-
+    private BCryptPasswordEncoder hash;
 
     @GetMapping("/eliminarUsuario/{id}")
-    public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model){
-        //eliminar usuario
-        if(usuario.findById(id).get() instanceof Participante){
-            fasevaloracion.eliminarcuenta((Participante) usuario.findById(id).get());
-        } 
+    public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model) {
+        if (usuarioLogueado() instanceof Administrador) {
+            // eliminar usuario
+            if (usuario.findById(id).get() instanceof Participante) {
+                fasevaloracion.eliminarcuenta((Participante) usuario.findById(id).get());
+            }
 
-        else usuario.eliminar(id);
+            else
+                usuario.eliminar(id);
 
-        //pasar usuario logueado y listado
-        model.addAttribute("user", usuarioLogueado());
+            // pasar usuario logueado y listado
+            model.addAttribute("user", usuarioLogueado());
 
-        List<Usuario> lista = listadoUsuarios();
-        model.addAttribute("usuarios", lista);
-       
+            List<Usuario> lista = listadoUsuarios();
+            model.addAttribute("usuarios", lista);
+        }
+
         return "redirect:/";
     }
 
     @GetMapping("/nuevoCoordinador")
-        public String nuevoCoordinador(Model model){
-            Usuario u = usuarioLogueado();
+    public String nuevoCoordinador(Model model) {
+        Usuario u = usuarioLogueado();
+
+        if (u instanceof Administrador) {
             model.addAttribute("user", u);
-
             model.addAttribute("coordinador", new Coordinador());
-
-        return "nuevoCoordinador";
+            return "nuevoCoordinador";
+        } else
+            return "redirect:/";
     }
 
     @PostMapping("/process_coordinador")
-    public String crear(@ModelAttribute Coordinador coordinador, Model model){
-        hash = new BCryptPasswordEncoder();
-        String encodedPassword = hash.encode(coordinador.getContrasenia());
-        coordinador.setContrasenia(encodedPassword);
+    public String crear(@ModelAttribute Coordinador coordinador, Model model) {
+        if (usuarioLogueado() instanceof Administrador) {
 
-        Integer elcodigo = new Random().nextInt(100000 + 1);
+            hash = new BCryptPasswordEncoder();
+            String encodedPassword = hash.encode(coordinador.getContrasenia());
+            coordinador.setContrasenia(encodedPassword);
 
-        //comprobar que no existe un usuario con ese codigo
-        while(usuario.logueado(elcodigo) != null){
-            elcodigo = new Random().nextInt(100000 + 1);
+            Integer elcodigo = new Random().nextInt(100000 + 1);
+
+            // comprobar que no existe un usuario con ese codigo
+            while (usuario.logueado(elcodigo) != null) {
+                elcodigo = new Random().nextInt(100000 + 1);
+            }
+
+            coordinador.setCodigo(elcodigo);
+            coordinador.setEstadoCuenta(Estado.BAJA);
+
+            usuario.guardar(coordinador);
+
+            model.addAttribute("user", usuarioLogueado());
+
+            List<Usuario> lista = listadoUsuarios();
+            model.addAttribute("usuarios", lista);
+
+            return "admin";
         }
+        else return "redirect:/";
 
-        coordinador.setCodigo(elcodigo);
-        coordinador.setEstadoCuenta(Estado.BAJA);
-        
-        usuario.guardar(coordinador); 
-
-        model.addAttribute("user", usuarioLogueado());
-
-        List<Usuario> lista = listadoUsuarios();
-        model.addAttribute("usuarios", lista);
-
-        return "admin";
     }
 
-    public Usuario usuarioLogueado(){
+    public Usuario usuarioLogueado() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         UserDetails userDetails = null;
@@ -98,22 +109,20 @@ public class AdminController {
             userDetails = (UserDetails) principal;
         }
 
-        String codigo = userDetails.getUsername(); //codigo del logueado
+        String codigo = userDetails.getUsername(); // codigo del logueado
 
-        Usuario user = usuario.logueado(Integer.parseInt(codigo)); //atributos del logueado
+        Usuario user = usuario.logueado(Integer.parseInt(codigo)); // atributos del logueado
         return user;
     }
 
-    public List <Usuario> listadoUsuarios(){
+    public List<Usuario> listadoUsuarios() {
         List<Usuario> lista = usuario.listadoTotal();
 
-        for(int i=0; i<lista.size(); i++){ //o hacer otra consulta pasandolo el id
-            if(lista.get(i).id == usuarioLogueado().id) lista.remove(i);
+        for (int i = 0; i < lista.size(); i++) { // o hacer otra consulta pasandolo el id
+            if (lista.get(i).id == usuarioLogueado().id)
+                lista.remove(i);
         }
         return lista;
     }
 
-
-
-    
 }

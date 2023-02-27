@@ -5,6 +5,7 @@ import com.estepper.estepper.model.entity.Participante;
 
 
 import java.util.List;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,5 +13,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProgresoRepository extends JpaRepository<Progreso, Integer>{
     List<Progreso> findByParticipanteAndTipo(Participante participante, TipoProgreso tipo);
+    List<Progreso> findByFechaAfterAndTipoAndParticipante(Date fecha, TipoProgreso tipo, Participante participante);
     
 }

@@ -83,23 +83,36 @@ $(document).ready(function () {
 
 
     /* MOSTRAR Y OCULTAR CONTRASEÑAS */
+
+    const iconoOjo1 = $("#iconoOjo1");
+    const iconoOjo2 = $("#iconoOjo2");
+
+
     $("#ojo").click(function () {
         if (this.previousElementSibling.type === 'password') {
             this.previousElementSibling.type = "text";
+            iconoOjo1.removeClass('fa-eye-slash');
+            iconoOjo1.addClass('fa-eye');
         }
 
         else if (this.previousElementSibling.type === 'text') {
             this.previousElementSibling.type = "password";
+            iconoOjo1.removeClass('fa-eye');                
+            iconoOjo1.addClass('fa-eye-slash');
         }
     });
 
     $("#ojo2").click(function () {
         if (this.previousElementSibling.type === 'password') {
             this.previousElementSibling.type = "text";
+            iconoOjo2.removeClass('fa-eye-slash');
+            iconoOjo2.addClass('fa-eye');
         }
 
         else if (this.previousElementSibling.type === 'text') {
             this.previousElementSibling.type = "password";
+            iconoOjo2.removeClass('fa-eye');                
+            iconoOjo2.addClass('fa-eye-slash');
         }
     });
 
