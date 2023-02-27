@@ -245,7 +245,7 @@ public class HomeController {
                     byte[] bytesArc = file.getBytes(); 
                     Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                     Files.write(rutaCompleta, bytesArc);
-                    material.setLink(rutaCompleta.toString());
+                    material.setLink(file.getOriginalFilename());
                     participante.updateMaterial(material);
                 } catch (Exception e) {
                 }
