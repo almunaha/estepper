@@ -3,6 +3,10 @@ package com.estepper.estepper.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.*; 
 
 
@@ -17,9 +21,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
+import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
@@ -213,14 +219,45 @@ public class HomeController {
     //MATERIALES:
     @GetMapping("/materiales/{id}")
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
-        Usuario elusuario = usuario.findById(id).get();
+        Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
         if(elusuario instanceof Coordinador){
+            model.addAttribute("listado", participante.materiales(id));
+            Materiales material = new Materiales();
+            model.addAttribute("material", material);
+            model.addAttribute("id", id);
             return "materialesCoor";
         } 
         else{
             model.addAttribute("listado", participante.materiales(id));
             return "materialesPart";
         }
+    }
+
+    @PostMapping("/process_material/{id}")
+    public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam(value = "enlace") MultipartFile enlace){
+            //material.setLink("materiales/" + enlace.getOriginalFilename());
+            material.setParticipante(participante.findById(id).get());
+            material.setGrupo(material.getParticipante().getGrupo());
+            participante.updateMaterial(material);
+            //Path rutaArchivo = Paths.get("materiales/" + enlace.getOriginalFilename());
+            //try{Files.write(rutaArchivo, enlace.getBytes());}catch (IOException e) {
+                // Manejar la excepción
+            //}
+        return "redirect:/";
+    }
+
+    public Usuario getUsuario(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+        }
+
+        String codigo = userDetails.getUsername(); //codigo del logueado
+
+        Usuario user = usuario.logueado(Integer.parseInt(codigo));
+        return user;
     }
 }

@@ -19,4 +19,5 @@ public interface ParticipanteService {
     public Page<Participante> paginas(Pageable pageable);
     public List<Materiales> materiales(Integer id);
     public void eliminarMaterial(Integer id);
+    public void updateMaterial(Materiales material);
 }

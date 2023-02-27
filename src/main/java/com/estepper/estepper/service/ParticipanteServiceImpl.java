@@ -62,4 +62,9 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     public void eliminarMaterial(Integer id){
         repoM.deleteById(id);
     }
+
+    @Override
+    public void updateMaterial(Materiales material) {
+        repoM.save(material);
+    }
 }

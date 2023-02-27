@@ -18,7 +18,7 @@ public class Materiales implements Serializable{
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="idParticipante", nullable=false)
+    @JoinColumn(name="idParticipante")
     private Participante participante;
 
     @ManyToOne
