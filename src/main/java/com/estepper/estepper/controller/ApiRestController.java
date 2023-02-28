@@ -54,13 +54,6 @@ public class ApiRestController {
         return user;
     }
 
-    @GetMapping("/progreso/peso")
-    public List<Progreso> progresoPeso() {
-        Participante p = part.findById(25).get();
-
-        return progreso.datos(p, TipoProgreso.PESO);
-    }
-
     @GetMapping("/index/sesiones")
     public Participante getParticipante() {
  
