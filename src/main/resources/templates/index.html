@@ -20,8 +20,14 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto">
 
-  <title>Inicio</title>
+  <!-- Para la alerta del peso -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.all.min.js"></script>
+  <script src="sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
+  <title>Inicio</title>
 
 </head>
 
@@ -121,11 +127,26 @@
 
       <div th:if="${recordatorio}">
         <script th:inline="javascript">
-           setTimeout(function() { //temporizador, al pasar un segundo salta la alerta
-            alert("No se ha registrado el peso en la última semana."); 
-          }, 1000); 
+          setTimeout(function () { //temporizador, al pasar un segundo salta la alerta
+            Swal.fire({
+              position: 'top',
+              title: '<h5>¡Hace más de una semana que no te pesas!</h5>',
+              showConfirmButton: true,
+              showCancelButton: true,
+              confirmButtonText: '<a href="/progreso">Registrar</a>',
+              cancelButtonText: "Cerrar",
+              confirmButtonColor: "#6ca4c7",
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+              }
+            })
+
+          }, 500); 
         </script>
-     </div>
+      </div>
 
       <div class="utilidades">
 
@@ -142,17 +163,17 @@
               </a>
 
               <h4 id="nombre">SESIONES</h4>
- 
+
 
               <div class="chart1" id="chart1"></div>
 
               <script>
 
                 var sesionesCompletas = parseInt("${participante.sesionesCompletas}");
-                console.log(sesionesCompletas); 
+                console.log(sesionesCompletas);
 
                 var options = {
-                  series: [ sesionesCompletas, 9],
+                  series: [sesionesCompletas, 9],
                   chart: {
                     width: 420,
                     type: 'pie',
