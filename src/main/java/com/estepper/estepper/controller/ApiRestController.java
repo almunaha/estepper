@@ -10,10 +10,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.enums.TipoProgreso;
 import com.estepper.estepper.model.entity.Participante;
 
-import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.ProgresoService;
@@ -34,9 +34,10 @@ public class ApiRestController {
     @Autowired
     private ProgresoService progreso;
 
-    @GetMapping("/usuarios") // siempre que accedamos a /usuarios accedera al listado y lo ejecutará
-    public List<Usuario> listado() {
-        return usuario.listadoTotal();
+    @GetMapping("/progreso/peso") 
+    public List<Progreso> datosPeso() {
+        Participante p =  part.findById(getUsuario().id).get();
+        return progreso.datos(p, TipoProgreso.PESO);
     }
 
     public Usuario getUsuario() {

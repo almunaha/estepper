@@ -335,7 +335,6 @@ public class ParticipanteController {
         pro.guardar(progreso);
 
         return "redirect:/progreso";
-
     }
 
     @GetMapping("/objetivos")

@@ -97,7 +97,7 @@ public class HomeController {
                         List<Progreso> datos = progreso.PesoPorFecha(fechaSemana, TipoProgreso.PESO, part.get());
 
                         if (datos.isEmpty()) {
-                            model.addAttribute("mostrarAlerta", true);
+                            model.addAttribute("recordatorio", true);
                         }
                     }
 
