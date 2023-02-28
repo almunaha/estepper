@@ -133,18 +133,27 @@
               title: '<h5>¡Hace más de una semana que no te pesas!</h5>',
               showConfirmButton: true,
               showCancelButton: true,
-              confirmButtonText: '<a href="/progreso">Registrar</a>',
+              confirmButtonText: '<a href="/progreso" id="enlace">Registrar</a>',
               cancelButtonText: "Cerrar",
               confirmButtonColor: "#6ca4c7",
+
+              didRender: function() {
+                const registrar = document.querySelector('#enlace');
+
+                if (registrar) {
+                  registrar.style.color = 'white';
+                }
+              },
               showClass: {
                 popup: 'animate__animated animate__fadeInDown'
               },
               hideClass: {
                 popup: 'animate__animated animate__fadeOutUp'
               }
+
             })
 
-          }, 500); 
+          }, 200); 
         </script>
       </div>
 

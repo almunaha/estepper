@@ -545,3 +545,13 @@ a{
     color: black;
     background-color: rgb(250, 208, 153);
 }
+
+/* no tiene acceso */
+.acceso{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 5%;
+}
+

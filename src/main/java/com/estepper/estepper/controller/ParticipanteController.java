@@ -23,7 +23,7 @@ import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.Antecedentes;
 import com.estepper.estepper.model.entity.ActividadFisica;
 import com.estepper.estepper.model.entity.AlimentacionVal;
-
+import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.service.FaseValoracionService;
@@ -64,19 +64,19 @@ public class ParticipanteController {
 
     @GetMapping("/sesiones")
     public String sesiones(Model model){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());      
+        
+        if(u instanceof Participante){
+            Participante p = participante.findById(u.id).get();
+
+            if(p.getGrupo() != null) return "sesiones";
+            else return "acceso";
         }
 
-        String codigo = userDetails.getUsername(); //codigo del logueado
+        else return "redirect:/";
 
-        Usuario user = usuario.logueado(Integer.parseInt(codigo)); 
-        model.addAttribute("part", user);
-        model.addAttribute("user", getUsuario());        
-        return "sesiones";
     }
 
     @GetMapping("/sesion/{num}")
@@ -312,11 +312,16 @@ public class ParticipanteController {
     public String progreso(Model model){
         model.addAttribute("user", getUsuario());
         Participante p = participante.findById(getUsuario().id).get();
-        List<Progreso> peso = pro.datos(p, TipoProgreso.PESO); 
-        model.addAttribute("peso", peso);
-        model.addAttribute("progreso", new Progreso());
 
-        return "progreso";
+        if(p.getEstadoCuenta().equals(Estado.ALTA)){
+            List<Progreso> peso = pro.datos(p, TipoProgreso.PESO); 
+            model.addAttribute("peso", peso);
+            model.addAttribute("progreso", new Progreso());
+            return "progreso";
+        }
+
+        else return "acceso";
+        
     }  
 
     @PostMapping("/process_peso")
