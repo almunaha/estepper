@@ -23,7 +23,7 @@ public class ProgresoServiceImpl implements ProgresoService{
 
     @Override
     public List<Progreso> datos(Participante participante, TipoProgreso tipo){
-        return repo.findByParticipanteAndTipo(participante, tipo);
+        return repo.findByParticipanteAndTipoOrderByFechaAsc(participante, tipo);
     }
 
     @Override

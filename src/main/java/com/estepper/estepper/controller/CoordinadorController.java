@@ -80,6 +80,7 @@ public class CoordinadorController {
 
     @GetMapping("/valoracion/{id}")
     public String fasedevaloracion(@PathVariable("id") Integer id, Model model) {
+        //realmente si es su coordinador tiene que aparecerle que si está dado de alta le aparezcan sus datos pero le tiene que dejar entrar
         if((getUsuario() instanceof Coordinador) && ((part.findById(id).get().getIdCoordinador() == getUsuario().getId()) || part.findById(id).get().estadoCuenta.equals(Estado.BAJA))){
             model.addAttribute("participante", part.findById(id).get());
             model.addAttribute("user", getUsuario());

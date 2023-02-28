@@ -1,21 +1,58 @@
-.layout-progreso{
-    display: grid;
-    gap: 10px;
-    grid-template-columns: auto auto;
-    margin-bottom: 10px;
-    justify-items: center;
+.tit-dash{
+    padding: 1.3%;
+}
+
+/* valores progreso, lo de arriba del todo */
+.valores-progreso{
+    display: flex;
+    width: 100%;
+    height: 20%;
+    justify-content: space-between;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    gap: 1%;
+}
+
+.valor{
+    box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
     align-items: center;
+    background-color: white;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-valor{
+    font-size: 175%;
+    float: left;
+    width: 100%;
+    padding-left: 5%;
+    padding-top: 3%;
+}
+
+.graficas-progreso{
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1%;
 }
 
 .progreso-datos{
-    border: 1.5px solid #95a4ad;
-    border-radius: 25px;
-    width: 500px;
-    height: 430px;
+    width: 50%;
     padding: 20px;
     box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
     align-items: center;
     background-color: white;
+}
+
+/* contenido de Peso y perímetro abdominal */
+.layout-grafica{
+    display: flex;
+    flex-direction: column;
 }
 
 .header-progreso{
@@ -23,9 +60,15 @@
     justify-content: space-between;
 }
 
+#top-grafica{
+    flex-basis: 60%;
+}
+
 .botones-prog{
     display: flex;
     justify-content: center;
+    margin-top: 1%;
+    flex-basis: 40%;
 }
 .botones-prog button{
     margin-right: 10px;
@@ -33,9 +76,10 @@
 
 .btn-reg{
     font-size: 15px; 
-    background-color: grey;
+    background-color: rgb(251, 179, 116);
+    border: 0.5px solid rgb(251, 179, 116);
     color: white;
-    width: 30%;
+    width: 25%;
     border-radius: 5px;
     margin-top: 5px;
     text-align: center;
@@ -61,7 +105,8 @@
 }
 
 .pesoTabla{
-  display: none;
-  overflow-y: scroll;
-  height: 310px; /* ajusta el alto de la tabla aquí */
+    overflow-y: scroll;
+    flex-basis: 60%;
+    box-sizing: border-box;
+    max-height: 240px;
 }

@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProgresoRepository extends JpaRepository<Progreso, Integer>{
 
-    List<Progreso> findByParticipanteAndTipo(Participante participante, TipoProgreso tipo);
+    List<Progreso> findByParticipanteAndTipoOrderByFechaAsc(Participante participante, TipoProgreso tipo);
     List<Progreso> findByFechaAfterAndTipoAndParticipante(Date fecha, TipoProgreso tipo, Participante participante);
     
 }

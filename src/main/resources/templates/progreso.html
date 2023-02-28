@@ -28,15 +28,6 @@
 
     <!-- Dashboard progreso -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"
-        integrity="sha256-JG6hsuMjFnQ2spWq0UiaDRJBaarzhFbUxiUTxQDA9Lk=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"
-        integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"
-        integrity="sha256-J2sc79NPV/osLcIpzL3K8uJyAD7T5gaEFKlLDM18oxY=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"
-        integrity="sha256-CfcERD4Ov4+lKbWbYqXD6aFM9M51gN4GUEtDhkWABMo=" crossorigin="anonymous"></script>
-
 
     <title>Progreso</title>
 
@@ -137,8 +128,30 @@
 
             <!-- DASHBOARD -->
 
-            <div class="layout-progreso p-5">
+            <div class="tit-dash">
+                <h3>Dashboard progreso</h3>
+            </div>
 
+            <div class="valores-progreso">
+                <div class="valor">
+                    <div class="top-valor"><i class="fa-solid fa-bullseye" style="color: rgb(201, 75, 75)"></i></div>
+                    <span>Objetivos conseguidos</span>
+                </div>
+                <div class="valor">
+                    <div class="top-valor"><i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i></div>
+                    <span>Peso perdido </span>
+                </div>
+                <div class="valor">
+                    <div class="top-valor"><i class="fa-solid fa-check" style="color: rgb(122, 218, 103)"></i></div>
+                    <span>Sesiones completadas</span>
+                </div>
+                <div class="valor">
+                    <div class="top-valor"><i class="fa-solid fa-percent" style="color: rgb(57, 170, 192)"></i></div>
+                    <span>Asistencia media</span>
+                </div>
+            </div>
+
+            <div class="graficas-progreso">
                 <!-- PESO -->
                 <div class="progreso-datos">
                     <div class="header-progreso">
@@ -147,31 +160,33 @@
                                 class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
                     </div>
 
-                    <!-- Ver registros -->
-                    <div class="pesoTabla" style="overflow-y:auto; ">
-                        <table class="table tablePart" id="tablaPeso">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="lis:${peso}">
-                                    <td th:text="${lis.dato} + ' kg'"></td>
-                                    <td th:text="${#dates.format(lis.fecha, 'dd MMM yyyy')}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <!-- Ver registros peso -->
+                    <div class="layout-grafica">
+                        <div class="pesoTabla">
+                            <table class="table tablePart" id="tablaPeso">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="lis:${peso}">
+                                        <td th:text="${lis.dato} + ' kg'"></td>
+                                        <td th:text="${#dates.format(lis.fecha, 'dd MMM yyyy')}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <!-- Ver gráfica -->
-                    <div><canvas id="grafica" width="300" height="200"></canvas></div>
+                        <!-- Ver gráfica peso -->
+                        <div id="top-grafica"><canvas id="grafica" width="500" height="200"></canvas></div>
 
-                    <!-- Botones para cambiar de vista-->
-                    <div class="botones-prog">
-                        <button class="btn-reg" id="registroPeso">Ver registros</button>
-                        <button class="btn-reg" id="graficaPeso">Ver gráfica</button>
+                        <!-- Botones para cambiar de vista del peso -->
+                        <div class="botones-prog">
+                            <button class="btn-reg" id="registroPeso">Ver registros</button>
+                            <button class="btn-reg" id="graficaPeso">Ver gráfica</button>
+                        </div>
                     </div>
 
                     <!-- Registar peso -->
@@ -189,71 +204,6 @@
                             <button type="submit" class="btn btn-primary">Registrar</button>
                         </form>
                     </div>
-
-                    <script>
-
-                        let graficaPeso = document.getElementById("grafica").getContext("2d");
-
-                        var peso = new Chart(graficaPeso, {
-                            type: "line",
-                            data: {
-                                datasets: [
-                                    {
-                                        label: "Peso",
-                                        borderColor: 'rgb(75, 192, 192)',
-                                    }
-                                ]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        })
-
-                        let url = 'http://localhost:7070/progreso/peso'; //petición http
-                        fetch(url)
-                            .then(response => response.json())
-                            .then(data => {
-                                for (i in data) {
-                                    peso.data['labels'].push(data[i].fecha);
-                                    peso.data['datasets'][0].data.push(data[i].dato);
-                                }
-                            })
-                    </script>
-
-                </div>
-
-                <!-- ÍNDICE CORPORAL -->
-                <div class="progreso-datos">
-
-                    <div class="header-progreso">
-                        <h4>Índice corporal</h4>
-                        <a class="btn-plus"><i class="fa-solid fa-circle-plus"
-                                style="cursor: pointer; float:right;"></i></a>
-                    </div>
-
-                    <canvas id="grafica2" width="400" height="300"></canvas>
-
-                    <script>
-                        let canvas2 = document.getElementById("grafica2").getContext("2d");
-
-                        var chart = new Chart(canvas2, {
-                            type: "line",
-                            data: {
-                                labels: ["febrero", "marzo", "abril", "mayo"],
-                                datasets: [
-                                    {
-                                        label: "Índice corporal",
-                                        borderColor: 'rgb(75, 192, 192)',
-                                        data: [24, 22, 20, 18]
-                                    }
-                                ]
-                            }
-                        })
-                    </script>
                 </div>
 
                 <!-- PERÍMETRO ABDOMINAL -->
@@ -263,65 +213,17 @@
                         <a class="btn-plus"><i class="fa-solid fa-circle-plus"
                                 style="cursor: pointer; float:right;"></i></a>
                     </div>
-
-                    <!--<canvas id="grafica3" width="400" height="300"></canvas>-->
-
-                    <script>
-                        let canvas3 = document.getElementById("grafica3").getContext("2d");
-
-                        var chart = new Chart(canvas3, {
-                            type: "line",
-                            data: {
-                                labels: ["febrero", "marzo", "abril", "mayo"],
-                                datasets: [
-                                    {
-                                        label: "Perímetro abdominal",
-                                        borderColor: 'rgb(75, 192, 192)',
-                                        data: [79, 74, 70, 65]
-                                    }
-                                ]
-                            }
-                        })
-                    </script>
                 </div>
+
+                <!-- ÍNDICE CORPORAL -->
 
                 <!-- ACTIVIDAD FÍSICA -->
-                <div class="progreso-datos">
-                    <div class="header-progreso">
-                        <h4>Actividad física</h4>
-                        <a class="btn-plus"><i class="fa-solid fa-circle-plus"
-                                style="cursor: pointer; float:right;"></i></a>
-                    </div>
-                    <!--<canvas id="grafica4" width="400" height="300"></canvas>-->
-
-                    <script>
-                        let canvas4 = document.getElementById("grafica4").getContext("2d");
-
-                        var chart = new Chart(canvas4, {
-                            type: "doughnut",
-                            data: {
-                                labels: ["febrero", "marzo", "abril", "mayo"],
-                                datasets: [
-                                    {
-                                        label: "Actividad física",
-                                        backgroundColor: [
-                                            'rgb(75, 192, 192)',
-                                            'rgb(75, 100, 192)',
-                                            'rgb(1, 2, 192)',
-                                            'rgb(250, 150, 0)'
-                                        ],
-                                        data: [2, 5, 8, 10]
-                                    }
-                                ]
-                            }
-                        })
-                    </script>
-                </div>
 
                 <!-- PASOS -->
             </div>
-
         </div>
+
+    </div>
 
 
 
