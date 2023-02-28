@@ -35,8 +35,8 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     }*/
 
     @Override
-    public List<Objetivo> listaObjetivos() {
-        return(List<Objetivo>) repo.findAll();    
+    public List<Objetivo> listaObjetivos(Participante p) {
+        return(List<Objetivo>) repo.findByParticipante(p);    
     }
 
     @Override
