@@ -31,6 +31,7 @@ import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.enums.TipoProgreso;
 import com.estepper.estepper.service.UsuarioService;
 
@@ -145,11 +146,22 @@ public class HomeController {
 
             // Nombre del grupo
             String grupo = "No asignado";
-
+            String edad = "No asignado";
+            String sexo = "No asignado";
+          
+            if(p.getAsistencia() == null){p.setAsistencia(0);}
+            if(p.getPerdidaDePeso() == null){p.setPerdidaDePeso(0);}
+            if (p.getSexo() != null) {sexo = String.valueOf(p.getSexo());}
+            if (p.getEdad() != null) {edad = String.valueOf(p.getEdad());}
+            
             if (p.getGrupo() != null)
                 grupo = p.getGrupo().getNombre();
 
             model.addAttribute("grupo", grupo);
+            model.addAttribute("edad", edad);
+            model.addAttribute("sexo", sexo);
+    
+         
 
             return "mostrarperfilParticipante";
         } else

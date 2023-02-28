@@ -222,17 +222,17 @@
                                         <div class="card"  data-bs-toggle="tooltip" title="Sexo">
                                           <div class="card-body" >
                                               <h5><i class="fa-solid fa-venus-mars"></i><!--Sexo--> </h5>
-                                              <h5 th:text="${participante.sexo}"></h5>
+                                              <h5 th:text="${sexo}"></h5>
                                           </div>
                                         </div>
                                     </div>
 
                                     <div class="row mt-3" style="justify-content: center;">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="card"  data-bs-toggle="tooltip" title="Edad">
                                           <div class="card-body" >
                                               <h5><i class="fa-solid fa-calendar-day"></i><!--Edad--> </h5>
-                                              <h5 th:text="${participante.edad} + ' ' + 'años'"></h5>
+                                              <h5 th:text="'Edad:'+ ' ' + ${edad}"></h5>
                                           </div>
                                         </div>
                                     </div>

@@ -439,3 +439,17 @@ a{
     transform: scale(1.1);
 }
 
+/*COSILLAS INDEX GRÁFICOS*/
+
+.fondoGraficas{
+    width: 60%;
+    height: 30%;
+    margin-left: 20%;
+}
+
+/*COSILLAS DE OBJETIVOS, YA LO SEPARARÉ SI ES MUCHO*/
+
+input[type="date"] {
+    background-color: #f2f2f2;
+    color: #333;
+}

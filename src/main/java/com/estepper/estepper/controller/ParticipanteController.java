@@ -9,11 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.FaseValoracion;
 import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Findrisc;
+import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.Usuario;
@@ -28,6 +31,7 @@ import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
+import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
@@ -55,6 +59,9 @@ public class ParticipanteController {
 
     @Autowired
     private ProgresoService pro;
+
+    @Autowired
+    private ObjetivoService obj;
 
 
     @GetMapping("/menu")
@@ -333,9 +340,48 @@ public class ParticipanteController {
 
     @GetMapping("/objetivos")
     public String objetivos(Model model){
+
+        List<Objetivo> listaObjetivos = obj.listaObjetivos();
+        model.addAttribute("listaObjetivos", listaObjetivos);
         model.addAttribute("user", getUsuario());
+
         return "objetivos";
-    }  
+    } 
+    
+    @GetMapping("/objetivos/nuevo")
+    public String mostrarFormularioDeNuevoObjetivo(Model model){
+        model.addAttribute("objetivo", new Objetivo());
+        model.addAttribute("user", getUsuario());
+        return "nuevo_objetivo";
+    }
+
+    @PostMapping("/objetivos/guardar")
+    public String guardarObjetivo(Objetivo elObjetivo){
+        Participante p = participante.findById(getUsuario().id).get();
+        elObjetivo.setParticipante(p);
+        obj.guardar(elObjetivo); 
+        return"redirect:/objetivos";
+    }
+
+    @RequestMapping("/objetivos/eliminar/{id}")
+    public String eliminarObjetivo(@PathVariable(name = "id") Integer id){
+        obj.borrar(id);
+        return"redirect:/objetivos";
+    }
+
+    @GetMapping("/objetivos/editar/{id}")
+    public ModelAndView mostrarFormularioDeEditarObjetivo(@PathVariable(name = "id") Integer id){
+       ModelAndView modelo = new ModelAndView("editar_objetivo");
+        
+       Objetivo o = obj.getObjetivo(id);
+     
+       modelo.addObject("objetivo", o);
+       modelo.addObject("user", getUsuario());
+
+       return modelo;
+    }
+    
+
     //MATERIALES:
     @GetMapping("/eliminarMaterial/{id}")
     public String processElimMaterial(@PathVariable("id") Integer id) {

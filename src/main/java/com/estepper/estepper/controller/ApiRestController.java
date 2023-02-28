@@ -60,4 +60,20 @@ public class ApiRestController {
         return progreso.datos(p, TipoProgreso.PESO);
     }
 
+    @GetMapping("/index/sesiones")
+    public Participante getParticipante() {
+ 
+        Usuario u = getUsuario();
+        if(u instanceof Participante){
+            Participante p = part.findById(u.id).get();
+            return p;
+        }
+
+        return null;
+    }
+
+
+
+    
+
 }

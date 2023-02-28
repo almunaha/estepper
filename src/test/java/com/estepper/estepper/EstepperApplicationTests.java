@@ -1,4 +1,6 @@
 package com.estepper.estepper;
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +12,8 @@ import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.entity.Objetivo;
+import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.repository.UsuarioRepository;
@@ -26,6 +30,8 @@ class EstepperApplicationTests {
 	private BCryptPasswordEncoder hash;
 	@Autowired
 	private GrupoRepository grupoRepo;
+	@Autowired
+	private GrupoRepository objetivoRepo;
 
 	@Autowired
 	private FindriscRepository findriscRepo;
@@ -65,5 +71,6 @@ class EstepperApplicationTests {
 		grupoRepo.save(new Grupo(3,992,"Los escarabajos",0));
 		grupoRepo.save(new Grupo(4,993,"Los súper deportistas",0));
 	}
+
 
 }

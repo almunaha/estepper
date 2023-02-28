@@ -51,7 +51,7 @@ public class GruposController {
     } 
 
     @GetMapping("/grupos/nuevo")
-    public String mostrarFormularioDeNuevoProducto(Model model){
+    public String mostrarFormularioDeNuevoGrupo(Model model){
         model.addAttribute("grupo", new Grupo());
         model.addAttribute("user", getUsuario());
         return "nuevo_grupo";
