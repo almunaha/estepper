@@ -31,6 +31,14 @@
     padding-top: 3%;
 }
 
+.bottom-valor{
+    float: left;
+    width: 100%;
+    padding-top: 5%;
+    padding-left: 5%;
+    font-size: 110%;
+}
+
 .graficas-progreso{
     padding-left: 1%;
     padding-right: 1%;
