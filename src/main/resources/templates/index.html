@@ -16,9 +16,15 @@
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
   <script src="/js/menu.js"></script>
 
+
+  <!-- para jquery-->
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <!--PARA GRÁFICOS-->
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Para la alerta del peso -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -127,6 +133,9 @@
 
       <div th:if="${recordatorio}">
         <script th:inline="javascript">
+          setTimeout(function () {
+            alert("No se han introducido datos en la última semana.");
+          }, 1000); // 1000 milisegundos = 1 segundos
           setTimeout(function () { //temporizador, al pasar un segundo salta la alerta
             Swal.fire({
               position: 'top',
@@ -163,8 +172,6 @@
 
           <div class="col">
 
-            <h3 th:text="${participante.sesionesCompletas} + '' + 'sesiones completas'"></h3>
-
             <!-- Botón sesiones -->
             <div class="layout-util">
               <a class="btn-util" th:href="@{/sesiones}">
@@ -173,28 +180,40 @@
 
               <h4 id="nombre">SESIONES</h4>
 
-
-              <div class="chart1" id="chart1"></div>
+              <!-- Ver gráfica -->
+              <!--<div><canvas id="chart1" width="400" height="300"></canvas></div>-->
+              <div class="fondoGraficas">
+                <div><canvas id="graficoSesiones"></canvas></div>
+              </div>
+            
 
               <script>
+            
+                let canvas = document.getElementById("graficoSesiones").getContext("2d");
+                let url = 'http://localhost:7070/index/sesiones';
 
-                var sesionesCompletas = parseInt("${participante.sesionesCompletas}");
-                console.log(sesionesCompletas);
+                fetch(url)
+                  .then(response => response.json())
+                  .then(data => {
 
-                var options = {
-                  series: [sesionesCompletas, 9],
-                  chart: {
-                    width: 420,
-                    type: 'pie',
-                  },
+                    var graficaSesiones = new Chart(canvas, {
+                      type: "pie",
+                  
+                  
+                      data: {
+                        labels: ["Sesiones completadas", "Sesiones pendientes"],
+                        datasets: [
+                          {
+                            data: [data.sesionesCompletas, 10-data.sesionesCompletas],
+                           // borderColor: 'rgb(251, 179, 116)'
 
-                  labels: ['Sesiones completadas', 'Sesiones pendientes'],
+                          }
 
+                        ]
+                      },
 
-                };
-
-                var chart = new ApexCharts(document.querySelector("#chart1"), options);
-                chart.render();
+                    })
+                  })
 
               </script>
 

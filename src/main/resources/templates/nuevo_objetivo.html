@@ -25,7 +25,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <title>Objetivos</title>
+
+    <title>Objetivo</title>
 
 
 </head>
@@ -39,7 +40,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -73,7 +74,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{'/materiales/' + ${user.id}}">
+                    <a href="#">
                         <i class="fa-solid fa-folder-open"></i>
                         <span class="nombre-enlaces">Materiales</span>
                     </a>
@@ -122,53 +123,45 @@
                 </div>
             </nav>
 
-            <!-- OBJETIVOS -->
-           
             <div class="p-4 mt-5" id="grupos">
+               
                 <div>
-                    <h4>Mis objetivos</h4> 
+                    <h4>Crear un nuevo objetivo</h4>
                 </div>
 
-                <!-- Tabla de objetivos -->
-                <table class=" table tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Fecha vencimiento</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
 
-                        </tr>
-                    </thead>
-                    <tbody class = "buscarObjetivos">
-                        <tr th:each="lis:${listaObjetivos}">
-                            <td th:text="${lis.descripcion}"></td>
-                            <td th:text="${lis.fecha}"></td>
-                            <td th:text="${lis.estadoObjetivo}"></td>
-                            <td>   
-                                <a class="fa-solid fa-eye fa-2x" id="btn-icono" data-bs-toggle="tooltip" title="Ver objetivo" th:href="@{'/unObjetivo/' + ${lis.id}}"></a>
-                                <a class="fa-solid fa-pen-to-square fa-2x" id="btn-icono" data-bs-toggle="tooltip"  title="Editar objetivo" th:href="@{'/objetivos/editar/' + ${lis.id}} "></a>
-                                <a class="fa-solid fa-trash-can fa-2x" id="btn-icono" data-bs-toggle="tooltip"  title="Eliminar objetivo" th:href="@{'/objetivos/eliminar/'+ ${lis.id}}"></a>
-                            </td>
-            
-                        </tr>
-                    </tbody>
-                </table>
+                <form th:action="@{/objetivos/guardar}" th:object="${objetivo}" method="post">
+                    <div class="m-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Descripción del nuevo objetivo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{descripcion}" class="form-control" required />
+                            </div>
+           
+                            <!--Falta controlar que no se pueda meter la fecha que te de la gana y esas cosas-->
+                            <label class="col-form-label col-sm-4">Fecha tope para cumplir mi objetivo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="date" th:field="*{fecha}" class="form-control" id="fecha" name="fecha"  required />
+                            </div>
+                            
+                            <label class="col-form-label col-sm-4">Estado del objetivo (cambiarlo por pasos para cumplir el objetivo):</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{estadoObjetivo}" class="form-control" required />
+                            </div>
 
-                    <a class="btn" id="btn-part" th:href="@{/objetivos/nuevo}">Crear un objetivo nuevo</a>
-                   
+                        </div>
+                        <div class="text-center p">
+                            <button type="submit" class="btn" id="btn-part">Añadir</button>
+                        </div>
+                    </div>
+                </form>
+
+
+
             </div>
 
         </div>
     </div>
-          
-           
-
-             
-
-        </div>
-
-
 
 </body>
 
