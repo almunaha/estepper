@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -344,8 +345,9 @@ public class ParticipanteController {
 
     @GetMapping("/objetivos")
     public String objetivos(Model model){
+        Participante p = participante.findById(getUsuario().id).get();
 
-        List<Objetivo> listaObjetivos = obj.listaObjetivos();
+        List<Objetivo> listaObjetivos = obj.listaObjetivos(p);
         model.addAttribute("listaObjetivos", listaObjetivos);
         model.addAttribute("user", getUsuario());
 
@@ -360,10 +362,10 @@ public class ParticipanteController {
     }
 
     @PostMapping("/objetivos/guardar")
-    public String guardarObjetivo(Objetivo elObjetivo){
+    public String guardarObjetivo(Objetivo objetivo){
         Participante p = participante.findById(getUsuario().id).get();
-        elObjetivo.setParticipante(p);
-        obj.guardar(elObjetivo); 
+        objetivo.setParticipante(p);
+        obj.guardar(objetivo); 
         return"redirect:/objetivos";
     }
 
@@ -373,7 +375,7 @@ public class ParticipanteController {
         return"redirect:/objetivos";
     }
 
-    @GetMapping("/objetivos/editar/{id}")
+    /*@GetMapping("/objetivos/editar/{id}")
     public ModelAndView mostrarFormularioDeEditarObjetivo(@PathVariable(name = "id") Integer id){
        ModelAndView modelo = new ModelAndView("editar_objetivo");
         
@@ -383,6 +385,23 @@ public class ParticipanteController {
        modelo.addObject("user", getUsuario());
 
        return modelo;
+    }*/
+
+    @GetMapping("/objetivos/editar/{id}")   
+    public String editarObjetivo(@PathVariable("id") Integer id, Model model){
+
+        Objetivo o = obj.getObjetivo(id);
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("objetivo", o);
+        return "editar_objetivo";
+    }      
+    
+    @PostMapping("/objetivos/guardar/{id}")
+    public String process_editarObjetivo(@PathVariable("id") Integer id, @ModelAttribute Objetivo objetivo){
+       Participante p = participante.findById(getUsuario().id).get();
+       objetivo.setParticipante(p);
+       obj.guardar(objetivo);        
+       return "redirect:/objetivos";
     }
     
 

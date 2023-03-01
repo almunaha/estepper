@@ -128,7 +128,7 @@
                     <h4>Editar un objetivo</h4> 
                 </div>
 
-               <form th:action="@{/objetivos/guardar}" th:object="${objetivo}" method="post">
+               <form th:action="@{'/objetivos/guardar/' + ${objetivo.id}}" th:object="${objetivo}" method="post">
                     <div class="m-3">
                     
                         <div class="form-group row">

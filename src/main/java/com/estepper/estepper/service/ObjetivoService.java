@@ -10,7 +10,7 @@ import com.estepper.estepper.model.enums.EstadoObjetivo;
 
 public interface ObjetivoService {
 
-    public List<Objetivo> listaObjetivos();
+    public List<Objetivo> listaObjetivos(Participante p);
     public void guardar(Objetivo o);
     public void borrar(Integer id);
     public Objetivo getObjetivo(Integer id); 

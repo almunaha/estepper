@@ -10,7 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface ObjetivoRepository extends JpaRepository<Objetivo, Integer>{
-    //List<Objetivo> findByParticipanteyEstadoObjetivo(Participante participante, EstadoObjetivo estado);
+
+    List<Objetivo> findByParticipante(Participante participante);
     ///List<Objetivo> findByFechaAfteryEstadoObjetivoyParticipante(Date fecha, EstadoObjetivo estado, Participante participante);
     //Objetivo findByIdObjetivo(Integer id);
 }
