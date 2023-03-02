@@ -40,6 +40,12 @@ public class ApiRestController {
         return progreso.datos(p, TipoProgreso.PESO);
     }
 
+    @GetMapping("/progreso/perimetro") 
+    public List<Progreso> datosPerimetro() {
+        Participante p =  part.findById(getUsuario().id).get();
+        return progreso.datos(p, TipoProgreso.PERIMETRO);
+    }
+
     public Usuario getUsuario() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

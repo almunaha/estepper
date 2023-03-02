@@ -23,22 +23,45 @@
     flex-direction: column;
 }
 
-.top-valor{
-    font-size: 175%;
+.flex-valor{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.iz-valor{
+    font-size: 220%;
+    width: 30%;
+    padding-left: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.der-valor{
+    width: 70%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dato-valor{
     float: left;
     width: 100%;
     padding-left: 5%;
-    padding-top: 3%;
+    font-weight: bold;
+    font-size: 170%;
 }
 
 .bottom-valor{
     float: left;
     width: 100%;
-    padding-top: 5%;
     padding-left: 5%;
     font-size: 110%;
 }
 
+/* Gráficas */
 .graficas-progreso{
     padding-left: 1%;
     padding-right: 1%;
@@ -82,6 +105,11 @@
     margin-right: 10px;
 }
 
+.btn-form{
+    display: flex;
+    gap: 2%;
+}
+
 .btn-reg{
     font-size: 15px; 
     background-color: rgb(251, 179, 116);
@@ -95,7 +123,7 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
-.btn-plus {
+.btn-plus, .btn-plus2 {
     font-size: 22px; 
     color: rgb(251, 179, 116);
 }

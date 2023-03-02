@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.PathVariable;
+
 
 import com.estepper.estepper.model.entity.FaseValoracion;
 import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Findrisc;
+import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Ficha;
@@ -29,13 +33,14 @@ import com.estepper.estepper.model.entity.ActividadFisica;
 import com.estepper.estepper.model.entity.AlimentacionVal;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.TipoProgreso;
-
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
+import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
+
 import com.estepper.estepper.service.ProgresoService;
 
 
@@ -63,6 +68,9 @@ public class ParticipanteController {
 
     @Autowired
     private ObjetivoService obj;
+
+    @Autowired
+    private MaterialService m;
 
 
     @GetMapping("/menu")
@@ -322,8 +330,14 @@ public class ParticipanteController {
         Participante p = participante.findById(getUsuario().id).get();
 
         if(p.getEstadoCuenta().equals(Estado.ALTA)){
+            model.addAttribute("participante", p);
+
             List<Progreso> peso = pro.datos(p, TipoProgreso.PESO); 
             model.addAttribute("peso", peso);
+
+            List<Progreso> perimetro = pro.datos(p, TipoProgreso.PERIMETRO); 
+            model.addAttribute("perimetro", perimetro);
+
             model.addAttribute("progreso", new Progreso());
             return "progreso";
         }
@@ -337,6 +351,17 @@ public class ParticipanteController {
         Participante p = participante.findById(getUsuario().id).get();
         progreso.setParticipante(p);
         progreso.setTipo(TipoProgreso.PESO);
+
+        pro.guardar(progreso);
+
+        return "redirect:/progreso";
+    }
+
+    @PostMapping("/process_perimetro")
+    public String process_perimetro(Progreso progreso, Model model){
+        Participante p = participante.findById(getUsuario().id).get();
+        progreso.setParticipante(p);
+        progreso.setTipo(TipoProgreso.PERIMETRO);
 
         pro.guardar(progreso);
 
@@ -413,4 +438,17 @@ public class ParticipanteController {
        return "redirect:/";
     }
 
+    /*@GetMapping("descargarMaterial/{id}")
+    public ResponseEntity<Resource> processDescargar(@PathVariable("id") Integer id){
+        Materiales material = m.getMaterial(id); //cargar archivo
+        Resource recurso = resourceLoader.getResource("file:/home/usuario/proyecto/materiales/" + material.getLink());
+        String mimeType = URLConnection.guessContentTypeFromStream(recurso.getInputStream());
+                
+        HttpHeaders cabeceras = new HttpHeaders();
+        cabeceras.setContentType(MediaType.parseMediaType(mimeType));
+        cabeceras.setContentDisposition(ContentDisposition.attachment().filename(material.getDescripcion()).build());
+       
+        return new ResponseEntity<>(recurso, cabeceras, HttpStatus.OK);
+    }
+*/
 }
