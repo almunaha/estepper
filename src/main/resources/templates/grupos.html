@@ -163,7 +163,28 @@
                     </ul>
                   </nav>
 
-                    <a class="btn" id="btn-part" th:href="@{/grupos/nuevo}">Crear un grupo nuevo</a>
+                  <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
+                    <div class="m-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{nombre}" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="text-center p">
+                            <button type="submit" class="btn" id="btn-part" onclick=myFunction()>Crear nuevo grupo</button>
+                        </div>
+                        <script language="JavaScript">
+                            function myFunction() {
+                                if(confirm("¿Desea añadir este nuevo grupo?")){
+                                alert("Grupo creado correctamente");
+                                }else{
+                                alert("Usted cancelo la acción para crearlo");
+                                }
+                            }
+                        </script>
+                    </div>
+                 </form>
                     <div style="float: right;">
                         <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
                     </div>

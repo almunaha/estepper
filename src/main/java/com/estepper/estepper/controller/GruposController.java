@@ -51,15 +51,9 @@ public class GruposController {
         List<Grupo> listaGrupos = grupo.listaGrupos();
         model.addAttribute("listaGrupos", listaGrupos);
         model.addAttribute("user", getUsuario());
+        model.addAttribute("grupo", new Grupo());
         return "grupos";
     } 
-
-    @GetMapping("/grupos/nuevo")
-    public String mostrarFormularioDeNuevoGrupo(Model model){
-        model.addAttribute("grupo", new Grupo());
-        model.addAttribute("user", getUsuario());
-        return "nuevo_grupo";
-    }
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(Grupo elgrupo){
@@ -72,6 +66,7 @@ public class GruposController {
             elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
         }
         elgrupo.setCodigo(elcodigo);
+        elgrupo.setNumParticipantes(0);
         grupo.save(elgrupo); 
         return"redirect:/listaGrupos";
     }
