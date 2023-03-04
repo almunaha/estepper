@@ -26,7 +26,7 @@ public class Grupo implements Serializable{
     private Integer idCoordinador;
 
     @Column(unique=true)
-    private Integer codigo;
+    private String codigo;
     @Column(unique=true)
     private String nombre;
     @Column
@@ -34,7 +34,7 @@ public class Grupo implements Serializable{
 
 
     
-    public Grupo(Integer id, Integer idCoordinador, Integer codigo, String nombre, Integer numParticipantes) {
+    public Grupo(Integer id, Integer idCoordinador, String codigo, String nombre, Integer numParticipantes) {
         this.id = id;
         this.idCoordinador = idCoordinador;
         this.codigo = codigo;
@@ -51,10 +51,10 @@ public class Grupo implements Serializable{
     public void setId(Integer id) {
         this.id = id;
     }
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
     public String getNombre() {

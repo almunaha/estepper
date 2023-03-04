@@ -4,8 +4,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,6 +63,15 @@ public class GruposController {
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(Grupo elgrupo){
+        elgrupo.setIdCoordinador(getUsuario().getId());
+
+        String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
+
+        // comprobar que no existe un usuario con ese codigo
+        while (grupo.findByCodigo(elcodigo) != null) {
+            elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
+        }
+        elgrupo.setCodigo(elcodigo);
         grupo.save(elgrupo); 
         return"redirect:/listaGrupos";
     }

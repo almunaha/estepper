@@ -20,6 +20,11 @@ public class GrupoServiceImpl implements GrupoService{
     }  
 
     @Override
+    public Grupo findByCodigo(String codigo){
+        return repo.findByCodigo(codigo);
+    }
+
+    @Override
     public Grupo getGrupo(Integer id){
         return repo.findById(id).get();
     }    

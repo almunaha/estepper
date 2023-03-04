@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 public interface GrupoRepository extends JpaRepository<Grupo, Integer>{
         
     Grupo findByNombre(String nombre); //select * from grupo where nombre = g.nombre 
-    Grupo findByCodigo(String codigo); //Ver si hacerlo con el código o con el ID
+    Grupo findByCodigo(String codigo); 
     
     @Modifying
     @Transactional
