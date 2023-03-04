@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,6 +15,8 @@ import java.util.Date;
 import java.time.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,7 +26,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.estepper.estepper.model.entity.Administrador;
@@ -264,6 +270,13 @@ public class HomeController {
         }
     }
 
+    @RequestMapping(value="/materiales/download/{id}", method=RequestMethod.GET)
+    @ResponseBody
+    public FileSystemResource downloadFile(@PathVariable("id") Integer id) {
+    Materiales material = participante.getMaterial(id);
+    return new FileSystemResource(new File(material.getLink()));
+    }
+
     @PostMapping("/process_material/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
             material.setParticipante(participante.findById(id).get());
@@ -275,7 +288,7 @@ public class HomeController {
                     byte[] bytesArc = file.getBytes(); 
                     Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                     Files.write(rutaCompleta, bytesArc);
-                    material.setLink(file.getOriginalFilename());
+                    material.setLink(rutaCompleta.toString());
                     participante.updateMaterial(material);
                 } catch (Exception e) {
                     String mensaje = "Ha ocurrido un error: " + e.getMessage();
