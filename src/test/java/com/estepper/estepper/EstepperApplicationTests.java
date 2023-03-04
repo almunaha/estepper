@@ -50,27 +50,23 @@ class EstepperApplicationTests {
 		
 
 		//Usuario tipo COORDINADOR
-		usuarioRepo.save(new Coordinador(0, 222, "Mercedes",  "mercedes@madrid.es", hash.encode("mercedespass"), 
+		Coordinador coor = usuarioRepo.save(new Coordinador(0, 222, "Mercedes",  "mercedes@madrid.es", hash.encode("mercedespass"), 
 		Estado.ALTA));
 
 		//Usuario tipo ADMINISTRADOR
 		usuarioRepo.save(new Administrador(0, 333, "Javier",  "javier@ucm.es", hash.encode("javierpass"), 
 		Estado.ALTA));
 		
+	    grupoRepo.save(new Grupo(1, coor.getId(), 990,"Las saltimbanquis",0));
 
 		/*
 		Usuario retorno = usuarioRepo.save(us);
 		assertTrue(retorno.getContrasenia().equalsIgnoreCase(us.getContrasenia()));
 		*/
 	}
+
 	
-	@Test
-	public void crearGrupo(){
-	    grupoRepo.save(new Grupo(1,990,"Las saltimbanquis",0));
-		grupoRepo.save(new Grupo(2,991,"Los viajeros disfrutones",0));
-		grupoRepo.save(new Grupo(3,992,"Los escarabajos",0));
-		grupoRepo.save(new Grupo(4,993,"Los súper deportistas",0));
-	}
+	
 
 
 }
