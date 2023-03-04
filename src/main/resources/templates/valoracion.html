@@ -119,9 +119,25 @@
                 </tbody>
             </table>
 
-            <a class="btn" id="btn-part" th:href="@{'/activarcuenta/' + ${participante.id}}">Activar cuenta</a>
+            <a class="btn btn-unir" id="btn-part1" th:href="@{'/activarcuenta/' + ${participante.id}}" data-estado="${participante.estado}">Activar cuenta</a>
             <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}}">Eliminar cuenta</a>
-
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                const btn_part = document.getElementById('btn-part1');
+                btn_part.addEventListener('click', function(e) {
+                  var estado = $(this).data("estado").text();
+                  if (estado == 'ALTA') {
+                    e.preventDefault();
+                    btn_part.disabled = true;
+                    alert("El usuario ya está dado de alta.");
+                  } else {
+                    btn_part.disabled = false;
+                    window.location.href = $(this).attr("href");
+                  }
+                });
+              });
+            </script>
+            
             <div style="float: right;">
                 <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
             </div>

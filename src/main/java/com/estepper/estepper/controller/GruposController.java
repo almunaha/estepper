@@ -48,7 +48,7 @@ public class GruposController {
     
     @GetMapping("/listaGrupos")
     public String grupos(Model model){
-        List<Grupo> listaGrupos = grupo.listaGrupos();
+        List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
         model.addAttribute("listaGrupos", listaGrupos);
         model.addAttribute("user", getUsuario());
         model.addAttribute("grupo", new Grupo());
@@ -96,7 +96,7 @@ public class GruposController {
         model.addAttribute("user", user.findById(id).get());
         model.addAttribute("idparticipante", id);
 
-        List<Grupo> listaGrupos = grupo.listaGrupos();
+        List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
         model.addAttribute("listaGrupos", listaGrupos);
      
         return "unirAgrupo";
