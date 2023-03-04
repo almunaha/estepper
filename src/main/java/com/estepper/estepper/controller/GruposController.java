@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -131,14 +133,15 @@ public class GruposController {
                     Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                     Files.write(rutaCompleta, bytesArc);
                     material.setLink(file.getOriginalFilename());
+                    List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
+                    for(int i = 0; i < losparticipantes.size(); i++){
+                        material.setParticipante(losparticipantes.get(i));
+                        part.updateMaterial(material);
+                    }
                 } catch (Exception e) {
-                }
-                List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
-                for(int i = 0; i < losparticipantes.size(); i++){
-                    material.setParticipante(losparticipantes.get(i));
-                    part.updateMaterial(material);
-                }
-                    
+                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                }   
                 
 
             }

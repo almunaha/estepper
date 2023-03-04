@@ -3,6 +3,9 @@ package com.estepper.estepper.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
+import javax.swing.JOptionPane;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -266,15 +269,17 @@ public class HomeController {
             material.setParticipante(participante.findById(id).get());
             material.setGrupo(participante.findById(id).get().getGrupo());
             if(!file.isEmpty()){
-                Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
-                String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
                 try {
+                    Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
+                    String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
                     byte[] bytesArc = file.getBytes(); 
                     Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                     Files.write(rutaCompleta, bytesArc);
                     material.setLink(file.getOriginalFilename());
                     participante.updateMaterial(material);
                 } catch (Exception e) {
+                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         return "redirect:/";
