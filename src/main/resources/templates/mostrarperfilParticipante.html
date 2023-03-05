@@ -14,15 +14,13 @@
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-
+    <script src="/js/menu.js"></script>
 
     <!--PARA GRÁFICOS-->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto">
 
     <title>Perfil</title>
-
-
 </head>
 
 <body>
@@ -96,7 +94,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
