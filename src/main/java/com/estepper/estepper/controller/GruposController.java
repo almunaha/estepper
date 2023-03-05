@@ -108,8 +108,7 @@ public class GruposController {
 
         Grupo g = grupo.getGrupo(idGrupo);
         model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
-        model.addAttribute("total", g.getNumParticipantes());
-        model.addAttribute("nombreGrupo", g.getNombre());
+        model.addAttribute("grupo", g);
         model.addAttribute("user", getUsuario());
      
         return "unGrupo";

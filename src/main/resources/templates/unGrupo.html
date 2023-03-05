@@ -77,8 +77,9 @@
 
                 <div class="encabezado-grupo">
 
-                    <h3 th:text="'GRUPO: ' + ${nombreGrupo}"></h3>
-                    <strong th:text="'Número total de participantes: ' + ${total}"></strong>
+                    <h3 th:text="'GRUPO: ' + ${grupo.nombre}"></h3>
+                    <h5 th:text="'Código: ' + ${grupo.codigo}"></h5>
+                    <strong th:text="'Número total de participantes: ' + ${grupo.numParticipantes}"></strong>
             
                 </div>
 

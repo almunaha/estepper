@@ -114,6 +114,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Código</th>
                             <th scope="col">Número de participantes</th>
                             <th scope="col">Acciones</th>
 
@@ -122,6 +123,7 @@
                     <tbody class = "buscarGrupos">
                         <tr th:each="lis:${listaGrupos}">
                             <td th:text="${lis.nombre}"></td>
+                            <td th:text="${lis.codigo}"></td>
                             <td th:text="${lis.numParticipantes}"></td>
                             <td>   
 
