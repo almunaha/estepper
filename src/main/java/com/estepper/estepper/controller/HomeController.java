@@ -182,23 +182,25 @@ public class HomeController {
     public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user,
             @ModelAttribute Participante p) {
 
-        Usuario orig = usuario.findById(user.id).get(); // usuario antes de editarlo
+        if(getUsuario().getId() == id){
+            Usuario orig = usuario.findById(user.id).get(); // usuario antes de editarlo
 
-        if (user.contrasenia == "")
-            user.contrasenia = orig.contrasenia; // si no se ha cambiado la contraseña
-        else
-            user.contrasenia = hash.encode(user.contrasenia);
+            if (user.contrasenia == "")
+                user.contrasenia = orig.contrasenia; // si no se ha cambiado la contraseña
+            else
+                user.contrasenia = hash.encode(user.contrasenia);
 
-        usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.id);
+            usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.id);
 
-        if (orig instanceof Participante) { // si es un participante
-            Participante part = participante.findById(id).get();
+            if (orig instanceof Participante) { // si es un participante
+                Participante part = participante.findById(id).get();
 
-            participante.update(p.edad, p.sexo, p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
-                    part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), id);
-        }
+                participante.update(p.edad, p.sexo, p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
+                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), id);
+            }
 
-        return "redirect:/mostrarperfil/{id}";
+            return "redirect:/mostrarperfil/{id}";
+        } else return "redirect:/";
     }
 
     @GetMapping("/baja")
@@ -258,16 +260,16 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
-        if (elusuario instanceof Coordinador) {
+        if (elusuario instanceof Coordinador && participante.findById(id).get().getIdCoordinador() == elusuario.getId()) {
             model.addAttribute("listado", participante.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
             return "materialesCoor";
-        } else {
+        } else if(elusuario instanceof Participante && getUsuario().getId() == id){
             model.addAttribute("listado", participante.materiales(id));
             return "materialesPart";
-        }
+        } else return "redirect:/";
     }
 
     @RequestMapping(value="/materiales/download/{id}", method=RequestMethod.GET)
@@ -279,20 +281,23 @@ public class HomeController {
 
     @PostMapping("/process_material/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
-            material.setParticipante(participante.findById(id).get());
-            material.setGrupo(participante.findById(id).get().getGrupo());
-            if(!file.isEmpty()){
-                try {
-                    Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
-                    String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
-                    byte[] bytesArc = file.getBytes(); 
-                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
-                    Files.write(rutaCompleta, bytesArc);
-                    material.setLink(rutaCompleta.toString());
-                    participante.updateMaterial(material);
-                } catch (Exception e) {
-                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
-                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+        Participante p = participante.findById(id).get();
+            if(getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id){
+                material.setParticipante(p);
+                material.setGrupo(p.getGrupo());
+                if(!file.isEmpty()){
+                    try {
+                        Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
+                        String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                        byte[] bytesArc = file.getBytes(); 
+                        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                        Files.write(rutaCompleta, bytesArc);
+                        material.setLink(rutaCompleta.toString());
+                        participante.updateMaterial(material);
+                    } catch (Exception e) {
+                        String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         return "redirect:/";
