@@ -4,6 +4,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Random;
+
+import javax.swing.JOptionPane;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,21 +48,25 @@ public class GruposController {
     
     @GetMapping("/listaGrupos")
     public String grupos(Model model){
-        List<Grupo> listaGrupos = grupo.listaGrupos();
+        List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
         model.addAttribute("listaGrupos", listaGrupos);
         model.addAttribute("user", getUsuario());
+        model.addAttribute("grupo", new Grupo());
         return "grupos";
     } 
 
-    @GetMapping("/grupos/nuevo")
-    public String mostrarFormularioDeNuevoGrupo(Model model){
-        model.addAttribute("grupo", new Grupo());
-        model.addAttribute("user", getUsuario());
-        return "nuevo_grupo";
-    }
-
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(Grupo elgrupo){
+        elgrupo.setIdCoordinador(getUsuario().getId());
+
+        String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
+
+        // comprobar que no existe un usuario con ese codigo
+        while (grupo.findByCodigo(elcodigo) != null) {
+            elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
+        }
+        elgrupo.setCodigo(elcodigo);
+        elgrupo.setNumParticipantes(0);
         grupo.save(elgrupo); 
         return"redirect:/listaGrupos";
     }
@@ -88,7 +96,7 @@ public class GruposController {
         model.addAttribute("user", user.findById(id).get());
         model.addAttribute("idparticipante", id);
 
-        List<Grupo> listaGrupos = grupo.listaGrupos();
+        List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
         model.addAttribute("listaGrupos", listaGrupos);
      
         return "unirAgrupo";
@@ -131,14 +139,15 @@ public class GruposController {
                     Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                     Files.write(rutaCompleta, bytesArc);
                     material.setLink(file.getOriginalFilename());
+                    List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
+                    for(int i = 0; i < losparticipantes.size(); i++){
+                        material.setParticipante(losparticipantes.get(i));
+                        part.updateMaterial(material);
+                    }
                 } catch (Exception e) {
-                }
-                List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
-                for(int i = 0; i < losparticipantes.size(); i++){
-                    material.setParticipante(losparticipantes.get(i));
-                    part.updateMaterial(material);
-                }
-                    
+                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                }   
                 
 
             }

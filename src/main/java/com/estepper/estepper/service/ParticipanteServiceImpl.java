@@ -59,6 +59,11 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }
 
     @Override
+    public Materiales getMaterial(Integer id){
+        return repoM.findById(id).get();
+    }
+
+    @Override
     public List<Materiales> materialesGrupo(Grupo grupo){
         List<Materiales> todos = repoM.findByGrupo(grupo);
         for(int i = todos.size()-1; i > 0 ; i--){

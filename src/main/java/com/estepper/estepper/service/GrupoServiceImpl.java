@@ -15,9 +15,14 @@ public class GrupoServiceImpl implements GrupoService{
     private GrupoRepository repo; //inyección de dependencias del grupo dao api
 
     @Override
-    public List<Grupo> listaGrupos() {
-        return(List<Grupo>) repo.findAll();
+    public List<Grupo> listaGrupos(Integer id) {
+        return(List<Grupo>) repo.findByIdCoordinador(id);
     }  
+
+    @Override
+    public Grupo findByCodigo(String codigo){
+        return repo.findByCodigo(codigo);
+    }
 
     @Override
     public Grupo getGrupo(Integer id){

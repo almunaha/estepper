@@ -88,6 +88,12 @@
 			<artifactId>google-api-services-gmail</artifactId>
 			<version>v1-rev20220404-2.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+		</dependency>
+
 
 	</dependencies>
 	
