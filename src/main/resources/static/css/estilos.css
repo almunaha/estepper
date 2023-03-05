@@ -569,3 +569,67 @@ input[type="date"] {
     margin-top: 5%;
 }
 
+/* perfil coordinador REVISAR QUE ES IGUAL QUE EL DE PARTICIPANTE EL CSS DE BAJA */
+
+.header-coord{
+    display: flex;
+    justify-content: space-around;
+}
+
+#btn-coord{
+    color: white;
+    background-color: #6ca4c7;
+    height: 100%;
+}
+
+#btn-coord:hover{
+    transform: scale(1.1);
+    
+}
+
+.perfil-coord{
+    background-color: white;
+    height: 50%;
+    display: flex;
+    flex-direction: column; /* verticalmente */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border-radius: 12px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.dato-coord{
+    background-color: white;
+    list-style: none;
+    border: 0.8px solid #6ca4c7;
+    margin-bottom: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border-radius: 12px;
+    width: 70%;
+
+    display: flex;
+}
+
+.tit-coord{
+    background-color: #6ca4c7;
+    color: white;
+    border-left: 0.8px solid #6ca4c7;
+    border-radius: 10px 0 0 10px;
+    padding: 2%;
+    flex-basis: 35%;
+    text-align: left;
+}
+
+.span-coord{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: flex-start;
+    flex-basis: 65%;
+    margin-left: 5%;
+}
+
+
