@@ -125,8 +125,8 @@
               document.addEventListener('DOMContentLoaded', function () {
                 const btn_part = document.getElementById('btn-part1');
                 btn_part.addEventListener('click', function(e) {
-                  var grupo = /*[[${participante.grupo}]]*/ null;
-                  var estado = /*[[${usuario.estadoCuenta}]]*/ null;
+                  var grupo = `${participante.grupo}`;
+                  var estado = `${usuario.estadoCuenta}`;
                   if (grupo == null) {
                     e.preventDefault();
                     btn_part.disabled = true;
