@@ -144,6 +144,7 @@ public class GruposController {
         } else return "redirect:/";
     }
 
+    //subir material a un grupo
     @PostMapping("/process_materialGrupo/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
             Grupo elgrupo = grupo.getGrupo(id);
@@ -156,7 +157,7 @@ public class GruposController {
                         byte[] bytesArc = file.getBytes(); 
                         Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                         Files.write(rutaCompleta, bytesArc);
-                        material.setLink(file.getOriginalFilename());
+                        material.setLink(rutaCompleta.toString());
                         List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
                         for(int i = 0; i < losparticipantes.size(); i++){
                             material.setParticipante(losparticipantes.get(i));

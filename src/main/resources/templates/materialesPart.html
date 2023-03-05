@@ -134,7 +134,7 @@
                     <td th:text="${lis.titulo}"></td>
                     <td th:text="${lis.descripcion}"></td>
                     <td>
-                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/materiales/download/' + ${lis.id}}" title="Descargar" download><i class="fa-solid fa-download"></i></a>
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i class="fa-solid fa-download"></i></a>
                         <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 </tr>

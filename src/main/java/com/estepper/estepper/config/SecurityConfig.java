@@ -47,7 +47,7 @@ public class SecurityConfig{
             .requestMatchers("../static/diapositivas/Taller online sesion 1 (nuevo formato).pdf").permitAll()
             .requestMatchers("/client_secret_997788153381-j7h2r75bek6g35no8jmsmfq729cgc1g1.apps.googleusercontent.com.json").permitAll()          
         
-          
+            .requestMatchers("/material/descargar/**").permitAll() // permitir acceso a todos
 
             .anyRequest()
             .authenticated()

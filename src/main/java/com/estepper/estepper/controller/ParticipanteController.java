@@ -4,16 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
@@ -494,17 +490,4 @@ public class ParticipanteController {
        return "redirect:/";
     }
 
-    /*@GetMapping("descargarMaterial/{id}")
-    public ResponseEntity<Resource> processDescargar(@PathVariable("id") Integer id){
-        Materiales material = m.getMaterial(id); //cargar archivo
-        Resource recurso = resourceLoader.getResource("file:/home/usuario/proyecto/materiales/" + material.getLink());
-        String mimeType = URLConnection.guessContentTypeFromStream(recurso.getInputStream());
-                
-        HttpHeaders cabeceras = new HttpHeaders();
-        cabeceras.setContentType(MediaType.parseMediaType(mimeType));
-        cabeceras.setContentDisposition(ContentDisposition.attachment().filename(material.getDescripcion()).build());
-       
-        return new ResponseEntity<>(recurso, cabeceras, HttpStatus.OK);
-    }
-*/
 }

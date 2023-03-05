@@ -276,13 +276,7 @@ public class HomeController {
         } else return "redirect:/";
     }
 
-    @RequestMapping(value="/materiales/download/{id}", method=RequestMethod.GET)
-    @ResponseBody
-    public FileSystemResource downloadFile(@PathVariable("id") Integer id) {
-    Materiales material = materialS.getMaterial(id);
-    return new FileSystemResource(new File(material.getLink()));
-    }
-
+    //subir material a un solo participante
     @PostMapping("/process_material/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
         Participante p = participante.findById(id).get();
