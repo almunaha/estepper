@@ -260,13 +260,13 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
-        if (elusuario instanceof Coordinador) {
+        if (elusuario instanceof Coordinador && participante.findById(id).get().getIdCoordinador() == elusuario.getId()) {
             model.addAttribute("listado", participante.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
             return "materialesCoor";
-        } else if(elusuario instanceof Participante){
+        } else if(elusuario instanceof Participante && getUsuario().getId() == id){
             model.addAttribute("listado", participante.materiales(id));
             return "materialesPart";
         } else return "redirect:/";
@@ -281,20 +281,23 @@ public class HomeController {
 
     @PostMapping("/process_material/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
-            material.setParticipante(participante.findById(id).get());
-            material.setGrupo(participante.findById(id).get().getGrupo());
-            if(!file.isEmpty()){
-                try {
-                    Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
-                    String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
-                    byte[] bytesArc = file.getBytes(); 
-                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
-                    Files.write(rutaCompleta, bytesArc);
-                    material.setLink(rutaCompleta.toString());
-                    participante.updateMaterial(material);
-                } catch (Exception e) {
-                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
-                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+        Participante p = participante.findById(id).get();
+            if(getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id){
+                material.setParticipante(p);
+                material.setGrupo(p.getGrupo());
+                if(!file.isEmpty()){
+                    try {
+                        Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
+                        String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                        byte[] bytesArc = file.getBytes(); 
+                        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                        Files.write(rutaCompleta, bytesArc);
+                        material.setLink(rutaCompleta.toString());
+                        participante.updateMaterial(material);
+                    } catch (Exception e) {
+                        String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         return "redirect:/";
