@@ -23,6 +23,11 @@ public class GrupoServiceImpl implements GrupoService{
         return(List<Grupo>) repo.findByIdCoordinador(id);
     }  
 
+    @Override 
+    public void update (Grupo grupo){
+        repo.update(grupo.getNombre(), grupo.getCodigo(), grupo.getIdCoordinador(), grupo.getNumParticipantes(), grupo.getId());
+    }
+
     @Override
     public Grupo findByCodigo(String codigo){
         return repo.findByCodigo(codigo);
@@ -32,12 +37,6 @@ public class GrupoServiceImpl implements GrupoService{
     public Grupo getGrupo(Integer id){
         return repo.findById(id).get();
     }    
-
-    
-    @Override
-    public void updateParticipantes(Integer idGrupo, Integer numParticipantes){
-        repo.update(idGrupo, numParticipantes);
-    }
 
     @Override
     public void delete(Integer id) {
@@ -52,7 +51,8 @@ public class GrupoServiceImpl implements GrupoService{
     @Override
     public void save(Grupo grupo) {
         repo.save(grupo);
-    }    
+    }   
+
 
 
 }

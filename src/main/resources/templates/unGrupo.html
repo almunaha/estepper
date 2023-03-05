@@ -101,7 +101,10 @@
                             <h2 th:text="${lis.nickname}"></h2>
                             <h3 th:text="${lis.codigo}"></h3>
                             <p th:text="${lis.edad} + ' ' + años"></p>
+                            <div style="display: flex; justify-content: space-around; flex-direction: column;">
                             <a class="botonGr" th:href="@{'/valoracion/' + ${lis.id}}">Ver expediente</a>
+                            <a class="botonGr" style="background: red;" th:href="@{'/echargrupo/' + ${lis.id}}">Echar del grupo</a>
+                            </div>
 
                         </div>
                     </div>

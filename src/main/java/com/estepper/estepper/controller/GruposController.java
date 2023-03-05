@@ -160,6 +160,12 @@ public class GruposController {
        return "redirect:/";
     }
 
+    @GetMapping("/echargrupo/{id}")
+    public String echargrupo(@PathVariable("id") Integer id){
+        part.quitargrupo(id);
+        return "redirect:/listaGrupos";
+    }
+
     public Usuario getUsuario(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

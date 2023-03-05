@@ -103,7 +103,8 @@ public class CoordinadorController {
 
             part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g, usuario.getAsistencia(), usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
-            grupo.updateParticipantes(idG, participantes);
+            g.setNumParticipantes(participantes);
+            grupo.update(g);
 
             // crear las sesiones del participante
             Sesion s;
