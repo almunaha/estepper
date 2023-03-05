@@ -293,7 +293,7 @@ public class ParticipanteController {
         }
         fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().id);
 
-       return "redirect:/valoracion/{id}";
+       return "redirect:/listado";
     }
 
     @GetMapping("/eliminarcuenta/{id}")

@@ -129,16 +129,14 @@
                   var estado = `${usuario.estadoCuenta}`;
                   if (grupo == null) {
                     e.preventDefault();
-                    btn_part.disabled = true;
                     alert("El usuario aún no pertenece a ningún grupo");
                   } else if(estado == 'ALTA'){
                     e.preventDefault();
-                    btn_part.disabled = true;
                     alert("El usuario ya está dado de alta.");
                   }
                   else {
-                    btn_part.disabled = false;
-                    window.location.href = $(this).attr("href");
+                    alert("La cuenta del usuario se ha dado de alta correctamente.");
+                    btn_part.disabled = true;
                   }
                 });
               });
