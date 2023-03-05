@@ -306,9 +306,12 @@ public class HomeController {
             userDetails = (UserDetails) principal;
         }
 
-        String codigo = userDetails.getUsername(); // codigo del logueado
+        if (userDetails != null) {
+            String codigo = userDetails.getUsername(); // codigo del logueado
 
-        Usuario user = usuario.logueado(Integer.parseInt(codigo));
-        return user;
+            Usuario user = usuario.logueado(Integer.parseInt(codigo)); // atributos del logueado
+            return user;
+        }
+        return null;
     }
 }

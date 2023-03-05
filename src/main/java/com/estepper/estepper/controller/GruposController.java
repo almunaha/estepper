@@ -4,7 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -174,10 +173,14 @@ public class GruposController {
             userDetails = (UserDetails) principal;
         }
 
-        String codigo = userDetails.getUsername(); //codigo del logueado
+        if (userDetails != null) {
+            String codigo = userDetails.getUsername(); // codigo del logueado
 
-        Usuario usuario = user.logueado(Integer.parseInt(codigo));
-        return usuario;
+            Usuario usuario = user.logueado(Integer.parseInt(codigo)); // atributos del logueado
+            return usuario;
+        }
+        return null;
+
     }
    
 

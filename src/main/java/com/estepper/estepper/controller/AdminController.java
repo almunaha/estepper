@@ -108,11 +108,13 @@ public class AdminController {
         if (principal instanceof UserDetails) {
             userDetails = (UserDetails) principal;
         }
+        if (userDetails != null) {
+            String codigo = userDetails.getUsername(); // codigo del logueado
 
-        String codigo = userDetails.getUsername(); // codigo del logueado
-
-        Usuario user = usuario.logueado(Integer.parseInt(codigo)); // atributos del logueado
-        return user;
+            Usuario user = usuario.logueado(Integer.parseInt(codigo)); // atributos del logueado
+            return user;
+        }
+        return null;
     }
 
     public List<Usuario> listadoUsuarios() {

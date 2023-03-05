@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
 
@@ -128,9 +127,12 @@ public class CoordinadorController {
             userDetails = (UserDetails) principal;
         }
 
-        String codigo = userDetails.getUsername(); //codigo del logueado
+        if (userDetails != null) {
+            String codigo = userDetails.getUsername(); // codigo del logueado
 
-        Usuario usuario = user.logueado(Integer.parseInt(codigo));
-        return usuario;
+            Usuario usuario = user.logueado(Integer.parseInt(codigo)); // atributos del logueado
+            return usuario;
+        }
+        return null;
     }
 }
