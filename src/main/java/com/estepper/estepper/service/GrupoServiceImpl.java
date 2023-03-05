@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.repository.GrupoRepository;
+import com.estepper.estepper.repository.ParticipanteRepository;
 
 
 @Service
@@ -13,6 +15,8 @@ public class GrupoServiceImpl implements GrupoService{
     
     @Autowired
     private GrupoRepository repo; //inyección de dependencias del grupo dao api
+
+    @Autowired ParticipanteRepository repoP;
 
     @Override
     public List<Grupo> listaGrupos(Integer id) {
@@ -37,7 +41,12 @@ public class GrupoServiceImpl implements GrupoService{
 
     @Override
     public void delete(Integer id) {
-        repo.delete(repo.findById(id).get());
+        Grupo grupo = repo.findById(id).get();
+        List<Participante> p = repoP.findByGrupo(grupo);
+        for(int i = 0; i < p.size(); i++){
+            p.get(i).setGrupo(null);
+        }
+        repo.delete(grupo);
     }   
     
     @Override
