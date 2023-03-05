@@ -125,8 +125,8 @@
               document.addEventListener('DOMContentLoaded', function () {
                 const btn_part = document.getElementById('btn-part1');
                 btn_part.addEventListener('click', function(e) {
-                  var grupo = `${participante.grupo}`;
-                  var estado = `${usuario.estadoCuenta}`;
+                  var grupo = "Para que no falle (prueba)"; //${participante.grupo};
+                  var estado = "Para que no falle (prueba)"; //${usuario.estadoCuenta};
                   if (grupo == null) {
                     e.preventDefault();
                     alert("El usuario aún no pertenece a ningún grupo");
@@ -135,8 +135,8 @@
                     alert("El usuario ya está dado de alta.");
                   }
                   else {
-                    alert("La cuenta del usuario se ha dado de alta correctamente.");
                     btn_part.disabled = true;
+                    alert("La cuenta del usuario se ha dado de alta correctamente.");  
                   }
                 });
               });
