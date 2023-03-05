@@ -2,7 +2,19 @@ package com.estepper.estepper.controller;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -488,6 +500,35 @@ public class ParticipanteController {
         
 
        return "redirect:/";
+    }
+
+    //DIAPOSITIVAS
+    // Descargar diapositivas
+    @GetMapping("/diapos/descargar/{id}")
+    public ResponseEntity<byte[]> descargar(@PathVariable Integer id) {
+        //el id es el numero de la sesion
+
+        try {
+            String archivo = "Taller online sesion " + id + " (nuevo formato).pdf";
+            Path rutaArchivo = Paths.get("src//main//resources//static/diapositivas/" + archivo);
+            byte[] bytesArc = Files.readAllBytes(rutaArchivo);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM); // establecer tipo de contenido que se descarga
+            headers.setContentLength(bytesArc.length);
+
+            headers.setContentDisposition(
+                    ContentDisposition.attachment().filename(archivo).build());
+            ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(bytesArc, headers, HttpStatus.OK);
+
+            return response;
+
+        } catch (Exception e) {
+            String mensaje = "Ha ocurrido un error: " + e.getMessage();
+            JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensaje.getBytes());
+        }
     }
 
 }

@@ -120,7 +120,7 @@
       </nav>
 
       <div class="layout-sesion p-4 mt-3">
-        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}">Sesión 1</h3> 
+        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}"></h3> 
         <form>
           <label for="asistencia">Asistencia</label>
           <div>
@@ -136,9 +136,7 @@
 
           <div><label>Diapositivas:</label></div>
           <div>
-            <a href="../static/diapositivas/Taller online sesion 1 (nuevo formato).pdf" target="_blank">
-              <button>Ver</button>
-            </a>
+            <a class="btn" id="btn-part" th:href="@{'/diapos/descargar/' + ${sesion.numSesion}}">Ver</a>
           </div>
 
           <button>Guardar</button>
