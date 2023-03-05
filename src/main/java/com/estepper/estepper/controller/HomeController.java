@@ -48,6 +48,7 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ProgresoService;
+import com.estepper.estepper.service.MaterialService;
 
 @Controller
 public class HomeController {
@@ -60,6 +61,9 @@ public class HomeController {
 
     @Autowired
     private ParticipanteService participante;
+
+    @Autowired
+    private MaterialService materialS;
 
     @Autowired
     private ProgresoService progreso;
@@ -261,13 +265,13 @@ public class HomeController {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
         if (elusuario instanceof Coordinador && participante.findById(id).get().getIdCoordinador() == elusuario.getId()) {
-            model.addAttribute("listado", participante.materiales(id));
+            model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
             return "materialesCoor";
         } else if(elusuario instanceof Participante && getUsuario().getId() == id){
-            model.addAttribute("listado", participante.materiales(id));
+            model.addAttribute("listado", materialS.materiales(id));
             return "materialesPart";
         } else return "redirect:/";
     }
@@ -275,7 +279,7 @@ public class HomeController {
     @RequestMapping(value="/materiales/download/{id}", method=RequestMethod.GET)
     @ResponseBody
     public FileSystemResource downloadFile(@PathVariable("id") Integer id) {
-    Materiales material = participante.getMaterial(id);
+    Materiales material = materialS.getMaterial(id);
     return new FileSystemResource(new File(material.getLink()));
     }
 
@@ -293,7 +297,7 @@ public class HomeController {
                         Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                         Files.write(rutaCompleta, bytesArc);
                         material.setLink(rutaCompleta.toString());
-                        participante.updateMaterial(material);
+                        materialS.updateMaterial(material);
                     } catch (Exception e) {
                         String mensaje = "Ha ocurrido un error: " + e.getMessage();
                         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);

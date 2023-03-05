@@ -29,6 +29,7 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
+import com.estepper.estepper.service.MaterialService;
 
 
 import com.estepper.estepper.service.UsuarioService;
@@ -44,6 +45,9 @@ public class GruposController {
 
     @Autowired 
     private UsuarioService user;
+
+    @Autowired
+    private MaterialService materialS;
 
     
     @GetMapping("/listaGrupos")
@@ -132,7 +136,7 @@ public class GruposController {
         if(getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()){
             Usuario elusuario = getUsuario();
             model.addAttribute("user", elusuario);
-            model.addAttribute("listado", part.materialesGrupo(g));
+            model.addAttribute("listado", materialS.materialesGrupo(g));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
@@ -156,7 +160,7 @@ public class GruposController {
                         List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
                         for(int i = 0; i < losparticipantes.size(); i++){
                             material.setParticipante(losparticipantes.get(i));
-                            part.updateMaterial(material);
+                            materialS.updateMaterial(material);
                         }
                     } catch (Exception e) {
                         String mensaje = "Ha ocurrido un error: " + e.getMessage();
@@ -172,7 +176,7 @@ public class GruposController {
     @GetMapping("/eliminarMaterialGrupo/{id}")
     public String processElimMaterial(@PathVariable("id") Integer id) {
         if(getUsuario() instanceof Coordinador){
-           part.eliminarMaterialGrupo(id);
+            materialS.eliminarMaterialGrupo(id);
         }
        return "redirect:/";
     }

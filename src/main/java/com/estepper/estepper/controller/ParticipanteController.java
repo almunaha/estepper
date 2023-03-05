@@ -71,7 +71,7 @@ public class ParticipanteController {
     private ObjetivoService obj;
 
     @Autowired
-    private MaterialService m;
+    private MaterialService materialS;
 
 
     @GetMapping("/menu")
@@ -483,11 +483,11 @@ public class ParticipanteController {
     //MATERIALES:
     @GetMapping("/eliminarMaterial/{id}")
     public String processElimMaterial(@PathVariable("id") Integer id) {
-        Materiales material = participante.getMaterial(id);
+        Materiales material = materialS.getMaterial(id);
         if(getUsuario() instanceof Coordinador){
-            participante.eliminarMaterial(id);
+            materialS.eliminarMaterial(id);
         } else if (getUsuario().getId() == material.getParticipante().getId()){
-            participante.eliminarMaterial(id);
+            materialS.eliminarMaterial(id);
         }
         
 
