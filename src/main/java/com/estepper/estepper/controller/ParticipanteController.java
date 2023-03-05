@@ -27,6 +27,7 @@ import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.Antecedentes;
 import com.estepper.estepper.model.entity.ActividadFisica;
@@ -115,189 +116,224 @@ public class ParticipanteController {
 
     @GetMapping("/exploracion/{id}")
     public String exploracion(@PathVariable Integer id, Model model){
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("participante", participante.findById(id).get());
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        Exploracion exploracion = null;
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof Exploracion) {
-                exploracion = (Exploracion) formularios.get(i);
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("participante", p);
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            Exploracion exploracion = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Exploracion) {
+                    exploracion = (Exploracion) formularios.get(i);
+                }
             }
-        }
 
-        model.addAttribute("exploracion", exploracion);
-        return "exploracion";
+            model.addAttribute("exploracion", exploracion);
+            return "exploracion";
+        } else return "redirect:/";
 
     }
 
     @PostMapping("/process_exploracion/{id}")
     public String processExploracion(@PathVariable("id") Integer id, @ModelAttribute Exploracion exploracion) {
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        Findrisc findrisc = null;
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof Findrisc) {
-                findrisc = (Findrisc) formularios.get(i);
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            Findrisc findrisc = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Findrisc) {
+                    findrisc = (Findrisc) formularios.get(i);
+                }
             }
-        }
-        fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.sexo, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, participante.findById(id).get());
-        fasevaloracion.actualizarFindrisc(exploracion, findrisc);
+            fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.sexo, exploracion.peso, exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc, participante.findById(id).get());
+            fasevaloracion.actualizarFindrisc(exploracion, findrisc);
 
-        return "redirect:/valoracion/{id}";
+            return "redirect:/valoracion/{id}";
+        } else return "redirect:/";
     }
 
     @GetMapping("/findrisc/{id}")
     public String findrisc(@PathVariable Integer id, Model model){
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("participante", participante.findById(id).get());
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        Findrisc findrisc = null;
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof Findrisc) {
-                findrisc = (Findrisc) formularios.get(i);
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("participante", p);
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            Findrisc findrisc = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Findrisc) {
+                    findrisc = (Findrisc) formularios.get(i);
+                }
             }
-        }
 
-        model.addAttribute("findrisc", findrisc);
-        return "findriscPart";
-
+            model.addAttribute("findrisc", findrisc);
+            return "findriscPart";
+        } else return "redirect:/";
     }
 
     @PostMapping("/process_findrisc/{id}")
     public String processFindrisc(@PathVariable("id") Integer id, @ModelAttribute Findrisc findrisc){
-        fasevaloracion.updateFindrisc(participante.findById(id).get(),findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura, findrisc.ptosactfisica,
-        findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes, findrisc.puntuacion,
-        findrisc.escalarriesgo);
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            fasevaloracion.updateFindrisc(p,findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura, findrisc.ptosactfisica,
+            findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes, findrisc.puntuacion,
+            findrisc.escalarriesgo);
 
-        Exploracion exploracion = null;
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof Exploracion) {
-                exploracion = (Exploracion) formularios.get(i);
+            Exploracion exploracion = null;
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Exploracion) {
+                    exploracion = (Exploracion) formularios.get(i);
+                }
             }
-        }
-        if((exploracion.edad >= 35) & (findrisc.puntuacion >= 15)){
-            fasevaloracion.crearFormulariosNuevos(participante.findById(id).get());
-        }
+            if((exploracion.edad >= 35) & (findrisc.puntuacion >= 15)){
+                fasevaloracion.crearFormulariosNuevos(p);
+            }
 
-        return "redirect:/valoracion/{id}";
+            return "redirect:/valoracion/{id}";
+        } else return "redirect:/";
     }
 
     @GetMapping("/clasificacion/{id}")
     public String clasificacion(@PathVariable Integer id, Model model){
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("participante", participante.findById(id).get());
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        Clasificacion clasificacion = null;
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof Clasificacion) {
-                clasificacion = (Clasificacion) formularios.get(i);
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("participante", p);
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            Clasificacion clasificacion = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Clasificacion) {
+                    clasificacion = (Clasificacion) formularios.get(i);
+                }
             }
-        }
 
-        model.addAttribute("clasificacion", clasificacion);
-        return "clasificacion";
-
+            model.addAttribute("clasificacion", clasificacion);
+            return "clasificacion";
+        } else return "redirect:/";
     }
 
     @PostMapping("/process_clasificacion/{id}")
     public String processClasificacion(@PathVariable("id") Integer id, @ModelAttribute Clasificacion clasificacion){
-        fasevaloracion.updateClasificacion(clasificacion, participante.findById(id).get());
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            fasevaloracion.updateClasificacion(clasificacion, p);
 
-        return "redirect:/valoracion/{id}";
+            return "redirect:/valoracion/{id}";
+        } else return "redirect:/";
     }
 
     @GetMapping("/antecedentes/{id}")
     public String antecedentes(@PathVariable Integer id, Model model){
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("participante", participante.findById(id).get());
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        Antecedentes antecedentes = null;
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof Antecedentes) {
-                antecedentes = (Antecedentes) formularios.get(i);
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("participante", p);
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            Antecedentes antecedentes = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Antecedentes) {
+                    antecedentes = (Antecedentes) formularios.get(i);
+                }
             }
-        }
 
-        model.addAttribute("antecedentes", antecedentes);
-        return "antecedentes";
-
+            model.addAttribute("antecedentes", antecedentes);
+            return "antecedentes";
+        } else return "redirect:/";
     }
 
     @PostMapping("/process_antecedentes/{id}")
     public String processantecedentes(@PathVariable("id") Integer id, @ModelAttribute Antecedentes antecedentes){
-        fasevaloracion.updateAntecedentes(antecedentes, participante.findById(id).get());
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            fasevaloracion.updateAntecedentes(antecedentes, p);
 
-        return "redirect:/valoracion/{id}";
+            return "redirect:/valoracion/{id}";
+        } else return "redirect:/";
     }
 
     @GetMapping("/alimentacionval/{id}")
     public String alimentacionval(@PathVariable Integer id, Model model){
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("participante", participante.findById(id).get());
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        AlimentacionVal alimentacionval = null;
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof AlimentacionVal) {
-                alimentacionval = (AlimentacionVal) formularios.get(i);
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("participante", p);
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            AlimentacionVal alimentacionval = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof AlimentacionVal) {
+                    alimentacionval = (AlimentacionVal) formularios.get(i);
+                }
             }
-        }
 
-        model.addAttribute("alimentacionval", alimentacionval);
-        return "alimentacionval";
-
+            model.addAttribute("alimentacionval", alimentacionval);
+            return "alimentacionval";
+        } else return "redirect:/";
     }
 
     @PostMapping("/process_alimentacionval/{id}")
     public String processalimentacionval(@PathVariable("id") Integer id, @ModelAttribute AlimentacionVal alimentacionval){
-        fasevaloracion.updateAlimentacionVal(alimentacionval, participante.findById(id).get());
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            fasevaloracion.updateAlimentacionVal(alimentacionval, p);
 
-        return "redirect:/valoracion/{id}";
+            return "redirect:/valoracion/{id}";
+        } else return "redirect:/";
     }
 
     @GetMapping("/actfisica/{id}")
     public String actfisica(@PathVariable Integer id, Model model){
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("participante", participante.findById(id).get());
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        ActividadFisica actfisica = null;
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof ActividadFisica) {
-                actfisica = (ActividadFisica) formularios.get(i);
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("participante", p);
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            ActividadFisica actfisica = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof ActividadFisica) {
+                    actfisica = (ActividadFisica) formularios.get(i);
+                }
             }
-        }
 
-        model.addAttribute("actfisica", actfisica);
-        return "actfisica";
-
+            model.addAttribute("actfisica", actfisica);
+            return "actfisica";
+        } else return "redirect:/";
     }
 
     @PostMapping("/process_actfisica/{id}")
     public String processactfisica(@PathVariable("id") Integer id, @ModelAttribute ActividadFisica actfisica){
-        fasevaloracion.updateActividadFisica(actfisica, participante.findById(id).get());
+        Participante p = participante.findById(id).get();
+        if(getUsuario() instanceof Coordinador && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)){
+            fasevaloracion.updateActividadFisica(actfisica, p);
 
-        return "redirect:/valoracion/{id}";
+            return "redirect:/valoracion/{id}";
+        } else return "redirect:/";
     }
     
     @GetMapping("/activarcuenta/{id}")
     public String processActCuenta(@PathVariable("id") Integer id) {
-        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(participante.findById(id).get());
-        Findrisc findrisc = null;
-        Exploracion exploracion = null;
-        for(int i = 0; i < formularios.size(); i++){
-            if(formularios.get(i) instanceof Findrisc) {
-                findrisc = (Findrisc) formularios.get(i);
+        if(getUsuario() instanceof Coordinador){
+            Participante p = participante.findById(id).get();
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            Findrisc findrisc = null;
+            Exploracion exploracion = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Findrisc) {
+                    findrisc = (Findrisc) formularios.get(i);
+                }
+                if(formularios.get(i) instanceof Exploracion) {
+                    exploracion = (Exploracion) formularios.get(i);
+                }
             }
-            if(formularios.get(i) instanceof Exploracion) {
-                exploracion = (Exploracion) formularios.get(i);
-            }
-        }
-        fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().id);
+            fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().id);
 
-       return "redirect:/listado";
+            return "redirect:/listado";
+        } else return "redirect:/";
     }
 
     @GetMapping("/eliminarcuenta/{id}")
     public String processElimCuenta(@PathVariable("id") Integer id) {
+        if(getUsuario() instanceof Coordinador)
         fasevaloracion.eliminarcuenta(participante.findById(id).get());
 
        return "redirect:/";
@@ -305,7 +341,9 @@ public class ParticipanteController {
 
     @GetMapping("/ficha0")
     public String ficha0(){
-        return "ficha0";
+        if(getUsuario() instanceof Participante){
+            return "ficha0";
+        } else return "redirect:/";
     }
 
      public Usuario getUsuario(){
@@ -329,6 +367,7 @@ public class ParticipanteController {
 
     @GetMapping("/progreso")
     public String progreso(Model model){
+
         model.addAttribute("user", getUsuario());
         Participante p = participante.findById(getUsuario().id).get();
 
@@ -346,7 +385,6 @@ public class ParticipanteController {
         }
 
         else return "acceso";
-        
     }  
 
     @PostMapping("/process_peso")
@@ -374,7 +412,6 @@ public class ParticipanteController {
     @GetMapping("/objetivos")
     public String objetivos(Model model){
         Participante p = participante.findById(getUsuario().id).get();
-
         List<Objetivo> listaObjetivos = obj.listaObjetivos(p);
         model.addAttribute("listaObjetivos", listaObjetivos);
         model.addAttribute("user", getUsuario());
@@ -384,23 +421,30 @@ public class ParticipanteController {
     
     @GetMapping("/objetivos/nuevo")
     public String mostrarFormularioDeNuevoObjetivo(Model model){
-        model.addAttribute("objetivo", new Objetivo());
-        model.addAttribute("user", getUsuario());
-        return "nuevo_objetivo";
+        if(getUsuario() instanceof Participante){
+            model.addAttribute("objetivo", new Objetivo());
+            model.addAttribute("user", getUsuario());
+            return "nuevo_objetivo";
+        } else return "redirect:/";
     }
 
     @PostMapping("/objetivos/guardar")
     public String guardarObjetivo(Objetivo objetivo){
         Participante p = participante.findById(getUsuario().id).get();
-        objetivo.setParticipante(p);
-        obj.guardar(objetivo); 
-        return"redirect:/objetivos";
+        if(getUsuario().getId() == objetivo.getParticipante().getId()){
+            objetivo.setParticipante(p);
+            obj.guardar(objetivo); 
+            return "redirect:/objetivos";
+        } else return "redirect:/";
     }
 
     @RequestMapping("/objetivos/eliminar/{id}")
     public String eliminarObjetivo(@PathVariable(name = "id") Integer id){
-        obj.borrar(id);
-        return"redirect:/objetivos";
+        Objetivo o = obj.getObjetivo(id);
+        if(getUsuario() instanceof Participante && getUsuario().getId() == o.getParticipante().getId()){
+            obj.borrar(id);
+            return"redirect:/objetivos";
+        } else return "redirect:/";
     }
 
     /*@GetMapping("/objetivos/editar/{id}")
@@ -417,26 +461,35 @@ public class ParticipanteController {
 
     @GetMapping("/objetivos/editar/{id}")   
     public String editarObjetivo(@PathVariable("id") Integer id, Model model){
-
         Objetivo o = obj.getObjetivo(id);
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("objetivo", o);
-        return "editar_objetivo";
+        if(getUsuario() instanceof Participante && getUsuario().getId() == o.getParticipante().getId()){
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("objetivo", o);
+            return "editar_objetivo";
+        } else return "redirect:/";
     }      
     
     @PostMapping("/objetivos/guardar/{id}")
     public String process_editarObjetivo(@PathVariable("id") Integer id, @ModelAttribute Objetivo objetivo){
-       Participante p = participante.findById(getUsuario().id).get();
-       objetivo.setParticipante(p);
-       obj.guardar(objetivo);        
-       return "redirect:/objetivos";
+        if(getUsuario().getId() == objetivo.getParticipante().getId()){
+            Participante p = participante.findById(getUsuario().id).get();
+            objetivo.setParticipante(p);
+            obj.guardar(objetivo);        
+            return "redirect:/objetivos";
+        } else return "redirect:/";
     }
     
 
     //MATERIALES:
     @GetMapping("/eliminarMaterial/{id}")
     public String processElimMaterial(@PathVariable("id") Integer id) {
-        participante.eliminarMaterial(id);
+        Materiales material = participante.getMaterial(id);
+        if(getUsuario() instanceof Coordinador){
+            participante.eliminarMaterial(id);
+        } else if (getUsuario().getId() == material.getParticipante().getId()){
+            participante.eliminarMaterial(id);
+        }
+        
 
        return "redirect:/";
     }
