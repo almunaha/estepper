@@ -416,7 +416,7 @@ public class ParticipanteController {
     public String progreso(Model model){
 
         model.addAttribute("user", getUsuario());
-        Participante p = participante.findById(getUsuario().id).get();
+        Participante p = participante.findById(getUsuario().getId()).get();
 
         if(p.getEstadoCuenta().equals(Estado.ALTA)){
             model.addAttribute("participante", p);
@@ -439,7 +439,7 @@ public class ParticipanteController {
 
     @PostMapping("/process_peso")
     public String process_peso(Progreso progreso, Model model){
-        Participante p = participante.findById(getUsuario().id).get();
+        Participante p = participante.findById(getUsuario().getId()).get();
         progreso.setParticipante(p);
         progreso.setTipo(TipoProgreso.PESO);
 
@@ -450,7 +450,7 @@ public class ParticipanteController {
 
     @PostMapping("/process_perimetro")
     public String process_perimetro(Progreso progreso, Model model){
-        Participante p = participante.findById(getUsuario().id).get();
+        Participante p = participante.findById(getUsuario().getId()).get();
         progreso.setParticipante(p);
         progreso.setTipo(TipoProgreso.PERIMETRO);
 

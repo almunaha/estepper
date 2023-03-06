@@ -2,6 +2,7 @@ package com.estepper.estepper.model.entity;
 
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Sexo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,7 +41,8 @@ public class Participante extends Usuario{
     public Integer id; //diría que este sobra
 
     @ManyToOne
-    @JoinColumn(name="idGrupo", nullable=true)
+    @JoinColumn(name="idGrupo")
+    @JsonIgnore
     private Grupo grupo; 
     
     public Participante(){
