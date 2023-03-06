@@ -38,10 +38,12 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.Antecedentes;
+import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.ActividadFisica;
 import com.estepper.estepper.model.entity.AlimentacionVal;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.TipoProgreso;
+import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
@@ -80,6 +82,9 @@ public class ParticipanteController {
 
     @Autowired
     private MaterialService materialS;
+
+    @Autowired
+    private ActividadService act;
 
 
     @GetMapping("/menu")
@@ -402,6 +407,9 @@ public class ParticipanteController {
             List<Progreso> perimetro = pro.datos(p, TipoProgreso.PERIMETRO); 
             model.addAttribute("perimetro", perimetro);
 
+            List<Sesion> sesiones = ses.sesiones(p);
+            model.addAttribute("sesiones", sesiones);           
+
             model.addAttribute("progreso", new Progreso());
             return "progreso";
         }
@@ -550,6 +558,9 @@ public class ParticipanteController {
     public String actividades(Model model){
         Usuario user = getUsuario();
         model.addAttribute("user", user);
+
+        List<Actividad> listado = act.listado();
+        model.addAttribute("listado", listado);
 
         if(user instanceof Coordinador) return "actividadesCoor";
         else if(user instanceof Participante) return "actividades";

@@ -2,7 +2,9 @@ package com.estepper.estepper.model.entity;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,15 +38,14 @@ public class Progreso implements Serializable{
 
     private Double dato;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = ISO.DATE)
-    @NotNull
-    private Date fecha;
+    @Column(name = "fecha", columnDefinition = "DATETIME")
+    private LocalDateTime fecha;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "tipo", columnDefinition = "ENUM('PESO', 'PERIMETRO')")
     private TipoProgreso tipo;
 
-    public Progreso(Integer id, Participante participante, Double dato, Date fecha, TipoProgreso tipo) {
+    public Progreso(Integer id, Participante participante, Double dato, LocalDateTime fecha, TipoProgreso tipo) {
         this.id = id;
         this.participante = participante;
         this.fecha = fecha;
@@ -71,7 +72,7 @@ public class Progreso implements Serializable{
         this.participante = participante;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
@@ -83,7 +84,7 @@ public class Progreso implements Serializable{
         this.dato = dato;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

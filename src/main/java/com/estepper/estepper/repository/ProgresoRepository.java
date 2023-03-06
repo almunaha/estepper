@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 
 
 import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface ProgresoRepository extends JpaRepository<Progreso, Integer>{
 
     List<Progreso> findByParticipanteAndTipoOrderByFechaAsc(Participante participante, TipoProgreso tipo);
-    List<Progreso> findByFechaAfterAndTipoAndParticipante(Date fecha, TipoProgreso tipo, Participante participante);
+    List<Progreso> findByFechaAfterAndTipoAndParticipante(LocalDateTime fecha, TipoProgreso tipo, Participante participante);
     
 }

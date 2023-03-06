@@ -1,9 +1,16 @@
 package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.estepper.estepper.model.enums.Categoria;
+import com.estepper.estepper.model.enums.EstadoActividad;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,27 +24,41 @@ public class Actividad implements Serializable {
     private Integer id;
 
     private String nombre;
-    private String ubicación;
+    private String ubicacion;
 
     private String descripcion;
-    private String categoria; //enum
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "categoria", columnDefinition = "ENUM('DEPORTE', 'ALIMENTACIÓN')")
+    private Categoria categoria; 
 
     private Integer numParticipantes;
 
-    private Date fechaRealizacion;
+    private Integer plazas;
 
-    private String estado; //enum
+    @Column(name = "fechaRealizacion", columnDefinition = "DATETIME")
+    private LocalDateTime fechaRealizacion;
 
-    public Actividad(Integer id, String nombre, String ubicación, String descripcion, String categoria, Integer numParticipantes,
-            Date fechaRealizacion, String estado) {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", columnDefinition = "ENUM('DISPONIBLE', 'FINALIZADA')")
+    private EstadoActividad estado; 
+
+    private String foto;
+
+    public Actividad(){}
+
+    public Actividad(Integer id, String nombre, String ubicacion, String descripcion, Categoria categoria, Integer numParticipantes,
+            Integer plazas, LocalDateTime fechaRealizacion, EstadoActividad estado, String foto) {
         this.id = id;
         this.nombre = nombre;
-        this.ubicación = ubicación;
+        this.ubicacion = ubicacion;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.numParticipantes = numParticipantes;
+        this.plazas = plazas;
         this.fechaRealizacion = fechaRealizacion;
         this.estado = estado;
+        this.foto = foto;
     }
 
     public Integer getId() {
@@ -52,24 +73,32 @@ public class Actividad implements Serializable {
         return nombre;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getUbicación() {
-        return ubicación;
+    public String getUbicacion() {
+        return ubicacion;
     }
 
-    public void setUbicación(String ubicación) {
-        this.ubicación = ubicación;
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     public String getDescripcion() {
@@ -88,19 +117,27 @@ public class Actividad implements Serializable {
         this.numParticipantes = numParticipantes;
     }
 
-    public Date getFechaRealizacion() {
+    public Integer getPlazas() {
+        return plazas;
+    }
+
+    public void setPlazas(Integer plazas) {
+        this.plazas = plazas;
+    }
+
+    public LocalDateTime getFechaRealizacion() {
         return fechaRealizacion;
     }
 
-    public void setFechaRealizacion(Date fechaRealizacion) {
+    public void setFechaRealizacion(LocalDateTime fechaRealizacion) {
         this.fechaRealizacion = fechaRealizacion;
     }
 
-    public String getEstado() {
+    public EstadoActividad getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoActividad estado) {
         this.estado = estado;
     }
 

@@ -100,9 +100,8 @@ public class HomeController {
                 if (part.isPresent()){
                         model.addAttribute("participante", part.get());
                         //enviar alerta de peso
-                        LocalDate datosSemana = LocalDate.now().minusDays(7); //Buscar fechas de una semana atrás
-                        Date fechaSemana = Date.from(datosSemana.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                        List<Progreso> datos = progreso.PesoPorFecha(fechaSemana, TipoProgreso.PESO, part.get());
+                        LocalDateTime datosSemana = LocalDateTime.now().minusDays(7); //Buscar fechas de una semana atrás
+                        List<Progreso> datos = progreso.PesoPorFecha(datosSemana, TipoProgreso.PESO, part.get());
 
                         if (datos.isEmpty()) {
                             model.addAttribute("recordatorio", true);

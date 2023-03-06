@@ -127,184 +127,198 @@
             </nav>
 
             <!-- DASHBOARD -->
+            
+                <div class="tit-dash">
+                    <h3>Dashboard progreso</h3>
+                </div>
 
-            <div class="tit-dash">
-                <h3>Dashboard progreso</h3>
-            </div>
-
-            <div class="valores-progreso">
-                <div class="valor">
-                    <div class="flex-valor">
-                        <div class="iz-valor">
-                            <i class="fa-solid fa-bullseye" style="color: rgb(201, 75, 75)"></i>
+                <div class="valores-progreso">
+                    <div class="valor">
+                        <div class="flex-valor">
+                            <div class="iz-valor">
+                                <i class="fa-solid fa-bullseye" style="color: rgb(201, 75, 75)"></i>
+                            </div>
+                            <div class="der-valor">
+                                <div class="dato-valor"><span th:text="0"></span></div>
+                                <div class="bottom-valor"><span>Objetivos conseguidos</span></div>
+                            </div>
                         </div>
-                        <div class="der-valor">
-                            <div class="dato-valor"><span th:text="0"></span></div>
-                            <div class="bottom-valor"><span>Objetivos conseguidos</span></div>
+                    </div>
+
+                    <div class="valor">
+                        <div class="flex-valor">
+                            <div class="iz-valor">
+                                <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
+                            </div>
+                            <div class="der-valor">
+                                <div class="dato-valor"><span th:text="${participante.perdidaDePeso} + kg"></span></div>
+                                <div class="bottom-valor"><span>Peso perdido </span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="valor">
+                        <div class="flex-valor">
+                            <div class="iz-valor">
+                                <i class="fa-solid fa-check" style="color: rgb(122, 218, 103)"></i>
+                            </div>
+                            <div class="der-valor">
+                                <div class="dato-valor"><span th:text="${participante.sesionesCompletas}"></span></div>
+                                <div class="bottom-valor"><span>Sesiones completadas</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="valor">
+                        <div class="flex-valor">
+                            <div class="iz-valor">
+                                <i class="fa-solid fa-percent" style="color: rgb(57, 170, 192)"></i>
+                            </div>
+                            <div class="der-valor">
+                                <div class="dato-valor"><span th:text="${participante.asistencia}"></span></div>
+                                <div class="bottom-valor"><span>Asistencia media</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="valor">
-                    <div class="flex-valor">
-                        <div class="iz-valor">
-                            <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
+                <div class="graficas-progreso">
+                    <!-- PESO -->
+                    <div class="progreso-datos">
+                        <div class="header-progreso">
+                            <h4>Peso</h4>
+                            <a class="btn-plus" data-bs-toggle="tooltip" title="Registrar peso"><i
+                                    class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
                         </div>
-                        <div class="der-valor">
-                            <div class="dato-valor"><span th:text="${participante.perdidaDePeso} + kg"></span></div>
-                            <div class="bottom-valor"><span>Peso perdido </span></div>
+
+                        <!-- Ver registros peso -->
+                        <div class="layout-grafica">
+                            <div class="pesoTabla">
+                                <table class="table tablePart" id="tablaPeso">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="lis:${peso}">
+                                            <td th:text="${lis.dato} + ' kg'"></td>
+                                            <td th:text="${#temporals.format(lis.fecha, 'dd MMM yyyy')}"></td>
+                                            <td th:text="${#temporals.format(lis.fecha, 'HH:mm')}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Ver gráfica peso -->
+                            <div id="top-grafica"><canvas id="grafica" width="500" height="200"></canvas></div>
+
+                            <!-- Botones para cambiar de vista del peso -->
+                            <div class="botones-prog">
+                                <button class="btn-reg" id="registroPeso">Ver registros</button>
+                                <button class="btn-reg" id="graficaPeso">Ver gráfica</button>
+                            </div>
                         </div>
+
+                        <!-- Registar peso -->
+                        <div class="bg-white p-5" style="width: 30%" id="form-peso">
+                            <form method="post" th:action="@{/process_peso}" th:object="${progreso}">
+                                <div class="mb-3">
+                                    <label>Fecha</label>
+                                    <input type="datetime-local" th:field="*{fecha}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Peso (kg)</label>
+                                    <input type="number" step="any" th:field="*{dato}" required>
+                                </div>
+                                <div class="btn-form">
+                                    <a href="/progreso" class="btn btn-primary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- PERÍMETRO ABDOMINAL -->
+                    <div class="progreso-datos">
+                        <div class="header-progreso">
+                            <h4>Perímetro</h4>
+                            <a class="btn-plus2" data-bs-toggle="tooltip" title="Registrar perímetro"><i
+                                    class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
+                        </div>
+
+                        <!-- Ver registros perímetro -->
+                        <div class="layout-grafica">
+                            <div class="perimetroTabla">
+                                <table class="table tablePart" id="tablaPeso">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="per:${perimetro}">
+                                            <td th:text="${per.dato} + ' kg'"></td>
+                                            <td th:text="${#temporals.format(per.fecha, 'dd MMM yyyy')}"></td>
+                                            <td th:text="${#temporals.format(per.fecha, 'HH:mm')}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Ver gráfica perímetro -->
+                            <div id="top-grafica"><canvas id="grafica2" width="500" height="200"></canvas></div>
+
+                            <!-- Botones para cambiar de vista del perimetro -->
+                            <div class="botones-prog">
+                                <button class="btn-reg" id="registroPerimetro">Ver registros</button>
+                                <button class="btn-reg" id="graficaPerimetro">Ver gráfica</button>
+                            </div>
+                        </div>
+
+                        <!-- Registar perímetro -->
+                        <div class="bg-white p-5" style="width: 30%" id="form-perimetro">
+                            <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}">
+                                <div class="mb-3">
+                                    <label>Fecha</label>
+                                    <input type="datetime-local" th:field="*{fecha}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Perímetro</label>
+                                    <input type="number" step="any" th:field="*{dato}" required>
+                                </div>
+
+                                <div class="btn-form">
+                                    <a href="/progreso" class="btn btn-primary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ÍNDICE CORPORAL -->
+
+                    <!-- ACTIVIDAD FÍSICA -->
+
+                    <!-- PASOS -->
+                </div>
+                <!--
+                <div class="asistencia">
+                    <div class="asis-sesion" th:each="ses:${sesiones}">
+                        <div th:text="'Sesión ' + ${ses.numSesion}"></div>
+                        <div th:text="${ses.asistencia}"></div>
                     </div>
                 </div>
-
-                <div class="valor">
-                    <div class="flex-valor">
-                        <div class="iz-valor">
-                             <i class="fa-solid fa-check" style="color: rgb(122, 218, 103)"></i>
-                        </div>
-                        <div class="der-valor">
-                            <div class="dato-valor"><span th:text="${participante.sesionesCompletas}"></span></div>
-                            <div class="bottom-valor"><span>Sesiones completadas</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="valor">
-                    <div class="flex-valor">
-                        <div class="iz-valor">
-                            <i class="fa-solid fa-percent" style="color: rgb(57, 170, 192)"></i>
-                        </div>
-                        <div class="der-valor">
-                            <div class="dato-valor"><span th:text="${participante.asistencia}"></span></div>
-                            <div class="bottom-valor"><span>Asistencia media</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="graficas-progreso">
-                <!-- PESO -->
-                <div class="progreso-datos">
-                    <div class="header-progreso">
-                        <h4>Peso</h4>
-                        <a class="btn-plus" data-bs-toggle="tooltip" title="Registrar peso"><i
-                                class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
-                    </div>
-
-                    <!-- Ver registros peso -->
-                    <div class="layout-grafica">
-                        <div class="pesoTabla">
-                            <table class="table tablePart" id="tablaPeso">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="lis:${peso}">
-                                        <td th:text="${lis.dato} + ' kg'"></td>
-                                        <td th:text="${#dates.format(lis.fecha, 'dd MMM yyyy')}"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Ver gráfica peso -->
-                        <div id="top-grafica"><canvas id="grafica" width="500" height="200"></canvas></div>
-
-                        <!-- Botones para cambiar de vista del peso -->
-                        <div class="botones-prog">
-                            <button class="btn-reg" id="registroPeso">Ver registros</button>
-                            <button class="btn-reg" id="graficaPeso">Ver gráfica</button>
-                        </div>
-                    </div>
-
-                    <!-- Registar peso -->
-                    <div class="bg-white p-5" style="width: 30%" id="form-peso">
-                        <form method="post" th:action="@{/process_peso}" th:object="${progreso}">
-                            <div class="mb-3">
-                                <label>Fecha</label>
-                                <input type="date" th:field="*{fecha}" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Peso</label>
-                                <input type="text" th:field="*{dato}" required>
-                            </div>
-                            <div class="btn-form">
-                                <a href="/progreso" class="btn btn-primary">Cancelar</a>
-                                <button type="submit" class="btn btn-primary">Registrar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- PERÍMETRO ABDOMINAL -->
-                <div class="progreso-datos">
-                    <div class="header-progreso">
-                        <h4>Perímetro</h4>
-                        <a class="btn-plus2" data-bs-toggle="tooltip" title="Registrar perímetro"><i
-                                class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
-                    </div>
-
-                    <!-- Ver registros perímetro -->
-                    <div class="layout-grafica">
-                        <div class="perimetroTabla">
-                            <table class="table tablePart" id="tablaPeso">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="per:${perimetro}">
-                                        <td th:text="${per.dato} + ' kg'"></td>
-                                        <td th:text="${#dates.format(per.fecha, 'dd MMM yyyy')}"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Ver gráfica perímetro -->
-                        <div id="top-grafica"><canvas id="grafica2" width="500" height="200"></canvas></div>
-
-                        <!-- Botones para cambiar de vista del perimetro -->
-                        <div class="botones-prog">
-                            <button class="btn-reg" id="registroPerimetro">Ver registros</button>
-                            <button class="btn-reg" id="graficaPerimetro">Ver gráfica</button>
-                        </div>
-                    </div>
-
-                    <!-- Registar perímetro -->
-                    <div class="bg-white p-5" style="width: 30%" id="form-perimetro">
-                        <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}">
-                            <div class="mb-3">
-                                <label>Fecha</label>
-                                <input type="date" th:field="*{fecha}" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Perímetro</label>
-                                <input type="text" th:field="*{dato}" required>
-                            </div>
-
-                            <div class="btn-form">
-                                <a href="/progreso" class="btn btn-primary">Cancelar</a>
-                                <button type="submit" class="btn btn-primary">Registrar</button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-
-                <!-- ÍNDICE CORPORAL -->
-
-                <!-- ACTIVIDAD FÍSICA -->
-
-                <!-- PASOS -->
-            </div>
+            -->
+            
         </div>
-
     </div>
 
 

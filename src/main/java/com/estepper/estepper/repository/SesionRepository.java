@@ -1,9 +1,8 @@
 package com.estepper.estepper.repository;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Sesion;
@@ -13,5 +12,5 @@ import com.estepper.estepper.model.entity.Sesion;
 public interface SesionRepository extends JpaRepository<Sesion, Integer>{
 
     Sesion findByParticipanteAndNumSesion(Participante participante, Integer numSesion);
- 
+    List<Sesion> findByParticipante(Participante participante);
 }

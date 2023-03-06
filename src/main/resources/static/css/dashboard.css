@@ -146,3 +146,24 @@
     box-sizing: border-box;
     max-height: 240px;
 }
+
+/* para que no aparezcan las flechitas en el input de tipo number */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+/* asistencia sesiones */
+
+.asistencia{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    width: 100%;
+    height: 20%;
+
+}
+
+.asis-sesion{
+    display: flex;
+}

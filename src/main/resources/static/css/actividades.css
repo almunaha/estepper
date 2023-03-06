@@ -1,0 +1,65 @@
+/* PARTICIPANTE */
+.actividades-part{
+    display: flex;
+    margin-top: 2%;
+    margin-left: 2%;
+    gap: 1.2%;
+    flex-wrap: wrap; /* para cambiar de fila */
+}
+
+.actividad{
+    width: 23.5%;
+    height: 100%;
+    border-radius: 12px;
+    padding: 3%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    margin-bottom: 1.2%;
+}
+
+.foto-act{
+    height: 25%;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.foto-act img{
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.datos-actividad{
+    height: 65%;
+}
+
+.dato-act{
+    display: flex;
+    gap: 1%;
+    margin-top: 4%;
+}
+
+.nombre-act{
+    font-size: 110%;
+    color: rgb(38, 172, 213);
+    font-weight: bold;
+    font-weight: 400;
+
+}
+
+.layout-apuntar{
+    margin-top: 4%;
+    width: 100%;
+    text-align: center;
+}
+
+/* COORDINADOR */
+.layout-actividades{
+    margin-left: 2%;
+    margin-right: 2%;
+
+    padding: 5%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}

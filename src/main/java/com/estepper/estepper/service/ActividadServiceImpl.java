@@ -1,5 +1,7 @@
 package com.estepper.estepper.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +12,16 @@ import com.estepper.estepper.repository.ActividadRepository;
 public class ActividadServiceImpl implements ActividadService{
 
     @Autowired
-    private ActividadRepository actividad;
+    private ActividadRepository repo;
 
-  
+    @Override
+    public void guardar(Actividad a){
+        repo.save(a); 
+    }
+
+    @Override
+    public List<Actividad> listado() {
+        return(List<Actividad>) repo.findAll();
+    }
     
 }

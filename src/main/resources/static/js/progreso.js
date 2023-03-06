@@ -45,6 +45,9 @@ $(document).ready(function () {
             scales: {
                 y: {
                     beginAtZero: true
+                },
+                x: {
+                    display: false
                 }
             }
         }
@@ -78,6 +81,9 @@ $(document).ready(function () {
             scales: {
                 y: {
                     beginAtZero: true
+                },
+                x: {
+                    display: false
                 }
             }
         }

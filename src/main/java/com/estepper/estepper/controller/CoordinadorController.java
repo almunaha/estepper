@@ -38,9 +38,11 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.EstadoActividad;
 import com.estepper.estepper.model.enums.EstadoSesion;
 
 import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
@@ -48,7 +50,7 @@ import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
-
+import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.MaterialService;
 
@@ -69,6 +71,9 @@ public class CoordinadorController {
 
     @Autowired
     private MaterialService mat;
+
+    @Autowired
+    private ActividadService act;
 
     @GetMapping("/listado")
     public String participantes(@RequestParam Map<String, Object> params, Model model) {
@@ -135,15 +140,16 @@ public class CoordinadorController {
             grupo.update(g);
 
             // crear las sesiones del participante
-            // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas y le meta en otro, entonces ya tendría sus sesiones
+            // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas
+            // y le meta en otro, entonces ya tendría sus sesiones
             Sesion sesion1 = sesion.buscarSesion(usuario, 1);
-            if(sesion1 == null){ //si no tiene la sesion1 creada
+            if (sesion1 == null) { // si no tiene la sesion1 creada
                 Sesion s;
                 for (int i = 1; i <= 10; i++) {
                     s = new Sesion(0, i, usuario, EstadoSesion.ENCURSO, "", Asistencia.NO, 0, 0);
                     sesion.guardar(s);
                 }
-            }   
+            }
             return "redirect:/listaGrupos";
         }
 
@@ -172,16 +178,19 @@ public class CoordinadorController {
     @GetMapping("/material/descargar/{id}")
     public ResponseEntity<byte[]> descargar(@PathVariable Integer id) {
         Materiales m = mat.getMaterial(id); // material que se va a descargar
-        Usuario u = getUsuario(); // Usuario logueado 
+        Usuario u = getUsuario(); // Usuario logueado
         Participante p = part.getParticipante(m.getParticipante().getId()); // participante DUEÑO del material
 
         try {
-            // Es Coordinador: si el idCoordinador del dueño del material es distinto que el del coordinador: si no es un participante del coordinador
-            // O Es Participante: si el participante logueado no tiene el mismo id que el dueño del material
+            // Es Coordinador: si el idCoordinador del dueño del material es distinto que el
+            // del coordinador: si no es un participante del coordinador
+            // O Es Participante: si el participante logueado no tiene el mismo id que el
+            // dueño del material
             // O es Administrador
-            if(u instanceof Coordinador && u.getId() != p.getIdCoordinador() || u instanceof Participante && p.getId() != u.getId() || u instanceof Administrador){
+            if (u instanceof Coordinador && u.getId() != p.getIdCoordinador()
+                    || u instanceof Participante && p.getId() != u.getId() || u instanceof Administrador) {
                 RedirectView inicio = new RedirectView("/");
-                return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, inicio.getUrl()).build();       
+                return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, inicio.getUrl()).build();
             }
 
             Path rutaArchivo = Paths.get(m.getLink());
@@ -207,6 +216,45 @@ public class CoordinadorController {
         }
     }
 
-    
+    // ACTIVIDADES
+    @GetMapping("nuevaActividad")
+    public String nuevaActividad(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+
+        model.addAttribute("actividad", new Actividad());
+
+        return "nuevaActividad";
+    }
+
+    @PostMapping("process_actividad")
+    public String process_actividad(Model model, @ModelAttribute Actividad actividad,
+            @RequestParam("file") MultipartFile file) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+
+        actividad.setEstado(EstadoActividad.DISPONIBLE); // actividad disponible hasta que finalice
+        actividad.setNumParticipantes(0); // participantes apuntados: inicializar a cero
+
+        // Foto de la actividad
+        if (!file.isEmpty()) {
+            Path rutaArchivo = Paths.get("src//main//resources//static/actividades");
+            String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+
+            try {
+                byte[] bytesArc = file.getBytes();
+                Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                Files.write(rutaCompleta, bytesArc);
+
+                actividad.setFoto("/actividades/" + file.getOriginalFilename());
+                act.guardar(actividad); // guardar la nueva actividad en la bd
+
+            } catch (Exception e) {
+                String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return "redirect:/actividades";
+    }
 
 }
