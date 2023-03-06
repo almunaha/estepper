@@ -140,7 +140,7 @@ public class CoordinadorController {
             if(sesion1 == null){ //si no tiene la sesion1 creada
                 Sesion s;
                 for (int i = 1; i <= 10; i++) {
-                    s = new Sesion(0, i, usuario, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
+                    s = new Sesion(0, i, usuario, EstadoSesion.ENCURSO, "", Asistencia.NO, 0, 0);
                     sesion.guardar(s);
                 }
             }   

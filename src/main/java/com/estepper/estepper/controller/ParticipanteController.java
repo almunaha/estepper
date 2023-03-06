@@ -87,6 +87,7 @@ public class ParticipanteController {
         return "menu";
     }
 
+    //SESIONES:
     @GetMapping("/sesiones")
     public String sesiones(Model model){
 
@@ -120,6 +121,19 @@ public class ParticipanteController {
         model.addAttribute("participante", participante.findById(1)); //coger participante 
 
         return "sesion";
+    }
+
+    @PostMapping("process_sesion/{num}")
+    public String actualizar(@PathVariable("num") Integer num, @ModelAttribute Sesion sesion){
+        Participante p = participante.getParticipante(getUsuario().getId());
+        Sesion orig = ses.buscarSesion(p, num);
+
+        Sesion actualizada = new Sesion(orig.getId(), orig.getNumSesion(), orig.getParticipante(), orig.getEstado(),
+        sesion.getObservaciones(), sesion.getAsistencia(), orig.getCmsPerdidos(), orig.getPesoPerdido());
+
+        ses.guardar(actualizada);
+
+        return "redirect:/sesiones";
     }
 
     @GetMapping("/exploracion/{id}")
