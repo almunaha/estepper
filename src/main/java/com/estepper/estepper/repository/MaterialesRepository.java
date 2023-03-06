@@ -21,5 +21,14 @@ public interface MaterialesRepository extends JpaRepository<Materiales, Integer>
     @Transactional
     @Query("DELETE FROM Materiales m WHERE m.grupo = :grupo AND m.link =:link")
     void deleteByGrupoAndLink(Grupo grupo, String link);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Materiales m WHERE m.participante = :p")
+    void deleteAllByParticipante(Participante p);
     
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Materiales m WHERE m.grupo = :g")
+    void deleteAllByGrupo(Grupo g);
 }

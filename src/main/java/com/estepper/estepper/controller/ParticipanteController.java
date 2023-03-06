@@ -54,6 +54,7 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ProgresoService;
+import com.estepper.estepper.service.GrupoService;
 
 @Controller
 public class ParticipanteController {
@@ -81,6 +82,9 @@ public class ParticipanteController {
 
     @Autowired
     private MaterialService materialS;
+
+    @Autowired
+    private GrupoService grupoS;
 
 
     @GetMapping("/menu")
@@ -364,9 +368,14 @@ public class ParticipanteController {
 
     @GetMapping("/eliminarcuenta/{id}")
     public String processElimCuenta(@PathVariable("id") Integer id) {
-        if(getUsuario() instanceof Coordinador)
-        fasevaloracion.eliminarcuenta(participante.findById(id).get());
-
+        if(getUsuario() instanceof Coordinador){
+            Participante p = participante.findById(id).get();
+            materialS.deleteByParticipante(p);
+            fasevaloracion.eliminarcuenta(p);
+            p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
+            grupoS.update(p.getGrupo());
+            ses.deleteByParticipante(p);
+        }
        return "redirect:/";
     }
 

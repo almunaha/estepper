@@ -23,6 +23,10 @@ import com.estepper.estepper.model.enums.Estado;
 
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.UsuarioService;
+import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.ParticipanteService;
+import com.estepper.estepper.service.SesionService;
+import com.estepper.estepper.service.GrupoService;
 
 @Controller
 public class AdminController {
@@ -34,6 +38,19 @@ public class AdminController {
     private FaseValoracionService fasevaloracion;
 
     @Autowired
+    private MaterialService materialS;
+
+    @Autowired
+    private GrupoService grupoS;
+
+    @Autowired
+    private ParticipanteService participante;
+
+    
+    @Autowired 
+    private SesionService ses;
+
+    @Autowired
     private BCryptPasswordEncoder hash;
 
     @GetMapping("/eliminarUsuario/{id}")
@@ -41,7 +58,12 @@ public class AdminController {
         if (usuarioLogueado() instanceof Administrador) {
             // eliminar usuario
             if (usuario.findById(id).get() instanceof Participante) {
-                fasevaloracion.eliminarcuenta((Participante) usuario.findById(id).get());
+                Participante p = participante.findById(id).get();
+                materialS.deleteByParticipante(p);
+                fasevaloracion.eliminarcuenta(p);
+                p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
+                grupoS.update(p.getGrupo());
+                ses.deleteByParticipante(p);
             }
 
             else

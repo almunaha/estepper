@@ -96,6 +96,7 @@ public class GruposController {
     public String eliminarGrupo(@PathVariable(name = "id") Integer id){
         Grupo gr = grupo.getGrupo(id);
         if(getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()){
+            materialS.deleteByGrupo(gr);
             grupo.delete(id);
             return "redirect:/listaGrupos";
         } else return "redirect:/";

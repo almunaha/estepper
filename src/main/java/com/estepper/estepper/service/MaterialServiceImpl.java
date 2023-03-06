@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import com.estepper.estepper.model.entity.Materiales;
+import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.repository.MaterialesRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
@@ -53,5 +54,15 @@ public class MaterialServiceImpl implements MaterialService {
     @Override
     public List<Materiales> materiales(Integer id){
         return repoM.findByParticipante(repoP.findById(id).get());
+    }
+
+    @Override
+    public void deleteByParticipante(Participante p) {
+        repoM.deleteAllByParticipante(p);
+    }
+
+    @Override
+    public void deleteByGrupo(Grupo g) {
+        repoM.deleteAllByGrupo(g);
     }
 }
