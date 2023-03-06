@@ -135,12 +135,15 @@ public class CoordinadorController {
             grupo.update(g);
 
             // crear las sesiones del participante
-            Sesion s;
-            for (int i = 1; i <= 10; i++) {
-                s = new Sesion(0, i, usuario, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
-                sesion.guardar(s);
-            }
-
+            // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas y le meta en otro, entonces ya tendría sus sesiones
+            Sesion sesion1 = sesion.buscarSesion(usuario, 1);
+            if(sesion1 == null){ //si no tiene la sesion1 creada
+                Sesion s;
+                for (int i = 1; i <= 10; i++) {
+                    s = new Sesion(0, i, usuario, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
+                    sesion.guardar(s);
+                }
+            }   
             return "redirect:/listaGrupos";
         }
 

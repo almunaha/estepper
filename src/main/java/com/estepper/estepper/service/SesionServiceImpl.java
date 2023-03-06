@@ -19,7 +19,7 @@ public class SesionServiceImpl implements SesionService{
         repo.save(s); 
     }
 
-    public Sesion buscarSesion(Participante participante, Integer numSesion){ //hacerlo en una sola consulta mejor
+    public Sesion buscarSesion(Participante participante, Integer numSesion){ 
         return repo.findByParticipanteAndNumSesion(participante, numSesion);
     }
     
