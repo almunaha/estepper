@@ -33,6 +33,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.estepper.estepper.model.enums.Estado;
+
 import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.entity.Sesion;
@@ -41,12 +43,14 @@ import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoActividad;
 import com.estepper.estepper.model.enums.EstadoSesion;
 
+
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Materiales;
+
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
@@ -151,6 +155,32 @@ public class CoordinadorController {
                 }
             }
             return "redirect:/listaGrupos";
+        }
+
+        else
+            return "redirect:/";
+    }
+
+    @GetMapping("/eliminarDeUnGrupo/{idP}/{idG}")
+    public String eliminarDeUnGrupo(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG,
+            Model model) {
+
+        if (getUsuario() instanceof Coordinador) {
+            Participante usuario = part.findById(idP).get();
+            model.addAttribute("user", getUsuario());
+            Grupo g = grupo.getGrupo(idG);
+
+            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), null, usuario.getAsistencia(),
+                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
+
+            Integer participantes = g.getNumParticipantes() - 1;
+            grupo.updateParticipantes(idG, participantes);
+            if (g.getNumParticipantes() <= 1) {
+                grupo.delete(idG);
+                return "redirect:/listaGrupos";
+            }
+
+            return "redirect:/grupos/editar/{idG}";
         }
 
         else

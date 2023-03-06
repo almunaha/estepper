@@ -3,6 +3,7 @@ package com.estepper.estepper.controller;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,15 +16,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Usuario;
-
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.enums.Estado;
+
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.UsuarioService;
-
-import org.springframework.ui.Model;
+import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.ParticipanteService;
+import com.estepper.estepper.service.SesionService;
+import com.estepper.estepper.service.GrupoService;
+import com.estepper.estepper.service.ObjetivoService;
+import com.estepper.estepper.service.ProgresoService;
 
 @Controller
 public class AdminController {
@@ -35,6 +40,25 @@ public class AdminController {
     private FaseValoracionService fasevaloracion;
 
     @Autowired
+    private MaterialService materialS;
+
+    @Autowired
+    private GrupoService grupoS;
+
+    @Autowired
+    private ProgresoService pro;
+
+    @Autowired
+    private ObjetivoService obj;
+
+    @Autowired
+    private ParticipanteService participante;
+
+    
+    @Autowired 
+    private SesionService ses;
+
+    @Autowired
     private BCryptPasswordEncoder hash;
 
     @GetMapping("/eliminarUsuario/{id}")
@@ -42,7 +66,14 @@ public class AdminController {
         if (usuarioLogueado() instanceof Administrador) {
             // eliminar usuario
             if (usuario.findById(id).get() instanceof Participante) {
-                fasevaloracion.eliminarcuenta((Participante) usuario.findById(id).get());
+                Participante p = participante.findById(id).get();
+                materialS.deleteByParticipante(p);
+                ses.deleteByParticipante(p);
+                obj.deleteByParticipante(p);
+                pro.deleteByParticipante(p);
+                fasevaloracion.eliminarcuenta(p);
+                p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
+                grupoS.update(p.getGrupo());
             }
 
             else

@@ -16,5 +16,6 @@ public interface ObjetivoService {
     public Objetivo getObjetivo(Integer id); 
    // public List<Objetivo> objetivosPorEstado(Participante participante, EstadoObjetivo estado);
    // public List<Objetivo> ObjetivosPorFecha(Date fecha, EstadoObjetivo estado, Participante participante);
+   public void deleteByParticipante(Participante p);
 }
 

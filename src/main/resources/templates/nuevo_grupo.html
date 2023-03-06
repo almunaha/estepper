@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/signin.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+    <script src="/js/menu.js"></script>
+
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+
+
+    <title>Grupos</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <div class="d-flex">
+        <div id="sidebar-container">
+
+            <div class="logo">
+                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
+                <h4>Estepper</h4>
+            </div>
+
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3">
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
+                                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="p-4 mt-5" id="grupos">
+                <div>
+                    <h4>Crear un nuevo grupo</h4>
+                </div>
+
+                <!--ESTA ES LA BASE, A PARTIR DE AQUÍ PONERLO COMO QUIERA-->
+
+                <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
+                    <div class="m-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{nombre}" class="form-control" required />
+                            </div>
+
+                            <div th:if="${error}" class="alert alert-danger">
+                                <p th:text="${error}"></p>
+                            </div>
+
+
+                            <label class="col-form-label col-sm-4">Participantes del nuevo grupo:</label>   
+                            <div class="col-sm-8 mb-2">
+                                <select th:field="*{participantes}" class="form-control" multiple>
+                                    <option th:each="participante : ${participantesExistentes}"
+                                        th:value="${participante.id}" th:text="${participante.nickname}" th:disabled="${participante.grupo != null}">
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="text-center p">
+                            <button type="submit" class="btn" id="btn-part">Añadir</button>
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="modal fade" id="alertaModal2" tabindex="-1" aria-labelledby="alertaModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="alertaModalLabel"><i
+                                    class="fa-solid fa-triangle-exclamation" style="color: goldenrod;"></i> No se ha
+                                podido completar la acción </h5>
+
+                        </div>
+                        <div class="modal-body">
+                            <p>El participante ya pertenece a un grupo.</p>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                style="float:right">Cerrar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

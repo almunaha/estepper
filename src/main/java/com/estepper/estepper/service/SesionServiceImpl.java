@@ -25,8 +25,14 @@ public class SesionServiceImpl implements SesionService{
         return repo.findByParticipanteAndNumSesion(participante, numSesion);
     }
 
+    @Override
     public List<Sesion> sesiones(Participante participante){
         return repo.findByParticipante(participante);
+    }
+
+    @Override
+    public void deleteByParticipante(Participante p) {
+        repo.deleteAllByParticipante(p);
     }
     
 }

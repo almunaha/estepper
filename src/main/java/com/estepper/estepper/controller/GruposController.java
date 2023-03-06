@@ -1,13 +1,18 @@
 package com.estepper.estepper.controller;
 
+import java.io.Console;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
-import org.apache.commons.lang3.RandomStringUtils;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,44 +32,149 @@ import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
+
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
+
 import com.estepper.estepper.service.MaterialService;
-
-
 import com.estepper.estepper.service.UsuarioService;
- //yo pasaria todo esto a CoordinadorController para no tener tantos
+
+//yo pasaria todo esto a CoordinadorController para no tener tantos
 @Controller
 public class GruposController {
 
-    @Autowired //inyectar recursos de la clase GrupoService
+    @Autowired // inyectar recursos de la clase GrupoService
     private GrupoService grupo;
 
-    @Autowired 
+    @Autowired
     private ParticipanteService part;
 
-    @Autowired 
+    @Autowired
     private UsuarioService user;
 
     @Autowired
     private MaterialService materialS;
 
-    
+    @GetMapping("/grupos/nuevo")
+    public String mostrarFormularioDeNuevoGrupo(Model model) {
+        List<Participante> participantesExistentes = part.listado();// obtener lista de participantes de la base de
+                                                                    // datos
+        model.addAttribute("participantesExistentes", participantesExistentes);
+        model.addAttribute("grupo", new Grupo());
+
+        return "nuevo_grupo";
+    }
+
+    /*
+     * @PostMapping("/grupos/guardar")
+     * public String guardarGrupo(Grupo elgrupo, @RequestParam(value =
+     * "participantes", required = false) List<Participante> participantesIds, Model
+     * model) {
+     * 
+     * elgrupo.setIdCoordinador(getUsuario().getId());
+     * 
+     * String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
+     * // comprobar que no existe un usuario con ese codigo
+     * while (grupo.findByCodigo(elcodigo) != null) {
+     * elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
+     * }
+     * elgrupo.setCodigo(elcodigo);
+     * 
+     * if (participantesIds != null) { //NO ENTRA AQUÍ
+     * List<Participante> participantesSeleccionadosList = new ArrayList<>();
+     * for (String p : participantesIds) {
+     * Participante usuario = part.findById(p.id).get();
+     * model.addAttribute("user", getUsuario());
+     * Grupo g = grupo.getGrupo(elgrupo.getId());
+     * part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g,
+     * usuario.getAsistencia(), usuario.getIdCoordinador(),
+     * usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), p.id);
+     * Integer numParticipantes = g.getNumParticipantes() + 1;
+     * grupo.updateParticipantes(elgrupo.getId(), numParticipantes);
+     * }
+     * 
+     * //elgrupo.setParticipantes(participantesSeleccionadosList);
+     * }
+     * else{
+     * elgrupo.setNumParticipantes(0);
+     * }
+     * 
+     * grupo.save(elgrupo);
+     * return "redirect:/listaGrupos";
+     * }
+     */
+
+    @PostMapping("/grupos/guardar")
+    public String guardarGrupo(@ModelAttribute("grupo") Grupo elgrupo,
+            @RequestParam(value = "participantes", required = false) List<Integer> participantes,
+            Model model) {
+
+        elgrupo.setIdCoordinador(getUsuario().getId());
+
+        // FUNCIONA PERO FALTA CONSEGUIR QUE SALGA LA ALERTA CON EL MENSAJITO
+        if (grupo.findByNombre(elgrupo.getNombre()) != null) {
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            // model.addAttribute("errorcito", "El nombre del grupo ya existe en la base de
+            // datos");
+            return "redirect:/listaGrupos";
+
+        }
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+        System.out.println(elgrupo.getNombre());
+
+        String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
+        while (grupo.findByCodigo(elcodigo) != null) {
+            elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
+        }
+        elgrupo.setCodigo(elcodigo);
+
+        if (participantes != null) {
+            List<Participante> participantesSeleccionadosList = new ArrayList<>();
+            for (Integer participanteId : participantes) {
+                Participante participante = part.findById(participanteId).get();
+                System.out.println(participante.nickname);
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                participantesSeleccionadosList.add(participante);
+                grupo.save(elgrupo);
+                Grupo g = grupo.getGrupo(elgrupo.getId());
+
+                part.update(participante.edad, participante.sexo, participante.getFotoParticipante(), g,
+                        participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
+                        participante.getSesionesCompletas(), participanteId);
+
+                elgrupo.setNumParticipantes(participantesSeleccionadosList.size());
+
+            }
+            elgrupo.setParticipantes(participantesSeleccionadosList);
+
+        } else {
+            elgrupo.setNumParticipantes(0);
+        }
+
+        elgrupo.setFechaInicioGrupo(LocalDate.now());
+
+        grupo.save(elgrupo);
+        return "redirect:/listaGrupos";
+    }
+
+   
+
     @GetMapping("/listaGrupos")
-    public String grupos(Model model){
-        if(getUsuario() instanceof Coordinador){
+    public String grupos(Model model) {
+        if (getUsuario() instanceof Coordinador) {
             List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
             model.addAttribute("user", getUsuario());
             model.addAttribute("grupo", new Grupo());
             return "grupos";
-        }
-        else return "redirect:/";
-    } 
+        } else
+            return "redirect:/";
+    }
 
-    @PostMapping("/grupos/guardar")
-    public String guardarGrupo(Grupo elgrupo){
-        if(getUsuario() instanceof Coordinador){
+    /*@PostMapping("/grupos/guardar")
+    public String guardarGrupo(Grupo elgrupo) {
+        if (getUsuario() instanceof Coordinador) {
             elgrupo.setIdCoordinador(getUsuario().getId());
 
             String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
@@ -75,33 +185,35 @@ public class GruposController {
             }
             elgrupo.setCodigo(elcodigo);
             elgrupo.setNumParticipantes(0);
-            grupo.save(elgrupo); 
-            return"redirect:/listaGrupos";
-        }
-        else return "redirect:/";
-    }
+            grupo.save(elgrupo);
+            return "redirect:/listaGrupos";
+        } else
+            return "redirect:/";
+    }*/
 
     @GetMapping("/grupos/editar/{id}")
-    public ModelAndView mostrarFormularioDeEditarGrupo(@PathVariable(name = "id") Integer id){
-       ModelAndView modelo = new ModelAndView("editar_grupo");
-       Grupo gr = grupo.getGrupo(id);
-     
-       modelo.addObject("grupo", gr);
-       modelo.addObject("user", getUsuario());
+    public ModelAndView mostrarFormularioDeEditarGrupo(@PathVariable(name = "id") Integer id) {
+        ModelAndView modelo = new ModelAndView("editar_grupo");
+        Grupo gr = grupo.getGrupo(id);
 
-       return modelo;
+        modelo.addObject("grupo", gr);
+        modelo.addObject("user", getUsuario());
+        modelo.addObject("listadoParticipantesGrupo", part.listadoGrupo(gr));
+
+        return modelo;
     }
 
     @RequestMapping("/grupos/eliminar/{id}")
-    public String eliminarGrupo(@PathVariable(name = "id") Integer id){
+    public String eliminarGrupo(@PathVariable(name = "id") Integer id) {
         Grupo gr = grupo.getGrupo(id);
-        if(getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()){
+        if (getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()) {
+            materialS.deleteByGrupo(gr);
             grupo.delete(id);
             return "redirect:/listaGrupos";
-        } else return "redirect:/";
+        } else
+            return "redirect:/";
     }
 
-    
     @GetMapping("/unirAgrupo/{id}")
     public String unirAgrupo(@PathVariable("id") Integer id, Model model){
         if(getUsuario() instanceof Coordinador){
@@ -113,9 +225,10 @@ public class GruposController {
             model.addAttribute("listaGrupos", listaGrupos);
         
             return "unirAgrupo";
-        } else return "redirect:/";
-    }  
+        } 
+        else return "redirect:/";
 
+    }
 
     @GetMapping("/unGrupo/{idGrupo}")
     public String unGrupo(@PathVariable("idGrupo") Integer idGrupo, Model model){
@@ -126,10 +239,12 @@ public class GruposController {
             model.addAttribute("user", getUsuario());
         
             return "unGrupo";
-        } else return "redirect:/";
-    }  
+        } else
+        
+        return "redirect:/";
+    }
 
-    //MATERIALES:
+    // MATERIALES:
     @GetMapping("/materialesGrupo/{id}")
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Grupo g = grupo.getGrupo(id);
@@ -144,7 +259,7 @@ public class GruposController {
         } else return "redirect:/";
     }
 
-    //subir material a un grupo
+    // subir material a un grupo
     @PostMapping("/process_materialGrupo/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
             Grupo elgrupo = grupo.getGrupo(id);
@@ -192,7 +307,7 @@ public class GruposController {
         } else return "redirect:/";
     }
 
-    public Usuario getUsuario(){
+    public Usuario getUsuario() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         UserDetails userDetails = null;
@@ -209,13 +324,5 @@ public class GruposController {
         return null;
 
     }
-   
 
 }
-
-
-
-
-
-
-

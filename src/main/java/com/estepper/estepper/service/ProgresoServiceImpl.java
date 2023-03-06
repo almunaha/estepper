@@ -32,6 +32,10 @@ public class ProgresoServiceImpl implements ProgresoService{
         return repo.findByFechaAfterAndTipoAndParticipante(fecha, tipo, participante);
     }
 
+    @Override
+    public void deleteByParticipante(Participante p) {
+        repo.deleteAllByParticipante(p);
+    }
 
     
 }

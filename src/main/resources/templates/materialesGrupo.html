@@ -90,7 +90,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                     <td th:text="${lis.titulo}"></td>
                     <td th:text="${lis.descripcion}"></td>
                     <td>
-                      <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/materiales/' + ${lis.link}}" download="${lis.titulo}"title="Descargar"><i class="fa-solid fa-download"></i></a>
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i class="fa-solid fa-download"></i></a>
                         <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterialGrupo/' + ${lis.id}}" title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 </tr>

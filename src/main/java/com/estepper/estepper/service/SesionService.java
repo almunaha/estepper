@@ -9,5 +9,6 @@ public interface SesionService {
     public Sesion buscarSesion(Participante participante, Integer numSesion);
     public void guardar(Sesion s);
     public List<Sesion> sesiones(Participante participante);
+    public void deleteByParticipante(Participante p);
     
 }

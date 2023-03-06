@@ -1,18 +1,23 @@
-.contenido-grupos{
+
+.contenido-grupos {
     background-color: rgb(255, 250, 250);
     margin-left: 100px;
     margin-right: 100px;
     display: flex;
     align-content: center;
-    align-items: flex-end;
-  
+    flex-wrap: wrap;
 }
 
-
 .encabezado-grupo{
-    border-left: thick solid #5ec1c5;
+    /*border-left: thick solid #5ec1c5;*/
     border-left-width: 10px;
+}
 
+.indicadores-grupo{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-group{
@@ -118,3 +123,99 @@
     background: #2f5b80;
 }
 
+/*PARA LA PARTE DE EDITAR, MUY REPETITIVO, VER CÓMO HACERLO DIFERENTE DE MOMENTO LO DEJO ASI*/
+
+
+
+
+.container-participantes{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    padding:5%;
+}
+
+.participantesGrupo{
+    padding: 3%;
+   /* min-width: 40%;*/
+   width: 90%;
+ 
+}
+
+.participante-arriba{ 
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: #68b19d;
+    width: 100%;
+    height: 40%;
+    margin-bottom: 1.5%;
+    position: relative; 
+    top: -8.5%;
+}
+
+.fondoParticipante{
+    flex-basis: 50%;
+    background-color: rgb(185, 223, 198);
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.element-top{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+.span-dentro{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: flex-start;
+    flex-basis: 65%;
+    margin-left: 5%;
+}
+
+.nombreCampo{
+    background-color: #68b19d;
+    color: white;
+    border-left: 0.8px solid #3d8c68;
+    border-radius: 10px 0 0 10px;
+    padding: 2%;
+    flex-basis: 70%;
+    text-align: left;
+}
+
+.participante-abajo{
+    background-color: white;
+    list-style: none;
+    border: 0.8px solid #3d8c68;
+    margin-bottom: 5px;
+    border-radius: 12px;
+    width: 70%;
+    display: flex;
+}
+
+.botonEliminarPart{
+    padding: 3%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    width: 40%;
+    border:none;
+    background: #bd4f4f;
+    color:white;
+    font-size: 14px;
+    cursor:pointer;
+    border-radius: 8px;
+    transition: all 300ms;
+}
+
+.botonEliminarPart:hover{
+    background: #c80e0e;
+}

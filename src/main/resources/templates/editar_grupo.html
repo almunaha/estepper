@@ -14,6 +14,8 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/grupos.css}"> 
+
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
 
@@ -90,35 +92,106 @@
                     <div class="m-3">
                     
                         <div class="form-group row">
+
                             <label class="col-form-label col-sm-4">ID del grupo:</label>
                             <div class="col-sm-8 mb-2">
                                 <input type="text" th:field="*{id}" class="form-control" readonly="readonly"/>
                             </div>
+
+                            <label class="col-form-label col-sm-4">Código del nuevo grupo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{codigo}" class="form-control" readonly="readonly"/>
+                            </div>
+
+                            
+                            <label class="col-form-label col-sm-4">Número de participantes del grupo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{numParticipantes}" class="form-control" readonly="readonly"/>
+                            </div>
+
+                            <label class="col-form-label col-sm-4">Fecha de inicio del grupo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{fechaInicioGrupo}" class="form-control" readonly="readonly"/>
+                            </div>
+        
+
                             <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>
                             <div class="col-sm-8 mb-2">
                                 <input type="text" th:field="*{nombre}" class="form-control" required/>
                             </div>
-                            <label class="col-form-label col-sm-4">Código del nuevo grupo:</label>
+
+
+                            <!--Si cambio también el nombre del grupo si que me cambia esta fecha, sino no,ver xq-->
+                            <!--TAMBIÉN FALTA PONER LA Q YA ESTABA POR DEFECTO POR SI NO SE QUIERE CAMBIAR-->
+                            <label class="col-form-label col-sm-4">Fecha de finalización del grupo:</label>
                             <div class="col-sm-8 mb-2">
-                                <input type="text" th:field="*{codigo}" class="form-control" required/>
+                                <input type="date" th:field="*{fechaFinGrupo}" class="form-control" />
                             </div>
-                            <label class="col-form-label col-sm-4">Número de participantes del nuevo grupo:</label>
-                            <div class="col-sm-8 mb-2">
-                                <input type="text" th:field="*{numParticipantes}" class="form-control" required/>
+                          
+                
+                            <!--FALTA HACER QUE SE PUEDAN AÑADIR DESDE AQUI a nuevos miembros del grupo-->
+                            <label class="col-form-label col-sm-4">Participantes del grupo:</label>   
+                            <div class="container-participantes">
+                                <tr th:each="lis:${listadoParticipantesGrupo}">
+                            
+                                   <!-- <div class="card">
+                                        <div class="cover"> 
+                                            <img th:src="${lis.fotoParticipante}" alt="avatar">
+                                            <div class="img-back"></div>
+                                        </div>
+                                        <div class="descripcion">
+                                            <h2 th:text="${lis.nickname}"></h2>
+                                            <h3 th:text="${lis.codigo}"></h3>
+                                          
+                                            <a class="botonGr" th:href="@{'/eliminarDeUnGrupo/' + ${lis.id} + '/' + *{id}}">Eliminar</a>
+                
+                                        </div>
+                                    </div>-->
+
+                                    <div class="participantesGrupo">
+                                        <div class="fondoParticipante">
+                                          <div class="participante-arriba">
+                                            <div class="element-top">
+                                              <div class="img-baja">
+                                                <img width="80" th:src="${lis.fotoParticipante}" alt="img-baja" />
+                                              </div>
+                                              <div>
+                                                <h4 th:text="${lis.nickname}"></h4>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                        
+                                          <div class="participante-abajo">
+                                            <div class="nombreCampo">
+                                              <i class="icono fas fa-key"></i>
+                                              <span>Código</span>  
+                                            </div>
+                                            <div class="span-dentro"><span th:text="${lis.codigo}" /></div>
+                                          </div>
+
+                                          <div class="participante-abajo">
+                                            <div class="nombreCampo">
+                                                <i class="fa-solid fa-cake-candles"></i>
+                                              <span>Edad</span> 
+                                            </div>
+                                            <div class="span-dentro"><span th:text="${lis.edad}" /></div>
+                                          </div>
+
+                                          <a class="botonEliminarPart" th:href="@{'/eliminarDeUnGrupo/' + ${lis.id} + '/' + *{id}}">Eliminar</a>
+
+                                        </div>
+                                    </div>
                             </div>
+
+                            
+
+
                         </div>
                         <div class="text-center p">
-                            <button type="submit" class="btn" id="btn-part" onclick=myFunction()>Editar</button>
+                            <button type="submit" class="btn" id="btn-part">Editar</button>
                         </div>
-                        <script language="JavaScript">
-                            function myFunction() {
-                                if(confirm("Desea guardar los datos?")){
-                                alert("Datos guardados exitosamente");
-                                }else{
-                                alert("Usted cancelo la acción para guardar");
-                                }
-                            }
-                        </script>
+                   
                     </div>
                </form>
             

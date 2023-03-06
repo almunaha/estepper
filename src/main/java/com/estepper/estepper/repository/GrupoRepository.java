@@ -22,5 +22,10 @@ public interface GrupoRepository extends JpaRepository<Grupo, Integer>{
     @Query("update Grupo SET nombre = :nombre, codigo = :codigo, idCoordinador = :idCoordinador, numParticipantes = :numParticipantes WHERE id = :idGrupo")
     void update(String nombre, String codigo, Integer idCoordinador, Integer numParticipantes, Integer idGrupo);
      
+
+    @Modifying
+    @Transactional
+    @Query("update Grupo SET numParticipantes = :numParticipantes WHERE id = :idGrupo")
+    void update(Integer idGrupo, Integer numParticipantes);
 }
 

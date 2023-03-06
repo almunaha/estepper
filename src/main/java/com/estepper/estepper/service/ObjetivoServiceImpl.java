@@ -49,6 +49,11 @@ public class ObjetivoServiceImpl implements ObjetivoService {
         return repo.findById(id).get();    
     }
 
+    @Override
+    public void deleteByParticipante(Participante p) {
+        repo.deleteAllByParticipante(p);
+    }
+
 
 }
 
