@@ -133,7 +133,7 @@ public class CoordinadorController {
             Model model) {
         Grupo g = grupo.getGrupo(idG);
 
-        if (getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().id) {
+        if (getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()) {
             Participante usuario = part.findById(idP).get();
             model.addAttribute("user", getUsuario());
 

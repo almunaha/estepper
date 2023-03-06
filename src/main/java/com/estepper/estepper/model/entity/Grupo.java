@@ -36,7 +36,7 @@ public class Grupo implements Serializable{
     @Column
     private Integer numParticipantes; 
 
-    @OneToMany(mappedBy = "grupo")
+    @OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Participante> participantes;
 
     @Column

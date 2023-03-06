@@ -35,13 +35,13 @@ public class ApiRestController {
 
     @GetMapping("/progreso/peso") 
     public List<Progreso> datosPeso() {
-        Participante p =  part.findById(getUsuario().id).get();
+        Participante p =  part.findById(getUsuario().getId()).get();
         return progreso.datos(p, TipoProgreso.PESO);
     }
 
     @GetMapping("/progreso/perimetro") 
     public List<Progreso> datosPerimetro() {
-        Participante p =  part.findById(getUsuario().id).get();
+        Participante p =  part.findById(getUsuario().getId()).get();
         return progreso.datos(p, TipoProgreso.PERIMETRO);
     }
 
@@ -67,7 +67,7 @@ public class ApiRestController {
  
         Usuario u = getUsuario();
         if(u instanceof Participante){
-            Participante p = part.findById(u.id).get();
+            Participante p = part.findById(u.getId()).get();
             return p;
         }
 
