@@ -11,20 +11,22 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/grupos.css}"> 
+    <link rel="stylesheet" th:href="@{/css/grupos.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}"> <!--ACORDARME DE QUITARLOOOO-->
+
 
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <!--PARA EL BUSCADOR-->
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
     <title>Grupo</title>
 
-   
+
 </head>
 
 <body>
@@ -41,7 +43,8 @@
 
             <div class="menu">
                 <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a th:href="@{/actividades}" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
+                <a th:href="@{/actividades}" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i>
+                    Actividades</a>
             </div>
 
         </div>
@@ -72,66 +75,92 @@
                 </div>
             </nav>
 
-            
+
             <div class="contenido-grupos p-4 mt-5">
 
                 <div class="encabezado-grupo">
 
                     <h3 th:text="'GRUPO: ' + ${grupo.nombre}"></h3>
                     <h3 th:text="'SE ME ESTÁ HACIENDO BOLA AHORA VOLVERÉ A INTENTAR PONERLO DECENTE'"></h3>
-                  <!--  <h5 th:text="'Código: ' + ${grupo.codigo}"></h5>-->
-                 <!--   <strong th:text="'Número total de participantes: ' + ${grupo.numParticipantes}"></strong>-->
+                    <!--  <h5 th:text="'Código: ' + ${grupo.codigo}"></h5>-->
+                    <!--   <strong th:text="'Número total de participantes: ' + ${grupo.numParticipantes}"></strong>-->
                     <strong th:text="'Fecha inicio grupo: ' + ${grupo.fechaInicioGrupo}"></strong>
-                    <!--  <strong th:text="'Fecha fin grupo: ' + ${grupo.fechaFinGrupo}"></strong>-->
-            
+                    <strong th:text="'Fecha fin grupo: ' + ${grupo.fechaFinGrupo}"></strong>
+
                 </div>
 
                
                 <div class="indicadores-grupo">
-               
-                    
-                      <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+
+
+                    <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                         <div class="card-header">Código del grupo</div>
                         <div class="card-body">
                             <h5 th:text="${grupo.codigo}"></h5>
                         </div>
-                      </div>
+                    </div>
 
-                      <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
                         <div class="card-header">Número total de participantes</div>
                         <div class="card-body">
-                          <h5 th:text="${grupo.numParticipantes}"></h5>
+                            <h5 th:text="${grupo.numParticipantes}"></h5>
                         </div>
-                      </div>
+                    </div>
 
-                      <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
                         <div class="card-header">Pérdida de peso grupal</div>
                         <div class="card-body">
-                          <h5 class="card-title">4 Kg</h5> <!--FALTA COGERLO DE VERDAD-->
+                            <h5 class="card-title">4 Kg</h5> <!--FALTA COGERLO DE VERDAD-->
                         </div>
-                      </div>
-                     
-                      <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                    </div>
+
+                    <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
                         <div class="card-header">Asistencia media a las sesiones</div>
                         <div class="card-body">
-                          <h5 class="card-title">70%</h5><!--FALTA COGERLO DE VERDAD-->
+                            <h5 class="card-title">70%</h5><!--FALTA COGERLO DE VERDAD-->
                         </div>
-                      </div>
-                      
-                     
-                
+                    </div>
 
-    
+
+
+
+
                 </div>
 
+            </div>
+
+            <div class="valores-progreso">
+                <div class="valor">
+                    <div class="flex-valor">
+                        <div class="iz-valor">
+                            <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
+                        </div>
+                        <div class="der-valor">
+                            <div class="dato-valor"><span th:text="${grupo.id} + kg"></span></div>
+                            <div class="bottom-valor"><span>Peso perdido </span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="valor">
+                    <div class="flex-valor">
+                        <div class="iz-valor">
+                            <i class="fa-solid fa-check" style="color: rgb(122, 218, 103)"></i>
+                        </div>
+                        <div class="der-valor">
+                            <div class="dato-valor"><span th:text="${grupo.id}"></span></div>
+                            <div class="bottom-valor"><span>Sesiones completadas</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="container-cards">
 
                 <tr th:each="lis:${listadoParticipantesGrupo}">
-            
+
                     <div class="cardi">
-                        <div class="cover"> 
+                        <div class="cover">
                             <img th:src="${lis.fotoParticipante}" alt="avatar">
                             <div class="img-back"></div>
                         </div>
@@ -140,32 +169,34 @@
                             <h3 th:text="${lis.codigo}"></h3>
                             <p th:text="${lis.edad} + ' ' + años"></p>
                             <div style="display: flex; justify-content: space-around; flex-direction: column;">
-                            <a class="botonGr" th:href="@{'/valoracion/' + ${lis.id}}">Ver expediente</a>
-                            <a class="botonGr" style="background: red;" th:href="@{'/echargrupo/' + ${lis.id}}">Echar del grupo</a>
+                                <a class="botonGr" th:href="@{'/valoracion/' + ${lis.id}}">Ver expediente</a>
+                                <a class="botonGr" style="background: red;"
+                                    th:href="@{'/echargrupo/' + ${lis.id}}">Echar del grupo</a>
                             </div>
 
                         </div>
                     </div>
-                
+
                 </tr>
-        
-               
+
+
             </div>
             <div style="float: right;">
-            <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
+                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                    onclick="window.print();">
             </div>
 
-           
-          
-                
 
-        
-            
-            
-           
-        
-            
-            
+
+
+
+
+
+
+
+
+
+
 
         </div>
     </div>
@@ -173,7 +204,3 @@
 </body>
 
 </html>
-
-
-
-

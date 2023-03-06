@@ -88,7 +88,7 @@
                     <h4>Editar un grupo</h4> 
                 </div>
 
-               <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
+               <form th:action="@{/grupos/guardar2}" th:object="${grupo}" method="post">
                     <div class="m-3">
                     
                         <div class="form-group row">
@@ -125,14 +125,23 @@
                             <!--TAMBIÉN FALTA PONER LA Q YA ESTABA POR DEFECTO POR SI NO SE QUIERE CAMBIAR-->
                             <label class="col-form-label col-sm-4">Fecha de finalización del grupo:</label>
                             <div class="col-sm-8 mb-2">
-                                <input type="date" th:field="*{fechaFinGrupo}" class="form-control" />
+                                <input type="date" th:name="fechaFinGrupo" th:field="*{fechaFinGrupo}" class="form-control" />
                             </div>
                           
                 
+                            <label class="col-form-label col-sm-4">Selecciona otros participantes que quieras añadir al grupo:</label>   
+                            <div class="col-sm-8 mb-2">
+                                <select th:field="*{participantes}" class="form-control" multiple>
+                                    <option th:each="participante : ${participantesExistentes}"
+                                        th:value="${participante.id}" th:text="${participante.nickname}" th:if="${participante.grupo == null}">
+                                    </option>
+                                </select>
+                            </div>
+        
                             <!--FALTA HACER QUE SE PUEDAN AÑADIR DESDE AQUI a nuevos miembros del grupo-->
-                            <label class="col-form-label col-sm-4">Participantes del grupo:</label>   
+                            <label class="col-form-label col-sm-4">Participantes actuales del grupo:</label>   
                             <div class="container-participantes">
-                                <tr th:each="lis:${listadoParticipantesGrupo}">
+                                <tr th:each="lis:${listadoParticipantesGrupo}" >
                             
                                    <!-- <div class="card">
                                         <div class="cover"> 
@@ -161,7 +170,6 @@
                                             </div>
                                           </div>
 
-                                        
                                           <div class="participante-abajo">
                                             <div class="nombreCampo">
                                               <i class="icono fas fa-key"></i>

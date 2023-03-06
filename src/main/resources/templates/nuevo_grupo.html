@@ -104,7 +104,7 @@
                             <div class="col-sm-8 mb-2">
                                 <select th:field="*{participantes}" class="form-control" multiple>
                                     <option th:each="participante : ${participantesExistentes}"
-                                        th:value="${participante.id}" th:text="${participante.nickname}" th:disabled="${participante.grupo != null}">
+                                        th:value="${participante.id}" th:text="${participante.nickname}" th:if="${participante.grupo == null}">
                                     </option>
                                 </select>
                             </div>
