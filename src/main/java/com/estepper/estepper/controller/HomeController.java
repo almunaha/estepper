@@ -265,9 +265,12 @@ public class HomeController {
             model.addAttribute("material", material);
             model.addAttribute("id", id);
             return "materialesCoor";
-        } else if(elusuario instanceof Participante && getUsuario().getId() == id){
+        } else if(elusuario instanceof Participante && getUsuario().getId() == id && getUsuario().getEstadoCuenta().equals(Estado.ALTA)){
             model.addAttribute("listado", materialS.materiales(id));
             return "materialesPart";
+        }
+        else if(elusuario instanceof Participante && getUsuario().getId() == id){
+            return "acceso";
         } else return "redirect:/";
     }
 
