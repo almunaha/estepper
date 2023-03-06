@@ -3,6 +3,7 @@ package com.estepper.estepper.controller;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,15 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Usuario;
-
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.enums.Estado;
+
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.UsuarioService;
-
-import org.springframework.ui.Model;
 
 @Controller
 public class AdminController {

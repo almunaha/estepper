@@ -3,11 +3,12 @@ package com.estepper.estepper.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import org.apache.commons.lang3.RandomStringUtils;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,11 +28,10 @@ import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
+
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.MaterialService;
-
-
 import com.estepper.estepper.service.UsuarioService;
  //yo pasaria todo esto a CoordinadorController para no tener tantos
 @Controller
