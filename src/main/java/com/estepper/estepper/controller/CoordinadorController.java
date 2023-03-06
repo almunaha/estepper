@@ -20,35 +20,27 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.Page;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import com.estepper.estepper.model.enums.Estado;
 
 import com.estepper.estepper.model.entity.Participante;
-
-import com.estepper.estepper.model.entity.Sesion;
-import com.estepper.estepper.model.enums.Asistencia;
-import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.EstadoSesion;
-
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Materiales;
+
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
-
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.MaterialService;
 
@@ -134,16 +126,6 @@ public class CoordinadorController {
             g.setNumParticipantes(participantes);
             grupo.update(g);
 
-            // crear las sesiones del participante
-            // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas y le meta en otro, entonces ya tendría sus sesiones
-            Sesion sesion1 = sesion.buscarSesion(usuario, 1);
-            if(sesion1 == null){ //si no tiene la sesion1 creada
-                Sesion s;
-                for (int i = 1; i <= 10; i++) {
-                    s = new Sesion(0, i, usuario, EstadoSesion.ENCURSO, "", Asistencia.NO, 0, 0);
-                    sesion.guardar(s);
-                }
-            }   
             return "redirect:/listaGrupos";
         }
 

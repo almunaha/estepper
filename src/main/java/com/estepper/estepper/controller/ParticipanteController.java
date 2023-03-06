@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 
-
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -40,8 +40,12 @@ import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.Antecedentes;
 import com.estepper.estepper.model.entity.ActividadFisica;
 import com.estepper.estepper.model.entity.AlimentacionVal;
+
+import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.TipoProgreso;
+
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
@@ -49,11 +53,8 @@ import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
-
 import com.estepper.estepper.service.ProgresoService;
 
-
-import org.springframework.ui.Model;
 @Controller
 public class ParticipanteController {
 
@@ -94,14 +95,8 @@ public class ParticipanteController {
         Usuario u = getUsuario();
         model.addAttribute("user", getUsuario());      
         
-        if(u instanceof Participante){
-            Participante p = participante.findById(u.id).get();
-
-            if(p.getGrupo() != null) return "sesiones";
-            else return "acceso";
-        }
-
-        else return "redirect:/";
+        if(u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)){ return "sesiones";} 
+        else return "acceso";
 
     }
 
@@ -110,6 +105,7 @@ public class ParticipanteController {
         //necesito idParticipante y numSesion para saber el id de la sesión correspondiente
         model.addAttribute("user", getUsuario());
         Participante p = participante.findById(getUsuario().id).get();
+        if(p.getEstadoCuenta().equals(Estado.ALTA)){
         //sesión seleccionada
         Sesion sesion = ses.buscarSesion(p, num); //cambiar segun sesion
         model.addAttribute("sesion", sesion); 
@@ -121,19 +117,22 @@ public class ParticipanteController {
         model.addAttribute("participante", participante.findById(1)); //coger participante 
 
         return "sesion";
+        } else return "acceso";
     }
 
     @PostMapping("process_sesion/{num}")
     public String actualizar(@PathVariable("num") Integer num, @ModelAttribute Sesion sesion){
         Participante p = participante.getParticipante(getUsuario().getId());
-        Sesion orig = ses.buscarSesion(p, num);
+        if(p.getEstadoCuenta().equals(Estado.ALTA)){
+            Sesion orig = ses.buscarSesion(p, num);
 
-        Sesion actualizada = new Sesion(orig.getId(), orig.getNumSesion(), orig.getParticipante(), orig.getEstado(),
-        sesion.getObservaciones(), sesion.getAsistencia(), orig.getCmsPerdidos(), orig.getPesoPerdido());
+            Sesion actualizada = new Sesion(orig.getId(), orig.getNumSesion(), orig.getParticipante(), orig.getEstado(),
+            sesion.getObservaciones(), sesion.getAsistencia(), orig.getCmsPerdidos(), orig.getPesoPerdido());
 
-        ses.guardar(actualizada);
+            ses.guardar(actualizada);
 
-        return "redirect:/sesiones";
+            return "redirect:/sesiones";
+        } else return "acceso";
     }
 
     @GetMapping("/exploracion/{id}")
@@ -348,6 +347,16 @@ public class ParticipanteController {
                 }
             }
             fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().id);
+            // crear las sesiones del participante
+            // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas y le meta en otro, entonces ya tendría sus sesiones
+            Sesion sesion1 = ses.buscarSesion(p, 1);
+            if(sesion1 == null){ //si no tiene la sesion1 creada
+                Sesion s;
+                for (int i = 1; i <= 10; i++) {
+                    s = new Sesion(0, i, p, EstadoSesion.ENCURSO, "", Asistencia.NO, 0, 0);
+                    ses.guardar(s);
+                }
+            }   
 
             return "redirect:/listado";
         } else return "redirect:/";

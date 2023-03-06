@@ -3,18 +3,17 @@ package com.estepper.estepper.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
-
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
+
 import java.time.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,18 +29,16 @@ import org.springframework.web.multipart.MultipartFile;
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Progreso;
-
 import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
-import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.Sexo;
-import com.estepper.estepper.model.enums.TipoProgreso;
-import com.estepper.estepper.service.UsuarioService;
 
+import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.TipoProgreso;
+
+import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
-import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.MaterialService;
 
