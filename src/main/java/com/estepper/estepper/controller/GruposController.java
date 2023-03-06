@@ -65,44 +65,6 @@ public class GruposController {
         return "nuevo_grupo";
     }
 
-    /*
-     * @PostMapping("/grupos/guardar")
-     * public String guardarGrupo(Grupo elgrupo, @RequestParam(value =
-     * "participantes", required = false) List<Participante> participantesIds, Model
-     * model) {
-     * 
-     * elgrupo.setIdCoordinador(getUsuario().getId());
-     * 
-     * String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
-     * // comprobar que no existe un usuario con ese codigo
-     * while (grupo.findByCodigo(elcodigo) != null) {
-     * elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
-     * }
-     * elgrupo.setCodigo(elcodigo);
-     * 
-     * if (participantesIds != null) { //NO ENTRA AQUÍ
-     * List<Participante> participantesSeleccionadosList = new ArrayList<>();
-     * for (String p : participantesIds) {
-     * Participante usuario = part.findById(p.id).get();
-     * model.addAttribute("user", getUsuario());
-     * Grupo g = grupo.getGrupo(elgrupo.getId());
-     * part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g,
-     * usuario.getAsistencia(), usuario.getIdCoordinador(),
-     * usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), p.id);
-     * Integer numParticipantes = g.getNumParticipantes() + 1;
-     * grupo.updateParticipantes(elgrupo.getId(), numParticipantes);
-     * }
-     * 
-     * //elgrupo.setParticipantes(participantesSeleccionadosList);
-     * }
-     * else{
-     * elgrupo.setNumParticipantes(0);
-     * }
-     * 
-     * grupo.save(elgrupo);
-     * return "redirect:/listaGrupos";
-     * }
-     */
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(@ModelAttribute("grupo") Grupo elgrupo,
@@ -152,11 +114,46 @@ public class GruposController {
             elgrupo.setNumParticipantes(0);
         }
 
+        if(elgrupo.getFechaFinGrupo() != grupo.getGrupo(elgrupo.getId()).getFechaFinGrupo()){
+            elgrupo.setFechaFinGrupo(elgrupo.getFechaFinGrupo());
+        }
         elgrupo.setFechaInicioGrupo(LocalDate.now());
 
         grupo.save(elgrupo);
         return "redirect:/listaGrupos";
     }
+
+
+    @PostMapping("/grupos/guardar2")
+    public String guardarGrupo2(@ModelAttribute("grupo") Grupo elgrupo,
+            @RequestParam(value = "participantes", required = false) List<Integer> participantes,
+            Model model) {
+
+        elgrupo.setIdCoordinador(getUsuario().getId());
+
+        if (participantes != null) {
+            List<Participante> participantesSeleccionadosList = new ArrayList<>();
+            for (Integer participanteId : participantes) {
+                Participante participante = part.findById(participanteId).get();
+                participantesSeleccionadosList.add(participante);
+                grupo.save(elgrupo);
+                Grupo g = grupo.getGrupo(elgrupo.getId());
+
+                part.update(participante.edad, participante.sexo, participante.getFotoParticipante(), g,
+                        participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
+                        participante.getSesionesCompletas(), participanteId);
+
+                elgrupo.setNumParticipantes(g.getNumParticipantes() + participantesSeleccionadosList.size());
+
+            }
+            elgrupo.setParticipantes(participantesSeleccionadosList);
+
+        } 
+
+        grupo.save(elgrupo);
+        return "redirect:/listaGrupos";
+    }
+
 
    
 
@@ -172,29 +169,14 @@ public class GruposController {
             return "redirect:/";
     }
 
-    /*@PostMapping("/grupos/guardar")
-    public String guardarGrupo(Grupo elgrupo) {
-        if (getUsuario() instanceof Coordinador) {
-            elgrupo.setIdCoordinador(getUsuario().getId());
-
-            String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
-
-            // comprobar que no existe un usuario con ese codigo
-            while (grupo.findByCodigo(elcodigo) != null) {
-                elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
-            }
-            elgrupo.setCodigo(elcodigo);
-            elgrupo.setNumParticipantes(0);
-            grupo.save(elgrupo);
-            return "redirect:/listaGrupos";
-        } else
-            return "redirect:/";
-    }*/
 
     @GetMapping("/grupos/editar/{id}")
     public ModelAndView mostrarFormularioDeEditarGrupo(@PathVariable(name = "id") Integer id) {
         ModelAndView modelo = new ModelAndView("editar_grupo");
         Grupo gr = grupo.getGrupo(id);
+
+        List<Participante> participantesExistentes = part.listado();// obtener lista de participantes de la base de
+        modelo.addObject("participantesExistentes", participantesExistentes);
 
         modelo.addObject("grupo", gr);
         modelo.addObject("user", getUsuario());

@@ -175,10 +175,12 @@ public class CoordinadorController {
 
             Integer participantes = g.getNumParticipantes() - 1;
             grupo.updateParticipantes(idG, participantes);
+            /*
+            LO HE COMENTADO PERO FUNCIONA, ES SEGÚN QUERAMOS, POR SI QUEREMOS QUE CUANDO SEA 0 EL NÚMERO DE PARTICIPANTES SE BORRE O NO EL GRUPO
             if (g.getNumParticipantes() <= 1) {
                 grupo.delete(idG);
                 return "redirect:/listaGrupos";
-            }
+            }*/
 
             return "redirect:/grupos/editar/{idG}";
         }
