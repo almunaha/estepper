@@ -217,6 +217,7 @@ public class GruposController {
             model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
             model.addAttribute("grupo", g);
             model.addAttribute("user", getUsuario());
+            model.addAttribute("mensaje", "No asignada");
         
             return "unGrupo";
         } else
