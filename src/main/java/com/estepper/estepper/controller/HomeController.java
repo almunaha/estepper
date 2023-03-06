@@ -293,7 +293,7 @@ public class HomeController {
                     }
                 }
             }
-        return "redirect:/";
+        return "redirect:/materiales/{id}";
     }
 
     public Usuario getUsuario() {

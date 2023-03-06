@@ -171,7 +171,7 @@ public class GruposController {
 
                 }
             }
-        return "redirect:/";
+        return "redirect:/materialesGrupo/{id}";
     }
 
     @GetMapping("/eliminarMaterialGrupo/{id}")
