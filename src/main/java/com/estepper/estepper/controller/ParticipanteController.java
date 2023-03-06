@@ -498,8 +498,8 @@ public class ParticipanteController {
             materialS.eliminarMaterial(id);
         }
         
-
-       return "redirect:/";
+       Integer idP = material.getParticipante().getId();
+       return "redirect:/materiales/" + idP;
     }
 
     //DIAPOSITIVAS

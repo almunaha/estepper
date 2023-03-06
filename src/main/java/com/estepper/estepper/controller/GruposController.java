@@ -179,7 +179,9 @@ public class GruposController {
         if(getUsuario() instanceof Coordinador){
             materialS.eliminarMaterialGrupo(id);
         }
-       return "redirect:/";
+
+        Integer idG = materialS.getMaterial(id).getGrupo().getId();
+       return "redirect:/materialesGrupo/" + idG;
     }
 
     @GetMapping("/echargrupo/{id}")
