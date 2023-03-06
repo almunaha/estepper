@@ -545,4 +545,15 @@ public class ParticipanteController {
         }
     }
 
+    //ACTIVIDADES
+    @GetMapping("/actividades")
+    public String actividades(Model model){
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+
+        if(user instanceof Coordinador) return "actividadesCoor";
+        else if(user instanceof Participante) return "actividades";
+        else return "redirect:/";
+    }
+
 }

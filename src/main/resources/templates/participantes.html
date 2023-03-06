@@ -44,7 +44,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a th:href="@{/actividades}">
                         <i class="fa-solid fa-person-hiking"></i>
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
@@ -155,7 +155,7 @@
                         <tr th:each="lis:${listado}">
                             <td> <img width="55" th:src="${lis.fotoParticipante}" /></td>
                             <td th:text="${lis.nickname}"></td>
-                            <td th:text="${lis.codigo}"></td>
+                            <td style="font-weight: bold;" th:text="${lis.codigo}"></td>
                             <td th:text="${lis.email}"></td>
                             <td th:text="${lis.idGrupo}" id="columnaGr"></td>
                             <td th:text="${lis.estadoCuenta}"></td>
