@@ -23,4 +23,5 @@ public interface ParticipanteService {
     public void eliminarMaterialGrupo(Integer id);
     public void updateMaterial(Materiales material);
     public Materiales getMaterial(Integer id);
+    
 }

@@ -86,6 +86,13 @@
                     <h4>Listado de grupos</h4> 
                 </div>
 
+
+            <!--Lo estaba probando para lo de mostrar la alerta, no borrarlo aún-->
+                <div th:if="${errorcito}" class="alert alert-danger">
+                    <p th:text="${errorcito}"></p>
+                </div>
+                  
+
                 <!-- Buscador de participantes en grupos -->
                 <div class="container-fluid">
                     <form class="d-flex justify-content-end">
@@ -111,11 +118,13 @@
 
                 <!-- Tabla de grupos -->
                 <table class=" table tablePart">
+
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Código</th>
                             <th scope="col">Número de participantes</th>
+                            <th scope="col">Fecha de creación</th>
                             <th scope="col">Acciones</th>
 
                         </tr>
@@ -125,6 +134,7 @@
                             <td th:text="${lis.nombre}"></td>
                             <td th:text="${lis.codigo}"></td>
                             <td th:text="${lis.numParticipantes}"></td>
+                            <td th:text="${lis.fechaInicioGrupo}"></td>
                             <td>   
 
                                 <!--LOS BOTONES SIN ICONOS-->
@@ -143,29 +153,15 @@
                     </tbody>
                 </table>
 
-            
+               
 
-                <!--PARA PAGINACIÓN, ACORDARME DE HACERLO BIEN-->
+                <!--FALTA PAGINACIÓN-->
 
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                        </a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
+               
 
-                  <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
+                  <a class="btn" id="btn-part" th:href="@{/grupos/nuevo}">Crear un grupo nuevo</a>
+
+                  <!--<form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
                     <div class="m-3">
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>
@@ -174,19 +170,11 @@
                             </div>
                         </div>
                         <div class="text-center p">
-                            <button type="submit" class="btn" id="btn-part" onclick=myFunction()>Crear nuevo grupo</button>
+                            <button type="submit" class="btn" id="btn-part">Crear nuevo grupo</button>
                         </div>
-                        <script language="JavaScript">
-                            function myFunction() {
-                                if(confirm("¿Desea añadir este nuevo grupo?")){
-                                alert("Grupo creado correctamente");
-                                }else{
-                                alert("Usted cancelo la acción para crearlo");
-                                }
-                            }
-                        </script>
+               
                     </div>
-                 </form>
+                 </form>-->
                     <div style="float: right;">
                         <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
                     </div>

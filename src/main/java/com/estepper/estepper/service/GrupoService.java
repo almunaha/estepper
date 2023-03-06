@@ -13,6 +13,7 @@ public interface GrupoService {
     public void updateParticipantes(Integer idGrupo, Integer numParticipantes);
     public void delete(Integer id);
     public void save(Grupo grupo);
+    public Grupo findByNombre(String nombre); 
 
 }
 

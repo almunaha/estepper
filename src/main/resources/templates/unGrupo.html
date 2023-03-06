@@ -78,13 +78,51 @@
                 <div class="encabezado-grupo">
 
                     <h3 th:text="'GRUPO: ' + ${grupo.nombre}"></h3>
-                    <h5 th:text="'Código: ' + ${grupo.codigo}"></h5>
-                    <strong th:text="'Número total de participantes: ' + ${grupo.numParticipantes}"></strong>
+                    <h3 th:text="'SE ME ESTÁ HACIENDO BOLA AHORA VOLVERÉ A INTENTAR PONERLO DECENTE'"></h3>
+                  <!--  <h5 th:text="'Código: ' + ${grupo.codigo}"></h5>-->
+                 <!--   <strong th:text="'Número total de participantes: ' + ${grupo.numParticipantes}"></strong>-->
+                    <strong th:text="'Fecha inicio grupo: ' + ${grupo.fechaInicioGrupo}"></strong>
+                    <!--  <strong th:text="'Fecha fin grupo: ' + ${grupo.fechaFinGrupo}"></strong>-->
             
                 </div>
 
                
+                <div class="indicadores-grupo">
+               
+                    
+                      <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Código del grupo</div>
+                        <div class="card-body">
+                            <h5 th:text="${grupo.codigo}"></h5>
+                        </div>
+                      </div>
+
+                      <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Número total de participantes</div>
+                        <div class="card-body">
+                          <h5 th:text="${grupo.numParticipantes}"></h5>
+                        </div>
+                      </div>
+
+                      <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Pérdida de peso grupal</div>
+                        <div class="card-body">
+                          <h5 class="card-title">4 Kg</h5> <!--FALTA COGERLO DE VERDAD-->
+                        </div>
+                      </div>
+                     
+                      <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Asistencia media a las sesiones</div>
+                        <div class="card-body">
+                          <h5 class="card-title">70%</h5><!--FALTA COGERLO DE VERDAD-->
+                        </div>
+                      </div>
+                      
+                     
                 
+
+    
+                </div>
 
             </div>
 
@@ -115,8 +153,6 @@
             </div>
 
            
-                  
-
           
                 
 

@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -37,7 +36,6 @@ import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.GrupoService;
 
-
 @Controller
 public class CoordinadorController {
 
@@ -56,15 +54,22 @@ public class CoordinadorController {
     @GetMapping("/listado")
     public String participantes(@RequestParam Map<String, Object> params, Model model) {
 
-        if(getUsuario() instanceof Coordinador){ //controlar acceso
+        if (getUsuario() instanceof Coordinador) { // controlar acceso
 
-            int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) -1) : 0;
-            PageRequest pageable = PageRequest.of(page, 6); //define página solicitada y tamaño de la página, se inicializa a cero
-            Page<Participante> paginaPart = part.paginas(pageable); //listado de páginas de 6 participantes cada una
-            int totalPags = paginaPart.getTotalPages(); //total de páginas
+            int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+            PageRequest pageable = PageRequest.of(page, 6); // define página solicitada y tamaño de la página, se
+                                                            // inicializa a cero
+            Page<Participante> paginaPart = part.paginas(pageable); // listado de páginas de 6 participantes cada una
+            int totalPags = paginaPart.getTotalPages(); // total de páginas
 
-            if(totalPags > 0){
-                List<Integer> paginas = IntStream.rangeClosed(1, totalPags).boxed().collect(Collectors.toList()); //listado con los números de las páginas
+            if (totalPags > 0) {
+                List<Integer> paginas = IntStream.rangeClosed(1, totalPags).boxed().collect(Collectors.toList()); // listado
+                                                                                                                  // con
+                                                                                                                  // los
+                                                                                                                  // números
+                                                                                                                  // de
+                                                                                                                  // las
+                                                                                                                  // páginas
                 model.addAttribute("paginas", paginas);
             }
 
@@ -75,13 +80,17 @@ public class CoordinadorController {
             return "participantes";
         }
 
-        else return "redirect:/";
+        else
+            return "redirect:/";
     }
 
     @GetMapping("/valoracion/{id}")
     public String fasedevaloracion(@PathVariable("id") Integer id, Model model) {
-        //realmente si es su coordinador tiene que aparecerle que si está dado de alta le aparezcan sus datos pero le tiene que dejar entrar
-        if((getUsuario() instanceof Coordinador) && ((part.findById(id).get().getIdCoordinador() == getUsuario().getId()) || part.findById(id).get().estadoCuenta.equals(Estado.BAJA))){
+        // realmente si es su coordinador tiene que aparecerle que si está dado de alta
+        // le aparezcan sus datos pero le tiene que dejar entrar
+        if ((getUsuario() instanceof Coordinador)
+                && ((part.findById(id).get().getIdCoordinador() == getUsuario().getId())
+                        || part.findById(id).get().estadoCuenta.equals(Estado.BAJA))) {
             model.addAttribute("participante", part.findById(id).get());
             model.addAttribute("usuario", user.findById(id).get());
             model.addAttribute("user", getUsuario());
@@ -89,37 +98,65 @@ public class CoordinadorController {
             return "valoracion";
         }
 
-        else return "redirect:/";
+        else
+            return "redirect:/";
     }
 
     @GetMapping("/actualizarGrupos/{idP}/{idG}")
-    public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG, Model model) {
+    public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG,
+            Model model) {
 
-        if(getUsuario() instanceof Coordinador){
+        if (getUsuario() instanceof Coordinador) {
             Participante usuario = part.findById(idP).get();
             model.addAttribute("user", getUsuario());
             Grupo g = grupo.getGrupo(idG);
 
-
-            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g, usuario.getAsistencia(), usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
+            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g, usuario.getAsistencia(),
+                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
             grupo.updateParticipantes(idG, participantes);
 
             // crear las sesiones del participante
             Sesion s;
             for (int i = 1; i <= 10; i++) {
-            s = new Sesion(0, i, usuario, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
-            sesion.guardar(s);
+                s = new Sesion(0, i, usuario, EstadoSesion.BLOQUEADA, "", Asistencia.NO, 0, 0);
+                sesion.guardar(s);
             }
-        
+
             return "redirect:/listaGrupos";
         }
 
-        else return "redirect:/";
+        else
+            return "redirect:/";
     }
-    
 
-    public Usuario getUsuario(){
+    @GetMapping("/eliminarDeUnGrupo/{idP}/{idG}")
+    public String eliminarDeUnGrupo(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG,
+            Model model) {
+
+        if (getUsuario() instanceof Coordinador) {
+            Participante usuario = part.findById(idP).get();
+            model.addAttribute("user", getUsuario());
+            Grupo g = grupo.getGrupo(idG);
+
+            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), null, usuario.getAsistencia(),
+                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
+
+            Integer participantes = g.getNumParticipantes() - 1;
+            grupo.updateParticipantes(idG, participantes);
+            if (g.getNumParticipantes() <= 1) {
+                grupo.delete(idG);
+                return "redirect:/listaGrupos";
+            }
+
+            return "redirect:/grupos/editar/{idG}";
+        }
+
+        else
+            return "redirect:/";
+    }
+
+    public Usuario getUsuario() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         UserDetails userDetails = null;
@@ -127,7 +164,7 @@ public class CoordinadorController {
             userDetails = (UserDetails) principal;
         }
 
-        String codigo = userDetails.getUsername(); //codigo del logueado
+        String codigo = userDetails.getUsername(); // codigo del logueado
 
         Usuario usuario = user.logueado(Integer.parseInt(codigo));
         return usuario;
