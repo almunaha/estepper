@@ -111,7 +111,7 @@ public class ParticipanteController {
     public String sesion1(@PathVariable Integer num, Model model){
         //necesito idParticipante y numSesion para saber el id de la sesión correspondiente
         model.addAttribute("user", getUsuario());
-        Participante p = participante.findById(getUsuario().id).get();
+        Participante p = participante.findById(getUsuario().getId()).get();
         if(p.getEstadoCuenta().equals(Estado.ALTA)){
         //sesión seleccionada
         Sesion sesion = ses.buscarSesion(p, num); //cambiar segun sesion
@@ -353,7 +353,7 @@ public class ParticipanteController {
                     exploracion = (Exploracion) formularios.get(i);
                 }
             }
-            fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().id);
+            fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().getId());
             // crear las sesiones del participante
             // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas y le meta en otro, entonces ya tendría sus sesiones
             Sesion sesion1 = ses.buscarSesion(p, 1);
@@ -461,7 +461,7 @@ public class ParticipanteController {
 
     @GetMapping("/objetivos")
     public String objetivos(Model model){
-        Participante p = participante.findById(getUsuario().id).get();
+        Participante p = participante.findById(getUsuario().getId()).get();
         List<Objetivo> listaObjetivos = obj.listaObjetivos(p);
         model.addAttribute("listaObjetivos", listaObjetivos);
         model.addAttribute("user", getUsuario());
@@ -480,7 +480,7 @@ public class ParticipanteController {
 
     @PostMapping("/objetivos/guardar")
     public String guardarObjetivo(Objetivo objetivo){
-        Participante p = participante.findById(getUsuario().id).get();
+        Participante p = participante.findById(getUsuario().getId()).get();
         if(getUsuario().getId() == objetivo.getParticipante().getId()){
             objetivo.setParticipante(p);
             obj.guardar(objetivo); 
@@ -522,7 +522,7 @@ public class ParticipanteController {
     @PostMapping("/objetivos/guardar/{id}")
     public String process_editarObjetivo(@PathVariable("id") Integer id, @ModelAttribute Objetivo objetivo){
         if(getUsuario().getId() == objetivo.getParticipante().getId()){
-            Participante p = participante.findById(getUsuario().id).get();
+            Participante p = participante.findById(getUsuario().getId()).get();
             objetivo.setParticipante(p);
             obj.guardar(objetivo);        
             return "redirect:/objetivos";

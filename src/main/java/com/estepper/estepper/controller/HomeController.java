@@ -125,7 +125,7 @@ public class HomeController {
 
     @GetMapping("/perfil/{id}")
     public String perfil(@PathVariable("id") Integer id, Model model) {
-        if(id != getUsuario().id) id= getUsuario().id; //mejor no pasar ids para evitar errores, cambiarlo más adelante
+        if(id != getUsuario().getId()) id= getUsuario().getId(); //mejor no pasar ids para evitar errores, cambiarlo más adelante
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
@@ -140,7 +140,7 @@ public class HomeController {
     @GetMapping("/mostrarperfil/{id}")
     public String mostrarperfil(@PathVariable("id") Integer id, Model model) {
         
-        if(id != getUsuario().id) id= getUsuario().id; //mejor no pasar ids para evitar errores
+        if(id != getUsuario().getId()) id= getUsuario().getId(); //mejor no pasar ids para evitar errores
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
@@ -178,14 +178,14 @@ public class HomeController {
             @ModelAttribute Participante p) {
 
         if(getUsuario().getId() == id){
-            Usuario orig = usuario.findById(user.id).get(); // usuario antes de editarlo
+            Usuario orig = usuario.findById(user.getId()).get(); // usuario antes de editarlo
 
             if (user.contrasenia == "")
                 user.contrasenia = orig.contrasenia; // si no se ha cambiado la contraseña
             else
                 user.contrasenia = hash.encode(user.contrasenia);
 
-            usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.id);
+            usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.getId());
 
             if (orig instanceof Participante) { // si es un participante
                 Participante part = participante.findById(id).get();
@@ -230,7 +230,7 @@ public class HomeController {
 
         usuario.guardar(user);
 
-        fasevaloracion.crearFormularios(participante.findById(user.id).get());
+        fasevaloracion.crearFormularios(participante.findById(user.getId()).get());
 
         model.addAttribute("nickname", user.getNickname());
         model.addAttribute("codigo", user.getCodigo());

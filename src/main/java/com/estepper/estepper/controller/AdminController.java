@@ -152,7 +152,7 @@ public class AdminController {
         List<Usuario> lista = usuario.listadoTotal();
 
         for (int i = 0; i < lista.size(); i++) { // o hacer otra consulta pasandolo el id
-            if (lista.get(i).id == usuarioLogueado().id)
+            if (lista.get(i).getId() == usuarioLogueado().getId())
                 lista.remove(i);
         }
         return lista;
