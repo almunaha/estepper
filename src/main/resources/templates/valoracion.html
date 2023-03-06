@@ -44,7 +44,7 @@
                 </li>
         
                 <li>
-                    <a href="#">
+                    <a th:href="@{/actividades}">
                         <i class="fa-solid fa-person-hiking"></i>
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
@@ -121,16 +121,21 @@
 
             <a class="btn btn-unir" style="color: white; background-color: #6ca4c7;" id="btn-part1" th:href="@{'/activarcuenta/' + ${participante.id}}">Activar cuenta</a>
             <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}}">Eliminar cuenta</a>
-            <script>
+            <input type="hidden" id="grupo" value="${participante.id}"/>
+
+            <script th:inline="javascript">
+              var grupo = /*[[${participante.grupo}]]*/ null;
+              var estado = /*[[${participante.estadoCuenta}]]*/ null;
+
               document.addEventListener('DOMContentLoaded', function () {
                 const btn_part = document.getElementById('btn-part1');
                 btn_part.addEventListener('click', function(e) {
-                  var grupo = "Para que no falle (prueba)"; //${participante.grupo};
-                  var estado = "Para que no falle (prueba)"; //${usuario.estadoCuenta};
-                  if (grupo == null) {
+               
+                  if (grupo === null) {
                     e.preventDefault();
                     alert("El usuario aún no pertenece a ningún grupo");
-                  } else if(estado == 'ALTA'){
+
+                  } else if(estado === 'ALTA'){
                     e.preventDefault();
                     alert("El usuario ya está dado de alta.");
                   }

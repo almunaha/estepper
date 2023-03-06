@@ -13,5 +13,6 @@ public interface ProgresoService {
     
     public List<Progreso> datos(Participante participante, TipoProgreso tipo); //datos de un tipo de progreso
     public List<Progreso> PesoPorFecha(Date fecha, TipoProgreso tipo, Participante participante);
+    public void deleteByParticipante(Participante p);
     
 }

@@ -56,7 +56,7 @@
         </li>
 
         <li>
-          <a href="#">
+          <a th:href="@{/actividades}">
             <i class="fa-solid fa-person-hiking"></i>
             <span class="nombre-enlaces">Actividades</span>
           </a>
@@ -119,30 +119,40 @@
         </div>
       </nav>
 
-      <div class="layout-sesion p-4 mt-3">
-        <h3 th:text="'Sesión' + ' ' + ${sesion.numSesion}">Sesión 1</h3> 
-        <form>
-          <label for="asistencia">Asistencia</label>
+      <div class="layout-sesion">
+        <div class="tit-sesion">
+          <div><h2 th:text="'Sesión' + ' ' + ${sesion.numSesion}"></h2></div>
+        </div>
+
+        <form method="post" th:action="@{'/process_sesion/' + ${sesion.numSesion}}" th:object="${sesion}">
           <div>
-            <select id="asistencia">
-              <option>Si</option>
-              <option>No</option>
-              <option>Justificado</option>
-            </select>
-          </div>
+            <div class="flex-sesion">
+              
+              <div class="cont-flex">
+                <label for="asistencia" class="mt-4">Asistencia</label>
+                <select id="asistencia" class="form-select" th:field="*{asistencia}">
+                  <option th:text="Si" th:value="SI"></option>
+                  <option th:text="No" th:value="NO"></option>
+                  <option th:text="Justificado" th:value="JUSTIFICADO"></option>
+                </select>
 
-          <div><label for="observaciones">Tus notas</label></div>
-          <div><textarea id="observaciones"></textarea></div>
+                <div class="mt-4"><label for="observaciones">Tus notas</label></div>
+                <div><textarea id="observaciones" class="form-control" placeholder="Escribe aquí..." th:field="*{observaciones}" rows="4"></textarea></div>
+              </div>
 
-          <div><label>Diapositivas:</label></div>
-          <div>
-            <a href="../static/diapositivas/Taller online sesion 1 (nuevo formato).pdf" target="_blank">
-              <button>Ver</button>
-            </a>
-          </div>
+              <div class="cont-flex">
+                <div class="mt-4"><label>Diapositivas</label></div>
+                <img width="20" th:src="@{/img/iconoPdf.png}" />
+                <a class="enlace-diapo" th:text="'Taller online sesion ' + ${sesion.numSesion} + '.pdf'" th:href="@{'/diapos/descargar/' + ${sesion.numSesion}}"></a>
+              </div>
+            </div>
 
-          <button>Guardar</button>
+            <div class="botones-sesion mt-5">
+              <a class="btn-sesion" id="atras" th:href="@{/sesiones}">Atrás</a>  
+              <button class="btn-sesion" id="guardar">Guardar</button>
+            </div>
         </form>
+
 
       </div>
 

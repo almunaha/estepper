@@ -14,6 +14,8 @@ public interface GrupoService {
     public void delete(Integer id);
     public void save(Grupo grupo);
     public Grupo findByNombre(String nombre); 
+    public void update(Grupo grupo);
+    
 
 }
 

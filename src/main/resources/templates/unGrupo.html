@@ -41,7 +41,7 @@
 
             <div class="menu">
                 <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a href="#" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
+                <a th:href="@{/actividades}" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i> Actividades</a>
             </div>
 
         </div>
@@ -139,7 +139,10 @@
                             <h2 th:text="${lis.nickname}"></h2>
                             <h3 th:text="${lis.codigo}"></h3>
                             <p th:text="${lis.edad} + ' ' + años"></p>
+                            <div style="display: flex; justify-content: space-around; flex-direction: column;">
                             <a class="botonGr" th:href="@{'/valoracion/' + ${lis.id}}">Ver expediente</a>
+                            <a class="botonGr" style="background: red;" th:href="@{'/echargrupo/' + ${lis.id}}">Echar del grupo</a>
+                            </div>
 
                         </div>
                     </div>

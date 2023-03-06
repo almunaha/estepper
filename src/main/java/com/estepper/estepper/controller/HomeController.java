@@ -3,20 +3,17 @@ package com.estepper.estepper.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
+
 import java.time.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,28 +23,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Progreso;
-
 import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
-import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.Sexo;
-import com.estepper.estepper.model.enums.TipoProgreso;
-import com.estepper.estepper.service.UsuarioService;
 
+import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.TipoProgreso;
+
+import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
-import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ProgresoService;
+import com.estepper.estepper.service.MaterialService;
 
 @Controller
 public class HomeController {
@@ -60,6 +53,9 @@ public class HomeController {
 
     @Autowired
     private ParticipanteService participante;
+
+    @Autowired
+    private MaterialService materialS;
 
     @Autowired
     private ProgresoService progreso;
@@ -182,23 +178,25 @@ public class HomeController {
     public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user,
             @ModelAttribute Participante p) {
 
-        Usuario orig = usuario.findById(user.id).get(); // usuario antes de editarlo
+        if(getUsuario().getId() == id){
+            Usuario orig = usuario.findById(user.id).get(); // usuario antes de editarlo
 
-        if (user.contrasenia == "")
-            user.contrasenia = orig.contrasenia; // si no se ha cambiado la contraseña
-        else
-            user.contrasenia = hash.encode(user.contrasenia);
+            if (user.contrasenia == "")
+                user.contrasenia = orig.contrasenia; // si no se ha cambiado la contraseña
+            else
+                user.contrasenia = hash.encode(user.contrasenia);
 
-        usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.id);
+            usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.id);
 
-        if (orig instanceof Participante) { // si es un participante
-            Participante part = participante.findById(id).get();
+            if (orig instanceof Participante) { // si es un participante
+                Participante part = participante.findById(id).get();
 
-            participante.update(p.edad, p.sexo, p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
-                    part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), id);
-        }
+                participante.update(p.edad, p.sexo, p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
+                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), id);
+            }
 
-        return "redirect:/mostrarperfil/{id}";
+            return "redirect:/mostrarperfil/{id}";
+        } else return "redirect:/";
     }
 
     @GetMapping("/baja")
@@ -258,44 +256,44 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
-        if (elusuario instanceof Coordinador) {
-            model.addAttribute("listado", participante.materiales(id));
+        if (elusuario instanceof Coordinador && participante.findById(id).get().getIdCoordinador() == elusuario.getId()) {
+            model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
             return "materialesCoor";
-        } else {
-            model.addAttribute("listado", participante.materiales(id));
+        } else if(elusuario instanceof Participante && getUsuario().getId() == id && getUsuario().getEstadoCuenta().equals(Estado.ALTA)){
+            model.addAttribute("listado", materialS.materiales(id));
             return "materialesPart";
         }
+        else if(elusuario instanceof Participante && getUsuario().getId() == id){
+            return "acceso";
+        } else return "redirect:/";
     }
 
-    @RequestMapping(value="/materiales/download/{id}", method=RequestMethod.GET)
-    @ResponseBody
-    public FileSystemResource downloadFile(@PathVariable("id") Integer id) {
-    Materiales material = participante.getMaterial(id);
-    return new FileSystemResource(new File(material.getLink()));
-    }
-
+    //subir material a un solo participante
     @PostMapping("/process_material/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
-            material.setParticipante(participante.findById(id).get());
-            material.setGrupo(participante.findById(id).get().getGrupo());
-            if(!file.isEmpty()){
-                try {
-                    Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
-                    String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
-                    byte[] bytesArc = file.getBytes(); 
-                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
-                    Files.write(rutaCompleta, bytesArc);
-                    material.setLink(rutaCompleta.toString());
-                    participante.updateMaterial(material);
-                } catch (Exception e) {
-                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
-                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+        Participante p = participante.findById(id).get();
+            if(getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id){
+                material.setParticipante(p);
+                material.setGrupo(p.getGrupo());
+                if(!file.isEmpty()){
+                    try {
+                        Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
+                        String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                        byte[] bytesArc = file.getBytes(); 
+                        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                        Files.write(rutaCompleta, bytesArc);
+                        material.setLink(rutaCompleta.toString());
+                        materialS.updateMaterial(material);
+                    } catch (Exception e) {
+                        String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
-        return "redirect:/";
+        return "redirect:/materiales/{id}";
     }
 
     public Usuario getUsuario() {
@@ -306,9 +304,12 @@ public class HomeController {
             userDetails = (UserDetails) principal;
         }
 
-        String codigo = userDetails.getUsername(); // codigo del logueado
+        if (userDetails != null) {
+            String codigo = userDetails.getUsername(); // codigo del logueado
 
-        Usuario user = usuario.logueado(Integer.parseInt(codigo));
-        return user;
+            Usuario user = usuario.logueado(Integer.parseInt(codigo)); // atributos del logueado
+            return user;
+        }
+        return null;
     }
 }

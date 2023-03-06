@@ -57,7 +57,7 @@ class EstepperApplicationTests {
 		usuarioRepo.save(new Administrador(0, 333, "Javier",  "javier@ucm.es", hash.encode("javierpass"), 
 		Estado.ALTA));
 		
-	    grupoRepo.save(new Grupo(1, coor.getId(), "909A67BZ5","Las saltimbanquis",0));
+	   // grupoRepo.save(new Grupo(1, coor.getId(), "909A67BZ5","Las saltimbanquis",0));
 
 		/*
 		Usuario retorno = usuarioRepo.save(us);

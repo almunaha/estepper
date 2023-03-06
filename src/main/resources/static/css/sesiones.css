@@ -1,6 +1,4 @@
-.layout-sesiones{
-
-}
+/* botones sesiones 1 a 10*/
 
 .btn-sesiones ul{
     list-style: none;
@@ -35,10 +33,82 @@
 } 
 
 /* Sesión individual */
-.layout-sesiones{
-
+.layout-sesion{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    background-color: white;
+    margin: 2%;
+    padding: 3%;
+    width: 70%;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 4%;
 }
 
+.tit-sesion{
+    background-color: #eeca9a;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    height: 5%;
+    padding: 1%;
+    color: white;
+    text-align: center;
+}
+
+.flex-sesion{
+    display: flex;
+    gap: 5%;
+    justify-content: center;
+}
+
+.flex-sesion label{
+    font-size: 120%;
+    font-weight: 600;
+    margin-bottom: 1.5%;
+}
+
+.cont-flex{
+    width: 45%;
+}
+
+#observaciones{
+    resize: none;
+}
+
+.enlace-diapo:hover{
+    text-decoration: underline;
+    color: #1958b8;
+}
+
+.botones-sesion{
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    gap: 5%;
+}
+
+.btn-sesion{
+    width: 14%;
+    text-align: center;
+    border: none;
+    padding: 1%;
+    font-size: 120%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    
+}
+
+.btn-sesion:hover{
+    transform: scale(1.1);
+}
+
+#atras{
+    background-color: white;
+    color: black;
+}
+
+#guardar{
+    background-color: #b59770;
+    color: white;
+}
 /* fichas */
 
 /* FICHA 0 */

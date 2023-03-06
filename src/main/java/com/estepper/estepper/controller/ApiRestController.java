@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,10 +53,13 @@ public class ApiRestController {
             userDetails = (UserDetails) principal;
         }
 
-        String codigo = userDetails.getUsername(); // codigo del logueado
+        if (userDetails != null) {
+            String codigo = userDetails.getUsername(); // codigo del logueado
 
-        Usuario user = usuario.logueado(Integer.parseInt(codigo));
-        return user;
+            Usuario user = usuario.logueado(Integer.parseInt(codigo)); // atributos del logueado
+            return user;
+        }
+        return null;
     }
 
     @GetMapping("/index/sesiones")
