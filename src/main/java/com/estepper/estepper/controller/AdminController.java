@@ -27,6 +27,8 @@ import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.GrupoService;
+import com.estepper.estepper.service.ObjetivoService;
+import com.estepper.estepper.service.ProgresoService;
 
 @Controller
 public class AdminController {
@@ -42,6 +44,12 @@ public class AdminController {
 
     @Autowired
     private GrupoService grupoS;
+
+    @Autowired
+    private ProgresoService pro;
+
+    @Autowired
+    private ObjetivoService obj;
 
     @Autowired
     private ParticipanteService participante;
@@ -60,10 +68,12 @@ public class AdminController {
             if (usuario.findById(id).get() instanceof Participante) {
                 Participante p = participante.findById(id).get();
                 materialS.deleteByParticipante(p);
+                ses.deleteByParticipante(p);
+                obj.deleteByParticipante(p);
+                pro.deleteByParticipante(p);
                 fasevaloracion.eliminarcuenta(p);
                 p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
                 grupoS.update(p.getGrupo());
-                ses.deleteByParticipante(p);
             }
 
             else

@@ -39,6 +39,7 @@ import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.Antecedentes;
 import com.estepper.estepper.model.entity.ActividadFisica;
+import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.AlimentacionVal;
 
 import com.estepper.estepper.model.enums.Asistencia;
@@ -371,10 +372,14 @@ public class ParticipanteController {
         if(getUsuario() instanceof Coordinador){
             Participante p = participante.findById(id).get();
             materialS.deleteByParticipante(p);
+            ses.deleteByParticipante(p);
+            obj.deleteByParticipante(p);
+            pro.deleteByParticipante(p);
             fasevaloracion.eliminarcuenta(p);
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
             grupoS.update(p.getGrupo());
-            ses.deleteByParticipante(p);
+            
+
         }
        return "redirect:/";
     }
