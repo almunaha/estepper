@@ -26,7 +26,7 @@ public class Participante extends Usuario{
    private String fotoParticipante;
 
     @Column(nullable=true)
-    private Integer perdidaDePeso;
+    private Double perdidaDePeso;
     @Column(nullable=true)
     private Integer asistencia;
     @Column(nullable=true)
@@ -49,7 +49,7 @@ public class Participante extends Usuario{
         super();
     }
 
-    public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Integer perdidaDePeso,Integer asistencia,
+    public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Double perdidaDePeso,Integer asistencia,
     Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante){
         super(id, codigo, nickname, email, contrasenia, estadoCuenta);
         this.idCoordinador=idCoordinador;
@@ -78,11 +78,11 @@ public class Participante extends Usuario{
         this.sexo = sexo;
     }
 
-    public Integer getPerdidaDePeso() {
+    public Double getPerdidaDePeso() {
         return perdidaDePeso;
     }
 
-    public void setPerdidaDePeso(Integer perdidaDePeso) {
+    public void setPerdidaDePeso(Double perdidaDePeso) {
         this.perdidaDePeso = perdidaDePeso;
     }
 

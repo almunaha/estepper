@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.nio.file.Files;
 
 import org.springframework.ui.Model;
@@ -428,7 +429,39 @@ public class ParticipanteController {
             model.addAttribute("perimetro", perimetro);
 
             List<Sesion> sesiones = ses.sesiones(p);
-            model.addAttribute("sesiones", sesiones);           
+            model.addAttribute("sesiones", sesiones); 
+            
+            //CALCULAR IMC
+            //Coger formulario de exploración:
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            Exploracion exploracion = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Exploracion) {
+                    exploracion = (Exploracion) formularios.get(i);
+                }
+            }
+
+            //Altura:
+            Double altura = exploracion.getTalla().doubleValue();
+            altura = altura/100;
+
+            //Buscar último registro de peso
+            Progreso progrPes = pro.pesoAntiguo(p, TipoProgreso.PESO);
+            Double ultPeso = null;
+
+            if(progrPes != null){
+                ultPeso = progrPes.getDato().doubleValue();               
+            }
+
+            else{
+                ultPeso = exploracion.getPeso().doubleValue(); 
+            }
+
+            //Calcular IMC
+            Double imc = ultPeso/(altura*altura);
+            DecimalFormat imc2 = new DecimalFormat("#.00");
+            
+            model.addAttribute("imc", imc2.format(imc));
 
             model.addAttribute("progreso", new Progreso());
             return "progreso";
@@ -442,6 +475,35 @@ public class ParticipanteController {
         Participante p = participante.findById(getUsuario().getId()).get();
         progreso.setParticipante(p);
         progreso.setTipo(TipoProgreso.PESO);
+
+        //Coger formulario de exploración:
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+        Exploracion exploracion = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Exploracion) {
+                exploracion = (Exploracion) formularios.get(i);
+            }
+        }
+
+        Progreso primerPeso = pro.primerPeso(p, TipoProgreso.PESO);
+        Double pe = null;
+
+        if(primerPeso != null){ //aunque realmente el primero siempre será el de exploración yo creo 
+            pe = primerPeso.getDato().doubleValue();
+        }
+
+        else{
+            pe = exploracion.getPeso().doubleValue();
+        }
+
+        Double pesoPerdido = null;
+        
+        //positivo -> ha ganado, negativo -> ha perdido
+        if(progreso.getDato() - pe > 0) pesoPerdido = 0.0;
+        else pesoPerdido = progreso.getDato() - pe;
+        
+        p.setPerdidaDePeso(pesoPerdido);
+        participante.update(p.edad, p.sexo, p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(), p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getId());
 
         pro.guardar(progreso);
 

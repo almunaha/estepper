@@ -132,6 +132,7 @@
                     <h3>Dashboard progreso</h3>
                 </div>
 
+                <!-- Valores progreso (top) -->
                 <div class="valores-progreso">
                     <div class="valor">
                         <div class="flex-valor">
@@ -182,7 +183,33 @@
                     </div>
                 </div>
 
-                <div class="graficas-progreso">
+                <!-- Asistencia e IMC -->
+                <div class="asis-gr">
+                    <h5 class="tit-asis">Asistencia sesiones</h5>
+                    <h5 class="tit-asis">Índice de masa corporal</h5>
+                </div>
+
+                <div class="asistencia">
+                    
+                    <div class="asis-ind">
+                        
+                        <div class="asis-sesion" th:each="ses:${sesiones}">
+                            <span th:text="'S' + ${ses.numSesion}"></span>
+                            <div th:if="${ses.asistencia.name() == 'SI'}">
+                                <i style="color: rgb(110, 196, 222)" class="fa-solid fa-star"></i>
+                            </div>
+                            <div th:if="${ses.asistencia.name() == 'NO'}">
+                                <i style="color: rgb(225, 222, 222)" class="fa-solid fa-star"></i>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="asis-ind">
+                        <div style="font-size: 130%" th:text="${imc}"></div>
+                    </div>
+                </div>
+                <!-- Gráficas peso y perímetro -->
+                <div class="graficas-progreso"> 
                     <!-- PESO -->
                     <div class="progreso-datos">
                         <div class="header-progreso">
@@ -300,8 +327,6 @@
                         </div>
 
                     </div>
-
-
 
                     <!-- ÍNDICE CORPORAL -->
 

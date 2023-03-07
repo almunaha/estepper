@@ -36,6 +36,16 @@ public class ProgresoServiceImpl implements ProgresoService{
     public void deleteByParticipante(Participante p) {
         repo.deleteAllByParticipante(p);
     }
+    
+    @Override
+    public Progreso pesoAntiguo(Participante participante, TipoProgreso tipo){
+        return repo.findFirstByParticipanteAndTipoOrderByFechaDesc(participante, tipo);
+    }
+
+    @Override
+    public Progreso primerPeso(Participante participante, TipoProgreso tipo){
+        return repo.findFirstByParticipanteAndTipoOrderByFechaAsc(participante, tipo);
+    }
 
     
 }

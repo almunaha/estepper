@@ -154,7 +154,7 @@ public class HomeController {
             String sexo = "No asignado";
           
             if(p.getAsistencia() == null){p.setAsistencia(0);}
-            if(p.getPerdidaDePeso() == null){p.setPerdidaDePeso(0);}
+            if(p.getPerdidaDePeso() == null){p.setPerdidaDePeso(0.0);}
             if (p.getSexo() != null) {sexo = String.valueOf(p.getSexo());}
             if (p.getEdad() != null) {edad = String.valueOf(p.getEdad());}
             

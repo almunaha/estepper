@@ -155,15 +155,42 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* asistencia sesiones */
+.asis-gr{
+    display: flex;
+    width: 100%;
+}
+
+.tit-asis{
+    width: 50%;
+    margin-left: 1.3%;
+    margin-top: 2%;
+}
 
 .asistencia{
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     width: 100%;
     height: 20%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+}
 
+.asis-ind{
+    display: flex;
+    width: 50%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .asis-sesion{
-    display: flex;
+    width: 10%;
+}
+
+.asis-sesion i{
+    font-size: 160%;
 }

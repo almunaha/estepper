@@ -14,7 +14,7 @@ public interface ParticipanteService {
     public Optional<Participante> findById(Integer id);   
     public Participante getParticipante(Integer id); 
     public List<Participante> listadoGrupo(Grupo grupo);
-    public void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Integer perdidadepeso, Integer sesionescompletas, Integer id);
+    public void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Double perdidadepeso, Integer sesionescompletas, Integer id);
     public Page<Participante> paginas(Pageable pageable);
     public void quitargrupo(Integer id);
 }
