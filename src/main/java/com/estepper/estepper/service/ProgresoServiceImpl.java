@@ -42,5 +42,10 @@ public class ProgresoServiceImpl implements ProgresoService{
         return repo.findFirstByParticipanteAndTipoOrderByFechaDesc(participante, tipo);
     }
 
+    @Override
+    public Progreso primerPeso(Participante participante, TipoProgreso tipo){
+        return repo.findFirstByParticipanteAndTipoOrderByFechaAsc(participante, tipo);
+    }
+
     
 }

@@ -15,5 +15,7 @@ public interface ProgresoService {
     public List<Progreso> PesoPorFecha(LocalDateTime fecha, TipoProgreso tipo, Participante participante);
     public void deleteByParticipante(Participante p);
     public Progreso pesoAntiguo(Participante participante, TipoProgreso tipo);
+    public Progreso primerPeso(Participante participante, TipoProgreso tipo);
+
     
 }

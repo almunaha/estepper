@@ -446,7 +446,16 @@ public class ParticipanteController {
             altura = altura/100;
 
             //Buscar último registro de peso
-            Double ultPeso = pro.pesoAntiguo(p, TipoProgreso.PESO).getDato();
+            Progreso progrPes = pro.pesoAntiguo(p, TipoProgreso.PESO);
+            Double ultPeso = null;
+
+            if(progrPes != null){
+                ultPeso = progrPes.getDato().doubleValue();               
+            }
+
+            else{
+                ultPeso = exploracion.getPeso().doubleValue(); 
+            }
 
             //Calcular IMC
             Double imc = ultPeso/(altura*altura);
@@ -466,6 +475,35 @@ public class ParticipanteController {
         Participante p = participante.findById(getUsuario().getId()).get();
         progreso.setParticipante(p);
         progreso.setTipo(TipoProgreso.PESO);
+
+        //Coger formulario de exploración:
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+        Exploracion exploracion = null;
+        for(int i = 0; i < formularios.size(); i++){
+            if(formularios.get(i) instanceof Exploracion) {
+                exploracion = (Exploracion) formularios.get(i);
+            }
+        }
+
+        Progreso primerPeso = pro.primerPeso(p, TipoProgreso.PESO);
+        Double pe = null;
+
+        if(primerPeso != null){ //aunque realmente el primero siempre será el de exploración yo creo 
+            pe = primerPeso.getDato().doubleValue();
+        }
+
+        else{
+            pe = exploracion.getPeso().doubleValue();
+        }
+
+        Double pesoPerdido = null;
+        
+        //positivo -> ha ganado, negativo -> ha perdido
+        if(progreso.getDato() - pe > 0) pesoPerdido = 0.0;
+        else pesoPerdido = progreso.getDato() - pe;
+        
+        p.setPerdidaDePeso(pesoPerdido);
+        participante.update(p.edad, p.sexo, p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(), p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getId());
 
         pro.guardar(progreso);
 

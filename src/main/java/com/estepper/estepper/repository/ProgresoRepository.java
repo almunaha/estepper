@@ -22,4 +22,6 @@ public interface ProgresoRepository extends JpaRepository<Progreso, Integer>{
     void deleteAllByParticipante(Participante p);   
 
     Progreso findFirstByParticipanteAndTipoOrderByFechaDesc(Participante participante, TipoProgreso tipo);
+    Progreso findFirstByParticipanteAndTipoOrderByFechaAsc(Participante participante, TipoProgreso tipo);
+
 }
