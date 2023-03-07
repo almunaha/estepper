@@ -195,10 +195,10 @@
                         
                         <div class="asis-sesion" th:each="ses:${sesiones}">
                             <span th:text="'S' + ${ses.numSesion}"></span>
-                            <div th:if="${ses.estado.name() == 'COMPLETA'}">
+                            <div th:if="${ses.asistencia.name() == 'SI'}">
                                 <i style="color: rgb(110, 196, 222)" class="fa-solid fa-star"></i>
                             </div>
-                            <div th:if="${ses.estado.name() == 'ENCURSO'}">
+                            <div th:if="${ses.asistencia.name() == 'NO'}">
                                 <i style="color: rgb(225, 222, 222)" class="fa-solid fa-star"></i>
                             </div>
                            
