@@ -588,6 +588,7 @@ public class ParticipanteController {
     @PostMapping("/objetivos/guardar")
     public String guardarObjetivo(Objetivo objetivo) {
         Participante p = participante.findById(getUsuario().getId()).get();
+        objetivo.setParticipante(p);
         if (getUsuario().getId() == objetivo.getParticipante().getId()) {
             objetivo.setParticipante(p);
             obj.guardar(objetivo);
