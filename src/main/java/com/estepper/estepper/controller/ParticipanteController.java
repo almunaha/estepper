@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.nio.file.Files;
 
 import org.springframework.ui.Model;
@@ -428,7 +429,30 @@ public class ParticipanteController {
             model.addAttribute("perimetro", perimetro);
 
             List<Sesion> sesiones = ses.sesiones(p);
-            model.addAttribute("sesiones", sesiones);           
+            model.addAttribute("sesiones", sesiones); 
+            
+            //CALCULAR IMC
+            //Coger formulario de exploración:
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            Exploracion exploracion = null;
+            for(int i = 0; i < formularios.size(); i++){
+                if(formularios.get(i) instanceof Exploracion) {
+                    exploracion = (Exploracion) formularios.get(i);
+                }
+            }
+
+            //Altura:
+            Double altura = exploracion.getTalla().doubleValue();
+            altura = altura/100;
+
+            //Buscar último registro de peso
+            Double ultPeso = pro.pesoAntiguo(p, TipoProgreso.PESO).getDato();
+
+            //Calcular IMC
+            Double imc = ultPeso/(altura*altura);
+            DecimalFormat imc2 = new DecimalFormat("#.00");
+            
+            model.addAttribute("imc", imc2.format(imc));
 
             model.addAttribute("progreso", new Progreso());
             return "progreso";
