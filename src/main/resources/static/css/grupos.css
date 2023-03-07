@@ -9,8 +9,8 @@
 }
 
 .encabezado-grupo{
-    /*border-left: thick solid #5ec1c5;*/
-    border-left-width: 10px;
+    margin-top: 4%;
+    margin-left: 4%;
 }
 
 .indicadores-grupo{
@@ -26,55 +26,56 @@
 
 
 .container-cards{
-    max-width: 1200px;
+   /* max-width: 90%;*/
     margin:auto;
-    margin-top:10px;
+    margin-top:1%;
     display: flex;
     flex-wrap: wrap; /*Para que cuando no quepa se ponga debajo*/
     justify-content: center;
+
 }
 
 .cardi{
-    width: 210px;
-    margin:10px;
+    width: 20%;
+    margin:1%;
     transition: all 300ms;
 }
 
 .cardi:hover{
-    width:240px;
+    width:22%;
 }
 
 .cardi .cover{
     width: 100%;
-    height: 250px;;
+    height: 33%;
     position: relative;
     overflow: hidden;
 }
 
 .cardi .cover img{
-    width:210px;
+    width:60%;
     display:block;
     margin:auto;
     position:relative;
-    top:40px;
+    top:10%;
     z-index:1;
     filter: drop-shadow(5px 5px 4 px rgba(0,0,0,0.5));
     transition: all 400ms;
 }
 
 .cardi:hover .cover img{
-    top: 0px;
+    top: -6%;
     filter:none;
 }
 
 .cardi .img-back{
     width: 100%;
-    height: 200px;
+    height: 150%;
     position: absolute;
-    bottom:-80px;
+    bottom:-50px;
     left:0;
     background-size: cover;
-    border-radius: 20px;
+    border-radius: 20%;
     transition: all 300ms;
 }
 
@@ -88,15 +89,17 @@
 }
 
 .cardi .descripcion{
-    background:white;
-    margin-top: -10px;
-    padding: 20px;
-    border-radius: 0px 0px 20px 20px;
+    padding: 10%;
+    word-wrap: break-word;
+   /* border-radius: 0px 0px 20px 20px;*/
     transition: all 300ms;
+    border-radius: 2%;
+    background-color: #ddedfd;
+    
 }
 
 .cardi:hover .descripcion{
-    padding:40px;
+    padding:10%;
 }
 
 .cardi .descripcion h2{
@@ -108,15 +111,16 @@
 }
 
 .botonGr{
-    padding: 10px 25px;
-    margin-top: 20px;
+    padding: 5% 10%;
+    margin-top: 2%;
     border:none;
-    background: #4988bb;
+    background: rgb(115, 161, 204);
     color:white;
     font-size: 14px;
     cursor:pointer;
     border-radius: 8px;
     transition: all 300ms;
+   
 }
 
 .botonGr:hover{
@@ -126,19 +130,18 @@
 /*PARA LA PARTE DE EDITAR, MUY REPETITIVO, VER CÓMO HACERLO DIFERENTE DE MOMENTO LO DEJO ASI*/
 
 
-
-
 .container-participantes{
-    display: flex; 
+    display:flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding:5%;
+    padding:3%;
 }
 
 .participantesGrupo{
-    padding: 3%;
+    padding: 2%;
    /* min-width: 40%;*/
-   width: 90%;
+   width: 25%;
  
 }
 
@@ -218,4 +221,205 @@
 
 .botonEliminarPart:hover{
     background: #c80e0e;
+}
+
+/*UN GRUPO*/
+
+.valores-progreso{
+    margin-top: 2%;
+    display: flex;
+    width: 100%;
+    height: 180px; /*PARA LA ALTURA DE LOS 4 DE ARRIBA*/
+    justify-content: space-between;
+    padding-left: 3%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    gap: 1%;
+}
+
+.valor1{
+    align-items: center;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+
+}
+
+.der-valor1{
+    margin-top: 7%;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: self-start;
+    flex-direction: column;
+}
+
+.valor{
+    box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
+    align-items: center;
+    background-color: white;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.flex-valor{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.iz-valor{
+    font-size: 220%;
+    width: 30%;
+    padding-left: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.der-valor{
+    width: 70%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dato-valor{
+    float: left;
+    width: 100%;
+    padding-left: 5%;
+    font-weight: bold;
+    font-size: 170%;
+}
+
+.bottom-valor{
+    float: left;
+    width: 100%;
+    padding-left: 5%;
+    font-size: 110%;
+}
+
+/* Gráficas */
+.graficas-progreso{
+
+    width: 100%;
+    height:max-content;
+    display: flex;
+    justify-content: space-between;
+    gap: 1%;
+
+    padding-left: 3%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+}
+
+.progreso-datos{
+    width: 70%;
+
+    padding: 3%;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
+    align-items: center;
+    background-color: white;
+}
+
+.progreso-datos2{
+    width: 30%;
+    padding: 5%;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
+    align-items: center;
+    background-color: white;
+}
+
+
+.header-progreso{
+    display:flex; 
+    justify-content: space-between;
+}
+
+
+
+#top-grafica{
+    flex-basis: 60%;
+}
+
+.botones-prog{
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    flex-basis: 40%;
+}
+.botones-prog button{
+    margin-right: 10px;
+}
+
+.btn-form{
+    display: flex;
+    gap: 2%;
+}
+
+.btn-reg{
+    font-size: 15px; 
+    background-color: rgb(251, 179, 116);
+    border: 0.5px solid rgb(251, 179, 116);
+    color: white;
+    width: 25%;
+    border-radius: 5px;
+    margin-top: 5px;
+    text-align: center;
+    padding: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.btn-plus, .btn-plus2 {
+    font-size: 22px; 
+    color: rgb(251, 179, 116);
+}
+
+.btn-plus:hover {
+    color: black;
+}
+
+.btn-reg:hover {
+    transform: scale(1.1);
+}
+
+#form-peso{
+    display: none;
+}
+
+.pesoTabla{
+    overflow-y: scroll;
+    flex-basis: 60%;
+    box-sizing: border-box;
+    max-height: 240px;
+}
+
+/* para que no aparezcan las flechitas en el input de tipo number */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+/* asistencia sesiones */
+
+.asistencia{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    width: 100%;
+    height: 20%;
+
+}
+
+.asis-sesion{
+    display: flex;
+}
+
+.layout-grafica{
+   
 }
