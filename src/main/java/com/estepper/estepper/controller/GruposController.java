@@ -114,9 +114,6 @@ public class GruposController {
             elgrupo.setNumParticipantes(0);
         }
 
-        if(elgrupo.getFechaFinGrupo() != grupo.getGrupo(elgrupo.getId()).getFechaFinGrupo()){
-            elgrupo.setFechaFinGrupo(elgrupo.getFechaFinGrupo());
-        }
         elgrupo.setFechaInicioGrupo(LocalDate.now());
 
         grupo.save(elgrupo);
@@ -164,6 +161,7 @@ public class GruposController {
             model.addAttribute("listaGrupos", listaGrupos);
             model.addAttribute("user", getUsuario());
             model.addAttribute("grupo", new Grupo());
+            model.addAttribute("mensaje", "No asignada");
             return "grupos";
         } else
             return "redirect:/";
@@ -219,6 +217,7 @@ public class GruposController {
             model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
             model.addAttribute("grupo", g);
             model.addAttribute("user", getUsuario());
+            model.addAttribute("mensaje", "No asignada");
         
             return "unGrupo";
         } else
