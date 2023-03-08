@@ -42,7 +42,7 @@ public class Grupo implements Serializable{
     private LocalDate fechaFinGrupo; 
 
     
-    public Grupo(Integer id, Integer idCoordinador, String codigo, String nombre, Integer numParticipantes, LocalDate fechaInicioGrupo, LocalDate fechaFinGrupo) {
+    public Grupo(Integer id, Integer idCoordinador, String codigo, String nombre, Integer numParticipantes, LocalDate fechaInicioGrupo, LocalDate fechaFinGrupo, List<Participante> participantes) {
         this.id = id;
         this.idCoordinador = idCoordinador;
         this.codigo = codigo;
