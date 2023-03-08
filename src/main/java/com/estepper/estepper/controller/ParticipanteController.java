@@ -696,8 +696,10 @@ public class ParticipanteController {
         List<Actividad> listado = act.listado();
         model.addAttribute("listado", listado);
 
-        if (user instanceof Coordinador)
+        if (user instanceof Coordinador){
             return "actividadesCoor";
+        }
+
         else if (user instanceof Participante)
             return "actividades";
         else
