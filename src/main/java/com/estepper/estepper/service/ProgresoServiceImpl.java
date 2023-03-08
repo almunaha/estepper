@@ -1,12 +1,15 @@
 package com.estepper.estepper.service;
+
 import com.estepper.estepper.repository.ProgresoRepository;
-import com.estepper.estepper.model.entity.Progreso;
 
 import com.estepper.estepper.model.enums.TipoProgreso;
+
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Progreso;
+
 import java.util.List;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

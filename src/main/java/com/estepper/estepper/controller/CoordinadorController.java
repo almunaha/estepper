@@ -39,7 +39,6 @@ import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.enums.Asistencia;
-import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoActividad;
 import com.estepper.estepper.model.enums.EstadoSesion;
 

@@ -1,15 +1,19 @@
 package com.estepper.estepper.repository;
+
 import com.estepper.estepper.model.entity.Progreso;
-import com.estepper.estepper.model.enums.TipoProgreso;
 import com.estepper.estepper.model.entity.Participante;
-import org.springframework.data.jpa.repository.Modifying;
+
+import com.estepper.estepper.model.enums.TipoProgreso;
+
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+
 import java.time.LocalDateTime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Modifying;
 
 public interface ProgresoRepository extends JpaRepository<Progreso, Integer>{
 

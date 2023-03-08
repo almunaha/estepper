@@ -12,14 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotNull;
-
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

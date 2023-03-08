@@ -5,16 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.Sexo;
+
 import com.estepper.estepper.model.entity.FaseValoracion;
 import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Participante;
-import com.estepper.estepper.model.enums.Estado;
-import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Antecedentes;
 import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.AlimentacionVal;
 import com.estepper.estepper.model.entity.ActividadFisica;
+
 import com.estepper.estepper.repository.FaseValoracionRepository;
 import com.estepper.estepper.repository.ExploracionRepository;
 import com.estepper.estepper.repository.FindriscRepository;

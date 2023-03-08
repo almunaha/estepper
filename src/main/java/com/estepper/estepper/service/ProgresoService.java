@@ -1,10 +1,12 @@
 package com.estepper.estepper.service;
+
 import java.util.List;
+
 import java.time.LocalDateTime;
 
+import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.model.entity.Progreso;
-import com.estepper.estepper.model.enums.TipoProgreso;
 import com.estepper.estepper.model.entity.Participante;
 
 public interface ProgresoService {
