@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.estepper.estepper.model.entity.Usuario;
+
 import com.estepper.estepper.model.enums.Estado;
 
 import jakarta.transaction.Transactional;

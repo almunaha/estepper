@@ -253,13 +253,22 @@ public class ParticipanteController {
             model.addAttribute("participante", p);
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
             Clasificacion clasificacion = null;
+            Exploracion exploracion = null;
+            Findrisc findrisc = null;
             for (int i = 0; i < formularios.size(); i++) {
                 if (formularios.get(i) instanceof Clasificacion) {
                     clasificacion = (Clasificacion) formularios.get(i);
                 }
+                if (formularios.get(i) instanceof Exploracion) {
+                    exploracion = (Exploracion) formularios.get(i);
+                }
+                if (formularios.get(i) instanceof Findrisc) {
+                    findrisc = (Findrisc) formularios.get(i);
+                }
             }
-
             model.addAttribute("clasificacion", clasificacion);
+            model.addAttribute("exploracion", exploracion);
+            model.addAttribute("findrisc", findrisc);
             return "clasificacion";
         } else
             return "redirect:/";

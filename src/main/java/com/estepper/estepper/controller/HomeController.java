@@ -3,7 +3,6 @@ package com.estepper.estepper.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -70,16 +69,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-        }
-
-        String codigo = userDetails.getUsername(); // codigo del logueado
-
-        Usuario user = usuario.logueado(Integer.parseInt(codigo)); // atributos del logueado
+        Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
             return "coordinador";
