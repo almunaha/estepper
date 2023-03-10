@@ -632,4 +632,13 @@ input[type="date"] {
     margin-left: 5%;
 }
 
+/* RESPONSIVE */
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    .d-flex {
+      width: 100%;
+    }
+  
+}
 
