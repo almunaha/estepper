@@ -98,3 +98,19 @@
 .act-coor i{
     color: rgb(224, 176, 94);
 }
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+
+    .actividades-part{
+        flex-direction: column;
+    }
+
+    .actividad{
+        width: 100%;
+    }
+
+
+}
