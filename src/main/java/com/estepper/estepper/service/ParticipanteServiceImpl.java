@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.enums.Estado;
 
 import com.estepper.estepper.repository.ParticipanteRepository;
 import com.estepper.estepper.repository.GrupoRepository;
@@ -25,8 +26,8 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     private GrupoRepository repoG;
 
     @Override
-    public List<Participante> listado(){ 
-        return(List<Participante>) repo.findAll();
+    public List<Participante> listado(Integer idCoordinador, Estado estadoCuenta){ 
+        return(List<Participante>) repo.findByIdCoordinadonOrEstado(idCoordinador, estadoCuenta);
     }
 
     @Override
@@ -49,8 +50,8 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }
 
     @Override
-    public Page<Participante> paginas(Pageable pageable){
-        return(Page<Participante>) repo.findAll(pageable);
+    public Page<Participante> paginas(Pageable pageable, Integer idCoordinador, Estado estadoCuenta){
+        return(Page<Participante>) repo.findByIdCoordinadonOrEstado(pageable, idCoordinador, estadoCuenta);
     }
 
     @Override

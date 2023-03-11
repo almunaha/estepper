@@ -31,7 +31,7 @@ import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Mensaje;
-
+import com.estepper.estepper.model.enums.Estado;
 
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -60,7 +60,7 @@ public class GruposController {
 
     @GetMapping("/grupos/nuevo")
     public String mostrarFormularioDeNuevoGrupo(Model model) {
-        List<Participante> participantesExistentes = part.listado();// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().id, Estado.BAJA);// obtener lista de participantes de la base de
                                                                     // datos
         model.addAttribute("participantesExistentes", participantesExistentes);
         model.addAttribute("grupo", new Grupo());
@@ -176,7 +176,7 @@ public class GruposController {
         ModelAndView modelo = new ModelAndView("editar_grupo");
         Grupo gr = grupo.getGrupo(id);
 
-        List<Participante> participantesExistentes = part.listado();// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().id, Estado.BAJA);// obtener lista de participantes de la base de
         modelo.addObject("participantesExistentes", participantesExistentes);
 
         modelo.addObject("grupo", gr);
