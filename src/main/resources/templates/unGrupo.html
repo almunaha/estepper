@@ -13,6 +13,8 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="stylesheet" th:href="@{/css/grupos.css}">
 
+    <script src="/js/progreso.js"></script>
+
 
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
@@ -40,11 +42,21 @@
                 <h4>Estepper</h4>
             </div>
 
-            <div class="menu">
-                <a th:href="@{/}" class="d-block text-light p-3"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a th:href="@{/actividades}" class="d-block text-light p-3"><i class="fa-solid fa-person-hiking"></i>
-                    Actividades</a>
-            </div>
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+            </ul>
 
         </div>
 
@@ -109,7 +121,7 @@
                             </div>
                             <div class="bottom-valor1">
                                 <i class="fa-solid fa-calendar-minus" style="color: rgb(115, 161, 204)"></i>
-                                <span th:text="'Fecha finalización: ' + ${mensaje}"
+                                <span th:text="'Fecha finalización: ' + ${mensajito}"
                                     th:if="${grupo.fechaFinGrupo == null}"></span>
                                 <span th:text="'Fecha finalización: ' + ${grupo.fechaFinGrupo}"
                                     th:unless="${grupo.fechaFinGrupo == null}"></span>
@@ -182,13 +194,13 @@
             </div>-->
 
             <div class="graficas-progreso">
-            
+
                 <div class="progreso-datos">
                     <div class="header-progreso">
                         <h4>Participantes</h4>
                     </div>
 
-                  
+
                     <div class="layout-grafica">
                         <div class="container-cards">
 
@@ -222,25 +234,82 @@
                 </div>
 
 
-                <div class="progreso-datos2">
-                    <div class="header-progreso">
-                        <h4>Ver qué poner</h4>
+                <!--<div class="progreso-datos2">
+                    <!--<div class="header-progreso">
+                        <h4>Ver qué poner (tablón, chat grupal...)</h4>
                     </div>
 
                     HOLI
                     <div class="layout-grafica">
 
-
-
                     </div>
 
 
 
+
+                </div>-->
+
+
+                <!--
+                    <div class="wrapper">
+                <section class="chat-area">
+                    <header>
+
+                        <img src="/img/avatar1.png" alt="">
+                        <h4 th:text="${grupo.nombre}"></h4>
+                        <div class="details">
+                         </div>
+                </header>
+                <div class="chat-box">
+
+                </div>
+                <form th:action="@{/mensajes/guardar}" th:object="${message}" method="post" class="typing-area">
+
+                    <input type="text" th:field="*{mensaje}" class="input-field"
+                        placeholder="Escribe un mensaje aquí ..." autocomplete="off">
+                    <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+                </form>
+            </section>
+        </div>
+                -->
+
+
+                <div class="wrapper">
+                    <section class="chat-area">
+                        <header>
+    
+                            <img src="/img/avatar1.png" alt="">
+                            <h4 th:text="${grupo.nombre}"></h4>
+                            <div class="details">
+                            </div>
+                        </header>
+                        <div class="chat-box">
+                            <ul>
+                                <li th:each="m : ${mensajes}">
+                                    <span th:text="${m.mensaje}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <form th:action="@{/mensajes/guardar}" th:object="${message}" method="post" class="typing-area">
+    
+                            <input type="text" th:field="*{mensaje}" class="input-field"
+                                placeholder="Escribe un mensaje aquí ..." autocomplete="off">
+
+                            <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+
+                        </form>
+                    </section>
                 </div>
 
-             
 
             </div>
+
+
+           
+
+
+
+
 
             <!--<div class="container-cards">
 

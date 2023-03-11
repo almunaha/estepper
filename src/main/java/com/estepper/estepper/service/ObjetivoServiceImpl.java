@@ -24,15 +24,11 @@ public class ObjetivoServiceImpl implements ObjetivoService {
         repo.save(obj);
     }
 
-    /*@Override
-    public List<Objetivo> objetivosPorEstado(Participante participante, EstadoObjetivo estado){
-        return repo.findByParticipanteyEstadoObjetivo(participante, estado);
+    @Override
+    public List<Objetivo> getObjetivos(){
+        return repo.findAll();
     }
 
-    @Override
-    public List<Objetivo> ObjetivosPorFecha(Date fecha, EstadoObjetivo estado, Participante participante){
-        return repo.findByFechaAfteryEstadoObjetivoyParticipante(fecha, estado, participante);
-    }*/
 
     @Override
     public List<Objetivo> listaObjetivos(Participante p) {
