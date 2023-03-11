@@ -34,7 +34,7 @@
                     aria-label="Username" aria-describedby="basic-addon1" style="border-right: 0;" required />
                 <span class="input-group-text"
                     style="background-color:white; border-left-style: none; cursor: pointer; " id="ojo"><i
-                        class="fa-solid fa-eye-slash" onmouseover="this.style.color = '#aaa'"
+                        class="fa-solid fa-eye" onmouseover="this.style.color = '#aaa'"
                         id="iconoOjo" onmouseout="this.style.color = '#000'"></i></span>
             </div>
 
@@ -52,14 +52,14 @@
                 
                 if (this.previousElementSibling.type === 'password') {
                     this.previousElementSibling.type = "text";
-                    iconoOjo.classList.remove('fa-eye-slash');
-                    iconoOjo.classList.add('fa-eye');
+                    iconoOjo.classList.remove('fa-eye');
+                    iconoOjo.classList.add('fa-eye-slash');
                 }
 
                 else if (this.previousElementSibling.type === 'text') {
                     this.previousElementSibling.type = "password";
-                    iconoOjo.classList.remove('fa-eye');                
-                    iconoOjo.classList.add('fa-eye-slash'); 
+                    iconoOjo.classList.remove('fa-eye-slash'); 
+                    iconoOjo.classList.add('fa-eye');                
                 }
             })
         </script>
