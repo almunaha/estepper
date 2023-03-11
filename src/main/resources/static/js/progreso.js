@@ -29,6 +29,7 @@ $(document).ready(function () {
     //URL actual
     var baseUrl = window.location.origin;
     console.log(baseUrl);
+    var meses = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
     //Gráfica PESO
     let graficaPeso = document.getElementById("grafica").getContext("2d");
@@ -59,7 +60,13 @@ $(document).ready(function () {
         .then(response => response.json())
         .then(data => {
             for (i in data) {
-                peso.data['labels'].push(data[i].fecha);
+                var fecha = new Date(data[i].fecha);
+                var dia = fecha.getDate();
+                var mes = fecha.getMonth();
+                var anio = fecha.getFullYear();
+                var dato = dia + " " + meses[mes] + " " + anio;
+               
+                peso.data['labels'].push(dato);
                 peso.data['datasets'][0].data.push(data[i].dato);
             }
             peso.update();
@@ -95,7 +102,13 @@ $(document).ready(function () {
         .then(response => response.json())
         .then(data => {
             for (i in data) {
-                perimetro.data['labels'].push(data[i].fecha);
+                var fecha = new Date(data[i].fecha);
+                var dia = fecha.getDate();
+                var mes = fecha.getMonth();
+                var anio = fecha.getFullYear();
+                var dato = dia + " " + meses[mes] + " " + anio;
+               
+                perimetro.data['labels'].push(dato);
                 perimetro.data['datasets'][0].data.push(data[i].dato);
             }
             perimetro.update();
