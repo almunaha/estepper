@@ -3,9 +3,9 @@ package com.estepper.estepper.service;
 import java.util.Date;
 import java.util.List;
 
-
 import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Participante;
+
 import com.estepper.estepper.model.enums.EstadoObjetivo;
 
 public interface ObjetivoService {

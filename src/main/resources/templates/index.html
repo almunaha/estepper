@@ -31,7 +31,7 @@
   <script src="sweetalert2.all.min.js"></script>
   <script src="sweetalert2.min.js"></script>
   <link rel="stylesheet" href="sweetalert2.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   <title>Inicio</title>
 
@@ -147,7 +147,7 @@
               cancelButtonText: "Cerrar",
               confirmButtonColor: "#6ca4c7",
 
-              didRender: function() {
+              didRender: function () {
                 const registrar = document.querySelector('#enlace');
 
                 if (registrar) {
@@ -186,12 +186,15 @@
               <div class="fondoGraficas">
                 <div><canvas id="graficoSesiones"></canvas></div>
               </div>
-            
+
 
               <script>
-            
+                //URL actual
+                var baseUrl = window.location.origin;
+                console.log(baseUrl);
+
                 let canvas = document.getElementById("graficoSesiones").getContext("2d");
-                let url = 'http://localhost:7070/index/sesiones';
+                let url = baseUrl + '/index/sesiones';
 
                 fetch(url)
                   .then(response => response.json())
@@ -199,14 +202,14 @@
 
                     var graficaSesiones = new Chart(canvas, {
                       type: "pie",
-                  
-                  
+
+
                       data: {
                         labels: ["Sesiones completadas", "Sesiones pendientes"],
                         datasets: [
                           {
-                            data: [data.sesionesCompletas, 10-data.sesionesCompletas],
-                           // borderColor: 'rgb(251, 179, 116)'
+                            data: [data.sesionesCompletas, 10 - data.sesionesCompletas],
+                            // borderColor: 'rgb(251, 179, 116)'
 
                           }
 

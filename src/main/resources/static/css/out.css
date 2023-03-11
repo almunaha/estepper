@@ -1,0 +1,16 @@
+#login, #proyecto{
+    width: 36%;
+}
+
+#registro{
+    width: 30%;
+}
+
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    #login, #proyecto, #registro {
+      width: 100%;
+    }
+  
+}

@@ -55,11 +55,67 @@
 }
 
 /* COORDINADOR */
+.header-act{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 2%;
+    margin-top: 3%;
+    margin-right: 2%;
+    margin-bottom: 1%;
+}
+
+.btn-act{
+    background-color: rgb(224, 176, 94);
+    border: 2px solid;
+    color: white;
+    border-color: rgb(224, 176, 94);
+    font-size: 115%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    padding: 0.8%;
+}
+
+.btn-act:hover{
+    background-color: white;
+    color: rgb(224, 176, 94);
+    border-color: rgb(224, 176, 94);
+}
+
 .layout-actividades{
     margin-left: 2%;
     margin-right: 2%;
+}
 
-    padding: 5%;
+.act-coor{
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    margin-bottom: 2%;
+    display: flex;
+    height: 80px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.act-coor i{
+    color: rgb(224, 176, 94);
+}
+
+.btn-form{
+    margin-top: 2%;
+    text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+
+    .actividades-part{
+        flex-direction: column;
+    }
+
+    .actividad{
+        width: 100%;
+    }
+
+
 }

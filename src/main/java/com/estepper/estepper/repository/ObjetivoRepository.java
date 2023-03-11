@@ -1,13 +1,12 @@
 package com.estepper.estepper.repository;
+
 import com.estepper.estepper.model.entity.Objetivo;
-import com.estepper.estepper.model.enums.EstadoObjetivo;
 
 import jakarta.transaction.Transactional;
 
 import com.estepper.estepper.model.entity.Participante;
 
 import java.util.List;
-import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

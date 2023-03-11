@@ -11,8 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.estepper.estepper.model.entity.Participante;
-import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.model.entity.Grupo;
+
+import com.estepper.estepper.model.enums.Sexo;
 
 import jakarta.transaction.Transactional;
 

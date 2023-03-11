@@ -91,28 +91,28 @@ $(document).ready(function () {
     $("#ojo").click(function () {
         if (this.previousElementSibling.type === 'password') {
             this.previousElementSibling.type = "text";
-            iconoOjo1.removeClass('fa-eye-slash');
-            iconoOjo1.addClass('fa-eye');
+            iconoOjo1.removeClass('fa-eye');
+            iconoOjo1.addClass('fa-eye-slash');
         }
 
         else if (this.previousElementSibling.type === 'text') {
             this.previousElementSibling.type = "password";
-            iconoOjo1.removeClass('fa-eye');                
-            iconoOjo1.addClass('fa-eye-slash');
+            iconoOjo1.removeClass('fa-eye-slash');
+            iconoOjo1.addClass('fa-eye');                
         }
     });
 
     $("#ojo2").click(function () {
         if (this.previousElementSibling.type === 'password') {
             this.previousElementSibling.type = "text";
-            iconoOjo2.removeClass('fa-eye-slash');
-            iconoOjo2.addClass('fa-eye');
+            iconoOjo2.removeClass('fa-eye');
+            iconoOjo2.addClass('fa-eye-slash');
         }
 
         else if (this.previousElementSibling.type === 'text') {
             this.previousElementSibling.type = "password";
-            iconoOjo2.removeClass('fa-eye');                
-            iconoOjo2.addClass('fa-eye-slash');
+            iconoOjo2.removeClass('fa-eye-slash');
+            iconoOjo2.addClass('fa-eye');                
         }
     });
 

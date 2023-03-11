@@ -1,6 +1,5 @@
 package com.estepper.estepper.controller;
 
-import java.io.Console;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,8 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Optional;
 
 import javax.swing.JOptionPane;
 

@@ -2,7 +2,6 @@ package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import com.estepper.estepper.model.enums.Categoria;
 import com.estepper.estepper.model.enums.EstadoActividad;
