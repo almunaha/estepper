@@ -99,6 +99,11 @@
     color: rgb(224, 176, 94);
 }
 
+.btn-form{
+    margin-top: 2%;
+    text-align: center;
+}
+
 /* RESPONSIVE */
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */

@@ -26,7 +26,9 @@ $(document).ready(function () {
         $("#form-peso").show();
     });
 
-
+    //URL actual
+    var baseUrl = window.location.origin;
+    console.log(baseUrl);
 
     //Gráfica PESO
     let graficaPeso = document.getElementById("grafica").getContext("2d");
@@ -52,8 +54,7 @@ $(document).ready(function () {
             }
         }
     })
-
-    let url = 'http://localhost:7070/progreso/peso'; //petición http
+    let url = baseUrl + '/progreso/peso'; //petición http
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -89,7 +90,7 @@ $(document).ready(function () {
         }
     })
 
-    let url2 = 'http://localhost:7070/progreso/perimetro'; //petición http
+    let url2 = baseUrl + '/progreso/perimetro'; //petición http
     fetch(url2)
         .then(response => response.json())
         .then(data => {
