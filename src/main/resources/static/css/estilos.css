@@ -217,6 +217,13 @@ a{
 
 /*BOTONES FILTRADO*/
 
+#filtros{
+    margin-top: 4%;
+    margin-bottom: 1%;
+    display: flex;
+    justify-content: space-between;
+}
+
 #btn-filtrarALTA, #btn-filtrarBAJA {
     padding: 5px 20px;
     text-align: center;
@@ -239,6 +246,10 @@ a{
 #btn-filtrarBAJA:hover {
     background-color: #434b6a;
     color: white;
+}
+
+#buscadorPart{
+    width: 25%;
 }
 
 /*BOTONCITOS ICONOS CON LO DE ARRIBA*/
