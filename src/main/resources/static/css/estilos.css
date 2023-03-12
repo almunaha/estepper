@@ -203,7 +203,7 @@ a{
     width: 90%;
 }
 
-#btn-part{
+#btn-part, #btn-admi{
     color: white;
     background-color: #6ca4c7;
 }
@@ -211,8 +211,12 @@ a{
 /* Administrador */
 .flex-usuarios{
     display: flex;
-    
+}
 
+.top-admin{
+    display: flex;
+    gap: 2%;
+    margin-bottom: 2%;
 }
 
 /*BOTONES FILTRADO*/
