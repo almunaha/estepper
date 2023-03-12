@@ -654,6 +654,10 @@ input[type="date"] {
     .d-flex {
       width: 100%;
     }
+
+    #sidebar-container{
+        display: none;
+    }
   
 }
 

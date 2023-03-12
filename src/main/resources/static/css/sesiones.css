@@ -16,11 +16,12 @@
 }
 
 .btn-sesiones ul li .b-ses {
+    display: inline-block;
     font-size: 40px;
     color: white;
     background-color: #eeca9a;
     padding: 15px;
-    width: 80px;
+    width: 100%;
     border: 1px solid;
     border-color: #eeca9a;
     border-radius: 6px;
@@ -137,3 +138,55 @@
 }
 
 /* FICHA 1*/
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    #sidebar-container{
+        display: none;
+    }
+
+    .btn-sesiones ul {
+        display: grid;
+        align-items: center;
+        justify-items: end;
+        grid-gap: 1px;
+        grid-template-columns: auto auto;
+        grid-template-rows: 100px 100px 100px 100px 100px;
+    }
+
+    .btn-sesiones ul li .b-ses { 
+        font-size: 25px;
+        padding: 10px;
+    }
+
+    .layout-sesion{
+        width: 85%;
+    }
+    
+    .btn-sesion{
+        width: 40%;
+        font-size: 80%;
+    }
+
+    .enlace-diapo{
+        font-size: 65%;
+    }
+
+    .cont-flex img{
+        width: 15px;
+    }
+
+    .cont-flex label{
+        font-size: 93%;
+    }
+
+    .cont-flex select{
+        font-size: 84%;
+    }
+
+    .cont-flex ::placeholder{
+        font-size: 70%;
+    }
+}

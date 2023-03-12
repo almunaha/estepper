@@ -65,7 +65,7 @@ $(document).ready(function () {
                 var mes = fecha.getMonth();
                 var anio = fecha.getFullYear();
                 var dato = dia + " " + meses[mes] + " " + anio;
-               
+
                 peso.data['labels'].push(dato);
                 peso.data['datasets'][0].data.push(data[i].dato);
             }
@@ -107,37 +107,78 @@ $(document).ready(function () {
                 var mes = fecha.getMonth();
                 var anio = fecha.getFullYear();
                 var dato = dia + " " + meses[mes] + " " + anio;
-               
+
                 perimetro.data['labels'].push(dato);
                 perimetro.data['datasets'][0].data.push(data[i].dato);
             }
             perimetro.update();
         });
-    
-     //Botones del PERÍMETRO
-     $(".perimetroTabla").hide();
-     $("#form-perimetro").hide();
-     $("#grafica2").show();
- 
-     $("#registroPerimetro").click(function () {
-         $(".perimetroTabla").show();
-         $("#grafica2").hide();
-         $("#form-perimetro").hide();
-     });
- 
-     $("#graficaPerimetro").click(function () {
-         $("#grafica2").show();
-         $(".perimetroTabla").hide();
-         $("#form-perimetro").hide();
-     });
- 
-     $(".btn-plus2").click(function () {
-         $("#grafica2").hide();
-         $(".perimetroTabla").hide();
-         $("#registroPerimetro").hide();
-         $("#graficaPerimetro").hide();
-         $(".btn-plus2").hide();
-         $("#form-perimetro").show();
-     });
+
+    //Botones del PERÍMETRO
+    $(".perimetroTabla").hide();
+    $("#form-perimetro").hide();
+    $("#grafica2").show();
+
+    $("#registroPerimetro").click(function () {
+        $(".perimetroTabla").show();
+        $("#grafica2").hide();
+        $("#form-perimetro").hide();
+    });
+
+    $("#graficaPerimetro").click(function () {
+        $("#grafica2").show();
+        $(".perimetroTabla").hide();
+        $("#form-perimetro").hide();
+    });
+
+    $(".btn-plus2").click(function () {
+        $("#grafica2").hide();
+        $(".perimetroTabla").hide();
+        $("#registroPerimetro").hide();
+        $("#graficaPerimetro").hide();
+        $(".btn-plus2").hide();
+        $("#form-perimetro").show();
+    });
+
+    //IMC
+    var imc = parseFloat(document.getElementById("imc").textContent); //pasar el texto a un número float
+    var valores = [
+        { label: "NORMOPESO", value: 25, color: "#61AF37" },
+        { label: "SOBREPESO", value: 29, color: "#F39E4A" },
+        { label: "OBESIDAD", value: 40, color: "#DA4F3F" }
+    ];
+
+    var resultado = "";
+    for (var i = 0; i < valores.length; i++) {
+        if (imc <= valores[i].value) {
+            resultado = valores[i].label;
+            break;
+        }
+    }
+
+    var myChart = new Chart(document.getElementById("resultadoIMC"), {
+        type: 'doughnut',
+        data: {
+            labels: [resultado],
+            datasets: [{
+                data: [imc],
+                backgroundColor: [valores[i].color],
+                borderWidth: 0,
+                hoverBorderColor: "rgba(255,255,255,1)",
+                hoverBorderWidth: 2
+            }]
+        },
+        options: {
+            cutoutPercentage: 70,
+            rotation: 270,
+            circumference: 180,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                enabled: false
+            }
+        }
+    });
 
 });

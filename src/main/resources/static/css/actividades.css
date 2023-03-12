@@ -108,13 +108,18 @@
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 
+    #sidebar-container{
+        display: none;
+    }
 
     .actividades-part{
         flex-direction: column;
+        align-content: space-around;
     }
 
     .actividad{
-        width: 100%;
+        width: 84%;
+        margin-bottom: 3.5%;
     }
 
 
