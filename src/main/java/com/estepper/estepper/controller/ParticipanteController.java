@@ -196,6 +196,25 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
+    @GetMapping("/valoracion/{id}")
+    public String fasedevaloracion(@PathVariable("id") Integer id, Model model) {
+        if ((getUsuario() instanceof Coordinador)
+                && ((participante.findById(id).get().getIdCoordinador() == getUsuario().getId())
+                        || participante.findById(id).get().estadoCuenta.equals(Estado.BAJA))) {
+            Participante part = participante.findById(id).get();
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(part);
+            if(formularios.size() > 2) model.addAttribute("formularios", formularios);
+            model.addAttribute("participante", part);
+            model.addAttribute("usuario", usuario.findById(id).get());
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("idparticipante", id);
+            return "valoracion";
+        }
+
+        else
+            return "redirect:/";
+    }
+
     @GetMapping("/findrisc/{id}")
     public String findrisc(@PathVariable Integer id, Model model) {
         Participante p = participante.findById(id).get();

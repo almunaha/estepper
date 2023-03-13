@@ -144,6 +144,7 @@
               var grupo = /*[[${participante.grupo}]]*/ null;
               var estado = /*[[${participante.estadoCuenta}]]*/ null;
               var id = /*[[${participante.id}]]*/ null;
+              var formularios = /*[[${formularios}]]*/ null;
 
               document.addEventListener('DOMContentLoaded', function () {
                 const btn_part = document.getElementById('btn-part1');
@@ -157,6 +158,9 @@
                   } else if(estado === 'ALTA'){
                     e.preventDefault();
                     alert("El usuario ya está dado de alta.");
+                  } else if(formularios === null){
+                    e.preventDefault();
+                    alert("Debe rellenar correctamente los formularios de Exploracion y Findrisc");
                   }
                   else {
                     btn_part.disabled = true;
