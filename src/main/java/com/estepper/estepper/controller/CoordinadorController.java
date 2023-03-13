@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import java.util.stream.IntStream;
@@ -95,8 +96,14 @@ public class CoordinadorController {
             }
 
             List<Participante> listado = paginaPart.getContent();
-            model.addAttribute("listado", listado);
             model.addAttribute("user", getUsuario());
+            List<Participante> listadofiltrada = new ArrayList<>();
+            for(int i = 0; i < listado.size(); i++){
+                if(listado.get(i).getEstadoCuenta().equals(Estado.BAJA) || listado.get(i).getIdCoordinador() == getUsuario().getId()){
+                    listadofiltrada.add(listado.get(i));
+                }
+            }
+            model.addAttribute("listado", listadofiltrada);
 
             return "participantes";
         }
