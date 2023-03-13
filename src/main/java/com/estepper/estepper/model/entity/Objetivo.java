@@ -35,21 +35,27 @@ public class Objetivo implements Serializable{
     @JoinColumn(name="idParticipante", nullable=false)
     private Participante participante;
 
+    private String titulo;
     private String descripcion;
+    private String repeticion;
+    private Date fechaRecordatorio;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = ISO.DATE)
     @NotNull
-    private Date fecha;
+    private Date fechaVencimiento;
 
     @Enumerated(value = EnumType.STRING)
     private EstadoObjetivo estado;
 
-    public Objetivo(Integer id, Participante participante, String descripcion, Date fecha, EstadoObjetivo estado) {
+    public Objetivo(Integer id, Participante participante, String titulo, String descripcion, String repeticion, Date fechaRecordatorio, Date fechaVencimiento, EstadoObjetivo estado) {
         this.id = id;
         this.participante = participante;
+        this.titulo = titulo;
         this.descripcion = descripcion;
-        this.fecha = fecha;
+        this.repeticion = repeticion;
+        this.fechaRecordatorio = fechaRecordatorio;
+        this.fechaVencimiento = fechaVencimiento;
         this.estado = estado;
     }
 
@@ -73,6 +79,14 @@ public class Objetivo implements Serializable{
         this.participante = participante;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -81,12 +95,28 @@ public class Objetivo implements Serializable{
         this.descripcion = descripcion;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getRepeticion() {
+        return repeticion;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setRepeticion(String repeticion) {
+        this.repeticion = repeticion;
+    }
+
+    public Date getFechaRecordatorio() {
+        return fechaRecordatorio;
+    }
+
+    public void setFechaRecordatorio(Date fechaRecordatorio) {
+        this.fechaRecordatorio = fechaRecordatorio;
+    }
+
+    public Date getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFechaVencimiento(Date fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     public EstadoObjetivo getEstadoObjetivo() {

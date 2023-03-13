@@ -1,9 +1,9 @@
 package com.estepper.estepper.model.enums;
 
 public enum EstadoObjetivo {
-    CONSEGUIDO,
+    COMPLETADO,
+    PENDIENTE,
     ENPROCESO,
-    CANCELADO,
 }
 
 

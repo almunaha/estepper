@@ -1,35 +1,37 @@
-/* botones sesiones 1 a 10*/
+.layout-sesiones{
+    width: 100%;
+    height: 89vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
 
+/* botones sesiones 1 a 10*/
 .btn-sesiones ul{
     list-style: none;
     display: grid;
+    grid-gap: 20px;
     grid-template-columns: auto auto auto auto auto;
     grid-template-rows: 150px 150px ;
-
 }
 
-.btn-sesiones ul li .btn-part {
+.btn-sesiones ul li .b-ses {
+    display: inline-block;
     font-size: 40px;
     color: white;
-    background-color: #6ca4c7;
+    background-color: #eeca9a;
     padding: 15px;
-    width: 80px;
+    width: 100%;
     border: 1px solid;
-    border-color: #6ca4c7;
+    border-color: #eeca9a;
     border-radius: 6px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-.btn-sesiones ul li #bloqueada{
-    color: #6ca4c7;
-    background-color: white;
-    opacity: 0.5;
-}
-
-.btn-sesiones ul li .btn-part:hover{
+.btn-sesiones ul li .b-ses:hover{
     color: white;
-    background-color: #436a82;
-    border-color: #436a82;
+    background-color: #ebab58;
+    border-color: #ebab58;
 } 
 
 /* Sesión individual */
@@ -136,3 +138,55 @@
 }
 
 /* FICHA 1*/
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    #sidebar-container{
+        display: none;
+    }
+
+    .btn-sesiones ul {
+        display: grid;
+        align-items: center;
+        justify-items: end;
+        grid-gap: 1px;
+        grid-template-columns: auto auto;
+        grid-template-rows: 100px 100px 100px 100px 100px;
+    }
+
+    .btn-sesiones ul li .b-ses { 
+        font-size: 25px;
+        padding: 10px;
+    }
+
+    .layout-sesion{
+        width: 85%;
+    }
+    
+    .btn-sesion{
+        width: 40%;
+        font-size: 80%;
+    }
+
+    .enlace-diapo{
+        font-size: 65%;
+    }
+
+    .cont-flex img{
+        width: 15px;
+    }
+
+    .cont-flex label{
+        font-size: 93%;
+    }
+
+    .cont-flex select{
+        font-size: 84%;
+    }
+
+    .cont-flex ::placeholder{
+        font-size: 70%;
+    }
+}

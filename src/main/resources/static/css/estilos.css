@@ -203,7 +203,7 @@ a{
     width: 90%;
 }
 
-#btn-part{
+#btn-part, #btn-admi{
     color: white;
     background-color: #6ca4c7;
 }
@@ -211,11 +211,22 @@ a{
 /* Administrador */
 .flex-usuarios{
     display: flex;
-    
+}
 
+.top-admin{
+    display: flex;
+    gap: 2%;
+    margin-bottom: 2%;
 }
 
 /*BOTONES FILTRADO*/
+
+#filtros{
+    margin-top: 4%;
+    margin-bottom: 1%;
+    display: flex;
+    justify-content: space-between;
+}
 
 #btn-filtrarALTA, #btn-filtrarBAJA {
     padding: 5px 20px;
@@ -239,6 +250,10 @@ a{
 #btn-filtrarBAJA:hover {
     background-color: #434b6a;
     color: white;
+}
+
+#buscadorPart{
+    width: 25%;
 }
 
 /*BOTONCITOS ICONOS CON LO DE ARRIBA*/
@@ -632,4 +647,17 @@ input[type="date"] {
     margin-left: 5%;
 }
 
+/* RESPONSIVE */
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    .d-flex {
+      width: 100%;
+    }
+
+    #sidebar-container{
+        display: none;
+    }
+  
+}
 

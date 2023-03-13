@@ -98,3 +98,29 @@
 .act-coor i{
     color: rgb(224, 176, 94);
 }
+
+.btn-form{
+    margin-top: 2%;
+    text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    #sidebar-container{
+        display: none;
+    }
+
+    .actividades-part{
+        flex-direction: column;
+        align-content: space-around;
+    }
+
+    .actividad{
+        width: 84%;
+        margin-bottom: 3.5%;
+    }
+
+
+}

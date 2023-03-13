@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +30,12 @@ import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.entity.Mensaje;
+import com.estepper.estepper.model.enums.Estado;
 
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
-
+import com.estepper.estepper.service.MensajeService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.UsuarioService;
 
@@ -52,9 +55,12 @@ public class GruposController {
     @Autowired
     private MaterialService materialS;
 
+    @Autowired
+    private MensajeService mensaje;
+
     @GetMapping("/grupos/nuevo")
     public String mostrarFormularioDeNuevoGrupo(Model model) {
-        List<Participante> participantesExistentes = part.listado();// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().id, Estado.BAJA);// obtener lista de participantes de la base de
                                                                     // datos
         model.addAttribute("participantesExistentes", participantesExistentes);
         model.addAttribute("grupo", new Grupo());
@@ -158,7 +164,7 @@ public class GruposController {
             model.addAttribute("listaGrupos", listaGrupos);
             model.addAttribute("user", getUsuario());
             model.addAttribute("grupo", new Grupo());
-            model.addAttribute("mensaje", "No asignada");
+            model.addAttribute("mensajito", "No asignada");
             return "grupos";
         } else
             return "redirect:/";
@@ -170,7 +176,7 @@ public class GruposController {
         ModelAndView modelo = new ModelAndView("editar_grupo");
         Grupo gr = grupo.getGrupo(id);
 
-        List<Participante> participantesExistentes = part.listado();// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().id, Estado.BAJA);// obtener lista de participantes de la base de
         modelo.addObject("participantesExistentes", participantesExistentes);
 
         modelo.addObject("grupo", gr);
@@ -210,12 +216,14 @@ public class GruposController {
     @GetMapping("/unGrupo/{idGrupo}")
     public String unGrupo(@PathVariable("idGrupo") Integer idGrupo, Model model){
         Grupo g = grupo.getGrupo(idGrupo);
+                
         if(getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()){
             model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
             model.addAttribute("grupo", g);
             model.addAttribute("user", getUsuario());
-            model.addAttribute("mensaje", "No asignada");
-        
+            model.addAttribute("mensajito", "No asignada");
+            model.addAttribute("message", new Mensaje());
+
             return "unGrupo";
         } else
         
@@ -303,4 +311,17 @@ public class GruposController {
 
     }
 
+    @PostMapping("/mensajes/guardar")
+    public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, Model model) {
+
+        List<Mensaje> mensajes = mensaje.obtenerMensajes();
+        model.addAttribute("mensajes", mensajes);
+        
+        mensaje.save(elmensaje);
+
+        return "redirect:/";
+    }
+
+
 }
+

@@ -86,10 +86,17 @@
                     <h4>Listado de participantes</h4>
                 </div>
 
-                <!-- Buscador de participantes -->
-                <div class="container-fluid">
-                    <form class="d-flex justify-content-end">
-                        <input id="filtrarParticipantes" class="form-control me-2 light-table-filter w-25"
+                <div class="container-fluid" id="filtros">
+                     <!--BOTONES DE FILTRADO -->
+                    <div>
+                        <button id="btn-filtrarTodos">Todos</button>
+                        <button id="btn-filtrarALTA">ALTA</button>
+                        <button id="btn-filtrarBAJA">BAJA</button>
+                    </div>
+                    
+                    <!-- Buscador de participantes -->
+                    <form class="d-flex justify-content-end" id="buscadorPart">
+                        <input id="filtrarParticipantes" class="form-control me-2 light-table-filter"
                             data-table="tablePart" type="text" placeholder="Buscar...">
                     </form>
                 </div>
@@ -107,11 +114,6 @@
                         }(jQuery));
                     });
                 </script>
-
-                <!--BOTÓN DE FILTRADO -->
-
-                <button id="btn-filtrarALTA">ALTA</button>
-                <button id="btn-filtrarBAJA">BAJA</button>
 
                 <!--ALERTA MODAL -->
 
@@ -189,10 +191,17 @@
 
                 <script type="text/javascript">
                     document.addEventListener('DOMContentLoaded', function () {
+                        const btnFiltrarTodos = document.getElementById('btn-filtrarTodos');
                         const btnFiltrarALTA = document.getElementById('btn-filtrarALTA');
                         const btnFiltrarBAJA = document.getElementById('btn-filtrarBAJA');
                         const btn_unir = document.getElementById('btn-unir');
                         const tablaParticipantes = document.querySelector('.tablePart tbody');
+
+                        btnFiltrarTodos.addEventListener('click', function (){
+                            for (let i = 0; i < tablaParticipantes.rows.length; i++) {
+                                tablaParticipantes.rows[i].style.display = "";
+                            }
+                        });
 
                         btnFiltrarALTA.addEventListener('click', function () {
                             const estadoActivo = 'ALTA';
