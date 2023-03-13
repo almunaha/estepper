@@ -215,6 +215,21 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
+    @GetMapping("/expediente/{id}")
+    public String expediente(@PathVariable("id") Integer id, Model model) {
+        if ((getUsuario() instanceof Coordinador)
+                && ((participante.findById(id).get().getIdCoordinador() == getUsuario().getId())
+                        || participante.findById(id).get().estadoCuenta.equals(Estado.BAJA))) {
+            Participante part = participante.findById(id).get();
+            model.addAttribute("participante", part);
+            model.addAttribute("user", getUsuario());
+            return "expediente";
+        }
+
+        else
+            return "redirect:/";
+    }
+
     @GetMapping("/findrisc/{id}")
     public String findrisc(@PathVariable Integer id, Model model) {
         Participante p = participante.findById(id).get();
