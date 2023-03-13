@@ -86,30 +86,30 @@
                 <div class="imagenPerfil">
                     <img  width="100" th:src="${participante.fotoParticipante}" alt="imagenPerfil"/>
                 </div>
-                <div th:unless="${participante.sexo == null}">
-                    <h5><i class="fa-solid fa-venus-mars"></i></h5>
+                <div th:unless="${participante.sexo == null}" style="display: flex; align-items: center;"></div>
+                    <h5><i class="fa-solid fa-venus-mars" style="margin-right: 10px;"></i></h5>
                     <h5 th:text="${participante.sexo}"></h5>
                 </div>
-                <div th:unless="${participante.edad == null}">
-                    <h5><i class="fa-solid fa-calendar-day"></i></h5>
+                <div th:unless="${participante.edad == null}" style="display: flex; align-items: center;"></div>
+                    <h5><i class="fa-solid fa-calendar-day"style="margin-right: 10px;"></i></h5>
                     <h5 th:text="${participante.edad}"></h5>
                 </div>
-                <div th:unless="${participante.asistencia == null}">
-                    <h5><i class="fa-solid fa-list-check"></i></h5>
-                    <h5 th:text="${participante.asistencia}"></h5>
+                <div th:unless="${participante.asistencia == null}" style="display: flex; align-items: center;">
+                    <h5><i class="fa-solid fa-list-check" style="margin-right: 10px;"></i></h5>
+                    <h5 th:text="'Asistencia: ' + ${participante.asistencia}"></h5>
                 </div>
-                <div th:unless="${participante.perdidaDePeso == null}">
-                    <h5><i class="fa-solid fa-weight-scale"></i></h5>
+                <div th:unless="${participante.perdidaDePeso == null}" style="display: flex; align-items: center;">
+                    <h5><i class="fa-solid fa-weight-scale" style="margin-right: 10px;"></i></h5>
                     <h5 th:text="${participante.perdidaDePeso}+ ' ' + 'kg perdidos'"></h5>
+                </div>
+                <div th:unless="${participante.sesionesCompletas == null}" style="display: flex; align-items: center;">
+                    <h5><i class="fa-solid fa-gears" style="margin-right: 10px;"></i></h5>
+                    <h5 th:text="${participante.sesionesCompletas}+ ' ' + 'sesiones completas'"></h5>
                 </div>
             </div>
 
             <div>
                 <div th:unless="${participante.idGrupo == 0}"><a class="btn" id="btn-part" title="Materiales" th:href="@{'/materialesGrupo/' + ${participante.idGrupo}}"> Materiales grupales </a></div>
-                <div th:unless="${participante.sesionesCompletas == null}">
-                    <h5><i class="fa-solid fa-gears"></i></h5>
-                    <h5 th:text="${participante.sesionesCompletas}+ ' ' + 'sesiones completas'"></h5>
-                </div>
                 <a class="btn" id="btn-part" title="Fase de valoracion" th:href="@{'/valoracion/' + ${participante.id}}"> Fase de valoración </a>
             </div>
             
