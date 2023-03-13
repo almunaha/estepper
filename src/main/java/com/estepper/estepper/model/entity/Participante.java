@@ -47,6 +47,9 @@ public class Participante extends Usuario{
     
     public Participante(){
         super();
+        sesionesCompletas = 0;
+        perdidaDePeso = 0.0;
+        asistencia = 0;
     }
 
     public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Double perdidaDePeso,Integer asistencia,
