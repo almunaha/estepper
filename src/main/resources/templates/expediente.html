@@ -21,6 +21,35 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto">
 
     <title>Expediente</title>
+
+    <style>
+        /* Estilo para el encabezado de participante */
+        h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        }
+
+        /* Estilo para los contenedores de información */
+        div {
+        margin-bottom: 0.5rem;
+        }
+
+        /* Estilo para las imágenes de perfil */
+        .imagenPerfil img {
+        border-radius: 50%;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* Estilo para el texto de información */
+        h5 {
+        font-size: 1rem;
+        font-weight: normal;
+        margin-bottom: 0;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -80,17 +109,17 @@
                     </ul>
                 </div>
             </nav>
-
-            <h3 th:text="${participante.nickname}">Nombre</h3>
+            <div style="margin-left: 20px; margin-top: 20px;">
+            <h3 th:text="${participante.nickname} + ': ' + ${participante.codigo}">Nombre</h3>
             <div>
                 <div class="imagenPerfil">
                     <img  width="100" th:src="${participante.fotoParticipante}" alt="imagenPerfil"/>
                 </div>
-                <div th:unless="${participante.sexo == null}" style="display: flex; align-items: center;"></div>
+                <div th:unless="${participante.sexo == null}" style="display: flex; align-items: center;">
                     <h5><i class="fa-solid fa-venus-mars" style="margin-right: 10px;"></i></h5>
                     <h5 th:text="${participante.sexo}"></h5>
                 </div>
-                <div th:unless="${participante.edad == null}" style="display: flex; align-items: center;"></div>
+                <div th:unless="${participante.edad == null}" style="display: flex; align-items: center;">
                     <h5><i class="fa-solid fa-calendar-day"style="margin-right: 10px;"></i></h5>
                     <h5 th:text="${participante.edad}"></h5>
                 </div>
@@ -113,7 +142,7 @@
                 <a class="btn" id="btn-part" title="Fase de valoracion" th:href="@{'/valoracion/' + ${participante.id}}"> Fase de valoración </a>
             </div>
             
-  
+            </div>
 
         </div>
 
