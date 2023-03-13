@@ -449,7 +449,7 @@ public class ParticipanteController {
             fasevaloracion.eliminarcuenta(p);
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
             grupoS.update(p.getGrupo());
-            if(getUsuario().getId() == id) return "redirect:/login";
+            if(getUsuario() == null) return "redirect:/login";
 
         }
         return "redirect:/";

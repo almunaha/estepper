@@ -172,7 +172,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         repoA.deleteByParticipante(participante);
         repoAl.deleteByParticipante(participante);
         repoAF.deleteByParticipante(participante);
-        repoP.delete(participante);
+        repoP.delete(participante.getId());
     }
 
     @Override

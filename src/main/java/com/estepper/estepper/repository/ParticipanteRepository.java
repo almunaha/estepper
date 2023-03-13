@@ -23,6 +23,10 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     List<Participante> findAll();
     Optional<Participante> findById(Integer id);
     List<Participante> findByGrupo(Grupo grupo);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Participante m WHERE m.id = :participante")
+    void delete(Integer participante);
 
     @Query("SELECT p FROM Participante p WHERE p.idCoordinador = :idCoordinador OR p.estadoCuenta = :estadoCuenta")
     List<Participante> findByIdCoordinadonOrEstado(Integer idCoordinador, Estado estadoCuenta);

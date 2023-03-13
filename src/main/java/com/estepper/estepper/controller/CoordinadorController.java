@@ -97,13 +97,7 @@ public class CoordinadorController {
 
             List<Participante> listado = paginaPart.getContent();
             model.addAttribute("user", getUsuario());
-            List<Participante> listadofiltrada = new ArrayList<>();
-            for(int i = 0; i < listado.size(); i++){
-                if(listado.get(i).getEstadoCuenta().equals(Estado.BAJA) || listado.get(i).getIdCoordinador() == getUsuario().getId()){
-                    listadofiltrada.add(listado.get(i));
-                }
-            }
-            model.addAttribute("listado", listadofiltrada);
+            model.addAttribute("listado", listado);
 
             return "participantes";
         }
