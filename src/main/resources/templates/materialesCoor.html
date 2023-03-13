@@ -16,6 +16,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
     <script src="/js/menu.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>Materiales</title>
 </head>
@@ -74,6 +75,33 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                 </ul>
               </div>
           </nav>
+          <div>
+            <h4>Materiales</h4>
+        </div>
+          <div class="container-fluid" id="filtros">
+                    
+            <!-- Buscador de materiales -->
+            <form class="d-flex justify-content-end" id="buscadorPart">
+                <input id="filtrarMateriales" class="form-control me-2 light-table-filter"
+                    data-table="tablePart" type="text" placeholder="Buscar...">
+            </form>
+        </div>
+
+        <script type="text/javascript">
+             $(document).ready(function () {
+                (function ($) {
+                    $('#filtrarMateriales').keyup(function () {
+                        var rex = new RegExp($(this).val(), 'i');
+                        $('.buscarParticipantes tr').hide();
+                        $('.buscarParticipantes tr').filter(function () {
+                            return rex.test($(this).text());
+                        }).show();
+                    })
+                }(jQuery));
+
+            });
+        </script>
+
           <table class="table tablePart">
             <thead class="thead-dark">
                 <tr>

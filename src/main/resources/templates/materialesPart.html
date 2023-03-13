@@ -118,6 +118,32 @@
           </ul>
         </div>
       </nav>
+      <div>
+        <h4>Materiales</h4>
+    </div>
+      <div class="container-fluid" id="filtros">
+                
+        <!-- Buscador de materiales -->
+        <form class="d-flex justify-content-end" id="buscadorPart">
+            <input id="filtrarMateriales" class="form-control me-2 light-table-filter"
+                data-table="tablePart" type="text" placeholder="Buscar...">
+        </form>
+    </div>
+
+    <script type="text/javascript">
+         $(document).ready(function () {
+            (function ($) {
+                $('#filtrarMateriales').keyup(function () {
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.buscarParticipantes tr').hide();
+                    $('.buscarParticipantes tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+                })
+            }(jQuery));
+
+        });
+    </script>
         <table class="table tablePart">
             <thead class="thead-dark">
                 <tr>
