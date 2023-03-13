@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 
 import java.time.*;
 
+import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -300,5 +301,12 @@ public class HomeController {
             return user;
         }
         return null;
+    }
+
+    //PRUEBA PARA USAR PYHTON EN JAVA
+    public void pruebaPython(){
+        try(PythonInterpreter pyInterp = new PythonInterpreter()) {
+            pyInterp.exec("print('Hello Python World!')");
+          }
     }
 }
