@@ -14,10 +14,6 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <!-- DataTables library -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>Participantes</title>
@@ -110,14 +106,8 @@
                                 $('.buscarParticipantes tr').filter(function () {
                                     return rex.test($(this).text());
                                 }).show();
-                                tabla.search($(this).val()).draw();
                             })
                         }(jQuery));
-
-                        var tabla = $('#tablePart').DataTable({
-                            searching: true,
-                            paging: true
-                        });
 
                     });
                 </script>
