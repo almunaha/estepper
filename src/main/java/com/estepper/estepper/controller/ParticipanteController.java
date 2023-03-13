@@ -440,7 +440,7 @@ public class ParticipanteController {
 
     @GetMapping("/eliminarcuenta/{id}")
     public String processElimCuenta(@PathVariable("id") Integer id) {
-        if (getUsuario() instanceof Coordinador) {
+        if (getUsuario() instanceof Coordinador || getUsuario().getId() == id) {
             Participante p = participante.findById(id).get();
             materialS.deleteByParticipante(p);
             ses.deleteByParticipante(p);
@@ -449,6 +449,7 @@ public class ParticipanteController {
             fasevaloracion.eliminarcuenta(p);
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
             grupoS.update(p.getGrupo());
+            if(getUsuario().getId() == id) return "redirect:/login";
 
         }
         return "redirect:/";
