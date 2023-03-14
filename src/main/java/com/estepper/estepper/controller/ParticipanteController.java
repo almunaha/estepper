@@ -750,4 +750,14 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
+    //CUADERNO
+    @GetMapping("/cuaderno")
+    public String cuaderno(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+            return "cuaderno";
+        else
+            return "redirect:/";
+    }
 }
