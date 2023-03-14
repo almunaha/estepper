@@ -108,41 +108,45 @@
                     </ul>
                 </div>
             </nav>
-            <div style="margin-left: 20px; margin-top: 20px;">
-            <h3 th:text="${participante.nickname} + ': ' + ${participante.codigo}">Nombre</h3>
-            <div>
+            <div style="margin-left: 10%; margin-top: 5%;">
+                <div style="display: grid;justify-content: center;background-color: whitesmoke;border-radius: 5%;margin-right: 10%;">
+                <h3 style="margin-top: 8%;" th:text="${participante.nickname} + ': ' + ${participante.codigo}">Nombre</h3>
                 <div class="imagenPerfil">
                     <img  width="100" th:src="${participante.fotoParticipante}" alt="imagenPerfil"/>
                 </div>
-                <div th:unless="${participante.sexo == null}" style="display: flex; align-items: center;">
-                    <h5><i class="fa-solid fa-venus-mars" style="margin-right: 10px;"></i></h5>
-                    <h5 th:text="${participante.sexo}"></h5>
                 </div>
-                <div th:unless="${participante.edad == null}" style="display: flex; align-items: center;">
-                    <h5><i class="fa-solid fa-calendar-day"style="margin-right: 10px;"></i></h5>
-                    <h5 th:text="${participante.edad}"></h5>
+                <div style="background-color: whitesmoke;border-radius: 5%; margin-right: 10%;">
+                <div style="display: flex; flex-wrap: wrap; margin-top: 5%; margin-bottom: 5%;">
+                <div th:unless="${participante.sexo == null}" style="display: flex; align-items: center; margin-left:2.5%; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
+                    <h5><i title="Género"class="fa-solid fa-venus-mars" style="margin-right: 10px;"></i></h5>
+                    <h5 th:text="${participante.sexo}" style="margin-left: 10px;"></h5>
                 </div>
-                <div th:unless="${participante.asistencia == null}" style="display: flex; align-items: center;">
-                    <h5><i class="fa-solid fa-list-check" style="margin-right: 10px;"></i></h5>
-                    <h5 th:text="'Asistencia: ' + ${participante.asistencia}"></h5>
+                <div th:unless="${participante.edad == null}" style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
+                    <h5><i title="Edad"class="fa-solid fa-calendar-day"style="margin-right: 10px;"></i></h5>
+                    <h5 th:text="${participante.edad}"style="margin-left: 10px;"></h5>
                 </div>
-                <div th:unless="${participante.perdidaDePeso == null}" style="display: flex; align-items: center;">
-                    <h5><i class="fa-solid fa-weight-scale" style="margin-right: 10px;"></i></h5>
-                    <h5 th:text="${participante.perdidaDePeso}+ ' ' + 'kg perdidos'"></h5>
+                <div th:unless="${participante.asistencia == null}" style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
+                    <h5><i title="Asistencia"class="fa-solid fa-list-check" style="margin-right: 10px;"></i></h5>
+                    <h5 th:text="'Asistencia: ' + ${participante.asistencia}"style="margin-left: 10px;"></h5>
                 </div>
-                <div th:unless="${participante.sesionesCompletas == null}" style="display: flex; align-items: center;">
-                    <h5><i class="fa-solid fa-gears" style="margin-right: 10px;"></i></h5>
-                    <h5 th:text="${participante.sesionesCompletas}+ ' ' + 'sesiones completas'"></h5>
+                <div th:unless="${participante.perdidaDePeso == null}" style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
+                    <h5><i title="Pérdida de peso" class="fa-solid fa-weight-scale" style="margin-right: 10px;"></i></h5>
+                    <h5 th:text="${participante.perdidaDePeso}+ ' ' + 'kg perdidos'"style="margin-left: 10px;"></h5>
+                </div>
+                <div th:unless="${participante.sesionesCompletas == null}" style="display: flex; align-items: center; margin-top: 5%; margin-right: 2.5%; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
+                    <h5><i title="Sesiones completas" class="fa-solid fa-gears" style="margin-right: 10px;"></i></h5>
+                    <h5 th:text="${participante.sesionesCompletas}+ ' ' + 'sesiones completas'"style="margin-left: 10px;"></h5>
+                </div>
+                </div>
+
+                <div style="display: flex; justify-content: center;">
+                    <div style="margin-right: 5%;" th:unless="${participante.idGrupo == 0}"><a class="btn" id="btn-part" title="Materiales" th:href="@{'/materialesGrupo/' + ${participante.idGrupo}}"> Materiales grupales </a></div>
+                    <div><a class="btn" id="btn-part" title="Fase de valoracion" th:href="@{'/valoracion/' + ${participante.id}}"> Fase de valoración </a></div>
+                </div>
                 </div>
             </div>
 
-            <div>
-                <div th:unless="${participante.idGrupo == 0}"><a class="btn" id="btn-part" title="Materiales" th:href="@{'/materialesGrupo/' + ${participante.idGrupo}}"> Materiales grupales </a></div>
-                <a class="btn" id="btn-part" title="Fase de valoracion" th:href="@{'/valoracion/' + ${participante.id}}"> Fase de valoración </a>
-            </div>
-            
-            </div>
-
+           
         </div>
 
     </div>
