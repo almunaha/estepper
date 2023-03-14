@@ -33,8 +33,8 @@ public class Participante extends Usuario{
     public Integer edad;
     @Column(nullable=true)
     private Integer sesionesCompletas;
-    @Column(nullable=true)
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "sexo", columnDefinition = "ENUM('MASCULINO', 'FEMENINO')", nullable = true)
     public Sexo sexo;
     
     @Column

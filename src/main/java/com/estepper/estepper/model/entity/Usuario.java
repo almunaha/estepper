@@ -28,6 +28,7 @@ public class Usuario implements Serializable{
     public String contrasenia;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "estadoCuenta", columnDefinition = "ENUM('ALTA', 'BAJA')")
     public Estado estadoCuenta;
     
     public Usuario(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta) {

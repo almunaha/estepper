@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.EstadoSesion;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -37,11 +39,13 @@ public class Sesion implements Serializable{
     private Participante participante; 
 
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "estado", columnDefinition = "ENUM('COMPLETA', 'ENCURSO')")
     private EstadoSesion estado;
 
     private String observaciones;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "asistencia", columnDefinition = "ENUM('SI', 'NO', 'JUSTIFICADO')")
     private Asistencia asistencia;
 
     private double cmsPerdidos;
