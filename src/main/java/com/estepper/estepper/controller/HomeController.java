@@ -265,7 +265,7 @@ public class HomeController {
     @PostMapping("/process_material/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
         Participante p = participante.findById(id).get();
-            if(getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id){
+            if(getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id || p.getEstadoCuenta().equals(Estado.BAJA)){
                 material.setParticipante(p);
                 material.setGrupo(p.getGrupo());
                 if(!file.isEmpty()){

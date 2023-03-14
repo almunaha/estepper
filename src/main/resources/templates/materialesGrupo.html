@@ -73,17 +73,14 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                 </ul>
               </div>
           </nav>
-          <div>
-            <h4>Materiales</h4>
+          <div
+          style="display: grid;justify-content: center; margin-top:5%;background-color:rgb(122, 184, 212);border-radius: 5%;margin-left: 10%;;margin-right: 10%;">
+          <h4 style="margin-top: 8%; color:azure">Materiales</h4>
         </div>
-          <div class="container-fluid" id="filtros">
-                    
-            <!-- Buscador de materiales -->
-            <form class="d-flex justify-content-end" id="buscadorPart">
-                <input id="filtrarMateriales" class="form-control me-2 light-table-filter"
-                    data-table="tablePart" type="text" placeholder="Buscar...">
-            </form>
-        </div>
+          <!-- Buscador de materiales -->
+          <form class="d-flex justify-content-end" id="buscadorPart" style="margin-top: 1%; margin-left: 65%; margin-right: 10%; margin-bottom:1%; justify-content: center;">
+            <input id="filtrarMateriales" class="form-control me-2" type="search" data-table="tablePart" placeholder="Buscar..." aria-label="Buscar">
+        </form>
 
         <script type="text/javascript">
              $(document).ready(function () {
@@ -99,7 +96,11 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
             });
         </script>
-        
+            <div th:if="${listado.empty}"> <div
+                style="display: grid;justify-content: center; align-items: center; background-color:azure;border-radius: 5%; margin-left: 10%; margin-right: 10%;">
+                <h4 style="margin-top: 8%; margin-bottom: 8%; color:rgb(122, 184, 212)">No ha añadido ningún material aún</h4>
+                  </div></div>
+            <div th:unless="${listado.empty}" style="margin-left: 10%; margin-right: 10%;" >
           <table class="table tablePart">
             <thead class="thead-dark">
                 <tr>
@@ -110,8 +111,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                 </tr>
             </thead>
             <tbody class="buscarParticipantes">
-                <div th:if="${listado.empty}"><h4>No ha añadido ningún material aún</h4></div>
-                <div th:unless="${listado.empty}">
+                <div>
                 <tr th:each="lis:${listado}">
                     <td th:text="${lis.titulo}"></td>
                     <td th:text="${lis.descripcion}"></td>
@@ -123,6 +123,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                 </div>
             </tbody>
         </table>
+        </div>
 
         
         <form th:action="@{'/process_materialGrupo/' + ${id}}" th:object="${material}" method="post" enctype="multipart/form-data">
