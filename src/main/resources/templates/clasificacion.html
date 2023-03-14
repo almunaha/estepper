@@ -13,7 +13,7 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
-
+    <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <title>Formulario de Clasificación</title>
@@ -78,7 +78,10 @@
             </nav>
 
             <div th:if="${clasificacion == null}" class="bg-white border border-1 p-5 rounded-4 ">
-                <h2>Necesita rellenar los formularios de Exploración y de Findrisc para acceder a este formulario.</h2>
+                <div
+                    style="display: grid;justify-content: center; align-items: center; background-color:azure;border-radius: 5%; margin-left: 10%; margin-right: 10%;">
+                    <h4 style="margin-top: 8%; margin-left: 5%; margin-right: 5%; margin-bottom: 8%; color:rgb(122, 184, 212)">Necesita rellenar los formularios de Exploración y de Findrisc para acceder a este formulario.</h4>
+                </div>
             </div>
             <div th:unless="${clasificacion == null}" class="bg-white border border-1 p-5 rounded-4 ">
                 <div
