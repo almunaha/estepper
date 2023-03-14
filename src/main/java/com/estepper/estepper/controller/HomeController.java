@@ -246,7 +246,7 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
-        if (elusuario instanceof Coordinador && participante.findById(id).get().getIdCoordinador() == elusuario.getId()) {
+        if (elusuario instanceof Coordinador && participante.findById(id).get().getIdCoordinador() == elusuario.getId() || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA)) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
