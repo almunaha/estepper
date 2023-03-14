@@ -84,7 +84,10 @@
                 </div>
             </div>
             <div th:unless="${actfisica == null}" class="bg-white border border-1 p-5 rounded-4 ">
-
+                <div
+                    style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 5%;">
+                    <h4 style="margin-top: 8%; color:azure">Actividad física</h4>
+                </div>
                 <form class="form-perfil" method="post" th:action="@{'/process_actfisica/' + ${participante.id}}" th:object="${actfisica}">
                     
                     <div><label class="col-4 col-form-label"><h4>ACTIVIDAD FÍSICA VIGOROSA (A.F.V)</h4></label></div>

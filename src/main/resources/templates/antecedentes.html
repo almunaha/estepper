@@ -84,10 +84,14 @@
                 </div>
             </div>
             <div th:unless="${antecedentes == null}" class="bg-white border border-1 p-5 rounded-4 ">
-
+                <div
+                    style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 5%;">
+                    <h4 style="margin-top: 8%; color:azure">Antecedentes</h4>
+                </div>
                 <form class="form-perfil" method="post" th:action="@{'/process_antecedentes/' + ${participante.id}}" th:object="${antecedentes}">
         
-                    <label class="col-4 col-form-label">ANTECEDENTES PERSONALES</label>
+                    <label style="font-weight: bold;" class="col-4 col-form-label">ANTECEDENTES PERSONALES</label>
+                    <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">H.T.A </label>
                         <select id="hta" th:field="*{hta}" class="form-control">
@@ -97,7 +101,7 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Dislipemias </label>
+                        <label style="margin-left: 3%;"class="col-4 col-form-label">Dislipemias </label>
                         <select id="dislipemias" th:field="*{dislipemias}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
@@ -105,13 +109,14 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Enfermedad tiroidea</label>
+                        <label style="margin-left: 3%;"class="col-4 col-form-label">Enfermedad tiroidea</label>
                         <select id="tiroides" th:field="*{tiroides}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
                         </select>
                     </div>
-
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Pat. Musculo-esquelética</label>
                         <select id="patmuscesq" th:field="*{patmuscesq}" class="form-control">
@@ -121,7 +126,7 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Pat. Mental</label>
+                        <label style="margin-left: 3%;" class="col-4 col-form-label">Pat. Mental</label>
                         <select id="patmental" th:field="*{patmental}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
@@ -129,13 +134,14 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">¿Toma medicación actualmente?</label>
+                        <label style="margin-left: 3%;" class="col-4 col-form-label">¿Toma medicación actualmente?</label>
                         <select id="medicacion" th:field="*{medicacion}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
                         </select>
                     </div>
-
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">E.C.V.</label>
                         <select id="ecv" th:field="*{ecv}" class="form-control">
@@ -145,7 +151,7 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Pat. Sensorial</label>
+                        <label style="margin-left: 3%;" class="col-4 col-form-label">Pat. Sensorial</label>
                         <select id="patsensorial" th:field="*{patsensorial}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
@@ -153,11 +159,11 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Especificar: </label>
+                        <label style="margin-left: 3%;" class="col-4 col-form-label">Especificar: </label>
                         
                         <input id="especificar" type="text" th:field="*{especificar}" class="form-control" />
                     </div>
-
+                    </div>
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">¿Fuma actualmente?</label>
                         <select id="fuma" th:field="*{fuma}" class="form-control">
@@ -174,7 +180,7 @@
                         </select>
                     </div>
 
-                    <label class="col-4 col-form-label">EXPLORACIÓN</label>
+                    <label style="font-weight: bold;" class="col-4 col-form-label">EXPLORACIÓN</label>
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">T.A. Sistólica: </label>
