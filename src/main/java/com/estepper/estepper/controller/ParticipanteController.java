@@ -760,4 +760,15 @@ public class ParticipanteController {
         else
             return "redirect:/";
     }
+
+    //ALIMENTACIÓN
+    @GetMapping("/alimentacion")
+    public String alimentacion(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+            return "alimentacion";
+        else
+            return "redirect:/";
+    }
 }
