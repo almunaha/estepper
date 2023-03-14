@@ -80,10 +80,13 @@
 
 
             <div class="bg-white border border-1 p-5 rounded-4 ">
-
+                <div
+                style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 5%;">
+                <h4 style="margin-top: 8%; color:azure">Exploración</h4>
+                </div>
                 <form class="form-perfil" method="post" th:action="@{'/process_exploracion/' + ${participante.id}}" th:object="${exploracion}">
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">¿Es la primera vez que acude al programa? </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Es la primera vez que acude al programa? </label>
                         <select th:field="*{primeravez}"class="form-control" >
                             <option th:value="si" th:text="SÍ"></option>
                             <option th:value="no" th:text="NO"></option>
@@ -91,7 +94,7 @@
                     </div>
         
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Género: </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Género: </label>
                         <select th:field="*{sexo}"class="form-control" >
                             <option th:value="MASCULINO" th:text="MASCULINO"></option>
                             <option th:value="FEMENINO" th:text="FEMENINO"></option>
@@ -99,27 +102,27 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Peso (kg): </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Peso (kg): </label>
                         <input id="peso" type="number" th:field="*{peso}" step="1" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Perímetro de cintura (cm): </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Perímetro de cintura (cm): </label>
                         <input type="number" th:field="*{cmcintura}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Talla/Altura (cm): </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Talla/Altura (cm): </label>
                         <input id="altura" type="number" th:field="*{talla}" step="1" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Edad: </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Edad: </label>
                         <input type="number" th:field="*{edad}" class="form-control" />
                     </div>
                   
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">IMC: </label>
+                        <label style="font-weight: bold; color:blue"class="col-4 col-form-label">IMC: </label>
                         <input style="border-color: blue;" id="imc" type="number" th:field="*{imc}" class="form-control" />
                     </div>
                     <script>
@@ -146,13 +149,13 @@
                             }
                         }
                     </script>
+
+                    <div style="float: right; margin-top: 1%;">
+                        <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
+                    </div>
                     
                 </form>                      
             </div> 
-
-            <div style="float: right;">
-                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
-                </div>
 
         </div>
     </div>
