@@ -92,7 +92,7 @@
                 <form class="form-perfil" method="post" th:action="@{'/process_clasificacion/' + ${participante.id}}" th:object="${clasificacion}">
         
                     <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">¿El usuario tiene analítica y es inferior a 3 meses? </label>
+                        <label style="font-weight: bold; margin-right: 5%;" class="col-4 col-form-label">¿El usuario tiene analítica y es inferior a 3 meses? </label>
                         <select id="analiticahecha" th:field="*{analiticahecha}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
@@ -100,40 +100,40 @@
                     </div>
                     <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">Glucemia basal(mg/dl): </label>
+                        <label style="font-weight: bold;  margin-right: 5%;" class="col-4 col-form-label">Glucemia basal(mg/dl): </label>
                         
-                        <input id="glucemia" type="number" th:field="*{glucemia}" class="form-control" />
+                        <input style="margin-left: 10%" id="glucemia" type="number" th:field="*{glucemia}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label style="font-weight: bold; margin-left: 3%;" class="col-4 col-form-label">Colesterol Total(mg/dl): </label>
+                        <label style="font-weight: bold;  margin-right: 5%; margin-left: 3%;" class="col-4 col-form-label">Colesterol Total(mg/dl): </label>
                         
-                        <input id="colesterol" type="number" th:field="*{colesterol}" class="form-control" />
+                        <input style="margin-left: 10%" id="colesterol" type="number" th:field="*{colesterol}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label style="font-weight: bold; margin-left: 3%;" class="col-4 col-form-label">LDL colesterol(mg/dl): </label>
+                        <label style="font-weight: bold;  margin-right: 5%; margin-left: 3%;" class="col-4 col-form-label">LDL colesterol(mg/dl): </label>
                         
-                        <input id="ldl" type="number" th:field="*{ldl}" class="form-control" />
+                        <input style="margin-left: 10%" id="ldl" type="number" th:field="*{ldl}" class="form-control" />
                     </div>
                     </div>
                     <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">S.O.G(mg/dl): </label>
+                        <label style="font-weight: bold;  margin-right: 5%;" class="col-4 col-form-label">S.O.G(mg/dl): </label>
                         
-                        <input id="sog" type="number" th:field="*{sog}" class="form-control" />
+                        <input style="margin-left: 10%" id="sog" type="number" th:field="*{sog}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label style="font-weight: bold; margin-left: 3%;" class="col-4 col-form-label">HDL colesterol(mg/dl): </label>
+                        <label style="font-weight: bold; margin-left: 3%;  margin-right: 5%;" class="col-4 col-form-label">HDL colesterol(mg/dl): </label>
                         
-                        <input id="hdl" type="number" th:field="*{hdl}" class="form-control" />
+                        <input style="margin-left: 10%" id="hdl" type="number" th:field="*{hdl}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label style="font-weight: bold; margin-left: 3%;" class="col-4 col-form-label">Trigliceridos(mg/dl): </label>
+                        <label style="font-weight: bold; margin-left: 3%;  margin-right: 5%;" class="col-4 col-form-label">Trigliceridos(mg/dl): </label>
                         
-                        <input id="trigliceridos" type="number" th:field="*{trigliceridos}" class="form-control" />
+                        <input style="margin-left: 12%" id="trigliceridos" type="number" th:field="*{trigliceridos}" class="form-control" />
                     </div>
                     </div>
                     <div class="input-group mt-2">
@@ -232,7 +232,7 @@
                     </div>
                     </div>
                     <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Acepta realizar actividad física en centro deportivo municipal? </label>
+                        <label style="font-weight: bold; margin-right: 5%;" class="col-4 col-form-label">¿Acepta realizar actividad física en centro deportivo municipal? </label>
                         <select id="actividadfisica" th:field="*{actividadfisica}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
