@@ -11,18 +11,45 @@
   <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
   <link rel="stylesheet" th:href="@{/css/estilos.css}">
-  <link rel="stylesheet" th:href="@{/css/sesiones.css}">
+  <link rel="stylesheet" th:href="@{/css/grupos.css}">
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="/js/menu.js"></script>
 
-  <!--PARA GRÁFICOS-->
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto">
-
   <title>Mis Materiales</title>
 
+  <style>
+    .material {
+      width: 20%;
+      margin: 1%;
+      transition: all 300ms;
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 5%;
+      text-align: center;
+    }
 
+    .material:hover {
+      width: 22%;
+    }
+
+    .material .cover {
+      width: 100%;
+      height: 33%;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 5%;
+      margin-top: 5%;
+    }
+
+    .material .descripcion {
+      padding: 10%;
+      word-wrap: break-word;
+      transition: all 300ms;
+      border-radius: 2%;
+    }
+
+  </style>
 </head>
 
 <body>
@@ -117,56 +144,70 @@
           </ul>
         </div>
       </nav>
-      <div>
-        <h4>Materiales</h4>
-    </div>
-      <div class="container-fluid" id="filtros">
-                
-        <!-- Buscador de materiales -->
-        <form class="d-flex justify-content-end" id="buscadorPart">
-            <input id="filtrarMateriales" class="form-control me-2 light-table-filter"
-                data-table="tablePart" type="text" placeholder="Buscar...">
+      <div style="margin-left: 10%; margin-top: 2%;">
+        <div
+          style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5%;margin-right: 10%;">
+          <h4 style="margin-top: 8%; color:azure">Materiales</h4>
+        </div>
+        <form class="d-flex" id="search-form" style="margin-top: 2%; margin-right: 10%;">
+          <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar" id="search-input">
         </form>
-    </div>
-
-    <script type="text/javascript">
-         $(document).ready(function () {
-            (function ($) {
-                $('#filtrarMateriales').keyup(function () {
-                    var rex = new RegExp($(this).val(), 'i');
-                    $('.buscarParticipantes tr').hide();
-                    $('.buscarParticipantes tr').filter(function () {
-                        return rex.test($(this).text());
-                    }).show();
-                })
-            }(jQuery));
-
-        });
-    </script>
-        <table class="table tablePart">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Acciones</th>
-
-                </tr>
-            </thead>
+        <script>
+          $(document).ready(function() {
+            // Obtener los elementos de la lista de materiales
+            var materiales = $('.material');
+        
+            // Manejar la presentación de resultados cuando se envía el formulario
+            $('#search-form').keyup(function(event) {
+              event.preventDefault();
+              var busqueda = $('#search-input').val().toLowerCase();
+        
+              // Filtrar la lista de materiales para obtener los resultados
+              var resultados = materiales.filter(function() {
+                var descripcion = $(this).find('.cover').text().toLowerCase();
+                return descripcion.includes(busqueda);
+              });
+        
+              // Ocultar todos los elementos de la lista de materiales y mostrar solo los resultados
+              materiales.hide();
+              resultados.show();
+            });
+        
+            // Mostrar todos los elementos de la lista de materiales al cargar la página
+            materiales.show();
+          });
+        </script>
+        
+        <div class="table-responsive"
+          style="display: flex; flex-wrap: wrap; flex-direction: row; align-items: stretch; margin-top: 5%;">
+          <table class="table tablePart">
             <tbody class="buscarParticipantes">
-                <div th:if="${listado.empty}"><h4>Su coordinador no ha añadido ningún material aún</h4></div>
-                <div th:unless="${listado.empty}">
+              <div th:if="${listado.empty}">
+                <h4>Su coordinador no ha añadido ningún material aún</h4>
+              </div>
+              <div th:unless="${listado.empty}">
                 <tr th:each="lis:${listado}">
-                    <td th:text="${lis.titulo}"></td>
-                    <td th:text="${lis.descripcion}"></td>
-                    <td>
-                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i class="fa-solid fa-download"></i></a>
-                    </td>
-                </tr>
-                </div>
-            </tbody>
-        </table>
+                  <div class="material">
+                    <div class="cover">
+                      <h5 class="mt-0 mb-1" th:text="${lis.titulo}">Nombre del material</h5>
+                      <p class="mb-0" th:text="${lis.descripcion}">Descripción del material</p>
+                    </div>
+                    <div class="descripcion">
+                      <div style="display: flex; justify-content: space-around; flex-direction: column;">
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip"
+                          th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i
+                            class="fa-solid fa-download"></i></a>
+                      </div>
 
-  </div>
+                    </div>
+                  </div>
+                </tr>
+              </div>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
 </body>
 
