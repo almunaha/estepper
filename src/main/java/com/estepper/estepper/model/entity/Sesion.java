@@ -39,13 +39,11 @@ public class Sesion implements Serializable{
     private Participante participante; 
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "estado", columnDefinition = "ENUM('COMPLETA', 'ENCURSO')")
     private EstadoSesion estado;
 
     private String observaciones;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "asistencia", columnDefinition = "ENUM('SI', 'NO', 'JUSTIFICADO')")
     private Asistencia asistencia;
 
     private double cmsPerdidos;

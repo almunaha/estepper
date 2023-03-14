@@ -2,7 +2,6 @@ package com.estepper.estepper.model.entity;
 
 import com.estepper.estepper.model.enums.Sexo;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,9 +23,6 @@ public class Exploracion extends FaseValoracion {
     public Integer talla;
     public Integer edad;
     public Integer imc;  
-    
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "sexo", columnDefinition = "ENUM('MASCULINO', 'FEMENINO')")
     public Sexo sexo;
 
     public Exploracion(){
