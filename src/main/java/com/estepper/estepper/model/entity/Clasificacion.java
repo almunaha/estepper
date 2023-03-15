@@ -11,23 +11,23 @@ import jakarta.persistence.Table;
 public class Clasificacion extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
-    public String analiticahecha;
-    public Integer glucemia;
-    public Integer colesterol;
-    public Integer ldl;
-    public Integer sog;
-    public Integer hdl;
-    public Integer trigliceridos;
-    public float hbA1c;
-    public String pediranalitica;
-    public Integer clasificacionusuario;
-    public String montesa;
-    public String motivomontesa;
-    public String taller;
-    public String motivotaller;
-    public String actividadfisica;
+    private String analiticahecha;
+    private Integer glucemia;
+    private Integer colesterol;
+    private Integer ldl;
+    private Integer sog;
+    private Integer hdl;
+    private Integer trigliceridos;
+    private float hbA1c;
+    private String pediranalitica;
+    private Integer clasificacionusuario;
+    private String montesa;
+    private String motivomontesa;
+    private String taller;
+    private String motivotaller;
+    private String actividadfisica;
 
     public Clasificacion(){
         super();

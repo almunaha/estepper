@@ -60,7 +60,7 @@ public class GruposController {
 
     @GetMapping("/grupos/nuevo")
     public String mostrarFormularioDeNuevoGrupo(Model model) {
-        List<Participante> participantesExistentes = part.listado(getUsuario().id, Estado.BAJA);// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de participantes de la base de
                                                                     // datos
         model.addAttribute("participantesExistentes", participantesExistentes);
         model.addAttribute("grupo", new Grupo());
@@ -98,13 +98,13 @@ public class GruposController {
             List<Participante> participantesSeleccionadosList = new ArrayList<>();
             for (Integer participanteId : participantes) {
                 Participante participante = part.findById(participanteId).get();
-                System.out.println(participante.nickname);
+                System.out.println(participante.getNickname());
                 System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 participantesSeleccionadosList.add(participante);
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
-                part.update(participante.edad, participante.sexo, participante.getFotoParticipante(), g,
+                part.update(participante.edad, participante.getSexo(), participante.getFotoParticipante(), g,
                         participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participanteId);
 
@@ -139,7 +139,7 @@ public class GruposController {
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
-                part.update(participante.edad, participante.sexo, participante.getFotoParticipante(), g,
+                part.update(participante.getEdad(), participante.getSexo(), participante.getFotoParticipante(), g,
                         participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participanteId);
 
@@ -176,7 +176,7 @@ public class GruposController {
         ModelAndView modelo = new ModelAndView("editar_grupo");
         Grupo gr = grupo.getGrupo(id);
 
-        List<Participante> participantesExistentes = part.listado(getUsuario().id, Estado.BAJA);// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de participantes de la base de
         modelo.addObject("participantesExistentes", participantesExistentes);
 
         modelo.addObject("grupo", gr);

@@ -171,17 +171,17 @@ public class HomeController {
         if(getUsuario().getId() == id){
             Usuario orig = usuario.findById(user.getId()).get(); // usuario antes de editarlo
 
-            if (user.contrasenia == "")
-                user.contrasenia = orig.contrasenia; // si no se ha cambiado la contraseña
+            if (user.getContrasenia() == "")
+                user.setContrasenia(orig.getContrasenia()); // si no se ha cambiado la contraseña
             else
-                user.contrasenia = hash.encode(user.contrasenia);
+                user.setContrasenia(hash.encode(user.getContrasenia()));
 
-            usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.getId());
+            usuario.update(user.getNickname(), user.getEmail(), user.getContrasenia(), orig.getEstadoCuenta(), orig.getId());
 
             if (orig instanceof Participante) { // si es un participante
                 Participante part = participante.findById(id).get();
 
-                participante.update(p.edad, p.sexo, p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
+                participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
                         part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), id);
             }
 
@@ -191,7 +191,7 @@ public class HomeController {
 
     @GetMapping("/baja")
     public String baja() {
-        if(!getUsuario().estadoCuenta.equals(Estado.BAJA)) return "redirect:/";
+        if(!getUsuario().getEstadoCuenta().equals(Estado.BAJA)) return "redirect:/";
         return "baja";
     }
 

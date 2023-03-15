@@ -87,7 +87,7 @@ public class CoordinadorController {
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
             PageRequest pageable = PageRequest.of(page, 6); // define página solicitada y tamaño de la página, se
                                                             // inicializa a cero
-            Page<Participante> paginaPart = part.paginas(pageable, getUsuario().id, Estado.BAJA); // listado de páginas de 6 participantes cada una
+            Page<Participante> paginaPart = part.paginas(pageable, getUsuario().getId(), Estado.BAJA); // listado de páginas de 6 participantes cada una
             int totalPags = paginaPart.getTotalPages(); // total de páginas
 
             if (totalPags > 0) {
@@ -115,7 +115,7 @@ public class CoordinadorController {
             Participante usuario = part.findById(idP).get();
             model.addAttribute("user", getUsuario());
 
-            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g, usuario.getAsistencia(),
+            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), g, usuario.getAsistencia(),
                     usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
             g.setNumParticipantes(participantes);
@@ -148,7 +148,7 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
             Grupo g = grupo.getGrupo(idG);
 
-            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), null, usuario.getAsistencia(),
+            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), null, usuario.getAsistencia(),
                     usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
 
             Integer participantes = g.getNumParticipantes() - 1;

@@ -41,7 +41,7 @@ public class FaseValoracion {
     }
 
     public Integer getIdParticipante() {
-        return participante.id;
+        return participante.getId();
     }
 
     public Participante getParticipante(){

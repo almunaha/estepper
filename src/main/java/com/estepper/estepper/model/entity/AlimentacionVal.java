@@ -11,38 +11,38 @@ import jakarta.persistence.Table;
 public class AlimentacionVal extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
-
-    public String aceite;
-    public Integer ptosaceite;
-    public Integer racaceite;
-    public Integer ptosracaceite;
-    public Integer racverdura;
-    public Integer ptosracverdura;
-    public Integer racfruta;
-    public Integer ptosracfruta;
-    public Integer raccarne;
-    public Integer ptosraccarne;
-    public Integer racmantequilla;
-    public Integer ptosracmantequilla;
-    public Integer racbebidas;
-    public Integer ptosracbebidas;
-    public Integer racvino;
-    public Integer ptosracvino;
-    public Integer raclegumbres;
-    public Integer ptosraclegumbres;
-    public Integer racpescado;
-    public Integer ptosracpescado;
-    public Integer racreposteria;
-    public Integer ptosracreposteria;
-    public Integer racfrutosecos;
-    public Integer ptosracfrutosecos;
-    public String carneblanca;
-    public Integer ptoscarneblanca;
-    public Integer racsofrito;
-    public Integer ptosracsofrito;
-    public Integer puntuacion;
-    public String adherencia;
+    private Integer id;
+    
+    private Integer ptosaceite;
+    private Integer racaceite;
+    private Integer ptosracaceite;
+    private Integer racverdura;
+    private String aceite;
+    private Integer ptosracverdura;
+    private Integer racfruta;
+    private Integer ptosracfruta;
+    private Integer raccarne;
+    private Integer ptosraccarne;
+    private Integer racmantequilla;
+    private Integer ptosracmantequilla;
+    private Integer racbebidas;
+    private Integer ptosracbebidas;
+    private Integer racvino;
+    private Integer ptosracvino;
+    private Integer raclegumbres;
+    private Integer ptosraclegumbres;
+    private Integer racpescado;
+    private Integer ptosracpescado;
+    private Integer racreposteria;
+    private Integer ptosracreposteria;
+    private Integer racfrutosecos;
+    private Integer ptosracfrutosecos;
+    private String carneblanca;
+    private Integer ptoscarneblanca;
+    private Integer racsofrito;
+    private Integer ptosracsofrito;
+    private Integer puntuacion;
+    private String adherencia;
 
     public AlimentacionVal() {
         super();

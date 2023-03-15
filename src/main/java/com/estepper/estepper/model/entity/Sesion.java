@@ -93,7 +93,7 @@ public class Sesion implements Serializable{
     }
 
     public Integer getIdParticipante(){
-        return participante.id;
+        return participante.getId();
     }
 
     public EstadoSesion getEstado() {

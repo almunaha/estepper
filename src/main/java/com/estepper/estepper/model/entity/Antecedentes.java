@@ -11,21 +11,21 @@ import jakarta.persistence.Table;
 public class Antecedentes extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
-    public String hta;
-    public String tiroides;
-    public String patmental;
-    public String dislipemias;
-    public String patmuscesq;
-    public String medicacion;
-    public String ecv;
-    public String patsensorial;
-    public String especificar;
-    public String fuma;
-    public String dejardefumar;
-    public Integer tasistolica;
-    public Integer tadiastolica;
+    private String hta;
+    private String tiroides;
+    private String patmental;
+    private String dislipemias;
+    private String patmuscesq;
+    private String medicacion;
+    private String ecv;
+    private String patsensorial;
+    private String especificar;
+    private String fuma;
+    private String dejardefumar;
+    private Integer tasistolica;
+    private Integer tadiastolica;
 
     public Antecedentes() {
         super();

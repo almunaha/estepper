@@ -11,24 +11,24 @@ import jakarta.persistence.Table;
 public class ActividadFisica extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
-    public Integer vecesafv;
-    public Integer horaafv;
-    public Integer minafv;
-    public Integer metsafv; 
-    public Integer vecesafm;
-    public Integer horaafm;
-    public Integer minafm;
-    public Integer metsafm;
-    public Integer vecescaminar;
-    public Integer horacaminar;
-    public Integer mincaminar;
-    public Integer metscaminar;
-    public Integer horasentado;
-    public Integer minsentado;
-    public Integer metstotales;
-    public String clasificacion;
+    private Integer vecesafv;
+    private Integer horaafv;
+    private Integer minafv;
+    private Integer metsafv; 
+    private Integer vecesafm;
+    private Integer horaafm;
+    private Integer minafm;
+    private Integer metsafm;
+    private Integer vecescaminar;
+    private Integer horacaminar;
+    private Integer mincaminar;
+    private Integer metscaminar;
+    private Integer horasentado;
+    private Integer minsentado;
+    private Integer metstotales;
+    private String clasificacion;
 
     public ActividadFisica(){
         super();

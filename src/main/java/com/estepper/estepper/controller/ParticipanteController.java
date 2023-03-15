@@ -186,8 +186,8 @@ public class ParticipanteController {
                     findrisc = (Findrisc) formularios.get(i);
                 }
             }
-            fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.sexo, exploracion.peso,
-                    exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc,
+            fasevaloracion.updateExploracion(exploracion.getPrimeravez(), exploracion.getSexo(), exploracion.getPeso(),
+                    exploracion.getTalla(), exploracion.getCmcintura(), exploracion.getEdad(), exploracion.getImc(),
                     participante.findById(id).get());
             fasevaloracion.actualizarFindrisc(exploracion, findrisc);
 
@@ -200,7 +200,7 @@ public class ParticipanteController {
     public String fasedevaloracion(@PathVariable("id") Integer id, Model model) {
         if ((getUsuario() instanceof Coordinador)
                 && ((participante.findById(id).get().getIdCoordinador() == getUsuario().getId())
-                        || participante.findById(id).get().estadoCuenta.equals(Estado.BAJA))) {
+                        || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             Participante part = participante.findById(id).get();
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(part);
             if(formularios.size() > 2) model.addAttribute("formularios", formularios);
@@ -219,7 +219,7 @@ public class ParticipanteController {
     public String expediente(@PathVariable("id") Integer id, Model model) {
         if ((getUsuario() instanceof Coordinador)
                 && ((participante.findById(id).get().getIdCoordinador() == getUsuario().getId())
-                        || participante.findById(id).get().estadoCuenta.equals(Estado.BAJA))) {
+                        || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             Participante part = participante.findById(id).get();
             model.addAttribute("participante", part);
             model.addAttribute("user", getUsuario());
@@ -256,11 +256,11 @@ public class ParticipanteController {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
                 && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)) {
-            fasevaloracion.updateFindrisc(p, findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura,
-                    findrisc.ptosactfisica,
-                    findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes,
-                    findrisc.puntuacion,
-                    findrisc.escalarriesgo);
+            fasevaloracion.updateFindrisc(p, findrisc.getPuntosedad(), findrisc.getPuntosimc(), findrisc.getPuntoscmcintura(),
+                    findrisc.getPtosactfisica(),
+                    findrisc.getPtosfrecfruta(), findrisc.getPtosmedicacion(), findrisc.getPtosglucosa(), findrisc.getPtosdiabetes(),
+                    findrisc.getPuntuacion(),
+                    findrisc.getEscalarriesgo());
 
             Exploracion exploracion = null;
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
@@ -269,7 +269,7 @@ public class ParticipanteController {
                     exploracion = (Exploracion) formularios.get(i);
                 }
             }
-            if ((exploracion.edad >= 35) & (findrisc.puntuacion >= 15)) {
+            if ((exploracion.getEdad() >= 35) & (findrisc.getPuntuacion() >= 15)) {
                 fasevaloracion.crearFormulariosNuevos(p);
             }
 
@@ -590,7 +590,7 @@ public class ParticipanteController {
             pesoPerdido = progreso.getDato() - pe;
 
         p.setPerdidaDePeso(pesoPerdido);
-        participante.update(p.edad, p.sexo, p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+        participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
                 p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getId());
 
         pro.guardar(progreso);

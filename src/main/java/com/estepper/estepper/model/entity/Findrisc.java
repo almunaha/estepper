@@ -11,17 +11,17 @@ import jakarta.persistence.Table;
 public class Findrisc extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
-    public Integer puntosedad;
-    public Integer puntosimc;
-    public Integer puntoscmcintura;
-    public Integer ptosactfisica;
-    public Integer ptosfrecfruta;
-    public Integer ptosmedicacion;
-    public Integer ptosglucosa;
-    public Integer ptosdiabetes;
-    public Integer puntuacion;
-    public String escalarriesgo;
+    private Integer id;
+    private Integer puntosedad;
+    private Integer puntosimc;
+    private Integer puntoscmcintura;
+    private Integer ptosactfisica;
+    private Integer ptosfrecfruta;
+    private Integer ptosmedicacion;
+    private Integer ptosglucosa;
+    private Integer ptosdiabetes;
+    private Integer puntuacion;
+    private String escalarriesgo;
 
     public Findrisc(){
         super();

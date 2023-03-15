@@ -19,9 +19,6 @@ public class Participante extends Usuario{
     @Column(unique=false, nullable=true)
     private Integer idCoordinador;
 
-    //@Column(unique=false, nullable=true)
-   // private Integer idGrupo;
-
    @Column(nullable=true)
    private String fotoParticipante;
 
@@ -35,10 +32,10 @@ public class Participante extends Usuario{
     private Integer sesionesCompletas;
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true)
-    public Sexo sexo;
+    private Sexo sexo;
     
     @Column
-    public Integer id; //diría que este sobra
+    private Integer id; 
 
     @ManyToOne
     @JoinColumn(name="idGrupo")
