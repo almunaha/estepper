@@ -37,6 +37,7 @@ public class Exploracion extends FaseValoracion {
         this.talla = talla;
         this.edad = edad;
         this.imc = imc;
+        this.sexo = sexo;
     }
 
     
