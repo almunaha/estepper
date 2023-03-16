@@ -15,7 +15,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <title>Cuaderno</title>
+    <title>Fichas Decisiones</title>
 </head>
 <body>
     <!--Bootstrap-->
@@ -110,22 +110,32 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
           </nav>
 
           <div class="utilidades">
-            <!-- Botón INFORMACIÓN -->
+            <!-- Botón ELECCION 1 -->
             <div class="layout-util">
-              <a class="btn-util" href="#">
-                <i class="fa-solid fa-circle-info"></i>
+              <a class="btn-util-bis" th:href="@{/fichaEleccion/1}">
+                <i class="fa-solid fa-1"></i>
               </a> 
-
-              <h4 id="nombre">INFORMACIÓN</h4>
             </div>
 
-            <!-- Botón FICHAS -->
+            <!-- Botón ELECCION 2 -->
             <div class="layout-util">
-              <a class="btn-util" th:href="@{/fichas}">
-                <i class="fa-solid fa-file"></i>
+              <a class="btn-util-bis" th:href="@{/fichaEleccion/2}">
+                <i class="fa-solid fa-2"></i>
               </a> 
-              
-              <h4 id="nombre">FICHAS</h4>
+            </div>
+
+            <!-- Botón ELECCION 3 -->
+            <div class="layout-util">
+                <a class="btn-util-bis" th:href="@{/fichaEleccion/3}">
+                    <i class="fa-solid fa-3"></i>
+                </a> 
+            </div>
+
+            <!-- Botón ELECCION 4 -->
+            <div class="layout-util">
+                <a class="btn-util-bis" th:href="@{/fichaEleccion/4}">
+                    <i class="fa-solid fa-4"></i>
+                </a> 
             </div>
 
           </div>

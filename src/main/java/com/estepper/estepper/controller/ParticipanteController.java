@@ -32,6 +32,7 @@ import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Ficha;
+import com.estepper.estepper.model.entity.FichaEleccion;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.entity.Participante;
@@ -758,5 +759,45 @@ public class ParticipanteController {
             return "alimentacion";
         else
             return "redirect:/";
+    }
+
+    //FICHAS
+    @GetMapping("/fichas")
+    public String fichas(Model model) {
+
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            return "fichas";
+        } else
+            return "acceso";
+
+    }
+
+    @GetMapping("/fichaEleccion")
+    public String fichaEleccion(Model model) {
+
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            return "fichaEleccion";
+        } else
+            return "acceso";
+
+    }
+
+    @GetMapping("/fichaEleccion/{id}")
+    public String decisiones(@PathVariable("id") Integer id, Model model) {
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            FichaEleccion fichaEleccion = f.getFichaEleccion(participante.findById(u.getId()).get(), id);
+            model.addAttribute("ficha", fichaEleccion);
+            return "fichaEleccionConcreta";
+        } else
+            return "acceso";
     }
 }

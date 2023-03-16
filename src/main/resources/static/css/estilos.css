@@ -185,7 +185,27 @@ a{
     color: white;
     background-color: rgb(122, 184, 212);
 }
+.btn-util-bis{
+    color: white;
+    background-color: rgb(122, 184, 212);
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 50px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;    
 
+    min-height: 23vh; /*altura mínima*/
+    width: 30vh;
+    margin: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-util-bis:hover{
+    color: rgb(122, 184, 212);;
+    background-color: white
+}
 .layout-util{
     display: flex;
     flex-direction: column;
