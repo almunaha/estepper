@@ -434,8 +434,6 @@ public class ParticipanteController {
             }
             fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().getId());
             // crear las sesiones del participante
-            // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas
-            // y le meta en otro, entonces ya tendría sus sesiones
             Sesion sesion1 = ses.buscarSesion(p, 1);
             if (sesion1 == null) { // si no tiene la sesion1 creada
                 Sesion s;
@@ -443,6 +441,10 @@ public class ParticipanteController {
                     s = new Sesion(0, i, p, EstadoSesion.ENCURSO, "", Asistencia.NO, 0, 0);
                     ses.guardar(s);
                 }
+            }
+
+            if(!f.existe(p)){
+                f.crearFichas(p);
             }
 
             return "redirect:/listado";
@@ -797,6 +799,17 @@ public class ParticipanteController {
             FichaEleccion fichaEleccion = f.getFichaEleccion(participante.findById(u.getId()).get(), id);
             model.addAttribute("ficha", fichaEleccion);
             return "fichaEleccionConcreta";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_fichae/{id}")
+    public String processdecisiones(@PathVariable("id") Integer id, @ModelAttribute FichaEleccion ficha) {
+        Usuario u = getUsuario();
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            f.updateFichaEleccion(ficha);
+            return "redirect:/fichas";
         } else
             return "acceso";
     }

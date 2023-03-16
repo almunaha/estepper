@@ -3,8 +3,6 @@ package com.estepper.estepper.model.entity;
 import com.estepper.estepper.model.enums.Sexo;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;

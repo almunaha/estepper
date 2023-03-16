@@ -108,8 +108,66 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                 </ul>
               </div>
           </nav>
+          <div
+          style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 5%;">
+          <h4 style="margin-top: 8%; color:azure">Decisiones</h4>
+        </div>
+        <form class="form-perfil" method="post" th:action="@{'/process_fichae/' + ${ficha.id}}" th:object="${ficha}">
 
-          <!--HACER CÓDIGO-->
+          <div th:if="${ficha.numEleccion == 1}">
+            <div><label class="col-20 col-form-label"><h4>¿Cuál de estos dos alimentos es más saludable? ¿Por qué?</h4></label></div>
+            <div><label class="col-20 col-form-label">Compara calorías, grasas totales y saturadas, azúcares y fibra</label></div>
+            <div><label class="col-20 col-form-label">PAN CON FIBRA</label></div>
+            <!--METER IFRAME CON IMAGEN DE PAN CON FIBRA-->
+            <div><label class="col-20 col-form-label">CERALES DE DESAYUNO</label></div>
+            <!--METER IFRAME CON IMAGEN DE CEREALES AÑADIR FOOORM-->
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">Explique su decisión: </label>
+                <input type="text" th:field="*{texto}" class="form-control" />
+            </div>
+          </div>
+         
+          <div th:if="${ficha.numEleccion == 2}">
+            <div><label class="col-20 col-form-label"><h4>¿Cuál de estas dos galletas es más saludable? ¿Por qué?</h4></label></div>
+            <div><label class="col-20 col-form-label">Compara calorías, grasas totales y saturadas</label></div>
+            <div><label class="col-20 col-form-label">GALLETAS DIGESTIVE</label></div>
+            <!--METER IFRAME CON IMAGEN DE PAN CON FIBRA-->
+            <div><label class="col-20 col-form-label">GALLETAS TIPO MARIA</label></div>
+            <!--METER IFRAME CON IMAGEN DE CEREALES AÑADIR FOOORM-->
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">Explique su decisión: </label>
+                <input type="text" th:field="*{texto}" class="form-control" />
+            </div>
+          </div>
+
+          <div th:if="${ficha.numEleccion == 3}">
+            <div><label class="col-20 col-form-label"><h4>¿Cuál de estos dos quesos te parece más saludable? ¿Por qué?</h4></label></div>
+            <div><label class="col-20 col-form-label">Compara calorías, grasas totales y saturadas</label></div>
+            <div><label class="col-20 col-form-label">QUESO FRESCO</label></div>
+            <!--METER IFRAME CON IMAGEN DE PAN CON FIBRA-->
+            <div><label class="col-20 col-form-label">QUESO CURADO</label></div>
+            <!--METER IFRAME CON IMAGEN DE CEREALES AÑADIR FOOORM-->
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">Explique su decisión: </label>
+                <input type="text" th:field="*{texto}" class="form-control" />
+            </div>
+          </div>
+
+          <div th:if="${ficha.numEleccion == 4}">
+            <div><label class="col-20 col-form-label"><h4>¿Cuál de estos aperitivos te parece más saludable? ¿Por qué?</h4></label></div>
+            <div><label class="col-20 col-form-label">Compara las grasas saturadas y la fibra</label></div>
+            <div><label class="col-20 col-form-label">TRIÁNGULOS DE MAÍZ</label></div>
+            <!--METER IFRAME CON IMAGEN DE PAN CON FIBRA-->
+            <div><label class="col-20 col-form-label"></label>ALMENDRAS</div>
+            <!--METER IFRAME CON IMAGEN DE CEREALES AÑADIR FOOORM-->
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">Explique su decisión: </label>
+                <input type="text" th:field="*{texto}" class="form-control" />
+            </div>
+          </div>
+
+          <button class="btn btn-info text-white mt-4 w-100" type="submit">Guardar</button>
+        </form>     
 
        </div>
     </div>
