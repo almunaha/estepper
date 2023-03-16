@@ -15,8 +15,5 @@ public class FichaServiceImpl implements FichaService{
     @Autowired
     private FichaRepository repo; //inyección de dependencias del participante dao api
 
-    @Override
-    public List<Ficha> fichasSesion(Integer id){
-        return (List<Ficha>) repo.findByIdSesion(id);
-    }
+    
 }

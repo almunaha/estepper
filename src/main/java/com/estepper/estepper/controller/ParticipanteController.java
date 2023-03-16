@@ -124,10 +124,6 @@ public class ParticipanteController {
                 Sesion sesion = ses.buscarSesion(p, num); // cambiar segun sesion
                 model.addAttribute("sesion", sesion);
 
-                // lista de fichas de la sesión seleccionada a través del idSesion
-                List<Ficha> fichas = f.fichasSesion(sesion.getId());
-                model.addAttribute("fichas", fichas);
-
                 model.addAttribute("participante", participante.findById(1)); // coger participante
 
                 return "sesion";
@@ -468,14 +464,6 @@ public class ParticipanteController {
 
         }
         return "redirect:/";
-    }
-
-    @GetMapping("/ficha0")
-    public String ficha0() {
-        if (getUsuario() instanceof Participante) {
-            return "ficha0";
-        } else
-            return "redirect:/";
     }
 
     public Usuario getUsuario() {
