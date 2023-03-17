@@ -33,6 +33,7 @@ import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.FichaEleccion;
+import com.estepper.estepper.model.entity.FichaTaller;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.entity.Participante;
@@ -809,6 +810,30 @@ public class ParticipanteController {
 
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             f.updateFichaEleccion(ficha);
+            return "redirect:/fichas";
+        } else
+            return "acceso";
+    }
+
+    @GetMapping("/fichaTaller")
+    public String fichataller(Model model) {
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            FichaTaller fichaTaller = f.getFichaTaller(participante.findById(u.getId()).get());
+            model.addAttribute("ficha", fichaTaller);
+            return "fichaTaller";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_fichat/{id}")
+    public String processtaller(@PathVariable("id") Integer id, @ModelAttribute FichaTaller ficha) {
+        Usuario u = getUsuario();
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            f.updateFichaTaller(ficha);
             return "redirect:/fichas";
         } else
             return "acceso";

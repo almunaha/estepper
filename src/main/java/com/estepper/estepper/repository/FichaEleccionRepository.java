@@ -14,6 +14,6 @@ public interface FichaEleccionRepository extends JpaRepository<FichaEleccion, In
 
     @Modifying
     @Transactional
-    @Query("UPDATE FichaEleccion e SET e.texto = :texto  WHERE e.id = :id")
+    @Query("UPDATE FichaEleccion e SET e.texto = :texto WHERE e.id = :id")
     void update(String texto, Integer id);
 }

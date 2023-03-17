@@ -62,5 +62,15 @@ public class FichaServiceImpl implements FichaService{
         return repoE.findById(id).get();
     }
 
+    @Override
+    public FichaTaller getFichaTaller(Participante participante) {
+        return repoT.findByParticipante(participante);
+    }
+
+    @Override
+    public void updateFichaTaller(FichaTaller ficha) {
+        repoT.update(ficha.getDificultades(), ficha.getCapacidad(), ficha.getImportancia(), ficha.getRazones(), ficha.getTemores(), ficha.getId());
+    }
+
     
 }

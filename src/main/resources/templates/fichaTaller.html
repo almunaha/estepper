@@ -15,7 +15,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <title>Fichas</title>
+    <title>Taller</title>
 </head>
 <body>
     <!--Bootstrap-->
@@ -108,36 +108,39 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                 </ul>
               </div>
           </nav>
+          <div
+          style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 5%;">
+          <h4 style="margin-top: 8%; color:azure">Taller</h4>
+        </div>
+        <form class="form-perfil" method="post" th:action="@{'/process_fichat/' + ${ficha.id}}" th:object="${ficha}">
 
-          <div class="utilidades">
-            <!-- Botón TALLER -->
-            <div class="layout-util">
-              <a class="btn-util" th:href="@{/fichaTaller}">
-                <i class="fa-solid fa-briefcase"></i>
-              </a> 
-
-              <h4 id="nombre">TALLER</h4>
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">Mis razones para participar en el taller: </label>
+                <input type="text" th:field="*{razones}" class="form-control" />
             </div>
 
-            <!-- Botón PESO -->
-            <div class="layout-util">
-              <a class="btn-util" th:href="@{/fichas}">
-                <i class="fa-sharp fa-solid fa-dumbbell"></i>
-              </a> 
-              
-              <h4 id="nombre">PESO</h4>
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">¿Cuánto me importa? Irrelevante-Muy importante</label>
+                <input type="number" th:field="*{importancia}" class="form-control" />
+            </div>
+        
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">¿Me siento capaz? Nada-Totalmente capaz</label>
+                <input type="number" th:field="*{capacidad}" class="form-control" />
             </div>
 
-            <!-- Botón DECISIONES -->
-            <div class="layout-util">
-                <a class="btn-util" th:href="@{/fichaEleccion}">
-                    <i class="fa-sharp fa-solid fa-question"></i>
-                </a> 
-                
-                <h4 id="nombre">DECISIONES</h4>
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">Mis temores: </label>
+                <input type="text" th:field="*{temores}" class="form-control" />
             </div>
 
-          </div>
+            <div class="input-group mt-2"> 
+                <label class="col-4 col-form-label">Mis dificultades: </label>
+                <input type="text" th:field="*{dificultades}" class="form-control" />
+            </div>
+
+          <button class="btn btn-info text-white mt-4 w-100" type="submit">Guardar</button>
+        </form>     
 
        </div>
     </div>
