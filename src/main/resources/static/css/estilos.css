@@ -14,7 +14,7 @@ a{
     background-color: #13405d;
     color: white;
     min-height: 100vh; /*altura mínima*/
-    width: 35vh;
+    width: 250px;
     transition: all 0.5s ease;
     padding: 6px 14px;
 }
@@ -24,7 +24,7 @@ a{
 }
 
 #sidebar-container .logo{
-    padding: .875rem 1.25rem; /*arriba y abajo | a los lados*/
+    padding: 10px; /*arriba y abajo | a los lados*/
     text-align: center;
     pointer-events: none;
 }
@@ -131,6 +131,7 @@ a{
 }
 
 .navbar-expand-lg .navbar-nav{
+    margin-left: auto;
     position: relative;
     left: -35px;
 }
@@ -141,7 +142,8 @@ a{
 }
 
 .navbar-expand-lg .navbar-nav .dropdown-menu{
-    left: -30px;
+    right: 0;
+    left: auto;
 }
 
 .burger .btn{
@@ -675,8 +677,30 @@ input[type="date"] {
       width: 100%;
     }
 
-    #sidebar-container{
-        display: none;
+    .sidebar-container {
+        display: block;
+        width: 50px;
+        float: left;
+      }
+      
+      /* Ajustar el ancho del main-container para que ocupe el espacio restante */
+      .main-container {
+        width: calc(100% - 300px);
+        float: right;
+      }
+    .w-100 {
+        margin-top: 60px;
+    }
+    .navbar-nav {
+        margin-left: 0;
+    }
+    .dropdown-menu {
+        position: absolute;
+        right: 0;
+        left: 0;
+    }
+    .burger {
+        margin-left: auto;
     }
   
 }
