@@ -31,7 +31,6 @@ import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
-import com.estepper.estepper.model.entity.Ficha;
 import com.estepper.estepper.model.entity.FichaEleccion;
 import com.estepper.estepper.model.entity.FichaTaller;
 import com.estepper.estepper.model.entity.Usuario;
@@ -48,10 +47,13 @@ import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.TipoProgreso;
+
 import com.estepper.estepper.service.ActividadService;
+import com.estepper.estepper.service.AlimentacionService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.MensajeService;
 import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
@@ -91,6 +93,12 @@ public class ParticipanteController {
 
     @Autowired
     private GrupoService grupoS;
+
+    @Autowired
+    private AlimentacionService alimentacion;
+
+    @Autowired
+    private MensajeService mensajeS;
 
     @GetMapping("/menu")
     public String menu() {
@@ -461,7 +469,11 @@ public class ParticipanteController {
             ses.deleteByParticipante(p);
             obj.deleteByParticipante(p);
             pro.deleteByParticipante(p);
+            alimentacion.deleteByParticipante(p);
+            f.deleteByParticipante(p);
+            mensajeS.deleteByParticipante(p);
             fasevaloracion.eliminarcuenta(p);
+            
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
             grupoS.update(p.getGrupo());
             if(getUsuario() == null) return "redirect:/login";

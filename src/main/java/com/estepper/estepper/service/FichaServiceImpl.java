@@ -72,5 +72,9 @@ public class FichaServiceImpl implements FichaService{
         repoT.update(ficha.getDificultades(), ficha.getCapacidad(), ficha.getImportancia(), ficha.getRazones(), ficha.getTemores(), ficha.getId());
     }
 
+    @Override
+    public void deleteByParticipante(Participante p) {
+        repo.deleteAllByParticipante(p);
+    }
     
 }

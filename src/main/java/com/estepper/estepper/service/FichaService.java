@@ -13,5 +13,6 @@ public interface FichaService{
     public void updateFichaEleccion(FichaEleccion ficha);
     public void updateFichaTaller(FichaTaller ficha);
     public FichaEleccion findEById(Integer id);
+    public void deleteByParticipante(Participante p);
 
 }

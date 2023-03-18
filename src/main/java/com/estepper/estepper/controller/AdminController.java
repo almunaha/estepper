@@ -15,15 +15,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.estepper.estepper.model.entity.Coordinador;
+import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.enums.Estado;
 
+import com.estepper.estepper.service.AlimentacionService;
 import com.estepper.estepper.service.FaseValoracionService;
+import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.MensajeService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.GrupoService;
@@ -53,13 +57,21 @@ public class AdminController {
 
     @Autowired
     private ParticipanteService participante;
-
+    
+    @Autowired
+    private AlimentacionService alimentacion;
     
     @Autowired 
     private SesionService ses;
 
     @Autowired
     private BCryptPasswordEncoder hash;
+
+    @Autowired
+    private FichaService f;
+
+    @Autowired
+    private MensajeService mensajeS;
 
     @GetMapping("/eliminarUsuario/{id}")
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model) {
@@ -71,12 +83,26 @@ public class AdminController {
                 ses.deleteByParticipante(p);
                 obj.deleteByParticipante(p);
                 pro.deleteByParticipante(p);
+                alimentacion.deleteByParticipante(p);
+                f.deleteByParticipante(p);
+                mensajeS.deleteByParticipante(p);
                 fasevaloracion.eliminarcuenta(p);
+                
                 p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
                 grupoS.update(p.getGrupo());
             }
 
-            else
+            else if (usuario.findById(id).get() instanceof Coordinador) {
+                List<Grupo> listgrupos = grupoS.getGrupos();
+                for(int i = 0; i < listgrupos.size(); i++){
+                    if(listgrupos.get(i).getIdCoordinador() == id){
+                        materialS.deleteByGrupo(listgrupos.get(i));
+                        mensajeS.deleteByGrupo(listgrupos.get(i));
+                        grupoS.delete(id);
+                    }
+                }
+            }
+            else 
                 usuario.eliminar(id);
 
             // pasar usuario logueado y listado

@@ -1,5 +1,7 @@
 package com.estepper.estepper.service;
 
+import com.estepper.estepper.model.entity.Participante;
+
 public interface AlimentacionService {
-    //AQUÍ LAS FUNCIONES DECLARADAS QUE TENGAN QUE VER CON ALIMENTACION
+    public void deleteByParticipante(Participante p);
 }

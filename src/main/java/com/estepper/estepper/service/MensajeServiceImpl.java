@@ -1,6 +1,9 @@
 package com.estepper.estepper.service;
 
+import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Mensaje;
+import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Usuario;
 
 import java.util.List;
 
@@ -27,6 +30,16 @@ public class MensajeServiceImpl implements MensajeService {
 
     public List<Mensaje> obtenerMensajes(){
         return repo.findAll();
+    }
+
+    @Override
+    public void deleteByParticipante(Usuario p) {
+        repo.deleteAllByUsuario(p);
+    }
+
+    @Override
+    public void deleteByGrupo(Grupo g) {
+        repo.deleteAllByGrupo(g);
     }
 
 }

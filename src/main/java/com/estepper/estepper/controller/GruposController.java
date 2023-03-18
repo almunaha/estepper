@@ -191,6 +191,7 @@ public class GruposController {
         Grupo gr = grupo.getGrupo(id);
         if (getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()) {
             materialS.deleteByGrupo(gr);
+            mensaje.deleteByGrupo(gr);
             grupo.delete(id);
             return "redirect:/listaGrupos";
         } else
@@ -280,11 +281,11 @@ public class GruposController {
 
     @GetMapping("/eliminarMaterialGrupo/{id}")
     public String processElimMaterial(@PathVariable("id") Integer id) {
+        Integer idG = materialS.getMaterial(id).getGrupo().getId();
         if(getUsuario() instanceof Coordinador){
             materialS.eliminarMaterialGrupo(id);
         }
 
-        Integer idG = materialS.getMaterial(id).getGrupo().getId();
        return "redirect:/materialesGrupo/" + idG;
     }
 
