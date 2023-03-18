@@ -33,11 +33,19 @@
                 <h4>Estepper</h4>
             </div>
 
+            <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}">
             <ul>
                 <li>
                     <a th:href="@{/}">
                         <i class="fa-solid fa-house"></i>
                         <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/cuaderno}">
+                        <i class="fa-solid fa-pen"></i>
+                        <span class="nombre-enlaces">Cuaderno</span>
                     </a>
                 </li>
 
@@ -76,6 +84,24 @@
                 </li>
 
             </ul>
+            </div>
+            <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">
+                <ul>
+                    <li>
+                      <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                      </a>
+                    </li>
+            
+                    <li>
+                      <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                      </a>
+                    </li>
+                  </ul>
+            </div>
 
         </div>
 
