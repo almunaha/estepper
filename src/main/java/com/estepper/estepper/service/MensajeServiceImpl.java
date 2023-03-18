@@ -2,7 +2,6 @@ package com.estepper.estepper.service;
 
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Mensaje;
-import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 
 import java.util.List;
