@@ -750,7 +750,17 @@ public class ParticipanteController {
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
             return "cuaderno";
         else
-            return "redirect:/";
+            return "acceso";
+    }
+
+    @GetMapping("/info")
+    public String info(Model model){
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+            return "info";
+        else
+            return "acceso";
     }
 
     //ALIMENTACIÓN
@@ -761,7 +771,7 @@ public class ParticipanteController {
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
             return "alimentacion";
         else
-            return "redirect:/";
+            return "acceso";
     }
 
     //FICHAS
