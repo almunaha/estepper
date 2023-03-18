@@ -27,7 +27,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+                <img width="75" th:src="@{img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -74,7 +74,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
                         <span class="nombre-enlaces">Foro</span>
                     </a>

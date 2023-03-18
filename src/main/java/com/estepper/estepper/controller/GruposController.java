@@ -222,7 +222,10 @@ public class GruposController {
             model.addAttribute("grupo", g);
             model.addAttribute("user", getUsuario());
             model.addAttribute("mensajito", "No asignada");
-            model.addAttribute("message", new Mensaje());
+            Mensaje men = new Mensaje();
+            model.addAttribute("message", men);
+            List<Mensaje> mensajes = mensaje.obtenerMensajes();
+            model.addAttribute("mensajes", mensajes);
 
             return "unGrupo";
         } else
@@ -311,14 +314,33 @@ public class GruposController {
 
     }
 
-    @PostMapping("/mensajes/guardar")
-    public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, Model model) {
+     //CHAT
+     @GetMapping("/chat")
+     public String chat(Model model) {
+         Usuario u = getUsuario();
+         model.addAttribute("user", getUsuario());
+ 
+         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            model.addAttribute("mensajito", "No asignada");
+            Mensaje men = new Mensaje();
+            model.addAttribute("message", men);
+            List<Mensaje> mensajes = mensaje.obtenerMensajes();
+            model.addAttribute("mensajes", mensajes);
+             return "chat";
+         } else
+             return "acceso";
+     }
 
-        List<Mensaje> mensajes = mensaje.obtenerMensajes();
-        model.addAttribute("mensajes", mensajes);
-        
+    @PostMapping("/mensajes/guardar/{id}")
+    public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, @PathVariable("id") Integer idGrupo) {
+        elmensaje.setGrupo(grupo.getGrupo(idGrupo));
+        elmensaje.setUsuario(getUsuario());
+        elmensaje.setFechayHoraEnvio(LocalDateTime.now());
         mensaje.save(elmensaje);
 
+        if(getUsuario() instanceof Coordinador)
+        return "redirect:/unGrupo/{id}";
+        else if (getUsuario() instanceof Participante) return "redirect:/chat";
         return "redirect:/";
     }
 

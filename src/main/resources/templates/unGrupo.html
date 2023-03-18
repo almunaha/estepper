@@ -35,7 +35,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -283,11 +283,12 @@
                         <div class="chat-box">
                             <ul>
                                 <li th:each="m : ${mensajes}">
+                                    <span th:text="${m.usuario.nickname} + ': '"></span>
                                     <span th:text="${m.mensaje}"></span>
                                 </li>
                             </ul>
                         </div>
-                        <form th:action="@{/mensajes/guardar}" th:object="${message}" method="post" class="typing-area">
+                        <form th:action="@{'/mensajes/guardar/' + ${grupo.id}}" th:object="${message}" method="post" class="typing-area">
     
                             <input type="text" th:field="*{mensaje}" class="input-field"
                                 placeholder="Escribe un mensaje aquí ..." autocomplete="off">
