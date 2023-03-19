@@ -76,92 +76,100 @@
                     </ul>
                 </div>
             </nav>
-            <div
-                style="display: grid;justify-content: center; margin-top:5%;background-color:rgb(122, 184, 212);border-radius: 5%;margin-left: 10%;;margin-right: 10%;">
-                <h4 style="margin-top: 8%; color:azure">Materiales</h4>
-            </div>
-            <!-- Buscador de materiales -->
-            <form class="d-flex justify-content-end" id="buscadorPart"
-                style="margin-top: 1%; margin-left: 65%; margin-right: 10%; margin-bottom:1%; justify-content: center;">
-                <input id="filtrarMateriales" class="form-control me-2" type="search" data-table="tablePart"
-                    placeholder="Buscar..." aria-label="Buscar">
-            </form>
+            <div class="container">
+                <div class="bg-white border border-1 p-5 rounded-4 ">
+                    <div
+                        style="display: grid;justify-content: center; margin-top:5%;background-color:rgb(122, 184, 212);border-radius: 5%;margin-left: 10%;;margin-right: 10%;">
+                        <h4 style="margin-top: 8%; color:azure">Materiales</h4>
+                    </div>
+                    <!-- Buscador de materiales -->
+                    <div class="d-flex justify-content-center mt-3">
+                        <form class="w-75">
+                            <div class="input-group">
+                                <input id="filtrarMateriales" class="form-control" type="search" data-table="tablePart"
+                                    placeholder="Buscar...">
+                            </div>
+                        </form>
+                    </div>
 
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    (function ($) {
-                        $('#filtrarMateriales').keyup(function () {
-                            var rex = new RegExp($(this).val(), 'i');
-                            $('.buscarParticipantes tr').hide();
-                            $('.buscarParticipantes tr').filter(function () {
-                                return rex.test($(this).text());
-                            }).show();
-                        })
-                    }(jQuery));
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            (function ($) {
+                                $('#filtrarMateriales').keyup(function () {
+                                    var rex = new RegExp($(this).val(), 'i');
+                                    $('.buscarParticipantes tr').hide();
+                                    $('.buscarParticipantes tr').filter(function () {
+                                        return rex.test($(this).text());
+                                    }).show();
+                                })
+                            }(jQuery));
 
-                });
-            </script>
-            <div th:if="${listado.empty}">
-                <div
-                    style="display: grid;justify-content: center; align-items: center; background-color:azure;border-radius: 5%; margin-left: 10%; margin-right: 10%;">
-                    <h4 style="margin-top: 8%; margin-bottom: 8%; color:rgb(122, 184, 212)">No ha añadido ningún
-                        material aún</h4>
+                        });
+                    </script>
+                    <div th:if="${listado.empty}">
+                        <div
+                            style="display: grid;justify-content: center; align-items: center; background-color:azure;border-radius: 5%; margin-left: 10%; margin-right: 10%;">
+                            <h4 style="margin-top: 8%; margin-bottom: 8%; color:rgb(122, 184, 212)">No ha añadido ningún
+                                material aún</h4>
+                        </div>
+                    </div>
+                    <div th:unless="${listado.empty}" style="margin-left: 10%; margin-right: 10%;">
+                        <div class="table-responsive">
+                            <table class="table tablePart">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Título</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Acciones</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="buscarParticipantes">
+                                    <div>
+                                        <tr th:each="lis:${listado}">
+                                            <td th:text="${lis.titulo}"></td>
+                                            <td th:text="${lis.descripcion}"></td>
+                                            <td>
+                                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"
+                                                    th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i
+                                                        class="fa-solid fa-download"></i></a>
+                                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"
+                                                    th:href="@{'/eliminarMaterialGrupo/' + ${lis.id}}"
+                                                    title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <form th:action="@{'/process_materialGrupo/' + ${id}}" th:object="${material}" method="post"
+                        enctype="multipart/form-data">
+                        <div class="m-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">Título:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="text" th:field="*{titulo}" class="form-control" required />
+                                </div>
+                                <label class="col-form-label col-sm-4">Descripción:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="text" th:field="*{descripcion}" class="form-control" />
+                                </div>
+                                <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="file" th:name="file" class="form-control" required />
+                                </div>
+
+                            </div>
+                            <div class="text-center p">
+                                <button type="submit" class="btn" id="btn-part">Añadir</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div th:unless="${listado.empty}" style="margin-left: 10%; margin-right: 10%;">
-                <table class="table tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Título</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Acciones</th>
-
-                        </tr>
-                    </thead>
-                    <tbody class="buscarParticipantes">
-                        <div>
-                            <tr th:each="lis:${listado}">
-                                <td th:text="${lis.titulo}"></td>
-                                <td th:text="${lis.descripcion}"></td>
-                                <td>
-                                    <a class="btn" id="btn-part" data-bs-toggle="tooltip"
-                                        th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i
-                                            class="fa-solid fa-download"></i></a>
-                                    <a class="btn" id="btn-part" data-bs-toggle="tooltip"
-                                        th:href="@{'/eliminarMaterialGrupo/' + ${lis.id}}" title="Eliminar"><i
-                                            class="fa-solid fa-trash-can"></i></a>
-                                </td>
-                            </tr>
-                        </div>
-                    </tbody>
-                </table>
-            </div>
-
-
-            <form th:action="@{'/process_materialGrupo/' + ${id}}" th:object="${material}" method="post"
-                enctype="multipart/form-data">
-                <div class="m-3">
-                    <div class="form-group row">
-                        <label class="col-form-label col-sm-4">Título:</label>
-                        <div class="col-sm-8 mb-2">
-                            <input type="text" th:field="*{titulo}" class="form-control" required />
-                        </div>
-                        <label class="col-form-label col-sm-4">Descripción:</label>
-                        <div class="col-sm-8 mb-2">
-                            <input type="text" th:field="*{descripcion}" class="form-control" />
-                        </div>
-                        <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
-                        <div class="col-sm-8 mb-2">
-                            <input type="file" th:name="file" class="form-control" required />
-                        </div>
-
-                    </div>
-                    <div class="text-center p">
-                        <button type="submit" class="btn" id="btn-part">Añadir</button>
-                    </div>
-                </div>
-            </form>
-
         </div>
     </div>
 </body>
