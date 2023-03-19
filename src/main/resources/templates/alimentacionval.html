@@ -85,7 +85,7 @@
             </div>
             <div th:unless="${alimentacionval == null}" class="bg-white border border-1 p-5 rounded-4 ">
                 <div
-                    style="display: grid;justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 5%;">
+                    style="display: grid;justify-content: center; text-align: center; align-items: center; background-color:#0dcaf0;border-radius: 5%;">
                     <h4 style="margin-top: 8%; color:azure">Adherencia a la dieta mediterránea</h4>
                 </div>
                 <form class="form-perfil" method="post" th:action="@{'/process_alimentacionval/' + ${participante.id}}" th:object="${alimentacionval}">
