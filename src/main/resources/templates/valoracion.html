@@ -15,7 +15,7 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <!--PARA EL BUSCADOR-->
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
@@ -34,7 +34,7 @@
                 <img width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
-        
+
             <ul>
                 <li>
                     <a th:href="@{/}">
@@ -42,15 +42,15 @@
                         <span class="nombre-enlaces">Inicio</span>
                     </a>
                 </li>
-        
+
                 <li>
                     <a th:href="@{/actividades}">
                         <i class="fa-solid fa-person-hiking"></i>
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
-                </li>    
+                </li>
             </ul>
-        
+
         </div>
         <div class="w-100">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -79,102 +79,113 @@
             </nav>
 
             <div class="p-4 mt-5" id="participantes">
-            <div>
+                <div>
                     <h3 th:text="${participante.nickname} + ': ' + ${participante.codigo}">Nombre</h3>
-            </div>
-            <!-- LISTADO DE FORMULARIOS DE LA FASE DE VALORACIÓN-->
-            <table class="table tablePart">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Formulario</th>
-                        <th scope="col">Editar</th>
+                </div>
+                <!-- LISTADO DE FORMULARIOS DE LA FASE DE VALORACIÓN-->
+                <div class="table-responsive">
+                    <table class="table tablePart">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Formulario</th>
+                                <th scope="col">Editar</th>
 
-                    </tr>
-                </thead>
-                <tbody class = "buscarParticipantes">
-                    <tr>
-                        <td th:text="Exploración"></td>                             
-                        <td><a class="btn" id="btn-part" th:href="@{'/exploracion/' + ${participante.id}}" ><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td th:text="Findrisc"></td>
-                        <td><a class="btn" id="btn-part" th:href="@{'/findrisc/' + ${participante.id}}" ><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td th:text="Clasificación"></td>
-                        <td><a class="btn" id="btn-part" th:href="@{'/clasificacion/' + ${participante.id}}" ><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td th:text="Antecedentes"></td>
-                        <td><a class="btn" id="btn-part" th:href="@{'/antecedentes/' + ${participante.id}}" ><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td th:text="Alimentación"></td>
-                        <td><a class="btn" id="btn-part" th:href="@{'/alimentacionval/' + ${participante.id}}" ><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td th:text="|Actividad Física|"></td>
-                        <td><a class="btn" id="btn-part" th:href="@{'/actfisica/' + ${participante.id}}" ><i class="fa-solid fa-pen-to-square"></i></a></td>
-                    </tr>
-                </tbody>
-            </table>
+                            </tr>
+                        </thead>
+                        <tbody class="buscarParticipantes">
+                            <tr>
+                                <td th:text="Exploración"></td>
+                                <td><a class="btn" id="btn-part" th:href="@{'/exploracion/' + ${participante.id}}"><i
+                                            class="fa-solid fa-pen-to-square"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td th:text="Findrisc"></td>
+                                <td><a class="btn" id="btn-part" th:href="@{'/findrisc/' + ${participante.id}}"><i
+                                            class="fa-solid fa-pen-to-square"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td th:text="Clasificación"></td>
+                                <td><a class="btn" id="btn-part" th:href="@{'/clasificacion/' + ${participante.id}}"><i
+                                            class="fa-solid fa-pen-to-square"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td th:text="Antecedentes"></td>
+                                <td><a class="btn" id="btn-part" th:href="@{'/antecedentes/' + ${participante.id}}"><i
+                                            class="fa-solid fa-pen-to-square"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td th:text="Alimentación"></td>
+                                <td><a class="btn" id="btn-part"
+                                        th:href="@{'/alimentacionval/' + ${participante.id}}"><i
+                                            class="fa-solid fa-pen-to-square"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td th:text="|Actividad Física|"></td>
+                                <td><a class="btn" id="btn-part" th:href="@{'/actfisica/' + ${participante.id}}"><i
+                                            class="fa-solid fa-pen-to-square"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <a class="btn btn-unir" style="color: white; background-color: #6ca4c7;" id="btn-part1" th:href="@{'/activarcuenta/' + ${participante.id}}">Activar cuenta</a>
-            <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}}">Eliminar cuenta</a>
-            <input type="hidden" id="grupo" value="${participante.id}"/>
+                <a class="btn btn-unir" style="color: white; background-color: #6ca4c7;" id="btn-part1"
+                    th:href="@{'/activarcuenta/' + ${participante.id}}">Activar cuenta</a>
+                <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}}">Eliminar cuenta</a>
+                <input type="hidden" id="grupo" value="${participante.id}" />
 
-            <script th:inline="javascript">
-                function showAlertWithLink(link) {
-                    var alertMessage = "El usuario aún no pertenece a ningún grupo";
-                    var linkText = "Haga click aquí para agregarlo a un grupo";
-                    var alertHTML = '<div>' + alertMessage + '<br><a style="color: blue;" href="' + link + '">' + linkText + '</a></div>';
+                <script th:inline="javascript">
+                    function showAlertWithLink(link) {
+                        var alertMessage = "El usuario aún no pertenece a ningún grupo";
+                        var linkText = "Haga click aquí para agregarlo a un grupo";
+                        var alertHTML = '<div>' + alertMessage + '<br><a style="color: blue;" href="' + link + '">' + linkText + '</a></div>';
 
-                    $('<div></div>').html(alertHTML).dialog({
-                        modal: true,
-                        title: '¡Alerta!',
-                        buttons: {
-                        Ok: function() {
-                            $(this).dialog('close');
-                        }
-                        }
+                        $('<div></div>').html(alertHTML).dialog({
+                            modal: true,
+                            title: '¡Alerta!',
+                            buttons: {
+                                Ok: function () {
+                                    $(this).dialog('close');
+                                }
+                            }
+                        });
+                    }
+                    var grupo = /*[[${participante.grupo}]]*/ null;
+                    var estado = /*[[${participante.estadoCuenta}]]*/ null;
+                    var id = /*[[${participante.id}]]*/ null;
+                    var formularios = /*[[${formularios}]]*/ null;
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const btn_part = document.getElementById('btn-part1');
+                        btn_part.addEventListener('click', function (e) {
+
+                            if (grupo === null) {
+                                e.preventDefault();
+                                var link = '/unirAgrupo/' + id;
+                                showAlertWithLink(link);
+
+                            } else if (estado === 'ALTA') {
+                                e.preventDefault();
+                                alert("El usuario ya está dado de alta.");
+                            } else if (formularios === null) {
+                                e.preventDefault();
+                                alert("Debe rellenar correctamente los formularios de Exploracion y Findrisc");
+                            }
+                            else {
+                                btn_part.disabled = true;
+                                alert("La cuenta del usuario se ha dado de alta correctamente.");
+                            }
+                        });
                     });
-                }
-              var grupo = /*[[${participante.grupo}]]*/ null;
-              var estado = /*[[${participante.estadoCuenta}]]*/ null;
-              var id = /*[[${participante.id}]]*/ null;
-              var formularios = /*[[${formularios}]]*/ null;
+                </script>
 
-              document.addEventListener('DOMContentLoaded', function () {
-                const btn_part = document.getElementById('btn-part1');
-                btn_part.addEventListener('click', function(e) {
-               
-                  if (grupo === null) {
-                    e.preventDefault();
-                    var link = '/unirAgrupo/' + id;
-                    showAlertWithLink(link);
-
-                  } else if(estado === 'ALTA'){
-                    e.preventDefault();
-                    alert("El usuario ya está dado de alta.");
-                  } else if(formularios === null){
-                    e.preventDefault();
-                    alert("Debe rellenar correctamente los formularios de Exploracion y Findrisc");
-                  }
-                  else {
-                    btn_part.disabled = true;
-                    alert("La cuenta del usuario se ha dado de alta correctamente.");  
-                  }
-                });
-              });
-            </script>
-            
-            <div style="float: right;">
-                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
-            </div>
+                <div style="float: right;">
+                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                        onclick="window.print();">
+                </div>
 
             </div>
-        
-            
+
+
         </div>
     </div>
 

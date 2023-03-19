@@ -22,6 +22,7 @@
     .material {
       width: 20%;
       margin: 1%;
+      min-width: 10%;
       transition: all 300ms;
       background-color: #fff;
       border: 2px solid #000;
@@ -40,6 +41,7 @@
       overflow: hidden;
       margin-bottom: 5%;
       margin-top: 5%;
+      font-size: 2.5vw; 
     }
 
     .material .descripcion {
@@ -48,6 +50,25 @@
       transition: all 300ms;
       border-radius: 2%;
     }
+
+    .btn-part {
+      height: 10vw;
+      width: 15vw;
+      font-size: 2.5vw;
+      padding: 4vw;
+      margin: 2.5vw;
+    }
+
+    @media (min-width: 768px) {
+      .btn-part {
+        height: auto;
+        width: auto;
+        font-size: 0.5rem;
+        padding: 0.5rem;
+        margin: 2.5vw;
+      }
+    }
+
   </style>
 </head>
 

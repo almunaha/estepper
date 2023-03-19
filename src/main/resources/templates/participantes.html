@@ -77,28 +77,35 @@
 
 
 
-            <div class="p-4 mt-5" id="participantes">
-                <div>
+            <div style="background-color: whitesmoke; border-radius: 5%; margin-left:5%; margin-right: 5%;"
+                class="p-4 mt-5" id="participantes">
+                <div style="display: flex; justify-content: center; justify-items: center;">
                     <h4>Listado de participantes</h4>
                 </div>
 
-                <div class="container-fluid" id="filtros">
-                    
-                    <!-- Buscador de participantes -->
-                    <form class="d-flex justify-content-end" id="buscadorPart">
-                        <input id="filtrarParticipantes" class="form-control me-2 light-table-filter"
-                            data-table="tablePart" type="text" placeholder="Buscar...">
-                            <label for="estado">Estado: </label>
-                            <select name="estado" id="estado">
-                              <option value="Todos">Todos</option>
-                              <option value="BAJA">Baja</option>
-                              <option value="ALTA">Alta</option>
+
+                <!-- Buscador de participantes -->
+                <div class="d-flex justify-content-center mt-3">
+                    <form class="w-75" id="buscadorPart">
+                        <div style="margin-bottom: 5%; display: flex; justify-content: center; align-items: center;"
+                            class="input-group">
+                            <input style="height: 5%;" id="filtrarParticipantes" class="form-control light-table-filter"
+                                data-table="tablePart" type="text" placeholder="Buscar...">
+                            <label style=" margin-left: 2%; margin-right: 1%;" for="estado"
+                                class="col-1 col-form-label">Estado:</label>
+                            <select style="height: 5%;" name="estado" id="estado">
+                                <option value="Todos">Todos</option>
+                                <option value="BAJA">Baja</option>
+                                <option value="ALTA">Alta</option>
                             </select>
+                        </div>
                     </form>
                 </div>
 
+
+
                 <script type="text/javascript">
-                     $(document).ready(function () {
+                    $(document).ready(function () {
                         (function ($) {
                             $('#filtrarParticipantes').keyup(function () {
                                 var rex = new RegExp($(this).val(), 'i');
@@ -137,41 +144,51 @@
 
 
                 <!-- Tabla de participantes -->
-                <table class="table tablePart" id="tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Alias</th>
-                            <th scope="col">Código</th>
-                            <th scope="col">Email</th>
-                            <th scope="col" id="columnaGrupo">Id Grupo</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
+                <div class="table-responsive">
+                    <table class="table tablePart" id="tablePart">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Alias</th>
+                                <th scope="col">Código</th>
+                                <th scope="col">Email</th>
+                                <th scope="col" id="columnaGrupo">Id Grupo</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
 
-                        </tr>
-                    </thead>
-                    <tbody class="buscarParticipantes">
-                        <tr th:each="lis:${listado}">
-                            <td> <img width="55" th:src="${lis.fotoParticipante}" /></td>
-                            <td th:text="${lis.nickname}"></td>
-                            <td style="font-weight: bold;" th:text="${lis.codigo}"></td>
-                            <td th:text="${lis.email}"></td>
-                            <td th:text="${lis.idGrupo}" id="columnaGr"></td>
-                            <td th:text="${lis.estadoCuenta}"></td>
-                            <td>
-                                <!--BOTONES CON ICONOS Y TOOLTIP-->
-                                <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Ver expediente"
-                                    th:href="@{'/expediente/' + ${lis.id}}"><i class="fa-solid fa-id-card-clip"></i></a>
-                                <a class="btn btn-unir" id="btn-part" data-bs-toggle="tooltip" title="Añadir a un grupo"
-                                    th:href="@{'/unirAgrupo/' + ${lis.id}}"><i class="fa-solid fa-user-plus"></i></a>
-                                <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Materiales"
-                                    th:href="@{'/materiales/' + ${lis.id}}"><i class="fa-solid fa-folder-open"></i></a>
-                          
-                                </li>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            </tr>
+                        </thead>
+                        <tbody class="buscarParticipantes">
+                            <tr th:each="lis:${listado}">
+                                <td> <img width="55" th:src="${lis.fotoParticipante}" /></td>
+                                <td th:text="${lis.nickname}"></td>
+                                <td style="font-weight: bold;" th:text="${lis.codigo}"></td>
+                                <td th:text="${lis.email}"></td>
+                                <td th:text="${lis.idGrupo}" id="columnaGr"></td>
+                                <td th:text="${lis.estadoCuenta}"></td>
+                                <td>
+                                    <!--BOTONES CON ICONOS Y TOOLTIP-->
+                                    <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Ver expediente"
+                                        th:href="@{'/expediente/' + ${lis.id}}"><i
+                                            class="fa-solid fa-id-card-clip"></i></a>
+                                    <a class="btn btn-unir" id="btn-part" data-bs-toggle="tooltip"
+                                        title="Añadir a un grupo" th:href="@{'/unirAgrupo/' + ${lis.id}}"><i
+                                            class="fa-solid fa-user-plus"></i></a>
+                                    <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Materiales"
+                                        th:href="@{'/materiales/' + ${lis.id}}"><i
+                                            class="fa-solid fa-folder-open"></i></a>
+
+                                    </li>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="float: right; margin-right: 60px; margin-bottom: 10%;">
+                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                        onclick="window.print();">
+                </div>
 
                 <!--PAGINACIÓN-->
                 <nav aria-label="Page navigation example">
@@ -234,11 +251,10 @@
                     });
                 </script>
 
+
+
             </div>
-            <div style="float: right; margin-right: 60px; margin-top: 60px;">
-                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
-                    onclick="window.print();">
-            </div>
+
 
         </div>
     </div>
