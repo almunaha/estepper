@@ -41,8 +41,9 @@ import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.Antecedentes;
 import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.ActividadFisica;
+import com.estepper.estepper.model.entity.Alimentacion;
 import com.estepper.estepper.model.entity.AlimentacionVal;
-
+import com.estepper.estepper.model.entity.AlimentosConsumidos;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoSesion;
@@ -783,6 +784,20 @@ public class ParticipanteController {
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
             return "alimentacion";
         else
+            return "acceso";
+    }
+
+    @GetMapping("/alimentos")
+    public String alimentos(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+            model.addAttribute("alimento", new Alimentacion());
+            model.addAttribute("alimentoCon", new AlimentosConsumidos());
+            model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
+            model.addAttribute("listaAlimentosCon", alimentacion.getAlimentosCon(participante.findById(user.getId()).get()));
+            return "alimentos";
+        } else
             return "acceso";
     }
 

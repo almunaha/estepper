@@ -1,5 +1,7 @@
 package com.estepper.estepper.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +16,6 @@ public interface AlimentosConsumidosRepository extends JpaRepository<AlimentosCo
     @Transactional
     @Query("DELETE FROM AlimentosConsumidos a WHERE a.participante = :p")
     void deleteAllByParticipante(Participante p);
+
+    List<AlimentosConsumidos> findByParticipante(Participante participante);
 }
