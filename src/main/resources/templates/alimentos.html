@@ -211,13 +211,12 @@
                         </table>
                     </div>
                     <!--AÑADIR ALIMENTO CONSUMIDO-->
-                    <div><h6 style="text-align: center;">¿Has comido algo más? Añádelo aquí:</h6></div>
+                    <div><h5 style="text-align: center; margin-top: 3%;">¿Has comido algo más? Añádelo aquí:</h5></div>
                     <form class="form-perfil" method="post" th:action="@{'/process_alimentoCon/' + ${user.id}}"
                     th:object="${alimentoCon}">
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Alimento:</label>
-                        <select th:field="*{alimento}" class="form-control" id="lista-alimentos">
+                        <select style="margin-left: 3%;" th:field="*{alimento}" class="form-control" id="lista-alimentos">
                             <option th:each="al : ${listaAlimentos}" th:value="${al.id}" th:text="${al.nombre}"></option>
                         </select>
                         <script language="JavaScript" th:inline="javascript">
@@ -258,7 +257,7 @@
                     </div>
                     
                     
-                    <div><h6 style="text-align: center;">¿No está el alimento que buscas?<a
+                    <div><h6 style="text-align: center; margin-top: 3%;">¿No está el alimento que buscas? <a
                         th:href="@{/nuevoalimento}" class="alert-link">¡Créalo!</a></h6></div>
                     <button class="btn btn-info text-white mt-4 w-100" type="submit">Añadir</button>
                 </form>
