@@ -168,10 +168,16 @@
                                   </div>
                                   <div class="descripcion">
                                     <div style="display: flex; flex-direction: column;">
-                                      <a class="btn" id="btn-part" data-bs-toggle="tooltip"
-                                        th:href="@{'/receta/ver/' + ${lis.id}}" title="Ver"><i
+                                        <a class="btn" id="btn-part" data-bs-toggle="tooltip"
+                                        onclick="abrirIframe('${lis.link}', 'mi-iframe')" title="Ver"><i
                                           class="fa-solid fa-eye"></i></a>
-                                        <!--EN VEZ DE TH:REF HACER UN ONCLICK() Y EN LA FUNCION QUE AÑADA UN IFRAME CON EL LINK Y LA PAG-->
+                                          <iframe id="mi-iframe"></iframe>
+                                          <script>
+                                            function abrirIframe(url, iframeId) {
+                                            const iframe = document.getElementById(iframeId);
+                                            iframe.src = url;
+                                            }
+                                          </script>
                                     </div>
                                     
                                   </div>
