@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import com.estepper.estepper.model.entity.Alimentacion;
 import com.estepper.estepper.model.entity.AlimentosConsumidos;
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Receta;
 import com.estepper.estepper.repository.AlimentacionRepository;
 import com.estepper.estepper.repository.AlimentosConsumidosRepository;
+import com.estepper.estepper.repository.RecetaRepository;
 
 @Service
 public class AlimentacionServiceImpl implements AlimentacionService{
@@ -19,6 +21,9 @@ public class AlimentacionServiceImpl implements AlimentacionService{
 
     @Autowired
     private AlimentosConsumidosRepository repoAC;
+
+    @Autowired
+    private RecetaRepository repoR;
 
     @Override
     public void deleteByParticipante(Participante p) {
@@ -49,6 +54,16 @@ public class AlimentacionServiceImpl implements AlimentacionService{
     public void deleteAlCon(Integer id) {
         repoAC.findById(id).get().setAlimento(null);
         repoAC.deleteById(id);
+    }
+
+    @Override
+    public List<Receta> getRecetas() {
+        return repoR.findAll();
+    }
+
+    @Override
+    public void updateReceta(Receta receta) {
+        repoR.save(receta);
     }
 
     

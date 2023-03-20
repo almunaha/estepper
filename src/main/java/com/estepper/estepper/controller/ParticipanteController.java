@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.FaseValoracion;
@@ -34,6 +36,7 @@ import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
+import com.estepper.estepper.model.entity.Receta;
 import com.estepper.estepper.model.entity.FichaEleccion;
 import com.estepper.estepper.model.entity.FichaTaller;
 import com.estepper.estepper.model.entity.Usuario;
@@ -851,6 +854,40 @@ public class ParticipanteController {
             return "redirect:/alimentos";
         } else
             return "redirect:/";
+    }
+
+    @GetMapping("/recetas")
+    public String recetas(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+            model.addAttribute("lareceta", new Receta());
+            model.addAttribute("listaRecetas", alimentacion.getRecetas());
+            model.addAttribute("listaIng", alimentacion.getAlimentos());
+            return "recetas";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_receta")
+    public String procesoReceta(@ModelAttribute Receta lareceta, @RequestParam("file") MultipartFile file){
+            if(getUsuario().getEstadoCuenta().equals(Estado.ALTA)){
+                if(!file.isEmpty()){
+                    try {
+                        Path rutaArchivo = Paths.get("src//main//resources//static/recetas");
+                        String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                        byte[] bytesArc = file.getBytes(); 
+                        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                        Files.write(rutaCompleta, bytesArc);
+                        lareceta.setLink(rutaCompleta.toString());
+                        alimentacion.updateReceta(lareceta);
+                    } catch (Exception e) {
+                        String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        return "redirect:/recetas";
     }
 
     //FICHAS

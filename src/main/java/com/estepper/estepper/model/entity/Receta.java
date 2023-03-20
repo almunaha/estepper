@@ -27,7 +27,9 @@ public class Receta {
     @Column(name = "ingredientes") 
     private List<Alimentacion> ingredientes;
 
-    public Receta(){}
+    public Receta(){
+        this.pag = 1;
+    }
 
     public Receta(Integer id, String link, Integer pag, String receta, List<Alimentacion> ingredientes){
         this.id = id;
