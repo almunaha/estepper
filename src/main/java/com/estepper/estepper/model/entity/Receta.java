@@ -21,7 +21,7 @@ public class Receta {
 
     private String link;
     private Integer pag;
-    private String receta;
+    private String nombre;
     @ElementCollection 
     @CollectionTable(name = "lista_ingredientes", joinColumns = @JoinColumn(name = "id")) 
     @Column(name = "ingredientes") 
@@ -31,10 +31,10 @@ public class Receta {
         this.pag = 1;
     }
 
-    public Receta(Integer id, String link, Integer pag, String receta, List<Alimentacion> ingredientes){
+    public Receta(Integer id, String link, String nombre, Integer pag,  List<Alimentacion> ingredientes){
         this.id = id;
         this.pag = pag;
-        this.receta = receta;
+        this.nombre = nombre;
         this.ingredientes = ingredientes;
     }
 
@@ -62,20 +62,20 @@ public class Receta {
         this.pag = pag;
     }
 
-    public String getReceta() {
-        return receta;
-    }
-
-    public void setReceta(String receta) {
-        this.receta = receta;
-    }
-
     public List<Alimentacion> getIngredientes() {
         return ingredientes;
     }
 
     public void setIngredientes(List<Alimentacion> ingredientes) {
         this.ingredientes = ingredientes;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
 

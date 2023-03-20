@@ -164,7 +164,7 @@
                             <tr th:each="lis:${listaRecetas}">
                                 <div class="material">
                                   <div class="cover">
-                                    <h5 class="mt-0 mb-1" th:text="${lis.receta}">Nombre de la receta</h5>
+                                    <h5 class="mt-0 mb-1" th:text="${lis.nombre}">Nombre de la receta</h5>
                                   </div>
                                   <div class="descripcion">
                                     <div style="display: flex; flex-direction: column;">
@@ -183,10 +183,10 @@
                     <div><h5 style="text-align: center; margin-top: 3%;">¿Quieres crear una receta nueva?</h5></div>
                     <form class="form-perfil" method="post" th:action="@{/process_receta}"
                     th:object="${lareceta}"  enctype="multipart/form-data">
-                        <label class="col-form-label col-sm-4">Nombre de la receta:</label>
-                        <div class="col-sm-8 mb-2">
-                            <input type="text" th:field="*{receta}" class="form-control" required />
-                        </div>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Nombre: </label>
+                        <input type="text" th:field="*{nombre}" class="form-control" required/>
+                    </div>
                         <label class="col-form-label col-sm-4">Ingredientes:</label>   
                             <div class="col-sm-8 mb-2">
                                 <select th:field="*{ingredientes}" class="form-control" multiple id="lista-alimentos">
