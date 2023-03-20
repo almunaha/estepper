@@ -140,15 +140,16 @@
                         </div>
                     </div>
                     <div th:unless="${listaRecetas.empty}" class="table-responsive">
-                        <!--BOTONES GEOMETRÍA NUTRICIONAL Y RECOMENDACIONESRECETAS-->
+                        <!--BOTONES GEOMETRÍA NUTRICIONAL, RECOMENDACIONESRECETAS Y NUEVARECETA-->
                         <div style="display: flex; justify-content: center;">
                             <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" href="#">
                                     Geometría nutricional </a>
                             </div>
-                            <div><a class="btn" id="btn-part" title="Recetas" href="#"> Recetas recomendadas</a></div>
+                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Recetas" href="#"> Recetas recomendadas</a></div>
                             <div><a class="btn" id="btn-part" title="Crear" href="#" onclick="abrirIframe('mi-modal2')">
                                     Nueva receta</a></div>
                         </div>
+                        <!--BUSCADOR-->
                         <form class="d-flex" id="search-form" style="margin-top: 2%;">
                             <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar"
                                 id="search-input">
@@ -175,7 +176,7 @@
 
                                     recetas.each(function () {
                                         var $receta = $(this);
-                                        var ingredients = $receta.find('.ingredientes').text().toLowerCase(); //aqui no encuentra ningun ingrediente, deberia buscar en ${lis.ingredientes.nombre}
+                                        var ingredients = $receta.find('.ingredientes').text().toLowerCase(); 
                                         var show = true;
 
                                         if (want.length > 0) {
@@ -217,6 +218,7 @@
                                 materiales.show();
                             });
                         </script>
+                        <!--TABLA RECETAS-->
                         <table class="table" id="tablePart">
                             <tr th:each="lis:${listaRecetas}">
                                 <div class="material">
