@@ -153,6 +153,45 @@
                             <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar"
                                 id="search-input">
                         </form>
+                        <div class="d-flex" style="margin-top: 1%">
+                            <div class="input-group me-2">
+                                <span class="input-group-text" id="want-addon">Quiero:</span>
+                                <input type="text" class="form-control" id="want-input" aria-describedby="want-addon">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" id="dont-want-addon">No quiero:</span>
+                                <input type="text" class="form-control" id="dont-want-input"
+                                    aria-describedby="dont-want-addon">
+                            </div>
+                            <button class="btn btn-outline-secondary" type="button" id="filter-button">Filtrar</button>
+                        </div>
+                        <script>
+                            $(document).ready(function () {
+                                var recetas = $('.material');
+
+                                $('#filter-button').click(function () {
+                                    var want = $('#want-input').val().toLowerCase();
+                                    var dontWant = $('#dont-want-input').val().toLowerCase();
+
+                                    recetas.each(function () {
+                                        var $receta = $(this);
+                                        var ingredients = $receta.find('.ingredientes').text().toLowerCase(); //aqui no encuentra ningun ingrediente, deberia buscar en ${lis.ingredientes.nombre}
+                                        var show = true;
+
+                                        if (want.length > 0) {
+                                            show = show && ingredients.includes(want);
+                                        }
+
+                                        if (dontWant.length > 0) {
+                                            show = show && !ingredients.includes(dontWant);
+                                        }
+
+                                        $receta.toggle(show);
+                                    });
+                                });
+                            });
+
+                        </script>
                         <script>
                             $(document).ready(function () {
                                 // Obtener los elementos de la lista de materiales
@@ -183,6 +222,11 @@
                                 <div class="material">
                                     <div class="cover">
                                         <h5 class="mt-0 mb-1" th:text="${lis.nombre}">Nombre de la receta</h5>
+                                        <div class="ingredientes" style="display: none;">
+                                            <div th:each="ing:${lis.ingredientes}">
+                                                <span th:text="${ing.nombre}"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="descripcion">
                                         <div style="display: flex; flex-direction: column;">
@@ -199,9 +243,11 @@
                                                                 data-bs-dismiss="modal" aria-label="Cerrar"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <iframe th:unless="${#strings.endsWith(lis.link, '.pdf')}" id="mi-iframe"
+                                                            <iframe th:unless="${#strings.endsWith(lis.link, '.pdf')}"
+                                                                id="mi-iframe"
                                                                 th:src="@{recetas/{link}(link=${lis.link}) }"></iframe>
-                                                            <iframe th:if="${#strings.endsWith(lis.link, '.pdf')}" name="mi-iframe" id="mi-iframe"
+                                                            <iframe th:if="${#strings.endsWith(lis.link, '.pdf')}"
+                                                                name="mi-iframe" id="mi-iframe"
                                                                 th:src="@{recetas/{link}(link=${lis.link})  + '#pagina' + ${lis.pag}}"></iframe>
                                                         </div>
                                                         <div class="modal-footer">
