@@ -304,7 +304,7 @@
                                         <label class="col-form-label col-sm-4">Ingredientes:</label>
                                         <div class="col-sm-8 mb-2">
                                             <select th:field="*{ingredientes}" class="form-control" multiple
-                                                id="lista-alimentos">
+                                                id="lista-alimentos1">
                                                 <option th:each="ing : ${listaIng}" th:value="${ing.id}"
                                                     th:text="${ing.nombre}">
                                                 </option>
@@ -312,13 +312,13 @@
                                             <script language="JavaScript" th:inline="javascript">
                                                 $(document).ready(function () {
                                                     // Obtener la lista de opciones del select
-                                                    var opciones = $("#lista-alimentos option");
+                                                    var opciones = $("#lista-alimentos1 option");
 
                                                     // Crear un input de búsqueda
                                                     var inputBusqueda = $('<input type="text" class="form-control mt-2" placeholder="Buscar...">');
 
                                                     // Agregar el input de búsqueda antes del select
-                                                    $("#lista-alimentos").before(inputBusqueda);
+                                                    $("#lista-alimentos1").before(inputBusqueda);
 
                                                     // Escuchar el evento keyup del input de búsqueda
                                                     inputBusqueda.keyup(function () {
@@ -331,16 +331,16 @@
                                                         });
 
                                                         // Actualizar las opciones del select con las opciones filtradas
-                                                        $("#lista-alimentos").empty().append(opcionesFiltradas);
+                                                        $("#lista-alimentos1").empty().append(opcionesFiltradas);
                                                     });
 
                                                     // Restaurar todas las opciones del select cuando se cierre
-                                                    $("#lista-alimentos").on("hidden.bs.select", function () {
-                                                        $("#lista-alimentos").empty().append(opciones);
+                                                    $("#lista-alimentos1").on("hidden.bs.select", function () {
+                                                        $("#lista-alimentos1").empty().append(opciones);
                                                     });
 
-                                                    $("#lista-alimentos").keydown("hidden.bs.select", function () {
-                                                        $("#lista-alimentos").empty().append(opciones);
+                                                    $("#lista-alimentos1").keydown("hidden.bs.select", function () {
+                                                        $("#lista-alimentos1").empty().append(opciones);
                                                     });
                                                 });
                                             </script>
