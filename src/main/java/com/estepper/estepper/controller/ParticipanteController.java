@@ -844,6 +844,15 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
+    @RequestMapping("/alimento/eliminar/{id}")
+    public String process_alimentoCeliminar(@PathVariable(name = "id") Integer id) {
+        if (getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
+            alimentacion.deleteAlCon(id);
+            return "redirect:/alimentos";
+        } else
+            return "redirect:/";
+    }
+
     //FICHAS
     @GetMapping("/fichas")
     public String fichas(Model model) {

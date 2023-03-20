@@ -12,4 +12,5 @@ public interface AlimentacionService {
     public List<AlimentosConsumidos> getAlimentosCon(Participante p);
     public void saveAlCon(AlimentosConsumidos al);
     public void saveAlimento(Alimentacion al);
+    public void deleteAlCon(Integer id);
 }

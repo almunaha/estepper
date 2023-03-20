@@ -204,6 +204,8 @@
                                 <tr th:each="lis:${listaAlimentosCon}">
                                     <td th:text="${lis.alimento.nombre}"></td>
                                     <td th:text="${lis.fecha_consumicion}"></td>
+                                    <td><a class="fa-solid fa-trash-can fa-2x" style="color: red" id="btn-icono" data-bs-toggle="tooltip"
+                                        title="Eliminar" th:href="@{'/alimento/eliminar/'+ ${lis.id}}"></a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -216,7 +218,7 @@
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Alimento:</label>
                         <select th:field="*{alimento}" class="form-control" id="lista-alimentos">
-                            <option th:each="al : ${listaAlimentos}" th:value="${al}" th:text="${al.nombre}"></option>
+                            <option th:each="al : ${listaAlimentos}" th:value="${al.id}" th:text="${al.nombre}"></option>
                         </select>
                         <script language="JavaScript" th:inline="javascript">
                             $(document).ready(function() {

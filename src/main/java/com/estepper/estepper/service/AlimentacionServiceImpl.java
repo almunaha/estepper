@@ -45,5 +45,11 @@ public class AlimentacionServiceImpl implements AlimentacionService{
         repoA.save(al);
     }
 
+    @Override
+    public void deleteAlCon(Integer id) {
+        repoAC.findById(id).get().setAlimento(null);
+        repoAC.deleteById(id);
+    }
+
     
 }
