@@ -1,5 +1,7 @@
 package com.estepper.estepper.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -794,9 +796,18 @@ public class ParticipanteController {
         model.addAttribute("user", user);
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
             model.addAttribute("alimentoCon", new AlimentosConsumidos());
+            List<AlimentosConsumidos> listal = alimentacion.getAlimentosCon(participante.findById(user.getId()).get());
+            List<Integer> nutrienteshoy = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0)); // Inicializar con ceros
+            for(int i = 0; i < listal.size(); i++){
+                nutrienteshoy.set(0, nutrienteshoy.get(0) + listal.get(i).getAlimento().getFibra_alimentaria());
+                nutrienteshoy.set(1, nutrienteshoy.get(1) + listal.get(i).getAlimento().getGrasas_saturadas());
+                nutrienteshoy.set(2, nutrienteshoy.get(2) + listal.get(i).getAlimento().getHidratos_de_carbono());
+                nutrienteshoy.set(3, nutrienteshoy.get(3) + listal.get(i).getAlimento().getProteinas());
+                nutrienteshoy.set(4, nutrienteshoy.get(4) + listal.get(i).getAlimento().getSal());
+            }
             model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
-            model.addAttribute("listaAlimentosCon", alimentacion.getAlimentosCon(participante.findById(user.getId()).get()));
-            //en vez de coger todos los alimentos consumidos, coger solo los de hoy. HAY QUE HACERLO
+            model.addAttribute("nutrientes", nutrienteshoy);
+            model.addAttribute("listaAlimentosCon", listal);
             return "alimentos";
         } else
             return "acceso";

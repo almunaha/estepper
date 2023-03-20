@@ -17,5 +17,8 @@ public interface AlimentosConsumidosRepository extends JpaRepository<AlimentosCo
     @Query("DELETE FROM AlimentosConsumidos a WHERE a.participante = :p")
     void deleteAllByParticipante(Participante p);
 
+    @Modifying
+    @Transactional
+    @Query("SELECT a FROM AlimentosConsumidos a WHERE a.participante = :participante AND DATE(a.fecha_consumicion) = CURRENT_DATE()")
     List<AlimentosConsumidos> findByParticipante(Participante participante);
 }
