@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.nio.file.Files;
 
 import org.springframework.ui.Model;
@@ -792,13 +793,44 @@ public class ParticipanteController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
-            model.addAttribute("alimento", new Alimentacion());
             model.addAttribute("alimentoCon", new AlimentosConsumidos());
             model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
             model.addAttribute("listaAlimentosCon", alimentacion.getAlimentosCon(participante.findById(user.getId()).get()));
+            //en vez de coger todos los alimentos consumidos, coger solo los de hoy. HAY QUE HACERLO
             return "alimentos";
         } else
             return "acceso";
+    }
+
+    @PostMapping("/process_alimentoCon/{id}")
+    public String process_alimento(@PathVariable("id") Integer id, @ModelAttribute AlimentosConsumidos alimento) {
+        if (getUsuario().getId() == id) {
+            alimento.setParticipante(participante.findById(getUsuario().getId()).get());
+            alimento.setFecha_consumicion(LocalDateTime.now());
+            alimentacion.saveAlCon(alimento);
+            return "redirect:/alimentos";
+        } else
+            return "redirect:/";
+    }
+
+    @GetMapping("/nuevoalimento")
+    public String nuevoal(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+            model.addAttribute("alimento", new Alimentacion());
+            return "nuevoalimento";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_alimento")
+    public String process_al(@ModelAttribute Alimentacion alimento) {
+        if (getUsuario().getEstadoCuenta().equals(Estado.ALTA) && getUsuario() instanceof Participante) {
+            alimentacion.saveAlimento(alimento);
+            return "redirect:/alimentos";
+        } else
+            return "redirect:/";
     }
 
     //FICHAS

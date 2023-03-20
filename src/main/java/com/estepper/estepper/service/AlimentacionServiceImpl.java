@@ -35,5 +35,15 @@ public class AlimentacionServiceImpl implements AlimentacionService{
         return repoAC.findByParticipante(p);
     }
 
+    @Override
+    public void saveAlCon(AlimentosConsumidos al) {
+        repoAC.save(al);
+    }
+
+    @Override
+    public void saveAlimento(Alimentacion al) {
+        repoA.save(al);
+    }
+
     
 }

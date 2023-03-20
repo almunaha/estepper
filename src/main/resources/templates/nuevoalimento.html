@@ -112,51 +112,58 @@
                 </div>
             </nav>
 
-            <!--HACER CÓDIGO-->
             <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
                 <div style="display: flex; justify-content: center; flex-direction: column;">
-                    <div><h3 style="text-align: center;">¿Qué has comido hoy?</h3></div>
+                    <div><h3 style="text-align: center;">¡Crea un alimento nuevo!</h3></div>
                     
                 </div>
             </div>
             <div style="margin: 1%;" class="bg-white border border-1 p-5 rounded-4 ">
                 <div style="display: flex; justify-content: center; flex-direction: column;">
-                    <!--META CALORÍAS DIARIAS Y CUÁNTAS HA CONSUMIDO YA-->
-                    <!--TABLA ALIMENTOS CONSUMIDOS-->
-                    <div th:if="${listaAlimentosCon.empty}">
-                        <div><h6 style="text-align: center;">¡No has agregado ningún alimento hoy!</h6></div>
-                    </div>
-                    <div th:unless="${listaAlimentosCon.empty}" class="table-responsive">
-                        <table class="table tablePart" id="tablePart">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Alimento</th>
-                                    <th scope="col">Fecha</th>
-    
-                                </tr>
-                            </thead>
-                            <tbody class="buscarParticipantes">
-                                <tr th:each="lis:${listaAlimentosCon}">
-                                    <td th:text="${lis.alimento.nombre}"></td>
-                                    <td th:text="${lis.fecha_consumicion}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--AÑADIR ALIMENTO CONSUMIDO-->
-                    <div><h6 style="text-align: center;">¿Has comido algo más? Añádelo aquí:</h6></div>
-                    <form class="form-perfil" method="post" th:action="@{'/process_alimentoCon/' + ${user.id}}"
-                    th:object="${alimentoCon}">
+                    <form class="form-perfil" method="post" th:action="@{/process_alimento}"
+                    th:object="${alimento}">
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Alimento: </label>
-                        <select th:field="*{alimento}" class="form-control">
-                            <option th:each="al : ${listaAlimentos}" th:value="${al}" th:text="${al.nombre}"></option>
+                        <label class="col-4 col-form-label">Nombre: </label>
+                        <input type="text" th:field="*{nombre}" class="form-control" />
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Sal: </label>
+                        <input type="number" th:field="*{sal}" class="form-control" />
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Fibra alimentaria: </label>
+                        <input type="number" th:field="*{fibra_alimentaria}" class="form-control" />
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Grasas saturadas: </label>
+                        <input type="number" th:field="*{grasas_saturadas}" class="form-control" />
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Hidratos de carbono: </label>
+                        <input type="number" th:field="*{hidratos_de_carbono}" class="form-control" />
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Proteinas: </label>
+                        <input type="number" th:field="*{proteinas}" class="form-control" />
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Tipo: </label>
+                        <select class="form-control" th:field="*{tipo}">
+                            <option th:each="t : ${T(com.estepper.estepper.model.enums.TipoAlimentacion).values()}"
+                                    th:value="${t}"
+                                    th:text="${t}">
+                            </option>
                         </select>
                     </div>
-                    <div><h6 style="text-align: center;">¿No está el alimento que buscas?<a
-                        th:href="@{/nuevoalimento}" class="alert-link">¡Créalo!</a></h6></div>
-                    <button class="btn btn-info text-white mt-4 w-100" type="submit">Añadir</button>
+                    
+                    <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>
                 </form>
                 </div>
             </div>

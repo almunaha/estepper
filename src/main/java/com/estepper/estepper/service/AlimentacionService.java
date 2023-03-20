@@ -10,4 +10,6 @@ public interface AlimentacionService {
     public void deleteByParticipante(Participante p);
     public List<Alimentacion> getAlimentos();
     public List<AlimentosConsumidos> getAlimentosCon(Participante p);
+    public void saveAlCon(AlimentosConsumidos al);
+    public void saveAlimento(Alimentacion al);
 }
