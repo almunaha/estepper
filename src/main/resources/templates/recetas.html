@@ -169,13 +169,12 @@
                                   <div class="descripcion">
                                     <div style="display: flex; flex-direction: column;">
                                         <a class="btn" id="btn-part" data-bs-toggle="tooltip"
-                                        onclick="abrirIframe('${lis.link}', 'mi-iframe')" title="Ver"><i
+                                        onclick="abrirIframe('mi-iframe')" title="Ver"><i
                                           class="fa-solid fa-eye"></i></a>
-                                          <iframe id="mi-iframe"></iframe>
+                                          <iframe id="mi-iframe" th:src="@{recetas/{link}(link=${lis.link})}"></iframe>
                                           <script>
-                                            function abrirIframe(url, iframeId) {
+                                            function abrirIframe(iframeId) {
                                             const iframe = document.getElementById(iframeId);
-                                            iframe.src = url;
                                             }
                                           </script>
                                     </div>

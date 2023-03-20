@@ -879,7 +879,7 @@ public class ParticipanteController {
                         byte[] bytesArc = file.getBytes(); 
                         Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                         Files.write(rutaCompleta, bytesArc);
-                        lareceta.setLink(rutaCompleta.toString());
+                        lareceta.setLink(file.getOriginalFilename());
                         alimentacion.updateReceta(lareceta);
                     } catch (Exception e) {
                         String mensaje = "Ha ocurrido un error: " + e.getMessage();
