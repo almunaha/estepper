@@ -200,7 +200,10 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <iframe id="mi-iframe"
-                                                                th:src="@{recetas/{link}(link=${lis.link})}"></iframe>
+                                                                th:src="@{recetas/{link}(link=${lis.link}) }"></iframe>
+                                                            <!--Si es un pdf que se vaya a la pag
+                                                            <iframe name="mi-iframe" id="mi-iframe"
+                                                                th:src="@{recetas/{link}(link=${lis.link})  + '#pagina' + ${lis.pag}}"></iframe>-->
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
