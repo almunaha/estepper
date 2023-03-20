@@ -2,6 +2,7 @@ package com.estepper.estepper.model.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -11,6 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 @Table(name = "recetas")
@@ -22,9 +25,10 @@ public class Receta {
     private String link;
     private Integer pag;
     private String nombre;
-    @ElementCollection 
-    @CollectionTable(name = "lista_ingredientes", joinColumns = @JoinColumn(name = "id")) 
-    @Column(name = "ingredientes") 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "receta_alimentacion",
+           joinColumns = @JoinColumn(name = "receta_id"),
+           inverseJoinColumns = @JoinColumn(name = "alimentacion_id"))
     private List<Alimentacion> ingredientes;
 
     public Receta(){
