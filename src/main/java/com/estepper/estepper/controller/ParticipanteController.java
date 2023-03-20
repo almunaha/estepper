@@ -879,12 +879,12 @@ public class ParticipanteController {
                         byte[] bytesArc = file.getBytes(); 
                         Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                         Files.write(rutaCompleta, bytesArc);
-                        lareceta.setLink(file.getOriginalFilename());
-                        alimentacion.updateReceta(lareceta);
                     } catch (Exception e) {
                         String mensaje = "Ha ocurrido un error: " + e.getMessage();
                         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                     }
+                    lareceta.setLink(file.getOriginalFilename());
+                    alimentacion.updateReceta(lareceta);
                 }
             }
         return "redirect:/recetas";

@@ -169,12 +169,30 @@
                                   <div class="descripcion">
                                     <div style="display: flex; flex-direction: column;">
                                         <a class="btn" id="btn-part" data-bs-toggle="tooltip"
-                                        onclick="abrirIframe('mi-iframe')" title="Ver"><i
+                                        onclick="abrirIframe('mi-modal')" title="Ver"><i
                                           class="fa-solid fa-eye"></i></a>
-                                          <iframe id="mi-iframe" th:src="@{recetas/{link}(link=${lis.link})}"></iframe>
+                                          <!-- Modal -->
+                                            <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title">Receta</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    <iframe id="mi-iframe" th:src="@{recetas/{link}(link=${lis.link})}"></iframe>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
                                           <script>
-                                            function abrirIframe(iframeId) {
-                                            const iframe = document.getElementById(iframeId);
+                                            function abrirIframe(modalId) {
+                                                const iframe = document.getElementById("mi-iframe");
+                                                const modal = new bootstrap.Modal(document.getElementById(modalId));
+                                                modal.show();
                                             }
                                           </script>
                                     </div>
