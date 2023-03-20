@@ -66,5 +66,11 @@ public class AlimentacionServiceImpl implements AlimentacionService{
         repoR.save(receta);
     }
 
+    @Override
+    public void borraralconSem(Participante p) {
+       List<AlimentosConsumidos> lista = repoAC.getWeek(p);
+       for(int i = 0; i < lista.size(); i++) deleteAlCon(lista.get(i).getId());
+    }
+
     
 }

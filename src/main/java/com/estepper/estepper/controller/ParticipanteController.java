@@ -811,6 +811,9 @@ public class ParticipanteController {
             model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
             model.addAttribute("nutrientes", nutrienteshoy);
             model.addAttribute("listaAlimentosCon", listal);
+
+            //BORRAR ALIMENTOS DE HACE MÁS DE 1 SEMANA
+            alimentacion.borraralconSem(participante.findById(user.getId()).get());
             return "alimentos";
         } else
             return "acceso";

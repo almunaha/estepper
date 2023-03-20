@@ -203,7 +203,7 @@
                             <tbody class="buscarParticipantes">
                                 <tr th:each="lis:${listaAlimentosCon}">
                                     <td th:text="${lis.alimento.nombre}"></td>
-                                    <td th:text="${lis.fecha_consumicion}"></td>
+                                    <td th:text="${#temporals.format(lis.fecha_consumicion, 'HH:mm')}"></td>
                                     <td><a class="fa-solid fa-trash-can fa-2x" style="color: red" id="btn-icono" data-bs-toggle="tooltip"
                                         title="Eliminar" th:href="@{'/alimento/eliminar/'+ ${lis.id}}"></a></td>
                                 </tr>

@@ -16,4 +16,5 @@ public interface AlimentacionService {
     public void saveAlimento(Alimentacion al);
     public void deleteAlCon(Integer id);
     public void updateReceta(Receta receta);
+    public void borraralconSem(Participante p);
 }

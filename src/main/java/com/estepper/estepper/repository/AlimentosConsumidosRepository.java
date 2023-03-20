@@ -21,4 +21,9 @@ public interface AlimentosConsumidosRepository extends JpaRepository<AlimentosCo
     @Transactional
     @Query("SELECT a FROM AlimentosConsumidos a WHERE a.participante = :participante AND DATE(a.fecha_consumicion) = CURRENT_DATE()")
     List<AlimentosConsumidos> findByParticipante(Participante participante);
+
+    @Modifying
+    @Transactional
+    @Query("SELECT a FROM AlimentosConsumidos a WHERE a.participante = :p AND a.fecha_consumicion < DATEADD(day, -7, CURRENT_TIMESTAMP)")
+    List<AlimentosConsumidos> getWeek(Participante p);
 }
