@@ -139,7 +139,7 @@
                     <div class="input-group mt-2">
                         <label style="font-weight: bold; " class="col-4 col-form-label">HbA1c(%): </label>
                         
-                        <input id="hb" type="number" step="0.1" th:field="*{hbA1c}" class="form-control" />
+                        <input id="hb" type="number" step="0.1" th:field="*{hbA1c}" min=0 max=100 class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
@@ -152,7 +152,7 @@
 
                     <div class="input-group mt-2">
                         <label style="font-weight: bold; color:blue;" class="col-4 col-form-label">CLASIFICACIÓN DEL USUARIO</label>
-                        <select style="border-color: blue;" id="clasificacion" th:field="*{clasificacionusuario}" class="form-control">
+                        <select style="border-color: blue;" id="clasificacion" th:field="*{clasificacionusuario}" class="form-control" disabled>
                             <option value=1>Diabetes no conocida</option>
                             <option value=2>Prediabetes</option>
                             <option value=3>T.F. > 14, normoglucemia e I.M.C >= 27</option>

@@ -107,12 +107,12 @@
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Nº minutos/día: </label>
                         
-                        <input style="border-color: blue;" id="minafv" type="number" th:field="*{minafv}" class="form-control" />
+                        <input style="border-color: blue;" id="minafv" type="number" th:field="*{minafv}" class="form-control" readonly/>
                     </div>
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Vigorosa METS-minuto/semana: </label>
                         
-                        <input style="border-color: blue;" id="metsafv" type="number" th:field="*{metsafv}" class="form-control" />
+                        <input style="border-color: blue;" id="metsafv" type="number" th:field="*{metsafv}" class="form-control" readonly/>
                     </div>
 
                     <div><label class="col-20 col-form-label"><h4>ACTIVIDAD FÍSICA MODERADA (A.F.M)</h4></label></div>
@@ -132,12 +132,12 @@
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Nº minutos/día: </label>
                         
-                        <input style="border-color: blue;" id="minafm" type="number" th:field="*{minafm}" class="form-control" />
+                        <input style="border-color: blue;" id="minafm" type="number" th:field="*{minafm}" class="form-control" readonly/>
                     </div>
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Moderada METS-minuto/semana: </label>
                         
-                        <input style="border-color: blue;" id="metsafm" type="number" th:field="*{metsafm}" class="form-control" />
+                        <input style="border-color: blue;" id="metsafm" type="number" th:field="*{metsafm}" class="form-control" readonly/>
                     </div>
 
                     <div><label class="col-20 col-form-label"><h4>CAMINANDO</h4></label></div>
@@ -157,12 +157,12 @@
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Nº minutos/día: </label>
                         
-                        <input style="border-color: blue;" id="mincaminar" type="number" th:field="*{mincaminar}" class="form-control" />
+                        <input style="border-color: blue;" id="mincaminar" type="number" th:field="*{mincaminar}" class="form-control" readonly/>
                     </div>
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Caminar METS-minuto/semana: </label>
                         
-                        <input style="border-color: blue;" id="metscaminar" type="number" th:field="*{metscaminar}" class="form-control" />
+                        <input style="border-color: blue;" id="metscaminar" type="number" th:field="*{metscaminar}" class="form-control" readonly/>
                     </div>
 
 
@@ -178,19 +178,19 @@
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Nº minutos/día: </label>
                         
-                        <input style="border-color: blue;" id="minsentado" type="number" th:field="*{minsentado}" class="form-control" />
+                        <input style="border-color: blue;" id="minsentado" type="number" th:field="*{minsentado}" class="form-control" readonly />
                     </div>
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">METs totales: </label>
                         
-                        <input style="border-color: blue;" id="metstotales" type="number" th:field="*{metstotales}" class="form-control" />
+                        <input style="border-color: blue;" id="metstotales" type="number" th:field="*{metstotales}" class="form-control" readonly />
                     </div>
 
                     <label class="col-4 col-form-label"><h4>NIVEL DE ACTIVIDAD FÍSICA</h4></label>
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Clasificación nivel actividad física</label>
-                        <select style="border-color: blue;" id="clasificacion" th:field="*{clasificacion}" class="form-control">
+                        <select style="border-color: blue;" id="clasificacion" th:field="*{clasificacion}" class="form-control" disabled>
                             <option value="moderada">Moderada</option>
                             <option value="vigorosa">Vigorosa</option>
                         </select>

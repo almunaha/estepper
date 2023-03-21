@@ -89,7 +89,7 @@
         
                     <div class="input-group mt-2">
                         <label style="font-weight: bold;" class="col-4 col-form-label">Edad: </label>
-                        <select style="border-color: blue;" id="edad" th:field="*{puntosedad}" class="form-control">
+                        <select style="border-color: blue;" id="edad" th:field="*{puntosedad}" class="form-control" disabled>
                             <option value=0>Menos de 45 años (0 puntos)</option>
                             <option value=2>Entre 45-54 años (2 puntos)</option>
                             <option value=3>Entre 55-64 años (3 puntos)</option>
@@ -99,7 +99,7 @@
 
                     <div class="input-group mt-2">
                         <label style="font-weight: bold;" class="col-4 col-form-label">Perímetro de cintura (cm): </label>
-                        <select style="border-color: blue;" id="cmcintura" th:field="*{puntoscmcintura}" class="form-control">
+                        <select style="border-color: blue;" id="cmcintura" th:field="*{puntoscmcintura}" class="form-control" disabled>
                             <option value=0>Menos de 94cm (MASCULINO)/80cm (FEMENINO)</option>
                             <option value=3>Entre 94 y 102cm (MASCULINO)/80 y 88cm (FEMENINO)</option>
                             <option value=4>Más de 102cm (MASCULINO)/88cm (FEMENINO)</option>
@@ -108,7 +108,7 @@
 
                     <div class="input-group mt-2">
                         <label style="font-weight: bold; color:blue" class="col-4 col-form-label">IMC: </label>
-                        <select style="border-color: blue;" id="imc" th:field="*{puntosimc}" class="form-control">
+                        <select style="border-color: blue;" id="imc" th:field="*{puntosimc}" class="form-control" disabled>
                             <option value=0>Menos de 25 kg/m2</option>
                             <option value=1>Entre 25 y 30 kg/m2</option>
                             <option value=3>Más de 30kg/m2</option>
@@ -158,7 +158,7 @@
 
                     <div class="input-group mt-2">
                         <label style="font-weight: bold; color:blue" class="col-4 col-form-label">Puntuación de Findrisc: </label>
-                        <input style="border-color: blue;" id="puntuacion" type="number" th:field="*{puntuacion}" class="form-control" />
+                        <input style="border-color: blue;" id="puntuacion" type="number" th:field="*{puntuacion}" class="form-control" readonly />
                     </div>
 
                     <script>
@@ -189,7 +189,7 @@
                   
                     <div class="input-group mt-2">
                         <label style="font-weight: bold; color:blue" class="col-4 col-form-label">Escala de riesgo </label>
-                        <select style="border-color: blue;" id="escala" th:field="*{escalarriesgo}"class="form-control" >
+                        <select style="border-color: blue;" id="escala" th:field="*{escalarriesgo}"class="form-control" disabled>
                             <option th:value="Bajo" th:text="Bajo"></option>
                             <option th:value="Alto" th:text="Alto"></option>
                             <option th:value="|Ligeramente elevado|" th:text="|Ligeramente elevado|"></option>
