@@ -11,4 +11,5 @@ public interface SesionService {
     public List<Sesion> sesiones(Participante participante);
     public void deleteByParticipante(Participante p);
     
+    
 }

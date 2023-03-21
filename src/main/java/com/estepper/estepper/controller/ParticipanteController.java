@@ -140,6 +140,7 @@ public class ParticipanteController {
                 // sesión seleccionada
                 Sesion sesion = ses.buscarSesion(p, num); // cambiar segun sesion
                 model.addAttribute("sesion", sesion);
+                model.addAttribute("lasesion", sesion);
 
                 model.addAttribute("participante", participante.findById(1)); // coger participante
 
@@ -166,7 +167,30 @@ public class ParticipanteController {
             for(int i = 0; i < lista.size(); i++){
                 if(lista.get(i).getAsistencia().equals(Asistencia.SI)) asistencia++;
             }
-            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia*10 , p.getIdCoordinador(), p.getPerdidaDePeso(), asistencia, p.getPerdidacmcintura(), p.getId());
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia*10 , p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
+            return "redirect:/sesiones";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("process_sesionTerm/{num}")
+    public String actualizarTerm(@PathVariable("num") Integer num, @ModelAttribute Sesion lasesion) {
+        Participante p = participante.getParticipante(getUsuario().getId());
+        if (p.getEstadoCuenta().equals(Estado.ALTA)) {
+            Sesion orig = ses.buscarSesion(p, num);
+
+            Sesion actualizada = new Sesion(orig.getId(), orig.getNumSesion(), orig.getParticipante(), EstadoSesion.COMPLETA,
+                    orig.getObservaciones(), orig.getAsistencia(), lasesion.getCmsPerdidos(), lasesion.getPesoPerdido());
+
+            ses.guardar(actualizada);
+
+            //actualizar asistencia media y sesiones completas participante
+            List<Sesion> lista = ses.sesiones(p);
+            Integer completas = 0;
+            for(int i = 0; i < lista.size(); i++){
+                if(lista.get(i).getEstado().equals(EstadoSesion.COMPLETA)) completas++;
+            }
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia() , p.getIdCoordinador(), p.getPerdidaDePeso(), completas, p.getPerdidacmcintura(), p.getId());
             return "redirect:/sesiones";
         } else
             return "acceso";

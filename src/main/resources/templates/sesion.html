@@ -150,6 +150,17 @@
               <button class="btn-sesion" id="guardar">Guardar</button>
             </div>
         </form>
+        <form style="margin-top: 2%;"class="form-perfil" method="post" th:action="@{'/process_sesionTerm/' + ${sesion.numSesion}}" th:object="${lasesion}">
+          <div class="input-group mt-2">
+              <label class="col-4 col-form-label">Peso perdido (kg): </label>
+              <input type="number" th:field="*{pesoPerdido}" class="form-control" required />
+          </div>
+          <div class="input-group mt-2">
+            <label class="col-4 col-form-label">Cm Cintura perdidos: </label>
+            <input type="number" th:field="*{cmsPerdidos}" class="form-control" required />
+        </div>
+          <button class="btn btn-info text-white mt-4 w-100" type="submit">Terminar sesión</button>
+      </form>
 
 
       </div>
