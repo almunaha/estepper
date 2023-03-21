@@ -1021,18 +1021,23 @@ public class ParticipanteController {
     public String geometria(@PathVariable("id") Integer id, Model model){
         try (PythonInterpreter pyInterp = new PythonInterpreter()) {
             String codigoPython = 
-            "import pandas as pd\n" +
-            "import pymysql.cursors\n" +
-            "from sklearn.linear_model import LinearRegression\n" +
-            "connection = pymysql.connect(host='localhost:3306',\n" +
-            "                             user='estepper',\n" +
-            "                             password='estepper',\n" +
-            "                             db='estepper',\n" +
-            "                             charset='utf8mb4',\n" +
-            "                             cursorclass=pymysql.cursors.DictCursor)\n";
-            
-            pyInterp.exec(codigoPython);
+                "import pandas as pd\n" +
+                "import pymysql.cursors\n" +
+                "from sklearn.linear_model import LinearRegression\n" +
+                "connection = pymysql.connect(host='localhost:3306',\n" +
+                "                             user='estepper',\n" +
+                "                             password='estepper',\n" +
+                "                             db='estepper',\n" +
+                "                             charset='utf8mb4',\n" +
+                "                             cursorclass=pymysql.cursors.DictCursor)\n" +
+                "sql = \"SELECT * FROM alimentosconsumidos\"\n" +
+                "consumo = pd.read_sql(sql, connection)\n" +
+                "sql = \"SELECT * FROM alimentos\"\n" +
+                "nutricion = pd.read_sql(sql, connection)";
+                    
+            pyInterp.exec(codigoPython); 
         }
+        
 
           return "redirect:/";
     }
