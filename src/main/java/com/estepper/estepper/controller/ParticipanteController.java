@@ -800,7 +800,7 @@ public class ParticipanteController {
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
             model.addAttribute("alimentoCon", new AlimentosConsumidos());
             List<AlimentosConsumidos> listal = alimentacion.getAlimentosCon(participante.findById(user.getId()).get());
-            List<Integer> nutrienteshoy = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0)); // Inicializar con ceros
+            List<Float> nutrienteshoy = new ArrayList<Float>(Arrays.asList(0f, 0f, 0f, 0f, 0f)); // Inicializar con ceros
             for(int i = 0; i < listal.size(); i++){
                 nutrienteshoy.set(0, nutrienteshoy.get(0) + (listal.get(i).getAlimento().getFibra_alimentaria() * listal.get(i).getRaciones()));
                 nutrienteshoy.set(1, nutrienteshoy.get(1) + (listal.get(i).getAlimento().getGrasas_saturadas() * listal.get(i).getRaciones()));

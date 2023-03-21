@@ -143,30 +143,31 @@
                             document.getElementById('porcionmg').value = (porcion*1000);
                         }
                     </script>
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Sal (g): </label>
-                        <input type="number" th:field="*{sal}" class="form-control" />
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Fibra alimentaria (g): </label>
-                        <input type="number" th:field="*{fibra_alimentaria}" class="form-control" />
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Grasas saturadas (g): </label>
-                        <input type="number" th:field="*{grasas_saturadas}" class="form-control" />
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Hidratos de carbono (g): </label>
-                        <input type="number" th:field="*{hidratos_de_carbono}" class="form-control" />
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Proteinas (g): </label>
-                        <input type="number" th:field="*{proteinas}" class="form-control" />
-                    </div>
+                   <div class="input-group mt-2">
+                    <label class="col-4 col-form-label">Sal (g): </label>
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{sal}" class="form-control" />
+                </div>
+                
+                <div class="input-group mt-2">
+                    <label class="col-4 col-form-label">Fibra alimentaria (g): </label>
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{fibra_alimentaria}" class="form-control" />
+                </div>
+                
+                <div class="input-group mt-2">
+                    <label class="col-4 col-form-label">Grasas saturadas (g): </label>
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{grasas_saturadas}" class="form-control" />
+                </div>
+                
+                <div class="input-group mt-2">
+                    <label class="col-4 col-form-label">Hidratos de carbono (g): </label>
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{hidratos_de_carbono}" class="form-control" />
+                </div>
+                
+                <div class="input-group mt-2">
+                    <label class="col-4 col-form-label">Proteinas (g): </label>
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{proteinas}" class="form-control" />
+                </div>
+                
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Tipo: </label>

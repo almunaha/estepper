@@ -285,7 +285,7 @@
                         <label class="col-form-label col-sm-4">Ingredientes:</label>
                         <div class="col-sm-8 mb-2">
                             <select th:field="*{ingredientes}" class="form-control" multiple id="lista-alimentos">
-                                <option th:each="ing : ${listaIng}" th:value="${ing.id}" th:text="${ing.nombre}">
+                                <option th:each="ing : ${listaIng}" th:value="${ing.id}" th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
                                 </option>
                             </select>
                             <script language="JavaScript" th:inline="javascript">
@@ -363,7 +363,7 @@
                                             <select th:field="*{ingredientes}" class="form-control" multiple
                                                 id="lista-alimentos1">
                                                 <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                                    th:text="${ing.nombre}">
+                                                    th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
                                                 </option>
                                             </select>
                                             <script language="JavaScript" th:inline="javascript">

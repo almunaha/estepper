@@ -19,11 +19,11 @@ public class Alimentacion {
     private Integer id;
 
     private String nombre;
-    private Integer sal;
-    private Integer fibra_alimentaria;
-    private Integer grasas_saturadas;
-    private Integer hidratos_de_carbono;
-    private Integer proteinas;
+    private float sal;
+    private float fibra_alimentaria;
+    private float grasas_saturadas;
+    private float hidratos_de_carbono;
+    private float proteinas;
     private Integer porcion;
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", columnDefinition = "ENUM('DULCE','CARNE_GRASA','EMBUTIDO','CARNE_MAGRA','PESCADO','HUEVO','LEGUMBRE','FRUTOS_SECOS','LACTEOS','ACEITE','VERDURA','FRUTA','CEREALES','ARROZ', 'PASTA','PAN')")
@@ -37,7 +37,7 @@ public class Alimentacion {
         this.proteinas = 0;
     }
 
-    public Alimentacion(Integer id, String nombre, Integer sal, Integer fibra_alimentaria, Integer grasas_saturadas, Integer hidratos_de_carbono, Integer proteinas, Integer porcion, TipoAlimentacion tipo){
+    public Alimentacion(Integer id, String nombre, float sal, float fibra_alimentaria, float grasas_saturadas, float hidratos_de_carbono, float proteinas, Integer porcion, TipoAlimentacion tipo){
         this.sal = sal;
         this.fibra_alimentaria = fibra_alimentaria;
         this.grasas_saturadas = grasas_saturadas;
@@ -66,43 +66,43 @@ public class Alimentacion {
         this.nombre = nombre;
     }
 
-    public Integer getSal() {
+    public float getSal() {
         return sal;
     }
 
-    public void setSal(Integer sal) {
+    public void setSal(float sal) {
         this.sal = sal;
     }
 
-    public Integer getFibra_alimentaria() {
+    public float getFibra_alimentaria() {
         return fibra_alimentaria;
     }
 
-    public void setFibra_alimentaria(Integer fibra_alimentaria) {
+    public void setFibra_alimentaria(float fibra_alimentaria) {
         this.fibra_alimentaria = fibra_alimentaria;
     }
 
-    public Integer getGrasas_saturadas() {
+    public float getGrasas_saturadas() {
         return grasas_saturadas;
     }
 
-    public void setGrasas_saturadas(Integer grasas_saturadas) {
+    public void setGrasas_saturadas(float grasas_saturadas) {
         this.grasas_saturadas = grasas_saturadas;
     }
 
-    public Integer getHidratos_de_carbono() {
+    public float getHidratos_de_carbono() {
         return hidratos_de_carbono;
     }
 
-    public void setHidratos_de_carbono(Integer hidratos_de_carbono) {
+    public void setHidratos_de_carbono(float hidratos_de_carbono) {
         this.hidratos_de_carbono = hidratos_de_carbono;
     }
 
-    public Integer getProteinas() {
+    public float getProteinas() {
         return proteinas;
     }
 
-    public void setProteinas(Integer proteinas) {
+    public void setProteinas(float proteinas) {
         this.proteinas = proteinas;
     }
 
