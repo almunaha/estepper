@@ -106,7 +106,7 @@ public class GruposController {
 
                 part.update(participante.edad, participante.getSexo(), participante.getFotoParticipante(), g,
                         participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
-                        participante.getSesionesCompletas(), participanteId);
+                        participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(participantesSeleccionadosList.size());
 
@@ -141,7 +141,7 @@ public class GruposController {
 
                 part.update(participante.getEdad(), participante.getSexo(), participante.getFotoParticipante(), g,
                         participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
-                        participante.getSesionesCompletas(), participanteId);
+                        participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(g.getNumParticipantes() + participantesSeleccionadosList.size());
 

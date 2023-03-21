@@ -40,7 +40,7 @@ class EstepperApplicationTests {
 
 		//Usuario tipo PARTICIPANTE
 		Participante almu = usuarioRepo.save(new Participante(0, 111, "Almudena",  "almunaha@ucm.es", hash.encode("almupass"), 
-		Estado.BAJA, null, null, 0.0, 0, 0, 0, null,"/img/p1.png"));
+		Estado.BAJA, null, null, 0.0, 0, 0, 0, null,"/img/p1.png", 0.0));
 		exploracionRepo.save(new Exploracion(0, almu, Sexo.MASCULINO, "no", 0, 0, 0, 0, 0));
 		findriscRepo.save(new Findrisc(0, almu, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo"));
 		

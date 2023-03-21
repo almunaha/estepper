@@ -160,7 +160,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         usuario.setSesionesCompletas(0);
         usuario.setPerdidaDePeso(0.0);
 
-        repoP.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), usuario.getGrupo(), usuario.getAsistencia(), idCoor, usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), id);
+        repoP.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), usuario.getGrupo(), usuario.getAsistencia(), idCoor, usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), id);
         repoU.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), usuario.getEstadoCuenta(), id);
     }
 

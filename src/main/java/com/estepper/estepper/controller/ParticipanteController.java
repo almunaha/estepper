@@ -166,7 +166,7 @@ public class ParticipanteController {
             for(int i = 0; i < lista.size(); i++){
                 if(lista.get(i).getAsistencia().equals(Asistencia.SI)) asistencia++;
             }
-            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia*10 , p.getIdCoordinador(), p.getPerdidaDePeso(), asistencia, p.getId());
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia*10 , p.getIdCoordinador(), p.getPerdidaDePeso(), asistencia, p.getPerdidacmcintura(), p.getId());
             return "redirect:/sesiones";
         } else
             return "acceso";
@@ -601,7 +601,7 @@ public class ParticipanteController {
 
         p.setPerdidaDePeso(pesoPerdido);
         participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
-                p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getId());
+                p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
 
         pro.guardar(progreso);
 
@@ -613,6 +613,30 @@ public class ParticipanteController {
         Participante p = participante.findById(getUsuario().getId()).get();
         progreso.setParticipante(p);
         progreso.setTipo(TipoProgreso.PERIMETRO);
+
+        // Coger formulario de exploración:
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+        Exploracion exploracion = null;
+        for (int i = 0; i < formularios.size(); i++) {
+            if (formularios.get(i) instanceof Exploracion) {
+                exploracion = (Exploracion) formularios.get(i);
+            }
+        }
+
+        Progreso primerCintura = pro.primerPeso(p, TipoProgreso.PERIMETRO);
+        Double pe = exploracion.getCmcintura().doubleValue();
+
+        Double cmCinturaPerdido = null;
+
+        // positivo -> ha ganado, negativo -> ha perdido
+        if (progreso.getDato() - pe > 0)
+            cmCinturaPerdido = 0.0;
+        else
+            cmCinturaPerdido = progreso.getDato() - pe;
+
+        p.setPerdidacmcintura(cmCinturaPerdido);
+        participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+                p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), cmCinturaPerdido, p.getId());
 
         pro.guardar(progreso);
 

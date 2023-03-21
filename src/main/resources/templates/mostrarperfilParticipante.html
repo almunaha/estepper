@@ -244,7 +244,15 @@
                                         <div class="card"  data-bs-toggle="tooltip" title="Pérdida de peso">
                                           <div class="card-body" >
                                               <h5><i class="fa-solid fa-weight-scale"></i><!--Pérdida de peso--> </h5>
-                                              <h5 th:text="${participante.perdidaDePeso}+ ' ' + 'kg perdidos'"></h5>
+                                              <h5 th:text="${-participante.perdidaDePeso}+ ' ' + 'kg perdidos'"></h5>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="card"  data-bs-toggle="tooltip" title="Pérdida de cm cintura">
+                                          <div class="card-body" >
+                                              <h5><i class="fa-sharp fa-solid fa-ruler"></i><!--Pérdida de cmcintura--> </h5>
+                                              <h5 th:text="${-participante.perdidacmcintura}+ ' ' + 'cm perdidos'"></h5>
                                           </div>
                                         </div>
                                     </div>

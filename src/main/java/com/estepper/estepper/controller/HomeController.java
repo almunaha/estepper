@@ -182,7 +182,7 @@ public class HomeController {
                 Participante part = participante.findById(id).get();
 
                 participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
-                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), id);
+                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), part.getPerdidacmcintura(), id);
             }
 
             return "redirect:/mostrarperfil/{id}";
