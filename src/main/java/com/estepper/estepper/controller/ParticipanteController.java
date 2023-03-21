@@ -582,15 +582,7 @@ public class ParticipanteController {
         }
 
         Progreso primerPeso = pro.primerPeso(p, TipoProgreso.PESO);
-        Double pe = null;
-
-        if (primerPeso != null) { // aunque realmente el primero siempre será el de exploración yo creo
-            pe = primerPeso.getDato().doubleValue();
-        }
-
-        else {
-            pe = exploracion.getPeso().doubleValue();
-        }
+        Double pe = exploracion.getPeso().doubleValue();
 
         Double pesoPerdido = null;
 
