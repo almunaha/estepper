@@ -160,6 +160,13 @@ public class ParticipanteController {
 
             ses.guardar(actualizada);
 
+            //actualizar asistencia media y sesiones completas participante
+            List<Sesion> lista = ses.sesiones(p);
+            Integer asistencia = 0;
+            for(int i = 0; i < lista.size(); i++){
+                if(lista.get(i).getAsistencia().equals(Asistencia.SI)) asistencia++;
+            }
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia*10 , p.getIdCoordinador(), p.getPerdidaDePeso(), asistencia, p.getId());
             return "redirect:/sesiones";
         } else
             return "acceso";
