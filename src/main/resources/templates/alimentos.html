@@ -130,10 +130,10 @@
                         <div class="valor">
                             <div class="flex-valor">
                                 <div class="iz-valor">
-                                    <i class="fa-solid fa-apple-whole" style="color: green"></i>
+                                    <i class="fa-solid fa-apple-whole" style="color:red"></i>
                                 </div>
                                 <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(0)}"></span></div>
+                                    <div class="dato-valor"><span th:text="${nutrientes.get(0)} + ' g'"></span></div>
                                     <div class="bottom-valor"><span>Fibra</span></div>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                                     <i class="fa-solid fa-hotdog" style="color: rgb(105, 70, 15)"></i>
                                 </div>
                                 <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(1)}"></span></div>
+                                    <div class="dato-valor"><span th:text="${nutrientes.get(1)} + ' g'"></span></div>
                                     <div class="bottom-valor"><span>Grasas saturadas</span></div>
                                 </div>
                             </div>
@@ -156,7 +156,7 @@
                                     <i class="fa-solid fa-pizza-slice" style="color: rgb(210, 165, 91)"></i>
                                 </div>
                                 <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(2)}"></span></div>
+                                    <div class="dato-valor"><span th:text="${nutrientes.get(2)} + ' g'"></span></div>
                                     <div class="bottom-valor"><span>Hidratos de carbono</span></div>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                                     <i class="fa-solid fa-bacon" style="color: rgb(105, 15, 38)"></i>
                                 </div>
                                 <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(3)}"></span></div>
+                                    <div class="dato-valor"><span th:text="${nutrientes.get(3)} + ' g'"></span></div>
                                     <div class="bottom-valor"><span>Proteinas</span></div>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                     <i class="fa-solid fa-cubes-stacked" style="color: rgb(161, 219, 239)"></i>
                                 </div>
                                 <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(4)}"></span></div>
+                                    <div class="dato-valor"><span th:text="${nutrientes.get(4)} + ' g'"></span></div>
                                     <div class="bottom-valor"><span>Sales</span></div>
                                 </div>
                             </div>
@@ -196,13 +196,14 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Alimento</th>
-                                    <th scope="col">Fecha</th>
-    
+                                    <th scope="col">Raciones</th>
+                                    <th scope="col">Fecha</th>   
                                 </tr>
                             </thead>
                             <tbody class="buscarParticipantes">
                                 <tr th:each="lis:${listaAlimentosCon}">
                                     <td th:text="${lis.alimento.nombre}"></td>
+                                    <td th:text="${lis.raciones}"></td>
                                     <td th:text="${#temporals.format(lis.fecha_consumicion, 'HH:mm')}"></td>
                                     <td><a class="fa-solid fa-trash-can fa-2x" style="color: red" id="btn-icono" data-bs-toggle="tooltip"
                                         title="Eliminar" th:href="@{'/alimento/eliminar/'+ ${lis.id}}"></a></td>
@@ -214,6 +215,11 @@
                     <div><h5 style="text-align: center; margin-top: 3%;">¿Has comido algo más? Añádelo aquí:</h5></div>
                     <form class="form-perfil" method="post" th:action="@{'/process_alimentoCon/' + ${user.id}}"
                     th:object="${alimentoCon}">
+
+                    <div class="input-group mt-2">
+                        <label style="margin-left: 4%;" class="col-4 col-form-label">Número de raciones: </label>
+                        <input type="number" th:field="*{raciones}" class="form-control" />
+                    </div>
 
                     <div class="input-group mt-2">
                         <select style="margin-left: 3%;" th:field="*{alimento}" class="form-control" id="lista-alimentos">

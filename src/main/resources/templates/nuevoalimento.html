@@ -129,27 +129,42 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Sal: </label>
+                        <label class="col-4 col-form-label">Porción (g/l): </label>
+                        <input type="number" id="porcion" class="form-control" step="any" min="0" max="999999999" />
+                        <label style="margin-left: 4%;" class="col-1 col-form-label">(Mg/ml): </label>
+                        <input style="border-color: blue;" id="porcionmg" type="number" th:field="*{porcion}" class="form-control" readonly />
+                    </div>
+                    <script>
+                      
+                        document.getElementById('porcion').addEventListener('input', calcularmg);
+
+                        function calcularmg(){
+                            var porcion = parseFloat(document.getElementById('porcion').value);
+                            document.getElementById('porcionmg').value = (porcion*1000);
+                        }
+                    </script>
+                    <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Sal (g): </label>
                         <input type="number" th:field="*{sal}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Fibra alimentaria: </label>
+                        <label class="col-4 col-form-label">Fibra alimentaria (g): </label>
                         <input type="number" th:field="*{fibra_alimentaria}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Grasas saturadas: </label>
+                        <label class="col-4 col-form-label">Grasas saturadas (g): </label>
                         <input type="number" th:field="*{grasas_saturadas}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Hidratos de carbono: </label>
+                        <label class="col-4 col-form-label">Hidratos de carbono (g): </label>
                         <input type="number" th:field="*{hidratos_de_carbono}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Proteinas: </label>
+                        <label class="col-4 col-form-label">Proteinas (g): </label>
                         <input type="number" th:field="*{proteinas}" class="form-control" />
                     </div>
 
@@ -158,9 +173,9 @@
                         <select class="form-control" th:field="*{tipo}">
                             <option th:each="t : ${T(com.estepper.estepper.model.enums.TipoAlimentacion).values()}"
                                     th:value="${t}"
-                                    th:text="${t}">
+                                    th:text="${#strings.replace(t.toString(), '_', ' ')}">
                             </option>
-                        </select>
+                          </select>                          
                     </div>
                     
                     <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>

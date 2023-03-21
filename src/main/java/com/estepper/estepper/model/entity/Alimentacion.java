@@ -24,6 +24,7 @@ public class Alimentacion {
     private Integer grasas_saturadas;
     private Integer hidratos_de_carbono;
     private Integer proteinas;
+    private Integer porcion;
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", columnDefinition = "ENUM('DULCE','CARNE_GRASA','EMBUTIDO','CARNE_MAGRA','PESCADO','HUEVO','LEGUMBRE','FRUTOS_SECOS','LACTEOS','ACEITE','VERDURA','FRUTA','CEREALES','ARROZ', 'PASTA','PAN')")
     private TipoAlimentacion tipo;
@@ -36,7 +37,7 @@ public class Alimentacion {
         this.proteinas = 0;
     }
 
-    public Alimentacion(Integer id, String nombre, Integer sal, Integer fibra_alimentaria, Integer grasas_saturadas, Integer hidratos_de_carbono, Integer proteinas, TipoAlimentacion tipo){
+    public Alimentacion(Integer id, String nombre, Integer sal, Integer fibra_alimentaria, Integer grasas_saturadas, Integer hidratos_de_carbono, Integer proteinas, Integer porcion, TipoAlimentacion tipo){
         this.sal = sal;
         this.fibra_alimentaria = fibra_alimentaria;
         this.grasas_saturadas = grasas_saturadas;
@@ -45,6 +46,7 @@ public class Alimentacion {
         this.tipo = tipo;
         this.nombre = nombre;
         this.id = id;
+        this.porcion = porcion;
 
     }
 
@@ -110,6 +112,14 @@ public class Alimentacion {
 
     public void setTipo(TipoAlimentacion tipo) {
         this.tipo = tipo;
+    }
+
+    public Integer getPorcion() {
+        return porcion;
+    }
+
+    public void setPorcion(Integer porcion) {
+        this.porcion = porcion;
     }
 
 }

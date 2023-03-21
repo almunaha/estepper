@@ -802,11 +802,11 @@ public class ParticipanteController {
             List<AlimentosConsumidos> listal = alimentacion.getAlimentosCon(participante.findById(user.getId()).get());
             List<Integer> nutrienteshoy = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0)); // Inicializar con ceros
             for(int i = 0; i < listal.size(); i++){
-                nutrienteshoy.set(0, nutrienteshoy.get(0) + listal.get(i).getAlimento().getFibra_alimentaria());
-                nutrienteshoy.set(1, nutrienteshoy.get(1) + listal.get(i).getAlimento().getGrasas_saturadas());
-                nutrienteshoy.set(2, nutrienteshoy.get(2) + listal.get(i).getAlimento().getHidratos_de_carbono());
-                nutrienteshoy.set(3, nutrienteshoy.get(3) + listal.get(i).getAlimento().getProteinas());
-                nutrienteshoy.set(4, nutrienteshoy.get(4) + listal.get(i).getAlimento().getSal());
+                nutrienteshoy.set(0, nutrienteshoy.get(0) + (listal.get(i).getAlimento().getFibra_alimentaria() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(1, nutrienteshoy.get(1) + (listal.get(i).getAlimento().getGrasas_saturadas() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(2, nutrienteshoy.get(2) + (listal.get(i).getAlimento().getHidratos_de_carbono() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(3, nutrienteshoy.get(3) + (listal.get(i).getAlimento().getProteinas() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(4, nutrienteshoy.get(4) + (listal.get(i).getAlimento().getSal() * listal.get(i).getRaciones()));
             }
             model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
             model.addAttribute("nutrientes", nutrienteshoy);

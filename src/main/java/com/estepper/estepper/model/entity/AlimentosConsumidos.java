@@ -20,7 +20,7 @@ public class AlimentosConsumidos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    private Integer raciones;
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(name="idAlimento")
     private Alimentacion alimento;
@@ -32,13 +32,16 @@ public class AlimentosConsumidos {
     @Column(name = "fecha_consumicion", columnDefinition = "DATETIME")
     private LocalDateTime fecha_consumicion;
 
-    public AlimentosConsumidos(){}
+    public AlimentosConsumidos(){
+        this.raciones = 1;
+    }
 
-    public AlimentosConsumidos(Integer id, Alimentacion alimento, Participante participante, LocalDateTime fecha_consumicion){
+    public AlimentosConsumidos(Integer id, Alimentacion alimento, Participante participante, Integer raciones, LocalDateTime fecha_consumicion){
         this.id = id;
         this.alimento = alimento;
         this.participante = participante;
         this.fecha_consumicion = fecha_consumicion;
+        this.raciones = raciones;
     }
 
     public Integer getId() {
@@ -71,6 +74,14 @@ public class AlimentosConsumidos {
 
     public void setFecha_consumicion(LocalDateTime fecha_consumicion) {
         this.fecha_consumicion = fecha_consumicion;
+    }
+
+    public Integer getRaciones() {
+        return raciones;
+    }
+
+    public void setRaciones(Integer raciones) {
+        this.raciones = raciones;
     }
     
     
