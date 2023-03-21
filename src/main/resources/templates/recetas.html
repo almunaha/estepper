@@ -139,7 +139,7 @@
                             <h6 style="text-align: center;">¡No existe ninguna receta aún!</h6>
                         </div>
                     </div>
-                    <div th:unless="${listaRecetas.empty}" class="table-responsive">
+                    <div th:unless="${listaRecetas.empty}">
                         <!--BOTONES GEOMETRÍA NUTRICIONAL, RECOMENDACIONESRECETAS Y NUEVARECETA-->
                         <div style="display: flex; justify-content: center;">
                             <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" href="#">
@@ -219,9 +219,8 @@
                             });
                         </script>
                         <!--TABLA RECETAS-->
-                        <table class="table" id="tablePart">
-                            <tr th:each="lis:${listaRecetas}">
-                                <div class="material">
+                        <div class="table-responsive" style="display: flex; flex-wrap: wrap; flex-direction: row; margin-top: 3%; align-items: stretch;">
+                                <div class="material" th:each="lis:${listaRecetas}">
                                     <div class="cover">
                                         <h5 class="mt-0 mb-1" th:text="${lis.nombre}">Nombre de la receta</h5>
                                         <div class="ingredientes" style="display: none;">
@@ -270,8 +269,7 @@
 
                                     </div>
                                 </div>
-                            </tr>
-                        </table>
+                        </div>
                     </div>
                     <!--CREAR RECETA-->
                     <div>
@@ -283,6 +281,7 @@
                             <label class="col-4 col-form-label">Nombre: </label>
                             <input type="text" th:field="*{nombre}" class="form-control" required />
                         </div>
+                        <div class="input-group mt-2">
                         <label class="col-form-label col-sm-4">Ingredientes:</label>
                         <div class="col-sm-8 mb-2">
                             <select th:field="*{ingredientes}" class="form-control" multiple id="lista-alimentos">
@@ -325,14 +324,21 @@
                                 });
                             </script>
                         </div>
+                    </div>
+                    <div style="display: flex; flex-direction: row;">
+                        <div class="input-group mt-2">
                         <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
                         <div class="col-sm-8 mb-2">
                             <input type="file" th:name="file" class="form-control" required />
                         </div>
-                        <label class="col-form-label col-sm-4">Pagina:</label>
-                        <div class="col-sm-8 mb-2">
+                        </div>
+                        <div style="margin-left: 10%; "class="input-group mt-2">
+                        <label class="col-form-label col-sm-2">Pagina:</label>
+                        <div class="col-sm-3 mb-2">
                             <input type="number" th:field="*{pag}" class="form-control" />
                         </div>
+                        </div>
+                    </div>
                         <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>
                     </form>
                     <!-- Modal -->
@@ -351,6 +357,7 @@
                                             <label class="col-4 col-form-label">Nombre: </label>
                                             <input type="text" th:field="*{nombre}" class="form-control" required />
                                         </div>
+                                        <div class="input-group mt-2">
                                         <label class="col-form-label col-sm-4">Ingredientes:</label>
                                         <div class="col-sm-8 mb-2">
                                             <select th:field="*{ingredientes}" class="form-control" multiple
@@ -395,6 +402,8 @@
                                                 });
                                             </script>
                                         </div>
+                                        </div>
+                                        <div class="input-group mt-2">
                                         <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
                                         <div class="col-sm-8 mb-2">
                                             <input type="file" th:name="file" class="form-control" required />
@@ -402,6 +411,7 @@
                                         <label class="col-form-label col-sm-4">Pagina:</label>
                                         <div class="col-sm-8 mb-2">
                                             <input type="number" th:field="*{pag}" class="form-control" />
+                                        </div>
                                         </div>
                                         <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>
                                     </form>
