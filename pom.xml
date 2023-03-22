@@ -99,8 +99,23 @@
 			<version>2.7.3</version>
 		</dependency>
 
-
 	</dependencies>
+
+	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ClassLoaderTemplate">
+		<property name="prefix" value="templates/"/>
+		<property name="suffix" value=".html"/>
+		<property name="templateMode" value="HTML"/>
+		<property name="characterEncoding" value="UTF-8"/>
+	</bean>
+
+	<bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver"/>
+	</bean>
+
+	<bean id="thymeleafViewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine"/>
+		<property name="characterEnconding" value="UTF-8"/>
+	</bean>
 	
 	<build>
 		<plugins>
