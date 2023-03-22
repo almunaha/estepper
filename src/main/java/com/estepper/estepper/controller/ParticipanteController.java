@@ -3,6 +3,7 @@ package com.estepper.estepper.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -1018,33 +1019,19 @@ public class ParticipanteController {
             return "acceso";
     }
 
-    //MACHINE LEARNING
-    // @GetMapping("/geometrianutricional/{id}")
-    // public String geometria(@PathVariable("id") Integer id, Model model){
-    //     try (PythonInterpreter pyInterp = new PythonInterpreter()) {
-    //                 String codigoPython = 
-    //                     "import pandas as pd\n" +
-    //                     "import pymysql.cursors\n" +
-    //                     "from sklearn.linear_model import LinearRegression\n" +
-    //                     "connection = pymysql.connect(host='localhost:3306',\n" +
-    //                     "                             user='estepper',\n" +
-    //                     "                             password='estepper',\n" +
-    //                     "                             db='estepper',\n" +
-    //                     "                             charset='utf8mb4',\n" +
-    //                     "                             cursorclass=pymysql.cursors.DictCursor)\n" +
-    //                     "sql = \"SELECT * FROM alimentosconsumidos\"\n" +
-    //                     "consumo = pd.read_sql(sql, connection)\n" +
-    //                     "sql = \"SELECT * FROM alimentos\"\n" +
-    //                     "nutricion = pd.read_sql(sql, connection)";
-                            
-    //                 pyInterp.exec(codigoPython); 
-    //             }
-    //         return "redirect:/";
-        // PythonInterpreter interpreter = new PythonInterpreter()) {
-        //     interpreter.exec("from machinelearning import geometria");
-        //     PyFunction function = interpreter.get("geometria", PyFunction.class);
-        //     PyObject result = function.__call__(interpreter.getLocals());
-        //     return "El resultado de la suma es: " + result.toString();
-        // }
-    // }
+    @GetMapping("/nutrientes")
+    public String nutrientes(){
+        Properties props = new Properties();
+        props.setProperty("python.path", "C:/Users/34663/proyecto/src/main/java/com/estepper/estepper/controller");
+
+        PythonInterpreter.initialize(System.getProperties(), props, new String[0]);
+
+        try (PythonInterpreter interpreter = new PythonInterpreter()) {
+            interpreter.exec("from machinelearning import geometria");
+            PyFunction function = interpreter.get("geometria", PyFunction.class);
+            PyObject result = function.__call__();
+            if(result.toString().equals("0")) return "acceso";
+            else return "index";
+        }
+    }
 }

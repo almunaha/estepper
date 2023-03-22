@@ -137,15 +137,18 @@
                     <div th:if="${listaRecetas.empty}">
                         <div>
                             <h6 style="text-align: center;">¡No existe ninguna receta aún!</h6>
+                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" th:href="@{/nutrientes}">
+                                Jython</a>
+                        </div>
                         </div>
                     </div>
                     <div th:unless="${listaRecetas.empty}">
                         <!--BOTONES GEOMETRÍA NUTRICIONAL, RECOMENDACIONESRECETAS Y NUEVARECETA-->
                         <div style="display: flex; justify-content: center;">
-                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" th:href="@{'/geometrianutricional/' + ${user.id}}">
-                                    Geometría nutricional </a>
+                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" href="#">
+                                    Nutrientes</a>
                             </div>
-                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Recetas" href="#"> Recetas recomendadas</a></div>
+                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Recetas" href="#"> Recomendaciones</a></div>
                             <div><a class="btn" id="btn-part" title="Crear" href="#" onclick="abrirIframe('mi-modal2')">
                                     Nueva receta</a></div>
                         </div>
