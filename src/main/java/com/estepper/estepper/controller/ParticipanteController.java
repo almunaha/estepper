@@ -18,6 +18,7 @@ import org.python.core.PyFunction;
 import org.python.core.PyObject;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -70,6 +71,7 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ProgresoService;
+import com.estepper.estepper.service.PythonService;
 import com.estepper.estepper.service.GrupoService;
 
 @Controller
@@ -110,6 +112,11 @@ public class ParticipanteController {
 
     @Autowired
     private MensajeService mensajeS;
+ 
+    @Autowired
+    @Qualifier("PythonServiceImpl")
+    private PythonService service;
+     
 
     @GetMapping("/menu")
     public String menu() {
@@ -1032,6 +1039,6 @@ public class ParticipanteController {
         //     if(result.toString().equals("0")) return "acceso";
         //     else return "index";
         // }
-        return "index";
+        return service.getHello();
     }
 }
