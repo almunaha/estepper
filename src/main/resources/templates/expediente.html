@@ -12,6 +12,8 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    
+  <link rel="stylesheet" th:href="@{/css/sesiones.css}">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
 
@@ -70,14 +72,14 @@
                         <i class="fa-solid fa-house"></i>
                         <span class="nombre-enlaces">Inicio</span>
                     </a>
-                </li>
+                
 
                 <li>
                     <a th:href="@{/actividades}">
                         <i class="fa-solid fa-person-hiking"></i>
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
-                </li>
+                
             </ul>
 
         </div>
@@ -102,7 +104,7 @@
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                                 </form>
                             </div>
-                        </li>
+                        
 
                     </ul>
                 </div>
@@ -149,6 +151,46 @@
                                 style="margin-left: 10px;"></h5>
                         </div>
                     </div>
+
+                    <div style="display: flex; justify-content: center; margin-bottom: 3%;">
+                        <a class="btn-sesion" id="guardar" title="Fichas"
+                        onclick="abrirIframe('mi-modal')" href="#"> Fichas </a>
+                    </div>
+                    <!--Modal-->
+        <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Sesión</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div style="display: flex; flex-direction: row; justify-content: center; margin-bottom: 3%;">
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${1}}">Sesión 1</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${2}}">Sesión 2</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${3}}">Sesión 3</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${4}}">Sesión 4</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${5}}">Sesión 5</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${6}}">Sesión 6</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${7}}">Sesión 7</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${8}}">Sesión 8</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${9}}">Sesión 9</a>
+                          <a class="btn-sesion" id="guardar" th:href="@{'/sesion/' + ${10}}">Sesión 10</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>
+            function abrirIframe(modalId) {
+              const modal = new bootstrap.Modal(document.getElementById(modalId));
+              modal.show();
+            }
+          </script>
+          <!--FIN MODAL-->
 
                     <div style="display: flex; justify-content: center;">
                         <div style="margin-right: 5%;" th:unless="${participante.idGrupo == 0}"><a class="btn"
