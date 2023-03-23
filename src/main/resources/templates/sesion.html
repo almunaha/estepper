@@ -19,6 +19,14 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+        integrity="sha512-nUf8aohwTZxv0l0d4A4kmOE+fj7W9PvCO2aS0E1Yjh81pN+w4ezn/jn8wNlvMxvNUnax/aLdQ+z/8W7X9DvI+A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
+        integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <title>Sesión</title>
 
 
@@ -144,24 +152,53 @@
                 <a class="enlace-diapo" th:text="'Taller online sesion ' + ${sesion.numSesion} + '.pdf'" th:href="@{'/diapos/descargar/' + ${sesion.numSesion}}"></a>
               </div>
             </div>
-
+            
             <div class="botones-sesion mt-5">
               <a class="btn-sesion" id="atras" th:href="@{/sesiones}">Atrás</a>  
               <button class="btn-sesion" id="guardar">Guardar</button>
             </div>
         </form>
-        <form style="margin-top: 2%;"class="form-perfil" method="post" th:action="@{'/process_sesionTerm/' + ${sesion.numSesion}}" th:object="${lasesion}">
-          <div class="input-group mt-2">
-              <label class="col-4 col-form-label">Peso perdido (kg): </label>
-              <input type="number" th:field="*{pesoPerdido}" class="form-control" required />
+        <div style="display: flex; justify-content: center;">
+          <div style="margin-right: 5%; margin-top: 3%;"><a class="btn" id="btn-part" title="Terminar" href="#"  onclick="abrirIframe('mi-modal')">
+                  ¿Has terminado la sesión?</a>
           </div>
-          <div class="input-group mt-2">
-            <label class="col-4 col-form-label">Cm Cintura perdidos: </label>
-            <input type="number" th:field="*{cmsPerdidos}" class="form-control" required />
         </div>
-          <button class="btn btn-info text-white mt-4 w-100" type="submit">Terminar sesión</button>
-      </form>
-
+        <!--Modal-->
+        <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Receta</h5>
+                      <button type="button" class="btn-close"
+                          data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form style="margin-top: 2%;"class="form-perfil" method="post" th:action="@{'/process_sesionTerm/' + ${sesion.numSesion}}" th:object="${lasesion}">
+                      <div class="input-group mt-2">
+                          <label class="col-4 col-form-label">Peso perdido (kg): </label>
+                          <input type="number" th:field="*{pesoPerdido}" class="form-control" required />
+                      </div>
+                      <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Cm Cintura perdidos: </label>
+                        <input type="number" th:field="*{cmsPerdidos}" class="form-control" required />
+                    </div>
+                      <button class="btn btn-info text-white mt-4 w-100" type="submit">Terminar sesión</button>
+                  </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary"
+                          data-bs-dismiss="modal">Cerrar</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script>
+        function abrirIframe(modalId) {
+            const modal = new bootstrap.Modal(document.getElementById(modalId));
+            modal.show();
+        }
+      </script>
+      <!--FIN MODAL-->
 
       </div>
 
