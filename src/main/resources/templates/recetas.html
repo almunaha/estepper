@@ -306,7 +306,7 @@
                                     var opciones = $("#lista-alimentos option");
 
                                     // Crear un input de búsqueda
-                                    var inputBusqueda = $('<input type="text" class="form-control mt-2" placeholder="Buscar...">');
+                                    var inputBusqueda = $('<form style="margin-right: 10%;"><input type="text" class="form-control mt-2" placeholder="Buscar..."></form>');
 
                                     // Agregar el input de búsqueda antes del select
                                     $("#lista-alimentos").before(inputBusqueda);
@@ -384,7 +384,7 @@
                                                     var opciones = $("#lista-alimentos1 option");
 
                                                     // Crear un input de búsqueda
-                                                    var inputBusqueda = $('<input type="text" class="form-control mt-2" placeholder="Buscar...">');
+                                                    var inputBusqueda = $('<form style="margin-right:15%;"> <input type="text" class="form-control mt-2" placeholder="Buscar..."></form>');
 
                                                     // Agregar el input de búsqueda antes del select
                                                     $("#lista-alimentos1").before(inputBusqueda);
@@ -417,11 +417,11 @@
                                         </div>
                                         <div class="input-group mt-2">
                                         <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
-                                        <div class="col-sm-8 mb-2">
+                                        <div class="col-sm-6 mb-2">
                                             <input type="file" th:name="file" class="form-control" required />
                                         </div>
                                         <label class="col-form-label col-sm-4">Pagina:</label>
-                                        <div class="col-sm-8 mb-2">
+                                        <div class="col-sm-4 mb-2">
                                             <input type="number" th:field="*{pag}" class="form-control" />
                                         </div>
                                         </div>
