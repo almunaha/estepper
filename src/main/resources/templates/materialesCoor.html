@@ -82,13 +82,67 @@
                         style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5%;margin-left: 10%; margin-right: 10%;">
                         <h4 style="margin-top: 8%; color:azure">Materiales</h4>
                     </div>
-                    <div class="d-flex justify-content-center mt-3">
+                    <div style="align-items: center;" class="d-flex justify-content-center mt-3">
                         <form class="w-75">
                             <div class="input-group">
                                 <input id="filtrarMateriales" class="form-control" type="search" data-table="tablePart"
                                     placeholder="Buscar...">
                             </div>
                         </form>
+                        <div style="margin-left: 5%;"><a class="btn" id="btn-part" title="Crear" href="#"
+                                onclick="abrirIframe('mi-modal')">
+                                Subir material</a>
+                        </div>
+                    </div>
+                    <!--Modal-->
+                    <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Material</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form th:action="@{'/process_material/' + ${id}}" th:object="${material}"
+                                        method="post" enctype="multipart/form-data">
+                                        <div class="m-3">
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-sm-4">Título:</label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" th:field="*{titulo}" class="form-control"
+                                                        required />
+                                                </div>
+                                                <label class="col-form-label col-sm-4">Descripción:</label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" th:field="*{descripcion}" class="form-control" />
+                                                </div>
+                                                <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="file" th:name="file" class="form-control" required />
+                                                </div>
+
+                                            </div>
+                                            <div class="text-end p">
+                                                <button type="submit" class="btn" id="btn-part">Añadir</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function abrirIframe(modalId) {
+                                const modal = new bootstrap.Modal(document.getElementById(modalId));
+                                modal.show();
+                            }
+                        </script>
+                        <!--FIN MODAL-->
                     </div>
 
                     <script type="text/javascript">
