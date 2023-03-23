@@ -159,23 +159,32 @@
                         </form>
                         <div class="d-flex" style="margin-top: 1%">
                             <div class="input-group me-2">
-                                <span class="input-group-text" id="want-addon">Quiero:</span>
-                                <input type="text" class="form-control" id="want-input" aria-describedby="want-addon">
+                              <span class="input-group-text" id="want-addon">Quiero:</span>
+                              <select class="form-select" id="want-select" multiple>
+                                <!-- opciones del select de alimentos que quiere -->
+                                <option th:each="ing : ${listaIng}" th:value="${ing.id}" th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                </option>
+                              </select>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-text" id="dont-want-addon">No quiero:</span>
-                                <input type="text" class="form-control" id="dont-want-input"
-                                    aria-describedby="dont-want-addon">
+                              <span class="input-group-text" id="dont-want-addon">No quiero:</span>
+                              <select class="form-select" id="dont-want-select" multiple>
+                                <!-- opciones del select de alimentos que no quiere -->
+                                <option th:each="ing : ${listaIng}" th:value="${ing.id}" th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                </option>
+                              </select>
                             </div>
                             <button class="btn btn-outline-secondary" type="button" id="filter-button">Filtrar</button>
-                        </div>
+                          </div>
+                          
                         <script>
                             $(document).ready(function () {
                                 var recetas = $('.material');
 
                                 $('#filter-button').click(function () {
-                                    var want = $('#want-input').val().toLowerCase();
-                                    var dontWant = $('#dont-want-input').val().toLowerCase();
+                                    var want = $('#want-select').val().map(function(val) { return val.toLowerCase(); });
+                                    var dontWant = $('#dont-want-select').val().map(function(val) { return val.toLowerCase(); });
+
 
                                     recetas.each(function () {
                                         var $receta = $(this);
@@ -183,11 +192,11 @@
                                         var show = true;
 
                                         if (want.length > 0) {
-                                            show = show && ingredients.includes(want);
+                                            show = show && want.some(function(wantVal) { return ingredients.includes(wantVal); });
                                         }
 
                                         if (dontWant.length > 0) {
-                                            show = show && !ingredients.includes(dontWant);
+                                            show = show && !dontWant.some(function(dontWantVal) { return ingredients.includes(dontWantVal); });
                                         }
 
                                         $receta.toggle(show);
@@ -228,7 +237,7 @@
                                         <h5 class="mt-0 mb-1" th:text="${lis.nombre}">Nombre de la receta</h5>
                                         <div class="ingredientes" style="display: none;">
                                             <div th:each="ing:${lis.ingredientes}">
-                                                <span th:text="${ing.nombre}"></span>
+                                                <span th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'"></span>
                                             </div>
                                         </div>
                                     </div>
