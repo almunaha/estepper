@@ -152,7 +152,7 @@
                         </div>
                     </div>
 
-                    <div style="display: flex; justify-content: center; margin-bottom: 3%;">
+                    <div th:unless="${participante.estadoCuenta == 'BAJA'}" style="display: flex; justify-content: center; margin-bottom: 3%;">
                         <a class="btn-sesion" id="guardar" title="Fichas"
                         onclick="abrirIframe('mi-modal')" href="#"> Fichas </a>
                     </div>
@@ -166,16 +166,16 @@
                 </div>
                 <div class="modal-body">
                     <div style="display: flex; flex-direction: column; justify-content: center; margin-bottom: 3%;">
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${1}}">Sesión 1</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${2}}">Sesión 2</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${3}}">Sesión 3</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${4}}">Sesión 4</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${5}}">Sesión 5</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${6}}">Sesión 6</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${7}}">Sesión 7</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${8}}">Sesión 8</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${9}}">Sesión 9</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${10}}">Sesión 10</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${1} + '/' + ${participante.id}}">Sesión 1</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${2} + '/' + ${participante.id}}">Sesión 2</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${3} + '/' + ${participante.id}}">Sesión 3</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${4} + '/' + ${participante.id}}">Sesión 4</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${5} + '/' + ${participante.id}}">Sesión 5</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${6} + '/' + ${participante.id}}">Sesión 6</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${7} + '/' + ${participante.id}}">Sesión 7</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${8} + '/' + ${participante.id}}">Sesión 8</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${9} + '/' + ${participante.id}}">Sesión 9</a>
+                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${10} + '/' + ${participante.id}}">Sesión 10</a>
                     </div>
                 </div>
                 <div class="modal-footer">

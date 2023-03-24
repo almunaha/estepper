@@ -105,6 +105,24 @@ public class CoordinadorController {
             return "redirect:/";
     }
 
+    @GetMapping("/sesion/{num}/{id}")
+    public String sesion1(@PathVariable Integer num, @PathVariable Integer id, Model model) {
+
+        if (num < 1 || num > 10) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("user", getUsuario());
+            Participante p = part.findById(id).get();
+                // CONTROLAR ESTADO ALTA O BAJA. SI BAJA MOSTRAR QUE ESTÁ DE BAJA Y NO HA COMENZADO SESIONES
+                Sesion lasesion = sesion.buscarSesion(p, num); // cambiar segun sesion
+                model.addAttribute("sesion", lasesion);
+                model.addAttribute("lasesion", lasesion);
+                model.addAttribute("participante", p); 
+
+                return "sesionPart";
+        }
+    }
+
     @GetMapping("/actualizarGrupos/{idP}/{idG}")
     public String actualizarGrupos(@PathVariable(name = "idP") Integer idP, @PathVariable(name = "idG") Integer idG,
             Model model) {

@@ -153,7 +153,7 @@ public class ParticipanteController {
                 model.addAttribute("sesion", sesion);
                 model.addAttribute("lasesion", sesion);
 
-                model.addAttribute("participante", participante.findById(1)); // coger participante
+                model.addAttribute("participante", p); // coger participante
 
                 return "sesion";
             } else
