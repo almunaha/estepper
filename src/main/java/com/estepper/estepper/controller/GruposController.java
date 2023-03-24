@@ -336,6 +336,7 @@ public class GruposController {
     public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, @PathVariable("id") Integer idGrupo) {
         elmensaje.setGrupo(grupo.getGrupo(idGrupo));
         elmensaje.setUsuario(getUsuario());
+        elmensaje.setId(0);
         elmensaje.setFechayHoraEnvio(LocalDateTime.now());
         mensaje.save(elmensaje);
 
