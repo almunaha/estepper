@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
@@ -43,7 +42,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+                <img width="75" th:src="@{img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -56,7 +55,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a th:href="@{/cuaderno}">
                         <i class="fa-solid fa-pen"></i>
                         <span class="nombre-enlaces">Cuaderno</span>
                     </a>
@@ -70,7 +69,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a th:href="@{/alimentacion}">
                         <i class="fa-solid fa-carrot"></i>
                         <span class="nombre-enlaces">Alimentación</span>
                     </a>
@@ -90,7 +89,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
                         <span class="nombre-enlaces">Foro</span>
                     </a>
@@ -127,7 +126,7 @@
             </nav>
 
             <!-- DASHBOARD -->
-            
+            <div class="dashboard">
                 <div class="tit-dash">
                     <h3>Dashboard progreso</h3>
                 </div>
@@ -152,7 +151,7 @@
                                 <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
                             </div>
                             <div class="der-valor">
-                                <div class="dato-valor"><span th:text="${participante.perdidaDePeso} + kg"></span></div>
+                                <div class="dato-valor"><span th:text="${-participante.perdidaDePeso} + kg"></span></div>
                                 <div class="bottom-valor"><span>Peso perdido </span></div>
                             </div>
                         </div>
@@ -190,9 +189,10 @@
                 </div>
 
                 <div class="asistencia">
-                    
+
                     <div class="asis-ind">
-                        
+
+                        <!-- ASISTENCIA SESIONES -->
                         <div class="asis-sesion" th:each="ses:${sesiones}">
                             <span th:text="'S' + ${ses.numSesion}"></span>
                             <div th:if="${ses.asistencia.name() == 'SI'}">
@@ -201,15 +201,19 @@
                             <div th:if="${ses.asistencia.name() == 'NO'}">
                                 <i style="color: rgb(225, 222, 222)" class="fa-solid fa-star"></i>
                             </div>
-                           
+
                         </div>
                     </div>
+
+                    <!-- ÍNDICE CORPORAL -->
                     <div class="asis-ind">
-                        <div style="font-size: 130%" th:text="${imc}"></div>
+                        <canvas id="resultadoIMC"></canvas>
+                        <div style="font-size: 130%" th:text="${imc}" id="imc"></div>
                     </div>
+
                 </div>
                 <!-- Gráficas peso y perímetro -->
-                <div class="graficas-progreso"> 
+                <div class="graficas-progreso">
                     <!-- PESO -->
                     <div class="progreso-datos">
                         <div class="header-progreso">
@@ -289,7 +293,7 @@
                                     </thead>
                                     <tbody>
                                         <tr th:each="per:${perimetro}">
-                                            <td th:text="${per.dato} + ' kg'"></td>
+                                            <td th:text="${per.dato} + ' cm'"></td>
                                             <td th:text="${#temporals.format(per.fecha, 'dd MMM yyyy')}"></td>
                                             <td th:text="${#temporals.format(per.fecha, 'HH:mm')}"></td>
                                         </tr>
@@ -315,7 +319,7 @@
                                     <input type="datetime-local" th:field="*{fecha}" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label>Perímetro</label>
+                                    <label>Perímetro (cm)</label>
                                     <input type="number" step="any" th:field="*{dato}" required>
                                 </div>
 
@@ -328,25 +332,14 @@
 
                     </div>
 
-                    <!-- ÍNDICE CORPORAL -->
 
                     <!-- ACTIVIDAD FÍSICA -->
 
                     <!-- PASOS -->
                 </div>
-                <!--
-                <div class="asistencia">
-                    <div class="asis-sesion" th:each="ses:${sesiones}">
-                        <div th:text="'Sesión ' + ${ses.numSesion}"></div>
-                        <div th:text="${ses.asistencia}"></div>
-                    </div>
-                </div>
-            -->
-            
+            </div>
         </div>
     </div>
-
-
 
 </body>
 

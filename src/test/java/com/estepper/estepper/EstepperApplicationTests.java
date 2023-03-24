@@ -1,5 +1,5 @@
 package com.estepper.estepper;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,6 @@ import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Grupo;
-import com.estepper.estepper.model.entity.Objetivo;
-import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.Sexo;
 import com.estepper.estepper.repository.UsuarioRepository;
@@ -30,8 +28,6 @@ class EstepperApplicationTests {
 	private BCryptPasswordEncoder hash;
 	@Autowired
 	private GrupoRepository grupoRepo;
-	@Autowired
-	private GrupoRepository objetivoRepo;
 
 	@Autowired
 	private FindriscRepository findriscRepo;
@@ -44,7 +40,7 @@ class EstepperApplicationTests {
 
 		//Usuario tipo PARTICIPANTE
 		Participante almu = usuarioRepo.save(new Participante(0, 111, "Almudena",  "almunaha@ucm.es", hash.encode("almupass"), 
-		Estado.BAJA, null, null, 0.0, 0, 0, 0, null,"/img/p1.png"));
+		Estado.BAJA, null, null, 0.0, 0, 0, 0, null,"/img/p1.png", 0.0));
 		exploracionRepo.save(new Exploracion(0, almu, Sexo.MASCULINO, "no", 0, 0, 0, 0, 0));
 		findriscRepo.save(new Findrisc(0, almu, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo"));
 		
@@ -57,7 +53,7 @@ class EstepperApplicationTests {
 		usuarioRepo.save(new Administrador(0, 333, "Javier",  "javier@ucm.es", hash.encode("javierpass"), 
 		Estado.ALTA));
 		
-	   // grupoRepo.save(new Grupo(1, coor.getId(), "909A67BZ5","Las saltimbanquis",0));
+	   grupoRepo.save(new Grupo(1, coor.getId(), "909A67BZ5","Las saltimbanquis",0, LocalDate.now(), null, null));
 
 		/*
 		Usuario retorno = usuarioRepo.save(us);

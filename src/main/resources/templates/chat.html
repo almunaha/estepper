@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+
+  <link rel="stylesheet" th:href="@{/css/estilos.css}">
+  <link rel="stylesheet" th:href="@{/css/grupos.css}">
+  <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/js/menu.js"></script>
+
+  <title>Chat</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <div class="d-flex">
+    <!-- MENÚ -->
+    <div id="sidebar-container">
+
+      <div class="logo">
+        <img width="75" th:src="@{/img/logo.png}" />
+        <h4>Estepper</h4>
+      </div>
+
+      <ul>
+        <li>
+          <a th:href="@{/}">
+            <i class="fa-solid fa-house"></i>
+            <span class="nombre-enlaces">Inicio</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:href="@{/cuaderno}">
+            <i class="fa-solid fa-pen"></i>
+            <span class="nombre-enlaces">Cuaderno</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:href="@{/actividades}">
+            <i class="fa-solid fa-person-hiking"></i>
+            <span class="nombre-enlaces">Actividades</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:href="@{/alimentacion}">
+            <i class="fa-solid fa-carrot"></i>
+            <span class="nombre-enlaces">Alimentación</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:href="@{'/materiales/' + ${user.id}}">
+            <i class="fa-solid fa-folder-open"></i>
+            <span class="nombre-enlaces">Materiales</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:href="@{/progreso}">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="nombre-enlaces">Progreso</span>
+          </a>
+        </li>
+        <li>
+          <a th:href="@{/chat}">
+            <i class="fa-solid fa-comments"></i>
+            <span class="nombre-enlaces">Foro</span>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="w-100">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                <div class="dropdown-divider"></div>
+                <form th:action="@{/logout}" method="post">
+                  <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+      <div style="margin-left: 10%; margin-top: 2%;">
+        <div
+          style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5%;margin-right: 10%;">
+          <h4 style="margin-top: 8%; color:azure">Chat</h4>
+        </div>
+        
+
+        <div class="wrapper">
+            <section class="chat-area">
+                <header>
+
+                    <img src="/img/avatar1.png" alt="">
+                    <h4 th:text="${user.grupo.nombre}"></h4>
+                    <div class="details">
+                    </div>
+                </header>
+                <div class="chat-box">
+                    <ul>
+                        <li th:each="m : ${mensajes}">
+                            <span th:text="${m.usuario.nickname} + ': '"></span>
+                            <span th:text="${m.mensaje}"></span>
+                        </li>
+                    </ul>
+                </div>
+                <form th:action="@{'/mensajes/guardar/' + ${user.grupo.id}}" th:object="${message}" method="post" class="typing-area">
+
+                    <input type="text" th:field="*{mensaje}" class="input-field"
+                        placeholder="Escribe un mensaje aquí ..." autocomplete="off">
+
+                    <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+
+                </form>
+            </section>
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>

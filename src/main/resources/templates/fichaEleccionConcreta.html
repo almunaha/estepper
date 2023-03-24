@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+    <script src="/js/menu.js"></script>
+
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+
+    <title>Decision</title>
+</head>
+
+<body>
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <div class="d-flex">
+
+        <div id="sidebar-container">
+
+
+            <div class="logo">
+                <img width="75" th:src="@{../img/logo.png}" />
+                <h4>Estepper</h4>
+            </div>
+
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/cuaderno}">
+                        <i class="fa-solid fa-pen"></i>
+                        <span class="nombre-enlaces">Cuaderno</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/alimentacion}">
+                        <i class="fa-solid fa-carrot"></i>
+                        <span class="nombre-enlaces">Alimentación</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{'/materiales/' + ${user.id}}">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span class="nombre-enlaces">Materiales</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/progreso}">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="nombre-enlaces">Progreso</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/chat}">
+                        <i class="fa-solid fa-comments"></i>
+                        <span class="nombre-enlaces">Foro</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+            <div class="container">
+            <div class="bg-white border border-1 p-5 rounded-4 ">
+                <div
+                    style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 5%;">
+                    <h4 style="margin-top: 8%; color:azure">Decisiones</h4>
+                </div>
+                <form class="form-perfil" method="post" th:action="@{'/process_fichae/' + ${ficha.id}}"
+                    th:object="${ficha}">
+
+                    <div th:if="${ficha.numEleccion == 1}">
+                        <div style="display: grid; justify-items: center;">
+                        <div><label class="col-20 col-form-label">
+                                <h4>¿Cuál de estos dos alimentos es más saludable? ¿Por qué?</h4>
+                            </label></div>
+                        <div><label class="col-20 col-form-label">Compara calorías, grasas totales y saturadas, azúcares
+                                y fibra</label></div>
+                        <div><label class="col-20 col-form-label">PAN CON FIBRA</label></div>
+                        <iframe style="margin-left: 45%;" th:src="@{../img/elecciones/pan-fibra.jpg}" width="100%" height="350"
+                            frameBorder="0"></iframe>
+                        <div><label class="col-20 col-form-label">CERALES DE DESAYUNO</label></div>
+                        <iframe style="margin-left: 45%;" th:src="@{../img/elecciones/cereales.jpeg}" width="100%" height="350"
+                            frameBorder="0"></iframe>
+                        <div class="input-group mt-2">
+                            <label class="col-4 col-form-label">Explique su decisión: </label>
+                            <input style="margin-right: 5%;" type="text" th:field="*{texto}" class="form-control" />
+                        </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${ficha.numEleccion == 2}">
+                        <div style="display: grid; justify-items: center;">
+                        <div><label class="col-20 col-form-label">
+                                <h4>¿Cuál de estas dos galletas es más saludable? ¿Por qué?</h4>
+                            </label></div>
+                        <div><label class="col-20 col-form-label">Compara calorías, grasas totales y saturadas</label>
+                        </div>
+                        <div><label class="col-20 col-form-label">GALLETAS DIGESTIVE</label></div>
+                        <iframe style="margin-left: 45%;" th:src="@{../img/elecciones/galletas-digestive.jpeg}" width="100%" height="350"
+                            frameBorder="0"></iframe>
+                        <div><label class="col-20 col-form-label">GALLETAS TIPO MARIA</label></div>
+                        <iframe style="margin-left: 45%;" th:src="@{../img/elecciones/galletas-maria.jpeg}" width="100%" height="350"
+                            frameBorder="0"></iframe>
+                        <div class="input-group mt-2">
+                            <label class="col-4 col-form-label">Explique su decisión: </label>
+                            <input style="margin-right: 5%;" type="text" th:field="*{texto}" class="form-control" />
+                        </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${ficha.numEleccion == 3}">
+                        <div style="display: grid; justify-items: center;">
+                        <div><label class="col-20 col-form-label">
+                                <h4>¿Cuál de estos dos quesos te parece más saludable? ¿Por qué?</h4>
+                            </label></div>
+                        <div><label class="col-20 col-form-label">Compara calorías, grasas totales y saturadas</label>
+                        </div>
+                        <div><label class="col-20 col-form-label">QUESO FRESCO</label></div>
+                        <iframe style="margin-left: 45%;" th:src="@{../img/elecciones/queso-fresco.jpeg}" width="100%" height="350"
+                            frameBorder="0"></iframe>
+                        <div><label class="col-20 col-form-label">QUESO CURADO</label></div>
+                        <iframe style="margin-left: 45%;" th:src="@{../img/elecciones/queso-curado.jpeg}" width="100%" height="350"
+                            frameBorder="0"></iframe>
+                        <div class="input-group mt-2">
+                            <label class="col-4 col-form-label">Explique su decisión: </label>
+                            <input style="margin-right: 5%;" type="text" th:field="*{texto}" class="form-control" />
+                        </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${ficha.numEleccion == 4}">
+                        <div style="display: grid; justify-items: center;">
+                        <div><label class="col-20 col-form-label">
+                                <h4>¿Cuál de estos aperitivos te parece más saludable? ¿Por qué?</h4>
+                            </label></div>
+                        <div><label class="col-20 col-form-label">Compara las grasas saturadas y la fibra</label></div>
+                        <div><label class="col-20 col-form-label">TRIÁNGULOS DE MAÍZ</label></div>
+                        <iframe style="margin-left: 45%;" th:src="@{../img/elecciones/triangulos.jpeg}" width="100%" height="360"
+                            frameBorder="0"></iframe>
+                        <div><label class="col-20 col-form-label"></label>ALMENDRAS</div>
+                        <iframe style="margin-left: 45%;" th:src="@{../img/elecciones/almendras.jpeg}" width="100%" height="350"
+                            frameBorder="0"></iframe>
+                        <div class="input-group mt-2">
+                            <label class="col-4 col-form-label">Explique su decisión: </label>
+                            <input style="margin-right: 5%;" type="text" th:field="*{texto}" class="form-control" />
+                        </div>
+                        </div>
+                    </div>
+
+                    <button style="margin-right: 5%;" class="btn btn-info text-white mt-4 w-100" type="submit">Guardar</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

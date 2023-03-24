@@ -13,15 +13,15 @@ import jakarta.persistence.Table;
 public class Exploracion extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
-    public String primeravez;
-    public Integer peso;
-    public Integer cmcintura;
-    public Integer talla;
-    public Integer edad;
-    public Integer imc;  
-    public Sexo sexo;
+    private String primeravez;
+    private Integer peso;
+    private Integer cmcintura;
+    private Integer talla;
+    private Integer edad;
+    private Integer imc;  
+    private Sexo sexo;
 
     public Exploracion(){
         super();
@@ -35,6 +35,7 @@ public class Exploracion extends FaseValoracion {
         this.talla = talla;
         this.edad = edad;
         this.imc = imc;
+        this.sexo = sexo;
     }
 
     

@@ -11,11 +11,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
-
+    <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <title>Formulario de Antecedentes</title>
@@ -30,7 +28,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}"/>
+                <img width="75" th:src="@{/img/logo.png}"/>
                 <h4>Estepper</h4>
             </div>
 
@@ -57,7 +55,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
@@ -79,14 +77,21 @@
                 </div>
             </nav>
 
-            <div th:if="${antecedentes == null}">
-                <h2>Necesita rellenar los formularios de Exploración y de Findrisc para acceder a este formulario.</h2>
+            <div th:if="${antecedentes == null}" class="bg-white border border-1 p-5 rounded-4 ">
+                <div
+                    style="display: grid;justify-content: center; align-items: center; background-color:azure;border-radius: 5%; margin-left: 10%; margin-right: 10%;">
+                    <h4 style="margin-top: 8%; margin-left: 5%; margin-right: 5%; margin-bottom: 8%; color:rgb(122, 184, 212)">Necesita rellenar los formularios de Exploración y de Findrisc para acceder a este formulario.</h4>
+                </div>
             </div>
             <div th:unless="${antecedentes == null}" class="bg-white border border-1 p-5 rounded-4 ">
-
+                <div
+                    style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 5%;">
+                    <h4 style="margin-top: 8%; color:azure">Antecedentes</h4>
+                </div>
                 <form class="form-perfil" method="post" th:action="@{'/process_antecedentes/' + ${participante.id}}" th:object="${antecedentes}">
         
-                    <label class="col-4 col-form-label">ANTECEDENTES PERSONALES</label>
+                    <label style="font-weight: bold;" class="col-20 col-form-label">ANTECEDENTES PERSONALES</label>
+                    <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">H.T.A </label>
                         <select id="hta" th:field="*{hta}" class="form-control">
@@ -96,7 +101,7 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Dislipemias </label>
+                        <label style="margin-left: 3%;"class="col-4 col-form-label">Dislipemias </label>
                         <select id="dislipemias" th:field="*{dislipemias}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
@@ -104,13 +109,14 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Enfermedad tiroidea</label>
+                        <label style="margin-left: 3%;"class="col-4 col-form-label">Enfermedad tiroidea</label>
                         <select id="tiroides" th:field="*{tiroides}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
                         </select>
                     </div>
-
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Pat. Musculo-esquelética</label>
                         <select id="patmuscesq" th:field="*{patmuscesq}" class="form-control">
@@ -120,7 +126,7 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Pat. Mental</label>
+                        <label style="margin-left: 3%;" class="col-4 col-form-label">Pat. Mental</label>
                         <select id="patmental" th:field="*{patmental}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
@@ -128,13 +134,14 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">¿Toma medicación actualmente?</label>
+                        <label style="margin-left: 3%;" class="col-4 col-form-label">¿Toma medicación actualmente?</label>
                         <select id="medicacion" th:field="*{medicacion}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
                         </select>
                     </div>
-
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">E.C.V.</label>
                         <select id="ecv" th:field="*{ecv}" class="form-control">
@@ -144,7 +151,7 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Pat. Sensorial</label>
+                        <label style="margin-left: 3%;" class="col-4 col-form-label">Pat. Sensorial</label>
                         <select id="patsensorial" th:field="*{patsensorial}" class="form-control">
                             <option value="si">Sí</option>
                             <option value="no">No</option>
@@ -152,11 +159,11 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Especificar: </label>
+                        <label style="margin-left: 3%;" class="col-4 col-form-label">Especificar: </label>
                         
                         <input id="especificar" type="text" th:field="*{especificar}" class="form-control" />
                     </div>
-
+                    </div>
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">¿Fuma actualmente?</label>
                         <select id="fuma" th:field="*{fuma}" class="form-control">
@@ -173,7 +180,7 @@
                         </select>
                     </div>
 
-                    <label class="col-4 col-form-label">EXPLORACIÓN</label>
+                    <label style="font-weight: bold;" class="col-4 col-form-label">EXPLORACIÓN</label>
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">T.A. Sistólica: </label>
@@ -197,13 +204,11 @@
                             }
                         }
                     </script>
-                    
+                     <div style="float: right; margin-top: 1%;">
+                        <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
+                    </div>
                 </form>                      
             </div> 
-            
-            <div style="float: right;">
-                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
-            </div>
 
         </div>
     </div>

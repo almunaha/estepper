@@ -11,11 +11,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
-
+    <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <title>Formulario de Exploración</title>
@@ -30,7 +28,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}"/>
+                <img width="75" th:src="@{/img/logo.png}"/>
                 <h4>Estepper</h4>
             </div>
 
@@ -58,7 +56,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="burger"><a class="btn"><i class="fa-solid fa-bars"></i></a></div>
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
@@ -82,10 +80,13 @@
 
 
             <div class="bg-white border border-1 p-5 rounded-4 ">
-
+                <div
+                style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 5%;">
+                <h4 style="margin-top: 8%; color:azure">Exploración</h4>
+                </div>
                 <form class="form-perfil" method="post" th:action="@{'/process_exploracion/' + ${participante.id}}" th:object="${exploracion}">
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">¿Es la primera vez que acude al programa? </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Es la primera vez que acude al programa? </label>
                         <select th:field="*{primeravez}"class="form-control" >
                             <option th:value="si" th:text="SÍ"></option>
                             <option th:value="no" th:text="NO"></option>
@@ -93,7 +94,7 @@
                     </div>
         
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Género: </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Género: </label>
                         <select th:field="*{sexo}"class="form-control" >
                             <option th:value="MASCULINO" th:text="MASCULINO"></option>
                             <option th:value="FEMENINO" th:text="FEMENINO"></option>
@@ -101,28 +102,28 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Peso (kg): </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Peso (kg): </label>
                         <input id="peso" type="number" th:field="*{peso}" step="1" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Perímetro de cintura (cm): </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Perímetro de cintura (cm): </label>
                         <input type="number" th:field="*{cmcintura}" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Talla/Altura (cm): </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Talla/Altura (cm): </label>
                         <input id="altura" type="number" th:field="*{talla}" step="1" class="form-control" />
                     </div>
 
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">Edad: </label>
+                        <label style="font-weight: bold;" class="col-4 col-form-label">Edad: </label>
                         <input type="number" th:field="*{edad}" class="form-control" />
                     </div>
                   
                     <div class="input-group mt-2">
-                        <label class="col-4 col-form-label">IMC: </label>
-                        <input style="border-color: blue;" id="imc" type="number" th:field="*{imc}" class="form-control" />
+                        <label style="font-weight: bold; color:blue"class="col-4 col-form-label">IMC: </label>
+                        <input style="border-color: blue;" id="imc" type="number" th:field="*{imc}" class="form-control" readonly/>
                     </div>
                     <script>
                         function calcularpuntuacion() {
@@ -148,13 +149,13 @@
                             }
                         }
                     </script>
+
+                    <div style="float: right; margin-top: 1%;">
+                        <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
+                    </div>
                     
                 </form>                      
             </div> 
-
-            <div style="float: right;">
-                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
-                </div>
 
         </div>
     </div>

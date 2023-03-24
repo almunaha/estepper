@@ -9,8 +9,6 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/signin.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
@@ -18,20 +16,6 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <title>Editar Perfil</title>
-
-    <!--<script type="text/javascript">
-        function elegirAvatar(sw) {
-            var pic;
-            if (sw == 0) {
-                pic = "/img/avatar1.png";
-            }
-            else {
-                pic = "/img/avatar2.png";
-            }
-            document.getElementById('avatar').src = pic;
-        }
-
-    </script>-->
 
 </head>
 
@@ -45,7 +29,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -58,7 +42,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a th:href="@{/cuaderno}">
                         <i class="fa-solid fa-pen"></i>
                         <span class="nombre-enlaces">Cuaderno</span>
                     </a>
@@ -72,7 +56,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a th:href="@{/alimentacion}">
                         <i class="fa-solid fa-carrot"></i>
                         <span class="nombre-enlaces">Alimentación</span>
                     </a>
@@ -92,7 +76,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
                         <span class="nombre-enlaces">Foro</span>
                     </a>
@@ -129,59 +113,67 @@
             </nav>
 
 
-            <div class="layout-edit">
-                <div>
-                    <h3 style="text-align: center; margin-bottom: 25px;">Editar perfil</h3>
-                </div>
-                <div class="cont-edit">
+            <div class="container">
+                <div style="margin: 5%;" class="bg-white border border-1 p-5 rounded-4">
+                  <div>
+                    <h3 style="text-align: center; margin-bottom: 2%;">Editar perfil</h3>
+                  </div>
+                  <div class="row">
                     <!--IMAGEN -->
-                    <div class="col-izq">
-                        <img id="foto-perfil" th:src="${participante.fotoParticipante}" width="55%" heigh="100" alt="">
+                    <div class="col-md-3 mb-3">
+                      <img id="foto-perfil" th:src="${participante.fotoParticipante}" class="w-50" alt="">
                     </div>
-
+              
                     <!--FORMULARIO -->
-                    <div class="col-der">
-                        <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${participante.id}}"
-                            th:object="${participante}">
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Alias </label>
-                                <input type="text" th:field="*{nickname}" class="form-control" required />
-                            </div>
-
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Correo </label>
-                                <input type="email" th:field="*{email}" class="form-control" required />
-                            </div>
-
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Contraseña </label>
-                                <input type="password" class="form-control" placeholder="**********" th:field="*{contrasenia}" />
-                            </div>
-
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Sexo </label>
-                                <select th:field="*{sexo}" class="form-control" required>
-                                    <option th:value="MASCULINO" th:text="MASCULINO"></option>
-                                    <option th:value="FEMENINO" th:text="FEMENINO"></option>
-                                </select>
-                            </div>
-
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Edad </label>
-                                <input type="number" th:field="*{edad}" class="form-control" required />
-                            </div>
-
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Avatar </label>
-                                <select id="avatar" class="form-select" th:field="*{fotoParticipante}">
-                                    <option value="/img/p1.png">Sin avatar</option>
-                                    <option value="/img/avatar1.png">Avatar 1</option>
-                                    <option value="/img/avatar2.png">Avatar 2</option>
-                                    <option value="/img/avatar3.png">Avatar 3</option>
-                                    <option value="/img/avatar4.png">Avatar 4</option>
-                                    <option value="/img/avatar5.png">Avatar 5</option>
-                                    <option value="/img/avatar6.png">Avatar 6</option>
-                                    <option value="/img/avatar7.png">Avatar 7</option>
+                    <div class="col-md-8">
+                      <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${participante.id}}" th:object="${participante}">
+                        <div class="mb-3">
+                          <label class="form-label">Alias</label>
+                          <input type="text" th:field="*{nickname}" class="form-control" required>
+                        </div>
+              
+                        <div class="mb-3">
+                          <label class="form-label">Correo</label>
+                          <input type="email" th:field="*{email}" class="form-control" required>
+                        </div>
+              
+                        <div class="mb-3">
+                          <label class="form-label">Contraseña</label>
+                          <input type="password" class="form-control" placeholder="**********" th:field="*{contrasenia}">
+                        </div>
+              
+                        <div class="mb-3">
+                          <label class="form-label">Sexo</label>
+                          <select th:field="*{sexo}" class="form-select" required>
+                            <option value="MASCULINO" th:text="MASCULINO"></option>
+                            <option value="FEMENINO" th:text="FEMENINO"></option>
+                          </select>
+                        </div>
+                        <div th:unless="${participante.estadoCuenta == 'BAJA'}" class="mb-3">
+                          <label class="form-label">Estado</label>
+                          <select th:field="*{estadoCuenta}" class="form-select" required>
+                            <option value="ALTA" th:text="ALTA"></option>
+                            <option value="BAJA" th:text="BAJA"></option>
+                          </select>
+                        </div>
+              
+                        <div class="mb-3">
+                          <label class="form-label">Edad</label>
+                          <input type="number" th:field="*{edad}" class="form-control" required>
+                        </div>
+              
+                        <div class="mb-3">
+                          <label class="form-label">Avatar</label>
+                          <select id="avatar" class="form-select" th:field="*{fotoParticipante}">
+                            <option value="/img/p1.png">Sin avatar</option>
+                            <option value="/img/avatar1.png">Avatar 1</option>
+                            <option value="/img/avatar2.png">Avatar 2</option>
+                            <option value="/img/avatar3.png">Avatar 3</option>
+                            <option value="/img/avatar4.png">Avatar 4</option>
+                            <option value="/img/avatar5.png">Avatar 5</option>
+                            <option value="/img/avatar6.png">Avatar 6</option>
+                            <option value="/img/avatar7.png">Avatar 7</option>
+              
                                     <option value="/img/avatar8.png">Avatar 8</option>
                                     <option value="/img/avatar9.png">Avatar 9</option>
                                     <option value="/img/avatar10.png">Avatar 10</option>
@@ -202,12 +194,14 @@
                                 <img src="/img/avatar10.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
                             </div>
                             <div style="display: flex; justify-content: center;">
+                                <a th:href="@{'/eliminarcuenta/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px; background-color: red;">Eliminar Cuenta</a>
                                 <a th:href="@{'/mostrarperfil/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px;">Cancelar</a>
                                <button class="btn mt-4" id="btn-edit" type="submit">Guardar</button>
                             </div>
                         </form>
                     </div>
 
+                </div>
                 </div>
             </div>
 

@@ -86,23 +86,17 @@ public class CoordinadorController {
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
             PageRequest pageable = PageRequest.of(page, 6); // define página solicitada y tamaño de la página, se
                                                             // inicializa a cero
-            Page<Participante> paginaPart = part.paginas(pageable); // listado de páginas de 6 participantes cada una
+            Page<Participante> paginaPart = part.paginas(pageable, getUsuario().getId(), Estado.BAJA); // listado de páginas de 6 participantes cada una
             int totalPags = paginaPart.getTotalPages(); // total de páginas
 
             if (totalPags > 0) {
-                List<Integer> paginas = IntStream.rangeClosed(1, totalPags).boxed().collect(Collectors.toList()); // listado
-                                                                                                                  // con
-                                                                                                                  // los
-                                                                                                                  // números
-                                                                                                                  // de
-                                                                                                                  // las
-                                                                                                                  // páginas
+                List<Integer> paginas = IntStream.rangeClosed(1, totalPags).boxed().collect(Collectors.toList()); // listado con los números de las páginas
                 model.addAttribute("paginas", paginas);
             }
 
             List<Participante> listado = paginaPart.getContent();
-            model.addAttribute("listado", listado);
             model.addAttribute("user", getUsuario());
+            model.addAttribute("listado", listado);
 
             return "participantes";
         }
@@ -111,20 +105,22 @@ public class CoordinadorController {
             return "redirect:/";
     }
 
-    @GetMapping("/valoracion/{id}")
-    public String fasedevaloracion(@PathVariable("id") Integer id, Model model) {
-        if ((getUsuario() instanceof Coordinador)
-                && ((part.findById(id).get().getIdCoordinador() == getUsuario().getId())
-                        || part.findById(id).get().estadoCuenta.equals(Estado.BAJA))) {
-            model.addAttribute("participante", part.findById(id).get());
-            model.addAttribute("usuario", user.findById(id).get());
-            model.addAttribute("user", getUsuario());
-            model.addAttribute("idparticipante", id);
-            return "valoracion";
-        }
+    @GetMapping("/sesion/{num}/{id}")
+    public String sesion1(@PathVariable Integer num, @PathVariable Integer id, Model model) {
 
-        else
+        if (num < 1 || num > 10) {
             return "redirect:/";
+        } else {
+            model.addAttribute("user", getUsuario());
+            Participante p = part.findById(id).get();
+                // CONTROLAR ESTADO ALTA O BAJA. SI BAJA MOSTRAR QUE ESTÁ DE BAJA Y NO HA COMENZADO SESIONES
+                Sesion lasesion = sesion.buscarSesion(p, num); // cambiar segun sesion
+                model.addAttribute("sesion", lasesion);
+                model.addAttribute("lasesion", lasesion);
+                model.addAttribute("participante", p); 
+
+                return "sesionPart";
+        }
     }
 
     @GetMapping("/actualizarGrupos/{idP}/{idG}")
@@ -136,8 +132,8 @@ public class CoordinadorController {
             Participante usuario = part.findById(idP).get();
             model.addAttribute("user", getUsuario());
 
-            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), g, usuario.getAsistencia(),
-                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
+            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), g, usuario.getAsistencia(),
+                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
             g.setNumParticipantes(participantes);
             grupo.update(g);
@@ -169,8 +165,8 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
             Grupo g = grupo.getGrupo(idG);
 
-            part.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), null, usuario.getAsistencia(),
-                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), idP);
+            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), null, usuario.getAsistencia(),
+                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), idP);
 
             Integer participantes = g.getNumParticipantes() - 1;
             grupo.updateParticipantes(idG, participantes);

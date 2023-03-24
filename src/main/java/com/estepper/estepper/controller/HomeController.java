@@ -170,18 +170,18 @@ public class HomeController {
         if(getUsuario().getId() == id){
             Usuario orig = usuario.findById(user.getId()).get(); // usuario antes de editarlo
 
-            if (user.contrasenia == "")
-                user.contrasenia = orig.contrasenia; // si no se ha cambiado la contraseña
+            if (user.getContrasenia() == "")
+                user.setContrasenia(orig.getContrasenia()); // si no se ha cambiado la contraseña
             else
-                user.contrasenia = hash.encode(user.contrasenia);
+                user.setContrasenia(hash.encode(user.getContrasenia()));
 
-            usuario.update(user.nickname, user.email, user.contrasenia, orig.estadoCuenta, orig.getId());
+            usuario.update(user.getNickname(), user.getEmail(), user.getContrasenia(), orig.getEstadoCuenta(), orig.getId());
 
             if (orig instanceof Participante) { // si es un participante
                 Participante part = participante.findById(id).get();
 
-                participante.update(p.edad, p.sexo, p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
-                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), id);
+                participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
+                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), part.getPerdidacmcintura(), id);
             }
 
             return "redirect:/mostrarperfil/{id}";
@@ -190,7 +190,7 @@ public class HomeController {
 
     @GetMapping("/baja")
     public String baja() {
-        if(!getUsuario().estadoCuenta.equals(Estado.BAJA)) return "redirect:/";
+        if(!getUsuario().getEstadoCuenta().equals(Estado.BAJA)) return "redirect:/";
         return "baja";
     }
 
@@ -245,7 +245,7 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
-        if (elusuario instanceof Coordinador && participante.findById(id).get().getIdCoordinador() == elusuario.getId()) {
+        if (elusuario instanceof Coordinador && participante.findById(id).get().getIdCoordinador() == elusuario.getId() || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA)) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
@@ -264,7 +264,7 @@ public class HomeController {
     @PostMapping("/process_material/{id}")
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
         Participante p = participante.findById(id).get();
-            if(getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id){
+            if(getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id || p.getEstadoCuenta().equals(Estado.BAJA)){
                 material.setParticipante(p);
                 material.setGrupo(p.getGrupo());
                 if(!file.isEmpty()){
@@ -301,4 +301,6 @@ public class HomeController {
         }
         return null;
     }
+
+    
 }

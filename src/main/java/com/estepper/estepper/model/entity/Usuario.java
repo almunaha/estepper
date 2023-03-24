@@ -20,15 +20,15 @@ public class Usuario implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
     @Column(unique=true)
     private Integer codigo;
-    public String nickname;
-    public String email;
-    public String contrasenia;
+    private String nickname;
+    private String email;
+    private String contrasenia;
 
     @Enumerated(value = EnumType.STRING)
-    public Estado estadoCuenta;
+    private Estado estadoCuenta;
     
     public Usuario(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta) {
         this.id = id;

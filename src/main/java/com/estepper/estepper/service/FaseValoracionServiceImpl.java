@@ -108,12 +108,12 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     
     @Override
     public void updateClasificacion(Clasificacion clasificacion, Participante participante){
-        repoC.updateClasificacion(clasificacion.analiticahecha, clasificacion.glucemia, clasificacion.colesterol, clasificacion.ldl, clasificacion.sog, clasificacion.hdl, clasificacion.trigliceridos, clasificacion.hbA1c, clasificacion.pediranalitica, clasificacion.clasificacionusuario, clasificacion.montesa, clasificacion.motivomontesa, clasificacion.taller, clasificacion.motivotaller, clasificacion.actividadfisica, participante);
+        repoC.updateClasificacion(clasificacion.getAnaliticahecha(), clasificacion.getGlucemia(), clasificacion.getColesterol(), clasificacion.getLdl(), clasificacion.getSog(), clasificacion.getHdl(), clasificacion.getTrigliceridos(), clasificacion.getHbA1c(), clasificacion.getPediranalitica(), clasificacion.getClasificacionusuario(), clasificacion.getMontesa(), clasificacion.getMotivomontesa(), clasificacion.getTaller(), clasificacion.getMotivotaller(), clasificacion.getActividadfisica(), participante);
     }
 
     @Override
     public void updateAntecedentes(Antecedentes antecedentes, Participante participante){
-        repoA.updateAntecedentes(antecedentes.hta,antecedentes.tiroides,antecedentes.patmental, antecedentes.dislipemias, antecedentes.patmuscesq, antecedentes.medicacion, antecedentes.ecv, antecedentes.patsensorial, antecedentes.especificar, antecedentes.fuma, antecedentes.dejardefumar, antecedentes.tasistolica, antecedentes.tadiastolica, participante);
+        repoA.updateAntecedentes(antecedentes.getHta(),antecedentes.getTiroides(),antecedentes.getPatmental(), antecedentes.getDislipemias(), antecedentes.getPatmuscesq(), antecedentes.getMedicacion(), antecedentes.getEcv(), antecedentes.getPatsensorial(), antecedentes.getEspecificar(), antecedentes.getFuma(), antecedentes.getDejardefumar(), antecedentes.getTasistolica(), antecedentes.getTadiastolica(), participante);
     }
 
     @Override
@@ -125,43 +125,43 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     @Override
     public void actualizarFindrisc(Exploracion exploracion, Findrisc findrisc){
         //PUNTOS EDAD
-        if (exploracion.edad < 45) { findrisc.setPuntosedad(0);}
-        else if (exploracion.edad >= 45 && exploracion.edad < 54) {findrisc.setPuntosedad(2);}
-        else if (exploracion.edad >= 55 && exploracion.edad < 64){findrisc.setPuntosedad(3);}
+        if (exploracion.getEdad() < 45) { findrisc.setPuntosedad(0);}
+        else if (exploracion.getEdad() >= 45 && exploracion.getEdad() < 54) {findrisc.setPuntosedad(2);}
+        else if (exploracion.getEdad() >= 55 && exploracion.getEdad() < 64){findrisc.setPuntosedad(3);}
         else findrisc.setPuntosedad(4);
 
         //PUNTOS IMC
-        if(exploracion.imc < 25){findrisc.setPuntosimc(0);}
-        else if (exploracion.imc >= 25 && exploracion.imc < 30){findrisc.setPuntosimc(1);}
+        if(exploracion.getImc() < 25){findrisc.setPuntosimc(0);}
+        else if (exploracion.getImc() >= 25 && exploracion.getImc() < 30){findrisc.setPuntosimc(1);}
         else findrisc.setPuntosimc(3);
 
         //PUNTOS CMCINTURA
-        if(exploracion.sexo.equals(Sexo.FEMENINO)){
-            if(exploracion.cmcintura < 80){findrisc.setPuntoscmcintura(0);}
-            else if (exploracion.cmcintura >= 80 && exploracion.cmcintura < 88){findrisc.setPuntoscmcintura(3);}
+        if(exploracion.getSexo().equals(Sexo.FEMENINO)){
+            if(exploracion.getCmcintura() < 80){findrisc.setPuntoscmcintura(0);}
+            else if (exploracion.getCmcintura() >= 80 && exploracion.getCmcintura() < 88){findrisc.setPuntoscmcintura(3);}
             else findrisc.setPuntoscmcintura(4);
         } else{
-            if(exploracion.cmcintura < 94){findrisc.setPuntoscmcintura(0);}
-            else if (exploracion.cmcintura >= 94 && exploracion.cmcintura < 102){findrisc.setPuntoscmcintura(3);}
+            if(exploracion.getCmcintura() < 94){findrisc.setPuntoscmcintura(0);}
+            else if (exploracion.getCmcintura() >= 94 && exploracion.getCmcintura() < 102){findrisc.setPuntoscmcintura(3);}
             else findrisc.setPuntoscmcintura(102);
         }
 
-        repoF.updateFindrisc(findrisc.getParticipante(), findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura, findrisc.ptosactfisica, findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes, findrisc.puntuacion, findrisc.escalarriesgo);
+        repoF.updateFindrisc(findrisc.getParticipante(), findrisc.getPuntosedad(), findrisc.getPuntosimc(), findrisc.getPuntoscmcintura(), findrisc.getPtosactfisica(), findrisc.getPtosfrecfruta(), findrisc.getPtosmedicacion(), findrisc.getPtosglucosa(), findrisc.getPtosdiabetes(), findrisc.getPuntuacion(), findrisc.getEscalarriesgo());
     }
 
     @Override
     public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id, Integer idCoor){
         Participante usuario = repoP.findById(id).get();
         usuario.setEstadoCuenta(Estado.ALTA);
-        usuario.setEdad(exploracion.edad);
-        usuario.setSexo(exploracion.sexo);
+        usuario.setEdad(exploracion.getEdad());
+        usuario.setSexo(exploracion.getSexo());
         usuario.setIdCoordinador(idCoor);
         usuario.setAsistencia(0);
         usuario.setSesionesCompletas(0);
         usuario.setPerdidaDePeso(0.0);
 
-        repoP.update(usuario.edad, usuario.sexo, usuario.getFotoParticipante(), usuario.getGrupo(), usuario.getAsistencia(), idCoor, usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), id);
-        repoU.update(usuario.nickname, usuario.email, usuario.contrasenia, usuario.getEstadoCuenta(), id);
+        repoP.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), usuario.getGrupo(), usuario.getAsistencia(), idCoor, usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), id);
+        repoU.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), usuario.getEstadoCuenta(), id);
     }
 
     @Override
@@ -172,17 +172,17 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         repoA.deleteByParticipante(participante);
         repoAl.deleteByParticipante(participante);
         repoAF.deleteByParticipante(participante);
-        repoP.delete(participante);
+        repoP.delete(participante.getId());
     }
 
     @Override
     public void updateAlimentacionVal(AlimentacionVal alimentacion, Participante participante) {
-        repoAl.updateAlimentacionVal(alimentacion.aceite, alimentacion.ptosaceite, alimentacion.racaceite, alimentacion.ptosracaceite, alimentacion.racverdura, alimentacion.ptosracverdura, alimentacion.racfruta, alimentacion.ptosracfruta, alimentacion.raccarne, alimentacion.ptosraccarne, alimentacion.racmantequilla, alimentacion.ptosracmantequilla, alimentacion.racbebidas, alimentacion.ptosracbebidas, alimentacion.racvino, alimentacion.ptosracvino, alimentacion.raclegumbres, alimentacion.ptosraclegumbres, alimentacion.racpescado, alimentacion.ptosracpescado, alimentacion.racreposteria, alimentacion.ptosracreposteria, alimentacion.racfrutosecos, alimentacion.ptosracfrutosecos, alimentacion.carneblanca, alimentacion.ptoscarneblanca, alimentacion.racsofrito, alimentacion.ptosracsofrito, alimentacion.puntuacion, alimentacion.adherencia, participante);
+        repoAl.updateAlimentacionVal(alimentacion.getAceite(), alimentacion.getPtosaceite(), alimentacion.getRacaceite(), alimentacion.getPtosaceite(), alimentacion.getRacverdura(), alimentacion.getPtosracverdura(), alimentacion.getRacfruta(), alimentacion.getPtosracfruta(), alimentacion.getRaccarne(), alimentacion.getPtosraccarne(), alimentacion.getRacmantequilla(), alimentacion.getPtosracmantequilla(), alimentacion.getRacbebidas(), alimentacion.getPtosracbebidas(), alimentacion.getRacvino(), alimentacion.getPtosracvino(), alimentacion.getRaclegumbres(), alimentacion.getPtosraclegumbres(), alimentacion.getRacpescado(), alimentacion.getPtosracpescado(), alimentacion.getRacreposteria(), alimentacion.getPtosracreposteria(), alimentacion.getRacfrutosecos(), alimentacion.getPtosracfrutosecos(), alimentacion.getCarneblanca(), alimentacion.getPtoscarneblanca(), alimentacion.getRacsofrito(), alimentacion.getPtosracsofrito(), alimentacion.getPuntuacion(), alimentacion.getAdherencia(), participante);
     }
 
     @Override
     public void updateActividadFisica(ActividadFisica actfisica, Participante participante) {
-        repoAF.updateActividadFisica(actfisica.vecesafv, actfisica.horaafv, actfisica.minafv, actfisica.metsafv, actfisica.vecesafm, actfisica.horaafm, actfisica.minafm, actfisica.metsafm, actfisica.vecescaminar, actfisica.horacaminar, actfisica.mincaminar, actfisica.metscaminar, actfisica.horasentado, actfisica.minsentado, actfisica.metstotales, actfisica.clasificacion, participante);
+        repoAF.updateActividadFisica(actfisica.getVecesafv(), actfisica.getHoraafv(), actfisica.getMinafv(), actfisica.getMetsafv(), actfisica.getVecesafm(), actfisica.getHoraafm(), actfisica.getMinafm(), actfisica.getMetsafm(), actfisica.getVecescaminar(), actfisica.getHoracaminar(), actfisica.getMincaminar(), actfisica.getMetscaminar(), actfisica.getHorasentado(), actfisica.getMinsentado(), actfisica.getMetstotales(), actfisica.getClasificacion(), participante);
         
     }
 }

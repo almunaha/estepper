@@ -12,8 +12,14 @@
     <title>Estepper</title>
 </head>
 <body>
-    <div>
-        <h2>Recuperar contraseña o código</h2>
+        <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
+            <div style="display: flex; justify-content: center; flex-direction: column;">
+                <div><h3 style="text-align: center;">Recuperar contraseña o código</h3></div>
+                
+            </div>
+        </div>
+        <div style="margin: 1%;" class="bg-white border border-1 p-5 rounded-4 ">
+            <div style="display: flex; justify-content: center; flex-direction: column;">
         <form class="form-perfil" method="post" th:action="@{'/process_recuperarCodigo'}">
             <div class="input-group mt-2">
                 <label class="col-4 col-form-label">Correo electrónico: </label>
@@ -23,6 +29,8 @@
                 <button class="btn btn-info text-white mt-4 w-100" type="submit">Enviar</button>
             </div>
         </form>
-    </div>
+            </div>
+            </div>
+
 </body>
 </html>

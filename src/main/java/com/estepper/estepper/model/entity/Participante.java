@@ -19,26 +19,25 @@ public class Participante extends Usuario{
     @Column(unique=false, nullable=true)
     private Integer idCoordinador;
 
-    //@Column(unique=false, nullable=true)
-   // private Integer idGrupo;
-
    @Column(nullable=true)
    private String fotoParticipante;
 
     @Column(nullable=true)
     private Double perdidaDePeso;
     @Column(nullable=true)
+    private Double perdidacmcintura;
+    @Column(nullable=true)
     private Integer asistencia;
     @Column(nullable=true)
     public Integer edad;
     @Column(nullable=true)
     private Integer sesionesCompletas;
-    @Column(nullable=true)
     @Enumerated(value = EnumType.STRING)
-    public Sexo sexo;
+    @Column(nullable = true)
+    private Sexo sexo;
     
     @Column
-    public Integer id; //diría que este sobra
+    private Integer id; 
 
     @ManyToOne
     @JoinColumn(name="idGrupo")
@@ -47,10 +46,14 @@ public class Participante extends Usuario{
     
     public Participante(){
         super();
+        sesionesCompletas = 0;
+        perdidaDePeso = 0.0;
+        asistencia = 0;
+        perdidacmcintura = 0.0;
     }
 
     public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Double perdidaDePeso,Integer asistencia,
-    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante){
+    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante, Double perdidacmcintura){
         super(id, codigo, nickname, email, contrasenia, estadoCuenta);
         this.idCoordinador=idCoordinador;
         this.grupo=grupo;
@@ -60,6 +63,7 @@ public class Participante extends Usuario{
         this.sesionesCompletas=sesionesCompletas;
         this.sexo=sexo;
         this.fotoParticipante=fotoParticipante;
+        this.perdidacmcintura = perdidacmcintura;
 
     }
 
@@ -137,6 +141,14 @@ public class Participante extends Usuario{
 
     public void setFotoParticipante(String fotoParticipante) {
         this.fotoParticipante = fotoParticipante;
+    }
+
+    public Double getPerdidacmcintura() {
+        return perdidacmcintura;
+    }
+
+    public void setPerdidacmcintura(Double perdidacmcintura) {
+        this.perdidacmcintura = perdidacmcintura;
     }
 
     

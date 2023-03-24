@@ -34,5 +34,7 @@ public class SesionServiceImpl implements SesionService{
     public void deleteByParticipante(Participante p) {
         repo.deleteAllByParticipante(p);
     }
+
+    
     
 }

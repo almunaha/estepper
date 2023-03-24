@@ -1,3 +1,8 @@
+.dashboard{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
 .tit-dash{
     padding: 1.3%;
 }
@@ -6,7 +11,7 @@
 .valores-progreso{
     display: flex;
     width: 100%;
-    height: 20%;
+    height: 140px;
     justify-content: space-between;
     padding-left: 1%;
     padding-right: 1%;
@@ -21,6 +26,7 @@
     width: 25%;
     display: flex;
     flex-direction: column;
+    border-radius: 12px;
 }
 
 .flex-valor{
@@ -78,6 +84,8 @@
     box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
     align-items: center;
     background-color: white;
+    border-radius: 12px;
+    margin-bottom: 5%;
 }
 
 /* contenido de Peso y perímetro abdominal */
@@ -168,13 +176,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 .asistencia{
     width: 100%;
-    height: 20%;
+    height: 150px;
     display: flex;
     justify-content: space-between;
     gap: 1%;
     padding-left: 1%;
     padding-right: 1%;
     padding-bottom: 1%;
+    margin-bottom: 1%;
 }
 
 .asis-ind{
@@ -185,6 +194,7 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
     justify-content: center;
     align-items: center;
+    border-radius: 12px;
 }
 
 .asis-sesion{
@@ -193,4 +203,31 @@ input[type=number]::-webkit-outer-spin-button {
 
 .asis-sesion i{
     font-size: 160%;
+}
+
+/* formularios registro peso y perimetro */
+
+#form-peso{
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    #sidebar-container{
+        display: none;
+    }
+
+    .graficas-progreso{
+        flex-direction: column;
+    }
+
+    .progreso-datos{
+        width: 100%;
+        margin-top: 2%;
+    }
+
+    .btn-reg{
+        width: 40%;
+    }
 }

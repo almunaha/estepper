@@ -8,22 +8,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" th:href="@{/css/signin.css}">
   <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
   <link rel="stylesheet" th:href="@{/css/estilos.css}">
-  <link rel="stylesheet" th:href="@{/css/sesiones.css}">
+  <link rel="stylesheet" th:href="@{/css/grupos.css}">
+  <link rel="stylesheet" th:href="@{/css/materiales.css}">
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="/js/menu.js"></script>
-
-  <!--PARA GRÁFICOS-->
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto">
 
   <title>Mis Materiales</title>
 
-
+  
 </head>
 
 <body>
@@ -36,7 +32,7 @@
     <div id="sidebar-container">
 
       <div class="logo">
-        <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
+        <img width="75" th:src="@{/img/logo.png}" />
         <h4>Estepper</h4>
       </div>
 
@@ -49,7 +45,7 @@
         </li>
 
         <li>
-          <a href="#">
+          <a th:href="@{/cuaderno}">
             <i class="fa-solid fa-pen"></i>
             <span class="nombre-enlaces">Cuaderno</span>
           </a>
@@ -63,7 +59,7 @@
         </li>
 
         <li>
-          <a href="#">
+          <a th:href="@{/alimentacion}">
             <i class="fa-solid fa-carrot"></i>
             <span class="nombre-enlaces">Alimentación</span>
           </a>
@@ -83,7 +79,7 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a th:href="@{/chat}">
             <i class="fa-solid fa-comments"></i>
             <span class="nombre-enlaces">Foro</span>
           </a>
@@ -118,30 +114,74 @@
           </ul>
         </div>
       </nav>
-        <table class="table tablePart">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Acciones</th>
+      <div style="margin: 5% " class="bg-white border border-1 p-5 rounded-4 ">
+        <div
+          style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5%;">
+          <h4 style="margin-top: 8%; color:azure">Materiales</h4>
+        </div>
+        <form class="d-flex" id="search-form" style="margin-top: 2%;">
+          <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar" id="search-input">
+        </form>
+        <script>
+          $(document).ready(function () {
+            // Obtener los elementos de la lista de materiales
+            var materiales = $('.material');
 
-                </tr>
-            </thead>
+            // Manejar la presentación de resultados cuando se envía el formulario
+            $('#search-form').keyup(function (event) {
+              event.preventDefault();
+              var busqueda = $('#search-input').val().toLowerCase();
+
+              // Filtrar la lista de materiales para obtener los resultados
+              var resultados = materiales.filter(function () {
+                var descripcion = $(this).find('.cover').text().toLowerCase();
+                return descripcion.includes(busqueda);
+              });
+
+              // Ocultar todos los elementos de la lista de materiales y mostrar solo los resultados
+              materiales.hide();
+              resultados.show();
+            });
+
+            // Mostrar todos los elementos de la lista de materiales al cargar la página
+            materiales.show();
+          });
+        </script>
+
+        <div class="table-responsive"
+          style="display: flex; flex-wrap: wrap; flex-direction: row; align-items: stretch; margin-top: 5%;">
+          <table class="table">
             <tbody class="buscarParticipantes">
-                <div th:if="${listado.empty}"><h4>Su coordinador no ha añadido ningún material aún</h4></div>
-                <div th:unless="${listado.empty}">
-                <tr th:each="lis:${listado}">
-                    <td th:text="${lis.titulo}"></td>
-                    <td th:text="${lis.descripcion}"></td>
-                    <td>
-                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i class="fa-solid fa-download"></i></a>
-                    </td>
-                </tr>
+              <div th:if="${listado.empty}">
+                <div
+                  style="display: flex;justify-content: center; align-items: center; background-color:azure; margin-left:40%; border-radius: 5%; ">
+                  <h4 style="margin-top: 8%; margin-left: 8%; margin-right: 8%; text-align: center; margin-bottom: 8%; color:rgb(122, 184, 212)">Su coordinador no ha añadido
+                    ningún material aún</h4>
                 </div>
-            </tbody>
-        </table>
+              </div>
+              <div th:unless="${listado.empty}">
+                <tr th:each="lis:${listado}">
+                  <div class="material">
+                    <div class="cover">
+                      <h5 class="mt-0 mb-1" th:text="${lis.titulo}">Nombre del material</h5>
+                      <p style="font-size: small;"class="mb-0" th:text="${lis.descripcion}">Descripción del material</p>
+                    </div>
+                    <div class="descripcion">
+                      <div style="display: flex; flex-direction: column;">
+                        <a class="btn" id="btn-part" data-bs-toggle="tooltip"
+                          th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i
+                            class="fa-solid fa-download"></i></a>
+                      </div>
 
-  </div>
+                    </div>
+                  </div>
+                </tr>
+              </div>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
 </body>
 

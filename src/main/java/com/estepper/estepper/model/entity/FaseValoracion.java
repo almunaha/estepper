@@ -9,7 +9,6 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
-
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
@@ -41,7 +40,7 @@ public class FaseValoracion {
     }
 
     public Integer getIdParticipante() {
-        return participante.id;
+        return participante.getId();
     }
 
     public Participante getParticipante(){

@@ -14,7 +14,7 @@ a{
     background-color: #13405d;
     color: white;
     min-height: 100vh; /*altura mínima*/
-    width: 35vh;
+    width: 250px;
     transition: all 0.5s ease;
     padding: 6px 14px;
 }
@@ -24,7 +24,7 @@ a{
 }
 
 #sidebar-container .logo{
-    padding: .875rem 1.25rem; /*arriba y abajo | a los lados*/
+    padding: 10px; /*arriba y abajo | a los lados*/
     text-align: center;
     pointer-events: none;
 }
@@ -131,17 +131,17 @@ a{
 }
 
 .navbar-expand-lg .navbar-nav{
-    position: relative;
-    left: -35px;
+    margin-left: auto;
+    left: -5%;
 }
 
 .navbar-expand-lg .burger{
-    position: relative;
-    left: 16px;
+    left: 4%;
 }
 
 .navbar-expand-lg .navbar-nav .dropdown-menu{
-    left: -30px;
+    right: 0;
+    left: auto;
 }
 
 .burger .btn{
@@ -160,22 +160,21 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
-
+    flex-wrap:  wrap;
     min-height: 90vh; /*altura mínima*/
 }
 
 .btn-util{
     color: rgb(122, 184, 212);
     background-color: white;
-    padding: 20px;
+    padding: 2vw;
     border-radius: 5px;
-    font-size: 50px;
+    font-size: 5vw;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;    
-
-    min-height: 23vh; /*altura mínima*/
-    width: 40vh;
-    margin: 20px;
-
+    min-height: 25vh; /*altura mínima*/
+    width: 20vw;
+    height: 15vw;
+    margin: 2vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -185,7 +184,26 @@ a{
     color: white;
     background-color: rgb(122, 184, 212);
 }
+.btn-util-bis{
+    color: white;
+    background-color: rgb(122, 184, 212);
+    padding: 2vw;
+    border-radius: 5px;
+    font-size: 5vw;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;    
+    min-height: 25vh; /*altura mínima*/
+    width: 20vw;
+    height: 15vw;
+    margin: 4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.btn-util-bis:hover{
+    color: rgb(122, 184, 212);;
+    background-color: white
+}
 .layout-util{
     display: flex;
     flex-direction: column;
@@ -203,7 +221,7 @@ a{
     width: 90%;
 }
 
-#btn-part{
+#btn-part, #btn-admi{
     color: white;
     background-color: #6ca4c7;
 }
@@ -211,11 +229,22 @@ a{
 /* Administrador */
 .flex-usuarios{
     display: flex;
-    
+}
 
+.top-admin{
+    display: flex;
+    gap: 2%;
+    margin-bottom: 2%;
 }
 
 /*BOTONES FILTRADO*/
+
+#filtros{
+    margin-top: 4%;
+    margin-bottom: 1%;
+    display: flex;
+    justify-content: space-between;
+}
 
 #btn-filtrarALTA, #btn-filtrarBAJA {
     padding: 5px 20px;
@@ -239,6 +268,10 @@ a{
 #btn-filtrarBAJA:hover {
     background-color: #434b6a;
     color: white;
+}
+
+#buscadorPart{
+    width: 25%;
 }
 
 /*BOTONCITOS ICONOS CON LO DE ARRIBA*/
@@ -632,6 +665,21 @@ input[type="date"] {
     margin-left: 5%;
 }
 
+.input-group select {
+    appearance: none;
+    background-color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 1.5l3 3 3-3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 8px 10px;
+    padding-right: 2.5rem;
+  }
+
+  .input-group input {
+    margin-left: 2rem;
+  }
+
+
 /* RESPONSIVE */
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
@@ -639,6 +687,58 @@ input[type="date"] {
     .d-flex {
       width: 100%;
     }
+
+    #sidebar-container {
+        display: none;
+    }
+    
+    .col-form-label {
+        font-size: 9px;
+        margin: 1vw;
+    }
+    .form-perfil {
+        margin: 0 5%;
+    }
+
+    .input-group {
+        flex-direction: row;
+      }
+
+      .input-group label {
+        margin-right: 2rem;
+        margin-left: 0;
+      }
+      
+      .input-group input {
+        margin-left: 2rem;
+      }
+
+      .input-group select {
+        width: auto;
+        margin-right: 1rem;
+      }
+
+    #btn-part {
+        display: block;
+        margin: 10px auto;
+    }
+    
   
+    .btn-util {
+        height: 25vw;
+        width: 20vw;
+        font-size: 5vw;
+        padding: 10vw;
+        margin: 2.5vw;
+      }
+    
+      .btn-util-bis {
+        height: 25vw;
+        width: 20vw;
+        font-size: 5vw;
+        padding: 10vw;
+        margin: 2.5vw;
+      }
+
 }
 

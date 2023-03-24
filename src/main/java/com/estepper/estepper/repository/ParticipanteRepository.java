@@ -14,6 +14,7 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Grupo;
 
 import com.estepper.estepper.model.enums.Sexo;
+import com.estepper.estepper.model.enums.Estado;
 
 import jakarta.transaction.Transactional;
 
@@ -22,11 +23,19 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     List<Participante> findAll();
     Optional<Participante> findById(Integer id);
     List<Participante> findByGrupo(Grupo grupo);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Participante m WHERE m.id = :participante")
+    void delete(Integer participante);
+
+    @Query("SELECT p FROM Participante p WHERE p.idCoordinador = :idCoordinador OR p.estadoCuenta = :estadoCuenta")
+    List<Participante> findByIdCoordinadonOrEstado(Integer idCoordinador, Estado estadoCuenta);
     
     @Modifying //modifca la base de datos
     @Transactional //la consulta se ejecuta en una transacción
-    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo, p.fotoParticipante = :fotoParticipante, p.grupo = :grupo, p.asistencia = :asistencia, p.idCoordinador = :idCoor, p.perdidaDePeso = :perdidadepeso, p.sesionesCompletas = :sesionescompletas WHERE p.id = :id")
-    void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Double perdidadepeso, Integer sesionescompletas, Integer id);
+    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo, p.fotoParticipante = :fotoParticipante, p.grupo = :grupo, p.asistencia = :asistencia, p.idCoordinador = :idCoor, p.perdidaDePeso = :perdidadepeso, p.sesionesCompletas = :sesionescompletas, p.perdidacmcintura = :percmcintura WHERE p.id = :id")
+    void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Double perdidadepeso, Integer sesionescompletas, Double percmcintura, Integer id);
 
-    public Page<Participante> findAll(Pageable pageable);
+    @Query("SELECT p FROM Participante p WHERE p.idCoordinador = :idCoordinador OR p.estadoCuenta = :estadoCuenta")
+    public Page<Participante> findByIdCoordinadonOrEstado(Pageable pageable, Integer idCoordinador, Estado estadoCuenta);
 }

@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.EstadoSesion;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -91,7 +92,7 @@ public class Sesion implements Serializable{
     }
 
     public Integer getIdParticipante(){
-        return participante.id;
+        return participante.getId();
     }
 
     public EstadoSesion getEstado() {

@@ -1,16 +1,24 @@
 package com.estepper.estepper.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.nio.file.Files;
 
 import org.springframework.ui.Model;
+import org.python.core.PyFunction;
+import org.python.core.PyObject;
+import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +31,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.estepper.estepper.model.entity.FaseValoracion;
@@ -31,7 +41,9 @@ import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
-import com.estepper.estepper.model.entity.Ficha;
+import com.estepper.estepper.model.entity.Receta;
+import com.estepper.estepper.model.entity.FichaEleccion;
+import com.estepper.estepper.model.entity.FichaTaller;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.entity.Participante;
@@ -40,21 +52,26 @@ import com.estepper.estepper.model.entity.Clasificacion;
 import com.estepper.estepper.model.entity.Antecedentes;
 import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.ActividadFisica;
+import com.estepper.estepper.model.entity.Alimentacion;
 import com.estepper.estepper.model.entity.AlimentacionVal;
-
+import com.estepper.estepper.model.entity.AlimentosConsumidos;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.TipoProgreso;
+
 import com.estepper.estepper.service.ActividadService;
+import com.estepper.estepper.service.AlimentacionService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.MensajeService;
 import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ProgresoService;
+import com.estepper.estepper.service.PythonService;
 import com.estepper.estepper.service.GrupoService;
 
 @Controller
@@ -90,6 +107,17 @@ public class ParticipanteController {
     @Autowired
     private GrupoService grupoS;
 
+    @Autowired
+    private AlimentacionService alimentacion;
+
+    @Autowired
+    private MensajeService mensajeS;
+ 
+    @Autowired
+    @Qualifier("PythonServiceImpl")
+    private PythonService service;
+     
+
     @GetMapping("/menu")
     public String menu() {
         return "menu";
@@ -123,12 +151,9 @@ public class ParticipanteController {
                 // sesión seleccionada
                 Sesion sesion = ses.buscarSesion(p, num); // cambiar segun sesion
                 model.addAttribute("sesion", sesion);
+                model.addAttribute("lasesion", sesion);
 
-                // lista de fichas de la sesión seleccionada a través del idSesion
-                List<Ficha> fichas = f.fichasSesion(sesion.getId());
-                model.addAttribute("fichas", fichas);
-
-                model.addAttribute("participante", participante.findById(1)); // coger participante
+                model.addAttribute("participante", p); // coger participante
 
                 return "sesion";
             } else
@@ -147,6 +172,36 @@ public class ParticipanteController {
 
             ses.guardar(actualizada);
 
+            //actualizar asistencia media y sesiones completas participante
+            List<Sesion> lista = ses.sesiones(p);
+            Integer asistencia = 0;
+            for(int i = 0; i < lista.size(); i++){
+                if(lista.get(i).getAsistencia().equals(Asistencia.SI)) asistencia++;
+            }
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia*10 , p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
+            return "redirect:/sesiones";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("process_sesionTerm/{num}")
+    public String actualizarTerm(@PathVariable("num") Integer num, @ModelAttribute Sesion lasesion) {
+        Participante p = participante.getParticipante(getUsuario().getId());
+        if (p.getEstadoCuenta().equals(Estado.ALTA)) {
+            Sesion orig = ses.buscarSesion(p, num);
+
+            Sesion actualizada = new Sesion(orig.getId(), orig.getNumSesion(), orig.getParticipante(), EstadoSesion.COMPLETA,
+                    orig.getObservaciones(), orig.getAsistencia(), lasesion.getCmsPerdidos(), lasesion.getPesoPerdido());
+
+            ses.guardar(actualizada);
+
+            //actualizar asistencia media y sesiones completas participante
+            List<Sesion> lista = ses.sesiones(p);
+            Integer completas = 0;
+            for(int i = 0; i < lista.size(); i++){
+                if(lista.get(i).getEstado().equals(EstadoSesion.COMPLETA)) completas++;
+            }
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia() , p.getIdCoordinador(), p.getPerdidaDePeso(), completas, p.getPerdidacmcintura(), p.getId());
             return "redirect:/sesiones";
         } else
             return "acceso";
@@ -186,13 +241,47 @@ public class ParticipanteController {
                     findrisc = (Findrisc) formularios.get(i);
                 }
             }
-            fasevaloracion.updateExploracion(exploracion.primeravez, exploracion.sexo, exploracion.peso,
-                    exploracion.talla, exploracion.cmcintura, exploracion.edad, exploracion.imc,
+            fasevaloracion.updateExploracion(exploracion.getPrimeravez(), exploracion.getSexo(), exploracion.getPeso(),
+                    exploracion.getTalla(), exploracion.getCmcintura(), exploracion.getEdad(), exploracion.getImc(),
                     participante.findById(id).get());
             fasevaloracion.actualizarFindrisc(exploracion, findrisc);
 
             return "redirect:/valoracion/{id}";
         } else
+            return "redirect:/";
+    }
+
+    @GetMapping("/valoracion/{id}")
+    public String fasedevaloracion(@PathVariable("id") Integer id, Model model) {
+        if ((getUsuario() instanceof Coordinador)
+                && ((participante.findById(id).get().getIdCoordinador() == getUsuario().getId())
+                        || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
+            Participante part = participante.findById(id).get();
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(part);
+            if(formularios.size() > 2) model.addAttribute("formularios", formularios);
+            model.addAttribute("participante", part);
+            model.addAttribute("usuario", usuario.findById(id).get());
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("idparticipante", id);
+            return "valoracion";
+        }
+
+        else
+            return "redirect:/";
+    }
+
+    @GetMapping("/expediente/{id}")
+    public String expediente(@PathVariable("id") Integer id, Model model) {
+        if ((getUsuario() instanceof Coordinador)
+                && ((participante.findById(id).get().getIdCoordinador() == getUsuario().getId())
+                        || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
+            Participante part = participante.findById(id).get();
+            model.addAttribute("participante", part);
+            model.addAttribute("user", getUsuario());
+            return "expediente";
+        }
+
+        else
             return "redirect:/";
     }
 
@@ -222,11 +311,11 @@ public class ParticipanteController {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
                 && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)) {
-            fasevaloracion.updateFindrisc(p, findrisc.puntosedad, findrisc.puntosimc, findrisc.puntoscmcintura,
-                    findrisc.ptosactfisica,
-                    findrisc.ptosfrecfruta, findrisc.ptosmedicacion, findrisc.ptosglucosa, findrisc.ptosdiabetes,
-                    findrisc.puntuacion,
-                    findrisc.escalarriesgo);
+            fasevaloracion.updateFindrisc(p, findrisc.getPuntosedad(), findrisc.getPuntosimc(), findrisc.getPuntoscmcintura(),
+                    findrisc.getPtosactfisica(),
+                    findrisc.getPtosfrecfruta(), findrisc.getPtosmedicacion(), findrisc.getPtosglucosa(), findrisc.getPtosdiabetes(),
+                    findrisc.getPuntuacion(),
+                    findrisc.getEscalarriesgo());
 
             Exploracion exploracion = null;
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
@@ -235,7 +324,7 @@ public class ParticipanteController {
                     exploracion = (Exploracion) formularios.get(i);
                 }
             }
-            if ((exploracion.edad >= 35) & (findrisc.puntuacion >= 15)) {
+            if ((exploracion.getEdad() >= 35) & (findrisc.getPuntuacion() >= 15)) {
                 fasevaloracion.crearFormulariosNuevos(p);
             }
 
@@ -403,8 +492,6 @@ public class ParticipanteController {
             }
             fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().getId());
             // crear las sesiones del participante
-            // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas
-            // y le meta en otro, entonces ya tendría sus sesiones
             Sesion sesion1 = ses.buscarSesion(p, 1);
             if (sesion1 == null) { // si no tiene la sesion1 creada
                 Sesion s;
@@ -414,6 +501,10 @@ public class ParticipanteController {
                 }
             }
 
+            if(!f.existe(p)){
+                f.crearFichas(p);
+            }
+
             return "redirect:/listado";
         } else
             return "redirect:/";
@@ -421,26 +512,23 @@ public class ParticipanteController {
 
     @GetMapping("/eliminarcuenta/{id}")
     public String processElimCuenta(@PathVariable("id") Integer id) {
-        if (getUsuario() instanceof Coordinador) {
+        if (getUsuario() instanceof Coordinador || getUsuario().getId() == id) {
             Participante p = participante.findById(id).get();
             materialS.deleteByParticipante(p);
             ses.deleteByParticipante(p);
             obj.deleteByParticipante(p);
             pro.deleteByParticipante(p);
+            alimentacion.deleteByParticipante(p);
+            f.deleteByParticipante(p);
+            mensajeS.deleteByParticipante(p);
             fasevaloracion.eliminarcuenta(p);
+            
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
             grupoS.update(p.getGrupo());
+            if(getUsuario() == null) return "redirect:/login";
 
         }
         return "redirect:/";
-    }
-
-    @GetMapping("/ficha0")
-    public String ficha0() {
-        if (getUsuario() instanceof Participante) {
-            return "ficha0";
-        } else
-            return "redirect:/";
     }
 
     public Usuario getUsuario() {
@@ -536,15 +624,7 @@ public class ParticipanteController {
         }
 
         Progreso primerPeso = pro.primerPeso(p, TipoProgreso.PESO);
-        Double pe = null;
-
-        if (primerPeso != null) { // aunque realmente el primero siempre será el de exploración yo creo
-            pe = primerPeso.getDato().doubleValue();
-        }
-
-        else {
-            pe = exploracion.getPeso().doubleValue();
-        }
+        Double pe = exploracion.getPeso().doubleValue();
 
         Double pesoPerdido = null;
 
@@ -555,8 +635,8 @@ public class ParticipanteController {
             pesoPerdido = progreso.getDato() - pe;
 
         p.setPerdidaDePeso(pesoPerdido);
-        participante.update(p.edad, p.sexo, p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
-                p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getId());
+        participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+                p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
 
         pro.guardar(progreso);
 
@@ -568,6 +648,30 @@ public class ParticipanteController {
         Participante p = participante.findById(getUsuario().getId()).get();
         progreso.setParticipante(p);
         progreso.setTipo(TipoProgreso.PERIMETRO);
+
+        // Coger formulario de exploración:
+        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+        Exploracion exploracion = null;
+        for (int i = 0; i < formularios.size(); i++) {
+            if (formularios.get(i) instanceof Exploracion) {
+                exploracion = (Exploracion) formularios.get(i);
+            }
+        }
+
+        Progreso primerCintura = pro.primerPeso(p, TipoProgreso.PERIMETRO);
+        Double pe = exploracion.getCmcintura().doubleValue();
+
+        Double cmCinturaPerdido = null;
+
+        // positivo -> ha ganado, negativo -> ha perdido
+        if (progreso.getDato() - pe > 0)
+            cmCinturaPerdido = 0.0;
+        else
+            cmCinturaPerdido = progreso.getDato() - pe;
+
+        p.setPerdidacmcintura(cmCinturaPerdido);
+        participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+                p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), cmCinturaPerdido, p.getId());
 
         pro.guardar(progreso);
 
@@ -715,4 +819,226 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
+    //CUADERNO
+    @GetMapping("/cuaderno")
+    public String cuaderno(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+            return "cuaderno";
+        else
+            return "acceso";
+    }
+
+    @GetMapping("/info")
+    public String info(Model model){
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+            return "info";
+        else
+            return "acceso";
+    }
+
+    //ALIMENTACIÓN
+    @GetMapping("/alimentacion")
+    public String alimentacion(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+            return "alimentacion";
+        else
+            return "acceso";
+    }
+
+    @GetMapping("/alimentos")
+    public String alimentos(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+            model.addAttribute("alimentoCon", new AlimentosConsumidos());
+            List<AlimentosConsumidos> listal = alimentacion.getAlimentosCon(participante.findById(user.getId()).get());
+            List<Float> nutrienteshoy = new ArrayList<Float>(Arrays.asList(0f, 0f, 0f, 0f, 0f)); // Inicializar con ceros
+            for(int i = 0; i < listal.size(); i++){
+                nutrienteshoy.set(0, nutrienteshoy.get(0) + (listal.get(i).getAlimento().getFibra_alimentaria() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(1, nutrienteshoy.get(1) + (listal.get(i).getAlimento().getGrasas_saturadas() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(2, nutrienteshoy.get(2) + (listal.get(i).getAlimento().getHidratos_de_carbono() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(3, nutrienteshoy.get(3) + (listal.get(i).getAlimento().getProteinas() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(4, nutrienteshoy.get(4) + (listal.get(i).getAlimento().getSal() * listal.get(i).getRaciones()));
+            }
+            model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
+            model.addAttribute("nutrientes", nutrienteshoy);
+            model.addAttribute("listaAlimentosCon", listal);
+
+            //BORRAR ALIMENTOS DE HACE MÁS DE 1 SEMANA
+            alimentacion.borraralconSem(participante.findById(user.getId()).get());
+            return "alimentos";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_alimentoCon/{id}")
+    public String process_alimento(@PathVariable("id") Integer id, @ModelAttribute AlimentosConsumidos alimento) {
+        if (getUsuario().getId() == id) {
+            alimento.setParticipante(participante.findById(getUsuario().getId()).get());
+            alimento.setFecha_consumicion(LocalDateTime.now());
+            alimentacion.saveAlCon(alimento);
+            return "redirect:/alimentos";
+        } else
+            return "redirect:/";
+    }
+
+    @GetMapping("/nuevoalimento")
+    public String nuevoal(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+            model.addAttribute("alimento", new Alimentacion());
+            return "nuevoalimento";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_alimento")
+    public String process_al(@ModelAttribute Alimentacion alimento) {
+        if (getUsuario().getEstadoCuenta().equals(Estado.ALTA) && getUsuario() instanceof Participante) {
+            alimentacion.saveAlimento(alimento);
+            return "redirect:/alimentos";
+        } else
+            return "redirect:/";
+    }
+
+    @RequestMapping("/alimento/eliminar/{id}")
+    public String process_alimentoCeliminar(@PathVariable(name = "id") Integer id) {
+        if (getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
+            alimentacion.deleteAlCon(id);
+            return "redirect:/alimentos";
+        } else
+            return "redirect:/";
+    }
+
+    @GetMapping("/recetas")
+    public String recetas(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+            model.addAttribute("lareceta", new Receta());
+            model.addAttribute("listaRecetas", alimentacion.getRecetas());
+            model.addAttribute("listaIng", alimentacion.getAlimentos());
+            return "recetas";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_receta")
+    public String procesoReceta(@ModelAttribute Receta lareceta, @RequestParam("file") MultipartFile file){
+            if(getUsuario().getEstadoCuenta().equals(Estado.ALTA)){
+                if(!file.isEmpty()){
+                    try {
+                        Path rutaArchivo = Paths.get("src//main//resources//static/recetas");
+                        String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                        byte[] bytesArc = file.getBytes(); 
+                        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                        Files.write(rutaCompleta, bytesArc);
+                    } catch (Exception e) {
+                        String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    lareceta.setLink(file.getOriginalFilename());
+                    alimentacion.updateReceta(lareceta);
+                }
+            }
+        return "redirect:/recetas";
+    }
+
+    //FICHAS
+    @GetMapping("/fichas")
+    public String fichas(Model model) {
+
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            return "fichas";
+        } else
+            return "acceso";
+
+    }
+
+    @GetMapping("/fichaEleccion")
+    public String fichaEleccion(Model model) {
+
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            return "fichaEleccion";
+        } else
+            return "acceso";
+
+    }
+
+    @GetMapping("/fichaEleccion/{id}")
+    public String decisiones(@PathVariable("id") Integer id, Model model) {
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            FichaEleccion fichaEleccion = f.getFichaEleccion(participante.findById(u.getId()).get(), id);
+            model.addAttribute("ficha", fichaEleccion);
+            return "fichaEleccionConcreta";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_fichae/{id}")
+    public String processdecisiones(@PathVariable("id") Integer id, @ModelAttribute FichaEleccion ficha) {
+        Usuario u = getUsuario();
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            f.updateFichaEleccion(ficha);
+            return "redirect:/fichas";
+        } else
+            return "acceso";
+    }
+
+    @GetMapping("/fichaTaller")
+    public String fichataller(Model model) {
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            FichaTaller fichaTaller = f.getFichaTaller(participante.findById(u.getId()).get());
+            model.addAttribute("ficha", fichaTaller);
+            return "fichaTaller";
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_fichat/{id}")
+    public String processtaller(@PathVariable("id") Integer id, @ModelAttribute FichaTaller ficha) {
+        Usuario u = getUsuario();
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            f.updateFichaTaller(ficha);
+            return "redirect:/fichas";
+        } else
+            return "acceso";
+    }
+
+    @GetMapping("/nutrientes")
+    public String nutrientes(){
+        // Properties props = new Properties();
+        // props.setProperty("python.path", "/src/main/java/com/estepper/estepper/machinelearning.py");
+        // PythonInterpreter.initialize(System.getProperties(), props, new String[0]);
+
+        // try (PythonInterpreter interpreter = new PythonInterpreter()) {
+        //     interpreter.exec("from machinelearning.py import geometria");
+        //     PyFunction function = interpreter.get("geometria", PyFunction.class);
+        //     PyObject result = function.__call__();
+        //     if(result.toString().equals("0")) return "acceso";
+        //     else return "index";
+        // }
+        return service.getHello();
+    }
 }

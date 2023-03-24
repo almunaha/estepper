@@ -1,128 +1,230 @@
 <!DOCTYPE html>
-<html lang="es"
-xmlns:th="https://www.thymeleaf.org"
-xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
-    rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/signin.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}"> 
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>Materiales</title>
 </head>
+
 <body>
     <!--Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
     <div class="d-flex">
 
         <div id="sidebar-container">
 
-          <div class="logo">
-              <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
-              <h4>Estepper</h4>
-          </div>
-      
-          <ul>
-              <li>
-                  <a th:href="@{/}">
-                      <i class="fa-solid fa-house"></i>
-                      <span class="nombre-enlaces">Inicio</span>
-                  </a>
-              </li>
-      
-              <li>
-                  <a th:href="@{/actividades}">
-                      <i class="fa-solid fa-person-hiking"></i>
-                      <span class="nombre-enlaces">Actividades</span>
-                  </a>
-              </li>   
-          </ul>
-      
-      </div>
-      
+            <div class="logo">
+                <img width="75" th:src="@{/img/logo.png}" />
+                <h4>Estepper</h4>
+            </div>
 
-       <div class="w-100">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
-
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
                     </a>
+                </li>
 
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                      <div class="dropdown-divider"></div>
-                      <form th:action="@{/logout}" method="post">
-                        <button class = "dropdown-item" type="submit">Cerrar sesión</a>
-                      </form>
-                    </div>
-                  </li>
-                 
-                </ul>
-              </div>
-          </nav>
-          <table class="table tablePart">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Acciones</th>
+                <li>
+                    <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+            </ul>
 
-                </tr>
-            </thead>
-            <tbody class="buscarParticipantes">
-                <div th:if="${listado.empty}"><h4>No ha añadido ningún material aún</h4></div>
-                <div th:unless="${listado.empty}">
-                <tr th:each="lis:${listado}">
-                    <td th:text="${lis.titulo}"></td>
-                    <td th:text="${lis.descripcion}"></td>
-                    <td>
-                      <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i class="fa-solid fa-download"></i></a>
-                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i class="fa-solid fa-trash-can"></i></a>
-                    </td>
-                </tr>
+        </div>
+
+
+        <div class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
                 </div>
-            </tbody>
-        </table>
+            </nav>
+            <div class="container">
+                <div class="bg-white border border-1 p-5 rounded-4 ">
+                    <div
+                        style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5%;margin-left: 10%; margin-right: 10%;">
+                        <h4 style="margin-top: 8%; color:azure">Materiales</h4>
+                    </div>
+                    <div style="align-items: center;" class="d-flex justify-content-center mt-3">
+                        <form class="w-75">
+                            <div class="input-group">
+                                <input id="filtrarMateriales" class="form-control" type="search" data-table="tablePart"
+                                    placeholder="Buscar...">
+                            </div>
+                        </form>
+                        <div style="margin-left: 5%;"><a class="btn" id="btn-part" title="Crear" href="#"
+                                onclick="abrirIframe('mi-modal')">
+                                Subir material</a>
+                        </div>
+                    </div>
+                    <!--Modal-->
+                    <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Material</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form th:action="@{'/process_material/' + ${id}}" th:object="${material}"
+                                        method="post" enctype="multipart/form-data">
+                                        <div class="m-3">
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-sm-4">Título:</label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" th:field="*{titulo}" class="form-control"
+                                                        required />
+                                                </div>
+                                                <label class="col-form-label col-sm-4">Descripción:</label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" th:field="*{descripcion}" class="form-control" />
+                                                </div>
+                                                <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="file" th:name="file" class="form-control" required />
+                                                </div>
 
-        
-        <form th:action="@{'/process_material/' + ${id}}" th:object="${material}" method="post" enctype="multipart/form-data">
-          <div class="m-3">
-              <div class="form-group row">
-                  <label class="col-form-label col-sm-4">Título:</label>
-                  <div class="col-sm-8 mb-2">
-                      <input type="text" th:field="*{titulo}" class="form-control" required/>
-                  </div>
-                  <label class="col-form-label col-sm-4">Descripción:</label>
-                  <div class="col-sm-8 mb-2">
-                      <input type="text" th:field="*{descripcion}" class="form-control"/>
-                  </div>
-                  <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
-                  <div class="col-sm-8 mb-2">
-                      <input type="file" th:name="file" class="form-control" required/>
-                  </div>
+                                            </div>
+                                            <div class="text-end p">
+                                                <button type="submit" class="btn" id="btn-part">Añadir</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
 
-              </div>
-              <div class="text-center p">
-                  <button type="submit" class="btn" id="btn-part">Añadir</button>
-              </div>
-          </div>
-     </form>
+                        <script>
+                            function abrirIframe(modalId) {
+                                const modal = new bootstrap.Modal(document.getElementById(modalId));
+                                modal.show();
+                            }
+                        </script>
+                        <!--FIN MODAL-->
+                    </div>
 
-       </div>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            (function ($) {
+                                $('#filtrarMateriales').keyup(function () {
+                                    var rex = new RegExp($(this).val(), 'i');
+                                    $('.buscarParticipantes tr').hide();
+                                    $('.buscarParticipantes tr').filter(function () {
+                                        return rex.test($(this).text());
+                                    }).show();
+                                })
+                            }(jQuery));
+
+                        });
+                    </script>
+                    <div th:if="${listado.empty}">
+                        <div
+                            style="display: grid;justify-content: center; align-items: center; background-color:azure;border-radius: 5%; margin-left: 10%; margin-right: 10%;">
+                            <h4 style="margin-top: 8%; margin-bottom: 8%; color:rgb(122, 184, 212)">No ha añadido ningún
+                                material aún</h4>
+                        </div>
+                    </div>
+                    <div th:unless="${listado.empty}" style="margin-left: 10%; margin-right: 10%;">
+                        <div class="table-responsive">
+                            <table class="table tablePart">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Título</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Acciones</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="buscarParticipantes">
+                                    <div>
+                                        <tr th:each="lis:${listado}">
+                                            <td th:text="${lis.titulo}"></td>
+                                            <td th:text="${lis.descripcion}"></td>
+                                            <td>
+                                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"
+                                                    th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i
+                                                        class="fa-solid fa-download"></i></a>
+                                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"
+                                                    th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i
+                                                        class="fa-solid fa-trash-can"></i></a>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <form th:action="@{'/process_material/' + ${id}}" th:object="${material}" method="post"
+                        enctype="multipart/form-data">
+                        <div class="m-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">Título:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="text" th:field="*{titulo}" class="form-control" required />
+                                </div>
+                                <label class="col-form-label col-sm-4">Descripción:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="text" th:field="*{descripcion}" class="form-control" />
+                                </div>
+                                <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="file" th:name="file" class="form-control" required />
+                                </div>
+
+                            </div>
+                            <div class="text-end p">
+                                <button type="submit" class="btn" id="btn-part">Añadir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>

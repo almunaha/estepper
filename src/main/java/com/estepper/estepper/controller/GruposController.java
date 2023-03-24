@@ -31,7 +31,7 @@ import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Mensaje;
-
+import com.estepper.estepper.model.enums.Estado;
 
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -60,7 +60,7 @@ public class GruposController {
 
     @GetMapping("/grupos/nuevo")
     public String mostrarFormularioDeNuevoGrupo(Model model) {
-        List<Participante> participantesExistentes = part.listado();// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de participantes de la base de
                                                                     // datos
         model.addAttribute("participantesExistentes", participantesExistentes);
         model.addAttribute("grupo", new Grupo());
@@ -98,15 +98,15 @@ public class GruposController {
             List<Participante> participantesSeleccionadosList = new ArrayList<>();
             for (Integer participanteId : participantes) {
                 Participante participante = part.findById(participanteId).get();
-                System.out.println(participante.nickname);
+                System.out.println(participante.getNickname());
                 System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 participantesSeleccionadosList.add(participante);
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
-                part.update(participante.edad, participante.sexo, participante.getFotoParticipante(), g,
+                part.update(participante.edad, participante.getSexo(), participante.getFotoParticipante(), g,
                         participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
-                        participante.getSesionesCompletas(), participanteId);
+                        participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(participantesSeleccionadosList.size());
 
@@ -139,9 +139,9 @@ public class GruposController {
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
-                part.update(participante.edad, participante.sexo, participante.getFotoParticipante(), g,
+                part.update(participante.getEdad(), participante.getSexo(), participante.getFotoParticipante(), g,
                         participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
-                        participante.getSesionesCompletas(), participanteId);
+                        participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(g.getNumParticipantes() + participantesSeleccionadosList.size());
 
@@ -176,7 +176,7 @@ public class GruposController {
         ModelAndView modelo = new ModelAndView("editar_grupo");
         Grupo gr = grupo.getGrupo(id);
 
-        List<Participante> participantesExistentes = part.listado();// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de participantes de la base de
         modelo.addObject("participantesExistentes", participantesExistentes);
 
         modelo.addObject("grupo", gr);
@@ -191,6 +191,7 @@ public class GruposController {
         Grupo gr = grupo.getGrupo(id);
         if (getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()) {
             materialS.deleteByGrupo(gr);
+            mensaje.deleteByGrupo(gr);
             grupo.delete(id);
             return "redirect:/listaGrupos";
         } else
@@ -222,7 +223,10 @@ public class GruposController {
             model.addAttribute("grupo", g);
             model.addAttribute("user", getUsuario());
             model.addAttribute("mensajito", "No asignada");
-            model.addAttribute("message", new Mensaje());
+            Mensaje men = new Mensaje();
+            model.addAttribute("message", men);
+            List<Mensaje> mensajes = mensaje.obtenerMensajes();
+            model.addAttribute("mensajes", mensajes);
 
             return "unGrupo";
         } else
@@ -277,11 +281,11 @@ public class GruposController {
 
     @GetMapping("/eliminarMaterialGrupo/{id}")
     public String processElimMaterial(@PathVariable("id") Integer id) {
+        Integer idG = materialS.getMaterial(id).getGrupo().getId();
         if(getUsuario() instanceof Coordinador){
             materialS.eliminarMaterialGrupo(id);
         }
 
-        Integer idG = materialS.getMaterial(id).getGrupo().getId();
        return "redirect:/materialesGrupo/" + idG;
     }
 
@@ -311,14 +315,33 @@ public class GruposController {
 
     }
 
-    @PostMapping("/mensajes/guardar")
-    public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, Model model) {
+     //CHAT
+     @GetMapping("/chat")
+     public String chat(Model model) {
+         Usuario u = getUsuario();
+         model.addAttribute("user", getUsuario());
+ 
+         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            model.addAttribute("mensajito", "No asignada");
+            Mensaje men = new Mensaje();
+            model.addAttribute("message", men);
+            List<Mensaje> mensajes = mensaje.obtenerMensajes();
+            model.addAttribute("mensajes", mensajes);
+             return "chat";
+         } else
+             return "acceso";
+     }
 
-        List<Mensaje> mensajes = mensaje.obtenerMensajes();
-        model.addAttribute("mensajes", mensajes);
-        
+    @PostMapping("/mensajes/guardar/{id}")
+    public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, @PathVariable("id") Integer idGrupo) {
+        elmensaje.setGrupo(grupo.getGrupo(idGrupo));
+        elmensaje.setUsuario(getUsuario());
+        elmensaje.setFechayHoraEnvio(LocalDateTime.now());
         mensaje.save(elmensaje);
 
+        if(getUsuario() instanceof Coordinador)
+        return "redirect:/unGrupo/{id}";
+        else if (getUsuario() instanceof Participante) return "redirect:/chat";
         return "redirect:/";
     }
 
