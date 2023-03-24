@@ -254,7 +254,7 @@ public class CoordinadorController {
         return "nuevaActividad";
     }
 
-    @PostMapping("process_actividad")
+    @PostMapping("/process_actividad")
     public String process_actividad(Model model, @ModelAttribute Actividad actividad,
             @RequestParam("file") MultipartFile file) {
         Usuario user = getUsuario();
