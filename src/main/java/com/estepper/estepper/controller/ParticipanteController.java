@@ -1026,19 +1026,15 @@ public class ParticipanteController {
             return "acceso";
     }
 
+    @GetMapping("/recetasparecidas")
+    public String recetasParecidas(@RequestParam(required = false) String[] want, @RequestParam(required = false) String[] dontwant, Model model) {
+        
+        return "recetasparecidas";      
+    }
+
+    //BORRAR CUANDO ESTÉ HECHO LO DE MACHINE LEARNING
     @GetMapping("/nutrientes")
     public String nutrientes(){
-        // Properties props = new Properties();
-        // props.setProperty("python.path", "/src/main/java/com/estepper/estepper/machinelearning.py");
-        // PythonInterpreter.initialize(System.getProperties(), props, new String[0]);
-
-        // try (PythonInterpreter interpreter = new PythonInterpreter()) {
-        //     interpreter.exec("from machinelearning.py import geometria");
-        //     PyFunction function = interpreter.get("geometria", PyFunction.class);
-        //     PyObject result = function.__call__();
-        //     if(result.toString().equals("0")) return "acceso";
-        //     else return "index";
-        // }
         return service.getHello();
     }
 }
