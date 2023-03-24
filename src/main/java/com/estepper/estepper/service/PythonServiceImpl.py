@@ -6,3 +6,8 @@ class PythonServiceImpl(PythonService):
        
     def getHello(self):
         return self.value
+    
+    def recetasparecidas(self, want, dontwant):
+        # from com.ziclick.python.sql import ZXJDBC
+        # db = ZXJDBC.connect()
+        return ["1", "2", "3"]

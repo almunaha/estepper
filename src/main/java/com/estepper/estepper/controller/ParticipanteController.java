@@ -1028,8 +1028,18 @@ public class ParticipanteController {
 
     @GetMapping("/recetasparecidas")
     public String recetasParecidas(@RequestParam(required = false) String[] want, @RequestParam(required = false) String[] dontwant, Model model) {
-        
-        return "recetasparecidas";      
+        Usuario u = getUsuario();
+        model.addAttribute("user", u);
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            if(want.length == 0) model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
+            else{
+                //List<String> recetas = new ArrayList();
+               // recetas = service.recetasparecidas(want, dontwant);
+            } 
+            //getRecetasById(recetas.get(i))
+            //model.addAttribute("listarecetas")
+        return "recetasparecidas";    
+        } else return "acceso";  
     }
 
     //BORRAR CUANDO ESTÉ HECHO LO DE MACHINE LEARNING
