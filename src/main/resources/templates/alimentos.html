@@ -222,7 +222,7 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <select style="margin-left: 3%;" th:field="*{alimento}" class="form-control" id="lista-alimentos">
+                        <select style="margin-left: 3%;" th:field="*{alimento}" class="form-control" id="lista-alimentos" required>
                             <option th:each="al : ${listaAlimentos}" th:value="${al.id}" th:text="${al.nombre} + ' (' + ${al.porcion} + 'mg/ml | ' + ${al.porcion div 1000} + 'g/l)'"></option>
                         </select>
                         <script language="JavaScript" th:inline="javascript">
