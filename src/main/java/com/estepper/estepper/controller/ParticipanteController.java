@@ -748,13 +748,13 @@ public class ParticipanteController {
 
     @PostMapping("/objetivos/guardar/{id}")
     public String process_editarObjetivo(@PathVariable("id") Integer id, @ModelAttribute Objetivo objetivo) {
-        if (getUsuario().getId() == objetivo.getParticipante().getId()) {
+        //if (getUsuario().getId() == objetivo.getParticipante().getId()) { 
             Participante p = participante.findById(getUsuario().getId()).get();
             objetivo.setParticipante(p);
             obj.guardar(objetivo);
             return "redirect:/objetivos";
-        } else
-            return "redirect:/";
+        //} else
+          //  return "redirect:/";
     }
 
     // MATERIALES:

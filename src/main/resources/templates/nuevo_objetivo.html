@@ -55,7 +55,7 @@
                       <i class="fa-solid fa-pen"></i>
                       <span class="nombre-enlaces">Cuaderno</span>
                     </a>
-                  </li>
+                </li>
 
                 <li>
                     <a th:href="@{/actividades}">
@@ -122,7 +122,7 @@
             </nav>
 
             <div class="p-4 mt-5" id="grupos">
-               
+
                 <div>
                     <h4>Crear un nuevo objetivo</h4>
                 </div>
@@ -131,21 +131,49 @@
                 <form th:action="@{/objetivos/guardar}" th:object="${objetivo}" method="post">
                     <div class="m-3">
                         <div class="form-group row">
+
+                            <label class="col-form-label col-sm-4">Título del nuevo objetivo:</label>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" th:field="*{titulo}" class="form-control" required />
+                            </div>
+
                             <label class="col-form-label col-sm-4">Descripción del nuevo objetivo:</label>
                             <div class="col-sm-8 mb-2">
                                 <input type="text" th:field="*{descripcion}" class="form-control" required />
                             </div>
-           
+
                             <!--Falta controlar que no se pueda meter la fecha que te de la gana y esas cosas-->
                             <label class="col-form-label col-sm-4">Fecha tope para cumplir mi objetivo:</label>
                             <div class="col-sm-8 mb-2">
-                                <input type="date" th:field="*{fechaVencimiento}" class="form-control" id="fecha" name="fecha"  required />
+                                <input type="date" th:field="*{fechaVencimiento}" class="form-control" id="fecha"
+                                    name="fecha" required />
                             </div>
-                            
-                            <label class="col-form-label col-sm-4">Estado del objetivo (cambiarlo por pasos para cumplir el objetivo):</label>
+
+                            <label class="col-form-label col-sm-4">Fecha recordatorio:</label>
                             <div class="col-sm-8 mb-2">
-                                <input type="text" th:field="*{estadoObjetivo}" class="form-control" required />
+                                <input type="date" th:field="*{fechaRecordatorio}" class="form-control" id="fechaRecordatorio"
+                                    name="fechaRecordatorio" required />
                             </div>
+
+                            <label class="col-form-label col-sm-4">Estado del objetivo (cambiarlo por pasos para cumplir
+                                el objetivo):</label>
+                            <div class="col-sm-8 mb-2">
+                            <select id="estadoObjetivo" th:field="*{estadoObjetivo}" class="form-control"  required >
+                                <option value="COMPLETADO">COMPLETADO</option>
+                                <option value="PENDIENTE">PENDIENTE</option>
+                            </select>
+
+
+                            <label class="col-form-label col-sm-4">Repetición</label>
+                            <div class="col-sm-8 mb-2">
+                            <select id="repeticion" th:field="*{repeticion}" class="form-control"  required >
+                                <option value="NINGUNA">NINGUNA</option>
+                                <option value="DIARIAMENTE">DIARIAMENTE</option>
+                                <option value="SEMANALMENTE">SEMANALMENTE</option>
+                                <option value="MENSUALMENTE">MENSUALMENTE</option>
+                                <option value="ANUALMENTE">ANUALMENTE</option>
+                            </select>
+                        </div>
 
                         </div>
                         <div class="text-center p">

@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.estepper.estepper.model.enums.EstadoObjetivo;
+import com.estepper.estepper.model.enums.Repeticion;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -37,7 +38,13 @@ public class Objetivo implements Serializable{
 
     private String titulo;
     private String descripcion;
-    private String repeticion;
+   
+    @Enumerated(value = EnumType.STRING)
+    private Repeticion repeticion;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = ISO.DATE)
+    @NotNull
     private Date fechaRecordatorio;
 
     @Temporal(TemporalType.DATE)
@@ -48,7 +55,7 @@ public class Objetivo implements Serializable{
     @Enumerated(value = EnumType.STRING)
     private EstadoObjetivo estado;
 
-    public Objetivo(Integer id, Participante participante, String titulo, String descripcion, String repeticion, Date fechaRecordatorio, Date fechaVencimiento, EstadoObjetivo estado) {
+    public Objetivo(Integer id, Participante participante, String titulo, String descripcion, Repeticion repeticion, Date fechaRecordatorio, Date fechaVencimiento, EstadoObjetivo estado) {
         this.id = id;
         this.participante = participante;
         this.titulo = titulo;
@@ -95,11 +102,11 @@ public class Objetivo implements Serializable{
         this.descripcion = descripcion;
     }
 
-    public String getRepeticion() {
+    public Repeticion getRepeticion() {
         return repeticion;
     }
 
-    public void setRepeticion(String repeticion) {
+    public void setRepeticion(Repeticion repeticion) {
         this.repeticion = repeticion;
     }
 
