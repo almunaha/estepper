@@ -161,27 +161,29 @@
                             <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar"
                                 id="search-input">
                         </form>
-                        <div class="d-flex" style="margin-top: 1%">
-                            <div class="input-group me-2">
-                                <span class="input-group-text" id="want-addon">Quiero:</span>
-                                <select class="form-select" id="want-select" multiple>
-                                    <!-- opciones del select de alimentos que quiere -->
-                                    <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
-                                    </option>
-                                </select>
+                        <form method="get" action="/recetasparecidas">
+                            <div class="d-flex" style="margin-top: 1%">
+                                <div class="input-group me-2">
+                                    <span class="input-group-text" id="want-addon">Quiero:</span>
+                                    <select class="form-select" id="want-select" name="want" multiple>
+                                        <!-- opciones del select de alimentos que quiere -->
+                                        <option th:each="ing : ${listaIng}" th:value="${ing.id}"
+                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="dont-want-addon">No quiero:</span>
+                                    <select class="form-select" id="dont-want-select" name="dontWant" multiple>
+                                        <!-- opciones del select de alimentos que no quiere -->
+                                        <option th:each="ing : ${listaIng}" th:value="${ing.id}"
+                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                        </option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
                             </div>
-                            <div class="input-group">
-                                <span class="input-group-text" id="dont-want-addon">No quiero:</span>
-                                <select class="form-select" id="dont-want-select" multiple>
-                                    <!-- opciones del select de alimentos que no quiere -->
-                                    <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
-                                    </option>
-                                </select>
-                            </div>
-                            <button class="btn btn-outline-secondary" type="button" id="filter-button">Filtrar</button>
-                        </div>
+                        </form>
 
                         <script>
                             $(document).ready(function () {
@@ -242,9 +244,13 @@
                         
                         <!-- BOTÓN RECETAS PARECIDAS -->
                         <div style="display: flex; justify-content: center;">
-                            <div style="margin-top: 5%;"><a  style="display: none;" class="btn btn-primary" id="no-resultados-btn" title="Recetas parecidas" href="#">
-                                ¿Quieres algunas recetas parecidas?</a></div>
-                        </div>
+                            <div style="margin-top: 5%;">
+                                <a style="display: none;" class="btn btn-primary" id="no-resultados-btn" title="Recetas parecidas"
+                                    th:href="@{/recetasparecidas(want=${want},dontWant=${dontWant})}">
+                                    ¿Quieres algunas recetas parecidas?
+                                </a>
+                            </div>
+                        </div>         
                         <!--TABLA RECETAS-->
                         <div class="table-responsive"
                             style="display: flex; flex-wrap: wrap; flex-direction: row; margin-top: 3%; align-items: stretch;">
