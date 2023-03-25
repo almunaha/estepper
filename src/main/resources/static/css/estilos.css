@@ -40,6 +40,11 @@ a{
     width: 10vh;
 }
 
+#header.active{
+    margin-left: -11.7%;
+    transition: all 0.5s ease;
+}
+
 #sidebar-container .logo{
     padding: 10px; /*arriba y abajo | a los lados*/
     text-align: center;
@@ -148,6 +153,7 @@ a{
     left: 251px;
 
     z-index: 999; /* determina que elementos están encima de otros */
+    transition: all 0.5s ease;
 }
 
 /* estos hay que pasarlo a ids*/
