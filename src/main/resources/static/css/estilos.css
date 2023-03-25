@@ -66,7 +66,7 @@ a{
     height: 53px;
     transition: all 0.5s ease;
     position: relative;
-    right: 23px;
+    right: 10px;
 }
 
 #sidebar-container .logo h4{
@@ -196,6 +196,11 @@ a{
     min-height: 90vh; /*altura mínima*/
 
     padding-top: 75px;
+}
+
+.utilidades.active{
+    transition: all 0.5s ease;
+
 }
 
 .btn-util{
