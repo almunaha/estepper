@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from com.estepper.estepper.service import PythonService
 
 class PythonServiceImpl(PythonService):

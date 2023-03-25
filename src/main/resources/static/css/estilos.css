@@ -475,9 +475,9 @@ a{
 
 #avatar-header{
     border-radius: 50%;
-    border: 0.7px solid #7fbdc9; /* Agrega un borde negro de 2px */
+    border: 0.7px solid #acd9e2; 
     overflow: hidden;
-    background-color: #8ec7d3;
+    background-color: #acd9e2;
     padding: 0.8%;
 }
 
