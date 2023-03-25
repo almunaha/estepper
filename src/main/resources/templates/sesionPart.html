@@ -48,23 +48,23 @@
 
       <ul>
         <li>
-            <a th:href="@{/}">
-                <i class="fa-solid fa-house"></i>
-                <span class="nombre-enlaces">Inicio</span>
-            </a>
-        
+          <a th:href="@{/}">
+            <i class="fa-solid fa-house"></i>
+            <span class="nombre-enlaces">Inicio</span>
+          </a>
+
 
         <li>
-            <a th:href="@{/actividades}">
-                <i class="fa-solid fa-person-hiking"></i>
-                <span class="nombre-enlaces">Actividades</span>
-            </a>
-        
-    </ul>
+          <a th:href="@{/actividades}">
+            <i class="fa-solid fa-person-hiking"></i>
+            <span class="nombre-enlaces">Actividades</span>
+          </a>
+
+      </ul>
 
     </div>
 
-    <div class="w-100">
+    <div class="w-100" style="margin-left: 250px">
       <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -89,90 +89,95 @@
           </ul>
         </div>
       </nav>
-      <div th:if="${participante.estadoCuenta == 'BAJA'}">
-        <div
+
+      <div style="padding-top: 75px;">
+        <div th:if="${participante.estadoCuenta == 'BAJA'}">
+          <div
             style="display: flex;justify-content: center; align-items: center; background-color:azure; margin-left:40%; border-radius: 5%; ">
-            <h4 style="margin-top: 8%; margin-left: 8%; margin-right: 8%; text-align: center; margin-bottom: 8%; color:rgb(122, 184, 212)">El participante no tiene ninguna ficha porque aún no se le ha dado de alta</h4>
-        </div>
-      </div>
-      <div th:unless="${participante.estadoCuenta == 'BAJA'}">
-      <div class="layout-sesion">
-        <div class="tit-sesion">
-          <div>
-            <h2 th:text="'Sesión' + ' ' + ${sesion.numSesion}"></h2>
+            <h4
+              style="margin-top: 8%; margin-left: 8%; margin-right: 8%; text-align: center; margin-bottom: 8%; color:rgb(122, 184, 212)">
+              El participante no tiene ninguna ficha porque aún no se le ha dado de alta</h4>
           </div>
         </div>
-
-        <form method="post" th:action="@{'/process_sesion/' + ${sesion.numSesion}}" th:object="${sesion}">
-          <div>
-            <div class="flex-sesion">
-
-              <div class="cont-flex">
-                <label for="asistencia" class="mt-4">Asistencia</label>
-                <select id="asistencia" class="form-select" th:field="*{asistencia}" disabled>
-                  <option th:text="Si" th:value="SI"></option>
-                  <option th:text="No" th:value="NO"></option>
-                  <option th:text="Justificado" th:value="JUSTIFICADO"></option>
-                </select>
-
-                <div class="mt-4"><label for="observaciones">Tus notas</label></div>
-                <div><textarea id="observaciones" class="form-control" placeholder="Escribe aquí..."
-                    th:field="*{observaciones}" rows="4" disabled></textarea></div>
-              </div>
-
-              <div class="cont-flex">
-                <div class="mt-4"><label>Diapositivas</label></div>
-                <img width="20" th:src="@{/img/iconoPdf.png}" />
-                <a class="enlace-diapo" th:text="'Taller online sesion ' + ${sesion.numSesion} + '.pdf'"
-                  th:href="@{'/diapos/descargar/' + ${sesion.numSesion}}"></a>
+        <div th:unless="${participante.estadoCuenta == 'BAJA'}">
+          <div class="layout-sesion">
+            <div class="tit-sesion">
+              <div>
+                <h2 th:text="'Sesión' + ' ' + ${sesion.numSesion}"></h2>
               </div>
             </div>
 
-        </form>
-        <div style="display: flex; justify-content: center;">
-          <div style="margin-right: 5%; margin-top: 3%;"><a class="btn" id="btn-part" title="Terminar" href="#"
-              onclick="abrirIframe('mi-modal')">
-              Peso y cm cintura perdidos</a>
-          </div>
-        </div>
-        <!--Modal-->
-        <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Sesión</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-              </div>
-              <div class="modal-body">
-                <form style="margin-top: 2%;" class="form-perfil" method="post"
-                  th:action="@{'/process_sesionTerm/' + ${sesion.numSesion}}" th:object="${lasesion}">
-                  <div class="input-group mt-2">
-                    <label class="col-4 col-form-label">Peso perdido (kg): </label>
-                    <input type="number" th:field="*{pesoPerdido}" class="form-control" required readonly/>
+            <form method="post" th:action="@{'/process_sesion/' + ${sesion.numSesion}}" th:object="${sesion}">
+              <div>
+                <div class="flex-sesion">
+
+                  <div class="cont-flex">
+                    <label for="asistencia" class="mt-4">Asistencia</label>
+                    <select id="asistencia" class="form-select" th:field="*{asistencia}" disabled>
+                      <option th:text="Si" th:value="SI"></option>
+                      <option th:text="No" th:value="NO"></option>
+                      <option th:text="Justificado" th:value="JUSTIFICADO"></option>
+                    </select>
+
+                    <div class="mt-4"><label for="observaciones">Tus notas</label></div>
+                    <div><textarea id="observaciones" class="form-control" placeholder="Escribe aquí..."
+                        th:field="*{observaciones}" rows="4" disabled></textarea></div>
                   </div>
-                  <div class="input-group mt-2">
-                    <label class="col-4 col-form-label">Cm Cintura perdidos: </label>
-                    <input type="number" th:field="*{cmsPerdidos}" class="form-control" required readonly/>
+
+                  <div class="cont-flex">
+                    <div class="mt-4"><label>Diapositivas</label></div>
+                    <img width="20" th:src="@{/img/iconoPdf.png}" />
+                    <a class="enlace-diapo" th:text="'Taller online sesion ' + ${sesion.numSesion} + '.pdf'"
+                      th:href="@{'/diapos/descargar/' + ${sesion.numSesion}}"></a>
                   </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+
+            </form>
+            <div style="display: flex; justify-content: center;">
+              <div style="margin-right: 5%; margin-top: 3%;"><a class="btn" id="btn-part" title="Terminar" href="#"
+                  onclick="abrirIframe('mi-modal')">
+                  Peso y cm cintura perdidos</a>
               </div>
             </div>
+            <!--Modal-->
+            <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form style="margin-top: 2%;" class="form-perfil" method="post"
+                      th:action="@{'/process_sesionTerm/' + ${sesion.numSesion}}" th:object="${lasesion}">
+                      <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Peso perdido (kg): </label>
+                        <input type="number" th:field="*{pesoPerdido}" class="form-control" required readonly />
+                      </div>
+                      <div class="input-group mt-2">
+                        <label class="col-4 col-form-label">Cm Cintura perdidos: </label>
+                        <input type="number" th:field="*{cmsPerdidos}" class="form-control" required readonly />
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script>
+              function abrirIframe(modalId) {
+                const modal = new bootstrap.Modal(document.getElementById(modalId));
+                modal.show();
+              }
+            </script>
+            <!--FIN MODAL-->
+
           </div>
         </div>
-        <script>
-          function abrirIframe(modalId) {
-            const modal = new bootstrap.Modal(document.getElementById(modalId));
-            modal.show();
-          }
-        </script>
-        <!--FIN MODAL-->
 
       </div>
-      </div>
-
     </div>
 
   </div>

@@ -52,7 +52,7 @@
             </ul>
 
         </div>
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -78,114 +78,119 @@
                 </div>
             </nav>
 
-            <div class="p-4 mt-5" id="participantes">
-                <div>
-                    <h3 th:text="${participante.nickname} + ': ' + ${participante.codigo}">Nombre</h3>
-                </div>
-                <!-- LISTADO DE FORMULARIOS DE LA FASE DE VALORACIÓN-->
-                <div class="table-responsive">
-                    <table class="table tablePart">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Formulario</th>
-                                <th scope="col">Editar</th>
+            <div style="padding-top: 75px;">
+                <div class="p-4 mt-4" id="participantes">
+                    <div>
+                        <h3 th:text="${participante.nickname} + ': ' + ${participante.codigo}">Nombre</h3>
+                    </div>
+                    <!-- LISTADO DE FORMULARIOS DE LA FASE DE VALORACIÓN-->
+                    <div class="table-responsive">
+                        <table class="table tablePart">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Formulario</th>
+                                    <th scope="col">Editar</th>
 
-                            </tr>
-                        </thead>
-                        <tbody class="buscarParticipantes">
-                            <tr>
-                                <td th:text="Exploración"></td>
-                                <td><a class="btn" id="btn-part" th:href="@{'/exploracion/' + ${participante.id}}"><i
-                                            class="fa-solid fa-pen-to-square"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td th:text="Findrisc"></td>
-                                <td><a class="btn" id="btn-part" th:href="@{'/findrisc/' + ${participante.id}}"><i
-                                            class="fa-solid fa-pen-to-square"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td th:text="Clasificación"></td>
-                                <td><a class="btn" id="btn-part" th:href="@{'/clasificacion/' + ${participante.id}}"><i
-                                            class="fa-solid fa-pen-to-square"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td th:text="Antecedentes"></td>
-                                <td><a class="btn" id="btn-part" th:href="@{'/antecedentes/' + ${participante.id}}"><i
-                                            class="fa-solid fa-pen-to-square"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td th:text="Alimentación"></td>
-                                <td><a class="btn" id="btn-part"
-                                        th:href="@{'/alimentacionval/' + ${participante.id}}"><i
-                                            class="fa-solid fa-pen-to-square"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td th:text="|Actividad Física|"></td>
-                                <td><a class="btn" id="btn-part" th:href="@{'/actfisica/' + ${participante.id}}"><i
-                                            class="fa-solid fa-pen-to-square"></i></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                </tr>
+                            </thead>
+                            <tbody class="buscarParticipantes">
+                                <tr>
+                                    <td th:text="Exploración"></td>
+                                    <td><a class="btn" id="btn-part"
+                                            th:href="@{'/exploracion/' + ${participante.id}}"><i
+                                                class="fa-solid fa-pen-to-square"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="Findrisc"></td>
+                                    <td><a class="btn" id="btn-part" th:href="@{'/findrisc/' + ${participante.id}}"><i
+                                                class="fa-solid fa-pen-to-square"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="Clasificación"></td>
+                                    <td><a class="btn" id="btn-part"
+                                            th:href="@{'/clasificacion/' + ${participante.id}}"><i
+                                                class="fa-solid fa-pen-to-square"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="Antecedentes"></td>
+                                    <td><a class="btn" id="btn-part"
+                                            th:href="@{'/antecedentes/' + ${participante.id}}"><i
+                                                class="fa-solid fa-pen-to-square"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="Alimentación"></td>
+                                    <td><a class="btn" id="btn-part"
+                                            th:href="@{'/alimentacionval/' + ${participante.id}}"><i
+                                                class="fa-solid fa-pen-to-square"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="|Actividad Física|"></td>
+                                    <td><a class="btn" id="btn-part" th:href="@{'/actfisica/' + ${participante.id}}"><i
+                                                class="fa-solid fa-pen-to-square"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                <a class="btn btn-unir" style="color: white; background-color: #6ca4c7;" id="btn-part1"
-                    th:href="@{'/activarcuenta/' + ${participante.id}}">Activar cuenta</a>
-                <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}}">Eliminar cuenta</a>
-                <input type="hidden" id="grupo" value="${participante.id}" />
+                    <a class="btn btn-unir" style="color: white; background-color: #6ca4c7;" id="btn-part1"
+                        th:href="@{'/activarcuenta/' + ${participante.id}}">Activar cuenta</a>
+                    <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}}">Eliminar
+                        cuenta</a>
+                    <input type="hidden" id="grupo" value="${participante.id}" />
 
-                <script th:inline="javascript">
-                    function showAlertWithLink(link) {
-                        var alertMessage = "El usuario aún no pertenece a ningún grupo";
-                        var linkText = "Haga click aquí para agregarlo a un grupo";
-                        var alertHTML = '<div>' + alertMessage + '<br><a style="color: blue;" href="' + link + '">' + linkText + '</a></div>';
+                    <script th:inline="javascript">
+                        function showAlertWithLink(link) {
+                            var alertMessage = "El usuario aún no pertenece a ningún grupo";
+                            var linkText = "Haga click aquí para agregarlo a un grupo";
+                            var alertHTML = '<div>' + alertMessage + '<br><a style="color: blue;" href="' + link + '">' + linkText + '</a></div>';
 
-                        $('<div></div>').html(alertHTML).dialog({
-                            modal: true,
-                            title: '¡Alerta!',
-                            buttons: {
-                                Ok: function () {
-                                    $(this).dialog('close');
+                            $('<div></div>').html(alertHTML).dialog({
+                                modal: true,
+                                title: '¡Alerta!',
+                                buttons: {
+                                    Ok: function () {
+                                        $(this).dialog('close');
+                                    }
                                 }
-                            }
+                            });
+                        }
+                        var grupo = /*[[${participante.grupo}]]*/ null;
+                        var estado = /*[[${participante.estadoCuenta}]]*/ null;
+                        var id = /*[[${participante.id}]]*/ null;
+                        var formularios = /*[[${formularios}]]*/ null;
+
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const btn_part = document.getElementById('btn-part1');
+                            btn_part.addEventListener('click', function (e) {
+
+                                if (grupo === null) {
+                                    e.preventDefault();
+                                    var link = '/unirAgrupo/' + id;
+                                    showAlertWithLink(link);
+
+                                } else if (estado === 'ALTA') {
+                                    e.preventDefault();
+                                    alert("El usuario ya está dado de alta.");
+                                } else if (formularios === null) {
+                                    e.preventDefault();
+                                    alert("Debe rellenar correctamente los formularios de Exploracion y Findrisc. Para entrar en el proyecto el usuario debe ser mayor de 35 años y su imc mayor a 14.");
+                                }
+                                else {
+                                    btn_part.disabled = true;
+                                    alert("La cuenta del usuario se ha dado de alta correctamente.");
+                                }
+                            });
                         });
-                    }
-                    var grupo = /*[[${participante.grupo}]]*/ null;
-                    var estado = /*[[${participante.estadoCuenta}]]*/ null;
-                    var id = /*[[${participante.id}]]*/ null;
-                    var formularios = /*[[${formularios}]]*/ null;
+                    </script>
 
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const btn_part = document.getElementById('btn-part1');
-                        btn_part.addEventListener('click', function (e) {
+                    <div style="float: right;">
+                        <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                            onclick="window.print();">
+                    </div>
 
-                            if (grupo === null) {
-                                e.preventDefault();
-                                var link = '/unirAgrupo/' + id;
-                                showAlertWithLink(link);
-
-                            } else if (estado === 'ALTA') {
-                                e.preventDefault();
-                                alert("El usuario ya está dado de alta.");
-                            } else if (formularios === null) {
-                                e.preventDefault();
-                                alert("Debe rellenar correctamente los formularios de Exploracion y Findrisc. Para entrar en el proyecto el usuario debe ser mayor de 35 años y su imc mayor a 14.");
-                            }
-                            else {
-                                btn_part.disabled = true;
-                                alert("La cuenta del usuario se ha dado de alta correctamente.");
-                            }
-                        });
-                    });
-                </script>
-
-                <div style="float: right;">
-                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
-                        onclick="window.print();">
                 </div>
 
             </div>
-
-
         </div>
     </div>
 

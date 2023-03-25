@@ -55,7 +55,7 @@
 
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -80,42 +80,43 @@
                     </ul>
                 </div>
             </nav>
-
-            <div class="header-coord">
-                <div style="margin: 20px; color: #13405d;">
-                    <h3 th:text="${user.nickname}">Nombre</h3>
+            <div style="padding-top: 75px;">
+                <div class="header-coord">
+                    <div style="margin: 20px; color: #13405d;">
+                        <h3 th:text="${user.nickname}">Nombre</h3>
+                    </div>
+                    <a class="btn" id="btn-coord" style="margin: 20px;" th:href="@{'/perfil/' + ${user.id}}">Editar
+                        perfil</a>
                 </div>
-                <a class="btn" id="btn-coord" style="margin: 20px;" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
+
+                <div class="perfil-coord">
+                    <!-- Datos -->
+                    <div class="dato-coord">
+                        <div class="tit-coord">
+                            <i class="icono fas fa-key"></i>
+                            <span>Código</span>
+                        </div>
+                        <div class="span-coord"><span th:text="${user.codigo}" /></div>
+                    </div>
+
+                    <div class="dato-coord">
+                        <div class="tit-coord">
+                            <i class="icono fas fa-envelope"></i>
+                            <span>Email</span>
+                        </div>
+                        <div class="span-coord"><span th:text="${user.email}" /></div>
+                    </div>
+
+                    <div class="dato-coord">
+                        <div class="tit-coord">
+                            <i class="icono fas fa-thumbtack"></i>
+                            <span>Estado cuenta</span>
+                        </div>
+                        <div class="span-coord"><span th:text="${user.estadoCuenta}" /></div>
+                    </div>
+
+                </div>
             </div>
-
-            <div class="perfil-coord">
-                <!-- Datos -->
-                <div class="dato-coord">
-                    <div class="tit-coord">
-                        <i class="icono fas fa-key"></i>
-                        <span>Código</span>
-                    </div>
-                    <div class="span-coord"><span th:text="${user.codigo}" /></div>
-                </div>
-
-                <div class="dato-coord">
-                    <div class="tit-coord">
-                        <i class="icono fas fa-envelope"></i>
-                        <span>Email</span>
-                    </div>
-                    <div class="span-coord"><span th:text="${user.email}" /></div>
-                </div>
-
-                <div class="dato-coord">
-                    <div class="tit-coord">
-                        <i class="icono fas fa-thumbtack"></i>
-                        <span>Estado cuenta</span>
-                    </div>
-                    <div class="span-coord"><span th:text="${user.estadoCuenta}" /></div>
-                </div>
-
-            </div>
-
         </div>
 
     </div>

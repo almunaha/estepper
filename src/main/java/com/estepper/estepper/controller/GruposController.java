@@ -64,6 +64,7 @@ public class GruposController {
                                                                     // datos
         model.addAttribute("participantesExistentes", participantesExistentes);
         model.addAttribute("grupo", new Grupo());
+        model.addAttribute("user", getUsuario());
 
         return "nuevo_grupo";
     }

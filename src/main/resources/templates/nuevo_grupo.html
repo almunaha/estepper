@@ -51,8 +51,8 @@
 
         </div>
 
-        <div class="w-100">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3">
+        <div class="w-100" style="margin-left: 250px">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -65,8 +65,7 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{/perfil}">Editar perfil</a>
-                                <a class="dropdown-item" th:href="@{/contrasenia}">Cambiar contraseña</a>
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -78,68 +77,67 @@
                 </div>
             </nav>
 
-            <div class="p-4 mt-5" id="grupos">
-                <div>
-                    <h4>Crear un nuevo grupo</h4>
-                </div>
+            <div style="padding-top: 75px;">
+                <div class="p-4 mt-5" id="grupos">
+                    <div>
+                        <h4>Crear un nuevo grupo</h4>
+                    </div>
 
-                <!--ESTA ES LA BASE, A PARTIR DE AQUÍ PONERLO COMO QUIERA-->
+                    <!--ESTA ES LA BASE, A PARTIR DE AQUÍ PONERLO COMO QUIERA-->
 
-                <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
-                    <div class="m-3">
-                        <div class="form-group row">
-                            <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>
-                            <div class="col-sm-8 mb-2">
-                                <input type="text" th:field="*{nombre}" class="form-control" required />
+                    <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
+                        <div class="m-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="text" th:field="*{nombre}" class="form-control" required />
+                                </div>
+
+                                <div th:if="${error}" class="alert alert-danger">
+                                    <p th:text="${error}"></p>
+                                </div>
+
+
+                                <label class="col-form-label col-sm-4">Participantes del nuevo grupo:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <select th:field="*{participantes}" class="form-control" multiple>
+                                        <option th:each="participante : ${participantesExistentes}"
+                                            th:value="${participante.id}" th:text="${participante.nickname}"
+                                            th:if="${participante.grupo == null}">
+                                        </option>
+                                    </select>
+                                </div>
+
                             </div>
-
-                            <div th:if="${error}" class="alert alert-danger">
-                                <p th:text="${error}"></p>
+                            <div class="text-center p">
+                                <button type="submit" class="btn" id="btn-part">Añadir</button>
                             </div>
-
-
-                            <label class="col-form-label col-sm-4">Participantes del nuevo grupo:</label>   
-                            <div class="col-sm-8 mb-2">
-                                <select th:field="*{participantes}" class="form-control" multiple>
-                                    <option th:each="participante : ${participantesExistentes}"
-                                        th:value="${participante.id}" th:text="${participante.nickname}" th:if="${participante.grupo == null}">
-                                    </option>
-                                </select>
-                            </div>
-
                         </div>
-                        <div class="text-center p">
-                            <button type="submit" class="btn" id="btn-part">Añadir</button>
+                    </form>
+
+
+                    <div class="modal fade" id="alertaModal2" tabindex="-1" aria-labelledby="alertaModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="alertaModalLabel"><i
+                                            class="fa-solid fa-triangle-exclamation" style="color: goldenrod;"></i> No
+                                        se ha
+                                        podido completar la acción </h5>
+
+                                </div>
+                                <div class="modal-body">
+                                    <p>El participante ya pertenece a un grupo.</p>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                        style="float:right">Cerrar</button>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </form>
 
-
-                <div class="modal fade" id="alertaModal2" tabindex="-1" aria-labelledby="alertaModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="alertaModalLabel"><i
-                                    class="fa-solid fa-triangle-exclamation" style="color: goldenrod;"></i> No se ha
-                                podido completar la acción </h5>
-
-                        </div>
-                        <div class="modal-body">
-                            <p>El participante ya pertenece a un grupo.</p>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                style="float:right">Cerrar</button>
-                        </div>
-
-                    </div>
                 </div>
-            </div>
-
-            
-
-
-
-
             </div>
 
         </div>

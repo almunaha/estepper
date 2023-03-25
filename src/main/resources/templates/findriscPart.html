@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="es"
- xmlns:th="https://www.thymeleaf.org"
- xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -22,37 +20,39 @@
 
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
     <div class="d-flex">
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}"/>
+                <img width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
-            
-          <ul>
-            <li>
-                <a th:href="@{/}">
-                    <i class="fa-solid fa-house"></i>
-                    <span class="nombre-enlaces">Inicio</span>
-                </a>
-            </li>
-    
-            <li>
-                <a th:href="@{/actividades}">
-                    <i class="fa-solid fa-person-hiking"></i>
-                    <span class="nombre-enlaces">Actividades</span>
-                </a>
-            </li>
-    
-        </ul>
+
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+
+            </ul>
 
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -78,156 +78,172 @@
                 </div>
             </nav>
 
+            <div style="padding-top: 75px;">
+                <div class="bg-white border border-1 p-5 rounded-4" style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
+                    <div style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 12px;">
+                        <h4 style="margin-top: 8%; color:azure">Findrisc</h4>
+                    </div>
 
-            <div class="bg-white border border-1 p-5 rounded-4 ">
-                <div
-                style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 5%;">
-                <h4 style="margin-top: 8%; color:azure">Findrisc</h4>
+                    <form class="form-perfil" method="post" th:action="@{'/process_findrisc/' + ${participante.id}}"
+                        th:object="${findrisc}">
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">Edad: </label>
+                            <select style="border-color: blue;" id="edad" th:field="*{puntosedad}" class="form-control"
+                                disabled>
+                                <option value=0>Menos de 45 años (0 puntos)</option>
+                                <option value=2>Entre 45-54 años (2 puntos)</option>
+                                <option value=3>Entre 55-64 años (3 puntos)</option>
+                                <option value=4>Más de 64 años (4 puntos)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">Perímetro de cintura (cm):
+                            </label>
+                            <select style="border-color: blue;" id="cmcintura" th:field="*{puntoscmcintura}"
+                                class="form-control" disabled>
+                                <option value=0>Menos de 94cm (MASCULINO)/80cm (FEMENINO)</option>
+                                <option value=3>Entre 94 y 102cm (MASCULINO)/80 y 88cm (FEMENINO)</option>
+                                <option value=4>Más de 102cm (MASCULINO)/88cm (FEMENINO)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold; color:blue" class="col-4 col-form-label">IMC: </label>
+                            <select style="border-color: blue;" id="imc" th:field="*{puntosimc}" class="form-control"
+                                disabled>
+                                <option value=0>Menos de 25 kg/m2</option>
+                                <option value=1>Entre 25 y 30 kg/m2</option>
+                                <option value=3>Más de 30kg/m2</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">¿Realiza habitualmente al
+                                menos 30 minutos de actividad física en el trabajo y/o en el tiempo libre? </label>
+                            <select id="actfis" th:field="*{ptosactfisica}" class="form-control">
+                                <option th:value=0 th:text="SÍ"></option>
+                                <option th:value=2 th:text="NO"></option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">¿Con qué frecuencia consume
+                                verduras o fruta? </label>
+                            <select id="fruta" th:field="*{ptosfrecfruta}" class="form-control">
+                                <option th:value=0 th:text="|A diario|"></option>
+                                <option th:value=1 th:text="|No a diario|"></option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">¿Toma medicación para la
+                                presión regularmente? </label>
+                            <select id="medicacion" th:field="*{ptosmedicacion}" class="form-control">
+                                <option th:value=2 th:text="SÍ"></option>
+                                <option th:value=0 th:text="NO"></option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">¿Le han encontrado alguna vez
+                                valores de glucosa (azucar) altos? </label>
+                            <select id="glucosa" th:field="*{ptosglucosa}" class="form-control">
+                                <option th:value=5 th:text="SÍ"></option>
+                                <option th:value=0 th:text="NO"></option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">¿Alguno de sus familiares
+                                allegados y otros parientes han sido diagnosticados de diabetes (tipo 1 o tipo 2)?
+                            </label>
+                            <select id="diabetes" th:field="*{ptosdiabetes}" class="form-control">
+                                <option th:value=5 th:text="|SÍ: Padres, hermanos o hijos propios|"></option>
+                                <option th:value=3 th:text="|SÍ: Abuelos, tíos, primos, hermanos|"></option>
+                                <option th:value=0 th:text="NO"></option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold; color:blue" class="col-4 col-form-label">Puntuación de
+                                Findrisc: </label>
+                            <input style="border-color: blue;" id="puntuacion" type="number" th:field="*{puntuacion}"
+                                class="form-control" readonly />
+                        </div>
+
+                        <script>
+                            function calcularpuntuacion() {
+                                var edad = parseInt(document.getElementById('edad').value);
+                                var cmcintura = parseInt(document.getElementById('cmcintura').value);
+                                var imc = parseInt(document.getElementById('imc').value);
+                                var actfis = parseInt(document.getElementById('actfis').value);
+                                var fruta = parseInt(document.getElementById('fruta').value);
+                                var medicacion = parseInt(document.getElementById('medicacion').value);
+                                var glucosa = parseInt(document.getElementById('glucosa').value);
+                                var diabetes = parseInt(document.getElementById('diabetes').value);
+                                var resultado = edad + cmcintura + imc + actfis + fruta + medicacion + glucosa + diabetes;
+                                document.getElementById('puntuacion').value = resultado;
+                                calcularescala();
+                            }
+
+                            document.getElementById('edad').addEventListener('change', calcularpuntuacion);
+                            document.getElementById('cmcintura').addEventListener('change', calcularpuntuacion);
+                            document.getElementById('imc').addEventListener('change', calcularpuntuacion);
+                            document.getElementById('actfis').addEventListener('change', calcularpuntuacion);
+                            document.getElementById('fruta').addEventListener('change', calcularpuntuacion);
+                            document.getElementById('medicacion').addEventListener('change', calcularpuntuacion);
+                            document.getElementById('glucosa').addEventListener('change', calcularpuntuacion);
+                            document.getElementById('diabetes').addEventListener('change', calcularpuntuacion);
+
+                        </script>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold; color:blue" class="col-4 col-form-label">Escala de riesgo
+                            </label>
+                            <select style="border-color: blue;" id="escala" th:field="*{escalarriesgo}"
+                                class="form-control" disabled>
+                                <option th:value="Bajo" th:text="Bajo"></option>
+                                <option th:value="Alto" th:text="Alto"></option>
+                                <option th:value="|Ligeramente elevado|" th:text="|Ligeramente elevado|"></option>
+                                <option th:value="Moderado" th:text="Moderado"></option>
+                                <option th:value="|Muy alto|" th:text="|Muy alto|"></option>
+                            </select>
+                        </div>
+                        <script>
+                            function calcularescala() {
+                                var resultado;
+                                var puntuacion = parseInt(document.getElementById('puntuacion').value);
+                                if (puntuacion < 7) resultado = "Bajo";
+                                else if (puntuacion >= 7 && puntuacion < 12) resultado = "Ligeramente elevado";
+                                else if (puntuacion >= 12 && puntuacion < 15) resultado = "Moderado";
+                                else if (puntuacion >= 15 && puntuacion < 21) resultado = "Alto";
+                                else if (puntuacion > 21) resultado = "Muy alto";
+                                document.getElementById('escala').value = resultado;
+                            }
+
+                        </script>
+                        <button class="btn btn-info text-white mt-4 w-100" type="submit"
+                            onclick=myFunction()>Guardar</button>
+                        <script language="JavaScript">
+                            function myFunction() {
+                                if (confirm("Desea guardar los datos?")) {
+                                    alert("Datos guardados exitosamente");
+                                } else {
+                                    alert("Usted cancelo la acción para guardar");
+                                }
+                            }
+                        </script>
+                        <div style="float: right; margin-top: 1%;">
+                            <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                                onclick="window.print();">
+                        </div>
+
+                    </form>
                 </div>
 
-                <form class="form-perfil" method="post" th:action="@{'/process_findrisc/' + ${participante.id}}" th:object="${findrisc}">
-        
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">Edad: </label>
-                        <select style="border-color: blue;" id="edad" th:field="*{puntosedad}" class="form-control" disabled>
-                            <option value=0>Menos de 45 años (0 puntos)</option>
-                            <option value=2>Entre 45-54 años (2 puntos)</option>
-                            <option value=3>Entre 55-64 años (3 puntos)</option>
-                            <option value=4>Más de 64 años (4 puntos)</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">Perímetro de cintura (cm): </label>
-                        <select style="border-color: blue;" id="cmcintura" th:field="*{puntoscmcintura}" class="form-control" disabled>
-                            <option value=0>Menos de 94cm (MASCULINO)/80cm (FEMENINO)</option>
-                            <option value=3>Entre 94 y 102cm (MASCULINO)/80 y 88cm (FEMENINO)</option>
-                            <option value=4>Más de 102cm (MASCULINO)/88cm (FEMENINO)</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold; color:blue" class="col-4 col-form-label">IMC: </label>
-                        <select style="border-color: blue;" id="imc" th:field="*{puntosimc}" class="form-control" disabled>
-                            <option value=0>Menos de 25 kg/m2</option>
-                            <option value=1>Entre 25 y 30 kg/m2</option>
-                            <option value=3>Más de 30kg/m2</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Realiza habitualmente al menos 30 minutos de actividad física en el trabajo y/o en el tiempo libre? </label>
-                        <select id="actfis" th:field="*{ptosactfisica}"class="form-control" >
-                            <option th:value=0 th:text="SÍ"></option>
-                            <option th:value=2 th:text="NO"></option>
-                        </select> 
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Con qué frecuencia consume verduras o fruta? </label>
-                        <select id="fruta" th:field="*{ptosfrecfruta}"class="form-control" >
-                            <option th:value=0 th:text="|A diario|"></option>
-                            <option th:value=1 th:text="|No a diario|"></option>
-                        </select> 
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Toma medicación para la presión regularmente? </label>
-                        <select id="medicacion" th:field="*{ptosmedicacion}"class="form-control" >
-                            <option th:value=2 th:text="SÍ"></option>
-                            <option th:value=0 th:text="NO"></option>
-                        </select> 
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Le han encontrado alguna vez valores de glucosa (azucar) altos? </label>
-                        <select id="glucosa" th:field="*{ptosglucosa}"class="form-control" >
-                            <option th:value=5 th:text="SÍ"></option>
-                            <option th:value=0 th:text="NO"></option>
-                        </select> 
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Alguno de sus familiares allegados y otros parientes han sido diagnosticados de diabetes (tipo 1 o tipo 2)? </label>
-                        <select id="diabetes" th:field="*{ptosdiabetes}"class="form-control" >
-                            <option th:value=5 th:text="|SÍ: Padres, hermanos o hijos propios|"></option>
-                            <option th:value=3 th:text="|SÍ: Abuelos, tíos, primos, hermanos|"></option>
-                            <option th:value=0 th:text="NO"></option>
-                        </select> 
-                    </div>
-
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold; color:blue" class="col-4 col-form-label">Puntuación de Findrisc: </label>
-                        <input style="border-color: blue;" id="puntuacion" type="number" th:field="*{puntuacion}" class="form-control" readonly />
-                    </div>
-
-                    <script>
-                        function calcularpuntuacion() {
-                            var edad = parseInt(document.getElementById('edad').value);
-                            var cmcintura = parseInt(document.getElementById('cmcintura').value);
-                            var imc = parseInt(document.getElementById('imc').value);
-                            var actfis = parseInt(document.getElementById('actfis').value);
-                            var fruta = parseInt(document.getElementById('fruta').value);
-                            var medicacion = parseInt(document.getElementById('medicacion').value);
-                            var glucosa = parseInt(document.getElementById('glucosa').value);
-                            var diabetes = parseInt(document.getElementById('diabetes').value);
-                            var resultado = edad + cmcintura + imc + actfis + fruta + medicacion + glucosa + diabetes;
-                            document.getElementById('puntuacion').value = resultado;
-                            calcularescala();
-                        }
-                      
-                        document.getElementById('edad').addEventListener('change', calcularpuntuacion);
-                        document.getElementById('cmcintura').addEventListener('change', calcularpuntuacion);
-                        document.getElementById('imc').addEventListener('change', calcularpuntuacion);
-                        document.getElementById('actfis').addEventListener('change', calcularpuntuacion);
-                        document.getElementById('fruta').addEventListener('change', calcularpuntuacion);
-                        document.getElementById('medicacion').addEventListener('change', calcularpuntuacion);
-                        document.getElementById('glucosa').addEventListener('change', calcularpuntuacion);
-                        document.getElementById('diabetes').addEventListener('change', calcularpuntuacion);
-                      
-                      </script>
-                  
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold; color:blue" class="col-4 col-form-label">Escala de riesgo </label>
-                        <select style="border-color: blue;" id="escala" th:field="*{escalarriesgo}"class="form-control" disabled>
-                            <option th:value="Bajo" th:text="Bajo"></option>
-                            <option th:value="Alto" th:text="Alto"></option>
-                            <option th:value="|Ligeramente elevado|" th:text="|Ligeramente elevado|"></option>
-                            <option th:value="Moderado" th:text="Moderado"></option>
-                            <option th:value="|Muy alto|" th:text="|Muy alto|"></option>
-                        </select> 
-                    </div>
-                    <script>
-                        function calcularescala() {
-                            var resultado;
-                            var puntuacion = parseInt(document.getElementById('puntuacion').value);
-                            if(puntuacion < 7) resultado="Bajo";
-                            else if (puntuacion >= 7 && puntuacion < 12) resultado="Ligeramente elevado";
-                            else if (puntuacion >= 12 && puntuacion < 15) resultado="Moderado";
-                            else if (puntuacion >= 15 && puntuacion < 21) resultado="Alto";
-                            else if (puntuacion > 21) resultado="Muy alto";
-                            document.getElementById('escala').value = resultado;
-                        }
-                      
-                    </script>
-                    <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Guardar</button>
-                    <script language="JavaScript">
-                        function myFunction() {
-                            if(confirm("Desea guardar los datos?")){
-                            alert("Datos guardados exitosamente");
-                            }else{
-                            alert("Usted cancelo la acción para guardar");
-                            }
-                        }
-                    </script>
-                     <div style="float: right; margin-top: 1%;">
-                        <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
-                        </div>
-                    
-                </form>                      
-            </div> 
-            
-           
+            </div>
 
         </div>
     </div>

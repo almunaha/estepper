@@ -16,8 +16,12 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <!-- BUSCADOR DE ALIMENTOS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-nUf8aohwTZxv0l0d4A4kmOE+fj7W9PvCO2aS0E1Yjh81pN+w4ezn/jn8wNlvMxvNUnax/aLdQ+z/8W7X9DvI+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+        integrity="sha512-nUf8aohwTZxv0l0d4A4kmOE+fj7W9PvCO2aS0E1Yjh81pN+w4ezn/jn8wNlvMxvNUnax/aLdQ+z/8W7X9DvI+A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
+        integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <title>Alimentos - Estepper</title>
 </head>
@@ -92,7 +96,7 @@
         </div>
 
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -101,7 +105,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img  width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header"/>
+                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -118,156 +123,177 @@
                 </div>
             </nav>
 
-            <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
-                <div style="display: flex; justify-content: center; flex-direction: column;">
-                    <div><h3 style="text-align: center;">¿Qué has comido hoy?</h3></div>
-                    
+            <div style="padding-top: 75px;">
+
+                <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
+                    <div style="display: flex; justify-content: center; flex-direction: column;">
+                        <div>
+                            <h3 style="text-align: center;">¿Qué has comido hoy?</h3>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div style="margin: 1%;" class="bg-white border border-1 p-5 rounded-4 ">
-                <div style="display: flex; justify-content: center; flex-direction: column;">
-                    <!--META CALORÍAS DIARIAS Y CUÁNTAS HA CONSUMIDO YA-->
-                    <div class="valores-progreso">
-                        <div class="valor">
-                            <div class="flex-valor">
-                                <div class="iz-valor">
-                                    <i class="fa-solid fa-apple-whole" style="color:red"></i>
-                                </div>
-                                <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(0)} + ' g'"></span></div>
-                                    <div class="bottom-valor"><span>Fibra</span></div>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="valor">
-                            <div class="flex-valor">
-                                <div class="iz-valor">
-                                    <i class="fa-solid fa-hotdog" style="color: rgb(105, 70, 15)"></i>
-                                </div>
-                                <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(1)} + ' g'"></span></div>
-                                    <div class="bottom-valor"><span>Grasas saturadas</span></div>
+                <div style="margin: 1%;" class="bg-white border border-1 p-5 rounded-4 ">
+                    <div style="display: flex; justify-content: center; flex-direction: column;">
+                        <!--META CALORÍAS DIARIAS Y CUÁNTAS HA CONSUMIDO YA-->
+                        <div class="valores-progreso">
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-apple-whole" style="color:red"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor"><span th:text="${nutrientes.get(0)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Fibra</span></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="valor">
-                            <div class="flex-valor">
-                                <div class="iz-valor">
-                                    <i class="fa-solid fa-pizza-slice" style="color: rgb(210, 165, 91)"></i>
-                                </div>
-                                <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(2)} + ' g'"></span></div>
-                                    <div class="bottom-valor"><span>Hidratos de carbono</span></div>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="valor">
-                            <div class="flex-valor">
-                                <div class="iz-valor">
-                                    <i class="fa-solid fa-bacon" style="color: rgb(105, 15, 38)"></i>
-                                </div>
-                                <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(3)} + ' g'"></span></div>
-                                    <div class="bottom-valor"><span>Proteinas</span></div>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="valor">
-                            <div class="flex-valor">
-                                <div class="iz-valor">
-                                    <i class="fa-solid fa-cubes-stacked" style="color: rgb(161, 219, 239)"></i>
-                                </div>
-                                <div class="der-valor">
-                                    <div class="dato-valor"><span th:text="${nutrientes.get(4)} + ' g'"></span></div>
-                                    <div class="bottom-valor"><span>Sales</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!--TABLA ALIMENTOS CONSUMIDOS-->
-                    <div th:if="${listaAlimentosCon.empty}">
-                        <div><h6 style="text-align: center;">¡No has agregado ningún alimento hoy!</h6></div>
-                    </div>
-                    <div th:unless="${listaAlimentosCon.empty}" class="table-responsive">
-                        <table class="table tablePart" id="tablePart">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Alimento</th>
-                                    <th scope="col">Raciones</th>
-                                    <th scope="col">Fecha</th>   
-                                </tr>
-                            </thead>
-                            <tbody class="buscarParticipantes">
-                                <tr th:each="lis:${listaAlimentosCon}">
-                                    <td th:text="${lis.alimento.nombre}"></td>
-                                    <td th:text="${lis.raciones}"></td>
-                                    <td th:text="${#temporals.format(lis.fecha_consumicion, 'HH:mm')}"></td>
-                                    <td><a class="fa-solid fa-trash-can fa-2x" style="color: red" id="btn-icono" data-bs-toggle="tooltip"
-                                        title="Eliminar" th:href="@{'/alimento/eliminar/'+ ${lis.id}}"></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--AÑADIR ALIMENTO CONSUMIDO-->
-                    <div><h5 style="text-align: center; margin-top: 3%;">¿Has comido algo más? Añádelo aquí:</h5></div>
-                    <form class="form-perfil" method="post" th:action="@{'/process_alimentoCon/' + ${user.id}}"
-                    th:object="${alimentoCon}">
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-hotdog" style="color: rgb(105, 70, 15)"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor"><span th:text="${nutrientes.get(1)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Grasas saturadas</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-pizza-slice" style="color: rgb(210, 165, 91)"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor"><span th:text="${nutrientes.get(2)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Hidratos de carbono</span></div>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="input-group mt-2">
-                        <label style="margin-left: 4%;" class="col-4 col-form-label">Número de raciones: </label>
-                        <input type="number" th:field="*{raciones}" class="form-control" />
-                    </div>
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-bacon" style="color: rgb(105, 15, 38)"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor"><span th:text="${nutrientes.get(3)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Proteinas</span></div>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="input-group mt-2">
-                        <select style="margin-left: 3%;" th:field="*{alimento}" class="form-control" id="lista-alimentos" required>
-                            <option th:each="al : ${listaAlimentos}" th:value="${al.id}" th:text="${al.nombre} + ' (' + ${al.porcion} + 'mg/ml | ' + ${al.porcion div 1000} + 'g/l)'"></option>
-                        </select>
-                        <script language="JavaScript" th:inline="javascript">
-                            $(document).ready(function() {
-                                // Obtener la lista de opciones del select
-                                var opciones = $("#lista-alimentos option");
-                    
-                                // Crear un input de búsqueda
-                                var inputBusqueda = $('<input type="text" class="form-control mt-2" placeholder="Buscar...">');
-                    
-                                // Agregar el input de búsqueda antes del select
-                                $("#lista-alimentos").before(inputBusqueda);
-                    
-                                // Escuchar el evento keyup del input de búsqueda
-                                inputBusqueda.keyup(function() {
-                                    // Obtener el término de búsqueda
-                                    var term = $(this).val().toLowerCase();
-                    
-                                    // Filtrar las opciones que contengan el término de búsqueda
-                                    var opcionesFiltradas = opciones.filter(function() {
-                                        return $(this).text().toLowerCase().indexOf(term) > -1;
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-cubes-stacked" style="color: rgb(161, 219, 239)"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor"><span th:text="${nutrientes.get(4)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Sales</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--TABLA ALIMENTOS CONSUMIDOS-->
+                        <div th:if="${listaAlimentosCon.empty}">
+                            <div>
+                                <h6 style="text-align: center;">¡No has agregado ningún alimento hoy!</h6>
+                            </div>
+                        </div>
+                        <div th:unless="${listaAlimentosCon.empty}" class="table-responsive">
+                            <table class="table tablePart" id="tablePart">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Alimento</th>
+                                        <th scope="col">Raciones</th>
+                                        <th scope="col">Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="buscarParticipantes">
+                                    <tr th:each="lis:${listaAlimentosCon}">
+                                        <td th:text="${lis.alimento.nombre}"></td>
+                                        <td th:text="${lis.raciones}"></td>
+                                        <td th:text="${#temporals.format(lis.fecha_consumicion, 'HH:mm')}"></td>
+                                        <td><a class="fa-solid fa-trash-can fa-2x" style="color: red" id="btn-icono"
+                                                data-bs-toggle="tooltip" title="Eliminar"
+                                                th:href="@{'/alimento/eliminar/'+ ${lis.id}}"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--AÑADIR ALIMENTO CONSUMIDO-->
+                        <div>
+                            <h5 style="text-align: center; margin-top: 3%;">¿Has comido algo más? Añádelo aquí:</h5>
+                        </div>
+                        <form class="form-perfil" method="post" th:action="@{'/process_alimentoCon/' + ${user.id}}"
+                            th:object="${alimentoCon}">
+
+                            <div class="input-group mt-2">
+                                <label style="margin-left: 4%;" class="col-4 col-form-label">Número de raciones:
+                                </label>
+                                <input type="number" th:field="*{raciones}" class="form-control" />
+                            </div>
+
+                            <div class="input-group mt-2">
+                                <select style="margin-left: 3%;" th:field="*{alimento}" class="form-control"
+                                    id="lista-alimentos" required>
+                                    <option th:each="al : ${listaAlimentos}" th:value="${al.id}"
+                                        th:text="${al.nombre} + ' (' + ${al.porcion} + 'mg/ml | ' + ${al.porcion div 1000} + 'g/l)'">
+                                    </option>
+                                </select>
+                                <script language="JavaScript" th:inline="javascript">
+                                    $(document).ready(function () {
+                                        // Obtener la lista de opciones del select
+                                        var opciones = $("#lista-alimentos option");
+
+                                        // Crear un input de búsqueda
+                                        var inputBusqueda = $('<input type="text" class="form-control mt-2" placeholder="Buscar...">');
+
+                                        // Agregar el input de búsqueda antes del select
+                                        $("#lista-alimentos").before(inputBusqueda);
+
+                                        // Escuchar el evento keyup del input de búsqueda
+                                        inputBusqueda.keyup(function () {
+                                            // Obtener el término de búsqueda
+                                            var term = $(this).val().toLowerCase();
+
+                                            // Filtrar las opciones que contengan el término de búsqueda
+                                            var opcionesFiltradas = opciones.filter(function () {
+                                                return $(this).text().toLowerCase().indexOf(term) > -1;
+                                            });
+
+                                            // Actualizar las opciones del select con las opciones filtradas
+                                            $("#lista-alimentos").empty().append(opcionesFiltradas);
+                                        });
+
+                                        // Restaurar todas las opciones del select cuando se cierre
+                                        $("#lista-alimentos").on("hidden.bs.select", function () {
+                                            $("#lista-alimentos").empty().append(opciones);
+                                        });
+
+                                        $("#lista-alimentos").keydown("hidden.bs.select", function () {
+                                            $("#lista-alimentos").empty().append(opciones);
+                                        });
                                     });
-                    
-                                    // Actualizar las opciones del select con las opciones filtradas
-                                    $("#lista-alimentos").empty().append(opcionesFiltradas);
-                                });
-                                
-                                // Restaurar todas las opciones del select cuando se cierre
-                                $("#lista-alimentos").on("hidden.bs.select", function() {
-                                    $("#lista-alimentos").empty().append(opciones);
-                                });
+                                </script>
+                            </div>
 
-                                $("#lista-alimentos").keydown("hidden.bs.select", function() {
-                                    $("#lista-alimentos").empty().append(opciones);
-                                });
-                            });
-                        </script>
+
+                            <div>
+                                <h6 style="text-align: center; margin-top: 3%;">¿No está el alimento que buscas? <a
+                                        th:href="@{/nuevoalimento}" class="alert-link">¡Créalo!</a></h6>
+                            </div>
+                            <button class="btn btn-info text-white mt-4 w-100" type="submit">Añadir</button>
+                        </form>
                     </div>
-                    
-                    
-                    <div><h6 style="text-align: center; margin-top: 3%;">¿No está el alimento que buscas? <a
-                        th:href="@{/nuevoalimento}" class="alert-link">¡Créalo!</a></h6></div>
-                    <button class="btn btn-info text-white mt-4 w-100" type="submit">Añadir</button>
-                </form>
                 </div>
             </div>
         </div>
