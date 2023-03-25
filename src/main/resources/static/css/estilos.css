@@ -473,6 +473,14 @@ a{
    flex-basis: 1%;
 }
 
+#avatar-header{
+    border-radius: 50%;
+    border: 0.7px solid #7fbdc9; /* Agrega un borde negro de 2px */
+    overflow: hidden;
+    background-color: #8ec7d3;
+    padding: 0.8%;
+}
+
 #btn-modal{
     cursor: pointer;
 }

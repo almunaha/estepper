@@ -90,7 +90,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                <img  width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header"/>
+                <span sec:authentication="principal.nombre"></span>
               </a>
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
