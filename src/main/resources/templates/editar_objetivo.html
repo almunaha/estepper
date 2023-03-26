@@ -129,7 +129,7 @@
                 </div>
 
                <form th:action="@{'/objetivos/guardar/' + ${objetivo.id}}" th:object="${objetivo}" method="post">
-                
+
                     <div class="m-3">
                     
                         <div class="form-group row">
@@ -158,6 +158,7 @@
                                 <option value="COMPLETADO">COMPLETADO</option>
                                 <option value="PENDIENTE">PENDIENTE</option>
                             </select>
+                            </div>
 
                             <label class="col-form-label col-sm-4">Repetición</label>
                             <div class="col-sm-8 mb-2">
@@ -168,6 +169,7 @@
                                 <option value="MENSUALMENTE">MENSUALMENTE</option>
                                 <option value="ANUALMENTE">ANUALMENTE</option>
                             </select>
+                            </div>
 
                         </div>
                         <div class="text-center p">
