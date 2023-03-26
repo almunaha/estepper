@@ -302,7 +302,7 @@ public class CoordinadorController {
 
         model.addAttribute("invitacion", new Invitacion());
 
-        List<Invitacion> invitaciones = inv.listadoCoor((Coordinador) user);
+        List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
         model.addAttribute("invitaciones", invitaciones);
 
         return "invitaciones";

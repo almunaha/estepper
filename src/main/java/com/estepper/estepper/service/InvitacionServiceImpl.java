@@ -47,4 +47,10 @@ public class InvitacionServiceImpl implements InvitacionService{
     public void guardar(Invitacion i){
         repo.save(i);
     }
+
+    @Override
+    public List<Invitacion> listadoCoordAct(Coordinador c, Actividad a){
+        return (List<Invitacion>) repo.findByCoordinadorAndActividad(c, a);
+    }
+
 }

@@ -12,6 +12,7 @@ import com.estepper.estepper.model.enums.EstadoInvitacion;
 public interface InvitacionRepository extends JpaRepository<Invitacion, Integer>{
 
     List<Invitacion> findByCoordinador(Coordinador c);
+    List<Invitacion> findByCoordinadorAndActividad(Coordinador c, Actividad actividad);
     List<Invitacion> findByActividad(Actividad a);
     List<Invitacion> findByParticipanteAndEstado(Participante p, EstadoInvitacion e);
     
