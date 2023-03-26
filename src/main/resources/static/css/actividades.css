@@ -305,6 +305,13 @@
     color: white;
 }
 
+.datos-coor{
+    display: flex;
+}
+
+.botones-coor{
+    display: flex;
+}
 
 /* RESPONSIVE */
 @media (max-width: 767px) {
