@@ -85,28 +85,36 @@
 
         <div class="layout-actividades">
           <div class="act-coor" th:each="lis:${listado}">
-            <div>
-              <div th:text="${lis.nombre}"></div>
-              <div class="mt-3">
-                <i class="fa-solid fa-calendar-days"></i>
-                <span th:text="${#temporals.format(lis.fechaRealizacion, 'dd MMM')}"></span>&nbsp
 
-                <i class="fa-solid fa-clock"></i>
-                <span th:text="${#temporals.format(lis.fechaRealizacion, 'HH:mm')}"></span>&nbsp
+            <!-- Datos actividad -->
+            <div class="datos-coor">
+              <div>
+                <div th:text="${lis.nombre}"></div>
+                <div class="mt-3">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span th:text="${#temporals.format(lis.fechaRealizacion, 'dd MMM')}"></span>&nbsp
 
-                <i class="fa-solid fa-location-dot"></i>
-                <span th:text="${lis.ubicacion}"></span>
+                  <i class="fa-solid fa-clock"></i>
+                  <span th:text="${#temporals.format(lis.fechaRealizacion, 'HH:mm')}"></span>&nbsp
+
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span th:text="${lis.ubicacion}"></span>
+                </div>
               </div>
+
+              <div th:text="'Plazas disponibles: '+ ${lis.plazas - lis.numParticipantes}"></div>&nbsp
+
+              <div th:text="'Asistentes: '+ ${lis.numParticipantes}"></div>
+
             </div>
 
-            <span th:text="'Plazas disponibles: '+ ${lis.plazas - lis.numParticipantes}"></span>&nbsp
-
-            <span th:text="'Asistentes: '+ ${lis.numParticipantes}"></span>
-
-            <a class="btn-gest" th:href="@{'/actividad/' + ${lis.id}}">Información</i></a>
-            <a class="btn-gest">Invitaciones</a>
-            <a class="btn-gest"><i class="fa-solid fa-pen"></i></a>
-            <a class="btn-gest"><i class="fa-solid fa-trash"></i></a>
+            <!-- Botones actividad -->
+            <div class="botones-coor">
+              <a class="btn-gest" th:href="@{'/actividad/' + ${lis.id}}">Información</i></a>
+              <a class="btn-gest">Invitaciones</a>
+              <a class="btn-gest"><i class="fa-solid fa-pen"></i></a>
+              <a class="btn-gest"><i class="fa-solid fa-trash"></i></a>
+            </div>
           </div>
 
 
