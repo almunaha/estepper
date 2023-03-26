@@ -40,8 +40,8 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.EstadoActividad;
+import com.estepper.estepper.model.enums.EstadoInvitacion;
 import com.estepper.estepper.model.enums.EstadoSesion;
-
 
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Actividad;
@@ -81,7 +81,7 @@ public class CoordinadorController {
     private ActividadService act;
 
     @Autowired
-    private InvitacionService inv; 
+    private InvitacionService inv;
 
     @GetMapping("/listado")
     public String participantes(@RequestParam Map<String, Object> params, Model model) {
@@ -91,11 +91,20 @@ public class CoordinadorController {
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
             PageRequest pageable = PageRequest.of(page, 6); // define página solicitada y tamaño de la página, se
                                                             // inicializa a cero
-            Page<Participante> paginaPart = part.paginas(pageable, getUsuario().getId(), Estado.BAJA); // listado de páginas de 6 participantes cada una
+            Page<Participante> paginaPart = part.paginas(pageable, getUsuario().getId(), Estado.BAJA); // listado de
+                                                                                                       // páginas de 6
+                                                                                                       // participantes
+                                                                                                       // cada una
             int totalPags = paginaPart.getTotalPages(); // total de páginas
 
             if (totalPags > 0) {
-                List<Integer> paginas = IntStream.rangeClosed(1, totalPags).boxed().collect(Collectors.toList()); // listado con los números de las páginas
+                List<Integer> paginas = IntStream.rangeClosed(1, totalPags).boxed().collect(Collectors.toList()); // listado
+                                                                                                                  // con
+                                                                                                                  // los
+                                                                                                                  // números
+                                                                                                                  // de
+                                                                                                                  // las
+                                                                                                                  // páginas
                 model.addAttribute("paginas", paginas);
             }
 
@@ -118,13 +127,14 @@ public class CoordinadorController {
         } else {
             model.addAttribute("user", getUsuario());
             Participante p = part.findById(id).get();
-                // CONTROLAR ESTADO ALTA O BAJA. SI BAJA MOSTRAR QUE ESTÁ DE BAJA Y NO HA COMENZADO SESIONES
-                Sesion lasesion = sesion.buscarSesion(p, num); // cambiar segun sesion
-                model.addAttribute("sesion", lasesion);
-                model.addAttribute("lasesion", lasesion);
-                model.addAttribute("participante", p); 
+            // CONTROLAR ESTADO ALTA O BAJA. SI BAJA MOSTRAR QUE ESTÁ DE BAJA Y NO HA
+            // COMENZADO SESIONES
+            Sesion lasesion = sesion.buscarSesion(p, num); // cambiar segun sesion
+            model.addAttribute("sesion", lasesion);
+            model.addAttribute("lasesion", lasesion);
+            model.addAttribute("participante", p);
 
-                return "sesionPart";
+            return "sesionPart";
         }
     }
 
@@ -138,7 +148,8 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
 
             part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), g, usuario.getAsistencia(),
-                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), idP);
+                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
+                    usuario.getPerdidacmcintura(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
             g.setNumParticipantes(participantes);
             grupo.update(g);
@@ -170,17 +181,21 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
             Grupo g = grupo.getGrupo(idG);
 
-            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), null, usuario.getAsistencia(),
-                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), idP);
+            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), null,
+                    usuario.getAsistencia(),
+                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
+                    usuario.getPerdidacmcintura(), idP);
 
             Integer participantes = g.getNumParticipantes() - 1;
             grupo.updateParticipantes(idG, participantes);
             /*
-            LO HE COMENTADO PERO FUNCIONA, ES SEGÚN QUERAMOS, POR SI QUEREMOS QUE CUANDO SEA 0 EL NÚMERO DE PARTICIPANTES SE BORRE O NO EL GRUPO
-            if (g.getNumParticipantes() <= 1) {
-                grupo.delete(idG);
-                return "redirect:/listaGrupos";
-            }*/
+             * LO HE COMENTADO PERO FUNCIONA, ES SEGÚN QUERAMOS, POR SI QUEREMOS QUE CUANDO
+             * SEA 0 EL NÚMERO DE PARTICIPANTES SE BORRE O NO EL GRUPO
+             * if (g.getNumParticipantes() <= 1) {
+             * grupo.delete(idG);
+             * return "redirect:/listaGrupos";
+             * }
+             */
 
             return "redirect:/grupos/editar/{idG}";
         }
@@ -290,7 +305,7 @@ public class CoordinadorController {
     }
 
     @GetMapping("/invitaciones/{id}")
-    public String invitaciones(@PathVariable Integer id, Model model){
+    public String invitaciones(@PathVariable Integer id, Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
@@ -300,44 +315,54 @@ public class CoordinadorController {
         List<Grupo> grupos = grupo.listaGrupos(user.getId());
         model.addAttribute("grupos", grupos);
 
-        model.addAttribute("invitacion", new Invitacion());
-
         List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
         model.addAttribute("invitaciones", invitaciones);
 
         return "invitaciones";
     }
 
-    @PostMapping("/process_invitacion")
-    public String process_invitacion(@ModelAttribute Actividad invitacion, @ModelAttribute String tipo){
+    @PostMapping("/process_invitacion/{id}")
+    public String process_invitacion(@PathVariable Integer id, @RequestParam("codigo") String codigo, 
+    @RequestParam("tipo") String tipo){
 
-        if(tipo == "GRUPAL"){
+       Actividad actividad = act.actividad(id); 
+       Coordinador coordinador = (Coordinador) getUsuario();
+
+        if(tipo.equals("GRUPAL")){
+            //grupo
+            Grupo g = grupo.findByCodigo(codigo);        
+
+            //listado participantes del grupo
+            List<Participante> participantes = part.listadoGrupo(g);
+
+            //por cada participante hacer una invitacion
+            for(Participante p : participantes)
+                inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
 
         }
 
         else {
-
+           // inv.guardar(new Invitacion(0, actividad, participante, coordinador, EstadoInvitacion.PENDIENTE));
         }
 
         return "redirect:/actividades"; //mandar a invitaciones otra vez
     }
 
     @GetMapping("/eliminar_actividad/{id}")
-    public String process_invitacion(@PathVariable(name = "id") Integer id, Model model){
+    public String process_invitacion(@PathVariable(name = "id") Integer id, Model model) {
 
         Actividad actividad = act.actividad(id);
 
-        //1. Eliminar las invitaciones a esa actividad
+        // 1. Eliminar las invitaciones a esa actividad
         List<Invitacion> invitaciones = inv.listadoByAct(actividad);
 
-        for(Invitacion invitacion : invitaciones)
+        for (Invitacion invitacion : invitaciones)
             inv.borrar(invitacion);
 
-        //2. Eliminar la actividad
+        // 2. Eliminar la actividad
         act.borrar(actividad);
 
         return "redirect:/actividades";
     }
-
 
 }

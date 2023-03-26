@@ -133,11 +133,10 @@
 
                     <div class="der-gestion">
                         <h5>Realizar invitación</h5>
-                        <form class="form-invitacion" th:action="@{/process_invitacion}" th:object="${invitacion}"
-                            method="post">
+                        <form class="form-invitacion" th:action="@{'/process_invitacion/' + ${actividad.id}}" method="post">
                             <div class="campo">
                                 <label for="tipo">Destinatario </label>
-                                <select id="tipo" class="form-select" required>
+                                <select id="tipo" name="tipo" class="form-select" required>
                                     <option th:text="Grupal" th:value="GRUPAL"></option>
                                     <option th:text="Individual" th:value="INDIVIDUAL"></option>
                                 </select>
@@ -145,9 +144,9 @@
 
                             <div class="campo-grupos">
                                 <label for="grupo">Grupo </label>
-                                <select id="grupo" class="form-select" required>
+                                <select name="codigo" id="grupo" class="form-select" required>
                                     <option th:each="grupo : ${grupos}" th:text="${grupo.nombre}"
-                                        th:value="${grupo.id}"></option>
+                                        th:value="${grupo.codigo}"></option>
                                 </select>
                             </div>
 

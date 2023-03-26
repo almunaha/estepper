@@ -85,7 +85,6 @@ public class GruposController {
             return "redirect:/listaGrupos";
 
         }
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         System.out.println(elgrupo.getNombre());
 
@@ -100,7 +99,6 @@ public class GruposController {
             for (Integer participanteId : participantes) {
                 Participante participante = part.findById(participanteId).get();
                 System.out.println(participante.getNickname());
-                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 participantesSeleccionadosList.add(participante);
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
