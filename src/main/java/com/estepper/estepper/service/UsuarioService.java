@@ -13,6 +13,7 @@ public interface UsuarioService {
     public Usuario logueado(Integer codigo);
     public Optional<Usuario> findById(Integer id);
     public void eliminar(Integer id);
+    public Usuario findByCodigo(Integer codigo);
 
     public void recuperarCodigo(String correo);
 

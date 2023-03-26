@@ -40,7 +40,7 @@
     width: 45%;
 }
 
-.form-invitacion select{
+.form-invitacion select, .form-invitacion input{
     width: 60%;
 }
 

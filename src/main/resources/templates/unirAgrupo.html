@@ -15,7 +15,7 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <!--PARA EL BUSCADOR-->
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
@@ -34,7 +34,7 @@
                 <img width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
-        
+
             <ul>
                 <li>
                     <a th:href="@{/}">
@@ -42,15 +42,15 @@
                         <span class="nombre-enlaces">Inicio</span>
                     </a>
                 </li>
-        
+
                 <li>
                     <a th:href="@{/actividades}">
                         <i class="fa-solid fa-person-hiking"></i>
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
-                </li> 
+                </li>
             </ul>
-        
+
         </div>
 
         <div class="w-100" style="margin-left: 250px">
@@ -79,38 +79,42 @@
                 </div>
             </nav>
 
-            
+            <div style="padding-top: 75px">
 
-            <div class="p-4 mt-5" id="participantes">
-             
-             
-                <div>
-                    <h4 th:text="'AÑADIR A UN GRUPO A: ' +${participante.nickname} + ' (' + ${participante.codigo} + ')'"></h4>
+                <div class="p-4 mt-5" id="participantes">
+
+
+                    <div>
+                        <h4
+                            th:text="'AÑADIR A UN GRUPO A: ' +${participante.nickname} + ' (' + ${participante.codigo} + ')'">
+                        </h4>
+                    </div>
+
+
+
+                    <table class="table tablePart">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Número de participantes</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="buscarGrupos">
+
+                            <tr th:each="lis:${listaGrupos}">
+                                <td th:text="${lis.nombre}"></td>
+                                <td th:text="${lis.numParticipantes}"></td>
+                                <td><a class="btn" id="btn-part"
+                                        th:href="@{'/actualizarGrupos/' + ${participante.id} + '/' + ${lis.id}}">Seleccionar</a>
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+
                 </div>
-           
-               
-           
-                <table class="table tablePart">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Número de participantes</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody class = "buscarGrupos">
-                        
-                        <tr th:each="lis:${listaGrupos}">
-                            <td th:text="${lis.nombre}"></td>
-                            <td th:text="${lis.numParticipantes}"></td>
-                            <td><a class="btn" id="btn-part" th:href="@{'/actualizarGrupos/' + ${participante.id} + '/' + ${lis.id}}" >Seleccionar</a></td>
-
-                        </tr>
-                    </tbody>
-
-                </table>
-          
-
             </div>
 
         </div>
@@ -119,7 +123,3 @@
 </body>
 
 </html>
-
-
-
-

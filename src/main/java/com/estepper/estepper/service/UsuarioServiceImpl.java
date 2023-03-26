@@ -79,6 +79,11 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
+    public Usuario findByCodigo(Integer codigo){
+        return repo.findByCodigo(codigo);
+    }
+
+    @Override
     public void update(String nickname, String email, String contrasenia, Estado estado, Integer id) {
         repo.update(nickname, email, contrasenia, estado, id);
     }

@@ -144,15 +144,15 @@
 
                             <div class="campo-grupos">
                                 <label for="grupo">Grupo </label>
-                                <select name="codigo" id="grupo" class="form-select" required>
+                                <select name="codigoG" id="grupo" class="form-select" required>
                                     <option th:each="grupo : ${grupos}" th:text="${grupo.nombre}"
                                         th:value="${grupo.codigo}"></option>
                                 </select>
                             </div>
 
                             <div class="campo-buscador">
-                                <label for="buscar">Buscar participante</label>
-                                <input type="text" id="busc-part">
+                                <label for="parti">Código participante </label>
+                                <input type="number" id="codigoP" name="codigoP" class="form-control" />
                             </div>
 
                             <div class="enviar-invit">

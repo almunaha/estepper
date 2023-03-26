@@ -322,15 +322,15 @@ public class CoordinadorController {
     }
 
     @PostMapping("/process_invitacion/{id}")
-    public String process_invitacion(@PathVariable Integer id, @RequestParam("codigo") String codigo, 
-    @RequestParam("tipo") String tipo){
+    public String process_invitacion(@PathVariable Integer id, @RequestParam("codigoG") String codigoG, 
+    @RequestParam("tipo") String tipo, @RequestParam(name = "codigoP", required=false) Integer codigoP){
 
        Actividad actividad = act.actividad(id); 
        Coordinador coordinador = (Coordinador) getUsuario();
 
         if(tipo.equals("GRUPAL")){
             //grupo
-            Grupo g = grupo.findByCodigo(codigo);        
+            Grupo g = grupo.findByCodigo(codigoG);        
 
             //listado participantes del grupo
             List<Participante> participantes = part.listadoGrupo(g);
@@ -338,14 +338,16 @@ public class CoordinadorController {
             //por cada participante hacer una invitacion
             for(Participante p : participantes)
                 inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
-
         }
 
         else {
-           // inv.guardar(new Invitacion(0, actividad, participante, coordinador, EstadoInvitacion.PENDIENTE));
+            Usuario u = user.findByCodigo(codigoP);
+            Participante p = part.findById(u.getId()).get();
+            if(p != null) 
+                inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
         }
 
-        return "redirect:/actividades"; //mandar a invitaciones otra vez
+        return "redirect:/invitaciones/" + id;
     }
 
     @GetMapping("/eliminar_actividad/{id}")

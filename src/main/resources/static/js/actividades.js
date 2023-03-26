@@ -44,14 +44,19 @@ $(document).ready(function () {
     // campo buscador
     $(".campo-buscador").hide();
 
+    $('#codigoP').removeAttr('required');
+    
     $("#tipo").change(function () {
 
         if ($(this).val() === 'GRUPAL') {
             $(".campo-grupos").show();
             $(".campo-buscador").hide();
+            $('#codigoP').removeAttr('required');
+
         } else {
             $(".campo-grupos").hide();
             $(".campo-buscador").show();
+            $('#codigoP').attr('required', true);
         }
 
     });
