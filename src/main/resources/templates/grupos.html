@@ -18,7 +18,7 @@
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <title>Grupos</title>
+    <title>Grupos - Estepper</title>
 </head>
 
 <body>
@@ -53,7 +53,7 @@
 
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -79,103 +79,105 @@
                 </div>
             </nav>
 
-            <div class="p-4 mt-5" id="grupos">
-                <div style="display: flex; justify-content: center; justify-items: center;">
-                    <h4>Listado de grupos</h4>
+            <div style="padding-top: 75px;">
+                <div class="p-4 mt-5" id="grupos">
+                    <div style="display: flex; justify-content: center; justify-items: center;">
+                        <h4>Listado de grupos</h4>
+                    </div>
+
+
+                    <!--Lo estaba probando para lo de mostrar la alerta, no borrarlo aún-->
+                    <div th:if="${errorcito}" class="alert alert-danger">
+                        <p th:text="${errorcito}"></p>
+                    </div>
+
+
+                    <!-- Buscador de participantes en grupos -->
+                    <div class="d-flex justify-content-center mt-3">
+                        <form class="w-75" id="buscadorPart">
+                            <div style="margin-bottom: 5%; display: flex; justify-content: center; align-items: center;"
+                                class="input-group">
+                                <input style="height: 5%;" id="filtrarGrupos" class="form-control light-table-filter"
+                                    data-table="tablePart" type="text" placeholder="Buscar...">
+                            </div>
+                        </form>
+                    </div>
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            (function ($) {
+                                $('#filtrarGrupos').keyup(function () {
+                                    var rex = new RegExp($(this).val(), 'i');
+                                    $('.buscarGrupos tr').hide();
+                                    $('.buscarGrupos tr').filter(function () {
+                                        return rex.test($(this).text());
+                                    }).show();
+                                })
+                            }(jQuery));
+                        });
+                    </script>
+
+
+                    <!-- Tabla de grupos -->
+                    <div class="table-responsive">
+                        <table class=" table tablePart">
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Número de participantes</th>
+                                    <th scope="col">Fecha de creación</th>
+                                    <th scope="col">Fecha de finalización</th>
+                                    <th scope="col">Acciones</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="buscarGrupos">
+                                <tr th:each="lis:${listaGrupos}">
+                                    <td th:text="${lis.nombre}"></td>
+                                    <td th:text="${lis.codigo}"></td>
+                                    <td th:text="${lis.numParticipantes}"></td>
+                                    <td th:text="${lis.fechaInicioGrupo}"></td>
+                                    <td th:text="${mensajito}" th:if="${lis.fechaFinGrupo == null}"></td>
+                                    <td th:text="${lis.fechaFinGrupo}" th:unless="${lis.fechaFinGrupo == null}"></td>
+                                    <td>
+
+                                        <!--LOS BOTONES SIN ICONOS-->
+                                        <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver grupo" th:href="@{'/unGrupo/' + ${lis.id}}">Ver grupo</a>-->
+                                        <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar grupo" th:href="@{'/grupos/editar/' + ${lis.id}} ">Editar grupo</a>-->
+                                        <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar grupo" th:href="@{'/grupos/eliminar/'+ ${lis.id}}">Eliminar grupo</a>-->
+
+                                        <!--LOS BOTONES CON ICONOS-->
+                                        <a class="fa-solid fa-eye fa-2x" id="btn-icono" data-bs-toggle="tooltip"
+                                            title="Ver grupo" th:href="@{'/unGrupo/' + ${lis.id}}"></a>
+                                        <a class="fa-solid fa-pen-to-square fa-2x" id="btn-icono"
+                                            data-bs-toggle="tooltip" title="Editar grupo"
+                                            th:href="@{'/grupos/editar/' + ${lis.id}} "></a>
+                                        <a class="fa-solid fa-trash-can fa-2x" id="btn-icono" data-bs-toggle="tooltip"
+                                            title="Eliminar grupo" th:href="@{'/grupos/eliminar/'+ ${lis.id}}"></a>
+                                        <a class="fa-solid fa-folder-open fa-2x" id="btn-icono" data-bs-toggle="tooltip"
+                                            title="Materiales" th:href="@{'/materialesGrupo/' + ${lis.id}}"></a>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <!--FALTA PAGINACIÓN-->
+
+
+                    <div style="display: flex; justify-content: center;">
+                        <a style="margin-right: 2%;" class="btn" id="btn-part" th:href="@{/grupos/nuevo}">Crear un grupo
+                            nuevo</a>
+                        <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                            onclick="window.print();">
+                    </div>
+
                 </div>
-
-
-                <!--Lo estaba probando para lo de mostrar la alerta, no borrarlo aún-->
-                <div th:if="${errorcito}" class="alert alert-danger">
-                    <p th:text="${errorcito}"></p>
-                </div>
-
-
-                <!-- Buscador de participantes en grupos -->
-                <div class="d-flex justify-content-center mt-3">
-                    <form class="w-75" id="buscadorPart">
-                        <div style="margin-bottom: 5%; display: flex; justify-content: center; align-items: center;"
-                            class="input-group">
-                            <input style="height: 5%;" id="filtrarGrupos" class="form-control light-table-filter"
-                                data-table="tablePart" type="text" placeholder="Buscar...">
-                        </div>
-                    </form>
-                </div>
-
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        (function ($) {
-                            $('#filtrarGrupos').keyup(function () {
-                                var rex = new RegExp($(this).val(), 'i');
-                                $('.buscarGrupos tr').hide();
-                                $('.buscarGrupos tr').filter(function () {
-                                    return rex.test($(this).text());
-                                }).show();
-                            })
-                        }(jQuery));
-                    });
-                </script>
-
-
-                <!-- Tabla de grupos -->
-                <div class="table-responsive">
-                    <table class=" table tablePart">
-
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Código</th>
-                                <th scope="col">Número de participantes</th>
-                                <th scope="col">Fecha de creación</th>
-                                <th scope="col">Fecha de finalización</th>
-                                <th scope="col">Acciones</th>
-
-                            </tr>
-                        </thead>
-                        <tbody class="buscarGrupos">
-                            <tr th:each="lis:${listaGrupos}">
-                                <td th:text="${lis.nombre}"></td>
-                                <td th:text="${lis.codigo}"></td>
-                                <td th:text="${lis.numParticipantes}"></td>
-                                <td th:text="${lis.fechaInicioGrupo}"></td>
-                                <td th:text="${mensajito}" th:if="${lis.fechaFinGrupo == null}"></td>
-                                <td th:text="${lis.fechaFinGrupo}" th:unless="${lis.fechaFinGrupo == null}"></td>
-                                <td>
-
-                                    <!--LOS BOTONES SIN ICONOS-->
-                                    <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver grupo" th:href="@{'/unGrupo/' + ${lis.id}}">Ver grupo</a>-->
-                                    <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar grupo" th:href="@{'/grupos/editar/' + ${lis.id}} ">Editar grupo</a>-->
-                                    <!--<a class="btn" id="btn-part" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar grupo" th:href="@{'/grupos/eliminar/'+ ${lis.id}}">Eliminar grupo</a>-->
-
-                                    <!--LOS BOTONES CON ICONOS-->
-                                    <a class="fa-solid fa-eye fa-2x" id="btn-icono" data-bs-toggle="tooltip"
-                                        title="Ver grupo" th:href="@{'/unGrupo/' + ${lis.id}}"></a>
-                                    <a class="fa-solid fa-pen-to-square fa-2x" id="btn-icono" data-bs-toggle="tooltip"
-                                        title="Editar grupo" th:href="@{'/grupos/editar/' + ${lis.id}} "></a>
-                                    <a class="fa-solid fa-trash-can fa-2x" id="btn-icono" data-bs-toggle="tooltip"
-                                        title="Eliminar grupo" th:href="@{'/grupos/eliminar/'+ ${lis.id}}"></a>
-                                    <a class="fa-solid fa-folder-open fa-2x" id="btn-icono" data-bs-toggle="tooltip"
-                                        title="Materiales" th:href="@{'/materialesGrupo/' + ${lis.id}}"></a>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-                <!--FALTA PAGINACIÓN-->
-
-
-                <div style="display: flex; justify-content: center;">
-                    <a style="margin-right: 2%;" class="btn" id="btn-part" th:href="@{/grupos/nuevo}">Crear un grupo
-                        nuevo</a>
-                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
-                        onclick="window.print();">
-                </div>
-
             </div>
-
         </div>
     </div>
 

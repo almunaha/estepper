@@ -10,13 +10,13 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/signin.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
 
-    <title>Inicio</title>
+    <title>Inicio - Estepper</title>
 
 </head>
 
@@ -29,7 +29,7 @@
         <!-- MENÚ -->
         <div id="sidebar-container">
             <div class="logo">
-                <img src="../static/img/logo.png" width="75" th:src="@{img/logo.png}" />
+                <img src="../static/img/logo.png" width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -73,13 +73,13 @@
                 <li>
                     <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
-                        <span class="nombre-enlaces">Foro</span>
+                        <span class="nombre-enlaces">Chat</span>
                     </a>
                 </li>
             </ul>
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -88,8 +88,9 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                                data-bs-toggle="dropdown" aria-expanded="false">      
+                                <img  width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header"/>
+                                <span sec:authentication="principal.nombre"></span>
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -104,7 +105,7 @@
                     </ul>
                 </div>
             </nav>
-
+            
             <div class="acceso">
                 <h4>No tiene acceso a esta funcionalidad</h4>
             </div>

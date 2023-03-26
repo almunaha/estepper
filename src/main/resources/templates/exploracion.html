@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="es"
- xmlns:th="https://www.thymeleaf.org"
- xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -16,43 +14,45 @@
     <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <title>Formulario de Exploración</title>
+    <title>Formulario de Exploración - Estepper</title>
 
 </head>
 
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
     <div class="d-flex">
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}"/>
+                <img width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
-            
-          <ul>
-            <li>
-                <a th:href="@{/}">
-                    <i class="fa-solid fa-house"></i>
-                    <span class="nombre-enlaces">Inicio</span>
-                </a>
-            </li>
-    
-            <li>
-                <a th:href="@{/actividades}">
-                    <i class="fa-solid fa-person-hiking"></i>
-                    <span class="nombre-enlaces">Actividades</span>
-                </a>
-            </li>
-       
-        </ul>
+
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+
+            </ul>
 
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -78,85 +78,91 @@
                 </div>
             </nav>
 
+            <div style="padding-top: 75px;">
 
-            <div class="bg-white border border-1 p-5 rounded-4 ">
-                <div
-                style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 5%;">
-                <h4 style="margin-top: 8%; color:azure">Exploración</h4>
-                </div>
-                <form class="form-perfil" method="post" th:action="@{'/process_exploracion/' + ${participante.id}}" th:object="${exploracion}">
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">¿Es la primera vez que acude al programa? </label>
-                        <select th:field="*{primeravez}"class="form-control" >
-                            <option th:value="si" th:text="SÍ"></option>
-                            <option th:value="no" th:text="NO"></option>
-                        </select> 
+                <div class="bg-white border border-1 p-5 rounded-4" style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
+                    <div style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 12px;">
+                        <h4 style="margin-top: 8%; color:azure">Exploración</h4>
                     </div>
-        
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">Género: </label>
-                        <select th:field="*{sexo}"class="form-control" >
-                            <option th:value="MASCULINO" th:text="MASCULINO"></option>
-                            <option th:value="FEMENINO" th:text="FEMENINO"></option>
-                        </select> 
-                    </div>
+                    <form class="form-perfil" method="post" th:action="@{'/process_exploracion/' + ${participante.id}}"
+                        th:object="${exploracion}">
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">¿Es la primera vez que acude
+                                al programa? </label>
+                            <select th:field="*{primeravez}" class="form-control">
+                                <option th:value="si" th:text="SÍ"></option>
+                                <option th:value="no" th:text="NO"></option>
+                            </select>
+                        </div>
 
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">Peso (kg): </label>
-                        <input id="peso" type="number" th:field="*{peso}" step="1" class="form-control" />
-                    </div>
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">Género: </label>
+                            <select th:field="*{sexo}" class="form-control">
+                                <option th:value="MASCULINO" th:text="MASCULINO"></option>
+                                <option th:value="FEMENINO" th:text="FEMENINO"></option>
+                            </select>
+                        </div>
 
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">Perímetro de cintura (cm): </label>
-                        <input type="number" th:field="*{cmcintura}" class="form-control" />
-                    </div>
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">Peso (kg): </label>
+                            <input id="peso" type="number" th:field="*{peso}" step="1" class="form-control" />
+                        </div>
 
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">Talla/Altura (cm): </label>
-                        <input id="altura" type="number" th:field="*{talla}" step="1" class="form-control" />
-                    </div>
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">Perímetro de cintura (cm):
+                            </label>
+                            <input type="number" th:field="*{cmcintura}" class="form-control" />
+                        </div>
 
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold;" class="col-4 col-form-label">Edad: </label>
-                        <input type="number" th:field="*{edad}" class="form-control" />
-                    </div>
-                  
-                    <div class="input-group mt-2">
-                        <label style="font-weight: bold; color:blue"class="col-4 col-form-label">IMC: </label>
-                        <input style="border-color: blue;" id="imc" type="number" th:field="*{imc}" class="form-control" readonly/>
-                    </div>
-                    <script>
-                        function calcularpuntuacion() {
-                            var peso = parseInt(document.getElementById('peso').value);
-                            var altura = parseInt(document.getElementById('altura').value);
-                            altura = altura/100;
-                            var resultado = peso/(altura*altura);
-                            document.getElementById('imc').value = resultado.toFixed(0);
-                        }
-                      
-                        document.getElementById('peso').addEventListener('input', calcularpuntuacion);
-                        document.getElementById('altura').addEventListener('input', calcularpuntuacion);
-                      
-                      </script>
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">Talla/Altura (cm): </label>
+                            <input id="altura" type="number" th:field="*{talla}" step="1" class="form-control" />
+                        </div>
 
-                    <button class="btn btn-info text-white mt-4 w-100" type="submit" onclick=myFunction()>Guardar</button>
-                    <script language="JavaScript">
-                        function myFunction() {
-                            if(confirm("Desea guardar los datos?")){
-                            alert("Datos guardados exitosamente");
-                            }else{
-                            alert("Usted cancelo la acción para guardar");
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold;" class="col-4 col-form-label">Edad: </label>
+                            <input type="number" th:field="*{edad}" class="form-control" />
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label style="font-weight: bold; color:blue" class="col-4 col-form-label">IMC: </label>
+                            <input style="border-color: blue;" id="imc" type="number" th:field="*{imc}"
+                                class="form-control" readonly />
+                        </div>
+                        <script>
+                            function calcularpuntuacion() {
+                                var peso = parseInt(document.getElementById('peso').value);
+                                var altura = parseInt(document.getElementById('altura').value);
+                                altura = altura / 100;
+                                var resultado = peso / (altura * altura);
+                                document.getElementById('imc').value = resultado.toFixed(0);
                             }
-                        }
-                    </script>
 
-                    <div style="float: right; margin-top: 1%;">
-                        <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();"> 
-                    </div>
-                    
-                </form>                      
-            </div> 
+                            document.getElementById('peso').addEventListener('input', calcularpuntuacion);
+                            document.getElementById('altura').addEventListener('input', calcularpuntuacion);
 
+                        </script>
+
+                        <button class="btn btn-info text-white mt-4 w-100" type="submit"
+                            onclick=myFunction()>Guardar</button>
+                        <script language="JavaScript">
+                            function myFunction() {
+                                if (confirm("Desea guardar los datos?")) {
+                                    alert("Datos guardados exitosamente");
+                                } else {
+                                    alert("Usted cancelo la acción para guardar");
+                                }
+                            }
+                        </script>
+
+                        <div style="float: right; margin-top: 1%;">
+                            <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                                onclick="window.print();">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

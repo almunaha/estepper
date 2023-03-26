@@ -22,7 +22,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-    <title>Grupo</title>
+    <title>Grupo - Estepper</title>
 
 
 </head>
@@ -57,7 +57,7 @@
 
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -83,90 +83,82 @@
                 </div>
             </nav>
 
+            <div style="padding-top: 75px;">
 
+                <div class="encabezado-grupo">
 
-
-            <div class="encabezado-grupo">
-
-                <h3 th:text="'GRUPO: ' + ${grupo.nombre}"></h3>
-                <!--  <h5 th:text="'Código: ' + ${grupo.codigo}"></h5>-->
-                <!--   <strong th:text="'Número total de participantes: ' + ${grupo.numParticipantes}"></strong>-->
-                <!--<strong th:text="'Fecha inicio grupo: ' + ${grupo.fechaInicioGrupo}"></strong>
+                    <h3 th:text="'GRUPO: ' + ${grupo.nombre}"></h3>
+                    <!--  <h5 th:text="'Código: ' + ${grupo.codigo}"></h5>-->
+                    <!--   <strong th:text="'Número total de participantes: ' + ${grupo.numParticipantes}"></strong>-->
+                    <!--<strong th:text="'Fecha inicio grupo: ' + ${grupo.fechaInicioGrupo}"></strong>
                     <strong th:text="'Fecha fin grupo: ' + ${mensaje}" th:if="${grupo.fechaFinGrupo == null}"></strong>
                     <strong th:text="'Fecha fin grupo: ' + ${grupo.fechaFinGrupo}" th:unless="${grupo.fechaFinGrupo == null}"></strong>-->
+                </div>
 
+                <div class="valores-progreso">
+                    <div class="valor1">
+                        <div class="flex-valor1">
 
-            </div>
+                            <div class="der-valor1">
+                                <div class="bottom-valor1">
+                                    <i class="icono fas fa-key" style="color: rgb(115, 161, 204)"></i>
+                                    <span th:text="'Código: ' + ${grupo.codigo}"></span>
+                                </div>
+                                <div class="bottom-valor1">
+                                    <i class="fa-solid fa-calendar-plus" style="color: rgb(115, 161, 204)"></i>
+                                    <span th:text="'Fecha creación: ' + ${grupo.fechaInicioGrupo}"></span>
+                                </div>
+                                <div class="bottom-valor1">
+                                    <i class="fa-solid fa-calendar-minus" style="color: rgb(115, 161, 204)"></i>
+                                    <span th:text="'Fecha finalización: ' + ${mensajito}"
+                                        th:if="${grupo.fechaFinGrupo == null}"></span>
+                                    <span th:text="'Fecha finalización: ' + ${grupo.fechaFinGrupo}"
+                                        th:unless="${grupo.fechaFinGrupo == null}"></span>
+                                </div>
 
-
-
-
-
-
-            <div class="valores-progreso">
-                <div class="valor1">
-                    <div class="flex-valor1">
-
-                        <div class="der-valor1">
-                            <div class="bottom-valor1">
-                                <i class="icono fas fa-key" style="color: rgb(115, 161, 204)"></i>
-                                <span th:text="'Código: ' + ${grupo.codigo}"></span>
                             </div>
-                            <div class="bottom-valor1">
-                                <i class="fa-solid fa-calendar-plus" style="color: rgb(115, 161, 204)"></i>
-                                <span th:text="'Fecha creación: ' + ${grupo.fechaInicioGrupo}"></span>
+                        </div>
+                    </div>
+
+                    <div class="valor">
+                        <div class="flex-valor">
+                            <div class="iz-valor">
+                                <i class="fa-solid fa-people-group" style="color: rgb(183, 120, 191)"></i>
                             </div>
-                            <div class="bottom-valor1">
-                                <i class="fa-solid fa-calendar-minus" style="color: rgb(115, 161, 204)"></i>
-                                <span th:text="'Fecha finalización: ' + ${mensajito}"
-                                    th:if="${grupo.fechaFinGrupo == null}"></span>
-                                <span th:text="'Fecha finalización: ' + ${grupo.fechaFinGrupo}"
-                                    th:unless="${grupo.fechaFinGrupo == null}"></span>
+                            <div class="der-valor">
+                                <div class="dato-valor"><span th:text="${grupo.numParticipantes}"></span></div>
+                                <div class="bottom-valor"><span>Participantes </span></div>
                             </div>
+                        </div>
+                    </div>
 
+                    <div class="valor">
+                        <div class="flex-valor">
+                            <div class="iz-valor">
+                                <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
+                            </div>
+                            <div class="der-valor">
+                                <div class="dato-valor"><span th:text="${grupo.id} + kg"></span></div>
+                                <div class="bottom-valor"><span>Peso perdido </span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="valor">
+                        <div class="flex-valor">
+                            <div class="iz-valor">
+                                <i class="fa-solid fa-check" style="color: rgb(122, 218, 103)"></i>
+                            </div>
+                            <div class="der-valor">
+                                <div class="dato-valor"><span th:text="${grupo.id}"></span></div>
+                                <div class="bottom-valor"><span>Asistencia media</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="valor">
-                    <div class="flex-valor">
-                        <div class="iz-valor">
-                            <i class="fa-solid fa-people-group" style="color: rgb(183, 120, 191)"></i>
-                        </div>
-                        <div class="der-valor">
-                            <div class="dato-valor"><span th:text="${grupo.numParticipantes}"></span></div>
-                            <div class="bottom-valor"><span>Participantes </span></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="valor">
-                    <div class="flex-valor">
-                        <div class="iz-valor">
-                            <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
-                        </div>
-                        <div class="der-valor">
-                            <div class="dato-valor"><span th:text="${grupo.id} + kg"></span></div>
-                            <div class="bottom-valor"><span>Peso perdido </span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="valor">
-                    <div class="flex-valor">
-                        <div class="iz-valor">
-                            <i class="fa-solid fa-check" style="color: rgb(122, 218, 103)"></i>
-                        </div>
-                        <div class="der-valor">
-                            <div class="dato-valor"><span th:text="${grupo.id}"></span></div>
-                            <div class="bottom-valor"><span>Asistencia media</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!--<div class="container-cards">
+                <!--<div class="container-cards">
 
                 <tr th:each="lis:${listadoParticipantesGrupo}">
 
@@ -190,49 +182,44 @@
 
             </div>-->
 
-            <div class="graficas-progreso">
+                <div class="graficas-progreso">
 
-                <div class="progreso-datos">
-                    <div class="header-progreso">
-                        <h4>Participantes</h4>
-                    </div>
-
-
-                    <div class="layout-grafica">
-                        <div class="container-cards">
-
-                            <tr th:each="lis:${listadoParticipantesGrupo}">
-
-                                <div class="cardi">
-                                    <div class="cover">
-                                        <img th:src="${lis.fotoParticipante}" alt="avatar">
-                                        <div class="img-back"></div>
-                                    </div>
-                                    <div class="descripcion">
-                                        <h5 th:text="${lis.nickname}"></h5>
-                                        <h5 th:text="${lis.codigo}"></h5>
-                                        <p th:text="${lis.edad} + ' ' + años"></p>
-                                        <div
-                                            style="display: flex; justify-content: space-around; flex-direction: column;">
-                                            <a class="botonGr" th:href="@{'/expediente/' + ${lis.id}}">Expediente</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </tr>
-
+                    <div class="progreso-datos">
+                        <div class="header-progreso">
+                            <h4>Participantes</h4>
                         </div>
 
+                        <div class="layout-grafica">
+                            <div class="container-cards">
 
+                                <tr th:each="lis:${listadoParticipantesGrupo}">
+
+                                    <div class="cardi">
+                                        <div class="cover">
+                                            <img th:src="${lis.fotoParticipante}" alt="avatar">
+                                            <div class="img-back"></div>
+                                        </div>
+                                        <div class="descripcion">
+                                            <h5 th:text="${lis.nickname}"></h5>
+                                            <h5 th:text="${lis.codigo}"></h5>
+                                            <p th:text="${lis.edad} + ' ' + años"></p>
+                                            <div
+                                                style="display: flex; justify-content: space-around; flex-direction: column;">
+                                                <a class="botonGr"
+                                                    th:href="@{'/expediente/' + ${lis.id}}">Expediente</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </tr>
+                            </div>
+                        </div>
                     </div>
 
 
-                </div>
-
-
-                <!--<div class="progreso-datos2">
-                    <!--<div class="header-progreso">
+                    <!--<div class="progreso-datos2">
+                    <div class="header-progreso">
                         <h4>Ver qué poner (tablón, chat grupal...)</h4>
                     </div>
 
@@ -247,7 +234,7 @@
                 </div>-->
 
 
-                <!--
+                    <!--
                     <div class="wrapper">
                 <section class="chat-area">
                     <header>
@@ -271,45 +258,37 @@
                 -->
 
 
-                <div class="wrapper">
-                    <section class="chat-area">
-                        <header>
-    
-                            <img src="/img/avatar1.png" alt="">
-                            <h4 th:text="${grupo.nombre}"></h4>
-                            <div class="details">
+                    <div class="wrapper">
+                        <section class="chat-area">
+                            <header>
+
+                                <img src="/img/avatar1.png" alt="">
+                                <h4 th:text="${grupo.nombre}"></h4>
+                                <div class="details">
+                                </div>
+                            </header>
+                            <div class="chat-box">
+                                <ul>
+                                    <li th:each="m : ${mensajes}">
+                                        <span th:text="${m.usuario.nickname} + ': '"></span>
+                                        <span th:text="${m.mensaje}"></span>
+                                    </li>
+                                </ul>
                             </div>
-                        </header>
-                        <div class="chat-box">
-                            <ul>
-                                <li th:each="m : ${mensajes}">
-                                    <span th:text="${m.usuario.nickname} + ': '"></span>
-                                    <span th:text="${m.mensaje}"></span>
-                                </li>
-                            </ul>
-                        </div>
-                        <form th:action="@{'/mensajes/guardar/' + ${grupo.id}}" th:object="${message}" method="post" class="typing-area">
-    
-                            <input type="text" th:field="*{mensaje}" class="input-field"
-                                placeholder="Escribe un mensaje aquí ..." autocomplete="off">
+                            <form th:action="@{'/mensajes/guardar/' + ${grupo.id}}" th:object="${message}" method="post"
+                                class="typing-area">
 
-                            <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+                                <input type="text" th:field="*{mensaje}" class="input-field"
+                                    placeholder="Escribe un mensaje aquí ..." autocomplete="off">
 
-                        </form>
-                    </section>
+                                <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+
+                            </form>
+                        </section>
+                    </div>
                 </div>
 
-
-            </div>
-
-
-           
-
-
-
-
-
-            <!--<div class="container-cards">
+                <!--<div class="container-cards">
 
                 <tr th:each="lis:${listadoParticipantesGrupo}">
 
@@ -333,22 +312,12 @@
 
             </div>-->
 
-            <div style="float: right;">
-                <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
-                    onclick="window.print();">
+                <div style="float: right;">
+                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                        onclick="window.print();">
+                </div>
+
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
         </div>
     </div>

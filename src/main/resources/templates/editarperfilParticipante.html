@@ -15,7 +15,7 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <title>Editar Perfil</title>
+    <title>Editar Perfil - Estepper</title>
 
 </head>
 
@@ -78,7 +78,7 @@
                 <li>
                     <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
-                        <span class="nombre-enlaces">Foro</span>
+                        <span class="nombre-enlaces">Chat</span>
                     </a>
                 </li>
 
@@ -86,7 +86,7 @@
 
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -96,7 +96,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                                <img  width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header"/>
+                                <span sec:authentication="principal.nombre"></span>
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -113,7 +114,7 @@
             </nav>
 
 
-            <div class="container">
+            <div class="container" style="padding-top: 50px;">
                 <div style="margin: 5%;" class="bg-white border border-1 p-5 rounded-4">
                   <div>
                     <h3 style="text-align: center; margin-bottom: 2%;">Editar perfil</h3>
@@ -194,7 +195,7 @@
                                 <img src="/img/avatar10.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
                             </div>
                             <div style="display: flex; justify-content: center;">
-                                <a th:href="@{'/eliminarcuenta/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px; background-color: red;">Eliminar Cuenta</a>
+                                <a th:href="@{'/eliminarcuenta/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px; background-color: rgb(237, 125, 125); color: white">Eliminar Cuenta</a>
                                 <a th:href="@{'/mostrarperfil/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px;">Cancelar</a>
                                <button class="btn mt-4" id="btn-edit" type="submit">Guardar</button>
                             </div>

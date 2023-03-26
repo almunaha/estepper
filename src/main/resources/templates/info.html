@@ -15,7 +15,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <title>Decision</title>
+    <title>Decisión - Estepper</title>
 </head>
 <body>
     <!--Bootstrap-->
@@ -76,7 +76,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                 <li>
                     <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
-                        <span class="nombre-enlaces">Foro</span>
+                        <span class="nombre-enlaces">Chat</span>
                     </a>
                 </li>
 
@@ -85,7 +85,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
         </div>
       
 
-       <div class="w-100">
+       <div class="w-100" style="margin-left: 250px">
         <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -93,7 +93,8 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                        <img  width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header"/>
+                        <span sec:authentication="principal.nombre"></span>
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -110,7 +111,7 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
           </nav>
           
           <div
-          style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 5%;">
+          style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 5%; padding-top: 75px;">
           <h4 style="margin-top: 8%; margin-bottom: 5%; color:azure">Diapositivas</h4>
         </div>
         

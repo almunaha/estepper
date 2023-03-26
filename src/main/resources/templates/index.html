@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-  <title>Inicio</title>
+  <title>Inicio - Estepper</title>
 
 </head>
 
@@ -95,7 +95,7 @@
         <li>
           <a th:href="@{/chat}">
             <i class="fa-solid fa-comments"></i>
-            <span class="nombre-enlaces">Foro</span>
+            <span class="nombre-enlaces">Chat</span>
           </a>
         </li>
 
@@ -103,7 +103,7 @@
 
     </div>
 
-    <div class="w-100">
+    <div id="contenido">
 
       <!-- encabezado -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
@@ -112,24 +112,28 @@
           <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
           <!--<i class="fa-regular fa-bell"></i> -->
+          <div class="der-header">
+            <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
 
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
-              </a>
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header" />
+                  <span sec:authentication="principal.nombre"></span>
+                </a>
 
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                <div class="dropdown-divider"></div>
-                <form th:action="@{/logout}" method="post">
-                  <button class="dropdown-item" type="submit">Cerrar sesión</a>
-                </form>
-              </div>
-            </li>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                  <div class="dropdown-divider"></div>
+                  <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                  </form>
+                </div>
+              </li>
 
-          </ul>
+            </ul>
+          </div>
         </div>
       </nav>
 
@@ -167,7 +171,7 @@
 
       <div class="utilidades">
 
-        <div class="row ">
+        <div class="row " style="width: 100%">
 
           <div class="col">
 

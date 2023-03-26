@@ -2,6 +2,10 @@ package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.hibernate.annotations.ManyToAny;
 
 import com.estepper.estepper.model.enums.Categoria;
 import com.estepper.estepper.model.enums.EstadoActividad;
@@ -13,6 +17,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 
 @Entity
@@ -44,10 +50,17 @@ public class Actividad implements Serializable {
 
     private String foto;
 
+    @ManyToAny
+    @JoinTable(
+        name = "asistencia_actividades",
+        joinColumns = @JoinColumn(name = "id_actividad"),
+        inverseJoinColumns = @JoinColumn(name = "id_participante"))
+    private Set<Participante> participantes = new HashSet<>();
+
     public Actividad(){}
 
     public Actividad(Integer id, String nombre, String ubicacion, String descripcion, Categoria categoria, Integer numParticipantes,
-            Integer plazas, LocalDateTime fechaRealizacion, EstadoActividad estado, String foto) {
+            Integer plazas, LocalDateTime fechaRealizacion, EstadoActividad estado, String foto, Set<Participante> participantes) {
         this.id = id;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
@@ -58,6 +71,15 @@ public class Actividad implements Serializable {
         this.fechaRealizacion = fechaRealizacion;
         this.estado = estado;
         this.foto = foto;
+        this.participantes = participantes;
+    }
+
+    public Set<Participante> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(Set<Participante> participantes) {
+        this.participantes = participantes;
     }
 
     public Integer getId() {

@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-    <title>Actividades</title>
+    <title>Actividades - Estepper</title>
 
 </head>
 
@@ -96,7 +96,7 @@
                 <li>
                     <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
-                        <span class="nombre-enlaces">Foro</span>
+                        <span class="nombre-enlaces">Chat</span>
                     </a>
                 </li>
 
@@ -104,7 +104,7 @@
 
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
 
             <!-- encabezado -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
@@ -113,74 +113,141 @@
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
                     <!--<i class="fa-regular fa-bell"></i> -->
+                    <div class="der-header">
+                        <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
 
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
-                            </a>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                        id="avatar-header" />
+                                    <span sec:authentication="principal.nombre"></span>
+                                </a>
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <div class="dropdown-divider"></div>
-                                <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
-                                </form>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    </form>
+                                </div>
+                            </li>
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
-            <!-- Layout actividades -->
-            <div>
-                <h3 class="m-4" style="text-align: center">Actividades</h3>
-                <!-- poner "tienes dos invitaciones y te lleve a otro sitio "-->
-                <div class="actividades-part">
+            <div style="padding-top: 75px;">
+                <div class="header-part">
+                    <div>
+                        <h3>Actividades</h3>
+                        <p>Revisa las invitaciones de tu coordinador</p>
+                    </div>
+                    <a class="btn-invit">Invitaciones</a>
+                </div>
+                <!-- Actividades y calendario -->
+                <div class="flex-act">
 
-                    <!-- Una actividad -->
-                    <div class="actividad" th:each="lis:${listado}">
+                    <!-- Layout actividades -->
+                    <!-- poner "tienes dos invitaciones y te lleve a otro sitio "-->
+                    <div class="actividades-part">
 
-                        <div class="foto-act">
-                            <img width="" th:src="${lis.foto}" />
-                        </div>
-                        <div class="datos-actividad">
-                            <div class="nombre-act" th:text="${lis.nombre}"></div>
-                            <!-- <div th:text="${lis.descripcion}"></div> un ver mas para la descripcion y más cosas -->
-                            <div class="dato-act">
-                                <i class="fa-solid fa-calendar-days"></i>
-                                <div th:text="${#temporals.format(lis.fechaRealizacion, 'dd MMM yyyy')}"></div>
-                            </div>
-                            <div class="dato-act">
-                                <i class="fa-solid fa-clock"></i>
-                                <div th:text="${#temporals.format(lis.fechaRealizacion, 'HH:mm')}"></div>
-                            </div>
-                            <div class="dato-act">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <div th:text="${lis.ubicacion}"></div>
-                            </div>
-                            <div class="dato-act">
-                                <span>Plazas disponibles:</span>
-                                <div th:text="${lis.plazas}"></div>
-                            </div>
+                        <!-- Una actividad -->
+                        <div class="actividad" th:each="lis:${listado}">
 
-                            <div class="layout-apuntar">
-                                <a class="btn" id="btn-part">Inscripción</a>
+                            <div class="foto-act">
+                                <img th:src="${lis.foto}" />
+                            </div>
+                            <div class="datos-actividad">
+                                <a th:href="@{'/actividad/' + ${lis.id}}" class="nombre-act"
+                                    th:text="${lis.nombre}"></a>
+                                <!-- <div th:text="${lis.descripcion}"></div> un ver mas para la descripcion y más cosas -->
+                                <div class="dato-act">
+                                    <i class="fa-solid fa-calendar-days" style="color:rgb(212, 88, 88)"></i>
+                                    <div th:text="${#temporals.format(lis.fechaRealizacion, 'dd MMM yyyy')}"></div>
+                                </div>
+                                <div class="dato-act">
+                                    <i class="fa-solid fa-clock" style="color:rgb(212, 88, 88)"></i>
+                                    <div th:text="${#temporals.format(lis.fechaRealizacion, 'HH:mm')}"></div>
+                                </div>
+                                <div class="dato-act">
+                                    <i class="fa-solid fa-location-dot" style="color:rgb(212, 88, 88)"></i>
+                                    <div th:text="${lis.ubicacion}"></div>
+                                </div>
+                                <div class="dato-act">
+                                    <span>Plazas disponibles:</span>
+                                    <div th:text="${lis.plazas}"></div>
+                                </div>
+
+                                <div class="layout-apuntar">
+                                    <a class="btn" id="btn-part" style="cursor: pointer"
+                                        th:onclick="inscripcion(/*[[${lis.id}]]*/)">Inscribirme</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                    <script>
+                        function inscripcion(id) {
+                            Swal.fire({
+                                position: 'center',
+                                title: '<h4>¿Estás seguro de realizar la inscripción?</h4>',
+                                text: 'Una vez acepte, se añadirá a tu listado de actividades',
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                cancelButtonText: '<a href="/actividad/' + id + '" id="enlace">Más información</a>',
+                                confirmButtonText: '<a href="/confirmar/' + id + '" id ="conf">Confirmar</a>',
+                                confirmButtonColor: "#6ca4c7",
+
+                                didRender: function () {
+                                    const cancel = document.querySelector('#enlace');
+                                    const confirm = document.querySelector('#conf');
+
+                                    if (cancel && confirm) {
+                                        cancel.style.color = 'white';
+                                        confirm.style.color = 'white';
+                                    }
+                                },
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+
+                            })
+                        }
+                    </script>
+
+                    <!-- Calendario o asistencia confirmada -->
+                    <div class="eventos">
+                        <div class="asistencia">
+                            <h5>Asistencia confirmada</h5>
+                        </div>
+
+                        <p>Recordatorio de actividades inscritas</p>
+
+                        <div class="layout-asis">
+                            <div class="asis-indi" th:each="asis:${asistencia}">
+                                <div class="iz-asis">
+                                    <div style="font-size: 1.3rem" th:text="${#temporals.format(asis.fechaRealizacion, 'dd')}"></div>
+                                    <div th:text="${#temporals.format(asis.fechaRealizacion, 'MMM')}"></div>
+                                </div>
+                                <div class="der-asis">
+                                    <div th:text="${asis.nombre}"></div>
+                                    <div th:text="${#temporals.format(asis.fechaRealizacion, 'HH:mm')}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
-
-
-
-    </div>
 
 </body>
 

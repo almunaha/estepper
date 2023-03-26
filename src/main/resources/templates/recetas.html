@@ -23,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
         integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <title>Recetas</title>
+    <title>Recetas - Estepper</title>
 </head>
 
 <body>
@@ -87,7 +87,7 @@
                 <li>
                     <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
-                        <span class="nombre-enlaces">Foro</span>
+                        <span class="nombre-enlaces">Chat</span>
                     </a>
                 </li>
 
@@ -96,7 +96,7 @@
         </div>
 
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -105,7 +105,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    id="avatar-header" />
+                                <span sec:authentication="principal.nombre"></span>
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -120,337 +122,351 @@
                     </ul>
                 </div>
             </nav>
+            <div style="padding-top: 75px;">
 
-            <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
-                <div style="display: flex; justify-content: center; flex-direction: column;">
-                    <div>
-                        <h3 style="text-align: center;">Recetas</h3>
-                    </div>
-
-                </div>
-            </div>
-            <div style="margin: 1%;" class="bg-white border border-1 p-5 rounded-4 ">
-                <div style="display: flex; justify-content: center; flex-direction: column;">
-
-                    <!--TABLA RECETAS-->
-                    <div th:if="${listaRecetas.empty}">
+                <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
+                    <div style="display: flex; justify-content: center; flex-direction: column;">
                         <div>
-                            <h6 style="text-align: center;">¡No existe ninguna receta aún!</h6>
-                            <!--PRUEBA JYTHON-->
-                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria"
-                                    th:href="@{/nutrientes}">
-                                    Jython</a>
-                            </div>
-                            <!--FIN PRUEBA JYTHON-->
-                        </div>
-                    </div>
-                    <div th:unless="${listaRecetas.empty}">
-                        <!--BOTONES GEOMETRÍA NUTRICIONAL, RECOMENDACIONESRECETAS Y NUEVARECETA-->
-                        <div style="display: flex; justify-content: center;">
-                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" href="#">
-                                    Nutrientes</a>
-                            </div>
-                            <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Recetas" href="#">
-                                    Recomendaciones</a></div>
-                            <div><a class="btn" id="btn-part" title="Crear" href="#" onclick="abrirIframe('mi-modal2')">
-                                    Nueva receta</a></div>
-                        </div>
-                        <!--BUSCADOR-->
-                        <form class="d-flex" id="search-form" style="margin-top: 2%;">
-                            <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar"
-                                id="search-input">
-                        </form>
-                        <div class="d-flex" style="margin-top: 1%">
-                            <div class="input-group me-2">
-                                <span class="input-group-text" id="want-addon">Quiero:</span>
-                                <select class="form-select" id="want-select" multiple>
-                                    <!-- opciones del select de alimentos que quiere -->
-                                    <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-text" id="dont-want-addon">No quiero:</span>
-                                <select class="form-select" id="dont-want-select" multiple>
-                                    <!-- opciones del select de alimentos que no quiere -->
-                                    <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
-                                    </option>
-                                </select>
-                            </div>
-                            <button class="btn btn-outline-secondary" type="button" id="filter-button">Filtrar</button>
+                            <h3 style="text-align: center;">Recetas</h3>
                         </div>
 
-                        <script>
-                            $(document).ready(function () {
-                                var recetas = $('.material');
-                                var noResultadosBtn = $('#no-resultados-btn'); 
-                            
-                                $('#filter-button').click(function () {
-                                    var want = $('#want-select').val().map(function (val) { return val.toLowerCase(); });
-                                    var dontWant = $('#dont-want-select').val().map(function (val) { return val.toLowerCase(); });
-                            
-                                    var resultados = recetas.filter(function () {
-                                        var ingredients = $(this).find('.ingredientes').text().toLowerCase();
-                                        return want.some(function (wantVal) { return ingredients.includes(wantVal); }) &&
-                                               !dontWant.some(function (dontWantVal) { return ingredients.includes(dontWantVal); });
-                                    });
-                            
-                                    recetas.hide();
-                                    resultados.show();
-                            
-                                    if (resultados.length === 0) {
-                                        noResultadosBtn.show();
-                                    } else {
-                                        noResultadosBtn.hide();
-                                    }
-                                });
-                            
-                                // Mostrar todas las recetas al cargar la página
-                                recetas.show();
-                            });
-                            </script>
-                            
-                        <script>
-                            $(document).ready(function () {
-                                // Obtener los elementos de la lista de materiales
-                                var materiales = $('.material');
-                        
-                                // Manejar la presentación de resultados cuando se envía el formulario
-                                $('#search-form').keyup(function (event) {
-                                    event.preventDefault();
-                                    var busqueda = $('#search-input').val().toLowerCase();
-                        
-                                    // Filtrar la lista de materiales para obtener los resultados
-                                    var resultados = materiales.filter(function () {
-                                        var descripcion = $(this).find('.cover').text().toLowerCase();
-                                        return descripcion.includes(busqueda);
-                                    });
-                        
-                                    // Ocultar todos los elementos de la lista de materiales y mostrar solo los resultados
-                                    materiales.hide();
-                                    resultados.show();
-                        
-                                });
-                        
-                                // Mostrar todos los elementos de la lista de materiales al cargar la página
-                                materiales.show();
-                            });
-                        </script>
-                        
-                        <!-- BOTÓN RECETAS PARECIDAS -->
-                        <div style="display: flex; justify-content: center;">
-                            <div style="margin-top: 5%;"><a  style="display: none;" class="btn btn-primary" id="no-resultados-btn" title="Recetas parecidas" href="#">
-                                ¿Quieres algunas recetas parecidas?</a></div>
-                        </div>
+                    </div>
+                </div>
+                <div style="margin: 1%;" class="bg-white border border-1 p-5 rounded-4 ">
+                    <div style="display: flex; justify-content: center; flex-direction: column;">
+
                         <!--TABLA RECETAS-->
-                        <div class="table-responsive"
-                            style="display: flex; flex-wrap: wrap; flex-direction: row; margin-top: 3%; align-items: stretch;">
-                            <div class="material" th:each="lis:${listaRecetas}">
-                                <div class="cover">
-                                    <h5 class="mt-0 mb-1" th:text="${lis.nombre}">Nombre de la receta</h5>
-                                    <div class="ingredientes" style="display: none;">
-                                        <div th:each="ing:${lis.ingredientes}">
-                                            <span
-                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'"></span>
+                        <div th:if="${listaRecetas.empty}">
+                            <div>
+                                <h6 style="text-align: center;">¡No existe ninguna receta aún!</h6>
+                                <!--PRUEBA JYTHON-->
+                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria"
+                                        th:href="@{/nutrientes}">
+                                        Jython</a>
+                                </div>
+                                <!--FIN PRUEBA JYTHON-->
+                            </div>
+                        </div>
+                        <div th:unless="${listaRecetas.empty}">
+                            <!--BOTONES GEOMETRÍA NUTRICIONAL, RECOMENDACIONESRECETAS Y NUEVARECETA-->
+                            <div style="display: flex; justify-content: center;">
+                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" href="#">
+                                        Nutrientes</a>
+                                </div>
+                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Recetas" href="#">
+                                        Recomendaciones</a></div>
+                                <div><a class="btn" id="btn-part" title="Crear" href="#"
+                                        onclick="abrirIframe('mi-modal2')">
+                                        Nueva receta</a></div>
+                            </div>
+                            <!--BUSCADOR-->
+                            <form class="d-flex" id="search-form" style="margin-top: 2%;">
+                                <input class="form-control me-2" type="search" placeholder="Buscar..."
+                                    aria-label="Buscar" id="search-input">
+                            </form>
+                            <form method="get" action="/recetasparecidas">
+                                <div class="d-flex" style="margin-top: 1%">
+                                    <div class="input-group me-2">
+                                        <span class="input-group-text" id="want-addon">Quiero:</span>
+                                        <select class="form-select" id="want-select" name="want" multiple>
+                                            <!-- opciones del select de alimentos que quiere -->
+                                            <option th:each="ing : ${listaIng}" th:value="${ing.id}"
+                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="dont-want-addon">No quiero:</span>
+                                        <select class="form-select" id="dont-want-select" name="dontWant" multiple>
+                                            <!-- opciones del select de alimentos que no quiere -->
+                                            <option th:each="ing : ${listaIng}" th:value="${ing.id}"
+                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+                                </div>
+                            </form>
+
+                            <script>
+                                $(document).ready(function () {
+                                    var recetas = $('.material');
+                                    var noResultadosBtn = $('#no-resultados-btn');
+
+                                    $('#filter-button').click(function () {
+                                        var want = $('#want-select').val().map(function (val) { return val.toLowerCase(); });
+                                        var dontWant = $('#dont-want-select').val().map(function (val) { return val.toLowerCase(); });
+
+                                        var resultados = recetas.filter(function () {
+                                            var ingredients = $(this).find('.ingredientes').text().toLowerCase();
+                                            return want.some(function (wantVal) { return ingredients.includes(wantVal); }) &&
+                                                !dontWant.some(function (dontWantVal) { return ingredients.includes(dontWantVal); });
+                                        });
+
+                                        recetas.hide();
+                                        resultados.show();
+
+                                        if (resultados.length === 0) {
+                                            noResultadosBtn.show();
+                                        } else {
+                                            noResultadosBtn.hide();
+                                        }
+                                    });
+
+                                    // Mostrar todas las recetas al cargar la página
+                                    recetas.show();
+                                });
+                            </script>
+
+                            <script>
+                                $(document).ready(function () {
+                                    // Obtener los elementos de la lista de materiales
+                                    var materiales = $('.material');
+
+                                    // Manejar la presentación de resultados cuando se envía el formulario
+                                    $('#search-form').keyup(function (event) {
+                                        event.preventDefault();
+                                        var busqueda = $('#search-input').val().toLowerCase();
+
+                                        // Filtrar la lista de materiales para obtener los resultados
+                                        var resultados = materiales.filter(function () {
+                                            var descripcion = $(this).find('.cover').text().toLowerCase();
+                                            return descripcion.includes(busqueda);
+                                        });
+
+                                        // Ocultar todos los elementos de la lista de materiales y mostrar solo los resultados
+                                        materiales.hide();
+                                        resultados.show();
+
+                                    });
+
+                                    // Mostrar todos los elementos de la lista de materiales al cargar la página
+                                    materiales.show();
+                                });
+                            </script>
+
+                            <!-- BOTÓN RECETAS PARECIDAS -->
+                            <div style="display: flex; justify-content: center;">
+                                <div style="margin-top: 5%;">
+                                    <a style="display: none;" class="btn btn-primary" id="no-resultados-btn"
+                                        title="Recetas parecidas"
+                                        th:href="@{/recetasparecidas(want=${want},dontWant=${dontWant})}">
+                                        ¿Quieres algunas recetas parecidas?
+                                    </a>
+                                </div>
+                            </div>
+                            <!--TABLA RECETAS-->
+                            <div class="table-responsive"
+                                style="display: flex; flex-wrap: wrap; flex-direction: row; margin-top: 3%; align-items: stretch;">
+                                <div class="material" th:each="lis:${listaRecetas}">
+                                    <div class="cover">
+                                        <h5 class="mt-0 mb-1" th:text="${lis.nombre}">Nombre de la receta</h5>
+                                        <div class="ingredientes" style="display: none;">
+                                            <div th:each="ing:${lis.ingredientes}">
+                                                <span
+                                                    th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="descripcion">
-                                    <div style="display: flex; flex-direction: column;">
-                                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" data-recipe-id="${lis.id}"
-                                            onclick="abrirIframe('mi-modal', 'mi-iframe-${lis.id}')"
-                                            title="Ver"><i class="fa-solid fa-eye"></i></a>
-                                
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
-                                            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-                                                <div class="modal-content" style="margin: 0; min-height: 80%;">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Receta</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Cerrar"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <iframe style="height: 100%; width: 100%; margin: 0%;"
-                                                            th:id="'mi-iframe-' + ${lis.id}"
-                                                            th:src="@{recetas/{link}(link=${lis.link}) }"></iframe>
+                                    <div class="descripcion">
+                                        <div style="display: flex; flex-direction: column;">
+                                            <a class="btn" id="btn-part" data-bs-toggle="tooltip"
+                                                data-recipe-id="${lis.id}"
+                                                onclick="abrirIframe('mi-modal', 'mi-iframe-${lis.id}')" title="Ver"><i
+                                                    class="fa-solid fa-eye"></i></a>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+                                                <div
+                                                    class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                                    <div class="modal-content" style="margin: 0; min-height: 80%;">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Receta</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <iframe style="height: 100%; width: 100%; margin: 0%;"
+                                                                th:id="'mi-iframe-' + ${lis.id}"
+                                                                th:src="@{recetas/{link}(link=${lis.link}) }"></iframe>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                                function abrirIframe(modalId, iframeId) {
+                                                    const iframe = document.getElementById(iframeId);
+                                                    const modal = new bootstrap.Modal(document.getElementById(modalId));
+                                                    modal.show();
+                                                }
+                                            </script>
+
                                         </div>
-                                
-                                        <script>
-                                            function abrirIframe(modalId, iframeId) {
-                                                const iframe = document.getElementById(iframeId);
-                                                const modal = new bootstrap.Modal(document.getElementById(modalId));
-                                                modal.show();
-                                            }
-                                        </script>
-                                
+
                                     </div>
-                                
+
                                 </div>
-                                
                             </div>
                         </div>
-                    </div>
-                    <!--CREAR RECETA-->
-                    <div>
-                        <h5 style="text-align: center; margin-top: 3%;">¿Quieres crear una receta nueva?</h5>
-                    </div>
-                    <form class="form-perfil" method="post" th:action="@{/process_receta}" th:object="${lareceta}"
-                        enctype="multipart/form-data">
-                        <div class="input-group mt-2">
-                            <label class="col-4 col-form-label">Nombre: </label>
-                            <input type="text" th:field="*{nombre}" class="form-control" required />
+                        <!--CREAR RECETA-->
+                        <div>
+                            <h5 style="text-align: center; margin-top: 3%;">¿Quieres crear una receta nueva?</h5>
                         </div>
-                        <div class="input-group mt-2">
-                            <label class="col-form-label col-sm-4">Ingredientes:</label>
-                            <div class="col-sm-8 mb-2">
-                                <select th:field="*{ingredientes}" class="form-control" multiple id="lista-alimentos" required>
-                                    <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
-                                    </option>
-                                </select>
-                                <script language="JavaScript" th:inline="javascript">
-                                    $(document).ready(function () {
-                                        // Obtener la lista de opciones del select
-                                        var opciones = $("#lista-alimentos option");
+                        <form class="form-perfil" method="post" th:action="@{/process_receta}" th:object="${lareceta}"
+                            enctype="multipart/form-data">
+                            <div class="input-group mt-2">
+                                <label class="col-4 col-form-label">Nombre: </label>
+                                <input type="text" th:field="*{nombre}" class="form-control" required />
+                            </div>
+                            <div class="input-group mt-2">
+                                <label class="col-form-label col-sm-4">Ingredientes:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <select th:field="*{ingredientes}" class="form-control" multiple
+                                        id="lista-alimentos" required>
+                                        <option th:each="ing : ${listaIng}" th:value="${ing.id}"
+                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                        </option>
+                                    </select>
+                                    <script language="JavaScript" th:inline="javascript">
+                                        $(document).ready(function () {
+                                            // Obtener la lista de opciones del select
+                                            var opciones = $("#lista-alimentos option");
 
-                                        // Crear un input de búsqueda
-                                        var inputBusqueda = $('<form style="margin-right: 10%;"><input type="text" class="form-control mt-2" placeholder="Buscar..."></form>');
+                                            // Crear un input de búsqueda
+                                            var inputBusqueda = $('<form style="margin-right: 10%;"><input type="text" class="form-control mt-2" placeholder="Buscar..."></form>');
 
-                                        // Agregar el input de búsqueda antes del select
-                                        $("#lista-alimentos").before(inputBusqueda);
+                                            // Agregar el input de búsqueda antes del select
+                                            $("#lista-alimentos").before(inputBusqueda);
 
-                                        // Escuchar el evento keyup del input de búsqueda
-                                        inputBusqueda.keyup(function () {
-                                            // Obtener el término de búsqueda
-                                            var term = $(this).val().toLowerCase();
+                                            // Escuchar el evento keyup del input de búsqueda
+                                            inputBusqueda.keyup(function () {
+                                                // Obtener el término de búsqueda
+                                                var term = $(this).val().toLowerCase();
 
-                                            // Filtrar las opciones que contengan el término de búsqueda
-                                            var opcionesFiltradas = opciones.filter(function () {
-                                                return $(this).text().toLowerCase().indexOf(term) > -1;
+                                                // Filtrar las opciones que contengan el término de búsqueda
+                                                var opcionesFiltradas = opciones.filter(function () {
+                                                    return $(this).text().toLowerCase().indexOf(term) > -1;
+                                                });
+
+                                                // Actualizar las opciones del select con las opciones filtradas
+                                                $("#lista-alimentos").empty().append(opcionesFiltradas);
                                             });
 
-                                            // Actualizar las opciones del select con las opciones filtradas
-                                            $("#lista-alimentos").empty().append(opcionesFiltradas);
-                                        });
+                                            // Restaurar todas las opciones del select cuando se cierre
+                                            $("#lista-alimentos").on("hidden.bs.select", function () {
+                                                $("#lista-alimentos").empty().append(opciones);
+                                            });
 
-                                        // Restaurar todas las opciones del select cuando se cierre
-                                        $("#lista-alimentos").on("hidden.bs.select", function () {
-                                            $("#lista-alimentos").empty().append(opciones);
+                                            $("#lista-alimentos").keydown("hidden.bs.select", function () {
+                                                $("#lista-alimentos").empty().append(opciones);
+                                            });
                                         });
-
-                                        $("#lista-alimentos").keydown("hidden.bs.select", function () {
-                                            $("#lista-alimentos").empty().append(opciones);
-                                        });
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <div style="display: flex; flex-direction: row;">
-                            <div class="input-group mt-2">
-                                <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
-                                <div class="col-sm-8 mb-2">
-                                    <input type="file" th:name="file" class="form-control" required />
+                                    </script>
                                 </div>
                             </div>
-                            <div style="margin-left: 10%; " class="input-group mt-2">
-                                <label class="col-form-label col-sm-2">Pagina:</label>
-                                <div class="col-sm-3 mb-2">
-                                    <input type="number" th:field="*{pag}" class="form-control" />
+                            <div style="display: flex; flex-direction: row;">
+                                <div class="input-group mt-2">
+                                    <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
+                                    <div class="col-sm-8 mb-2">
+                                        <input type="file" th:name="file" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div style="margin-left: 10%; " class="input-group mt-2">
+                                    <label class="col-form-label col-sm-2">Pagina:</label>
+                                    <div class="col-sm-3 mb-2">
+                                        <input type="number" th:field="*{pag}" class="form-control" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>
-                    </form>
-                    <!-- Modal -->
-                    <div class="modal fade" id="mi-modal2" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Crear receta</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Cerrar"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form class="form-perfil" method="post" th:action="@{/process_receta}"
-                                        th:object="${lareceta}" enctype="multipart/form-data">
-                                        <div class="input-group mt-2">
-                                            <label class="col-4 col-form-label">Nombre: </label>
-                                            <input type="text" th:field="*{nombre}" class="form-control" required />
-                                        </div>
-                                        <div class="input-group mt-2">
-                                            <label class="col-form-label col-sm-4">Ingredientes:</label>
-                                            <div class="col-sm-8 mb-2">
-                                                <select th:field="*{ingredientes}" class="form-control" multiple
-                                                    id="lista-alimentos1" required>
-                                                    <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
-                                                    </option>
-                                                </select>
-                                                <script language="JavaScript" th:inline="javascript">
-                                                    $(document).ready(function () {
-                                                        // Obtener la lista de opciones del select
-                                                        var opciones = $("#lista-alimentos1 option");
+                            <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>
+                        </form>
+                        <!-- Modal -->
+                        <div class="modal fade" id="mi-modal2" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Crear receta</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-perfil" method="post" th:action="@{/process_receta}"
+                                            th:object="${lareceta}" enctype="multipart/form-data">
+                                            <div class="input-group mt-2">
+                                                <label class="col-4 col-form-label">Nombre: </label>
+                                                <input type="text" th:field="*{nombre}" class="form-control" required />
+                                            </div>
+                                            <div class="input-group mt-2">
+                                                <label class="col-form-label col-sm-4">Ingredientes:</label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <select th:field="*{ingredientes}" class="form-control" multiple
+                                                        id="lista-alimentos1" required>
+                                                        <option th:each="ing : ${listaIng}" th:value="${ing.id}"
+                                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                                        </option>
+                                                    </select>
+                                                    <script language="JavaScript" th:inline="javascript">
+                                                        $(document).ready(function () {
+                                                            // Obtener la lista de opciones del select
+                                                            var opciones = $("#lista-alimentos1 option");
 
-                                                        // Crear un input de búsqueda
-                                                        var inputBusqueda = $('<form style="margin-right:15%;"> <input type="text" class="form-control mt-2" placeholder="Buscar..."></form>');
+                                                            // Crear un input de búsqueda
+                                                            var inputBusqueda = $('<form style="margin-right:15%;"> <input type="text" class="form-control mt-2" placeholder="Buscar..."></form>');
 
-                                                        // Agregar el input de búsqueda antes del select
-                                                        $("#lista-alimentos1").before(inputBusqueda);
+                                                            // Agregar el input de búsqueda antes del select
+                                                            $("#lista-alimentos1").before(inputBusqueda);
 
-                                                        // Escuchar el evento keyup del input de búsqueda
-                                                        inputBusqueda.keyup(function () {
-                                                            // Obtener el término de búsqueda
-                                                            var term = $(this).val().toLowerCase();
+                                                            // Escuchar el evento keyup del input de búsqueda
+                                                            inputBusqueda.keyup(function () {
+                                                                // Obtener el término de búsqueda
+                                                                var term = $(this).val().toLowerCase();
 
-                                                            // Filtrar las opciones que contengan el término de búsqueda
-                                                            var opcionesFiltradas = opciones.filter(function () {
-                                                                return $(this).text().toLowerCase().indexOf(term) > -1;
+                                                                // Filtrar las opciones que contengan el término de búsqueda
+                                                                var opcionesFiltradas = opciones.filter(function () {
+                                                                    return $(this).text().toLowerCase().indexOf(term) > -1;
+                                                                });
+
+                                                                // Actualizar las opciones del select con las opciones filtradas
+                                                                $("#lista-alimentos1").empty().append(opcionesFiltradas);
                                                             });
 
-                                                            // Actualizar las opciones del select con las opciones filtradas
-                                                            $("#lista-alimentos1").empty().append(opcionesFiltradas);
-                                                        });
+                                                            // Restaurar todas las opciones del select cuando se cierre
+                                                            $("#lista-alimentos1").on("hidden.bs.select", function () {
+                                                                $("#lista-alimentos1").empty().append(opciones);
+                                                            });
 
-                                                        // Restaurar todas las opciones del select cuando se cierre
-                                                        $("#lista-alimentos1").on("hidden.bs.select", function () {
-                                                            $("#lista-alimentos1").empty().append(opciones);
+                                                            $("#lista-alimentos1").keydown("hidden.bs.select", function () {
+                                                                $("#lista-alimentos1").empty().append(opciones);
+                                                            });
                                                         });
-
-                                                        $("#lista-alimentos1").keydown("hidden.bs.select", function () {
-                                                            $("#lista-alimentos1").empty().append(opciones);
-                                                        });
-                                                    });
-                                                </script>
+                                                    </script>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="input-group mt-2">
-                                            <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
-                                            <div class="col-sm-6 mb-2">
-                                                <input type="file" th:name="file" class="form-control" required />
+                                            <div class="input-group mt-2">
+                                                <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
+                                                <div class="col-sm-6 mb-2">
+                                                    <input type="file" th:name="file" class="form-control" required />
+                                                </div>
+                                                <label class="col-form-label col-sm-4">Pagina:</label>
+                                                <div class="col-sm-4 mb-2">
+                                                    <input type="number" th:field="*{pag}" class="form-control" />
+                                                </div>
                                             </div>
-                                            <label class="col-form-label col-sm-4">Pagina:</label>
-                                            <div class="col-sm-4 mb-2">
-                                                <input type="number" th:field="*{pag}" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cerrar</button>
+                                            <button class="btn btn-info text-white mt-4 w-100"
+                                                type="submit">Crear</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cerrar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>

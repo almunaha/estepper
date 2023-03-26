@@ -16,7 +16,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <title>Participantes</title>
+    <title>Participantes - Estepper</title>
 </head>
 
 <body>
@@ -49,7 +49,7 @@
 
         </div>
 
-        <div class="w-100">
+        <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -75,187 +75,189 @@
                 </div>
             </nav>
 
+            <div style="padding-top: 60px;">
+
+                <div style="background-color: whitesmoke; border-radius: 12px; margin-left:5%; margin-right: 5%;"
+                    class="p-4 mt-5" id="participantes">
+                    <div style="display: flex; justify-content: center; justify-items: center;">
+                        <h4>Listado de participantes</h4>
+                    </div>
 
 
-            <div style="background-color: whitesmoke; border-radius: 5%; margin-left:5%; margin-right: 5%;"
-                class="p-4 mt-5" id="participantes">
-                <div style="display: flex; justify-content: center; justify-items: center;">
-                    <h4>Listado de participantes</h4>
-                </div>
-
-
-                <!-- Buscador de participantes -->
-                <div class="d-flex justify-content-center mt-3">
-                    <form class="w-75" id="buscadorPart">
-                        <div style="margin-bottom: 5%; display: flex; justify-content: center; align-items: center;"
-                            class="input-group">
-                            <input style="height: 5%;" id="filtrarParticipantes" class="form-control light-table-filter"
-                                data-table="tablePart" type="text" placeholder="Buscar...">
-                            <label style=" margin-left: 2%; margin-right: 1%;" for="estado"
-                                class="col-1 col-form-label">Estado:</label>
-                            <select style="height: 5%;" name="estado" id="estado">
-                                <option value="Todos">Todos</option>
-                                <option value="BAJA">Baja</option>
-                                <option value="ALTA">Alta</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
+                    <!-- Buscador de participantes -->
+                    <div class="d-flex justify-content-center mt-3">
+                        <form class="w-75" id="buscadorPart">
+                            <div style="margin-bottom: 5%; display: flex; justify-content: center; align-items: center;"
+                                class="input-group">
+                                <input style="height: 5%;" id="filtrarParticipantes"
+                                    class="form-control light-table-filter" data-table="tablePart" type="text"
+                                    placeholder="Buscar...">
+                                <label style=" margin-left: 2%; margin-right: 1%;" for="estado"
+                                    class="col-1 col-form-label">Estado:</label>
+                                <select style="height: 5%;" name="estado" id="estado">
+                                    <option value="Todos">Todos</option>
+                                    <option value="BAJA">Baja</option>
+                                    <option value="ALTA">Alta</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
 
 
 
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        (function ($) {
-                            $('#filtrarParticipantes').keyup(function () {
-                                var rex = new RegExp($(this).val(), 'i');
-                                $('.buscarParticipantes tr').hide();
-                                $('.buscarParticipantes tr').filter(function () {
-                                    return rex.test($(this).text());
-                                }).show();
-                            })
-                        }(jQuery));
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            (function ($) {
+                                $('#filtrarParticipantes').keyup(function () {
+                                    var rex = new RegExp($(this).val(), 'i');
+                                    $('.buscarParticipantes tr').hide();
+                                    $('.buscarParticipantes tr').filter(function () {
+                                        return rex.test($(this).text());
+                                    }).show();
+                                })
+                            }(jQuery));
 
-                    });
-                </script>
+                        });
+                    </script>
 
-                <!--ALERTA MODAL -->
+                    <!--ALERTA MODAL -->
 
-                <div class="modal fade" id="alertaModal1" tabindex="-1" aria-labelledby="alertaModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="alertaModalLabel"><i
-                                        class="fa-solid fa-triangle-exclamation" style="color: goldenrod;"></i> No se ha
-                                    podido completar la acción </h5>
+                    <div class="modal fade" id="alertaModal1" tabindex="-1" aria-labelledby="alertaModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="alertaModalLabel"><i
+                                            class="fa-solid fa-triangle-exclamation" style="color: goldenrod;"></i> No
+                                        se ha
+                                        podido completar la acción </h5>
+
+                                </div>
+                                <div class="modal-body">
+                                    <p>El participante ya pertenece a un grupo.</p>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                        style="float:right">Cerrar</button>
+                                </div>
 
                             </div>
-                            <div class="modal-body">
-                                <p>El participante ya pertenece a un grupo.</p>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                    style="float:right">Cerrar</button>
-                            </div>
-
                         </div>
                     </div>
-                </div>
 
 
 
-                <!-- Tabla de participantes -->
-                <div class="table-responsive">
-                    <table class="table tablePart" id="tablePart">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Alias</th>
-                                <th scope="col">Código</th>
-                                <th scope="col">Email</th>
-                                <th scope="col" id="columnaGrupo">Id Grupo</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
+                    <!-- Tabla de participantes -->
+                    <div class="table-responsive">
+                        <table class="table tablePart" id="tablePart">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Alias</th>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col" id="columnaGrupo">Id Grupo</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acciones</th>
 
-                            </tr>
-                        </thead>
-                        <tbody class="buscarParticipantes">
-                            <tr th:each="lis:${listado}">
-                                <td> <img width="55" th:src="${lis.fotoParticipante}" /></td>
-                                <td th:text="${lis.nickname}"></td>
-                                <td style="font-weight: bold;" th:text="${lis.codigo}"></td>
-                                <td th:text="${lis.email}"></td>
-                                <td th:text="${lis.idGrupo}" id="columnaGr"></td>
-                                <td th:text="${lis.estadoCuenta}"></td>
-                                <td>
-                                    <!--BOTONES CON ICONOS Y TOOLTIP-->
-                                    <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Ver expediente"
-                                        th:href="@{'/expediente/' + ${lis.id}}"><i
-                                            class="fa-solid fa-id-card-clip"></i></a>
-                                    <a class="btn btn-unir" id="btn-part" data-bs-toggle="tooltip"
-                                        title="Añadir a un grupo" th:href="@{'/unirAgrupo/' + ${lis.id}}"><i
-                                            class="fa-solid fa-user-plus"></i></a>
-                                    <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Materiales"
-                                        th:href="@{'/materiales/' + ${lis.id}}"><i
-                                            class="fa-solid fa-folder-open"></i></a>
+                                </tr>
+                            </thead>
+                            <tbody class="buscarParticipantes">
+                                <tr th:each="lis:${listado}">
+                                    <td> <img width="55" th:src="${lis.fotoParticipante}" /></td>
+                                    <td th:text="${lis.nickname}"></td>
+                                    <td style="font-weight: bold;" th:text="${lis.codigo}"></td>
+                                    <td th:text="${lis.email}"></td>
+                                    <td th:text="${lis.idGrupo}" id="columnaGr"></td>
+                                    <td th:text="${lis.estadoCuenta}"></td>
+                                    <td>
+                                        <!--BOTONES CON ICONOS Y TOOLTIP-->
+                                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Ver expediente"
+                                            th:href="@{'/expediente/' + ${lis.id}}"><i
+                                                class="fa-solid fa-id-card-clip"></i></a>
+                                        <a class="btn btn-unir" id="btn-part" data-bs-toggle="tooltip"
+                                            title="Añadir a un grupo" th:href="@{'/unirAgrupo/' + ${lis.id}}"><i
+                                                class="fa-solid fa-user-plus"></i></a>
+                                        <a class="btn" id="btn-part" data-bs-toggle="tooltip" title="Materiales"
+                                            th:href="@{'/materiales/' + ${lis.id}}"><i
+                                                class="fa-solid fa-folder-open"></i></a>
 
-                                    </li>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                        </li>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                <div style="float: right; margin-right: 60px; margin-bottom: 10%;">
-                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
-                        onclick="window.print();">
-                </div>
+                    <div style="float: right; margin-right: 60px; margin-bottom: 10%;">
+                        <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                            onclick="window.print();">
+                    </div>
 
-                <!--PAGINACIÓN-->
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item" th:each="page: ${paginas}">
-                            <a class="page-link" th:href="@{|/listado?page=${page}}" th:text="${page}"></a>
-                        </li>
-                    </ul>
-                </nav>
+                    <!--PAGINACIÓN-->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:each="page: ${paginas}">
+                                <a class="page-link" th:href="@{|/listado?page=${page}}" th:text="${page}"></a>
+                            </li>
+                        </ul>
+                    </nav>
 
-                <!--FUNCIÓN PARA FILTRAR POR ESTADO-->
+                    <!--FUNCIÓN PARA FILTRAR POR ESTADO-->
 
-                <script type="text/javascript">
+                    <script type="text/javascript">
 
-                    document.addEventListener('DOMContentLoaded', function () {
-                        var btnEstado = document.getElementById('estado');
-                        const btn_unir = document.getElementById('btn-unir');
-                        const tablaParticipantes = document.querySelector('.tablePart tbody');
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var btnEstado = document.getElementById('estado');
+                            const btn_unir = document.getElementById('btn-unir');
+                            const tablaParticipantes = document.querySelector('.tablePart tbody');
 
-                        btnEstado.addEventListener('change', function () {
-                            if (btnEstado.value == "Todos") {
-                                for (let i = 0; i < tablaParticipantes.rows.length; i++) {
-                                    tablaParticipantes.rows[i].style.display = "";
-                                }
-                            }
-                            if (btnEstado.value == "ALTA" || btnEstado.value == "BAJA") {
-                                for (let i = 0; i < tablaParticipantes.rows.length; i++) {
-                                    const estadoTabla = tablaParticipantes.rows[i].cells[5].textContent;
-                                    if (estadoTabla !== btnEstado.value) {
-                                        tablaParticipantes.rows[i].style.display = "none";
-                                    } else {
+                            btnEstado.addEventListener('change', function () {
+                                if (btnEstado.value == "Todos") {
+                                    for (let i = 0; i < tablaParticipantes.rows.length; i++) {
                                         tablaParticipantes.rows[i].style.display = "";
                                     }
                                 }
-                            }
+                                if (btnEstado.value == "ALTA" || btnEstado.value == "BAJA") {
+                                    for (let i = 0; i < tablaParticipantes.rows.length; i++) {
+                                        const estadoTabla = tablaParticipantes.rows[i].cells[5].textContent;
+                                        if (estadoTabla !== btnEstado.value) {
+                                            tablaParticipantes.rows[i].style.display = "none";
+                                        } else {
+                                            tablaParticipantes.rows[i].style.display = "";
+                                        }
+                                    }
+                                }
+                            });
+
                         });
+                    </script>
 
-                    });
-                </script>
+                    <script>
+                        $(document).ready(function () {
 
-                <script>
-                    $(document).ready(function () {
+                            const tablaParticipantes = document.querySelector('.tablePart tbody');
 
-                        const tablaParticipantes = document.querySelector('.tablePart tbody');
-
-                        $('#columnaGrupo').hide();
-                        for (let i = 0; i < tablaParticipantes.rows.length; i++) {
-                            tablaParticipantes.rows[i].cells[4].style.display = "none";
-                        }
-
-
-                        $('.btn-unir').click(function (event) {
-                            var idGrupo = $(this).closest('tr').find('td:eq(4)').text();
-
-                            if (idGrupo !== '0') {
-                                event.preventDefault();
-                                $('#alertaModal1').modal('show');
+                            $('#columnaGrupo').hide();
+                            for (let i = 0; i < tablaParticipantes.rows.length; i++) {
+                                tablaParticipantes.rows[i].cells[4].style.display = "none";
                             }
+
+
+                            $('.btn-unir').click(function (event) {
+                                var idGrupo = $(this).closest('tr').find('td:eq(4)').text();
+
+                                if (idGrupo !== '0') {
+                                    event.preventDefault();
+                                    $('#alertaModal1').modal('show');
+                                }
+                            });
                         });
-                    });
-                </script>
+                    </script>
 
 
+
+                </div>
 
             </div>
-
-
         </div>
     </div>
 

@@ -798,10 +798,40 @@ public class ParticipanteController {
             return "actividadesCoor";
         }
 
-        else if (user instanceof Participante)
+        else if (user instanceof Participante){
+            //asistencia confirmada
+            List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
+            model.addAttribute("asistencia", asistencia); 
             return "actividades";
+        }
         else
             return "redirect:/";
+    }
+
+    @GetMapping("/actividad/{id}")
+    public String actividad(Model model, @PathVariable Integer id){
+        Actividad acti = act.actividad(id);
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("actividad", acti);
+
+        return "actividad";
+    }
+
+    @GetMapping("/confirmar/{id}")
+    public String confirmar(@PathVariable Integer id){
+        Usuario user = getUsuario();
+
+        if(user instanceof Participante){
+            Actividad acti = act.actividad(id);
+            Participante parti = participante.findById(user.getId()).get();
+
+            acti.getParticipantes().add(parti);
+            act.guardar(acti);
+
+            return "redirect:/actividades";
+        }
+        
+        else return "redirect:/";
     }
 
     //CUADERNO
@@ -1011,19 +1041,25 @@ public class ParticipanteController {
             return "acceso";
     }
 
+    @GetMapping("/recetasparecidas")
+    public String recetasParecidas(@RequestParam(required = false) String[] want, @RequestParam(required = false) String[] dontwant, Model model) {
+        Usuario u = getUsuario();
+        model.addAttribute("user", u);
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            if(want.length == 0) model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
+            else{
+                //List<String> recetas = new ArrayList();
+               // recetas = service.recetasparecidas(want, dontwant);
+            } 
+            //getRecetasById(recetas.get(i))
+            //model.addAttribute("listarecetas")
+        return "recetasparecidas";    
+        } else return "acceso";  
+    }
+
+    //BORRAR CUANDO ESTÉ HECHO LO DE MACHINE LEARNING
     @GetMapping("/nutrientes")
     public String nutrientes(){
-        // Properties props = new Properties();
-        // props.setProperty("python.path", "/src/main/java/com/estepper/estepper/machinelearning.py");
-        // PythonInterpreter.initialize(System.getProperties(), props, new String[0]);
-
-        // try (PythonInterpreter interpreter = new PythonInterpreter()) {
-        //     interpreter.exec("from machinelearning.py import geometria");
-        //     PyFunction function = interpreter.get("geometria", PyFunction.class);
-        //     PyObject result = function.__call__();
-        //     if(result.toString().equals("0")) return "acceso";
-        //     else return "index";
-        // }
         return service.getHello();
     }
 }

@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto">
 
-    <title>Perfil</title>
+    <title>Perfil - Estepper</title>
 </head>
 
 <body>
@@ -80,7 +80,7 @@
                 <li>
                     <a th:href="@{/chat}">
                         <i class="fa-solid fa-comments"></i>
-                        <span class="nombre-enlaces">Foro</span>
+                        <span class="nombre-enlaces">Chat</span>
                     </a>
                 </li>
 
@@ -88,7 +88,7 @@
 
         </div>
 
-        <div class="w-100" style="background-color:#afc0cb">
+        <div class="w-100" style="background-color:#afc0cb; margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -98,7 +98,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                                <img  width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header"/>
+                                <span sec:authentication="principal.nombre"></span>
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -113,42 +114,14 @@
                     </ul>
                 </div>
             </nav>
-            <!--<div style="text-align: center;">
-
-                <div style="margin: 20px; color: #13405d;">
-                    <h3 th:text="${user.nickname}">Nombre</h3>
-                </div>
-
-                <div style="display: flex; text-align: left;">
-                    <img  width="100" th:src="${user.fotoParticipante}" />
-                    <ul style="list-style: none;margin-right: 200px;margin-left: 150px;">
-                        <li><i class="icono fas fa-key"></i><span th:text="' Código: ' + ${user.codigo}" /></li>
-                        <li><i class="icono fas fa-envelope"></i><span th:text="' Email: ' + ${user.email}" /></li>
-                        <li><i class="icono fas fa-thumbtack"></i><span
-                                th:text="' Estado de la cuenta: ' + ${user.estadoCuenta}" />
-                        </li>
-                        <li><i class="icono fas fa-anchor"></i><span th:text="' Sexo: ' + ${participante.sexo}" /></li>
-                    </ul>
-                    <ul style="list-style: none;">
-                        <li><i class="icono fas fa-bug"></i><span th:text="' Edad: ' + ${participante.edad}" /></li>
-                        <li><i class="icono fas fa-list-alt"></i><span
-                                th:text="' Asistencia: ' + ${participante.asistencia}" />
-                        </li>
-                        <li><i class="icono fas fa-weight"></i><span
-                                th:text="' Pérdida de peso: ' + ${participante.perdidaDePeso}" /></li>
-                        <li><i class="icono fas fa-people-carry"></i><span                
-                                th:text="' Grupo: ' + ${grupo}" />
-                    </ul>
-                </div>
-
-                <a class="btn" id="btn-part"th:href="@{'/perfil/' + ${user.id}}" >Editar perfil</a>
-            </div>-->
-
 
             <div class="cuerpoPerfil">
 
+                <div class="row justify-content-end" style="width: 100%; margin-right: 150px;">
+                    <a class="btn" style="width: 15%" id="btn-part" th:href="@{'/perfil/' + ${user.id}}" >Editar perfil</a>
+                </div>
 
-                <div class="cardi2">
+                <div class="cardi2 mt-3">
 
                     <div class="imagenPerfil">
                         <img  width="100" th:src="${user.fotoParticipante}" alt="imagenPerfil"/>
@@ -158,7 +131,6 @@
                     
                         <h3 th:text="${user.nickname}">Nombre</h3>
 
-
                         <!--<div class="btn-group" role="group">
                             <button type="button" class="btn btn-outline-primary" id="botonContacto">Contacto</button>
                             <button type="button" class="btn btn-outline-primary" id="botonDetalles">Detalles</button>
@@ -167,7 +139,7 @@
     
                         <div class="centroPerfil">
     
-                        
+                          
                             <div class="box" id="contacto">
     
                                <!-- <p><i class="icono fas fa-key"></i><span th:text="' Código: ' + ${user.codigo}" /></p>-->
@@ -266,15 +238,10 @@
                                         </div>
                                     </div>
                                   </div>
-
-                                  
-
             
                                 </div>
 
-                                <div class="row" style="float: right;">
-                                    <a class="btn mt-5" style="float:right" id="btn-part" th:href="@{'/perfil/' + ${user.id}}" >Editar perfil</a>
-                                  </div>
+                              
 
                                
                    
