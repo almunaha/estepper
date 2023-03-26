@@ -103,7 +103,10 @@
 
             <span th:text="'Asistentes: '+ ${lis.numParticipantes}"></span>
 
-
+            <a class="btn-gest" th:href="@{'/actividad/' + ${lis.id}}">Información</i></a>
+            <a class="btn-gest">Invitaciones</a>
+            <a class="btn-gest"><i class="fa-solid fa-pen"></i></a>
+            <a class="btn-gest"><i class="fa-solid fa-trash"></i></a>
           </div>
 
 

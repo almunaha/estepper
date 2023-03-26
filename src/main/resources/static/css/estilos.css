@@ -41,7 +41,7 @@ a{
 }
 
 #header.active{
-    margin-left: -11.7%;
+    margin-left: -11.7%; /* hacer una resta para que sea justo */
     transition: all 0.5s ease;
 }
 
@@ -145,7 +145,7 @@ a{
 #header{
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     padding-left: 8px;
-    padding-right: 20px;
+    padding-right: 45px;
 
     position: fixed;
     top: 0;
@@ -154,6 +154,13 @@ a{
 
     z-index: 999; /* determina que elementos están encima de otros */
     transition: all 0.5s ease;
+}
+
+.der-header{
+    display: flex;
+    align-items: center;
+    gap: 5%;
+    cursor: pointer;
 }
 
 /* estos hay que pasarlo a ids*/
@@ -183,6 +190,11 @@ a{
 
 .burger .btn:hover{
     background-color: rgb(237, 237, 237);
+}
+
+#contenido{
+    width: 100%;
+    margin-left: 250px;
 }
 
 /* boton grupos y participantes */
@@ -263,6 +275,16 @@ a{
 #btn-part, #btn-admi{
     color: white;
     background-color: #6ca4c7;
+}
+
+#tablePart thead{
+    background-color: rgb(137, 201, 208);
+    color: white;
+}
+
+#tablePart td, th {
+    vertical-align: middle;
+    text-align: center; 
 }
 
 /* Administrador */
@@ -736,6 +758,11 @@ input[type="date"] {
 
     .d-flex {
       width: 100%;
+    }
+
+    #contenido{
+        width: 100%;
+        margin-left: 0px;
     }
 
     #sidebar-container {

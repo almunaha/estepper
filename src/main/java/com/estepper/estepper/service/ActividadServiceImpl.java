@@ -24,5 +24,15 @@ public class ActividadServiceImpl implements ActividadService{
     public List<Actividad> listado() {
         return(List<Actividad>) repo.findAll();
     }
+
+    @Override
+    public Actividad actividad(Integer id){
+        return repo.findById(id).get();
+    }
+
+    @Override
+    public List<Actividad> asistenciaParticipante(Integer id){
+        return(List<Actividad>) repo.findByParticipantesIdOrderByFechaRealizacionAsc(id);
+    }
     
 }

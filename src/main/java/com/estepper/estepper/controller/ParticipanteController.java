@@ -813,10 +813,40 @@ public class ParticipanteController {
             return "actividadesCoor";
         }
 
-        else if (user instanceof Participante)
+        else if (user instanceof Participante){
+            //asistencia confirmada
+            List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
+            model.addAttribute("asistencia", asistencia); 
             return "actividades";
+        }
         else
             return "redirect:/";
+    }
+
+    @GetMapping("/actividad/{id}")
+    public String actividad(Model model, @PathVariable Integer id){
+        Actividad acti = act.actividad(id);
+        model.addAttribute("user", getUsuario());
+        model.addAttribute("actividad", acti);
+
+        return "actividad";
+    }
+
+    @GetMapping("/confirmar/{id}")
+    public String confirmar(@PathVariable Integer id){
+        Usuario user = getUsuario();
+
+        if(user instanceof Participante){
+            Actividad acti = act.actividad(id);
+            Participante parti = participante.findById(user.getId()).get();
+
+            acti.getParticipantes().add(parti);
+            act.guardar(acti);
+
+            return "redirect:/actividades";
+        }
+        
+        else return "redirect:/";
     }
 
     //CUADERNO
