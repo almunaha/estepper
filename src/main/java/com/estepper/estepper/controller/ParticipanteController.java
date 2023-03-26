@@ -841,6 +841,8 @@ public class ParticipanteController {
             Participante parti = participante.findById(user.getId()).get();
 
             acti.getParticipantes().add(parti);
+            acti.setNumParticipantes(acti.getNumParticipantes() + 1);
+            acti.setPlazas(acti.getPlazas() - 1);
             act.guardar(acti);
 
             return "redirect:/actividades";
