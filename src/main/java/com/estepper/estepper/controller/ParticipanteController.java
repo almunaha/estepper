@@ -720,22 +720,7 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
-    /*
-     * @GetMapping("/objetivos/editar/{id}")
-     * public ModelAndView mostrarFormularioDeEditarObjetivo(@PathVariable(name =
-     * "id") Integer id){
-     * ModelAndView modelo = new ModelAndView("editar_objetivo");
-     * 
-     * Objetivo o = obj.getObjetivo(id);
-     * 
-     * modelo.addObject("objetivo", o);
-     * modelo.addObject("user", getUsuario());
-     * 
-     * return modelo;
-     * }
-     */
-
-    @GetMapping("/objetivos/editar/{id}")
+   @GetMapping("/objetivos/editar/{id}")
     public String editarObjetivo(@PathVariable("id") Integer id, Model model) {
         Objetivo o = obj.getObjetivo(id);
         if (getUsuario() instanceof Participante && getUsuario().getId() == o.getParticipante().getId()) {

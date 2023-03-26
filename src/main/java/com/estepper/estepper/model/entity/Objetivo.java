@@ -45,23 +45,17 @@ public class Objetivo implements Serializable{
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = ISO.DATE)
     @NotNull
-    private Date fechaRecordatorio;
-
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = ISO.DATE)
-    @NotNull
     private Date fechaVencimiento;
 
     @Enumerated(value = EnumType.STRING)
     private EstadoObjetivo estado;
 
-    public Objetivo(Integer id, Participante participante, String titulo, String descripcion, Repeticion repeticion, Date fechaRecordatorio, Date fechaVencimiento, EstadoObjetivo estado) {
+    public Objetivo(Integer id, Participante participante, String titulo, String descripcion, Repeticion repeticion, Date fechaVencimiento, EstadoObjetivo estado) {
         this.id = id;
         this.participante = participante;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.repeticion = repeticion;
-        this.fechaRecordatorio = fechaRecordatorio;
         this.fechaVencimiento = fechaVencimiento;
         this.estado = estado;
     }
@@ -108,14 +102,6 @@ public class Objetivo implements Serializable{
 
     public void setRepeticion(Repeticion repeticion) {
         this.repeticion = repeticion;
-    }
-
-    public Date getFechaRecordatorio() {
-        return fechaRecordatorio;
-    }
-
-    public void setFechaRecordatorio(Date fechaRecordatorio) {
-        this.fechaRecordatorio = fechaRecordatorio;
     }
 
     public Date getFechaVencimiento() {

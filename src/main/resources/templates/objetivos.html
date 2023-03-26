@@ -11,9 +11,12 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/objetivos.css}">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
+    <script src="/js/objetivos.js"></script>
+
 
 
     <!--PARA GRÁFICOS-->
@@ -51,10 +54,10 @@
 
                 <li>
                     <a th:href="@{/cuaderno}">
-                      <i class="fa-solid fa-pen"></i>
-                      <span class="nombre-enlaces">Cuaderno</span>
+                        <i class="fa-solid fa-pen"></i>
+                        <span class="nombre-enlaces">Cuaderno</span>
                     </a>
-                  </li>
+                </li>
 
                 <li>
                     <a th:href="@{/actividades}">
@@ -121,10 +124,10 @@
             </nav>
 
             <!-- OBJETIVOS -->
-           
+
             <div class="p-4 mt-5" id="grupos">
                 <div>
-                    <h4>Mis objetivos</h4> 
+                    <h4>Mis objetivos</h4>
                 </div>
 
                 <!-- Tabla de objetivos -->
@@ -134,57 +137,65 @@
                             <th scope="col">Título</th>
                             <th scope="col">Descripción</th>
                             <th scope="col">Fecha vencimiento</th>
-                            <th scope="col">Fecha recordatorio</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Repeticion</th>
                             <th scope="col">Acciones</th>
 
                         </tr>
                     </thead>
-                    <tbody class = "buscarObjetivos">
+                    <tbody class="buscarObjetivos">
                         <tr th:each="lis:${listaObjetivos}">
                             <td th:text="${lis.titulo}"></td>
                             <td th:text="${lis.descripcion}"></td>
                             <td th:text="${lis.fechaVencimiento}"></td>
-                            <td th:text="${lis.fechaRecordatorio}"></td>
                             <td th:text="${lis.estadoObjetivo}"></td>
                             <td th:text="${lis.repeticion}"></td>
-                            <td>   
-                                <a class="fa-solid fa-eye fa-2x" id="btn-icono" data-bs-toggle="tooltip" title="Ver objetivo" th:href="@{'/unObjetivo/' + ${lis.id}}"></a>
-                                <a class="fa-solid fa-pen-to-square fa-2x" id="btn-icono" data-bs-toggle="tooltip"  title="Editar objetivo" th:href="@{'/objetivos/editar/' + ${lis.id}} "></a>
-                                <a class="fa-solid fa-trash-can fa-2x" id="btn-icono" data-bs-toggle="tooltip"  title="Eliminar objetivo" th:href="@{'/objetivos/eliminar/'+ ${lis.id}}"></a>
+                            <td>
+                                <a class="fa-solid fa-eye fa-2x" id="btn-icono" data-bs-toggle="tooltip"
+                                    title="Ver objetivo" th:href="@{'/unObjetivo/' + ${lis.id}}"></a>
+                                <a class="fa-solid fa-pen-to-square fa-2x" id="btn-icono" data-bs-toggle="tooltip"
+                                    title="Editar objetivo" th:href="@{'/objetivos/editar/' + ${lis.id}} "></a>
+                                <a class="fa-solid fa-trash-can fa-2x" id="btn-icono" data-bs-toggle="tooltip"
+                                    title="Eliminar objetivo" th:href="@{'/objetivos/eliminar/'+ ${lis.id}}"></a>
                             </td>
-            
+
                         </tr>
                     </tbody>
                 </table>
 
-                    <a class="btn" id="btn-part" th:href="@{/objetivos/nuevo}">Crear un objetivo nuevo</a>
-                   
-            </div>
+                <a class="btn" id="btn-part" th:href="@{/objetivos/nuevo}">Crear un objetivo nuevo</a>
 
 
-            <div class = izquierda-objetivos>
-                <div class="calendario">
-                    <div class="meses">
-                        <i class="fa fa-angle-left prev"></i>
-                        <div class="fecha">Marzo 2023</div>
-                        <i class="fa fa-angle-right next"></i>
-
+                <div class="izquierda-objetivos">
+                    <div class="calendario">
+                        <div class="meses">
+                            <i class="fa fa-angle-left prev"></i>
+                            <div class="fecha"></div>
+                            <i class="fa fa-angle-right next"></i>
+                        </div>
+                        <div class="diasSemana">
+                            <div>Lunes</div>
+                            <div>Martes</div>
+                            <div>Miércoles</div>
+                            <div>Jueves</div>
+                            <div>Viernes</div>
+                            <div>Sábado</div>
+                            <div>Domingo</div>
+                        </div>
+                        <div class="dias"></div>
                     </div>
                 </div>
+
             </div>
 
 
-            
+
         </div>
     </div>
-          
-           
 
-             
+    </div>
 
-        </div>
+
 
 
 
