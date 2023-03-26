@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.estepper.estepper.model.entity.FaseValoracion;
 import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Findrisc;
+import com.estepper.estepper.model.entity.Invitacion;
 import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
@@ -57,6 +58,7 @@ import com.estepper.estepper.model.entity.AlimentacionVal;
 import com.estepper.estepper.model.entity.AlimentosConsumidos;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.EstadoInvitacion;
 import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
@@ -73,6 +75,7 @@ import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.PythonService;
 import com.estepper.estepper.service.GrupoService;
+import com.estepper.estepper.service.InvitacionService;
 
 @Controller
 public class ParticipanteController {
@@ -116,6 +119,9 @@ public class ParticipanteController {
     @Autowired
     @Qualifier("PythonServiceImpl")
     private PythonService service;
+
+    @Autowired
+    private InvitacionService invi;
      
 
     @GetMapping("/menu")
@@ -834,6 +840,63 @@ public class ParticipanteController {
         }
         
         else return "redirect:/";
+    }
+
+    @GetMapping("/confirmar_invitacion/{id}")
+    public String confirmarInvitacion(@PathVariable Integer id){
+        Usuario user = getUsuario();
+
+        if(user instanceof Participante){
+            Invitacion invitacion = invi.findById(id);
+
+            Actividad acti = invitacion.getActividad();
+            Participante parti = invitacion.getParticipante();
+
+            acti.getParticipantes().add(parti);
+            acti.setNumParticipantes(acti.getNumParticipantes() + 1);
+            acti.setPlazas(acti.getPlazas() - 1);
+            act.guardar(acti);
+
+            invitacion.setEstado(EstadoInvitacion.ACEPTADA);
+            invi.guardar(invitacion);
+
+            return "redirect:/panel_invitaciones";
+        }
+        
+        else return "redirect:/";
+    }
+
+    @GetMapping("/rechazar_invitacion/{id}")
+    public String rechazarInvitacion(@PathVariable Integer id){
+        Usuario user = getUsuario();
+
+        if(user instanceof Participante){
+            Invitacion invitacion = invi.findById(id);
+
+            invitacion.setEstado(EstadoInvitacion.RECHAZADA);
+            invi.guardar(invitacion);
+
+            return "redirect:/panel_invitaciones";
+        }
+        
+        else return "redirect:/";
+    }
+
+    @GetMapping("/panel_invitaciones")
+    public String invitacionesPart(Model model){
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+
+        List<Invitacion> pendientes = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(), EstadoInvitacion.PENDIENTE);
+        model.addAttribute("pendientes", pendientes);
+
+        List<Invitacion> aceptadas = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(), EstadoInvitacion.ACEPTADA);
+        model.addAttribute("aceptadas", aceptadas);
+
+        List<Invitacion> rechazadas = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(), EstadoInvitacion.RECHAZADA);
+        model.addAttribute("rechazadas", rechazadas);
+
+        return "invitacionesPart";
     }
 
     //CUADERNO

@@ -52,7 +52,7 @@
                 <h4>Estepper</h4>
             </div>
 
-            <ul>
+            <ul th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}">
                 <li>
                     <a th:href="@{/}">
                         <i class="fa-solid fa-house"></i>
@@ -103,6 +103,22 @@
 
             </ul>
 
+            <ul th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">
+                <li>
+                  <a th:href="@{/}">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="nombre-enlaces">Inicio</span>
+                  </a>
+                </li>
+        
+                <li>
+                  <a th:href="@{/actividades}">
+                    <i class="fa-solid fa-person-hiking"></i>
+                    <span class="nombre-enlaces">Actividades</span>
+                  </a>
+                </li>
+            </ul>
+
         </div>
 
         <div class="w-100" style="margin-left: 250px">
@@ -115,13 +131,13 @@
 
                     <!--<i class="fa-regular fa-bell"></i> -->
                     <div class="der-header">
-                        <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                        <a th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
 
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
                                         id="avatar-header" />
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>

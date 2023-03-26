@@ -34,5 +34,10 @@ public class ActividadServiceImpl implements ActividadService{
     public List<Actividad> asistenciaParticipante(Integer id){
         return(List<Actividad>) repo.findByParticipantesIdOrderByFechaRealizacionAsc(id);
     }
+
+    @Override
+    public void borrar(Actividad act){
+        repo.delete(act);
+    }
     
 }

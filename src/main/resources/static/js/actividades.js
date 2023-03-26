@@ -37,5 +37,56 @@ $(document).ready(function () {
         $(".inscripcion").show();
     });
 
+    //INVITACIONES
+    
+    // campo grupos
+    $(".campo-grupos").show();
+    // campo buscador
+    $(".campo-buscador").hide();
+
+    $("#tipo").change(function () {
+
+        if ($(this).val() === 'GRUPAL') {
+            $(".campo-grupos").show();
+            $(".campo-buscador").hide();
+        } else {
+            $(".campo-grupos").hide();
+            $(".campo-buscador").show();
+        }
+
+    });
+
+    $('.btn-gest-eliminar').click(function() {
+        var id = $(this).data('id');
+
+        Swal.fire({
+            position: 'center',
+            title: '<h4>¿Estás seguro de eliminar la actividad?</h4>',
+            showConfirmButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: "rgb(218, 77, 73)",
+            confirmButtonText: '<a href="/eliminar_actividad/' + id + '" id ="conf">Eliminar</a>',
+                        
+            didRender: function () {
+                const confirm = document.querySelector('#conf');
+
+                if (confirm) {
+                    confirm.style.color = 'white';
+                }
+            },
+
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+
+        })
+
+    });
+
+
 
 });

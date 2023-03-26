@@ -8,4 +8,5 @@ public interface ActividadService {
     public List<Actividad> listado();
     public Actividad actividad(Integer id);
     public List<Actividad> asistenciaParticipante(Integer id);
+    public void borrar(Actividad act);
 }

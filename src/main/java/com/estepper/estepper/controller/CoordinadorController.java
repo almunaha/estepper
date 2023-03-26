@@ -48,6 +48,7 @@ import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.entity.Invitacion;
 import com.estepper.estepper.model.entity.Materiales;
 
 import com.estepper.estepper.service.ParticipanteService;
@@ -55,6 +56,7 @@ import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.GrupoService;
+import com.estepper.estepper.service.InvitacionService;
 import com.estepper.estepper.service.MaterialService;
 
 @Controller
@@ -77,6 +79,9 @@ public class CoordinadorController {
 
     @Autowired
     private ActividadService act;
+
+    @Autowired
+    private InvitacionService inv; 
 
     @GetMapping("/listado")
     public String participantes(@RequestParam Map<String, Object> params, Model model) {
@@ -283,5 +288,56 @@ public class CoordinadorController {
         }
         return "redirect:/actividades";
     }
+
+    @GetMapping("/invitaciones/{id}")
+    public String invitaciones(@PathVariable Integer id, Model model){
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+
+        Actividad actividad = act.actividad(id);
+        model.addAttribute("actividad", actividad);
+
+        List<Grupo> grupos = grupo.listaGrupos(user.getId());
+        model.addAttribute("grupos", grupos);
+
+        model.addAttribute("invitacion", new Invitacion());
+
+        List<Invitacion> invitaciones = inv.listadoCoor((Coordinador) user);
+        model.addAttribute("invitaciones", invitaciones);
+
+        return "invitaciones";
+    }
+
+    @PostMapping("/process_invitacion")
+    public String process_invitacion(@ModelAttribute Actividad invitacion, @ModelAttribute String tipo){
+
+        if(tipo == "GRUPAL"){
+
+        }
+
+        else {
+
+        }
+
+        return "redirect:/actividades"; //mandar a invitaciones otra vez
+    }
+
+    @GetMapping("/eliminar_actividad/{id}")
+    public String process_invitacion(@PathVariable(name = "id") Integer id, Model model){
+
+        Actividad actividad = act.actividad(id);
+
+        //1. Eliminar las invitaciones a esa actividad
+        List<Invitacion> invitaciones = inv.listadoByAct(actividad);
+
+        for(Invitacion invitacion : invitaciones)
+            inv.borrar(invitacion);
+
+        //2. Eliminar la actividad
+        act.borrar(actividad);
+
+        return "redirect:/actividades";
+    }
+
 
 }
