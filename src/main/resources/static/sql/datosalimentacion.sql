@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-03-2023 a las 23:24:18
+-- Tiempo de generación: 28-03-2023 a las 00:19:34
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -85,7 +85,6 @@ INSERT INTO `alimentacion` (`id`, `fibra_alimentaria`, `grasas_saturadas`, `hidr
 (38, 0.5, 0, 1.9, 'Pepino', 1, 0.3, 0.002, 'FRUTA', 'UNIDADES'),
 (39, 0, 2, 0.6, 'Huevo cocido', 1, 6, 0.0154, 'HUEVO', 'UNIDADES'),
 (40, 0, 2, 0.6, 'Huevo', 1, 6, 0.14, 'HUEVO', 'UNIDADES'),
-(41, 0, 2, 0.6, 'Huevo', 1, 6, 0.14, 'HUEVO', 'UNIDADES'),
 (42, 0, 2, 9, 'Leche', 200, 6, 0.1, 'LACTEOS', 'MILILITROS'),
 (43, 0, 0.9, 0, 'Pechuga de pollo', 100, 31, 0.07, 'CARNE_MAGRA', 'GRAMOS'),
 (44, 1.8, 0, 5.8, 'Tomate cherry', 150, 1.5, 0.003, 'VERDURA', 'GRAMOS'),
@@ -101,7 +100,104 @@ INSERT INTO `alimentacion` (`id`, `fibra_alimentaria`, `grasas_saturadas`, `hidr
 (54, 0, 0.2, 0, 'Gambas', 100, 24, 0.142, 'PESCADO', 'GRAMOS'),
 (55, 0, 0.2, 4, 'Almejas', 100, 14, 0.196, 'PESCADO', 'GRAMOS'),
 (56, 0, 0.4, 1, 'Sepia', 100, 19, 0.04, 'PESCADO', 'GRAMOS'),
-(57, 1.2, 0, 3.3, 'Tomate rallado', 100, 1.1, 0.019, 'VERDURA', 'GRAMOS');
+(57, 1.2, 0, 3.3, 'Tomate rallado', 100, 1.1, 0.019, 'VERDURA', 'GRAMOS'),
+(58, 2.2, 0.2, 1.2, 'Espinacas', 100, 2.9, 0.079, 'VERDURA', 'GRAMOS');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `recetas`
+--
+
+CREATE TABLE `recetas` (
+  `id` int(11) NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `recetas`
+--
+
+INSERT INTO `recetas` (`id`, `link`, `nombre`) VALUES
+(1, 'menusemanal1-5.pdf', 'Ensalada de tomate'),
+(2, 'menusemanal1-6.pdf', 'Potaje de garbanzos'),
+(3, 'menusemanal1-7.pdf', 'Buñuelos de bacalao'),
+(4, 'menusemanal1-8.pdf', 'Pasta con verduras y atún'),
+(5, 'menusemanal1-9.pdf', 'Pisto con huevo a la plancha'),
+(6, 'menusemanal1-10.pdf', 'Lentejas con arroz y verduras'),
+(7, 'menusemanal1-11.pdf', 'Ensalada variada'),
+(8, 'menusemanal1-12.pdf', 'Tortilla francesa'),
+(9, 'menusemanal1-13.pdf', 'Espinacas rehogadas'),
+(10, 'menusemanal1-14.pdf', 'Merluza en salsa'),
+(11, 'menusemanal1-15.pdf', 'Brochetas de pollo'),
+(12, 'menusemanal1-16.pdf', 'Ensalada de garbanzos'),
+(13, 'menusemanal1-17.pdf', 'Tortilla de patata y calabacín'),
+(14, 'menusemanal1-18.pdf', 'Menestra de verduras'),
+(15, 'menusemanal1-19.pdf', 'Ternera en salsa'),
+(16, 'menusemanal1-20.pdf', 'Hamburguesa de lentejas'),
+(17, 'menusemanal1-21.pdf', 'Paella'),
+(18, 'menusemanal1-22.pdf', 'Salteado de legumbres con verduras');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `receta_alimentacion`
+--
+
+CREATE TABLE `receta_alimentacion` (
+  `receta_id` int(11) NOT NULL,
+  `alimentacion_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `receta_alimentacion`
+--
+
+INSERT INTO `receta_alimentacion` (`receta_id`, `alimentacion_id`) VALUES
+(1, 22),
+(2, 19),
+(3, 30),
+(4, 1),
+(4, 2),
+(4, 3),
+(4, 4),
+(4, 5),
+(4, 6),
+(4, 7),
+(4, 8),
+(4, 9),
+(4, 11),
+(4, 13),
+(5, 2),
+(5, 3),
+(5, 4),
+(5, 7),
+(5, 11),
+(5, 12),
+(5, 14),
+(5, 40),
+(6, 19),
+(7, 19),
+(8, 19),
+(9, 19),
+(10, 11),
+(10, 16),
+(11, 2),
+(11, 5),
+(11, 7),
+(11, 11),
+(11, 12),
+(11, 19),
+(11, 43),
+(11, 44),
+(12, 16),
+(13, 19),
+(14, 16),
+(15, 16),
+(16, 7),
+(17, 19),
+(18, 19);
 
 --
 -- Índices para tablas volcadas
@@ -114,6 +210,19 @@ ALTER TABLE `alimentacion`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `recetas`
+--
+ALTER TABLE `recetas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `receta_alimentacion`
+--
+ALTER TABLE `receta_alimentacion`
+  ADD KEY `FKmaunmdpev2wi0rn14n3i8b6os` (`alimentacion_id`),
+  ADD KEY `FKd4jyi4r6u26upxlob7jqmhg9t` (`receta_id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -121,7 +230,24 @@ ALTER TABLE `alimentacion`
 -- AUTO_INCREMENT de la tabla `alimentacion`
 --
 ALTER TABLE `alimentacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
+--
+-- AUTO_INCREMENT de la tabla `recetas`
+--
+ALTER TABLE `recetas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `receta_alimentacion`
+--
+ALTER TABLE `receta_alimentacion`
+  ADD CONSTRAINT `FKd4jyi4r6u26upxlob7jqmhg9t` FOREIGN KEY (`receta_id`) REFERENCES `recetas` (`id`),
+  ADD CONSTRAINT `FKmaunmdpev2wi0rn14n3i8b6os` FOREIGN KEY (`alimentacion_id`) REFERENCES `alimentacion` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
