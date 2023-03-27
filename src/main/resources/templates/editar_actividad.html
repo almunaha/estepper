@@ -15,7 +15,7 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
-    <title>Nueva actividad - Estepper</title>
+    <title>Editar actividad - Estepper</title>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" />
                 <h4>Estepper</h4>
             </div>
 
@@ -61,7 +61,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -80,11 +80,11 @@
 
             <div style="padding-top: 75px;">
                 <div class="contenido-nueva">
-                    <h3 style="text-align: center;" class="p-4">Nueva actividad</h3>
+                    <h3 style="text-align: center;" class="p-4">Editar actividad</h3>
 
                     <div class="layout-editar">
 
-                        <form class="form-actividad" th:action="@{/process_actividad}" th:object="${actividad}"
+                        <form class="form-actividad" th:action="@{/guardar_actividad}" th:object="${actividad}"
                             enctype="multipart/form-data" method="post">
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Nombre </label>
@@ -123,7 +123,8 @@
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Foto </label>
-                                <input type="file" th:name="file" class="form-control" required />
+                                <img width="90" th:src="${actividad.foto}" alt="imagenPerfil"/>
+                                <div><input type="file" th:name="file" class="form-control" required /></div>
                             </div>
 
                             <div class="btn-form">

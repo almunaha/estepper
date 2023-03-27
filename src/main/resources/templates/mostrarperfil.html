@@ -45,10 +45,17 @@
                     </a>
                 </li>
 
-                <li>
+                <li th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">
                     <a th:href="@{/actividades}">
                         <i class="fa-solid fa-person-hiking"></i>
                         <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+
+                <li th:if="${user instanceof T(com.estepper.estepper.model.entity.Administrador)}">
+                    <a href="#">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span class="nombre-enlaces">Mensajes</span>
                     </a>
                 </li>
             </ul>
@@ -65,7 +72,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <span sec:authentication="principal.nombre"></span>
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

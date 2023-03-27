@@ -304,6 +304,32 @@ public class CoordinadorController {
         return "redirect:/actividades";
     }
 
+    @GetMapping("/editarActividad/{id}")
+    public String editarActividad(@PathVariable("id") Integer id, Model model) {
+
+        Usuario elusuario = getUsuario();
+        model.addAttribute("user", elusuario);
+
+        if (elusuario instanceof Coordinador) {
+            model.addAttribute("actividad", act.actividad(id));
+            return "editar_actividad";
+        } else
+            return "redirect:/";
+
+    }
+
+    @PostMapping("/guardar_actividad")
+    public String guardarActividad(@ModelAttribute Actividad actividad) {
+
+        Usuario elusuario = getUsuario();
+        if (elusuario instanceof Coordinador) {
+            return "redirect:/actividades";
+        } else
+            return "redirect:/";
+
+    }
+
+
     @GetMapping("/invitaciones/{id}")
     public String invitaciones(@PathVariable Integer id, Model model) {
         Usuario user = getUsuario();

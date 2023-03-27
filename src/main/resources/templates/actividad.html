@@ -139,6 +139,9 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
                                         id="avatar-header" />
+                                    <span th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"> 
+                                        <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                    </span>
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
@@ -172,7 +175,7 @@
                         <p th:text="${actividad.descripcion}"></p>
 
                         <h5>Plazas disponibles</h5>
-                        <p th:text="${actividad.plazas}"></p>
+                        <p th:text="${actividad.plazas - actividad.numParticipantes}"></p>
 
                     </div>
 
