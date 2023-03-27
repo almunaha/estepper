@@ -103,6 +103,24 @@
                   </ul>
             </div>
 
+            <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Administrador)}">
+                <ul>
+                    <li>
+                        <a th:href="@{/}">
+                            <i class="fa-solid fa-user-pen"></i>
+                            <span class="nombre-enlaces">Usuarios</span>
+                        </a>
+                    </li>
+    
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span class="nombre-enlaces">Mensajes</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
 
         <div class="w-100" style="margin-left: 250px">
@@ -115,7 +133,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <span sec:authentication="principal.nombre"></span>
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

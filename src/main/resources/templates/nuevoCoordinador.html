@@ -58,7 +58,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> <span sec:authentication="principal.nombre"></span>
+                                <img width="40" th:src="@{img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+                                <span sec:authentication="principal.nombre"></span>
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -74,26 +75,29 @@
                 </div>
             </nav>
 
-        <div class="crearCoordinador bg-white p-5" style="width: 30%">
-            <form method="post" th:action="@{/process_coordinador}" th:object="${coordinador}">
-                <div class="mb-3">
-                    <label>Nickname</label>
-                    <input type="text" th:field="*{nickname}">
+            <div style="padding-top: 75px;">
+                <div class="crearCoordinador bg-white p-5" style="width: 30%">
+                    <h4 style="text-align: center;" class="p-2">Nueva actividad</h4>
+
+                    <form method="post" th:action="@{/process_coordinador}" th:object="${coordinador}">
+                        <div class="mb-3">
+                            <label>Nickname</label>
+                            <input type="text" th:field="*{nickname}">
+                        </div>
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="text" th:field="*{email}" id="exampleInputPassword1">
+                        </div>
+                        <div class="mb-3">
+                            <label>Contraseña</label>
+                            <input type="text" th:field="*{contrasenia}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label>Email</label>
-                    <input type="text" th:field="*{email}" id="exampleInputPassword1">
-                </div>
-                <div class="mb-3">
-                    <label>Contraseña</label>
-                    <input type="text" th:field="*{contrasenia}">
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </form>
+
+            </div>
         </div>
-
-
-    </div>
 
 </body>
 
