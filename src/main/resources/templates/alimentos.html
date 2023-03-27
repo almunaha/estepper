@@ -239,7 +239,7 @@
                             <div class="input-group mt-2">
                                 <label style="margin-left: 4%;" class="col-4 col-form-label">Número de raciones:
                                 </label>
-                                <input type="number" th:field="*{raciones}" class="form-control" />
+                                <input type="number" th:field="*{raciones}" class="form-control" step="any" min="0" max="999999999"  />
                             </div>
 
                             <div class="input-group mt-2">

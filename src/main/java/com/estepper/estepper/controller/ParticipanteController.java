@@ -963,6 +963,7 @@ public class ParticipanteController {
         if (getUsuario().getId() == id) {
             alimento.setParticipante(participante.findById(getUsuario().getId()).get());
             alimento.setFecha_consumicion(LocalDateTime.now());
+            alimento.setId(0);
             alimentacion.saveAlCon(alimento);
             return "redirect:/alimentos";
         } else
@@ -983,6 +984,7 @@ public class ParticipanteController {
     @PostMapping("/process_alimento")
     public String process_al(@ModelAttribute Alimentacion alimento) {
         if (getUsuario().getEstadoCuenta().equals(Estado.ALTA) && getUsuario() instanceof Participante) {
+            alimento.setId(0);
             alimentacion.saveAlimento(alimento);
             return "redirect:/alimentos";
         } else
@@ -1026,6 +1028,7 @@ public class ParticipanteController {
                         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     lareceta.setLink(file.getOriginalFilename());
+                    lareceta.setId(0);
                     alimentacion.updateReceta(lareceta);
                 }
             }
