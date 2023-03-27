@@ -351,15 +351,25 @@
 .contenido-nueva{
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 6%;
+    margin-right: 6%;
     border-radius: 12px;
     padding: 10px;
+    margin-top: 3%;
 }
 
 .layout-editar{
-    margin-left: 12%;
-    margin-right: 12%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.campos-form{
+    display: flex;
+}
+
+.form-dato{
+    width: 50%;
+    margin-right: 4%;
 }
 
 
