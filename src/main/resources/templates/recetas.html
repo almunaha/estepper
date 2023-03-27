@@ -171,7 +171,7 @@
                                         <select class="form-select" id="want-select" name="want" multiple>
                                             <!-- opciones del select de alimentos que quiere -->
                                             <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                             </option>
                                         </select>
                                     </div>
@@ -180,7 +180,7 @@
                                         <select class="form-select" id="dont-want-select" name="dontWant" multiple>
                                             <!-- opciones del select de alimentos que no quiere -->
                                             <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                             </option>
                                         </select>
                                     </div>
@@ -264,7 +264,7 @@
                                         <div class="ingredientes" style="display: none;">
                                             <div th:each="ing:${lis.ingredientes}">
                                                 <span
-                                                    th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'"></span>
+                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -325,7 +325,7 @@
                                     <select th:field="*{ingredientes}" class="form-control" multiple
                                         id="lista-alimentos" required>
                                         <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                         </option>
                                     </select>
                                     <script language="JavaScript" th:inline="javascript">
@@ -372,12 +372,6 @@
                                         <input type="file" th:name="file" class="form-control" required />
                                     </div>
                                 </div>
-                                <div style="margin-left: 10%; " class="input-group mt-2">
-                                    <label class="col-form-label col-sm-2">Pagina:</label>
-                                    <div class="col-sm-3 mb-2">
-                                        <input type="number" th:field="*{pag}" class="form-control" />
-                                    </div>
-                                </div>
                             </div>
                             <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>
                         </form>
@@ -403,7 +397,7 @@
                                                     <select th:field="*{ingredientes}" class="form-control" multiple
                                                         id="lista-alimentos1" required>
                                                         <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + 'mg/ml | ' + ${ing.porcion div 1000} + 'g/l)'">
+                                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                                         </option>
                                                     </select>
                                                     <script language="JavaScript" th:inline="javascript">
@@ -447,10 +441,6 @@
                                                 <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
                                                 <div class="col-sm-6 mb-2">
                                                     <input type="file" th:name="file" class="form-control" required />
-                                                </div>
-                                                <label class="col-form-label col-sm-4">Pagina:</label>
-                                                <div class="col-sm-4 mb-2">
-                                                    <input type="number" th:field="*{pag}" class="form-control" />
                                                 </div>
                                             </div>
                                             <button class="btn btn-info text-white mt-4 w-100"

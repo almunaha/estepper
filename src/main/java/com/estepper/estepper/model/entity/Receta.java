@@ -20,7 +20,6 @@ public class Receta {
     private Integer id;
 
     private String link;
-    private Integer pag;
     private String nombre;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "receta_alimentacion",
@@ -29,12 +28,10 @@ public class Receta {
     private List<Alimentacion> ingredientes;
 
     public Receta(){
-        this.pag = 1;
     }
 
-    public Receta(Integer id, String link, String nombre, Integer pag,  List<Alimentacion> ingredientes){
+    public Receta(Integer id, String link, String nombre, List<Alimentacion> ingredientes){
         this.id = id;
-        this.pag = pag;
         this.nombre = nombre;
         this.ingredientes = ingredientes;
     }
@@ -53,14 +50,6 @@ public class Receta {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public Integer getPag() {
-        return pag;
-    }
-
-    public void setPag(Integer pag) {
-        this.pag = pag;
     }
 
     public List<Alimentacion> getIngredientes() {
