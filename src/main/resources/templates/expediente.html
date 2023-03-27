@@ -150,12 +150,14 @@
                             <h5 th:text="${participante.sesionesCompletas}+ ' ' + 'sesiones completas'"
                                 style="margin-left: 10px;"></h5>
                         </div>
+
                     </div>
 
-                    <div th:unless="${participante.estadoCuenta == 'BAJA'}" style="display: flex; justify-content: center; margin-bottom: 3%;">
+                    <div th:unless="${participante.sexo == null}" style="display: flex; justify-content: center; margin-bottom: 3%;">
                         <a class="btn-sesion" id="guardar" title="Fichas"
                         onclick="abrirIframe('mi-modal')" href="#"> Fichas </a>
                     </div>
+                    
                     <!--Modal-->
         <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

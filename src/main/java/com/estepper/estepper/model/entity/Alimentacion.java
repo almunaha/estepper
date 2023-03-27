@@ -1,6 +1,7 @@
 package com.estepper.estepper.model.entity;
 
 import com.estepper.estepper.model.enums.TipoAlimentacion;
+import com.estepper.estepper.model.enums.TipoUnidad;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,12 +25,15 @@ public class Alimentacion {
     private float grasas_saturadas;
     private float hidratos_de_carbono;
     private float proteinas;
-    private Integer porcion;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "unidad")
+    private TipoUnidad unidad;
+    private float porcion;
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", columnDefinition = "ENUM('DULCE','CARNE_GRASA','EMBUTIDO','CARNE_MAGRA','PESCADO','HUEVO','LEGUMBRE','FRUTOS_SECOS','LACTEOS','ACEITE','VERDURA','FRUTA','CEREALES','ARROZ', 'PASTA','PAN')")
     private TipoAlimentacion tipo;
 
-    public Alimentacion(){
+    public Alimentacion() {
         this.sal = 0;
         this.fibra_alimentaria = 0;
         this.grasas_saturadas = 0;
@@ -37,7 +41,8 @@ public class Alimentacion {
         this.proteinas = 0;
     }
 
-    public Alimentacion(Integer id, String nombre, float sal, float fibra_alimentaria, float grasas_saturadas, float hidratos_de_carbono, float proteinas, Integer porcion, TipoAlimentacion tipo){
+    public Alimentacion(Integer id, String nombre, float sal, float fibra_alimentaria, float grasas_saturadas,
+            float hidratos_de_carbono, float proteinas, TipoUnidad unidad, float porcion, TipoAlimentacion tipo) {
         this.sal = sal;
         this.fibra_alimentaria = fibra_alimentaria;
         this.grasas_saturadas = grasas_saturadas;
@@ -47,6 +52,7 @@ public class Alimentacion {
         this.nombre = nombre;
         this.id = id;
         this.porcion = porcion;
+        this.unidad = unidad;
 
     }
 
@@ -114,12 +120,20 @@ public class Alimentacion {
         this.tipo = tipo;
     }
 
-    public Integer getPorcion() {
+    public float getPorcion() {
         return porcion;
     }
 
-    public void setPorcion(Integer porcion) {
+    public void setPorcion(float porcion) {
         this.porcion = porcion;
+    }
+
+    public TipoUnidad getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(TipoUnidad unidad) {
+        this.unidad = unidad;
     }
 
 }
