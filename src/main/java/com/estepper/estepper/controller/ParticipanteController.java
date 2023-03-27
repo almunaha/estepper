@@ -3,7 +3,6 @@ package com.estepper.estepper.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -14,9 +13,6 @@ import java.time.LocalDateTime;
 import java.nio.file.Files;
 
 import org.springframework.ui.Model;
-import org.python.core.PyFunction;
-import org.python.core.PyObject;
-import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ContentDisposition;
@@ -967,6 +963,7 @@ public class ParticipanteController {
         if (getUsuario().getId() == id) {
             alimento.setParticipante(participante.findById(getUsuario().getId()).get());
             alimento.setFecha_consumicion(LocalDateTime.now());
+            alimento.setId(0);
             alimentacion.saveAlCon(alimento);
             return "redirect:/alimentos";
         } else
@@ -987,6 +984,7 @@ public class ParticipanteController {
     @PostMapping("/process_alimento")
     public String process_al(@ModelAttribute Alimentacion alimento) {
         if (getUsuario().getEstadoCuenta().equals(Estado.ALTA) && getUsuario() instanceof Participante) {
+            alimento.setId(0);
             alimentacion.saveAlimento(alimento);
             return "redirect:/alimentos";
         } else
@@ -1030,6 +1028,7 @@ public class ParticipanteController {
                         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     lareceta.setLink(file.getOriginalFilename());
+                    lareceta.setId(0);
                     alimentacion.updateReceta(lareceta);
                 }
             }
