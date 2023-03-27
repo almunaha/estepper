@@ -820,6 +820,11 @@ public class ParticipanteController {
         model.addAttribute("user", getUsuario());
         model.addAttribute("actividad", acti);
 
+        boolean asiste = false;
+        Integer asistencia = act.asistencia(acti.getId(), getUsuario().getId());
+        if(asistencia > 0) asiste = true;
+        model.addAttribute("asistencia", asiste);
+
         return "actividad";
     }
 

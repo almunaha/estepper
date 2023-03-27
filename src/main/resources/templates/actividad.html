@@ -191,9 +191,14 @@
 
                     <div class="inscripcion">
                         <h5>Realizar la inscripción</h5>
-                        <p>Si desea inscribirse en esta actividad, pinche en "confirmar asistencia".</p>
-                        <p>La actividad será añadida a tu listado de actividades.</p>
-                        <a th:href="'/confirmar/' + ${actividad.id}" class="btn-confirm">Confirmar asistencia</a>
+                        <p th:if="${!asistencia and user instanceof T(com.estepper.estepper.model.entity.Participante)}">Si desea inscribirse en esta actividad, pinche en "confirmar asistencia".</p>
+                        <p th:if="${!asistencia and user instanceof T(com.estepper.estepper.model.entity.Participante)}">La actividad será añadida a tu listado de actividades.</p>
+                        <a th:if="${!asistencia and user instanceof T(com.estepper.estepper.model.entity.Participante)}" th:href="'/confirmar/' + ${actividad.id}" class="btn-confirm">Confirmar asistencia</a>
+
+                        <p th:if="${asistencia and user instanceof T(com.estepper.estepper.model.entity.Participante)}">¡Enhorabuena! Ya estás inscrito en esta actividad.</p>
+
+                        <p th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">Un coordinador no puede realizar la inscripción.</p>
+
                     </div>
                 </div>
                 <a class="atras-info" th:href="@{/actividades}">Atrás</a>

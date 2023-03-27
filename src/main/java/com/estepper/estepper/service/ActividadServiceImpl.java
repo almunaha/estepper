@@ -39,5 +39,10 @@ public class ActividadServiceImpl implements ActividadService{
     public void borrar(Actividad act){
         repo.delete(act);
     }
+
+    @Override
+    public Integer asistencia(Integer idActividad, Integer idParticipante){
+        return repo.asistencia(idActividad, idParticipante);
+    }
     
 }
