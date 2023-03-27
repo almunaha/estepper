@@ -61,7 +61,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -86,47 +86,54 @@
 
                         <form class="form-actividad" th:action="@{/guardar_actividad}" th:object="${actividad}"
                             enctype="multipart/form-data" method="post">
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Nombre </label>
-                                <input type="text" th:field="*{nombre}" class="form-control" required />
-                            </div>
+                            <div class="campos-form">
+                                <div class="form-dato">
+                                    
+                                    <input type="number" name="id" th:field="*{id}" hidden/>
 
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Descripción </label>
-                                <textarea style="resize: none" th:field="*{descripcion}" rows="4" class="form-control"
-                                    required></textarea>
-                            </div>
+                                    <div class="input-group mt-2">
+                                        <label class="col-3 col-form-label">Nombre </label>
+                                        <input type="text" th:field="*{nombre}" class="form-control" required />
+                                    </div>
 
-                            <div class="input-group mt-2">
-                                <label for="categoria" class="col-2 col-form-label">Categoría </label>
-                                <select id="categoria" th:field="*{categoria}" class="form-select" required>
-                                    <option th:text="Deporte" th:value="DEPORTE"></option>
-                                    <option th:text="Alimentación" th:value="ALIMENTACIÓN"></option>
-                                </select>
-                            </div>
+                                    <div class="input-group mt-2">
+                                        <label class="col-3 col-form-label">Descripción </label>
+                                        <textarea style="resize: none" th:field="*{descripcion}" rows="4"
+                                            class="form-control" required></textarea>
+                                    </div>
 
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Ubicación </label>
-                                <input type="text" th:field="*{ubicacion}" class="form-control" required />
-                            </div>
+                                    <div class="input-group mt-2">
+                                        <label for="categoria" class="col-3 col-form-label">Categoría </label>
+                                        <select id="categoria" th:field="*{categoria}" class="form-select" required>
+                                            <option th:text="Deporte" th:value="DEPORTE"></option>
+                                            <option th:text="Alimentación" th:value="ALIMENTACIÓN"></option>
+                                        </select>
+                                    </div>
 
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Plazas </label>
-                                <input type="number" th:field="*{plazas}" class="form-control" required />
-                            </div>
+                                    <div class="input-group mt-2">
+                                        <label class="col-3 col-form-label">Añadir plazas </label>
+                                        <input type="number" name="plazas" class="form-control" />
+                                    </div>
+                                </div>
 
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Fecha </label>
-                                <input type="datetime-local" th:field="*{fechaRealizacion}" class="form-control"
-                                    required />
-                            </div>
+                                <div class="form-dato">
+                                    <div class="input-group mt-2">
+                                        <label class="col-2 col-form-label">Ubicación </label>
+                                        <input type="text" th:field="*{ubicacion}" class="form-control" required />
+                                    </div>
 
-                            <div class="input-group mt-2">
-                                <label class="col-2 col-form-label">Foto </label>
-                                <img width="90" th:src="${actividad.foto}" alt="imagenPerfil"/>
-                                <div><input type="file" th:name="file" class="form-control" required /></div>
-                            </div>
+                                    <div class="input-group mt-2">
+                                        <label class="col-2 col-form-label">Fecha </label>
+                                        <input type="datetime-local" th:field="*{fechaRealizacion}" class="form-control"
+                                            required />
+                                    </div>
 
+                                    <div class="input-group mt-2">
+                                        <label class="col-1 col-form-label">Foto </label>
+                                        <div><input type="file" th:name="file" class="form-control" required /></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="btn-form">
                                 <button class="btn" type="submit" id="btn-part">Guardar</button>
                             </div>

@@ -319,10 +319,22 @@ public class CoordinadorController {
     }
 
     @PostMapping("/guardar_actividad")
-    public String guardarActividad(@ModelAttribute Actividad actividad) {
-
+    public String guardarActividad(@ModelAttribute Actividad actividad, @RequestParam(name = "plazas", required=false) Integer plazas) {
         Usuario elusuario = getUsuario();
+        
         if (elusuario instanceof Coordinador) {
+            Actividad orig = act.actividad(actividad.getId());
+
+            if(plazas != null)
+                actividad.setPlazas(orig.getPlazas() + plazas);
+            else actividad.setPlazas(orig.getPlazas());
+
+            actividad.setEstado(orig.getEstado());
+            actividad.setNumParticipantes(orig.getNumParticipantes());
+
+            //guardar actividad
+            act.guardar(actividad);
+
             return "redirect:/actividades";
         } else
             return "redirect:/";
