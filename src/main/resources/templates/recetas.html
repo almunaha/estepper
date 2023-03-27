@@ -139,12 +139,6 @@
                         <div th:if="${listaRecetas.empty}">
                             <div>
                                 <h6 style="text-align: center;">¡No existe ninguna receta aún!</h6>
-                                <!--PRUEBA JYTHON-->
-                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria"
-                                        th:href="@{/nutrientes}">
-                                        Jython</a>
-                                </div>
-                                <!--FIN PRUEBA JYTHON-->
                             </div>
                         </div>
                         <div th:unless="${listaRecetas.empty}">
