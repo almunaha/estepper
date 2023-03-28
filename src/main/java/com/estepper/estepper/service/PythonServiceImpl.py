@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from com.estepper.estepper.service import PythonService
-import dataset
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.cluster import KMeans
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
+# import dataset
+# from sklearn.feature_extraction.text import CountVectorizer
+# from sklearn.cluster import KMeans
+# from sklearn.metrics.pairwise import cosine_similarity
+# import numpy as np
 
 
 class PythonServiceImpl(PythonService):
@@ -41,53 +41,42 @@ class PythonServiceImpl(PythonService):
         #     # Cerrar la conexión
         #     db.close()
         # # DESCARTAR ALIMENTOS QUE ESTÉN EN DONTWANT
-        # # HACER CLUSTER CON ALIMENTOS HACIENDO LA CLASIFICACIÓN EN FUNCIÓN DE LA SIMILITUD DE COSENO Y DISTANCIA PARA VER CÓMO DE PARECIDOS SON LOS NUTRIENTES Y CREAR ALIMENTOS HIPERPROTEICOS, INFRAPROTEICOS, ETCÉTERA
+        # # HACER CLUSTER CON ALIMENTOS HACIENDO LA CLASIFICACIÓN EN FUNCIÓN DE LA SIMILITUD DE COSENO PARA VER CÓMO DE PARECIDOS SON
     
         #     # Descartar alimentos que están en dontwant
         #     alimentos = [alimento for alimento in alimentos if alimento not in dontwant]
 
         #     # Hacer cluster con los alimentos
-        #     vectorizer = CountVectorizer(tokenizer=lambda x: x.split(','))
-        #     X = vectorizer.fit_transform([','.join(a[-1]) for a in alimentos])
-            
-        #     # Clasificar los alimentos en hiperproteicos o infraproteicos en función de la cantidad de proteínas
-        #     alimentos_cluster = []
-        #     for i, alimento in enumerate(alimentos):
-        #         if float(alimento[2]) > 20: #alimento[2] xq es la columna correspondiente a proteinas
-        #             alimentos_cluster.append("hiperproteico")
-        #         else:
-        #             alimentos_cluster.append("infraproteico")
+        #     cv = CountVectorizer()
+        #     count_matrix = cv.fit_transform(alimentos)
+        #     cosine_sim = cosine_similarity(count_matrix)
 
-        #     # Unir los alimentos con su categoría correspondiente
-        #     alimentos_categorias = list(zip(alimentos, alimentos_cluster))
-
-        #     # Clasificar los alimentos en función de su similitud de coseno y distancia euclidiana
-        #     kmeans = KMeans(n_clusters=5).fit(X)
-        #     similarities = cosine_similarity(X)
-        #     distances = np.sqrt(((X - X[:, np.newaxis])**2).sum(axis=2))
+        #     similar_alimentos = list(enumerate(cosine_sim))
             
-        #     # COGER ALIMENTOS QUE ESTÉN EN EL MISMO CLUSTER QUE LOS WANTS
+        #     # COGER Similar_ALIMENTOS QUE ESTÉN EN EL MISMO CLUSTER QUE LOS WANTS
         #     # COGER RECETAS CON ALGUNO DE ESOS ALIMENTOS
-        #     # Coger los índices de los alimentos en el cluster que contienen los wants
-        #     want_indices = []
-        #     for w in want:
-        #         for i, c in enumerate(kmeans.labels_):
-        #             if w in alimentos[i][-1] and i not in want_indices:
-        #                 want_indices.append(i)
 
-        #     # Obtener los alimentos del mismo cluster que los wants
-        #     alimentos_cluster_wants = [alimentos_categorias[i] for i in want_indices]
+        #     alimentos_cluster = []
+        #     for i, _ in similar_alimentos:
+        #         if i in want:
+        #             for a in alimentos:
+        #                 if alimentos.index(a) == i:
+        #                     alimentos_cluster.append(a)
+        #             for j in range(0, len(cosine_sim[i])):
+        #                 if cosine_sim[i][j] > 0.5 and j not in want:
+        #                     for a in alimentos:
+        #                         if alimentos.index(a) == j:
+        #                             alimentos_cluster.append(a)
 
         #     # Obtener las recetas que contienen los alimentos del cluster
-        #     recetas_con_alimentos_cluster = []
-        #     for i, receta in enumerate(recetas):
-        #         ingredientes_receta = [ingrediente[1] for ingrediente in ingredientes if ingrediente[0] == receta[1][0]]
-        #         for a in alimentos_cluster_wants:
-        #             if a[0][-1][0] in ingredientes_receta:
-        #                 recetas_con_alimentos_cluster.append(receta[0])
-        #                 break
+        #     recetas_ids = []
+        #     for r in recetas:
+        #         for a in alimentos_cluster:
+        #             if str(a[6]) in r[1]:
+        #                 recetas_ids.append(r[1])
 
-        #     return recetas_con_alimentos_cluster
-
+        #     # Obtener los ids de las recetas y devolverlos
+        #     recetas_ids = [r for receta_id in recetas_ids for r in receta_id]
+        #     return recetas_ids
             
         return ["1", "2", "3"]
