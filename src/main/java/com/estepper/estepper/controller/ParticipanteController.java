@@ -41,6 +41,7 @@ import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Receta;
 import com.estepper.estepper.model.entity.FichaEleccion;
+import com.estepper.estepper.model.entity.FichaObjetivo;
 import com.estepper.estepper.model.entity.FichaTaller;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Sesion;
@@ -839,18 +840,17 @@ public class ParticipanteController {
                 model.addAttribute("asistencia", asiste);
             }
 
-            else { //Coordinador, enviar listado de asistentes
+            else { // Coordinador, enviar listado de asistentes
                 Set<Participante> asistentes = acti.getParticipantes();
                 model.addAttribute("asistentes", asistentes);
 
             }
 
             return "actividad";
-        }
-        else{
+        } else {
             return "redirect:/";
         }
-        
+
     }
 
     @GetMapping("/confirmar/{id}")
@@ -1151,30 +1151,82 @@ public class ParticipanteController {
             return "acceso";
     }
 
+    @GetMapping("/fichaObjetivo")
+    public String fichaObjetivo(Model model) {
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            Participante p = participante.getParticipante(u.getId());
+
+            FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(u.getId()).get());
+            model.addAttribute("ficha", fichaObjetivo);
+
+            Exploracion exploracion = null;
+            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+            for (int i = 0; i < formularios.size(); i++) {
+                if (formularios.get(i) instanceof Exploracion) {
+                    exploracion = (Exploracion) formularios.get(i);
+                }
+            }
+
+            if (exploracion != null) {
+                model.addAttribute("exploracion", exploracion);
+
+                String talla = String.format("%.2f", exploracion.getTalla() / 100.0); // Formatear a dos decimales
+                model.addAttribute("talla", talla); 
+
+                Double s = 25.00 * ((exploracion.getTalla() / 100.0) * (exploracion.getTalla() / 100.0)); // peso saludable para imc de 25
+                String saludable = String.format("%.2f", s);
+                model.addAttribute("saludable", saludable);
+
+                return "fichaObjetivo";
+            }
+
+            else
+                return "acceso";
+
+        } else
+            return "acceso";
+    }
+
+    @PostMapping("/process_fichao/{id}")
+    public String processFichaObjetivo(@PathVariable("id") Integer id, @ModelAttribute FichaObjetivo ficha) {
+        Usuario u = getUsuario();
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            f.updateFichaObjetivo(ficha);
+            return "redirect:/fichas";
+        } else
+            return "acceso";
+    }
+
     @GetMapping("/recetasparecidas")
     public String recetasParecidas(@RequestParam(required = false) String[] want,
             @RequestParam(required = false) String[] dontwant, Model model) {
         Usuario u = getUsuario();
         model.addAttribute("user", u);
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
-            if(want.length == 0) model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
-            else{
+            if (want.length == 0)
+                model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
+            else {
                 List<String> recetas = new ArrayList<String>();
                 String[] recetasArray = service.recetasparecidas(want, dontwant);
                 recetas = Arrays.asList(recetasArray);
-            
-            List<Receta> listaRecetas = new ArrayList<>();
-            for (String idReceta : recetas) {
-                Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-                if (receta != null) {
-                    listaRecetas.add(receta);
-                }
-            }
-            model.addAttribute("listaRecetas", listaRecetas);
 
-            } 
-        return "recetasparecidas";    
-        } else return "acceso";  
+                List<Receta> listaRecetas = new ArrayList<>();
+                for (String idReceta : recetas) {
+                    Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+                    if (receta != null) {
+                        listaRecetas.add(receta);
+                    }
+                }
+                model.addAttribute("listaRecetas", listaRecetas);
+
+            }
+            return "recetasparecidas";
+        } else
+            return "acceso";
     }
 
     // BORRAR CUANDO ESTÉ HECHO LO DE MACHINE LEARNING

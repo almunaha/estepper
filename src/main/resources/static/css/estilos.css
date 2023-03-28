@@ -751,6 +751,13 @@ input[type="date"] {
     margin-left: 2rem;
   }
 
+  /* Ficha objetivo */
+  .cont-calculo{
+    padding: 2%;
+    background-color: whitesmoke;
+    margin-bottom: 2%;
+  }
+
 
 /* RESPONSIVE */
 @media (max-width: 767px) {
