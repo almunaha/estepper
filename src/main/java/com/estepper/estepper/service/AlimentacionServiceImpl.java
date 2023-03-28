@@ -72,5 +72,10 @@ public class AlimentacionServiceImpl implements AlimentacionService{
        for(int i = 0; i < lista.size(); i++) deleteAlCon(lista.get(i).getId());
     }
 
+    @Override
+    public Receta getRecetasById(Integer id) {
+       return repoR.findById(id).get();
+    }
+
     
 }
