@@ -131,9 +131,9 @@
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Porción: </label>
-                        <input type="number" id="porcion" th:field="*{porcion}" class="form-control" step="any" min="0" max="999999999" />
+                        <input type="number" id="porcion" th:field="*{porcion}" class="form-control" step="any" min="0" max="999999999" required/>
                         <label style="margin-left: 5%;" class="col-4 col-form-label">Unidad: </label>
-                        <select class="form-control" th:field="*{unidad}">
+                        <select class="form-control" th:field="*{unidad}" required>
                           <option th:each="t : ${T(com.estepper.estepper.model.enums.TipoUnidad).values()}"
                                   th:value="${t}"
                                   th:text="${t.getAbreviatura()}">
@@ -143,33 +143,33 @@
                       
                    <div class="input-group mt-2">
                     <label class="col-4 col-form-label">Sal (g): </label>
-                    <input type="number" step="any" min="0" max="999999999" th:field="*{sal}" class="form-control" />
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{sal}" class="form-control" required />
                 </div>
                 
                 <div class="input-group mt-2">
                     <label class="col-4 col-form-label">Fibra alimentaria (g): </label>
-                    <input type="number" step="any" min="0" max="999999999" th:field="*{fibra_alimentaria}" class="form-control" />
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{fibra_alimentaria}" class="form-control" required/>
                 </div>
                 
                 <div class="input-group mt-2">
                     <label class="col-4 col-form-label">Grasas saturadas (g): </label>
-                    <input type="number" step="any" min="0" max="999999999" th:field="*{grasas_saturadas}" class="form-control" />
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{grasas_saturadas}" class="form-control" required />
                 </div>
                 
                 <div class="input-group mt-2">
                     <label class="col-4 col-form-label">Hidratos de carbono (g): </label>
-                    <input type="number" step="any" min="0" max="999999999" th:field="*{hidratos_de_carbono}" class="form-control" />
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{hidratos_de_carbono}" class="form-control" required/>
                 </div>
                 
                 <div class="input-group mt-2">
                     <label class="col-4 col-form-label">Proteinas (g): </label>
-                    <input type="number" step="any" min="0" max="999999999" th:field="*{proteinas}" class="form-control" />
+                    <input type="number" step="any" min="0" max="999999999" th:field="*{proteinas}" class="form-control" required/>
                 </div>
                 
 
                     <div class="input-group mt-2">
                         <label class="col-4 col-form-label">Tipo: </label>
-                        <select class="form-control" th:field="*{tipo}">
+                        <select class="form-control" th:field="*{tipo}" required>
                             <option th:each="t : ${T(com.estepper.estepper.model.enums.TipoAlimentacion).values()}"
                                     th:value="${t}"
                                     th:text="${#strings.replace(t.toString(), '_', ' ')}">

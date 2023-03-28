@@ -139,12 +139,6 @@
                         <div th:if="${listaRecetas.empty}">
                             <div>
                                 <h6 style="text-align: center;">¡No existe ninguna receta aún!</h6>
-                                <!--PRUEBA JYTHON-->
-                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria"
-                                        th:href="@{/nutrientes}">
-                                        Jython</a>
-                                </div>
-                                <!--FIN PRUEBA JYTHON-->
                             </div>
                         </div>
                         <div th:unless="${listaRecetas.empty}">
@@ -334,7 +328,7 @@
                                             var opciones = $("#lista-alimentos option");
 
                                             // Crear un input de búsqueda
-                                            var inputBusqueda = $('<form style="margin-right: 10%;"><input type="text" class="form-control mt-2" placeholder="Buscar..."></form>');
+                                            var inputBusqueda = $('<input style="margin-right:15%;" type="text" class="form-control mt-2" placeholder="Buscar...">');
 
                                             // Agregar el input de búsqueda antes del select
                                             $("#lista-alimentos").before(inputBusqueda);
@@ -406,7 +400,7 @@
                                                             var opciones = $("#lista-alimentos1 option");
 
                                                             // Crear un input de búsqueda
-                                                            var inputBusqueda = $('<form style="margin-right:15%;"> <input type="text" class="form-control mt-2" placeholder="Buscar..."></form>');
+                                                            var inputBusqueda = $('<input style="margin-right:15%;"type="text" class="form-control mt-2" placeholder="Buscar...">');
 
                                                             // Agregar el input de búsqueda antes del select
                                                             $("#lista-alimentos1").before(inputBusqueda);
