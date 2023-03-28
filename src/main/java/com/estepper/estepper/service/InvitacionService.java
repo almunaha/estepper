@@ -17,4 +17,5 @@ public interface InvitacionService {
     public List<Invitacion> invitacionesPartAndEstado(Participante p, EstadoInvitacion e);
     public Invitacion findById(Integer id);
     public void guardar(Invitacion i);
+    public Invitacion invitacionByPartAndActi(Participante p, Actividad a);
 }

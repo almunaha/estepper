@@ -13,6 +13,7 @@ public interface ActividadRepository extends JpaRepository<Actividad, Integer>{
 
     @Query(value = "SELECT COUNT(*) > 0 FROM asistencia_actividades WHERE id_actividad = :actividadId AND id_participante = :participanteId", nativeQuery = true)
     Integer asistencia(Integer actividadId, Integer participanteId);
+
     
 
 }

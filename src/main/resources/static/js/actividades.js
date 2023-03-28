@@ -4,6 +4,7 @@ $(document).ready(function () {
     $(".descripcion").show();
     $(".detalles").hide();
     $(".inscripcion").hide();
+    $(".asistentes").hide();
 
     $("#descripcion").css("background-color", "rgb(98, 207, 234)");
 
@@ -11,30 +12,51 @@ $(document).ready(function () {
         $(this).css("background-color", "rgb(98, 207, 234)");
         $("#detalles").css("background-color", "rgb(175, 198, 204)");
         $("#inscripcion").css("background-color", "rgb(175, 198, 204)");
+        $("#asistentes").css("background-color", "rgb(175, 198, 204)");
 
         $(".descripcion").show();
         $(".detalles").hide();
         $(".inscripcion").hide();
+        $(".asistentes").hide();
+
     });
 
     $("#detalles").click(function () {
         $(this).css("background-color", "rgb(98, 207, 234)");
         $("#inscripcion").css("background-color", "rgb(175, 198, 204)");
         $("#descripcion").css("background-color", "rgb(175, 198, 204)");
+        $("#asistentes").css("background-color", "rgb(175, 198, 204)");
 
         $(".descripcion").hide();
         $(".detalles").show();
         $(".inscripcion").hide();
+        $(".asistentes").hide();
     });
 
     $("#inscripcion").click(function () {
         $(this).css("background-color", "rgb(98, 207, 234)");
         $("#detalles").css("background-color", "rgb(175, 198, 204)");
         $("#descripcion").css("background-color", "rgb(175, 198, 204)");
+        $("#asistentes").css("background-color", "rgb(175, 198, 204)");
 
         $(".descripcion").hide();
         $(".detalles").hide();
         $(".inscripcion").show();
+        $(".asistentes").hide();
+
+    });
+
+    $("#asistentes").click(function () {
+        $(this).css("background-color", "rgb(98, 207, 234)");
+        $("#detalles").css("background-color", "rgb(175, 198, 204)");
+        $("#descripcion").css("background-color", "rgb(175, 198, 204)");
+        $("#inscripcion").css("background-color", "rgb(175, 198, 204)");
+
+        $(".descripcion").hide();
+        $(".detalles").hide();
+        $(".inscripcion").hide();
+        $(".asistentes").show();
+
     });
 
     //INVITACIONES
@@ -60,6 +82,7 @@ $(document).ready(function () {
         }
 
     });
+    
 
     $('.btn-gest-eliminar').click(function() {
         var id = $(this).data('id');
@@ -92,6 +115,7 @@ $(document).ready(function () {
 
     });
 
+    
 
 
 });

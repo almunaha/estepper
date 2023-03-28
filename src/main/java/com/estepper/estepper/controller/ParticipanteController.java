@@ -3,6 +3,7 @@ package com.estepper.estepper.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -111,14 +112,13 @@ public class ParticipanteController {
 
     @Autowired
     private MensajeService mensajeS;
- 
+
     @Autowired
     @Qualifier("PythonServiceImpl")
     private PythonService service;
 
     @Autowired
     private InvitacionService invi;
-     
 
     @GetMapping("/menu")
     public String menu() {
@@ -174,13 +174,16 @@ public class ParticipanteController {
 
             ses.guardar(actualizada);
 
-            //actualizar asistencia media y sesiones completas participante
+            // actualizar asistencia media y sesiones completas participante
             List<Sesion> lista = ses.sesiones(p);
             Integer asistencia = 0;
-            for(int i = 0; i < lista.size(); i++){
-                if(lista.get(i).getAsistencia().equals(Asistencia.SI)) asistencia++;
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).getAsistencia().equals(Asistencia.SI))
+                    asistencia++;
             }
-            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia*10 , p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia * 10,
+                    p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(),
+                    p.getId());
             return "redirect:/sesiones";
         } else
             return "acceso";
@@ -192,18 +195,22 @@ public class ParticipanteController {
         if (p.getEstadoCuenta().equals(Estado.ALTA)) {
             Sesion orig = ses.buscarSesion(p, num);
 
-            Sesion actualizada = new Sesion(orig.getId(), orig.getNumSesion(), orig.getParticipante(), EstadoSesion.COMPLETA,
-                    orig.getObservaciones(), orig.getAsistencia(), lasesion.getCmsPerdidos(), lasesion.getPesoPerdido());
+            Sesion actualizada = new Sesion(orig.getId(), orig.getNumSesion(), orig.getParticipante(),
+                    EstadoSesion.COMPLETA,
+                    orig.getObservaciones(), orig.getAsistencia(), lasesion.getCmsPerdidos(),
+                    lasesion.getPesoPerdido());
 
             ses.guardar(actualizada);
 
-            //actualizar asistencia media y sesiones completas participante
+            // actualizar asistencia media y sesiones completas participante
             List<Sesion> lista = ses.sesiones(p);
             Integer completas = 0;
-            for(int i = 0; i < lista.size(); i++){
-                if(lista.get(i).getEstado().equals(EstadoSesion.COMPLETA)) completas++;
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).getEstado().equals(EstadoSesion.COMPLETA))
+                    completas++;
             }
-            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia() , p.getIdCoordinador(), p.getPerdidaDePeso(), completas, p.getPerdidacmcintura(), p.getId());
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+                    p.getIdCoordinador(), p.getPerdidaDePeso(), completas, p.getPerdidacmcintura(), p.getId());
             return "redirect:/sesiones";
         } else
             return "acceso";
@@ -260,7 +267,8 @@ public class ParticipanteController {
                         || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             Participante part = participante.findById(id).get();
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(part);
-            if(formularios.size() > 2) model.addAttribute("formularios", formularios);
+            if (formularios.size() > 2)
+                model.addAttribute("formularios", formularios);
             model.addAttribute("participante", part);
             model.addAttribute("usuario", usuario.findById(id).get());
             model.addAttribute("user", getUsuario());
@@ -313,9 +321,11 @@ public class ParticipanteController {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
                 && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)) {
-            fasevaloracion.updateFindrisc(p, findrisc.getPuntosedad(), findrisc.getPuntosimc(), findrisc.getPuntoscmcintura(),
+            fasevaloracion.updateFindrisc(p, findrisc.getPuntosedad(), findrisc.getPuntosimc(),
+                    findrisc.getPuntoscmcintura(),
                     findrisc.getPtosactfisica(),
-                    findrisc.getPtosfrecfruta(), findrisc.getPtosmedicacion(), findrisc.getPtosglucosa(), findrisc.getPtosdiabetes(),
+                    findrisc.getPtosfrecfruta(), findrisc.getPtosmedicacion(), findrisc.getPtosglucosa(),
+                    findrisc.getPtosdiabetes(),
                     findrisc.getPuntuacion(),
                     findrisc.getEscalarriesgo());
 
@@ -503,7 +513,7 @@ public class ParticipanteController {
                 }
             }
 
-            if(!f.existe(p)){
+            if (!f.existe(p)) {
                 f.crearFichas(p);
             }
 
@@ -524,10 +534,11 @@ public class ParticipanteController {
             f.deleteByParticipante(p);
             mensajeS.deleteByParticipante(p);
             fasevaloracion.eliminarcuenta(p);
-            
+
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
             grupoS.update(p.getGrupo());
-            if(getUsuario() == null) return "redirect:/login";
+            if (getUsuario() == null)
+                return "redirect:/login";
 
         }
         return "redirect:/";
@@ -722,7 +733,7 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
-   @GetMapping("/objetivos/editar/{id}")
+    @GetMapping("/objetivos/editar/{id}")
     public String editarObjetivo(@PathVariable("id") Integer id, Model model) {
         Objetivo o = obj.getObjetivo(id);
         if (getUsuario() instanceof Participante && getUsuario().getId() == o.getParticipante().getId()) {
@@ -735,13 +746,13 @@ public class ParticipanteController {
 
     @PostMapping("/objetivos/guardar/{id}")
     public String process_editarObjetivo(@PathVariable("id") Integer id, @ModelAttribute Objetivo objetivo) {
-        //if (getUsuario().getId() == objetivo.getParticipante().getId()) { 
-            Participante p = participante.findById(getUsuario().getId()).get();
-            objetivo.setParticipante(p);
-            obj.guardar(objetivo);
-            return "redirect:/objetivos";
-        //} else
-          //  return "redirect:/";
+        // if (getUsuario().getId() == objetivo.getParticipante().getId()) {
+        Participante p = participante.findById(getUsuario().getId()).get();
+        objetivo.setParticipante(p);
+        obj.guardar(objetivo);
+        return "redirect:/objetivos";
+        // } else
+        // return "redirect:/";
     }
 
     // MATERIALES:
@@ -796,39 +807,57 @@ public class ParticipanteController {
         List<Actividad> listado = act.listado();
         model.addAttribute("listado", listado);
 
-        if (user instanceof Coordinador){
+        if (user instanceof Coordinador) {
             return "actividadesCoor";
         }
 
-        else if (user instanceof Participante){
-            //asistencia confirmada
+        else if (user instanceof Participante) {
+            // asistencia confirmada
             List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
-            model.addAttribute("asistencia", asistencia); 
+            model.addAttribute("asistencia", asistencia);
             return "actividades";
-        }
-        else
+        } else
             return "redirect:/";
     }
 
     @GetMapping("/actividad/{id}")
-    public String actividad(Model model, @PathVariable Integer id){
-        Actividad acti = act.actividad(id);
-        model.addAttribute("user", getUsuario());
-        model.addAttribute("actividad", acti);
+    public String actividad(Model model, @PathVariable Integer id) {
 
-        boolean asiste = false;
-        Integer asistencia = act.asistencia(acti.getId(), getUsuario().getId());
-        if(asistencia > 0) asiste = true;
-        model.addAttribute("asistencia", asiste);
+        Usuario user = getUsuario();
 
-        return "actividad";
+        if (user instanceof Participante || user instanceof Coordinador) {
+            Actividad acti = act.actividad(id);
+            model.addAttribute("user", user);
+            model.addAttribute("actividad", acti);
+
+            if (user instanceof Participante) { // si es participante comprobar asistencia confirmada a actividad
+                boolean asiste = false;
+                Integer asistencia = act.asistencia(acti.getId(), getUsuario().getId());
+
+                if (asistencia > 0)
+                    asiste = true;
+                model.addAttribute("asistencia", asiste);
+            }
+
+            else { //Coordinador, enviar listado de asistentes
+                Set<Participante> asistentes = acti.getParticipantes();
+                model.addAttribute("asistentes", asistentes);
+
+            }
+
+            return "actividad";
+        }
+        else{
+            return "redirect:/";
+        }
+        
     }
 
     @GetMapping("/confirmar/{id}")
-    public String confirmar(@PathVariable Integer id){
+    public String confirmar(@PathVariable Integer id) {
         Usuario user = getUsuario();
 
-        if(user instanceof Participante){
+        if (user instanceof Participante) {
             Actividad acti = act.actividad(id);
             Participante parti = participante.findById(user.getId()).get();
 
@@ -839,15 +868,16 @@ public class ParticipanteController {
 
             return "redirect:/actividades";
         }
-        
-        else return "redirect:/";
+
+        else
+            return "redirect:/";
     }
 
     @GetMapping("/confirmar_invitacion/{id}")
-    public String confirmarInvitacion(@PathVariable Integer id){
+    public String confirmarInvitacion(@PathVariable Integer id) {
         Usuario user = getUsuario();
 
-        if(user instanceof Participante){
+        if (user instanceof Participante) {
             Invitacion invitacion = invi.findById(id);
 
             Actividad acti = invitacion.getActividad();
@@ -863,15 +893,16 @@ public class ParticipanteController {
 
             return "redirect:/panel_invitaciones";
         }
-        
-        else return "redirect:/";
+
+        else
+            return "redirect:/";
     }
 
     @GetMapping("/rechazar_invitacion/{id}")
-    public String rechazarInvitacion(@PathVariable Integer id){
+    public String rechazarInvitacion(@PathVariable Integer id) {
         Usuario user = getUsuario();
 
-        if(user instanceof Participante){
+        if (user instanceof Participante) {
             Invitacion invitacion = invi.findById(id);
 
             invitacion.setEstado(EstadoInvitacion.RECHAZADA);
@@ -879,28 +910,32 @@ public class ParticipanteController {
 
             return "redirect:/panel_invitaciones";
         }
-        
-        else return "redirect:/";
+
+        else
+            return "redirect:/";
     }
 
     @GetMapping("/panel_invitaciones")
-    public String invitacionesPart(Model model){
+    public String invitacionesPart(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        List<Invitacion> pendientes = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(), EstadoInvitacion.PENDIENTE);
+        List<Invitacion> pendientes = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
+                EstadoInvitacion.PENDIENTE);
         model.addAttribute("pendientes", pendientes);
 
-        List<Invitacion> aceptadas = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(), EstadoInvitacion.ACEPTADA);
+        List<Invitacion> aceptadas = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
+                EstadoInvitacion.ACEPTADA);
         model.addAttribute("aceptadas", aceptadas);
 
-        List<Invitacion> rechazadas = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(), EstadoInvitacion.RECHAZADA);
+        List<Invitacion> rechazadas = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
+                EstadoInvitacion.RECHAZADA);
         model.addAttribute("rechazadas", rechazadas);
 
         return "invitacionesPart";
     }
 
-    //CUADERNO
+    // CUADERNO
     @GetMapping("/cuaderno")
     public String cuaderno(Model model) {
         Usuario user = getUsuario();
@@ -912,7 +947,7 @@ public class ParticipanteController {
     }
 
     @GetMapping("/info")
-    public String info(Model model){
+    public String info(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
@@ -921,7 +956,7 @@ public class ParticipanteController {
             return "acceso";
     }
 
-    //ALIMENTACIÓN
+    // ALIMENTACIÓN
     @GetMapping("/alimentacion")
     public String alimentacion(Model model) {
         Usuario user = getUsuario();
@@ -936,22 +971,28 @@ public class ParticipanteController {
     public String alimentos(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("alimentoCon", new AlimentosConsumidos());
             List<AlimentosConsumidos> listal = alimentacion.getAlimentosCon(participante.findById(user.getId()).get());
-            List<Float> nutrienteshoy = new ArrayList<Float>(Arrays.asList(0f, 0f, 0f, 0f, 0f)); // Inicializar con ceros
-            for(int i = 0; i < listal.size(); i++){
-                nutrienteshoy.set(0, nutrienteshoy.get(0) + (listal.get(i).getAlimento().getFibra_alimentaria() * listal.get(i).getRaciones()));
-                nutrienteshoy.set(1, nutrienteshoy.get(1) + (listal.get(i).getAlimento().getGrasas_saturadas() * listal.get(i).getRaciones()));
-                nutrienteshoy.set(2, nutrienteshoy.get(2) + (listal.get(i).getAlimento().getHidratos_de_carbono() * listal.get(i).getRaciones()));
-                nutrienteshoy.set(3, nutrienteshoy.get(3) + (listal.get(i).getAlimento().getProteinas() * listal.get(i).getRaciones()));
-                nutrienteshoy.set(4, nutrienteshoy.get(4) + (listal.get(i).getAlimento().getSal() * listal.get(i).getRaciones()));
+            List<Float> nutrienteshoy = new ArrayList<Float>(Arrays.asList(0f, 0f, 0f, 0f, 0f)); // Inicializar con
+                                                                                                 // ceros
+            for (int i = 0; i < listal.size(); i++) {
+                nutrienteshoy.set(0, nutrienteshoy.get(0)
+                        + (listal.get(i).getAlimento().getFibra_alimentaria() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(1, nutrienteshoy.get(1)
+                        + (listal.get(i).getAlimento().getGrasas_saturadas() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(2, nutrienteshoy.get(2)
+                        + (listal.get(i).getAlimento().getHidratos_de_carbono() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(3, nutrienteshoy.get(3)
+                        + (listal.get(i).getAlimento().getProteinas() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(4,
+                        nutrienteshoy.get(4) + (listal.get(i).getAlimento().getSal() * listal.get(i).getRaciones()));
             }
             model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
             model.addAttribute("nutrientes", nutrienteshoy);
             model.addAttribute("listaAlimentosCon", listal);
 
-            //BORRAR ALIMENTOS DE HACE MÁS DE 1 SEMANA
+            // BORRAR ALIMENTOS DE HACE MÁS DE 1 SEMANA
             alimentacion.borraralconSem(participante.findById(user.getId()).get());
             return "alimentos";
         } else
@@ -974,7 +1015,7 @@ public class ParticipanteController {
     public String nuevoal(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("alimento", new Alimentacion());
             return "nuevoalimento";
         } else
@@ -1004,7 +1045,7 @@ public class ParticipanteController {
     public String recetas(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)){
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("lareceta", new Receta());
             model.addAttribute("listaRecetas", alimentacion.getRecetas());
             model.addAttribute("listaIng", alimentacion.getAlimentos());
@@ -1014,28 +1055,28 @@ public class ParticipanteController {
     }
 
     @PostMapping("/process_receta")
-    public String procesoReceta(@ModelAttribute Receta lareceta, @RequestParam("file") MultipartFile file){
-            if(getUsuario().getEstadoCuenta().equals(Estado.ALTA)){
-                if(!file.isEmpty()){
-                    try {
-                        Path rutaArchivo = Paths.get("src//main//resources//static/recetas");
-                        String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
-                        byte[] bytesArc = file.getBytes(); 
-                        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
-                        Files.write(rutaCompleta, bytesArc);
-                    } catch (Exception e) {
-                        String mensaje = "Ha ocurrido un error: " + e.getMessage();
-                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                    lareceta.setLink(file.getOriginalFilename());
-                    lareceta.setId(0);
-                    alimentacion.updateReceta(lareceta);
+    public String procesoReceta(@ModelAttribute Receta lareceta, @RequestParam("file") MultipartFile file) {
+        if (getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
+            if (!file.isEmpty()) {
+                try {
+                    Path rutaArchivo = Paths.get("src//main//resources//static/recetas");
+                    String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                    byte[] bytesArc = file.getBytes();
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesArc);
+                } catch (Exception e) {
+                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                lareceta.setLink(file.getOriginalFilename());
+                lareceta.setId(0);
+                alimentacion.updateReceta(lareceta);
             }
+        }
         return "redirect:/recetas";
     }
 
-    //FICHAS
+    // FICHAS
     @GetMapping("/fichas")
     public String fichas(Model model) {
 
@@ -1111,24 +1152,27 @@ public class ParticipanteController {
     }
 
     @GetMapping("/recetasparecidas")
-    public String recetasParecidas(@RequestParam(required = false) String[] want, @RequestParam(required = false) String[] dontwant, Model model) {
+    public String recetasParecidas(@RequestParam(required = false) String[] want,
+            @RequestParam(required = false) String[] dontwant, Model model) {
         Usuario u = getUsuario();
         model.addAttribute("user", u);
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
-            if(want.length == 0) model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
-            else{
-                //List<String> recetas = new ArrayList();
-               // recetas = service.recetasparecidas(want, dontwant);
-            } 
-            //getRecetasById(recetas.get(i))
-            //model.addAttribute("listarecetas")
-        return "recetasparecidas";    
-        } else return "acceso";  
+            if (want.length == 0)
+                model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
+            else {
+                // List<String> recetas = new ArrayList();
+                // recetas = service.recetasparecidas(want, dontwant);
+            }
+            // getRecetasById(recetas.get(i))
+            // model.addAttribute("listarecetas")
+            return "recetasparecidas";
+        } else
+            return "acceso";
     }
 
-    //BORRAR CUANDO ESTÉ HECHO LO DE MACHINE LEARNING
+    // BORRAR CUANDO ESTÉ HECHO LO DE MACHINE LEARNING
     @GetMapping("/nutrientes")
-    public String nutrientes(){
+    public String nutrientes() {
         return service.getHello();
     }
 }

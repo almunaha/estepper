@@ -15,5 +15,5 @@ public interface InvitacionRepository extends JpaRepository<Invitacion, Integer>
     List<Invitacion> findByCoordinadorAndActividad(Coordinador c, Actividad actividad);
     List<Invitacion> findByActividad(Actividad a);
     List<Invitacion> findByParticipanteAndEstado(Participante p, EstadoInvitacion e);
-    
+    Invitacion findByParticipanteAndActividad(Participante p, Actividad a);    
 }
