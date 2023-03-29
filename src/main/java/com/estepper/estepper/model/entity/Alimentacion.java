@@ -26,7 +26,7 @@ public class Alimentacion {
     private float hidratos_de_carbono;
     private float proteinas;
     @Enumerated(EnumType.STRING)
-    @Column(name = "unidad")
+    @Column(name = "unidad", columnDefinition = "ENUM('GRAMOS', 'LITROS', 'MILIGRAMOS', 'MILILITROS', 'UNIDADES', 'CUCHARADAS', 'KILOGRAMOS')")
     private TipoUnidad unidad;
     private float porcion;
     @Enumerated(EnumType.STRING)
