@@ -28,6 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -319,20 +320,22 @@ public class CoordinadorController {
     }
 
     @PostMapping("/guardar_actividad")
-    public String guardarActividad(@ModelAttribute Actividad actividad, @RequestParam(name = "plazas", required=false) Integer plazas) {
+    public String guardarActividad(@ModelAttribute Actividad actividad,
+            @RequestParam(name = "plazas", required = false) Integer plazas) {
         Usuario elusuario = getUsuario();
-        
+
         if (elusuario instanceof Coordinador) {
             Actividad orig = act.actividad(actividad.getId());
 
-            if(plazas != null)
+            if (plazas != null)
                 actividad.setPlazas(orig.getPlazas() + plazas);
-            else actividad.setPlazas(orig.getPlazas());
+            else
+                actividad.setPlazas(orig.getPlazas());
 
             actividad.setEstado(orig.getEstado());
             actividad.setNumParticipantes(orig.getNumParticipantes());
 
-            //guardar actividad
+            // guardar actividad
             act.guardar(actividad);
 
             return "redirect:/actividades";
@@ -340,7 +343,6 @@ public class CoordinadorController {
             return "redirect:/";
 
     }
-
 
     @GetMapping("/invitaciones/{id}")
     public String invitaciones(@PathVariable Integer id, Model model) {
@@ -360,29 +362,42 @@ public class CoordinadorController {
     }
 
     @PostMapping("/process_invitacion/{id}")
-    public String process_invitacion(@PathVariable Integer id, @RequestParam("codigoG") String codigoG, 
-    @RequestParam("tipo") String tipo, @RequestParam(name = "codigoP", required=false) Integer codigoP){
+    public String process_invitacion(@PathVariable Integer id, @RequestParam("codigoG") String codigoG,
+            @RequestParam("tipo") String tipo, @RequestParam(name = "codigoP", required = false) Integer codigoP,
+            Model model) {
 
-       Actividad actividad = act.actividad(id); 
-       Coordinador coordinador = (Coordinador) getUsuario();
+        Actividad actividad = act.actividad(id);
+        Coordinador coordinador = (Coordinador) getUsuario();
 
-        if(tipo.equals("GRUPAL")){
-            //grupo
-            Grupo g = grupo.findByCodigo(codigoG);        
+        if (tipo.equals("GRUPAL")) {
+            // grupo
+            Grupo g = grupo.findByCodigo(codigoG);
 
-            //listado participantes del grupo
+            // listado participantes del grupo
             List<Participante> participantes = part.listadoGrupo(g);
 
-            //por cada participante hacer una invitacion
-            for(Participante p : participantes)
-                inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
+            // por cada participante hacer una invitacion
+            for (Participante p : participantes) {
+                Invitacion invitacion = inv.invitacionByPartAndActi(p, actividad);
+
+                if (invitacion == null)
+                    inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
+            }
         }
 
         else {
             Usuario u = user.findByCodigo(codigoP);
-            Participante p = part.findById(u.getId()).get();
-            if(p != null) 
-                inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
+
+            if (u != null && u instanceof Participante) { // si existe un usuario con ese codigo y es participante
+                Participante p = part.findById(u.getId()).get();
+
+                if (p != null) {
+                    Invitacion invitacion = inv.invitacionByPartAndActi(p, actividad);
+                    if (invitacion == null)
+                        inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
+                }
+            }
+
         }
 
         return "redirect:/invitaciones/" + id;

@@ -178,15 +178,19 @@
                                 </div>
                                 <div class="dato-act">
                                     <span>Plazas disponibles:</span>
-                                    <div th:text="${lis.plazas - lis.numParticipantes}"></div>
+                                    <div th:text="${lis.plazas}"></div>
                                 </div>
 
                                 <div class="layout-apuntar">
                                     <a th:if="${asistencia.contains(lis)}" class="btn" id="btn-part" th:href="'/actividad/' + ${lis.id}" 
                                     style="cursor: pointer">Inscripción realizada</a>
 
-                                    <a th:unless="${asistencia.contains(lis)}" class="btn" id="btn-part" style="cursor: pointer"
+                                    <a th:if="${not asistencia.contains(lis) and lis.plazas > 0}" class="btn" id="btn-part" style="cursor: pointer"
                                         th:onclick="inscripcion(/*[[${lis.id}]]*/)">Inscribirme</a>
+
+                                    <a th:if="${not asistencia.contains(lis) and lis.plazas == 0}" class="btn" id="btn-part" th:href="'/actividad/' + ${lis.id}" 
+                                        style="cursor: pointer">Sin disponibilidad</a>
+                                    
                                 </div>
                             </div>
                         </div>

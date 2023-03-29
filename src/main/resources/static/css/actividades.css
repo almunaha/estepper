@@ -1,5 +1,5 @@
 /* PARTICIPANTE */
-.header-part{
+.header-part {
     background-color: white;
     padding: 1%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
@@ -11,7 +11,7 @@
     align-items: center;
 }
 
-.btn-invit{
+.btn-invit {
     background-color: rgb(221, 171, 99);
     color: white;
     padding: 1%;
@@ -23,31 +23,32 @@
     text-align: center;
 }
 
-.btn-invit:hover{
+.btn-invit:hover {
     transform: scale(1.1);
 }
 
-.flex-act{
+.flex-act {
     display: flex;
     justify-content: space-between;
     width: 100%;
     flex-direction: row;
 }
 
-.calendario{
+.calendario {
     width: 27.5%;
 }
 
-.actividades-part{
+.actividades-part {
     display: flex;
     margin-top: 2%;
     margin-left: 2%;
     gap: 1.2%;
-    flex-wrap: wrap; /* para cambiar de fila */
+    flex-wrap: wrap;
+    /* para cambiar de fila */
     width: 71.5%
 }
 
-.actividad{
+.actividad {
     width: 31.7%;
     height: 370px;
     border-radius: 12px;
@@ -56,13 +57,13 @@
     margin-bottom: 1.2%;
 }
 
-.foto-act{
+.foto-act {
     height: 130px;
     width: 100%;
     overflow: hidden;
 }
 
-.foto-act img{
+.foto-act img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -71,38 +72,38 @@
     border-top-left-radius: 12px;
 }
 
-.datos-actividad{
+.datos-actividad {
     padding-left: 8%;
     padding-right: 8%;
     padding-bottom: 6%;
     height: 65%;
 }
 
-.dato-act{
+.dato-act {
     display: flex;
     gap: 1%;
     margin-top: 4%;
     align-items: center;
 }
 
-.dato-act i{
+.dato-act i {
     font-size: 1.2rem;
     width: 25px
 }
 
-.nombre-act{
+.nombre-act {
     font-size: 120%;
     color: rgb(38, 172, 213);
     font-weight: bold;
     font-weight: 400;
 }
 
-.nombre-act:hover{
+.nombre-act:hover {
     text-decoration: underline;
     color: #1958b8;
 }
 
-.layout-apuntar{
+.layout-apuntar {
     margin-top: 8%;
     width: 100%;
     text-align: center;
@@ -110,7 +111,7 @@
 
 /* INFO ACTIVIDAD */
 
-.actividad-info{
+.actividad-info {
     margin-top: 3%;
     margin-left: 9%;
     margin-right: 9%;
@@ -120,13 +121,13 @@
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
-.botones-info{
+.botones-info {
     margin-top: 2%;
     margin-bottom: 2%;
     display: flex;
 }
 
-.btn-info{
+.btn-info {
     background-color: rgb(175, 198, 204);
     color: white;
     padding: 0.5%;
@@ -135,18 +136,22 @@
     width: 40%;
     border-right: 0.5px solid rgb(170, 170, 170);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-} 
-
-.btn-info > *:last-child {
-    border-right: none; /* Elimina el borde derecho en el último elemento */
 }
 
-.descripcion p, .detalles div, .inscripcion div, .inscripcion a{
+.btn-info>*:last-child {
+    border-right: none;
+    /* Elimina el borde derecho en el último elemento */
+}
+
+.descripcion p,
+.detalles div,
+.inscripcion div,
+.inscripcion a {
     margin-bottom: 3%;
 }
 
-.btn-confirm{
-    background-color: rgb(49, 107, 127);    
+.btn-confirm {
+    background-color: rgb(49, 107, 127);
     color: white;
     padding: 0.5%;
     font-size: 1rem;
@@ -159,12 +164,12 @@
     float: right;
 }
 
-.btn-confirm:hover{
+.btn-confirm:hover {
     background-color: rgb(33, 72, 85);
 }
 
-.atras-info{
-    background-color: white;    
+.atras-info {
+    background-color: white;
     color: black;
     margin-left: 9%;
     padding: 0.5%;
@@ -180,51 +185,51 @@
     margin-top: 2%;
 }
 
-.atras-info:hover{
-    background-color: antiquewhite;
+.atras-info:hover {
+    background-color: rgb(230, 230, 230);
 }
 
 /* Calendario o asistencia confirmada */
-.eventos{
+.eventos {
     background-color: white;
     margin-top: 2%;
     margin-right: 2%;
     width: 25%;
 }
 
-.eventos p{
+.eventos p {
     padding-top: 5%;
     padding-left: 5%;
     padding-right: 5%;
     font-size: 0.9rem;
 }
 
-.asistencia{
+.asistencia {
     padding: 2%;
     background-color: rgb(207, 236, 250);
     text-align: center;
 }
 
-.asistencia h5{
+.asistencia h5 {
     font-size: 1.1rem;
-    color:rgb(49, 107, 127);
+    color: rgb(49, 107, 127);
 }
 
-.layout-asis{
+.layout-asis {
     display: flex;
     padding: 5%;
     width: 100%;
     flex-direction: column;
 }
 
-.asis-indi{
+.asis-indi {
     width: 100%;
     margin-bottom: 7px;
     display: flex;
-    height: 100%; 
+    height: 100%;
 }
 
-.iz-asis{
+.iz-asis {
     display: flex;
     flex-direction: column;
     font-weight: bold;
@@ -235,7 +240,7 @@
     align-items: center;
 }
 
-.der-asis{
+.der-asis {
     display: flex;
     flex-direction: column;
     background-color: rgb(242, 240, 240);
@@ -246,7 +251,7 @@
 }
 
 /* COORDINADOR */
-.header-act{
+.header-act {
     display: flex;
     justify-content: space-between;
     margin-left: 12%;
@@ -255,7 +260,7 @@
     margin-bottom: 1%;
 }
 
-.btn-act{
+.btn-act {
     background-color: rgb(224, 176, 94);
     border: 2px solid;
     color: white;
@@ -266,18 +271,18 @@
     border-radius: 10px;
 }
 
-.btn-act:hover{
+.btn-act:hover {
     background-color: white;
     color: rgb(224, 176, 94);
     border-color: rgb(224, 176, 94);
 }
 
-.layout-actividades{
+.layout-actividades {
     margin-left: 2%;
     margin-right: 2%;
 }
 
-.act-coor{
+.act-coor {
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     margin-bottom: 1.2%;
@@ -290,16 +295,17 @@
     margin-right: 10%;
 }
 
-.act-coor i{
+.act-coor i {
     color: rgb(94, 191, 224);
 }
 
-.btn-form{
+.btn-form {
     margin-top: 2%;
     text-align: center;
 }
 
-.btn-gest, .btn-gest-eliminar{
+.btn-gest,
+.btn-gest-eliminar {
     padding: 2.3%;
     background-color: rgb(79, 161, 188);
     color: white;
@@ -310,45 +316,47 @@
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
-.btn-gest:hover, .btn-gest-eliminar:hover{
+
+.btn-gest:hover,
+.btn-gest-eliminar:hover {
     transform: scale(1.04);
 }
 
-.btn-gest-eliminar i{
+.btn-gest-eliminar i {
     color: white;
 }
 
-.btn-gest i{
+.btn-gest i {
     color: white;
 }
 
-.datos-coor{
+.datos-coor {
     display: flex;
     align-items: center;
 }
 
 
-.iz-datos{
+.iz-datos {
     width: 60%;
 }
 
-.medio-datos{
+.medio-datos {
     width: 65%;
 }
 
-.der-datos{
+.der-datos {
     width: 30%;
 }
 
-.botones-coor{
+.botones-coor {
     display: flex;
 }
 
-.botones-coor #enlace{
+.botones-coor #enlace {
     width: 100px;
 }
 
-.contenido-nueva{
+.contenido-nueva {
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     margin-left: 6%;
@@ -358,18 +366,32 @@
     margin-top: 3%;
 }
 
-.layout-editar{
+.layout-editar {
     margin-left: 5%;
     margin-right: 5%;
 }
 
-.campos-form{
+.campos-form {
     display: flex;
 }
 
-.form-dato{
+.form-dato {
     width: 50%;
     margin-right: 4%;
+}
+
+#tabla-asistencia{
+    width: 70%;
+}
+
+#tabla-asistencia thead{
+    background-color: rgb(207, 236, 250);
+    color: rgb(49, 107, 127);
+}
+
+#tabla-asistencia td, th {
+    vertical-align: middle;
+    text-align: center; 
 }
 
 
@@ -377,16 +399,16 @@
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 
-    #sidebar-container{
+    #sidebar-container {
         display: none;
     }
 
-    .actividades-part{
+    .actividades-part {
         flex-direction: column;
         align-content: space-around;
     }
 
-    .actividad{
+    .actividad {
         width: 84%;
         margin-bottom: 3.5%;
     }

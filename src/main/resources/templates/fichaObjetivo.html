@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+    <script src="/js/menu.js"></script>
+
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+
+    <title>Objetivo pérdida - Estepper</title>
+</head>
+
+<body>
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <div class="d-flex">
+
+        <div id="sidebar-container">
+
+
+            <div class="logo">
+                <img width="75" th:src="@{img/logo.png}" />
+                <h4>Estepper</h4>
+            </div>
+
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/cuaderno}">
+                        <i class="fa-solid fa-pen"></i>
+                        <span class="nombre-enlaces">Cuaderno</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/alimentacion}">
+                        <i class="fa-solid fa-carrot"></i>
+                        <span class="nombre-enlaces">Alimentación</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{'/materiales/' + ${user.id}}">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span class="nombre-enlaces">Materiales</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/progreso}">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="nombre-enlaces">Progreso</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/chat}">
+                        <i class="fa-solid fa-comments"></i>
+                        <span class="nombre-enlaces">Chat</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="w-100" style="margin-left: 250px">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    id="avatar-header" />
+                                <span sec:authentication="principal.nombre"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div style="padding-top: 75px;">
+                <div class="bg-white border border-1 p-4 rounded-4" style="margin-top:2%; margin-left: 4%; margin-right: 4%">
+                    <div style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 12px;">
+                        <h4 style="margin-top: 3%; color:azure">CÁLCULO DEL ÍNDICE DE MASA CORPORAL (IMC) Y DEL PESO A
+                            PERDER</h4>
+                    </div>
+
+                    <div>
+                        <div class="cont-calculo" style="margin-top: 2%">
+                            <h6>CÁLCULO DEL IMC</h6>
+                            <div style="margin-top: 2%">IMC = Peso en kilos / Talla en m2</div>
+                            <div style="margin-top: 2%" th:text="'IMC = ' + ${exploracion.peso} + ' / ' + ${talla} + '^2 = '+ ${exploracion.imc}"></div>
+                        </div>
+
+                        <div class="cont-calculo">
+                            <h6>CÁLCULO DE PÉRDIDA DEL 5-10% DEL PESO</h6>
+                            <div style="margin-top: 2%" th:text="'Peso: ' + ${exploracion.peso} + ' kg'"></div>
+                            <div style="margin-top: 2%" th:text="'5% de pérdida: ' + ${exploracion.peso * 0.05} + ' kg'"></div>
+                            <div th:text="'10% de pérdida: ' + ${exploracion.peso * 0.1} + ' kg'"></div>
+                            <div style="margin-top: 2%" >Peso a alcanzar: </div>
+                            <div th:text="'Peso -5% de pérdida: ' +  ${exploracion.peso - exploracion.peso * 0.05} + ' kg'">
+                            </div>
+                            <div th:text="'Peso -10% de pérdida: ' + ${exploracion.peso - exploracion.peso * 0.1} + ' kg'">
+                            </div>
+                        </div>
+
+                        <div class="cont-calculo">
+                            <h6 th:text="'PESO SALUDABLE: ' + ${saludable} + ' kg'"></h6>
+                        </div>
+
+                        <div class="cont-calculo" style="background-color: rgb(237, 249, 255);">
+                            <h6>RELLENA LOS SIGUIENTES CAMPOS</h6>
+                            <form class="form-fobjetivo" method="post" th:action="@{'/process_fichao/' + ${ficha.id}}"
+                            th:object="${ficha}">
+
+                                <div class="input-group mt-4">
+                                    <label class="col-2 col-form-label">¿Cuánto quiero pesar?</label>
+                                    <input type="number" th:field="*{objetivo}" th:name="objetivo" th:value="${ficha.objetivo != null} ? ${ficha.objetivo} : ''" 
+                                    step="0.01" class="form-control" required />
+                                </div>
+
+                                <div class="input-group mt-2">
+                                    <label class="col-2 col-form-label">Mi objetivo es perder</label>
+                                    <input type="number" th:field="*{perdida}" th:name="perdida" th:value="${ficha.perdida != null} ? ${ficha.perdida} : ''"
+                                    step="0.01" class="form-control" required /> kg
+                                </div>
+
+                                <button class="btn btn-info text-white mt-4 w-100" type="submit">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

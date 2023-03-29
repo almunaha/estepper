@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estepper.estepper.model.entity.FichaEleccion;
+import com.estepper.estepper.model.entity.FichaObjetivo;
 import com.estepper.estepper.model.entity.FichaTaller;
 import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.repository.FichaEleccionRepository;
+import com.estepper.estepper.repository.FichaObjetivoRepository;
 import com.estepper.estepper.repository.FichaTallerRepository;
 import com.estepper.estepper.repository.FichaRepository;
 
@@ -22,6 +24,9 @@ public class FichaServiceImpl implements FichaService{
 
     @Autowired 
     private FichaTallerRepository repoT;
+
+    @Autowired
+    private FichaObjetivoRepository repoO;
 
     @Override
     public FichaEleccion getFichaEleccion(Participante participante, Integer numEleccion) {
@@ -50,6 +55,8 @@ public class FichaServiceImpl implements FichaService{
         repoT.save(fichaT);
 
         //CREAR FICHAS PESO SALUDABLE
+        FichaObjetivo fichaO = new FichaObjetivo(0, participante, null, null);
+        repoO.save(fichaO);
     }
 
     @Override
@@ -70,6 +77,16 @@ public class FichaServiceImpl implements FichaService{
     @Override
     public void updateFichaTaller(FichaTaller ficha) {
         repoT.update(ficha.getDificultades(), ficha.getCapacidad(), ficha.getImportancia(), ficha.getRazones(), ficha.getTemores(), ficha.getId());
+    }
+
+    @Override
+    public FichaObjetivo getFichaObjetivo(Participante participante){
+        return repoO.findByParticipante(participante);
+    }
+
+    @Override
+    public void updateFichaObjetivo(FichaObjetivo ficha) {
+        repoO.update(ficha.getObjetivo(), ficha.getPerdida(), ficha.getId());
     }
 
     @Override

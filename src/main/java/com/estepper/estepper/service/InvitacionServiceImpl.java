@@ -53,4 +53,9 @@ public class InvitacionServiceImpl implements InvitacionService{
         return (List<Invitacion>) repo.findByCoordinadorAndActividad(c, a);
     }
 
+    @Override
+    public Invitacion invitacionByPartAndActi(Participante p, Actividad a){
+        return repo.findByParticipanteAndActividad(p, a);
+    }
+
 }

@@ -167,7 +167,8 @@
                     <div class="botones-info">
                         <button class="btn-info" id="descripcion">Descripción</button>
                         <button class="btn-info" id="detalles">Detalles</button>
-                        <button class="btn-info" id="inscripcion">Inscripción</button>
+                        <button th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}" class="btn-info" id="asistentes">Asistentes</button>
+                        <button th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" class="btn-info" id="inscripcion">Inscripción</button>
                     </div>
 
                     <div class="descripcion">
@@ -175,7 +176,7 @@
                         <p th:text="${actividad.descripcion}"></p>
 
                         <h5>Plazas disponibles</h5>
-                        <p th:text="${actividad.plazas - actividad.numParticipantes}"></p>
+                        <p th:text="${actividad.plazas}"></p>
 
                     </div>
 
@@ -192,16 +193,40 @@
 
                     </div>
 
-                    <div class="inscripcion">
+                    <div class="asistentes">
+                        <h5>Listado de asistentes confirmados</h5>
+                        <h6 style="color: rgb(49, 107, 127)" th:text="'Total asistentes: ' + ${actividad.numParticipantes}"></h6>
+
+                        <div class="table-responsive" style="margin-top: 3%;">
+                            <table class="table" id="tabla-asistencia">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Alias</th>
+                                        <th scope="col">Código</th>
+                                        <th scope="col">Grupo</th>    
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr th:each="lis:${asistentes}">
+                                        <td th:text="${lis.nickname}"></td>
+                                        <td style="font-weight: bold;" th:text="${lis.codigo}"></td>
+                                        <td th:text="${lis.grupo.nombre}" id="columnaGr"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                    <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" class="inscripcion">
                         <h5>Realizar la inscripción</h5>
-                        <p th:if="${!asistencia and user instanceof T(com.estepper.estepper.model.entity.Participante)}">Si desea inscribirse en esta actividad, pinche en "confirmar asistencia".</p>
-                        <p th:if="${!asistencia and user instanceof T(com.estepper.estepper.model.entity.Participante)}">La actividad será añadida a tu listado de actividades.</p>
-                        <a th:if="${!asistencia and user instanceof T(com.estepper.estepper.model.entity.Participante)}" th:href="'/confirmar/' + ${actividad.id}" class="btn-confirm">Confirmar asistencia</a>
+                        <p th:if="${!asistencia and actividad.plazas > 0}">Si desea inscribirse en esta actividad, pinche en "confirmar asistencia".</p>
+                        <p th:if="${!asistencia and actividad.plazas > 0}">La actividad será añadida a tu listado de actividades.</p>
+                        <a th:if="${!asistencia and actividad.plazas > 0}" th:href="'/confirmar/' + ${actividad.id}" class="btn-confirm">Confirmar asistencia</a>
 
-                        <p th:if="${asistencia and user instanceof T(com.estepper.estepper.model.entity.Participante)}">¡Enhorabuena! Ya estás inscrito en esta actividad.</p>
-
-                        <p th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">Un coordinador no puede realizar la inscripción.</p>
-
+                        <p th:if="${asistencia}">¡Enhorabuena! Ya estás inscrito en esta actividad.</p>
+                        <p th:if="${!asistencia and actividad.plazas == 0}">Lo sentimos, actualmente no hay disponibilidad en esta actividad.</p>
                     </div>
                 </div>
                 <a class="atras-info" th:href="@{/actividades}">Atrás</a>

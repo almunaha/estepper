@@ -18,6 +18,8 @@
     <!-- para jquery-->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <script src="/js/menu.js"></script>
     <script src="/js/actividades.js"></script>
@@ -134,7 +136,10 @@
 
                     <div class="der-gestion">
                         <h5>Realizar invitación</h5>
-                        <form class="form-invitacion" th:action="@{'/process_invitacion/' + ${actividad.id}}" method="post">
+                        <p style="text-align: center;" th:if="${actividad.plazas == 0}">No hay disponibilidad para esta actividad.</p>
+                        <p style="text-align: center;" th:if="${actividad.plazas > 0}" th:text="'Puedes realizar '+ ${actividad.plazas} + ' invitaciones'">Puede realizar </p>
+
+                        <form th:if="${actividad.plazas > 0}" class="form-invitacion" th:action="@{'/process_invitacion/' + ${actividad.id}}" method="post" id="form-invi">
                             <div class="campo">
                                 <label for="tipo">Destinatario </label>
                                 <select id="tipo" name="tipo" class="form-select" required>
@@ -157,7 +162,7 @@
                             </div>
 
                             <div class="enviar-invit">
-                                <button class="enviar-invit" type="submit">Enviar</button>
+                                <button class="enviar-invit" type="submit" id="enviar-invi">Enviar</button>
                             </div>
 
                         </form>
