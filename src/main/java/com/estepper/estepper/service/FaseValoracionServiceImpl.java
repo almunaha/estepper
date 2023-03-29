@@ -66,7 +66,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     @Override
     public void crearFormularios(Participante participante){
         //EXPLORACIÓN
-        Exploracion exploracion = new Exploracion(0, participante, Sexo.MASCULINO, "no", 0, 0, 0, 0, 0);
+        Exploracion exploracion = new Exploracion(0, participante, Sexo.MASCULINO, "no", 0.0, 0.0, 0, 0, 0);
         repoE.save(exploracion);
         //FINDRISC
         Findrisc findrisc = new Findrisc(0, participante, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo");
@@ -93,7 +93,7 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     }
 
     @Override
-    public void updateExploracion(String primeravez, Sexo sexo, Integer peso, Integer talla, Integer cmcintura, Integer edad,
+    public void updateExploracion(String primeravez, Sexo sexo, Double peso, Integer talla, Double cmcintura, Integer edad,
             Integer imc, Participante participante) {
         repoE.updateExploracion(primeravez, sexo, peso, talla, cmcintura, edad, imc, participante);
         

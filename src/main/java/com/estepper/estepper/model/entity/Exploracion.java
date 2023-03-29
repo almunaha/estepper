@@ -16,8 +16,8 @@ public class Exploracion extends FaseValoracion {
     private Integer id;
 
     private String primeravez;
-    private Integer peso;
-    private Integer cmcintura;
+    private Double peso;
+    private Double cmcintura;
     private Integer talla;
     private Integer edad;
     private Integer imc;  
@@ -27,7 +27,7 @@ public class Exploracion extends FaseValoracion {
         super();
     }
 
-    public Exploracion(Integer id, Participante participante, Sexo sexo, String primeravez, Integer peso, Integer cmcintura, Integer talla, Integer edad, Integer imc ){
+    public Exploracion(Integer id, Participante participante, Sexo sexo, String primeravez, Double peso, Double cmcintura, Integer talla, Integer edad, Integer imc ){
         super(id, participante);
         this.primeravez = primeravez;
         this.peso = peso;
@@ -55,19 +55,19 @@ public class Exploracion extends FaseValoracion {
         this.primeravez = primeravez;
     }
 
-    public Integer getPeso() {
+    public Double getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Double peso) {
         this.peso = peso;
     }
 
-    public Integer getCmcintura() {
+    public Double getCmcintura() {
         return cmcintura;
     }
 
-    public void setCmcintura(Integer cmcintura) {
+    public void setCmcintura(Double cmcintura) {
         this.cmcintura = cmcintura;
     }
 

@@ -637,7 +637,6 @@ public class ParticipanteController {
             }
         }
 
-        Progreso primerPeso = pro.primerPeso(p, TipoProgreso.PESO);
         Double pe = exploracion.getPeso().doubleValue();
 
         Double pesoPerdido = null;
@@ -672,7 +671,6 @@ public class ParticipanteController {
             }
         }
 
-        Progreso primerCintura = pro.primerPeso(p, TipoProgreso.PERIMETRO);
         Double pe = exploracion.getCmcintura().doubleValue();
 
         Double cmCinturaPerdido = null;
@@ -1174,9 +1172,12 @@ public class ParticipanteController {
                 model.addAttribute("exploracion", exploracion);
 
                 String talla = String.format("%.2f", exploracion.getTalla() / 100.0); // Formatear a dos decimales
-                model.addAttribute("talla", talla); 
+                model.addAttribute("talla", talla);
 
-                Double s = 25.00 * ((exploracion.getTalla() / 100.0) * (exploracion.getTalla() / 100.0)); // peso saludable para imc de 25
+                Double s = 25.00 * ((exploracion.getTalla() / 100.0) * (exploracion.getTalla() / 100.0)); // peso
+                                                                                                          // saludable
+                                                                                                          // para imc de
+                                                                                                          // 25
                 String saludable = String.format("%.2f", s);
                 model.addAttribute("saludable", saludable);
 
