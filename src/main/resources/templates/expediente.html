@@ -141,7 +141,14 @@
                             style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
                             <h5><i title="Pérdida de peso" class="fa-solid fa-weight-scale"
                                     style="margin-right: 10px;"></i></h5>
-                            <h5 th:text="${participante.perdidaDePeso}+ ' ' + 'kg perdidos'" style="margin-left: 10px;">
+                            <h5 th:text="${-participante.perdidaDePeso}+ ' ' + 'kg perdidos'" style="margin-left: 10px;">
+                            </h5>
+                        </div>
+                        <div th:unless="${participante.perdidacmcintura == null}"
+                            style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
+                            <h5><i title="Pérdida de cm cintura" class="fa-sharp fa-solid fa-scale-balanced"
+                                    style="margin-right: 10px;"></i></h5>
+                            <h5 th:text="${-participante.perdidacmcintura}+ ' ' + 'cm perdidos'" style="margin-left: 10px;">
                             </h5>
                         </div>
                         <div th:unless="${participante.sesionesCompletas == null}"
