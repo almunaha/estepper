@@ -2,6 +2,7 @@ package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -40,6 +41,7 @@ public class Objetivo implements Serializable{
     private String descripcion;
    
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = true, name = "repeticion", columnDefinition = "ENUM('NINGUNA', 'DIARIAMENTE', 'SEMANALMENTE', 'MENSUALMENTE', 'ANUALMENTE')")
     private Repeticion repeticion;
 
     @Temporal(TemporalType.DATE)
@@ -48,6 +50,7 @@ public class Objetivo implements Serializable{
     private Date fechaVencimiento;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = true, name = "estado", columnDefinition = "ENUM('COMPLETADO', 'PENDIENTE')")
     private EstadoObjetivo estado;
 
     public Objetivo(Integer id, Participante participante, String titulo, String descripcion, Repeticion repeticion, Date fechaVencimiento, EstadoObjetivo estado) {
@@ -61,6 +64,7 @@ public class Objetivo implements Serializable{
     }
 
     public Objetivo() {
+        estado = EstadoObjetivo.PENDIENTE;
     }
 
 
