@@ -18,4 +18,5 @@ public interface AlimentacionService {
     public void updateReceta(Receta receta);
     public void borraralconSem(Participante p);
     public Receta getRecetasById(Integer id);
+    public List<Receta> recetasParecidas(String[] want, String[] dontwant);
 }

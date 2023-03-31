@@ -1210,9 +1210,9 @@ public class ParticipanteController {
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             if (want.length == 0)
                 model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
-            // else {
-            //     alimentacion.recetasParecidas(want, dontwant);
-            // }
+            else {
+                alimentacion.recetasParecidas(want, dontwant);
+            }
                 // else {
             //     List<String> recetas = new ArrayList<String>();
             //     String[] recetasArray = service.recetasparecidas(want, dontwant);
