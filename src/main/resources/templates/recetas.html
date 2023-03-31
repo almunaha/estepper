@@ -158,14 +158,14 @@
                                 <input class="form-control me-2" type="search" placeholder="Buscar..."
                                     aria-label="Buscar" id="search-input">
                             </form>
-                            <form method="get" action="/recetasparecidas">
+                            <form method="get" action="#">
                                 <div class="d-flex" style="margin-top: 1%">
                                     <div class="input-group me-2">
                                         <span class="input-group-text" id="want-addon">Quiero:</span>
                                         <select class="form-select" id="want-select" name="want" multiple>
                                             <!-- opciones del select de alimentos que quiere -->
                                             <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
+                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                             </option>
                                         </select>
                                     </div>
@@ -174,11 +174,12 @@
                                         <select class="form-select" id="dont-want-select" name="dontWant" multiple>
                                             <!-- opciones del select de alimentos que no quiere -->
                                             <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
+                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                             </option>
                                         </select>
                                     </div>
-                                    <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        id="filter-button">Filtrar</button>
                                 </div>
                             </form>
 
@@ -200,11 +201,7 @@
                                         recetas.hide();
                                         resultados.show();
 
-                                        if (resultados.length === 0) {
-                                            noResultadosBtn.show();
-                                        } else {
-                                            noResultadosBtn.hide();
-                                        }
+                                        noResultadosBtn.toggle(resultados.length === 0);
                                     });
 
                                     // Mostrar todas las recetas al cargar la página
@@ -258,14 +255,14 @@
                                         <div class="ingredientes" style="display: none;">
                                             <div th:each="ing:${lis.ingredientes}">
                                                 <span
-                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'"></span>
+                                                    th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="descripcion">
                                         <div style="display: flex; flex-direction: column;">
-                                            <a class="btn" id="btn-part" th:href="@{'/unareceta/' + ${lis.link}}" title="Ver"><i
-                                                    class="fa-solid fa-eye"></i></a>
+                                            <a class="btn" id="btn-part" th:href="@{'/unareceta/' + ${lis.link}}"
+                                                title="Ver"><i class="fa-solid fa-eye"></i></a>
                                         </div>
                                     </div>
 
@@ -288,7 +285,7 @@
                                     <select th:field="*{ingredientes}" class="form-control" multiple
                                         id="lista-alimentos" required>
                                         <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
+                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                         </option>
                                     </select>
                                     <script language="JavaScript" th:inline="javascript">
@@ -360,7 +357,7 @@
                                                     <select th:field="*{ingredientes}" class="form-control" multiple
                                                         id="lista-alimentos1" required>
                                                         <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                                        th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
+                                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                                         </option>
                                                     </select>
                                                     <script language="JavaScript" th:inline="javascript">
