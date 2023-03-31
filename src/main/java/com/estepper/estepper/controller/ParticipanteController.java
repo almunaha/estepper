@@ -1074,6 +1074,16 @@ public class ParticipanteController {
         return "redirect:/recetas";
     }
 
+    @GetMapping("/unareceta/{link}")
+    public String process_alimento(@PathVariable("link") String link, Model model) {
+        if (getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
+            model.addAttribute("link", link);
+            model.addAttribute("user", getUsuario());
+            return "unareceta";
+        } else
+            return "redirect:/";
+    }
+
     // FICHAS
     @GetMapping("/fichas")
     public String fichas(Model model) {
@@ -1213,19 +1223,19 @@ public class ParticipanteController {
             else {
                 alimentacion.recetasParecidas(want, dontwant);
             }
-                // else {
-            //     List<String> recetas = new ArrayList<String>();
-            //     String[] recetasArray = service.recetasparecidas(want, dontwant);
-            //     recetas = Arrays.asList(recetasArray);
+            // else {
+            // List<String> recetas = new ArrayList<String>();
+            // String[] recetasArray = service.recetasparecidas(want, dontwant);
+            // recetas = Arrays.asList(recetasArray);
 
-            //     List<Receta> listaRecetas = new ArrayList<>();
-            //     for (String idReceta : recetas) {
-            //         Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-            //         if (receta != null) {
-            //             listaRecetas.add(receta);
-            //         }
-            //     }
-            //     model.addAttribute("listaRecetas", listaRecetas);
+            // List<Receta> listaRecetas = new ArrayList<>();
+            // for (String idReceta : recetas) {
+            // Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+            // if (receta != null) {
+            // listaRecetas.add(receta);
+            // }
+            // }
+            // model.addAttribute("listaRecetas", listaRecetas);
 
             // }
             return "recetasparecidas";
