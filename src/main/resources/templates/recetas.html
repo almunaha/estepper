@@ -23,6 +23,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
         integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Array.prototype.map"></script>
+
+
     <title>Recetas - Estepper</title>
 </head>
 
@@ -158,50 +163,57 @@
                                 <input class="form-control me-2" type="search" placeholder="Buscar..."
                                     aria-label="Buscar" id="search-input">
                             </form>
-                            <form method="get" action="#">
-                                <div class="d-flex" style="margin-top: 1%">
-                                    <div class="input-group me-2">
-                                        <span class="input-group-text" id="want-addon">Quiero:</span>
-                                        <select class="form-select" id="want-select" name="want" multiple>
-                                            <!-- opciones del select de alimentos que quiere -->
-                                            <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="dont-want-addon">No quiero:</span>
-                                        <select class="form-select" id="dont-want-select" name="dontWant" multiple>
-                                            <!-- opciones del select de alimentos que no quiere -->
-                                            <option th:each="ing : ${listaIng}" th:value="${ing.id}"
-                                                th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <button class="btn btn-outline-secondary" type="button"
-                                        id="filter-button">Filtrar</button>
+                            <div class="d-flex" style="margin-top: 1%">
+                                <div class="input-group me-2">
+                                    <span class="input-group-text" id="want-addon">Quiero:</span>
+                                    <select class="form-select" id="want-select" name="want" multiple>
+                                        <!-- opciones del select de alimentos que quiere -->
+                                        <option th:each="ing : ${listaIng}" th:value="${ing.id}"
+                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
+                                        </option>
+                                    </select>
                                 </div>
-                            </form>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="dont-want-addon">No quiero:</span>
+                                    <select class="form-select" id="dont-want-select" name="dontWant" multiple>
+                                        <!-- opciones del select de alimentos que no quiere -->
+                                        <option th:each="ing : ${listaIng}" th:value="${ing.id}"
+                                            th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
+                                        </option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-outline-secondary" type="button"
+                                    id="filter-button">Filtrar</button>
+                            </div>
 
                             <script>
                                 $(document).ready(function () {
                                     var recetas = $('.material');
                                     var noResultadosBtn = $('#no-resultados-btn');
+                                    var want = [];
+                                    var dontWant = [];
 
                                     $('#filter-button').click(function () {
-                                        var want = $('#want-select').val().map(function (val) { return val.toLowerCase(); });
-                                        var dontWant = $('#dont-want-select').val().map(function (val) { return val.toLowerCase(); });
+                                        want = $('#want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
+                                        dontWant = $('#dont-want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
+
 
                                         var resultados = recetas.filter(function () {
                                             var ingredients = $(this).find('.ingredientes').text().toLowerCase();
-                                            return want.some(function (wantVal) { return ingredients.includes(wantVal); }) &&
-                                                !dontWant.some(function (dontWantVal) { return ingredients.includes(dontWantVal); });
+                                            return want.some(function (want) { return ingredients.includes(want); }) &&
+                                                !dontWant.some(function (dontWant) { return ingredients.includes(dontWant); });
+
                                         });
 
                                         recetas.hide();
                                         resultados.show();
 
                                         noResultadosBtn.toggle(resultados.length === 0);
+                                    });
+
+                                    $('#no-resultados-btn').click(function () {
+                                        var url = '/recetasparecidas?want=' + want.join() + '&dontWant=' + dontWant.join();
+                                        window.location.href = url;
                                     });
 
                                     // Mostrar todas las recetas al cargar la página
@@ -240,8 +252,7 @@
                             <div style="display: flex; justify-content: center;">
                                 <div style="margin-top: 5%;">
                                     <a style="display: none;" class="btn btn-primary" id="no-resultados-btn"
-                                        title="Recetas parecidas"
-                                        th:href="@{/recetasparecidas(want=${want},dontWant=${dontWant})}">
+                                        title="Recetas parecidas">
                                         ¿Quieres algunas recetas parecidas?
                                     </a>
                                 </div>
