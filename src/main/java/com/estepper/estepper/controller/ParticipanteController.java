@@ -1210,21 +1210,24 @@ public class ParticipanteController {
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             if (want.length == 0)
                 model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
-            else {
-                List<String> recetas = new ArrayList<String>();
-                String[] recetasArray = service.recetasparecidas(want, dontwant);
-                recetas = Arrays.asList(recetasArray);
+            // else {
+            //     alimentacion.recetasParecidas(want, dontwant);
+            // }
+                // else {
+            //     List<String> recetas = new ArrayList<String>();
+            //     String[] recetasArray = service.recetasparecidas(want, dontwant);
+            //     recetas = Arrays.asList(recetasArray);
 
-                List<Receta> listaRecetas = new ArrayList<>();
-                for (String idReceta : recetas) {
-                    Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-                    if (receta != null) {
-                        listaRecetas.add(receta);
-                    }
-                }
-                model.addAttribute("listaRecetas", listaRecetas);
+            //     List<Receta> listaRecetas = new ArrayList<>();
+            //     for (String idReceta : recetas) {
+            //         Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+            //         if (receta != null) {
+            //             listaRecetas.add(receta);
+            //         }
+            //     }
+            //     model.addAttribute("listaRecetas", listaRecetas);
 
-            }
+            // }
             return "recetasparecidas";
         } else
             return "acceso";
