@@ -192,11 +192,14 @@
                                     var noResultadosBtn = $('#no-resultados-btn');
                                     var want = [];
                                     var dontWant = [];
+                                    var wantI = [];
+                                    var dontwantI = [];
 
                                     $('#filter-button').click(function () {
                                         want = $('#want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
                                         dontWant = $('#dont-want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
-
+                                        wantI = $('#want-select').val().map(function (val) { return val.toLowerCase(); });
+                                        dontWantI = $('#dont-want-select').val().map(function (val) { return val.toLowerCase(); });
 
                                         var resultados = recetas.filter(function () {
                                             var ingredients = $(this).find('.ingredientes').text().toLowerCase();
@@ -212,7 +215,7 @@
                                     });
 
                                     $('#no-resultados-btn').click(function () {
-                                        var url = '/recetasparecidas?want=' + want.join() + '&dontWant=' + dontWant.join();
+                                        var url = '/recetasparecidas?want=' + wantI.join() + '&dontWant=' + dontWantI.join();
                                         window.location.href = url;
                                     });
 
