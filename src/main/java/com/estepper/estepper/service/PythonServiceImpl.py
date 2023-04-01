@@ -2,6 +2,7 @@ from com.estepper.estepper.service import PythonService
 # -*- coding: utf-8 -*-
 import jaydebeapi
 import math
+from array import array
 
 class PythonServiceImpl(PythonService):
     def __init__(self):
@@ -11,6 +12,8 @@ class PythonServiceImpl(PythonService):
         return self.value
         
     def recetasparecidas(self, want, dontwant):
+        want = [str(x) for x in want]
+        dontwant = [str(x) for x in dontwant]
         if not want:
             return []
         if not dontwant:
@@ -18,24 +21,16 @@ class PythonServiceImpl(PythonService):
 
         # FUNCIONES DE MACHINE LEARNING:
         def cosine_similarity(vector1, vector2):
-            try:
-                vector1_int = [int(val) for val in vector1]
-                vector2_int = [int(val) for val in vector2]
-            except ValueError:
-                return 0.0 # return 0.0 if there is a non-integer value in either vector
-            dot_product = sum(p*q for p,q in zip(vector1_int, vector2_int))
-            magnitude1 = math.sqrt(sum([val**2 for val in vector1_int]))
-            magnitude2 = math.sqrt(sum([val**2 for val in vector2_int]))
+            dot_product = sum(p*q for p,q in zip(vector1, vector2))
+            magnitude1 = math.sqrt(sum([val**2 for val in vector1]))
+            magnitude2 = math.sqrt(sum([val**2 for val in vector2]))
             if magnitude1 and magnitude2:
                 return dot_product / (magnitude1 * magnitude2)
             else:
                 return 0.0
 
-
-    
-        def count_words(text):
-            words = text.lower().split()
-            return {word: words.count(word) for word in words}
+        def create_vector(alimento):
+            return [alimento[1], alimento[2], alimento[3], alimento[4], alimento[5]]
 
         # CONECTAR BASE DE DATOS Y EXTRAER LISTA DE ALIMENTOS Y RECETAS
 
@@ -64,7 +59,6 @@ class PythonServiceImpl(PythonService):
                     str(row[6]).split(","),
                 )
                 alimentos.append(alimento)
-
         recetas = []
         with conn.cursor() as cur:
             cur.execute("SELECT nombre, id FROM recetas")
@@ -94,20 +88,21 @@ class PythonServiceImpl(PythonService):
 
         # Sin librería sklearn:
         # Lista de matrices de conteo para cada alimento
-        count_matrices = [count_words(alimento[0]) for alimento in alimentos]
+        # Lista de matrices de conteo para cada alimento
+        count_matrices = [create_vector(alimento) for alimento in alimentos]
 
         # Matriz de similitud del coseno
         cosine_sim = [[cosine_similarity(count_matrices[i], count_matrices[j])
                     for j in range(len(alimentos))] for i in range(len(alimentos))]
 
         # Lista de tuplas con los alimentos similares
-        similar_alimentos = [(alimentos[i][5], cosine_sim[i])
+        similar_alimentos = [(alimentos[i][6], cosine_sim[i])
                             for i in range(len(alimentos))]
-
+        
         want_index = []
         for i in similar_alimentos:
             for x in want:
-                if x == i[0]:
+                if x in i[0]:
                     want_index.append(similar_alimentos.index(i))
         want_index = set(want_index)
 
@@ -131,10 +126,18 @@ class PythonServiceImpl(PythonService):
                         ing_quitar.update(set(i[0]))
 
         # Obtener las recetas que contienen los alimentos de want
-        recetas_want = set()
+        recetas_want = []
         for i in recetas:
             # Verificar que la receta tenga al menos un ingrediente de want
             if any(str(a) in ingredientes_want for a in i[1]) and not any(str(a) in ing_quitar for a in i[1]):
-                recetas_want.add(i[0])
+                recetas_want.extend(i[1])
 
-        return recetas_want
+        # Unir todas las cadenas en una sola cadena
+        cadena_unida = ','.join(recetas_want)
+
+        # Convertir la cadena en unicode
+        cadena_unicode = unicode(cadena_unida, 'utf-8')
+
+        # Devolver la lista de cadenas como resultado
+        return [cadena_unicode]
+

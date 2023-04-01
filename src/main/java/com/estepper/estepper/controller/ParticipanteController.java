@@ -1225,9 +1225,9 @@ public class ParticipanteController {
             List<String> recetas = new ArrayList<String>();
             String[] recetasArray = service.recetasparecidas(want, dontwant);
             recetas = Arrays.asList(recetasArray);
-
+            String[] recetaArray = recetas.get(0).split(",");
             List<Receta> listaRecetas = new ArrayList<>();
-            for (String idReceta : recetas) {
+            for (String idReceta : recetaArray) {
             Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
             if (receta != null) {
              listaRecetas.add(receta);
