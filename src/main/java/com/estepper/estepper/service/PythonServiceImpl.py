@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 from com.estepper.estepper.service import PythonService
+# -*- coding: utf-8 -*-
 import jaydebeapi
 import math
 
@@ -37,31 +37,33 @@ class PythonServiceImpl(PythonService):
         alimentos = []
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT nombre, sal, proteinas, hidratos_de_carbono, fibra_alimentaria, grasas_saturadas, id FROM alimentacion"
+                "SELECT sal, proteinas, hidratos_de_carbono, fibra_alimentaria, grasas_saturadas, id FROM alimentacion"
             )
-            for row in cur:
+            rows = cur.fetchall()
+            for row in rows:
                 alimento = (
                     row[0],
                     row[1],
                     row[2],
                     row[3],
                     row[4],
-                    row[5],
-                    str(row[6]).split(","),
+                    str(row[5]).split(","),
                 )
                 alimentos.append(alimento)
 
         recetas = []
         with conn.cursor() as cur:
             cur.execute("SELECT nombre, id FROM recetas")
-            for row in cur:
-                receta = (str(row[0]), str(row[1]).split(","))
+            rows = cur.fetchall()
+            for row in rows:
+                receta = (row[0].encode('utf-8'), str(row[1]).split(","))
                 recetas.append(receta)
 
         ingredientes = []
         with conn.cursor() as cur:
             cur.execute("SELECT receta_id, alimentacion_id FROM receta_alimentacion")
-            for row in cur:
+            rows = cur.fetchall()
+            for row in rows:
                 ingrediente = (str(row[0]), str(row[1]).split(","))
                 ingredientes.append(ingrediente)
 
@@ -81,11 +83,11 @@ class PythonServiceImpl(PythonService):
         count_matrices = [count_words(alimento[0]) for alimento in alimentos]
 
         # Matriz de similitud del coseno
-        cosine_sim = [[cosine_similarity(count_matrices[i], count_matrices[j])
+        cosine_sim = [[cosine_similarity(float(count_matrices[i]), float(count_matrices[j]))
                     for j in range(len(alimentos))] for i in range(len(alimentos))]
 
         # Lista de tuplas con los alimentos similares
-        similar_alimentos = [(alimentos[i][6], cosine_sim[i])
+        similar_alimentos = [(alimentos[i][5], cosine_sim[i])
                             for i in range(len(alimentos))]
         print(similar_alimentos)
 
@@ -131,4 +133,4 @@ class PythonServiceImpl(PythonService):
 
         print(recetas_want) #ESTO ES LO QUE HAY QUE DEVOLVER CUANDO COMPRUEBE QUE VA BIEN
 
-        return ["1", "2", "3"]
+        return recetas_want
