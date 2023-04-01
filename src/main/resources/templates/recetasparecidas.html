@@ -146,9 +146,9 @@
                                 <h6 style="text-align: center;" th:text="${nohaywants}"></h6>
                             </div>
                         </div>
-                        <div th:if="${listaRecetas.empty} && ${nohaywants == null} ">
+                        <div th:if="${#lists.isEmpty(listaRecetas) and nohaywants == null}">
                             <div>
-                                <h6 style="text-align: center;">¡No existe ninguna receta aún!</h6>
+                                <h6 style="text-align: center;">¡No existe ninguna receta parecida!</h6>
                             </div>
                         </div>
                         <div th:unless="${listaRecetas.empty}">
