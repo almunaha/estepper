@@ -1220,32 +1220,26 @@ public class ParticipanteController {
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             if (want.length == 0)
                 model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
+            // EN PYTHON:
             else {
-                alimentacion.recetasParecidas(want, dontwant);
+            List<String> recetas = new ArrayList<String>();
+            String[] recetasArray = service.recetasparecidas(want, dontwant);
+            recetas = Arrays.asList(recetasArray);
+
+            List<Receta> listaRecetas = new ArrayList<>();
+            for (String idReceta : recetas) {
+            Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+            if (receta != null) {
+             listaRecetas.add(receta);
             }
-            // else {
-            // List<String> recetas = new ArrayList<String>();
-            // String[] recetasArray = service.recetasparecidas(want, dontwant);
-            // recetas = Arrays.asList(recetasArray);
+            }
+            model.addAttribute("listaRecetas", listaRecetas);
 
-            // List<Receta> listaRecetas = new ArrayList<>();
-            // for (String idReceta : recetas) {
-            // Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-            // if (receta != null) {
-            // listaRecetas.add(receta);
-            // }
-            // }
-            // model.addAttribute("listaRecetas", listaRecetas);
-
-            // }
+            }
             return "recetasparecidas";
         } else
             return "acceso";
     }
 
-    // BORRAR CUANDO ESTÉ HECHO LO DE MACHINE LEARNING
-    @GetMapping("/nutrientes")
-    public String nutrientes() {
-        return service.getHello();
-    }
+    
 }
