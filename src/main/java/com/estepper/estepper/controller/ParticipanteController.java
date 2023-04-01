@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.xml.PluggableSchemaResolver;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -1084,6 +1085,48 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
+    
+    @GetMapping("/recetasparecidas")
+    public String recetasParecidas(@RequestParam(required = false) String[] want,
+            @RequestParam(required = false) String[] dontwant, Model model) {
+        Usuario u = getUsuario();
+        model.addAttribute("user", u);
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            if (want.length == 0)
+                model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
+            // EN PYTHON:
+            else {
+            List<String> recetas = new ArrayList<String>();
+            String[] recetasArray = service.recetasparecidas(want, dontwant);
+            recetas = Arrays.asList(recetasArray);
+            String[] recetaArray = recetas.get(0).split(",");
+            List<Receta> listaRecetas = new ArrayList<>();
+            for (String idReceta : recetaArray) {
+            Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+            if (receta != null) {
+             listaRecetas.add(receta);
+            }
+            }
+            model.addAttribute("listaRecetas", listaRecetas);
+
+            }
+            return "recetasparecidas";
+        } else
+            return "acceso";
+    }
+
+    @GetMapping("/recomendaciones/{id}")
+    public String recomendaciones(Model model, @PathVariable("id") Integer id){
+        model.addAttribute("user", getUsuario());
+        if(getUsuario().getEstadoCuenta().equals(Estado.ALTA) && getUsuario() instanceof Participante){
+            //lista con tendencias globales
+            //lista con recomendaciones individuales
+            //mostrar un html con una lista a la izq y otra a la derecha
+            return "redirect:/";
+        }
+        else return "redirect:/";
+    }
+
     // FICHAS
     @GetMapping("/fichas")
     public String fichas(Model model) {
@@ -1208,35 +1251,6 @@ public class ParticipanteController {
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             f.updateFichaObjetivo(ficha);
             return "redirect:/fichas";
-        } else
-            return "acceso";
-    }
-
-    @GetMapping("/recetasparecidas")
-    public String recetasParecidas(@RequestParam(required = false) String[] want,
-            @RequestParam(required = false) String[] dontwant, Model model) {
-        Usuario u = getUsuario();
-        model.addAttribute("user", u);
-        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
-            if (want.length == 0)
-                model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
-            // EN PYTHON:
-            else {
-            List<String> recetas = new ArrayList<String>();
-            String[] recetasArray = service.recetasparecidas(want, dontwant);
-            recetas = Arrays.asList(recetasArray);
-            String[] recetaArray = recetas.get(0).split(",");
-            List<Receta> listaRecetas = new ArrayList<>();
-            for (String idReceta : recetaArray) {
-            Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-            if (receta != null) {
-             listaRecetas.add(receta);
-            }
-            }
-            model.addAttribute("listaRecetas", listaRecetas);
-
-            }
-            return "recetasparecidas";
         } else
             return "acceso";
     }
