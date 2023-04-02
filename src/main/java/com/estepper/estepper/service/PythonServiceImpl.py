@@ -142,6 +142,55 @@ class PythonServiceImpl(PythonService):
         return [cadena_unicode]
 
     def recomendacionesglobales(self):
+        # Conectar a la base de datos
+        conn = jaydebeapi.connect(
+            "com.mysql.jdbc.Driver",
+            "jdbc:mysql://localhost:3306/estepper",
+            ["estepper", "estepper"],
+        )
+
+        # Obtener los alimentos y recetas
+        alimentos = []
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT nombre, id FROM alimentacion"
+            )
+            rows = cur.fetchall()
+            for row in rows:
+                alimento = (
+                    row[0],
+                    str(row[1]).split(",")
+                )
+                alimentos.append(alimento)
+        alimentosconsumidos = []
+        with conn.cursor() as cur:
+            cur.execute("SELECT id_alimento, fecha_consumicion, id FROM alimentosconsumidos")
+            rows = cur.fetchall()
+            for row in rows:
+                receta = (
+                    str(row[0]), 
+                    row[1],
+                    str(row[2]).split(","))
+                alimentosconsumidos.append(receta)
+        
+        recetas = []
+        with conn.cursor() as cur:
+            cur.execute("SELECT nombre, id FROM recetas")
+            rows = cur.fetchall()
+            for row in rows:
+                receta = (row[0].encode('utf-8'), str(row[1]).split(","))
+                recetas.append(receta)
+
+        ingredientes = []
+        with conn.cursor() as cur:
+            cur.execute("SELECT receta_id, alimentacion_id FROM receta_alimentacion")
+            rows = cur.fetchall()
+            for row in rows:
+                ingrediente = (str(row[0]), str(row[1]).split(","))
+                ingredientes.append(ingrediente)
+
+        # Cerrar la conexión
+        conn.close()
     
         return ["1"]
     
