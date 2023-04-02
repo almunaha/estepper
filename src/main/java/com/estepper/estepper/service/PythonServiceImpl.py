@@ -141,3 +141,11 @@ class PythonServiceImpl(PythonService):
         # Devolver la lista de cadenas como resultado
         return [cadena_unicode]
 
+    def recomendacionesglobales(self):
+    
+        return ["1"]
+    
+    def recomendacionesindividuales(self, id):
+    
+        return ["4"]
+

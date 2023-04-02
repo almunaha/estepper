@@ -1119,10 +1119,36 @@ public class ParticipanteController {
     public String recomendaciones(Model model, @PathVariable("id") Integer id){
         model.addAttribute("user", getUsuario());
         if(getUsuario().getEstadoCuenta().equals(Estado.ALTA) && getUsuario() instanceof Participante){
+
             //lista con tendencias globales
+            List<String> recetas = new ArrayList<String>();
+            String[] recetasArray = service.recomendacionesglobales();
+            recetas = Arrays.asList(recetasArray);
+            String[] recetaArray = recetas.get(0).split(",");
+            List<Receta> listaRecetas = new ArrayList<>();
+            for (String idReceta : recetaArray) {
+            Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+            if (receta != null) {
+             listaRecetas.add(receta);
+            }
+            }
+            model.addAttribute("globales", listaRecetas);
+
             //lista con recomendaciones individuales
-            //mostrar un html con una lista a la izq y otra a la derecha
-            return "redirect:/";
+            List<String> recetas1 = new ArrayList<String>();
+            String[] recetasArray1 = service.recomendacionesindividuales(id);
+            recetas1 = Arrays.asList(recetasArray1);
+            String[] recetaArray1 = recetas1.get(0).split(",");
+            List<Receta> listaRecetas1 = new ArrayList<>();
+            for (String idReceta : recetaArray1) {
+                Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+                if (receta != null) {
+                listaRecetas1.add(receta);
+                }
+            }
+            model.addAttribute("individuales", listaRecetas1);
+            
+            return "recetasrecomendadas";
         }
         else return "redirect:/";
     }
