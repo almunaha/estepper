@@ -534,12 +534,23 @@ public class ParticipanteController {
             alimentacion.deleteByParticipante(p);
             f.deleteByParticipante(p);
             mensajeS.deleteByParticipante(p);
-            fasevaloracion.eliminarcuenta(p);
+            invi.eliminarPorParticipante(p); //invitacionesPart
+            //eliminar asistencia y aumentar plazas
+            List<Actividad> actividades = act.asistenciaParticipante(id);
+            for (Actividad actividad : actividades) {
+                actividad.setNumParticipantes(actividad.getNumParticipantes() - 1);
+                actividad.setPlazas(actividad.getPlazas() + 1);
+                actividad.getParticipantes().remove(p);
+                act.guardar(actividad);
+            }      
 
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
             grupoS.update(p.getGrupo());
+            
             if (getUsuario() == null)
                 return "redirect:/login";
+            fasevaloracion.eliminarcuenta(p); //se elimina al participante     
+            usuario.eliminar(id);
 
         }
         return "redirect:/";
@@ -567,55 +578,66 @@ public class ParticipanteController {
     @GetMapping("/progreso")
     public String progreso(Model model) {
 
-        model.addAttribute("user", getUsuario());
-        Participante p = participante.findById(getUsuario().getId()).get();
+        Usuario user = getUsuario();
 
-        if (p.getEstadoCuenta().equals(Estado.ALTA)) {
-            model.addAttribute("participante", p);
+        model.addAttribute("user", user);
 
-            List<Progreso> peso = pro.datos(p, TipoProgreso.PESO);
-            model.addAttribute("peso", peso);
+        if (user instanceof Participante) {
+            Participante p = participante.findById(getUsuario().getId()).get();
 
-            List<Progreso> perimetro = pro.datos(p, TipoProgreso.PERIMETRO);
-            model.addAttribute("perimetro", perimetro);
+            if (p.getEstadoCuenta().equals(Estado.ALTA)) {
+                model.addAttribute("participante", p);
 
-            List<Sesion> sesiones = ses.sesiones(p);
-            model.addAttribute("sesiones", sesiones);
+                List<Progreso> peso = pro.datos(p, TipoProgreso.PESO);
+                model.addAttribute("peso", peso);
 
-            // CALCULAR IMC
-            // Coger formulario de exploración:
-            List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
-            Exploracion exploracion = null;
-            for (int i = 0; i < formularios.size(); i++) {
-                if (formularios.get(i) instanceof Exploracion) {
-                    exploracion = (Exploracion) formularios.get(i);
+                List<Progreso> perimetro = pro.datos(p, TipoProgreso.PERIMETRO);
+                model.addAttribute("perimetro", perimetro);
+
+                List<Sesion> sesiones = ses.sesiones(p);
+                model.addAttribute("sesiones", sesiones);
+
+                // CALCULAR IMC
+                // Coger formulario de exploración:
+                List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+                Exploracion exploracion = null;
+                for (int i = 0; i < formularios.size(); i++) {
+                    if (formularios.get(i) instanceof Exploracion) {
+                        exploracion = (Exploracion) formularios.get(i);
+                    }
                 }
+
+                // Altura:
+                Double altura = exploracion.getTalla().doubleValue();
+                altura = altura / 100;
+
+                // Buscar último registro de peso
+                Progreso progrPes = pro.pesoAntiguo(p, TipoProgreso.PESO);
+                Double ultPeso = null;
+
+                if (progrPes != null) {
+                    ultPeso = progrPes.getDato().doubleValue();
+                }
+
+                else {
+                    ultPeso = exploracion.getPeso().doubleValue();
+                }
+
+                // Calcular IMC
+                Double imc = ultPeso / (altura * altura);
+                DecimalFormat imc2 = new DecimalFormat("#.00");
+
+                model.addAttribute("imc", imc2.format(imc));
+
+                model.addAttribute("progreso", new Progreso());
+                return "progreso";
             }
 
-            // Altura:
-            Double altura = exploracion.getTalla().doubleValue();
-            altura = altura / 100;
+            else return "acceso";
+        }
 
-            // Buscar último registro de peso
-            Progreso progrPes = pro.pesoAntiguo(p, TipoProgreso.PESO);
-            Double ultPeso = null;
-
-            if (progrPes != null) {
-                ultPeso = progrPes.getDato().doubleValue();
-            }
-
-            else {
-                ultPeso = exploracion.getPeso().doubleValue();
-            }
-
-            // Calcular IMC
-            Double imc = ultPeso / (altura * altura);
-            DecimalFormat imc2 = new DecimalFormat("#.00");
-
-            model.addAttribute("imc", imc2.format(imc));
-
-            model.addAttribute("progreso", new Progreso());
-            return "progreso";
+        else if(user instanceof Coordinador){
+            return "progresoCoor";
         }
 
         else
@@ -803,7 +825,7 @@ public class ParticipanteController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        if (user instanceof Coordinador) { //todas las actividades
+        if (user instanceof Coordinador) { // todas las actividades
             List<Actividad> listado = act.listado();
             model.addAttribute("listado", listado);
 
@@ -811,7 +833,7 @@ public class ParticipanteController {
         }
 
         else if (user instanceof Participante) {
-            //actividades que no se hayan acabado
+            // actividades que no se hayan acabado
             List<Actividad> listado = act.actividadesPendientes(LocalDateTime.now());
             model.addAttribute("listado", listado);
 
@@ -1088,7 +1110,6 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
-    
     @GetMapping("/recetasparecidas")
     public String recetasParecidas(@RequestParam(required = false) String[] want,
             @RequestParam(required = false) String[] dontwant, Model model) {
@@ -1099,18 +1120,18 @@ public class ParticipanteController {
                 model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
             // EN PYTHON:
             else {
-            List<String> recetas = new ArrayList<String>();
-            String[] recetasArray = service.recetasparecidas(want, dontwant);
-            recetas = Arrays.asList(recetasArray);
-            String[] recetaArray = recetas.get(0).split(",");
-            List<Receta> listaRecetas = new ArrayList<>();
-            for (String idReceta : recetaArray) {
-            Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-            if (receta != null) {
-             listaRecetas.add(receta);
-            }
-            }
-            model.addAttribute("listaRecetas", listaRecetas);
+                List<String> recetas = new ArrayList<String>();
+                String[] recetasArray = service.recetasparecidas(want, dontwant);
+                recetas = Arrays.asList(recetasArray);
+                String[] recetaArray = recetas.get(0).split(",");
+                List<Receta> listaRecetas = new ArrayList<>();
+                for (String idReceta : recetaArray) {
+                    Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+                    if (receta != null) {
+                        listaRecetas.add(receta);
+                    }
+                }
+                model.addAttribute("listaRecetas", listaRecetas);
 
             }
             return "recetasparecidas";
@@ -1119,25 +1140,25 @@ public class ParticipanteController {
     }
 
     @GetMapping("/recomendaciones/{id}")
-    public String recomendaciones(Model model, @PathVariable("id") Integer id){
+    public String recomendaciones(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("user", getUsuario());
-        if(getUsuario().getEstadoCuenta().equals(Estado.ALTA) && getUsuario() instanceof Participante){
+        if (getUsuario().getEstadoCuenta().equals(Estado.ALTA) && getUsuario() instanceof Participante) {
 
-            //lista con tendencias globales
+            // lista con tendencias globales
             List<String> recetas = new ArrayList<String>();
             String[] recetasArray = service.recomendacionesglobales();
             recetas = Arrays.asList(recetasArray);
             String[] recetaArray = recetas.get(0).split(",");
             List<Receta> listaRecetas = new ArrayList<>();
             for (String idReceta : recetaArray) {
-            Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-            if (receta != null) {
-             listaRecetas.add(receta);
-            }
+                Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+                if (receta != null) {
+                    listaRecetas.add(receta);
+                }
             }
             model.addAttribute("globales", listaRecetas);
 
-            //lista con recomendaciones individuales
+            // lista con recomendaciones individuales
             List<String> recetas1 = new ArrayList<String>();
             String[] recetasArray1 = service.recomendacionesindividuales(id);
             recetas1 = Arrays.asList(recetasArray1);
@@ -1146,14 +1167,14 @@ public class ParticipanteController {
             for (String idReceta : recetaArray1) {
                 Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
                 if (receta != null) {
-                listaRecetas1.add(receta);
+                    listaRecetas1.add(receta);
                 }
             }
             model.addAttribute("individuales", listaRecetas1);
-            
+
             return "recetasrecomendadas";
-        }
-        else return "redirect:/";
+        } else
+            return "redirect:/";
     }
 
     // FICHAS
@@ -1284,5 +1305,4 @@ public class ParticipanteController {
             return "acceso";
     }
 
-    
 }

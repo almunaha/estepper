@@ -12,5 +12,4 @@ public interface ActividadService {
     public void borrar(Actividad act);
     public Integer asistencia(Integer idActividad, Integer idParticipante);
     public List<Actividad> actividadesPendientes(LocalDateTime fechaActual);
-
 }

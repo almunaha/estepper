@@ -18,4 +18,7 @@ public interface InvitacionService {
     public Invitacion findById(Integer id);
     public void guardar(Invitacion i);
     public Invitacion invitacionByPartAndActi(Participante p, Actividad a);
+    public void eliminarPorParticipante(Participante p);
+    public void eliminarPorCoordinador(Coordinador c);
+
 }

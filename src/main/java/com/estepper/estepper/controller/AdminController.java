@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Usuario;
+import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.enums.Estado;
-
+import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.AlimentacionService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
@@ -31,6 +32,7 @@ import com.estepper.estepper.service.MensajeService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.GrupoService;
+import com.estepper.estepper.service.InvitacionService;
 import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ProgresoService;
 
@@ -73,6 +75,12 @@ public class AdminController {
     @Autowired
     private MensajeService mensajeS;
 
+    @Autowired
+    private ActividadService acti;
+
+    @Autowired
+    private InvitacionService invitacion;
+
     @GetMapping("/eliminarUsuario/{id}")
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model) {
         if (usuarioLogueado() instanceof Administrador) {
@@ -86,6 +94,15 @@ public class AdminController {
                 alimentacion.deleteByParticipante(p);
                 f.deleteByParticipante(p);
                 mensajeS.deleteByParticipante(p);
+                invitacion.eliminarPorParticipante(p); //invitacionesPart
+                //eliminar asistencia y aumentar plazas
+                List<Actividad> actividades = acti.asistenciaParticipante(id);
+                for (Actividad actividad : actividades) {
+                    actividad.setNumParticipantes(actividad.getNumParticipantes() - 1);
+                    actividad.setPlazas(actividad.getPlazas() + 1);
+                    actividad.getParticipantes().remove(p);
+                    acti.guardar(actividad);
+                }
                 fasevaloracion.eliminarcuenta(p);
                 
                 p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
@@ -101,15 +118,10 @@ public class AdminController {
                         grupoS.delete(id);
                     }
                 }
+                invitacion.eliminarPorCoordinador((Coordinador)usuario.findById(id).get());
             }
-            else 
-                usuario.eliminar(id);
-
-            // pasar usuario logueado y listado
-            model.addAttribute("user", usuarioLogueado());
-
-            List<Usuario> lista = listadoUsuarios();
-            model.addAttribute("usuarios", lista);
+            
+            usuario.eliminar(id); 
         }
 
         return "redirect:/";

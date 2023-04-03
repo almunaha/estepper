@@ -58,4 +58,14 @@ public class InvitacionServiceImpl implements InvitacionService{
         return repo.findByParticipanteAndActividad(p, a);
     }
 
+    @Override
+    public void eliminarPorParticipante(Participante p){
+        repo.deleteByParticipante(p);
+    }
+
+    @Override
+    public void eliminarPorCoordinador(Coordinador c){
+        repo.deleteByCoordinador(c);
+    }
+
 }
