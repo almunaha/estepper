@@ -80,6 +80,7 @@ public class HomeController {
             lista.remove(user);
             model.addAttribute("usuarios", lista);
             return "admin";
+            
         } else { // PARTICIPANTE
 
             // si está dado de alta
