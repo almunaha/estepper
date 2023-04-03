@@ -95,7 +95,52 @@
 
         </div>
 
-        <div class="w-100" style="margin-left: 250px">
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+
+            <a th:href="@{/cuaderno}">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+
+            <a th:href="@{/alimentacion}">
+                <i class="fa-solid fa-carrot"></i>
+            </a>
+
+            <a th:href="@{'/materiales/' + ${user.id}}">
+                <i class="fa-solid fa-folder-open"></i>
+            </a>
+
+            <a th:href="@{/progreso}">
+                <i class="fa-solid fa-chart-line"></i>
+            </a>
+
+            <a th:href="@{/chat}">
+                <i class="fa-solid fa-comments"></i>
+            </a>
+
+        </div>
+
+        <div id="contenido">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
+                <img width="35" th:src="@{img/logo.png}" />
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+            </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -124,67 +169,70 @@
             </nav>
 
             <div style="padding-top: 75px;">
-            <div class="p-4 mt-5" id="grupos">
-                <div>
-                    <h4>Editar un objetivo</h4> 
-                </div>
-
-               <form th:action="@{'/objetivos/guardar/' + ${objetivo.id}}" th:object="${objetivo}" method="post">
-
-                    <div class="m-3">
-                    
-                        <div class="form-group row">
-
-                            <label class="col-form-label col-sm-4">Título del nuevo objetivo:</label>
-                            <div class="col-sm-8 mb-2">
-                                <input type="text" th:field="*{titulo}" class="form-control" required />
-                            </div>
-
-                            <label class="col-form-label col-sm-4">Descripción del nuevo objetivo:</label>
-                            <div class="col-sm-8 mb-2">
-                                <input type="text" th:field="*{descripcion}" class="form-control" required />
-                            </div>
-           
-                            <!--Falta controlar que no se pueda meter la fecha que te de la gana y esas cosas-->
-                            <label class="col-form-label col-sm-4">Fecha tope para cumplir mi objetivo:</label>
-                            <div class="col-sm-8 mb-2">
-                                <input type="date" th:field="*{fechaVencimiento}" class="form-control" id="fecha" name="fecha"  required />
-                            </div>
-                            
-
-                            <label class="col-form-label col-sm-4">Estado del objetivo (cambiarlo por pasos para cumplir
-                                el objetivo):</label>
-                            <div class="col-sm-8 mb-2">
-                            <select id="estadoObjetivo" th:field="*{estadoObjetivo}" class="form-control"  required >
-                                <option value="COMPLETADO">COMPLETADO</option>
-                                <option value="PENDIENTE">PENDIENTE</option>
-                            </select>
-                            </div>
-
-                            <label class="col-form-label col-sm-4">Repetición</label>
-                            <div class="col-sm-8 mb-2">
-                            <select id="repeticion" th:field="*{repeticion}" class="form-control"  required >
-                                <option value="NINGUNA">NINGUNA</option>
-                                <option value="DIARIAMENTE">DIARIAMENTE</option>
-                                <option value="SEMANALMENTE">SEMANALMENTE</option>
-                                <option value="MENSUALMENTE">MENSUALMENTE</option>
-                                <option value="ANUALMENTE">ANUALMENTE</option>
-                            </select>
-                            </div>
-
-                        </div>
-                        <div class="text-center p">
-                            <button type="submit" class="btn" id="btn-part" >Editar</button>
-                        </div>
-
+                <div class="p-4 mt-5" id="grupos">
+                    <div>
+                        <h4>Editar un objetivo</h4>
                     </div>
 
-                </div>
-            </div>
+                    <form th:action="@{'/objetivos/guardar/' + ${objetivo.id}}" th:object="${objetivo}" method="post">
 
+                        <div class="m-3">
+
+                            <div class="form-group row">
+
+                                <label class="col-form-label col-sm-4">Título del nuevo objetivo:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="text" th:field="*{titulo}" class="form-control" required />
+                                </div>
+
+                                <label class="col-form-label col-sm-4">Descripción del nuevo objetivo:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="text" th:field="*{descripcion}" class="form-control" required />
+                                </div>
+
+                                <!--Falta controlar que no se pueda meter la fecha que te de la gana y esas cosas-->
+                                <label class="col-form-label col-sm-4">Fecha tope para cumplir mi objetivo:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="date" th:field="*{fechaVencimiento}" class="form-control" id="fecha"
+                                        name="fecha" required />
+                                </div>
+
+
+                                <label class="col-form-label col-sm-4">Estado del objetivo (cambiarlo por pasos para
+                                    cumplir
+                                    el objetivo):</label>
+                                <div class="col-sm-8 mb-2">
+                                    <select id="estadoObjetivo" th:field="*{estadoObjetivo}" class="form-control"
+                                        required>
+                                        <option value="COMPLETADO">COMPLETADO</option>
+                                        <option value="PENDIENTE">PENDIENTE</option>
+                                    </select>
+                                </div>
+
+                                <label class="col-form-label col-sm-4">Repetición</label>
+                                <div class="col-sm-8 mb-2">
+                                    <select id="repeticion" th:field="*{repeticion}" class="form-control" required>
+                                        <option value="NINGUNA">NINGUNA</option>
+                                        <option value="DIARIAMENTE">DIARIAMENTE</option>
+                                        <option value="SEMANALMENTE">SEMANALMENTE</option>
+                                        <option value="MENSUALMENTE">MENSUALMENTE</option>
+                                        <option value="ANUALMENTE">ANUALMENTE</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="text-center p">
+                                <button type="submit" class="btn" id="btn-part">Editar</button>
+                            </div>
+
+                        </div>
+
+                </div>
             </div>
 
         </div>
+
+    </div>
     </div>
 
 </body>

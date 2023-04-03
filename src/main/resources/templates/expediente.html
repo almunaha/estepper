@@ -12,8 +12,8 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    
-  <link rel="stylesheet" th:href="@{/css/sesiones.css}">
+
+    <link rel="stylesheet" th:href="@{/css/sesiones.css}">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
 
@@ -72,19 +72,51 @@
                         <i class="fa-solid fa-house"></i>
                         <span class="nombre-enlaces">Inicio</span>
                     </a>
-                
+
 
                 <li>
                     <a th:href="@{/actividades}">
                         <i class="fa-solid fa-person-hiking"></i>
                         <span class="nombre-enlaces">Actividades</span>
                     </a>
-                
+
             </ul>
 
         </div>
 
-        <div class="w-100" style="background-color:#afc0cb; margin-left: 250px">
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+            <a th:href="@{/listaGrupos}">
+                <i class="fa-solid fa-users"></i>
+            </a>
+            <a th:href="@{/listado}">
+                <i class="fa-solid fa-address-card"></i>
+            </a>
+
+        </div>
+
+        <div id="contenido" style="background-color:#afc0cb;">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()" />
+                <img width="35" th:src="@{/img/logo.png}" />
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+            </div>
+            
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -94,7 +126,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -105,7 +137,7 @@
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                                 </form>
                             </div>
-                        
+
 
                     </ul>
                 </div>
@@ -120,7 +152,8 @@
                     </div>
                 </div>
                 <div style="background-color: whitesmoke; border-radius: 12px; margin-right: 10%;">
-                    <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 5%; margin-bottom: 5%;">
+                    <div
+                        style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 5%; margin-bottom: 5%;">
                         <div th:unless="${participante.sexo == null}"
                             style="display: flex; align-items: center; margin-left:10px; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
                             <h5><i title="Género" class="fa-solid fa-venus-mars" style="margin-right: 10px;"></i></h5>
@@ -141,14 +174,16 @@
                             style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
                             <h5><i title="Pérdida de peso" class="fa-solid fa-weight-scale"
                                     style="margin-right: 10px;"></i></h5>
-                            <h5 th:text="${-participante.perdidaDePeso}+ ' ' + 'kg perdidos'" style="margin-left: 10px;">
+                            <h5 th:text="${-participante.perdidaDePeso}+ ' ' + 'kg perdidos'"
+                                style="margin-left: 10px;">
                             </h5>
                         </div>
                         <div th:unless="${participante.perdidacmcintura == null}"
                             style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
                             <h5><i title="Pérdida de cm cintura" class="fa-sharp fa-solid fa-scale-balanced"
                                     style="margin-right: 10px;"></i></h5>
-                            <h5 th:text="${-participante.perdidacmcintura}+ ' ' + 'cm perdidos'" style="margin-left: 10px;">
+                            <h5 th:text="${-participante.perdidacmcintura}+ ' ' + 'cm perdidos'"
+                                style="margin-left: 10px;">
                             </h5>
                         </div>
                         <div th:unless="${participante.sesionesCompletas == null}"
@@ -161,47 +196,61 @@
 
                     </div>
 
-                    <div th:unless="${participante.sexo == null}" style="display: flex; justify-content: center; margin-bottom: 3%;">
-                        <a class="btn-sesion" id="guardar" title="Fichas"
-                        onclick="abrirIframe('mi-modal')" href="#"> Fichas </a>
+                    <div th:unless="${participante.sexo == null}"
+                        style="display: flex; justify-content: center; margin-bottom: 3%;">
+                        <a class="btn-sesion" id="guardar" title="Fichas" onclick="abrirIframe('mi-modal')" href="#">
+                            Fichas </a>
                         <!--<a class="btn-sesion" th:href="@{/progreso}">Progreso individual</a>-->
                     </div>
-                    
+
                     <!--Modal-->
-        <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Fichas</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <div style="display: flex; flex-direction: column; justify-content: center; margin-bottom: 3%;">
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${1} + '/' + ${participante.id}}">Sesión 1</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${2} + '/' + ${participante.id}}">Sesión 2</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${3} + '/' + ${participante.id}}">Sesión 3</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${4} + '/' + ${participante.id}}">Sesión 4</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${5} + '/' + ${participante.id}}">Sesión 5</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${6} + '/' + ${participante.id}}">Sesión 6</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${7} + '/' + ${participante.id}}">Sesión 7</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${8} + '/' + ${participante.id}}">Sesión 8</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${9} + '/' + ${participante.id}}">Sesión 9</a>
-                          <a style="margin: 2%;" class="btn" id="btn-part" th:href="@{'/sesion/' + ${10} + '/' + ${participante.id}}">Sesión 10</a>
+                    <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Fichas</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div
+                                        style="display: flex; flex-direction: column; justify-content: center; margin-bottom: 3%;">
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${1} + '/' + ${participante.id}}">Sesión 1</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${2} + '/' + ${participante.id}}">Sesión 2</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${3} + '/' + ${participante.id}}">Sesión 3</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${4} + '/' + ${participante.id}}">Sesión 4</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${5} + '/' + ${participante.id}}">Sesión 5</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${6} + '/' + ${participante.id}}">Sesión 6</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${7} + '/' + ${participante.id}}">Sesión 7</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${8} + '/' + ${participante.id}}">Sesión 8</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${9} + '/' + ${participante.id}}">Sesión 9</a>
+                                        <a style="margin: 2%;" class="btn" id="btn-part"
+                                            th:href="@{'/sesion/' + ${10} + '/' + ${participante.id}}">Sesión 10</a>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <script>
-            function abrirIframe(modalId) {
-              const modal = new bootstrap.Modal(document.getElementById(modalId));
-              modal.show();
-            }
-          </script>
-          <!--FIN MODAL-->
+                    <script>
+                        function abrirIframe(modalId) {
+                            const modal = new bootstrap.Modal(document.getElementById(modalId));
+                            modal.show();
+                        }
+                    </script>
+                    <!--FIN MODAL-->
 
                     <div style="display: flex; justify-content: center;">
                         <div style="margin-right: 5%;" th:unless="${participante.idGrupo == 0}"><a class="btn"

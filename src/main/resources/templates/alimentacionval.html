@@ -51,7 +51,38 @@
 
         </div>
 
-        <div class="w-100" style="margin-left: 250px">
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+            <a th:href="@{/listaGrupos}">
+                <i class="fa-solid fa-users"></i>
+            </a>
+            <a th:href="@{/listado}">
+                <i class="fa-solid fa-address-card"></i>
+            </a>
+
+        </div>
+
+        <div id="contenido">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()" />
+                <img width="35" th:src="@{/img/logo.png}" />
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+            </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -61,7 +92,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -78,8 +109,9 @@
                 </div>
             </nav>
 
-            <div style="padding-top: 75px;">
-                <div th:if="${alimentacionval == null}" class="bg-white border border-1 p-5 rounded-4" style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
+            <div style="padding-top: 75px; margin-bottom: 15%;">
+                <div th:if="${alimentacionval == null}" class="bg-white border border-1 p-5 rounded-4"
+                    style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
                     <div
                         style="display: grid;justify-content: center; align-items: center; background-color:azure;border-radius: 12px; margin-left: 10%; margin-right: 10%;">
                         <h4
@@ -88,7 +120,8 @@
                             formulario.</h4>
                     </div>
                 </div>
-                <div th:unless="${alimentacionval == null}" class="bg-white border border-1 p-5 rounded-4" style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
+                <div th:unless="${alimentacionval == null}" class="bg-white border border-1 p-5 rounded-4"
+                    style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
                     <div
                         style="display: grid;justify-content: center; text-align: center; align-items: center; background-color:#0dcaf0;border-radius: 12px;">
                         <h4 style="margin-top: 3%; color:azure">Adherencia a la dieta mediterránea</h4>

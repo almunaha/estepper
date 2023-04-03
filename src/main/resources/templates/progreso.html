@@ -100,7 +100,52 @@
 
         </div>
 
-        <div class="w-100" style="margin-left: 250px">
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+
+            <a th:href="@{/cuaderno}">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+
+            <a th:href="@{/alimentacion}">
+                <i class="fa-solid fa-carrot"></i>
+            </a>
+
+            <a th:href="@{'/materiales/' + ${user.id}}">
+                <i class="fa-solid fa-folder-open"></i>
+            </a>
+
+            <a th:href="@{/progreso}">
+                <i class="fa-solid fa-chart-line"></i>
+            </a>
+
+            <a th:href="@{/chat}">
+                <i class="fa-solid fa-comments"></i>
+            </a>
+
+        </div>
+
+        <div id="contenido">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
+                <img width="35" th:src="@{img/logo.png}" />
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+            </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -110,7 +155,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img  width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header"/>
+                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -153,7 +199,8 @@
                                 <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
                             </div>
                             <div class="der-valor">
-                                <div class="dato-valor"><span th:text="${-participante.perdidaDePeso} + kg"></span></div>
+                                <div class="dato-valor"><span th:text="${-participante.perdidaDePeso} + kg"></span>
+                                </div>
                                 <div class="bottom-valor"><span>Peso perdido </span></div>
                             </div>
                         </div>
@@ -257,18 +304,27 @@
 
                         <!-- Registar peso -->
                         <div class="bg-white p-5" id="form-peso">
-                            <form method="post" th:action="@{/process_peso}" th:object="${progreso}" id="form-registroPeso">
+                            <form method="post" th:action="@{/process_peso}" th:object="${progreso}"
+                                id="form-registroPeso">
                                 <div class="mb-3">
                                     <label for="fechaPeso">Fecha</label>
-                                    <input type="datetime-local" th:field="*{fecha}" name="fechaPeso" id="fechaPeso"  class="form-control"required>
+                                    <input type="datetime-local" th:field="*{fecha}" name="fechaPeso" id="fechaPeso"
+                                        class="form-control" required>
                                 </div>
-                                <div id="error_fechaPeso"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una fecha actual o anterior</p></div>
+                                <div id="error_fechaPeso">
+                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca
+                                        una fecha actual o anterior</p>
+                                </div>
 
                                 <div class="mb-3">
                                     <label for="datoPeso">Peso (kg)</label>
-                                    <input type="number" step="any" th:field="*{dato}" id="datoPeso" class="form-control" required>
+                                    <input type="number" step="any" th:field="*{dato}" id="datoPeso"
+                                        class="form-control" required>
                                 </div>
-                                <div id="error_datoPeso"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un número mayor a 0</p></div>
+                                <div id="error_datoPeso">
+                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un
+                                        número mayor a 0</p>
+                                </div>
 
                                 <div class="btn-form">
                                     <a href="/progreso" class="btn btn-primary">Cancelar</a>
@@ -319,18 +375,27 @@
 
                         <!-- Registar perímetro -->
                         <div class="bg-white p-5" id="form-perimetro">
-                            <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}" id="form-registroPerimetro">
+                            <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}"
+                                id="form-registroPerimetro">
                                 <div class="mb-3">
                                     <label>Fecha</label>
-                                    <input type="datetime-local" th:field="*{fecha}" id="fechaPerimetro" class="form-control" required>
+                                    <input type="datetime-local" th:field="*{fecha}" id="fechaPerimetro"
+                                        class="form-control" required>
                                 </div>
-                                <div id="error_fechaPerimetro"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una fecha actual o anterior</p></div>
+                                <div id="error_fechaPerimetro">
+                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca
+                                        una fecha actual o anterior</p>
+                                </div>
 
                                 <div class="mb-3">
                                     <label>Perímetro (cm)</label>
-                                    <input type="number" step="any" th:field="*{dato}" id="datoPerimetro" class="form-control" required>
+                                    <input type="number" step="any" th:field="*{dato}" id="datoPerimetro"
+                                        class="form-control" required>
                                 </div>
-                                <div id="error_datoPerimetro"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un número mayor a 0</p></div>
+                                <div id="error_datoPerimetro">
+                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un
+                                        número mayor a 0</p>
+                                </div>
 
                                 <div class="btn-form">
                                     <a href="/progreso" class="btn btn-primary">Cancelar</a>

@@ -1,19 +1,19 @@
 function desplazar() {
 
-    let sidebar = document.querySelector("#sidebar-container"); //barra lateral izquierda
-    let header = document.querySelector("#header");
-   
-    sidebar.classList.toggle("active"); //cambiar botón a activo
-    header.classList.toggle("active");
+  let sidebar = document.querySelector("#sidebar-container"); //barra lateral izquierda
+  let header = document.querySelector("#header");
 
- /* // Guardar estado del botón burger en almacenamiento local
-  if (sidebar.classList.contains("active")) {
-    localStorage.setItem("menuState", "active");
-  } 
-  
-  else {
-    localStorage.setItem("menuState", "inactive");
-  }*/
+  sidebar.classList.toggle("active"); //cambiar botón a activo
+  header.classList.toggle("active");
+
+  /* // Guardar estado del botón burger en almacenamiento local
+   if (sidebar.classList.contains("active")) {
+     localStorage.setItem("menuState", "active");
+   } 
+   
+   else {
+     localStorage.setItem("menuState", "inactive");
+   }*/
 }
 
 /*window.onload = function () {
@@ -34,3 +34,15 @@ function desplazar() {
       //content.classList.remove("active");
     }
   };*/
+
+function desplegable() {
+  var menuDesplegable = document.querySelector('.desplegable-perfil');
+
+    // Muestra u oculta el menú desplegable según su estado actual
+    if (menuDesplegable.style.display === 'none') {
+      menuDesplegable.style.display = 'flex';
+    } else {
+      menuDesplegable.style.display = 'none';
+    }
+
+  }

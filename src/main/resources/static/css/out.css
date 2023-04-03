@@ -10,7 +10,7 @@
     /* Pantallas de menos de 768 píxeles de ancho */
 
     #login, #proyecto, #registro {
-      width: 100%;
+      width: 90%;
     }
   
 }

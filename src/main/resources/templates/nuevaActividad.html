@@ -14,7 +14,7 @@
     <script src="/js/menu.js"></script>
 
     <!-- para jquery-->
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/js/validaciones.js"></script>
 
@@ -55,9 +55,40 @@
             </ul>
 
         </div>
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+            <a th:href="@{/listaGrupos}">
+                <i class="fa-solid fa-users"></i>
+            </a>
+            <a th:href="@{/listado}">
+                <i class="fa-solid fa-address-card"></i>
+            </a>
+
+        </div>
 
 
-        <div class="w-100" style="margin-left: 250px">
+        <div id="contenido">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()" />
+                <img width="35" th:src="@{/img/logo.png}" />
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+            </div>
+            
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -66,7 +97,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{img/p1.png}" alt="imagenPerfil" id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -89,13 +120,17 @@
 
                     <div class="layout-editar">
 
-                        <form class="form-actividad" th:action="@{/process_actividad}" th:object="${actividad}" id="form-actividad"
-                            enctype="multipart/form-data" method="post">
+                        <form class="form-actividad" th:action="@{/process_actividad}" th:object="${actividad}"
+                            id="form-actividad" enctype="multipart/form-data" method="post">
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Nombre </label>
-                                <input type="text" th:field="*{nombre}" class="form-control" required id="nombreActividad"/>
+                                <input type="text" th:field="*{nombre}" class="form-control" required
+                                    id="nombreActividad" />
                             </div>
-                            <div id="error_nombreActividad"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Máximo 30 caracteres</p></div>
+                            <div id="error_nombreActividad">
+                                <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Máximo 30
+                                    caracteres</p>
+                            </div>
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Descripción </label>
@@ -120,16 +155,22 @@
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Plazas </label>
-                                <input type="number" th:field="*{plazas}" class="form-control" required id="plazas"/>
+                                <input type="number" th:field="*{plazas}" class="form-control" required id="plazas" />
                             </div>
-                            <div id="error_plazas"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un número entre 1 y 150</p></div>
+                            <div id="error_plazas">
+                                <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un
+                                    número entre 1 y 150</p>
+                            </div>
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Fecha </label>
-                                <input type="datetime-local" th:field="*{fechaRealizacion}" class="form-control" id="fechaRealizacion"
-                                    required />
+                                <input type="datetime-local" th:field="*{fechaRealizacion}" class="form-control"
+                                    id="fechaRealizacion" required />
                             </div>
-                            <div id="error_fechaRealizacion"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una fecha posterior a la actual</p></div>
+                            <div id="error_fechaRealizacion">
+                                <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una
+                                    fecha posterior a la actual</p>
+                            </div>
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Foto </label>

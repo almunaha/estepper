@@ -86,8 +86,53 @@
 
         </div>
 
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
 
-        <div class="w-100" style="margin-left: 250px">
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+
+            <a th:href="@{/cuaderno}">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+
+            <a th:href="@{/alimentacion}">
+                <i class="fa-solid fa-carrot"></i>
+            </a>
+
+            <a th:href="@{'/materiales/' + ${user.id}}">
+                <i class="fa-solid fa-folder-open"></i>
+            </a>
+
+            <a th:href="@{/progreso}">
+                <i class="fa-solid fa-chart-line"></i>
+            </a>
+
+            <a th:href="@{/chat}">
+                <i class="fa-solid fa-comments"></i>
+            </a>
+
+        </div>
+
+        <div id="contenido">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
+                <img width="35" th:src="@{img/logo.png}" />
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+            </div>
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -114,9 +159,11 @@
                 </div>
             </nav>
 
-            <div style="padding-top: 75px;">
-                <div class="bg-white border border-1 p-4 rounded-4" style="margin-top:2%; margin-left: 4%; margin-right: 4%">
-                    <div style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 12px;">
+            <div style="padding-top: 75px;margin-bottom: 15%; ">
+                <div class="bg-white border border-1 p-4 rounded-4"
+                    style="margin-top:2%; margin-left: 4%; margin-right: 4%">
+                    <div
+                        style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 12px;">
                         <h4 style="margin-top: 3%; color:azure">CÁLCULO DEL ÍNDICE DE MASA CORPORAL (IMC) Y DEL PESO A
                             PERDER</h4>
                     </div>
@@ -125,18 +172,23 @@
                         <div class="cont-calculo" style="margin-top: 2%">
                             <h6>CÁLCULO DEL IMC</h6>
                             <div style="margin-top: 2%">IMC = Peso en kilos / Talla en m2</div>
-                            <div style="margin-top: 2%" th:text="'IMC = ' + ${exploracion.peso} + ' / ' + ${talla} + '^2 = '+ ${exploracion.imc}"></div>
+                            <div style="margin-top: 2%"
+                                th:text="'IMC = ' + ${exploracion.peso} + ' / ' + ${talla} + '^2 = '+ ${exploracion.imc}">
+                            </div>
                         </div>
 
                         <div class="cont-calculo">
                             <h6>CÁLCULO DE PÉRDIDA DEL 5-10% DEL PESO</h6>
                             <div style="margin-top: 2%" th:text="'Peso: ' + ${exploracion.peso} + ' kg'"></div>
-                            <div style="margin-top: 2%" th:text="'5% de pérdida: ' + ${exploracion.peso * 0.05} + ' kg'"></div>
+                            <div style="margin-top: 2%"
+                                th:text="'5% de pérdida: ' + ${exploracion.peso * 0.05} + ' kg'"></div>
                             <div th:text="'10% de pérdida: ' + ${exploracion.peso * 0.1} + ' kg'"></div>
-                            <div style="margin-top: 2%" >Peso a alcanzar: </div>
-                            <div th:text="'Peso -5% de pérdida: ' +  ${exploracion.peso - exploracion.peso * 0.05} + ' kg'">
+                            <div style="margin-top: 2%">Peso a alcanzar: </div>
+                            <div
+                                th:text="'Peso -5% de pérdida: ' +  ${exploracion.peso - exploracion.peso * 0.05} + ' kg'">
                             </div>
-                            <div th:text="'Peso -10% de pérdida: ' + ${exploracion.peso - exploracion.peso * 0.1} + ' kg'">
+                            <div
+                                th:text="'Peso -10% de pérdida: ' + ${exploracion.peso - exploracion.peso * 0.1} + ' kg'">
                             </div>
                         </div>
 
@@ -147,18 +199,20 @@
                         <div class="cont-calculo" style="background-color: rgb(237, 249, 255);">
                             <h6>RELLENA LOS SIGUIENTES CAMPOS</h6>
                             <form class="form-fobjetivo" method="post" th:action="@{'/process_fichao/' + ${ficha.id}}"
-                            th:object="${ficha}">
+                                th:object="${ficha}">
 
                                 <div class="input-group mt-4">
                                     <label class="col-2 col-form-label">¿Cuánto quiero pesar?</label>
-                                    <input type="number" th:field="*{objetivo}" th:name="objetivo" th:value="${ficha.objetivo != null} ? ${ficha.objetivo} : ''" 
-                                    step="0.01" class="form-control" required />
+                                    <input type="number" th:field="*{objetivo}" th:name="objetivo"
+                                        th:value="${ficha.objetivo != null} ? ${ficha.objetivo} : ''" step="0.01"
+                                        class="form-control" required />
                                 </div>
 
                                 <div class="input-group mt-2">
                                     <label class="col-2 col-form-label">Mi objetivo es perder</label>
-                                    <input type="number" th:field="*{perdida}" th:name="perdida" th:value="${ficha.perdida != null} ? ${ficha.perdida} : ''"
-                                    step="0.01" class="form-control" required /> kg
+                                    <input type="number" th:field="*{perdida}" th:name="perdida"
+                                        th:value="${ficha.perdida != null} ? ${ficha.perdida} : ''" step="0.01"
+                                        class="form-control" required /> kg
                                 </div>
 
                                 <button class="btn btn-info text-white mt-4 w-100" type="submit">Guardar</button>
