@@ -256,17 +256,17 @@
                         </div>
 
                         <!-- Registar peso -->
-                        <div class="bg-white p-5" style="width: 30%" id="form-peso">
+                        <div class="bg-white p-5" id="form-peso">
                             <form method="post" th:action="@{/process_peso}" th:object="${progreso}" id="form-registroPeso">
                                 <div class="mb-3">
-                                    <label>Fecha</label>
-                                    <input type="datetime-local" th:field="*{fecha}" name="fechaPeso" id="fechaPeso" required>
+                                    <label for="fechaPeso">Fecha</label>
+                                    <input type="datetime-local" th:field="*{fecha}" name="fechaPeso" id="fechaPeso"  class="form-control"required>
                                 </div>
                                 <div id="error_fechaPeso"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una fecha actual o anterior</p></div>
 
                                 <div class="mb-3">
-                                    <label>Peso (kg)</label>
-                                    <input type="number" step="any" th:field="*{dato}" id="datoPeso" required>
+                                    <label for="datoPeso">Peso (kg)</label>
+                                    <input type="number" step="any" th:field="*{dato}" id="datoPeso" class="form-control" required>
                                 </div>
                                 <div id="error_datoPeso"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un número mayor a 0</p></div>
 
@@ -318,17 +318,17 @@
                         </div>
 
                         <!-- Registar perímetro -->
-                        <div class="bg-white p-5" style="width: 30%" id="form-perimetro">
+                        <div class="bg-white p-5" id="form-perimetro">
                             <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}" id="form-registroPerimetro">
                                 <div class="mb-3">
                                     <label>Fecha</label>
-                                    <input type="datetime-local" th:field="*{fecha}" id="fechaPerimetro" required>
+                                    <input type="datetime-local" th:field="*{fecha}" id="fechaPerimetro" class="form-control" required>
                                 </div>
                                 <div id="error_fechaPerimetro"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una fecha actual o anterior</p></div>
 
                                 <div class="mb-3">
                                     <label>Perímetro (cm)</label>
-                                    <input type="number" step="any" th:field="*{dato}" id="datoPerimetro" required>
+                                    <input type="number" step="any" th:field="*{dato}" id="datoPerimetro" class="form-control" required>
                                 </div>
                                 <div id="error_datoPerimetro"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un número mayor a 0</p></div>
 

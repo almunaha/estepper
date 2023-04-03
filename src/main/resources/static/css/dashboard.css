@@ -118,6 +118,7 @@
 .btn-form{
     display: flex;
     gap: 2%;
+    justify-content: center;
 }
 
 .btn-reg{
@@ -207,11 +208,6 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 160%;
 }
 
-/* formularios registro peso y perimetro */
-
-#form-peso{
-    text-align: center;
-}
 
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
