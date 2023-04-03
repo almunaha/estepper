@@ -39,7 +39,6 @@ import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.enums.Asistencia;
-import com.estepper.estepper.model.enums.EstadoActividad;
 import com.estepper.estepper.model.enums.EstadoInvitacion;
 import com.estepper.estepper.model.enums.EstadoSesion;
 
@@ -280,7 +279,6 @@ public class CoordinadorController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        actividad.setEstado(EstadoActividad.DISPONIBLE); // actividad disponible hasta que finalice
         actividad.setNumParticipantes(0); // participantes apuntados: inicializar a cero
 
         // Foto de la actividad
@@ -331,7 +329,6 @@ public class CoordinadorController {
             else
                 actividad.setPlazas(orig.getPlazas());
 
-            actividad.setEstado(orig.getEstado());
             actividad.setNumParticipantes(orig.getNumParticipantes());
 
             // guardar actividad

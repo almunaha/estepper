@@ -13,6 +13,11 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
 
+    <!-- para jquery-->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/validaciones.js"></script>
+
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <title>Nueva actividad - Estepper</title>
@@ -84,12 +89,13 @@
 
                     <div class="layout-editar">
 
-                        <form class="form-actividad" th:action="@{/process_actividad}" th:object="${actividad}"
+                        <form class="form-actividad" th:action="@{/process_actividad}" th:object="${actividad}" id="form-actividad"
                             enctype="multipart/form-data" method="post">
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Nombre </label>
-                                <input type="text" th:field="*{nombre}" class="form-control" required />
+                                <input type="text" th:field="*{nombre}" class="form-control" required id="nombreActividad"/>
                             </div>
+                            <div id="error_nombreActividad"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Máximo 30 caracteres</p></div>
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Descripción </label>
@@ -102,6 +108,8 @@
                                 <select id="categoria" th:field="*{categoria}" class="form-select" required>
                                     <option th:text="Deporte" th:value="DEPORTE"></option>
                                     <option th:text="Alimentación" th:value="ALIMENTACIÓN"></option>
+                                    <option th:text="'Salud ' + 'mental'" th:value="SALUDMENTAL"></option>
+                                    <option th:text="Educación" th:value="EDUCACIÓN"></option>
                                 </select>
                             </div>
 
@@ -112,14 +120,16 @@
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Plazas </label>
-                                <input type="number" th:field="*{plazas}" class="form-control" required />
+                                <input type="number" th:field="*{plazas}" class="form-control" required id="plazas"/>
                             </div>
+                            <div id="error_plazas"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un número entre 1 y 150</p></div>
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Fecha </label>
-                                <input type="datetime-local" th:field="*{fechaRealizacion}" class="form-control"
+                                <input type="datetime-local" th:field="*{fechaRealizacion}" class="form-control" id="fechaRealizacion"
                                     required />
                             </div>
+                            <div id="error_fechaRealizacion"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una fecha posterior a la actual</p></div>
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Foto </label>

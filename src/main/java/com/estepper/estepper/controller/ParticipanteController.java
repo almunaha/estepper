@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.xml.PluggableSchemaResolver;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -804,14 +803,18 @@ public class ParticipanteController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        List<Actividad> listado = act.listado();
-        model.addAttribute("listado", listado);
+        if (user instanceof Coordinador) { //todas las actividades
+            List<Actividad> listado = act.listado();
+            model.addAttribute("listado", listado);
 
-        if (user instanceof Coordinador) {
             return "actividadesCoor";
         }
 
         else if (user instanceof Participante) {
+            //actividades que no se hayan acabado
+            List<Actividad> listado = act.actividadesPendientes(LocalDateTime.now());
+            model.addAttribute("listado", listado);
+
             // asistencia confirmada
             List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
             model.addAttribute("asistencia", asistencia);

@@ -1,5 +1,6 @@
 package com.estepper.estepper.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,11 @@ public class ActividadServiceImpl implements ActividadService{
     public Integer asistencia(Integer idActividad, Integer idParticipante){
         return repo.asistencia(idActividad, idParticipante);
     }
+
+    @Override
+    public List<Actividad> actividadesPendientes(LocalDateTime fechaActual){
+        return repo.findActividadesPendientes(fechaActual);
+    }
+
     
 }

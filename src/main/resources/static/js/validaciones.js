@@ -6,6 +6,9 @@ $(document).ready(function () {
         nick: false,
         email: false,
         pass1: false,
+        nombreActividad: false,
+        plazas: false,
+        fechaRealizacion: false,
     }
 
     //expresiones regulares
@@ -13,6 +16,7 @@ $(document).ready(function () {
         nickname: /^.{3,20}/, //de 3 a 20 caracteres
         email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
         password: /^.{8,}$/, //minimo 8 caracteres -> consultar como de segura la quieren
+        nombreActividad: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{0,25}$/, //de 1 a 25 caracteres, alfanumerico
     }
 
     //validar campo
@@ -43,6 +47,15 @@ $(document).ready(function () {
             case "contrasenia2":
                 validarPassword();
                 break;
+            case "nombre":
+                validarCampo(expresiones.nombreActividad, e.target, 'nombreActividad');
+                break;
+            case "plazas":
+                validarPlazas();
+                break;
+            case "fechaRealizacion":
+                validarFechaRealizacion();
+                break;
         }
     }
 
@@ -57,11 +70,41 @@ $(document).ready(function () {
 		}
 	}
 
+    const validarPlazas = () => { //validar si las contraseñas coinciden
+		if ($('#plazas').val() <= 0 || $('#plazas').val() > 150) {
+			$('#error_plazas').show();
+			campos['plazas'] = false;
+
+		} else {
+			$('#error_plazas').hide();
+			campos['plazas'] = true;
+		}
+	}
+
+    const validarFechaRealizacion = () => { //validar si la fecha no ha pasado
+        var fechaIntroducida = new Date($('#fechaRealizacion').val());
+        var fechaActual = Date.now();
+        
+		if (fechaIntroducida < fechaActual) {
+			$('#error_fechaRealizacion').show();
+			campos['fechaRealizacion'] = false;
+
+		} else {
+			$('#error_fechaRealizacion').hide();
+			campos['fechaRealizacion'] = true;
+		}
+	}
+
     //ocultar errores REGISTRO
     $('#error_nick').hide();
     $('#error_email').hide();
     $('#error_pass1').hide();
     $('#error_pass2').hide();
+
+    //ocultar errores NUEVA ACTIVIDAD
+    $('#error_fechaRealizacion').hide();
+    $('#error_nombreActividad').hide();
+    $('#error_plazas').hide();
 
     //Validar formulario REGISTRO
     $("#form-registro #nickname").change(validarFormulario);
@@ -69,6 +112,10 @@ $(document).ready(function () {
     $("#form-registro #pass1").keyup(validarFormulario);
     $("#form-registro #pass2").change(validarFormulario);
 
+    //Validar formulario NUEVA ACTIVIDAD
+    $("#form-actividad #fechaRealizacion").change(validarFormulario);
+    $("#form-actividad #nombreActividad").keyup(validarFormulario);
+    $("#form-actividad #plazas").keyup(validarFormulario);
 
     $("#form-registro").submit(function (event) {
         //faltaría validar que ese correo no exista
@@ -80,6 +127,19 @@ $(document).ready(function () {
         }
 
     });
+
+    $("#form-actividad").submit(function (event) {
+        //faltaría validar que ese correo no exista
+        
+        event.preventDefault();
+
+        if (campos.nombreActividad && campos.plazas && campos.fechaRealizacion) {  //si está todo bien
+            event.currentTarget.submit();
+        }
+
+    });
+
+
 
 
     /* MOSTRAR Y OCULTAR CONTRASEÑAS */

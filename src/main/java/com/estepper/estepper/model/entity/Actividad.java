@@ -8,7 +8,6 @@ import java.util.Set;
 import org.hibernate.annotations.ManyToAny;
 
 import com.estepper.estepper.model.enums.Categoria;
-import com.estepper.estepper.model.enums.EstadoActividad;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +33,7 @@ public class Actividad implements Serializable {
     private String descripcion;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "categoria", columnDefinition = "ENUM('DEPORTE', 'ALIMENTACIÓN')")
+    @Column(name = "categoria", columnDefinition = "ENUM('DEPORTE', 'ALIMENTACIÓN', 'SALUDMENTAL', 'EDUCACIÓN')")
     private Categoria categoria; 
 
     private Integer numParticipantes;
@@ -43,10 +42,6 @@ public class Actividad implements Serializable {
 
     @Column(name = "fechaRealizacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaRealizacion;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "estado", columnDefinition = "ENUM('DISPONIBLE', 'FINALIZADA')")
-    private EstadoActividad estado; 
 
     private String foto;
 
@@ -60,7 +55,7 @@ public class Actividad implements Serializable {
     public Actividad(){}
 
     public Actividad(Integer id, String nombre, String ubicacion, String descripcion, Categoria categoria, Integer numParticipantes,
-            Integer plazas, LocalDateTime fechaRealizacion, EstadoActividad estado, String foto, Set<Participante> participantes) {
+            Integer plazas, LocalDateTime fechaRealizacion, String foto, Set<Participante> participantes) {
         this.id = id;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
@@ -69,7 +64,6 @@ public class Actividad implements Serializable {
         this.numParticipantes = numParticipantes;
         this.plazas = plazas;
         this.fechaRealizacion = fechaRealizacion;
-        this.estado = estado;
         this.foto = foto;
         this.participantes = participantes;
     }
@@ -153,17 +147,6 @@ public class Actividad implements Serializable {
     public void setFechaRealizacion(LocalDateTime fechaRealizacion) {
         this.fechaRealizacion = fechaRealizacion;
     }
-
-    public EstadoActividad getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoActividad estado) {
-        this.estado = estado;
-    }
-
-
-
 
 
 }
