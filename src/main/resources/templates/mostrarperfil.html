@@ -38,10 +38,17 @@
             </div>
 
             <ul>
-                <li>
+                <li th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">
                     <a th:href="@{/}">
                         <i class="fa-solid fa-house"></i>
                         <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li th:if="${user instanceof T(com.estepper.estepper.model.entity.Administrador)}">
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-user-pen"></i>
+                        <span class="nombre-enlaces">Usuarios</span>
                     </a>
                 </li>
 

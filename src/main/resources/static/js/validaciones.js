@@ -106,7 +106,7 @@ $(document).ready(function () {
     }
 
 
-    const validarFechaRegistro = () => { 
+    const validarFechaRegistro = () => {
         var fechaPeso = new Date($('#fechaPeso').val());
         var fechaPerimetro = new Date($('#fechaPerimetro').val());
         var fechaActual = Date.now();
@@ -122,7 +122,7 @@ $(document).ready(function () {
             }
         }
 
-        if(fechaPerimetro != ""){
+        if (fechaPerimetro != "") {
             if (fechaPerimetro > fechaActual) {
                 $('#error_fechaPerimetro').show();
                 campos['fechaPerimetro'] = false;
@@ -134,7 +134,7 @@ $(document).ready(function () {
         }
     }
 
-    const validarDatoProgreso = () => { 
+    const validarDatoProgreso = () => {
         var datoPeso = $('#datoPeso').val();
         var datoPerimetro = $('#datoPerimetro').val();
 
@@ -149,7 +149,7 @@ $(document).ready(function () {
             }
         }
 
-        if(datoPerimetro != ""){
+        if (datoPerimetro != "") {
             if (datoPerimetro <= 0) {
                 $('#error_datoPerimetro').show();
                 campos['datoPerimetro'] = false;
@@ -189,6 +189,11 @@ $(document).ready(function () {
     $("#form-actividad #nombreActividad").keyup(validarFormulario);
     $("#form-actividad #plazas").keyup(validarFormulario);
 
+    //Validar formulario EDITAR ACTIVIDAD
+    $("#form-editarActividad #fechaRealizacion").change(validarFormulario);
+    $("#form-editarActividad #nombreActividad").keyup(validarFormulario);
+    $("#form-editarActividad #plazas").keyup(validarFormulario);
+
     //validar formularios PROGRESO
     $("#form-registroPeso #fechaPeso").change(validarFormulario);
     $("#form-registroPerimetro #fechaPerimetro").change(validarFormulario);
@@ -207,6 +212,14 @@ $(document).ready(function () {
     });
 
     $("#form-actividad").submit(function (event) {
+        event.preventDefault();
+        if (campos.nombreActividad && campos.plazas && campos.fechaRealizacion) {  //si está todo bien
+            event.currentTarget.submit();
+        }
+
+    });
+
+    $("#form-editarActividad").submit(function (event) {
         event.preventDefault();
         if (campos.nombreActividad && campos.plazas && campos.fechaRealizacion) {  //si está todo bien
             event.currentTarget.submit();

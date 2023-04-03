@@ -13,6 +13,11 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
 
+    <!-- para jquery-->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/validaciones.js"></script>
+
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
     <title>Editar actividad - Estepper</title>
@@ -116,7 +121,7 @@
                     <div class="layout-editar">
 
                         <form class="form-actividad" th:action="@{/guardar_actividad}" th:object="${actividad}"
-                            enctype="multipart/form-data" method="post">
+                            enctype="multipart/form-data" id="form-editarActividad" method="post">
                             <div class="campos-form">
                                 <div class="form-dato">
 
@@ -124,7 +129,11 @@
 
                                     <div class="input-group mt-2">
                                         <label class="col-3 col-form-label">Nombre </label>
-                                        <input type="text" th:field="*{nombre}" class="form-control" required />
+                                        <input type="text" th:field="*{nombre}" class="form-control" id="nombreActividad" required />
+                                    </div>
+                                    <div id="error_nombreActividad">
+                                        <p style="margin-left: 24%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Máximo 30
+                                            caracteres</p>
                                     </div>
 
                                     <div class="input-group mt-2">
@@ -143,7 +152,11 @@
 
                                     <div class="input-group mt-2">
                                         <label class="col-3 col-form-label">Añadir plazas </label>
-                                        <input type="number" name="plazas" class="form-control" />
+                                        <input type="number" name="plazas" class="form-control" id="plazas"/>
+                                    </div>
+                                    <div id="error_plazas">
+                                        <p style="margin-left: 24%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un
+                                            número entre 1 y 150</p>
                                     </div>
                                 </div>
 
@@ -155,8 +168,12 @@
 
                                     <div class="input-group mt-2">
                                         <label class="col-2 col-form-label">Fecha </label>
-                                        <input type="datetime-local" th:field="*{fechaRealizacion}" class="form-control"
+                                        <input type="datetime-local" th:field="*{fechaRealizacion}" id="fechaRealizacion" class="form-control"
                                             required />
+                                    </div>
+                                    <div id="error_fechaRealizacion">
+                                        <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una
+                                            fecha posterior a la actual</p>
                                     </div>
 
                                     <div class="input-group mt-2">
