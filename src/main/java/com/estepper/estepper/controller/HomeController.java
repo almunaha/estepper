@@ -77,6 +77,7 @@ public class HomeController {
 
         else if (user instanceof Administrador) {
             List<Usuario> lista = usuario.listadoTotal();
+            lista.remove(user);
             model.addAttribute("usuarios", lista);
             return "admin";
         } else { // PARTICIPANTE
