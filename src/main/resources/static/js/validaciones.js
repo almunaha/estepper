@@ -9,6 +9,10 @@ $(document).ready(function () {
         nombreActividad: false,
         plazas: false,
         fechaRealizacion: false,
+        fechaPeso: false,
+        fechaPerimetro: false,
+        datoPeso: false,
+        datoPerimetro: false,
     }
 
     //expresiones regulares
@@ -56,44 +60,106 @@ $(document).ready(function () {
             case "fechaRealizacion":
                 validarFechaRealizacion();
                 break;
+            case "fecha":
+                validarFechaRegistro();
+                break;
+            case "dato":
+                validarDatoProgreso();
+                break;
         }
     }
 
-	const validarPassword = () => { //validar si las contraseñas coinciden
-		if ($('#pass1').val() !== $('#pass2').val()) {
-			$('#error_pass2').show();
-			campos['pass1'] = false;
+    const validarPassword = () => { //validar si las contraseñas coinciden
+        if ($('#pass1').val() !== $('#pass2').val()) {
+            $('#error_pass2').show();
+            campos['pass1'] = false;
 
-		} else {
-			$('#error_pass2').hide();
-			campos['pass1'] = true;
-		}
-	}
+        } else {
+            $('#error_pass2').hide();
+            campos['pass1'] = true;
+        }
+    }
 
     const validarPlazas = () => { //validar si las contraseñas coinciden
-		if ($('#plazas').val() <= 0 || $('#plazas').val() > 150) {
-			$('#error_plazas').show();
-			campos['plazas'] = false;
+        if ($('#plazas').val() <= 0 || $('#plazas').val() > 150) {
+            $('#error_plazas').show();
+            campos['plazas'] = false;
 
-		} else {
-			$('#error_plazas').hide();
-			campos['plazas'] = true;
-		}
-	}
+        } else {
+            $('#error_plazas').hide();
+            campos['plazas'] = true;
+        }
+    }
 
     const validarFechaRealizacion = () => { //validar si la fecha no ha pasado
         var fechaIntroducida = new Date($('#fechaRealizacion').val());
         var fechaActual = Date.now();
-        
-		if (fechaIntroducida < fechaActual) {
-			$('#error_fechaRealizacion').show();
-			campos['fechaRealizacion'] = false;
 
-		} else {
-			$('#error_fechaRealizacion').hide();
-			campos['fechaRealizacion'] = true;
-		}
-	}
+        if (fechaIntroducida < fechaActual) {
+            $('#error_fechaRealizacion').show();
+            campos['fechaRealizacion'] = false;
+
+        } else {
+            $('#error_fechaRealizacion').hide();
+            campos['fechaRealizacion'] = true;
+        }
+    }
+
+
+    const validarFechaRegistro = () => { 
+        var fechaPeso = new Date($('#fechaPeso').val());
+        var fechaPerimetro = new Date($('#fechaPerimetro').val());
+        var fechaActual = Date.now();
+
+        if (fechaPeso != "") {
+            if (fechaPeso > fechaActual) {
+                $('#error_fechaPeso').show();
+                campos['fechaPeso'] = false;
+
+            } else {
+                $('#error_fechaPeso').hide();
+                campos['fechaPeso'] = true;
+            }
+        }
+
+        if(fechaPerimetro != ""){
+            if (fechaPerimetro > fechaActual) {
+                $('#error_fechaPerimetro').show();
+                campos['fechaPerimetro'] = false;
+
+            } else {
+                $('#error_fechaPerimetro').hide();
+                campos['fechaPerimetro'] = true;
+            }
+        }
+    }
+
+    const validarDatoProgreso = () => { 
+        var datoPeso = $('#datoPeso').val();
+        var datoPerimetro = $('#datoPerimetro').val();
+
+        if (datoPeso != "") {
+            if (datoPeso <= 0) {
+                $('#error_datoPeso').show();
+                campos['datoPeso'] = false;
+
+            } else {
+                $('#error_datoPeso').hide();
+                campos['datoPeso'] = true;
+            }
+        }
+
+        if(datoPerimetro != ""){
+            if (datoPerimetro <= 0) {
+                $('#error_datoPerimetro').show();
+                campos['datoPerimetro'] = false;
+
+            } else {
+                $('#error_datoPerimetro').hide();
+                campos['datoPerimetro'] = true;
+            }
+        }
+    }
 
     //ocultar errores REGISTRO
     $('#error_nick').hide();
@@ -106,6 +172,12 @@ $(document).ready(function () {
     $('#error_nombreActividad').hide();
     $('#error_plazas').hide();
 
+    //ocultar errores PROGRESO
+    $('#error_fechaPeso').hide();
+    $('#error_fechaPerimetro').hide();
+    $('#error_datoPeso').hide();
+    $('#error_datoPerimetro').hide();
+
     //Validar formulario REGISTRO
     $("#form-registro #nickname").change(validarFormulario);
     $("#form-registro #email").change(validarFormulario);
@@ -117,9 +189,15 @@ $(document).ready(function () {
     $("#form-actividad #nombreActividad").keyup(validarFormulario);
     $("#form-actividad #plazas").keyup(validarFormulario);
 
+    //validar formularios PROGRESO
+    $("#form-registroPeso #fechaPeso").change(validarFormulario);
+    $("#form-registroPerimetro #fechaPerimetro").change(validarFormulario);
+    $("#form-registroPeso #datoPeso").keyup(validarFormulario);
+    $("#form-registroPerimetro #datoPerimetro").keyup(validarFormulario);
+
     $("#form-registro").submit(function (event) {
         //faltaría validar que ese correo no exista
-        
+
         event.preventDefault();
 
         if (campos.nick && campos.email && campos.pass1) {  //si está todo bien
@@ -129,15 +207,29 @@ $(document).ready(function () {
     });
 
     $("#form-actividad").submit(function (event) {
-        //faltaría validar que ese correo no exista
-        
         event.preventDefault();
-
         if (campos.nombreActividad && campos.plazas && campos.fechaRealizacion) {  //si está todo bien
             event.currentTarget.submit();
         }
 
     });
+
+    $("#form-registroPeso").submit(function (event) {
+        event.preventDefault();
+
+        if (campos.fechaPeso && campos.datoPeso) {  //si está todo bien
+            event.currentTarget.submit();
+        }
+    });
+
+    $("#form-registroPerimetro").submit(function (event) {
+        event.preventDefault();
+
+        if (campos.fechaPerimetro && campos.datoPerimetro) {  //si está todo bien
+            event.currentTarget.submit();
+        }
+    });
+
 
 
 
@@ -158,7 +250,7 @@ $(document).ready(function () {
         else if (this.previousElementSibling.type === 'text') {
             this.previousElementSibling.type = "password";
             iconoOjo1.removeClass('fa-eye-slash');
-            iconoOjo1.addClass('fa-eye');                
+            iconoOjo1.addClass('fa-eye');
         }
     });
 
@@ -172,7 +264,7 @@ $(document).ready(function () {
         else if (this.previousElementSibling.type === 'text') {
             this.previousElementSibling.type = "password";
             iconoOjo2.removeClass('fa-eye-slash');
-            iconoOjo2.addClass('fa-eye');                
+            iconoOjo2.addClass('fa-eye');
         }
     });
 

@@ -20,6 +20,7 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
     <script src="/js/progreso.js"></script>
+    <script src="/js/validaciones.js"></script>
 
     <!--PARA GRÁFICOS-->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -256,15 +257,19 @@
 
                         <!-- Registar peso -->
                         <div class="bg-white p-5" style="width: 30%" id="form-peso">
-                            <form method="post" th:action="@{/process_peso}" th:object="${progreso}">
+                            <form method="post" th:action="@{/process_peso}" th:object="${progreso}" id="form-registroPeso">
                                 <div class="mb-3">
                                     <label>Fecha</label>
-                                    <input type="datetime-local" th:field="*{fecha}" required>
+                                    <input type="datetime-local" th:field="*{fecha}" name="fechaPeso" id="fechaPeso" required>
                                 </div>
+                                <div id="error_fechaPeso"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una fecha actual o anterior</p></div>
+
                                 <div class="mb-3">
                                     <label>Peso (kg)</label>
-                                    <input type="number" step="any" th:field="*{dato}" required>
+                                    <input type="number" step="any" th:field="*{dato}" id="datoPeso" required>
                                 </div>
+                                <div id="error_datoPeso"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un número mayor a 0</p></div>
+
                                 <div class="btn-form">
                                     <a href="/progreso" class="btn btn-primary">Cancelar</a>
                                     <button type="submit" class="btn btn-primary">Registrar</button>
@@ -314,15 +319,18 @@
 
                         <!-- Registar perímetro -->
                         <div class="bg-white p-5" style="width: 30%" id="form-perimetro">
-                            <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}">
+                            <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}" id="form-registroPerimetro">
                                 <div class="mb-3">
                                     <label>Fecha</label>
-                                    <input type="datetime-local" th:field="*{fecha}" required>
+                                    <input type="datetime-local" th:field="*{fecha}" id="fechaPerimetro" required>
                                 </div>
+                                <div id="error_fechaPerimetro"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una fecha actual o anterior</p></div>
+
                                 <div class="mb-3">
                                     <label>Perímetro (cm)</label>
-                                    <input type="number" step="any" th:field="*{dato}" required>
+                                    <input type="number" step="any" th:field="*{dato}" id="datoPerimetro" required>
                                 </div>
+                                <div id="error_datoPerimetro"><p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un número mayor a 0</p></div>
 
                                 <div class="btn-form">
                                     <a href="/progreso" class="btn btn-primary">Cancelar</a>
