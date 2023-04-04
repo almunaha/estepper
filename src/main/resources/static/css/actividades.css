@@ -417,4 +417,12 @@
         font-size: 0.85rem;
     }
 
+    .campos-form{
+        flex-direction: column;
+    }
+
+    .form-dato{
+        width: 100%;
+    }
+
 }
