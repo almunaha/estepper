@@ -105,8 +105,10 @@ public class AdminController {
                 }
                 fasevaloracion.eliminarcuenta(p);
                 
-                p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
-                grupoS.update(p.getGrupo());
+                if(p.getGrupo() != null) {
+                    p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
+                    grupoS.update(p.getGrupo());
+                }
             }
 
             else if (usuario.findById(id).get() instanceof Coordinador) {
@@ -115,7 +117,7 @@ public class AdminController {
                     if(listgrupos.get(i).getIdCoordinador() == id){
                         materialS.deleteByGrupo(listgrupos.get(i));
                         mensajeS.deleteByGrupo(listgrupos.get(i));
-                        grupoS.delete(id);
+                        grupoS.delete(listgrupos.get(i).getId());
                     }
                 }
                 invitacion.eliminarPorCoordinador((Coordinador)usuario.findById(id).get());
