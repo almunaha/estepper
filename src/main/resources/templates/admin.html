@@ -19,12 +19,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--ALERTA ELIMINAR-->
-    
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="sweetalert2.all.min.js"></script>
-  <script src="sweetalert2.min.js"></script>
-  <link rel="stylesheet" href="sweetalert2.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <title>Administración - Estepper</title>
 </head>
@@ -123,11 +123,12 @@
                     <div style="align-items: center;" class="d-flex justify-content-center mt-3">
                         <form class="w-75">
                             <div class="input-group">
-                            <input id="filtrarUsuarios" class="form-control me-2 light-table-filter w-25"
-                                data-table="tableUsu" type="text" placeholder="Buscar...">
+                                <input id="filtrarUsuarios" class="form-control me-2 light-table-filter w-25"
+                                    data-table="tableUsu" type="text" placeholder="Buscar...">
                             </div>
                         </form>
-                        <div style="margin-left: 5%;"><a class="btn" id="btn-admi" th:href="@{'/nuevoCoordinador'}">Nuevo coordinador</a></div>
+                        <div style="margin-left: 5%;"><a class="btn" id="btn-admi"
+                                th:href="@{'/nuevoCoordinador'}">Nuevo coordinador</a></div>
                     </div>
 
                     <script type="text/javascript">
@@ -146,72 +147,74 @@
 
                     <div class="p-4">
                         <div class="table-responsive">
-                        <table class="table tablePart" id="tablePart">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Alias</th>
-                                    <th scope="col">Código</th>
-                                    <th scope="col">Rol</th>
-                                    <th scope="col">Estado</th>
-                                    <th scope="col">Acciones</th>
+                            <table class="table tablePart" id="tablePart">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Alias</th>
+                                        <th scope="col">Código</th>
+                                        <th scope="col">Rol</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Acciones</th>
 
-                                </tr>
-                            </thead>
-                            <tbody class="buscarUsuarios">
-                                <tr th:each="lis:${usuarios}">
-                                    
-                                    <td th:text="${lis.nickname}"></td>
-                                    <td th:text="${lis.codigo}"></td>
-                                    <td>
-                                        <span
-                                            th:if="${lis instanceof T(com.estepper.estepper.model.entity.Participante)}">Participante</span>
-                                        <span
-                                            th:if="${lis instanceof T(com.estepper.estepper.model.entity.Coordinador)}">Coordinador</span>
-                                        <span
-                                            th:if="${lis instanceof T(com.estepper.estepper.model.entity.Administrador)}">Administrador</span>
-                                    </td>
-                                    <td th:text="${lis.estadoCuenta}"></td>
-                                    <td>
-                                        <a class="btn btn-primary"><i title="Mensaje" class="fa-solid fa-envelope"></i></a>
-                                        <a class="btn btn-primary" id="eliminar" th:data-id="${lis.id}"><i title="Eliminar"
-                                                class="fa-solid fa-trash"></i></a>
-                                        <a class="btn btn-primary"><i title="Editar" class="fa-regular fa-pen-to-square"></i></a>
-                                    </td>
-                                </tr>
-                                <script>
-                                $('#eliminar').click(function() {
-                                    var id = $(this).data('id');
-                            
-                                    Swal.fire({
-                                        position: 'center',
-                                        title: '<h4>¿Estás seguro de eliminar el usuario?</h4>',
-                                        showConfirmButton: true,
-                                        showCancelButton: true,
-                                        cancelButtonText: 'Cancelar',
-                                        confirmButtonColor: "rgb(218, 77, 73)",
-                                        confirmButtonText: '<a href="/eliminarUsuario/' + id + '" id ="conf">Eliminar</a>',
-                                                    
-                                        didRender: function () {
-                                            const confirm = document.querySelector('#conf');
-                            
-                                            if (confirm) {
-                                                confirm.style.color = 'white';
-                                            }
-                                        },
-                            
-                                        showClass: {
-                                            popup: 'animate__animated animate__fadeInDown'
-                                        },
-                                        hideClass: {
-                                            popup: 'animate__animated animate__fadeOutUp'
-                                        }
-                            
-                                    })
-                            
-                                });
-                            </script>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </thead>
+                                <tbody class="buscarUsuarios">
+                                    <tr th:each="lis:${usuarios}">
+
+                                        <td th:text="${lis.nickname}"></td>
+                                        <td th:text="${lis.codigo}"></td>
+                                        <td>
+                                            <span
+                                                th:if="${lis instanceof T(com.estepper.estepper.model.entity.Participante)}">Participante</span>
+                                            <span
+                                                th:if="${lis instanceof T(com.estepper.estepper.model.entity.Coordinador)}">Coordinador</span>
+                                            <span
+                                                th:if="${lis instanceof T(com.estepper.estepper.model.entity.Administrador)}">Administrador</span>
+                                        </td>
+                                        <td th:text="${lis.estadoCuenta}"></td>
+                                        <td>
+                                            <a class="btn btn-primary"><i title="Mensaje"
+                                                    class="fa-solid fa-envelope"></i></a>
+                                            <a class="btn btn-primary" id="eliminar" th:data-id="${lis.id}"><i
+                                                    title="Eliminar" class="fa-solid fa-trash"></i></a>
+                                            <a class="btn btn-primary"><i title="Editar"
+                                                    class="fa-regular fa-pen-to-square"></i></a>
+                                        </td>
+                                    </tr>
+                                    <script>
+                                        $('#eliminar').click(function () {
+                                            var id = $(this).data('id');
+
+                                            Swal.fire({
+                                                position: 'center',
+                                                title: '<h4>¿Estás seguro de eliminar el usuario?</h4>',
+                                                showConfirmButton: true,
+                                                showCancelButton: true,
+                                                cancelButtonText: 'Cancelar',
+                                                confirmButtonColor: "rgb(218, 77, 73)",
+                                                confirmButtonText: '<a href="/eliminarUsuario/' + id + '" id ="conf">Eliminar</a>',
+
+                                                didRender: function () {
+                                                    const confirm = document.querySelector('#conf');
+
+                                                    if (confirm) {
+                                                        confirm.style.color = 'white';
+                                                    }
+                                                },
+
+                                                showClass: {
+                                                    popup: 'animate__animated animate__fadeInDown'
+                                                },
+                                                hideClass: {
+                                                    popup: 'animate__animated animate__fadeOutUp'
+                                                }
+
+                                            })
+
+                                        });
+                                    </script>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

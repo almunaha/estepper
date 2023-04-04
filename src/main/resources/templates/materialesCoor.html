@@ -15,6 +15,14 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!--ALERTA ELIMINAR-->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <title>Materiales - Estepper</title>
 </head>
 
@@ -92,7 +100,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -218,9 +226,41 @@
                                                 <a class="btn" id="btn-part" data-bs-toggle="tooltip"
                                                     th:href="@{'/material/descargar/' + ${lis.id}}" title="Descargar"><i
                                                         class="fa-solid fa-download"></i></a>
-                                                <a class="btn" id="btn-part" data-bs-toggle="tooltip"
-                                                    th:href="@{'/eliminarMaterial/' + ${lis.id}}" title="Eliminar"><i
+                                                <a class="btn eliminar" id="btn-part" data-bs-toggle="tooltip"
+                                                    th:data-id="${lis.id}" title="Eliminar"><i
                                                         class="fa-solid fa-trash-can"></i></a>
+                                                <script>
+                                                    $('.eliminar').click(function () {
+                                                        var id = $(this).data('id');
+
+                                                        Swal.fire({
+                                                            position: 'center',
+                                                            title: '<h4>¿Estás seguro de eliminar el material?</h4>',
+                                                            showConfirmButton: true,
+                                                            showCancelButton: true,
+                                                            cancelButtonText: 'Cancelar',
+                                                            confirmButtonColor: "rgb(218, 77, 73)",
+                                                            confirmButtonText: '<a href="/eliminarMaterial/' + id + '" id ="conf">Eliminar</a>',
+
+                                                            didRender: function () {
+                                                                const confirm = document.querySelector('#conf');
+
+                                                                if (confirm) {
+                                                                    confirm.style.color = 'white';
+                                                                }
+                                                            },
+
+                                                            showClass: {
+                                                                popup: 'animate__animated animate__fadeInDown'
+                                                            },
+                                                            hideClass: {
+                                                                popup: 'animate__animated animate__fadeOutUp'
+                                                            }
+
+                                                        })
+
+                                                    });
+                                                </script>
                                             </td>
                                         </tr>
                                     </div>

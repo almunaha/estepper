@@ -20,6 +20,14 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 
+    <!--ALERTA ELIMINAR-->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <title>Fase de Valoración - Estepper</title>
 </head>
 
@@ -168,9 +176,43 @@
 
                     <a class="btn btn-unir" style="color: white; background-color: #6ca4c7;" id="btn-part1"
                         th:href="@{'/activarcuenta/' + ${participante.id}}">Activar cuenta</a>
-                    <a class="btn" id="btn-part" th:href="@{'/eliminarcuenta/' + ${participante.id}}">Eliminar
+                    <a class="btn eliminar" id="btn-part" data-bs-toggle="tooltip"
+                        th:data-id="${participante.id}">Eliminar
                         cuenta</a>
                     <input type="hidden" id="grupo" value="${participante.id}" />
+
+                    <script>
+                        $('.eliminar').click(function () {
+                            var id = $(this).data('id');
+
+                            Swal.fire({
+                                position: 'center',
+                                title: '<h4>¿Estás seguro de eliminar la cuenta?</h4>',
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                cancelButtonText: 'Cancelar',
+                                confirmButtonColor: "rgb(218, 77, 73)",
+                                confirmButtonText: '<a href="/eliminarcuenta/' + id + '" id ="conf">Eliminar</a>',
+
+                                didRender: function () {
+                                    const confirm = document.querySelector('#conf');
+
+                                    if (confirm) {
+                                        confirm.style.color = 'white';
+                                    }
+                                },
+
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+
+                            })
+
+                        });
+                    </script>
 
                     <script th:inline="javascript">
                         function showAlertWithLink(link) {

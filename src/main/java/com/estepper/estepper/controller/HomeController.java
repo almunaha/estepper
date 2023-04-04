@@ -121,7 +121,7 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
-        if (elusuario instanceof Participante) {
+        if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("participante", participante.findById(id).get());
             return "editarperfilParticipante";
         } else
