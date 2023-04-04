@@ -413,5 +413,8 @@
         margin-bottom: 3.5%;
     }
 
+    .form-actividad label{
+        font-size: 0.85rem;
+    }
 
 }
