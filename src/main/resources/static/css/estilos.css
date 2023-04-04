@@ -795,6 +795,10 @@ input[type="date"] {
     display: none;
 }
 
+.utilidades-movil{
+    display: none;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 767px) {
