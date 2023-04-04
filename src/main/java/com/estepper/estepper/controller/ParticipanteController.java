@@ -337,8 +337,10 @@ public class ParticipanteController {
                     exploracion = (Exploracion) formularios.get(i);
                 }
             }
-            if ((exploracion.getEdad() >= 35) & (findrisc.getPuntuacion() >= 15)) {
-                fasevaloracion.crearFormulariosNuevos(p);
+            if (exploracion != null) {
+                if ((exploracion.getEdad() >= 35) & (findrisc.getPuntuacion() >= 15)) {
+                    fasevaloracion.crearFormulariosNuevos(p);
+                }
             }
 
             return "redirect:/valoracion/{id}";
@@ -608,26 +610,28 @@ public class ParticipanteController {
                 }
 
                 // Altura:
-                Double altura = exploracion.getTalla().doubleValue();
-                altura = altura / 100;
+                if (exploracion != null) {
+                    Double altura = exploracion.getTalla().doubleValue();
+                    altura = altura / 100;
 
-                // Buscar último registro de peso
-                Progreso progrPes = pro.pesoAntiguo(p, TipoProgreso.PESO);
-                Double ultPeso = null;
+                    // Buscar último registro de peso
+                    Progreso progrPes = pro.pesoAntiguo(p, TipoProgreso.PESO);
+                    Double ultPeso = null;
 
-                if (progrPes != null) {
-                    ultPeso = progrPes.getDato().doubleValue();
+                    if (progrPes != null) {
+                        ultPeso = progrPes.getDato().doubleValue();
+                    }
+
+                    else {
+                        ultPeso = exploracion.getPeso().doubleValue();
+                    }
+
+                    // Calcular IMC
+                    Double imc = ultPeso / (altura * altura);
+                    DecimalFormat imc2 = new DecimalFormat("#.00");
+
+                    model.addAttribute("imc", imc2.format(imc));
                 }
-
-                else {
-                    ultPeso = exploracion.getPeso().doubleValue();
-                }
-
-                // Calcular IMC
-                Double imc = ultPeso / (altura * altura);
-                DecimalFormat imc2 = new DecimalFormat("#.00");
-
-                model.addAttribute("imc", imc2.format(imc));
 
                 model.addAttribute("progreso", new Progreso());
                 return "progreso";
@@ -660,22 +664,23 @@ public class ParticipanteController {
             }
         }
 
-        Double pe = exploracion.getPeso().doubleValue();
+        if (exploracion != null) {
+            Double pe = exploracion.getPeso().doubleValue();
 
-        Double pesoPerdido = null;
+            Double pesoPerdido = null;
 
-        // positivo -> ha ganado, negativo -> ha perdido
-        if (progreso.getDato() - pe > 0)
-            pesoPerdido = 0.0;
-        else
-            pesoPerdido = progreso.getDato() - pe;
+            // positivo -> ha ganado, negativo -> ha perdido
+            if (progreso.getDato() - pe > 0)
+                pesoPerdido = 0.0;
+            else
+                pesoPerdido = progreso.getDato() - pe;
 
-        p.setPerdidaDePeso(pesoPerdido);
-        participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
-                p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
+            p.setPerdidaDePeso(pesoPerdido);
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+                    p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
 
-        pro.guardar(progreso);
-
+            pro.guardar(progreso);
+        }
         return "redirect:/progreso";
     }
 
@@ -693,22 +698,23 @@ public class ParticipanteController {
                 exploracion = (Exploracion) formularios.get(i);
             }
         }
+        if (exploracion != null) {
+            Double pe = exploracion.getCmcintura().doubleValue();
 
-        Double pe = exploracion.getCmcintura().doubleValue();
+            Double cmCinturaPerdido = null;
 
-        Double cmCinturaPerdido = null;
+            // positivo -> ha ganado, negativo -> ha perdido
+            if (progreso.getDato() - pe > 0)
+                cmCinturaPerdido = 0.0;
+            else
+                cmCinturaPerdido = progreso.getDato() - pe;
 
-        // positivo -> ha ganado, negativo -> ha perdido
-        if (progreso.getDato() - pe > 0)
-            cmCinturaPerdido = 0.0;
-        else
-            cmCinturaPerdido = progreso.getDato() - pe;
+            p.setPerdidacmcintura(cmCinturaPerdido);
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+                    p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), cmCinturaPerdido, p.getId());
 
-        p.setPerdidacmcintura(cmCinturaPerdido);
-        participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
-                p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), cmCinturaPerdido, p.getId());
-
-        pro.guardar(progreso);
+            pro.guardar(progreso);
+        }
 
         return "redirect:/progreso";
     }

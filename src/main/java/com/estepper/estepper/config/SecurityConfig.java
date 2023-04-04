@@ -30,43 +30,40 @@ public class SecurityConfig{
     
    @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception{
-        http           
-            .authorizeHttpRequests()
-            .requestMatchers("/register**").permitAll()
-            .requestMatchers("/img/logo.png").permitAll()
-            .requestMatchers("/process_register").permitAll()
-            .requestMatchers("/process_recuperarCodigo").permitAll()
-            .requestMatchers("/recuperarcodigo").permitAll()
-            .requestMatchers("/findrisc").permitAll()
-            .requestMatchers("/recomendaciones").permitAll()
-            .requestMatchers("/img/agua.png").permitAll()
-            .requestMatchers("/img/alimentacion.png").permitAll()
-            .requestMatchers("/img/deporte.png").permitAll()
-            .requestMatchers("/img/descanso.png").permitAll()  
-            .requestMatchers("/js/validaciones.js").permitAll()   
-            .requestMatchers("/css/out.css").permitAll()    
-            .requestMatchers("/client_secret_997788153381-j7h2r75bek6g35no8jmsmfq729cgc1g1.apps.googleusercontent.com.json").permitAll()          
-        
-            .requestMatchers("/material/descargar/**").permitAll() // permitir acceso a todos
+       http
+               .authorizeHttpRequests()
+               .requestMatchers("/register**").permitAll()
+               .requestMatchers("/img/logo.png").permitAll()
+               .requestMatchers("/process_register").permitAll()
+               .requestMatchers("/process_recuperarCodigo").permitAll()
+               .requestMatchers("/recuperarcodigo").permitAll()
+               .requestMatchers("/findrisc").permitAll()
+               .requestMatchers("/recomendaciones").permitAll()
+               .requestMatchers("/img/agua.png").permitAll()
+               .requestMatchers("/img/alimentacion.png").permitAll()
+               .requestMatchers("/img/deporte.png").permitAll()
+               .requestMatchers("/img/descanso.png").permitAll()
+               .requestMatchers("/js/validaciones.js").permitAll()
+               .requestMatchers("/css/out.css").permitAll()
+               .requestMatchers("/client_secret_997788153381-j7h2r75bek6g35no8jmsmfq729cgc1g1.apps.googleusercontent.com.json").permitAll()
 
-            .requestMatchers("/img/elecciones/**").permitAll()
+               .requestMatchers("/material/descargar/**").permitAll() // permitir acceso a todos
+
+               .requestMatchers("/img/elecciones/**").permitAll()
 
 
-            .anyRequest()
-            .authenticated()
-            .and()
-            .formLogin()
-            //especificar nombre pagina del login personalizado 
-            .loginPage("/login")
-            //url del login
-            .loginProcessingUrl("/autenticacion")
-            //permitir que todos puedan ver esta página
-            .permitAll()
-            //permitir logout a todos
-            .and().logout().permitAll();
+               .anyRequest()
+               .authenticated()
+               .and()
+               .formLogin(login -> login
+                       //especificar nombre pagina del login personalizado 
+                       .loginPage("/login")
+                       //url del login
+                       .loginProcessingUrl("/autenticacion")
+                       //permitir que todos puedan ver esta página
+                       .permitAll()).logout(logout -> logout.permitAll());
             ;
-
-        http.headers().frameOptions().disable();
+       http.headers(headers -> headers.frameOptions().disable());
 
         return http.build();
 
