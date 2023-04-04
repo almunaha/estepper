@@ -971,4 +971,17 @@ input[type="date"] {
         margin-right: 5%; 
     }
 
+    .perfil-baja{
+        flex-direction: column;
+        margin-bottom: 15%;
+    }
+
+    .column-baja{
+        width: 100%;
+    }
+
+    .top-baja{
+        top: -13.5%;
+        height: 35%;
+    }
 }
