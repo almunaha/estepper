@@ -105,40 +105,41 @@
 
     <!-- MENÚ MÓVIL -->
     <div class="menu-movil">
-      
-          <a th:href="@{/}">
-            <i class="fa-solid fa-house"></i>
-          </a>
-        
-          <a th:href="@{/cuaderno}">
-            <i class="fa-solid fa-pen"></i>
-          </a>
-          <a th:href="@{/actividades}">
-            <i class="fa-solid fa-person-hiking"></i>
-          </a>
-        
-          <a th:href="@{/alimentacion}">
-            <i class="fa-solid fa-carrot"></i>
-          </a>
-        
-          <a th:href="@{'/materiales/' + ${user.id}}">
-            <i class="fa-solid fa-folder-open"></i>
-          </a>
 
-          <a th:href="@{/progreso}">
-            <i class="fa-solid fa-chart-line"></i>
-          </a>
-      
-          <a th:href="@{/chat}">
-            <i class="fa-solid fa-comments"></i>
-          </a>
+      <a th:href="@{/}">
+        <i class="fa-solid fa-house"></i>
+      </a>
+
+      <a th:href="@{/cuaderno}">
+        <i class="fa-solid fa-pen"></i>
+      </a>
+      <a th:href="@{/actividades}">
+        <i class="fa-solid fa-person-hiking"></i>
+      </a>
+
+      <a th:href="@{/alimentacion}">
+        <i class="fa-solid fa-carrot"></i>
+      </a>
+
+      <a th:href="@{'/materiales/' + ${user.id}}">
+        <i class="fa-solid fa-folder-open"></i>
+      </a>
+
+      <a th:href="@{/progreso}">
+        <i class="fa-solid fa-chart-line"></i>
+      </a>
+
+      <a th:href="@{/chat}">
+        <i class="fa-solid fa-comments"></i>
+      </a>
 
     </div>
 
     <div id="contenido">
 
       <div class="header-movil">
-        <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header" onclick="desplegable()"/>
+        <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+          id="avatar-header" onclick="desplegable()" />
         <img width="35" th:src="@{img/logo.png}" />
         <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
       </div>
@@ -308,7 +309,6 @@
             <!-- Botón progreso -->
             <div class="layout-util">
               <a class="btn-util" th:href="@{/progreso}">
-
                 <i class="fa-solid fa-chart-line"></i>
               </a>
 
@@ -379,6 +379,44 @@
           </div>
 
         </div>
+
+      </div>
+
+      <div class="hello-movil">
+        <h2 th:text="'Hola, ' + ${user.nickname} + '!'"></h2>
+      </div>      
+
+      <div class="utilidades-movil">
+        
+        <a class="btn-movil" th:href="@{/sesiones}">
+          <i class="fa-solid fa-list-check"></i>
+          <div>Sesiones</div>
+        </a>
+
+        <a class="btn-movil" th:href="@{/objetivos}">
+          <i class="fa-solid fa-bullseye"></i>
+          <div>Objetivos</div>
+        </a>
+
+        <a class="btn-movil" th:href="@{/progreso}">
+          <i class="fa-solid fa-chart-line"></i>
+          <div>Progreso</div>
+        </a>
+
+        <a class="btn-movil" th:href="@{'/materiales/' + ${user.id}}">
+          <i class="fa-solid fa-folder-open"></i>
+          <div>Materiales</div>
+        </a>
+
+        <a class="btn-movil" th:href="@{/actividades}">
+            <i class="fa-solid fa-person-hiking"></i>
+            <div>Actividades</div>
+        </a>
+        <a class="btn-movil" th:href="@{/alimentacion}">
+          <i class="fa-solid fa-carrot"></i>
+          <div>Alimentación</div>
+        </a>
+
 
       </div>
 

@@ -208,6 +208,22 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 160%;
 }
 
+/* filtro */
+.filtro-fechas{
+    display: flex;
+    padding-left: 1%;
+    padding-right: 1%;
+    justify-content: space-between;
+    gap: 1%;
+}
+
+.filtro{
+    gap: 1%;
+    display: flex;
+    vertical-align: middle; 
+    width: 50%;
+}
+
 /* Progreso indivual */
 
 @media (max-width: 767px) {

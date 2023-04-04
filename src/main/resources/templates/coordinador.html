@@ -129,6 +129,25 @@
 
       </div>
 
+      <div class="hello-movil">
+        <h2 th:text="'Hola, ' + ${user.nickname} + '!'"></h2>
+      </div> 
+
+      <div class="utilidades-movil" style="grid-template-columns: repeat(1, 1fr);;
+      grid-template-rows: repeat(2, 1fr); margin-top: 30%">
+        
+        <a class="btn-movil" th:href="@{/listaGrupos}">
+          <i class="fa-solid fa-users"></i>
+          <div>Grupos</div>
+        </a>
+
+        <a class="btn-movil" th:href="@{/listado}">
+          <i class="fa-solid fa-address-card"></i>
+          <div>Participantes</div>
+        </a>
+
+      </div>
+
     </div>
   </div>
 </body>
