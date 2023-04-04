@@ -111,3 +111,17 @@
     height: 50px;
     text-align: center;
 }
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    .contenido-gestion{
+        flex-direction: column;
+    }
+
+    .iz-gestion, .der-gestion{
+        width: 100%;
+        margin-bottom: 2%;
+    }
+}
