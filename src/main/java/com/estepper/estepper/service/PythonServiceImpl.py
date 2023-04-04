@@ -178,7 +178,37 @@ class PythonServiceImpl(PythonService):
 
         conn.close()
 
-        return ["1"]
+        conteo_alimentos = {}
+        for alimento_consumido in alimentosconsumidos:
+            alimento_id = alimento_consumido[0]
+            if alimento_id in conteo_alimentos:
+                conteo_alimentos[alimento_id] += 1
+            else:
+                conteo_alimentos[alimento_id] = 1
+
+        conteo_alimentos_ordenado = sorted(conteo_alimentos.items(), key=lambda x: x[1], reverse=True)
+        if len(conteo_alimentos_ordenado) >= 4:
+            alimentos_top_4 = [alimento[0] for alimento in conteo_alimentos_ordenado[:4]]
+        else:
+            alimentos_top_4 = [alimento[0] for alimento in conteo_alimentos_ordenado]
+
+        ingredientes_want = set()
+        for i in ingredientes:
+            for x in alimentos_top_4:
+                if x in i[1]:
+                    ingredientes_want.update(set(i[0]))
+
+        recetas_want = []
+        for i in recetas:
+            if any(str(a) in ingredientes_want for a in i[1]):
+                recetas_want.extend(i[1])
+        recetas_want = recetas_want[:6]
+
+
+        cadena_unida = ','.join(recetas_want)
+        cadena_unicode = unicode(cadena_unida, 'utf-8')
+
+        return [cadena_unicode]
 
     def recomendacionesindividuales(self, id):
         conn = jaydebeapi.connect(
@@ -230,4 +260,33 @@ class PythonServiceImpl(PythonService):
 
         conn.close()
 
-        return ["4"]
+        conteo_alimentos = {}
+        for alimento_consumido in alimentosconsumidos:
+            alimento_id = alimento_consumido[0]
+            if alimento_id in conteo_alimentos:
+                conteo_alimentos[alimento_id] += 1
+            else:
+                conteo_alimentos[alimento_id] = 1
+
+        conteo_alimentos_ordenado = sorted(conteo_alimentos.items(), key=lambda x: x[1], reverse=True)
+        if len(conteo_alimentos_ordenado) >= 4:
+            alimentos_top_4 = [alimento[0] for alimento in conteo_alimentos_ordenado[:4]]
+        else:
+            alimentos_top_4 = [alimento[0] for alimento in conteo_alimentos_ordenado]
+
+        ingredientes_want = set()
+        for i in ingredientes:
+            for x in alimentos_top_4:
+                if x in i[1]:
+                    ingredientes_want.update(set(i[0]))
+
+        recetas_want = []
+        for i in recetas:
+            if any(str(a) in ingredientes_want for a in i[1]):
+                recetas_want.extend(i[1])
+        recetas_want = recetas_want[:6]
+
+        cadena_unida = ','.join(recetas_want)
+        cadena_unicode = unicode(cadena_unida, 'utf-8')
+
+        return [cadena_unicode]

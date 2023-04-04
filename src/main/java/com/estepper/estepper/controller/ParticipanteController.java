@@ -1136,11 +1136,13 @@ public class ParticipanteController {
                 String[] recetaArray = recetas.get(0).split(",");
                 List<Receta> listaRecetas = new ArrayList<>();
                 for (String idReceta : recetaArray) {
-                    Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-                    if (receta != null) {
-                        listaRecetas.add(receta);
+                    if (!idReceta.equals("")) {
+                        Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+                        if (receta != null) {
+                            listaRecetas.add(receta);
+                        }
                     }
-                }
+                }                
                 model.addAttribute("listaRecetas", listaRecetas);
 
             }
@@ -1161,11 +1163,13 @@ public class ParticipanteController {
             String[] recetaArray = recetas.get(0).split(",");
             List<Receta> listaRecetas = new ArrayList<>();
             for (String idReceta : recetaArray) {
-                Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-                if (receta != null) {
-                    listaRecetas.add(receta);
+                if (!idReceta.equals("")) {
+                    Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+                    if (receta != null) {
+                        listaRecetas.add(receta);
+                    }
                 }
-            }
+            }            
             model.addAttribute("globales", listaRecetas);
 
             // lista con recomendaciones individuales
@@ -1175,11 +1179,14 @@ public class ParticipanteController {
             String[] recetaArray1 = recetas1.get(0).split(",");
             List<Receta> listaRecetas1 = new ArrayList<>();
             for (String idReceta : recetaArray1) {
-                Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
-                if (receta != null) {
-                    listaRecetas1.add(receta);
+                if (!idReceta.equals("")) {
+                    Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
+                    if (receta != null) {
+                        listaRecetas1.add(receta);
+                    }
                 }
             }
+            
             model.addAttribute("individuales", listaRecetas1);
 
             return "recetasrecomendadas";
