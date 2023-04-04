@@ -551,7 +551,7 @@ public class ParticipanteController {
 
             if (getUsuario() == null)
                 return "redirect:/login";
-            fasevaloracion.eliminarcuenta(p); 
+            fasevaloracion.eliminarcuenta(p);
 
         }
         return "redirect:/";
@@ -1010,16 +1010,22 @@ public class ParticipanteController {
             List<Float> nutrienteshoy = new ArrayList<Float>(Arrays.asList(0f, 0f, 0f, 0f, 0f)); // Inicializar con
                                                                                                  // ceros
             for (int i = 0; i < listal.size(); i++) {
-                nutrienteshoy.set(0, nutrienteshoy.get(0)
-                        + (listal.get(i).getAlimento().getFibra_alimentaria() * listal.get(i).getRaciones()));
-                nutrienteshoy.set(1, nutrienteshoy.get(1)
-                        + (listal.get(i).getAlimento().getGrasas_saturadas() * listal.get(i).getRaciones()));
-                nutrienteshoy.set(2, nutrienteshoy.get(2)
-                        + (listal.get(i).getAlimento().getHidratos_de_carbono() * listal.get(i).getRaciones()));
-                nutrienteshoy.set(3, nutrienteshoy.get(3)
-                        + (listal.get(i).getAlimento().getProteinas() * listal.get(i).getRaciones()));
-                nutrienteshoy.set(4,
-                        nutrienteshoy.get(4) + (listal.get(i).getAlimento().getSal() * listal.get(i).getRaciones()));
+                nutrienteshoy.set(0, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(0)
+                        + (listal.get(i).getAlimento().getFibra_alimentaria() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+                nutrienteshoy.set(1, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(1)
+                        + (listal.get(i).getAlimento().getGrasas_saturadas() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+                nutrienteshoy.set(2, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(2)
+                        + (listal.get(i).getAlimento().getHidratos_de_carbono() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+                nutrienteshoy.set(3, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(3)
+                        + (listal.get(i).getAlimento().getProteinas() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+                nutrienteshoy.set(4, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(4)
+                        + (listal.get(i).getAlimento().getSal() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+
             }
             model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
             model.addAttribute("nutrientes", nutrienteshoy);
@@ -1141,7 +1147,7 @@ public class ParticipanteController {
                             listaRecetas.add(receta);
                         }
                     }
-                }                
+                }
                 model.addAttribute("listaRecetas", listaRecetas);
 
             }
@@ -1168,7 +1174,7 @@ public class ParticipanteController {
                         listaRecetas.add(receta);
                     }
                 }
-            }            
+            }
             model.addAttribute("globales", listaRecetas);
 
             // lista con recomendaciones individuales
@@ -1185,7 +1191,7 @@ public class ParticipanteController {
                     }
                 }
             }
-            
+
             model.addAttribute("individuales", listaRecetas1);
 
             return "recetasrecomendadas";

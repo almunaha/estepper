@@ -23,6 +23,14 @@
         integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <!--ALERTA ELIMINAR-->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <title>Alimentos - Estepper</title>
 </head>
 
@@ -130,17 +138,18 @@
 
         <div id="contenido">
             <div class="header-movil">
-                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header" onclick="desplegable()"/>
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{img/logo.png}" />
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
-              </div>
-        
-              <div class="desplegable-perfil">
+            </div>
+
+            <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                  <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
-              </div>
+            </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -266,10 +275,42 @@
                                         <td th:text="${lis.alimento.nombre}"></td>
                                         <td th:text="${lis.raciones}"></td>
                                         <td th:text="${#temporals.format(lis.fecha_consumicion, 'HH:mm')}"></td>
-                                        <td><a class="fa-solid fa-trash-can fa-2x" style="color: red" id="btn-icono"
-                                                data-bs-toggle="tooltip" title="Eliminar"
-                                                th:href="@{'/alimento/eliminar/'+ ${lis.id}}"></a></td>
+                                        <td><a class="fa-solid fa-trash-can fa-2x" th:data-id="${lis.id}"
+                                                style="color: red" id="eliminar" data-bs-toggle="tooltip"
+                                                title="Eliminar"></a></td>
                                     </tr>
+                                    <script>
+                                        $('#eliminar').click(function () {
+                                            var id = $(this).data('id');
+
+                                            Swal.fire({
+                                                position: 'center',
+                                                title: '<h4>¿Estás seguro de eliminar el alimento consumido?</h4>',
+                                                showConfirmButton: true,
+                                                showCancelButton: true,
+                                                cancelButtonText: 'Cancelar',
+                                                confirmButtonColor: "rgb(218, 77, 73)",
+                                                confirmButtonText: '<a href="/alimento/eliminar/' + id + '" id ="conf">Eliminar</a>',
+
+                                                didRender: function () {
+                                                    const confirm = document.querySelector('#conf');
+
+                                                    if (confirm) {
+                                                        confirm.style.color = 'white';
+                                                    }
+                                                },
+
+                                                showClass: {
+                                                    popup: 'animate__animated animate__fadeInDown'
+                                                },
+                                                hideClass: {
+                                                    popup: 'animate__animated animate__fadeOutUp'
+                                                }
+
+                                            })
+
+                                        });
+                                    </script>
                                 </tbody>
                             </table>
                         </div>
@@ -283,7 +324,8 @@
                             <div class="input-group mt-2">
                                 <label style="margin-left: 4%;" class="col-4 col-form-label">Número de raciones:
                                 </label>
-                                <input type="number" th:field="*{raciones}" class="form-control" step="any" min="0" max="999999999"  />
+                                <input type="number" th:field="*{raciones}" class="form-control" step="any" min="0"
+                                    max="999999999" />
                             </div>
 
                             <div class="input-group mt-2">
