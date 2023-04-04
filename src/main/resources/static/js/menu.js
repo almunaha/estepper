@@ -37,9 +37,11 @@ function desplazar() {
 
 function desplegable() {
   var menuDesplegable = document.querySelector('.desplegable-perfil');
+  var display = window.getComputedStyle(menuDesplegable).getPropertyValue('display');
+
 
     // Muestra u oculta el menú desplegable según su estado actual
-    if (menuDesplegable.style.display === 'none') {
+    if (display === 'none') {
       menuDesplegable.style.display = 'flex';
     } else {
       menuDesplegable.style.display = 'none';
