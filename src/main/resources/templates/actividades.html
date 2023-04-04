@@ -138,17 +138,18 @@
 
         <div id="contenido">
             <div class="header-movil">
-                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header" onclick="desplegable()"/>
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{img/logo.png}" />
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
-              </div>
-        
-              <div class="desplegable-perfil">
+            </div>
+
+            <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                  <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
-              </div>
+            </div>
 
             <!-- encabezado -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
@@ -191,23 +192,78 @@
                     </div>
                     <a th:href="@{/panel_invitaciones}" class="btn-invit">Invitaciones</a>
                 </div>
+
+                <!-- Buscador de actividades -->
+                <div class="d-flex" style=" width: 71.5%; margin-top: 1.5%">
+                    <form style="width: 70%; margin-top: 25px;" id="buscadorActi">
+                        <div style="display: flex; justify-content: center; align-items: center;" class="input-group">
+                            <input style="height: 5%;" id="filtrarActividades" class="form-control light-table-filter"
+                                data-table="tableActi" type="text" placeholder="Buscar actividad...">
+                        </div>
+                    </form>
+                    <div style="margin-left: 2%;">
+                        <label for="categoria">Filtrar por categoría </label>
+                        <select name="categoria" class="form-select" style="width:110%" id="categoria">
+                            <option th:value="TODAS" th:text="TODAS"></option>
+                            <div th:each="cat : ${T(com.estepper.estepper.model.enums.Categoria).values()}">
+                                <option th:value="${cat}" th:text="${cat}"></option>
+                            </div>
+                        </select>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+
+                        $('#filtrarActividades').on('keyup', function () {
+                            var buscado = $('#filtrarActividades').val().toLowerCase();
+                            var categSeleccionada = $('#categoria').val().toLowerCase();
+                            const actividades = $('.actividad');
+
+                            for (var i = 0; i < actividades.length; i++) {
+                                var nombre = actividades.eq(i).find('.nombre-act').text().toLowerCase();
+                                var categoria = actividades.eq(i).find('#categoria-acti').data('categoria').toLowerCase();
+
+                                if(buscado === '' && categSeleccionada === 'todas' || buscado === '' && categSeleccionada === categoria){
+                                    actividades.eq(i).show();
+                                }
+
+                                else if(nombre.includes(buscado) && categSeleccionada === 'todas'){
+                                    actividades.eq(i).show();
+                                }
+                               
+                                else if (nombre.includes(buscado) && categoria === categSeleccionada) {
+                                    actividades.eq(i).show();
+                                }
+                                else {
+                                    actividades.eq(i).hide();
+                                }
+                            }
+                        });
+
+                        $('#categoria').on('change', function () { //cuando se cambia la categoria vuelve a hacer el keyup
+                            $('#filtrarActividades').trigger('keyup');
+                        });
+
+
+                    });
+                </script>
+
                 <!-- Actividades y calendario -->
                 <div class="flex-act">
 
                     <!-- Layout actividades -->
-                    <!-- poner "tienes dos invitaciones y te lleve a otro sitio "-->
                     <div class="actividades-part">
 
                         <!-- Una actividad -->
                         <div class="actividad" th:each="lis:${listado}">
-
+                            <div id="categoria-acti" th:data-categoria="${lis.categoria}" hidden></div>
                             <div class="foto-act">
                                 <img th:src="${lis.foto}" />
                             </div>
                             <div class="datos-actividad">
                                 <a th:href="@{'/actividad/' + ${lis.id}}" class="nombre-act"
                                     th:text="${lis.nombre}"></a>
-                                <!-- <div th:text="${lis.descripcion}"></div> un ver mas para la descripcion y más cosas -->
                                 <div class="dato-act">
                                     <i class="fa-solid fa-calendar-days" style="color:rgb(212, 88, 88)"></i>
                                     <div th:text="${#temporals.format(lis.fechaRealizacion, 'dd MMM yyyy')}"></div>
@@ -273,6 +329,7 @@
 
                             })
                         }
+
                     </script>
 
                     <!-- Calendario o asistencia confirmada -->
