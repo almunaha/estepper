@@ -534,22 +534,22 @@ public class ParticipanteController {
             alimentacion.deleteByParticipante(p);
             f.deleteByParticipante(p);
             mensajeS.deleteByParticipante(p);
-            invi.eliminarPorParticipante(p); //invitacionesPart
-            //eliminar asistencia y aumentar plazas
+            invi.eliminarPorParticipante(p); // invitacionesPart
+            // eliminar asistencia y aumentar plazas
             List<Actividad> actividades = act.asistenciaParticipante(id);
             for (Actividad actividad : actividades) {
                 actividad.setNumParticipantes(actividad.getNumParticipantes() - 1);
                 actividad.setPlazas(actividad.getPlazas() + 1);
                 actividad.getParticipantes().remove(p);
                 act.guardar(actividad);
-            }      
+            }
 
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
             grupoS.update(p.getGrupo());
-            
+
             if (getUsuario() == null)
                 return "redirect:/login";
-            fasevaloracion.eliminarcuenta(p); //se elimina al participante     
+            fasevaloracion.eliminarcuenta(p); // se elimina al participante
             usuario.eliminar(id);
 
         }
@@ -633,10 +633,11 @@ public class ParticipanteController {
                 return "progreso";
             }
 
-            else return "acceso";
+            else
+                return "acceso";
         }
 
-        else if(user instanceof Coordinador){
+        else if (user instanceof Coordinador) {
             return "progresoCoor";
         }
 
@@ -833,14 +834,17 @@ public class ParticipanteController {
         }
 
         else if (user instanceof Participante) {
-            // actividades que no se hayan acabado
-            List<Actividad> listado = act.actividadesPendientes(LocalDateTime.now());
-            model.addAttribute("listado", listado);
+            if (user.getEstadoCuenta().equals(Estado.ALTA)) {
+                // actividades que no se hayan acabado
+                List<Actividad> listado = act.actividadesPendientes(LocalDateTime.now());
+                model.addAttribute("listado", listado);
 
-            // asistencia confirmada
-            List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
-            model.addAttribute("asistencia", asistencia);
-            return "actividades";
+                // asistencia confirmada
+                List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
+                model.addAttribute("asistencia", asistencia);
+                return "actividades";
+            } else
+                return "acceso";
         } else
             return "redirect:/";
     }
