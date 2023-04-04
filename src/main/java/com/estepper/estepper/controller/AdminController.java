@@ -85,7 +85,7 @@ public class AdminController {
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model) {
         if (usuarioLogueado() instanceof Administrador) {
             // eliminar usuario
-            if (usuario.findById(id).get() instanceof Participante) {
+            if (usuario.findById(id).get() instanceof Participante && usuario.findById(id).get().getEstadoCuenta().equals(Estado.ALTA)) {
                 Participante p = participante.findById(id).get();
                 materialS.deleteByParticipante(p);
                 ses.deleteByParticipante(p);
@@ -110,7 +110,10 @@ public class AdminController {
                     grupoS.update(p.getGrupo());
                 }
             }
-
+            else if(usuario.findById(id).get() instanceof Participante){
+                Participante p = participante.findById(id).get();
+                fasevaloracion.eliminarcuenta(p);
+            }
             else if (usuario.findById(id).get() instanceof Coordinador) {
                 List<Grupo> listgrupos = grupoS.getGrupos();
                 for(int i = 0; i < listgrupos.size(); i++){
@@ -121,9 +124,11 @@ public class AdminController {
                     }
                 }
                 invitacion.eliminarPorCoordinador((Coordinador)usuario.findById(id).get());
+                usuario.eliminar(id); 
             }
+            else usuario.eliminar(id); 
             
-            usuario.eliminar(id); 
+            
         }
 
         return "redirect:/";
@@ -157,7 +162,7 @@ public class AdminController {
             }
 
             coordinador.setCodigo(elcodigo);
-            coordinador.setEstadoCuenta(Estado.BAJA);
+            coordinador.setEstadoCuenta(Estado.ALTA);
 
             usuario.guardar(coordinador);
 

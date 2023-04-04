@@ -551,8 +551,7 @@ public class ParticipanteController {
 
             if (getUsuario() == null)
                 return "redirect:/login";
-            fasevaloracion.eliminarcuenta(p); // se elimina al participante
-            usuario.eliminar(id);
+            fasevaloracion.eliminarcuenta(p); 
 
         }
         return "redirect:/";

@@ -20,6 +20,7 @@
 }
 
 .btn-sesiones ul li .b-ses {
+    text-align: center;
     display: inline-block;
     font-size: 40px;
     color: white;
@@ -114,12 +115,6 @@
 #guardar{
     background-color: #b59770;
     color: white;
-}
-/* fichas */
-
-/* FICHA 0 */
-.layout-ficha0 {
-   
 }
 
 .layout-ficha0 h3{
