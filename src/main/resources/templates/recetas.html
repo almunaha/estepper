@@ -204,6 +204,12 @@
                                         onclick="abrirIframe('mi-modal2')">
                                         Nueva receta</a></div>
                             </div>
+                            <script>
+                                function abrirIframe(modalId) {
+                                    const modal = new bootstrap.Modal(document.getElementById(modalId));
+                                    modal.show();
+                                }
+                            </script>
                             <!--BUSCADOR-->
                             <form class="d-flex" id="search-form" style="margin-top: 2%;">
                                 <input class="form-control me-2" type="search" placeholder="Buscar..."
@@ -341,9 +347,10 @@
                             </div>
                             <div class="input-group mt-2">
                                 <label class="col-form-label col-sm-4">Ingredientes:</label>
-                                <div class="col-sm-8 mb-2">
-                                    <select th:field="*{ingredientes}" class="form-control" multiple
-                                        id="lista-alimentos" required>
+                                <div class="col-sm-6 mb-2"
+                                    style="display: flex; flex-direction: column; align-items: start;">
+                                    <select style="margin-left: 8%;" th:field="*{ingredientes}" class="form-control"
+                                        multiple id="lista-alimentos1" required>
                                         <option th:each="ing : ${listaIng}" th:value="${ing.id}"
                                             th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                         </option>
@@ -397,7 +404,7 @@
                         </form>
                         <!-- Modal -->
                         <div class="modal fade" id="mi-modal2" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Crear receta</h5>
@@ -413,9 +420,10 @@
                                             </div>
                                             <div class="input-group mt-2">
                                                 <label class="col-form-label col-sm-4">Ingredientes:</label>
-                                                <div class="col-sm-8 mb-2">
-                                                    <select th:field="*{ingredientes}" class="form-control" multiple
-                                                        id="lista-alimentos1" required>
+                                                <div class="col-sm-6 mb-2"
+                                                    style="display: flex; flex-direction: column; align-items: start;">
+                                                    <select style="margin-left: 8%;" th:field="*{ingredientes}"
+                                                        class="form-control" multiple id="lista-alimentos1" required>
                                                         <option th:each="ing : ${listaIng}" th:value="${ing.id}"
                                                             th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                                         </option>
@@ -426,7 +434,7 @@
                                                             var opciones = $("#lista-alimentos1 option");
 
                                                             // Crear un input de búsqueda
-                                                            var inputBusqueda = $('<input type="text" class="form-control mt-2" placeholder="Buscar...">');
+                                                            var inputBusqueda = $('<input type="text" class="form-control" placeholder="Buscar...">');
 
                                                             // Agregar el input de búsqueda antes del select
                                                             $("#lista-alimentos1").before(inputBusqueda);
@@ -456,6 +464,7 @@
                                                         });
                                                     </script>
                                                 </div>
+
                                             </div>
                                             <div class="input-group mt-2">
                                                 <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
