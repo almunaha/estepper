@@ -715,8 +715,7 @@ input[type="date"] {
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     border-radius: 12px;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin: 5% 10%;
     padding: 20px;
 }
 
@@ -727,8 +726,7 @@ input[type="date"] {
     margin-bottom: 5px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     border-radius: 12px;
-    width: 70%;
-
+    width: 90%;
     display: flex;
 }
 
