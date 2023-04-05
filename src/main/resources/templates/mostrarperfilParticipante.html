@@ -36,6 +36,10 @@
             margin: 2%;
         }
 
+        .dato h5{
+            padding: 3%;
+        }
+
     </style>
 
     <title>Perfil - Estepper</title>
@@ -207,7 +211,7 @@
                                             </div>
                                             <div class="dato">
                                                 <h5><i class="fa-solid fa-calendar-day" title="Edad"></i></h5>
-                                                <h5 th:text="'Edad:'+ ' ' + ${edad}"></h5>
+                                                <h5 th:text="${edad}"></h5>
                                             </div>
                                             <div class="dato">
                                                 <h5><i class="fa-solid fa-venus-mars" title="Género"></i></h5>
