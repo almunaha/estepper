@@ -36,6 +36,11 @@ import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.service.UsuarioService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.ProgresoService;
@@ -68,7 +73,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest request) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
@@ -81,28 +86,42 @@ public class HomeController {
             model.addAttribute("usuarios", lista);
             return "admin";
 
-        } else { // PARTICIPANTE
+        } else if(user instanceof Participante) { //PARTICIPANTE
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("consentimiento")
+                            && cookie.getValue().equals(getUsuario().getId().toString())) {
+                        // El usuario ha aceptado los términos y condiciones
+                        // si está dado de alta
+                        if (user.getEstadoCuenta().equals(Estado.ALTA)) {
+                            Optional<Participante> part = participante.findById(user.getId());
+                            if (part.isPresent()) {
+                                model.addAttribute("participante", part.get());
+                                // enviar alerta de peso
+                                LocalDateTime datosSemana = LocalDateTime.now().minusDays(7); // Buscar fechas de una
+                                                                                              // semana atrás
+                                List<Progreso> datos = progreso.PesoPorFecha(datosSemana, TipoProgreso.PESO,
+                                        part.get());
 
-            // si está dado de alta
-            if (user.getEstadoCuenta().equals(Estado.ALTA)) {
-                Optional<Participante> part = participante.findById(user.getId());
-                if (part.isPresent()) {
-                    model.addAttribute("participante", part.get());
-                    // enviar alerta de peso
-                    LocalDateTime datosSemana = LocalDateTime.now().minusDays(7); // Buscar fechas de una semana atrás
-                    List<Progreso> datos = progreso.PesoPorFecha(datosSemana, TipoProgreso.PESO, part.get());
+                                if (datos.isEmpty()) {
+                                    model.addAttribute("recordatorio", true);
+                                }
+                            }
 
-                    if (datos.isEmpty()) {
-                        model.addAttribute("recordatorio", true);
+                            return "index";
+                        }
+                        // si está de baja
+                        else
+                            return "baja";
                     }
                 }
 
-                return "index";
             }
-            // si está de baja
-            else
-                return "baja";
-        }
+            return "redirect:/terminos-y-condiciones";
+
+        } 
+        return "login";
     }
 
     @GetMapping("/findrisc")
@@ -215,8 +234,24 @@ public class HomeController {
         return "registro";
     }
 
+    @GetMapping("/terminos-y-condiciones")
+    public String terminosycondiciones(Model model) {
+        if (getUsuario() != null)
+            model.addAttribute("user", getUsuario());
+        return "terminos";
+    }
+
+    @PostMapping("/aceptar-cookie")
+    public String aceptarCookie(HttpServletResponse response, @RequestParam("userId") Integer userId) {
+        Cookie cookie = new Cookie("consentimiento", userId.toString());
+        cookie.setMaxAge(Integer.MAX_VALUE);
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
     @PostMapping("/process_register") // Procesar el registro
-    public String processRegister(Participante user, Model model) { // Model para poder enviar información a la vista
+    public String processRegister(Participante user, Model model, HttpServletRequest request,
+            HttpServletResponse response) { // Model para poder enviar información a la vista
 
         hash = new BCryptPasswordEncoder();
         String encodedPassword = hash.encode(user.getContrasenia());
@@ -234,6 +269,13 @@ public class HomeController {
         user.setFotoParticipante("/img/p1.png");
 
         usuario.guardar(user);
+
+        // COOKIES
+        if (request.getParameter("consentimiento") != null) {
+            Cookie cookie = new Cookie("consentimiento", user.getId().toString());
+            cookie.setMaxAge(Integer.MAX_VALUE);
+            response.addCookie(cookie);
+        }
 
         fasevaloracion.crearFormularios(participante.findById(user.getId()).get());
 
