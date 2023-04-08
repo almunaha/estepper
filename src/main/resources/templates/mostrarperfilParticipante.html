@@ -195,7 +195,7 @@
                         </div>
                         <div class="col-md-8">
                             <div style="margin-top: 3%;" class="contenidoPerfil mt-10">
-                                <h3 th:text="${user.nickname}">Nombre</h3>
+                                <h3 style="margin-top: 1%;" th:text="${user.nickname}">Nombre</h3>
                                         <div class="row datos">
                                             <div class="dato">
                                                 <h5><i class="fa-solid fa-barcode" title="Código"></i></h5>
@@ -218,17 +218,19 @@
                                                 <h5 th:text="${sexo}"></h5>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-20">
+                                                <a class="btn btn-primary btn-block" style="padding-bottom: 10%;" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
+                                            </div>
+                                        </div>
     
                                 
                             </div>
                         </div>
-
+                        
 
                     </div>
-                    <div class="row justify-content-end" style="width: 50%; margin-left: 20%; margin-top: 3%;">
-                        <a class="btn" style="width: 115%" id="btn-part" th:href="@{'/perfil/' + ${user.id}}">Editar
-                            perfil</a>
-                    </div>
+                    
                 </div>
 
 

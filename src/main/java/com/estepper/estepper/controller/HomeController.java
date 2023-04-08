@@ -117,7 +117,7 @@ public class HomeController {
 
     @GetMapping("/perfil/{id}")
     public String perfil(@PathVariable("id") Integer id, Model model) {
-        if(id != getUsuario().getId()) id= getUsuario().getId(); //mejor no pasar ids para evitar errores, cambiarlo más adelante
+        if(id != getUsuario().getId()) id= getUsuario().getId();
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
