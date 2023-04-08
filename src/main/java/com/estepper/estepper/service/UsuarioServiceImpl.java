@@ -105,7 +105,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
             texto = "Ha intentado recuperar sus datos de Estepper sin estar registrado. Acceda a estepper.com para registrarse.";
         }
         try {
-            mandarcorreo(correo, texto);
+            String messageSubject = "Recuperación de datos - Estepper";
+            mandarcorreo(correo, texto, messageSubject);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,8 +129,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
         return credential;
     }
 
-    private void mandarcorreo(String correo, String bodyText) throws Exception {
-        String messageSubject = "Recuperación de datos - Estepper";
+    private void mandarcorreo(String correo, String bodyText, String messageSubject) throws Exception {
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
         Gmail service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory))
@@ -156,6 +156,18 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void mandarAnalitica(Usuario u) {
+        String correo = u.getEmail();
+        String messageSubject = "Analítica pendiente - Estepper";
+        String texto = "Desde Estepper le recordamos que debe acudir a su centro médico para realizarse una analítica.";
+        try {
+            mandarcorreo(correo, texto, messageSubject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

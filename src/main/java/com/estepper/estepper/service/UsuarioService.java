@@ -24,4 +24,6 @@ public interface UsuarioService {
 
     public void update(String nickname, String email, String contrasenia, Estado estado, Integer id);
 
+    public void mandarAnalitica(Usuario u);
+
 }

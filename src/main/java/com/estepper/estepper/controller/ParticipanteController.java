@@ -1327,4 +1327,15 @@ public class ParticipanteController {
             return "acceso";
     }
 
+    @GetMapping("/analitica/{id}")
+    public String analitica(@PathVariable Integer id, Model model) {
+        Participante p = participante.findById(id).get();
+        if (getUsuario() instanceof Coordinador
+                && (p.getIdCoordinador() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)) {
+            usuario.mandarAnalitica(p);
+        }
+        return "redirect:/expediente/{id}";
+
+    }
+
 }
