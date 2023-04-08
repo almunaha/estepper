@@ -40,15 +40,15 @@ import com.google.api.services.gmail.model.Message;
 import com.estepper.estepper.model.enums.Estado;
 
 @Service
-public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
+public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
 
     @Autowired
-    private UsuarioRepository repo; //inyección de dependencias del usuario dao api
+    private UsuarioRepository repo; // inyección de dependencias del usuario dao api
 
     final String correoEstepper = "proyectoestepper@gmail.com";
 
     public UserDetails loadUserByUsername(String codigo) throws UsernameNotFoundException {
-        
+
         Usuario user = repo.findByCodigo(Integer.parseInt(codigo));
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -57,17 +57,17 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
-    public void guardar(Usuario u){
+    public void guardar(Usuario u) {
         repo.save(u);
     }
 
     @Override
-    public List<Usuario> listadoTotal(){
-        return(List<Usuario>) repo.findAll();
+    public List<Usuario> listadoTotal() {
+        return (List<Usuario>) repo.findAll();
     }
 
     @Override
-    public Usuario logueado(Integer codigo){
+    public Usuario logueado(Integer codigo) {
         return repo.findByCodigo(codigo);
     }
 
@@ -77,7 +77,7 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
-    public Usuario findByCodigo(Integer codigo){
+    public Usuario findByCodigo(Integer codigo) {
         return repo.findByCodigo(codigo);
     }
 
@@ -87,66 +87,75 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService{
     }
 
     @Override
-    public void eliminar(Integer id){
+    public void eliminar(Integer id) {
         repo.deleteById(id);
     }
 
     @Override
-    public void recuperarCodigo(String correo) {
+    public void recuperarCodigo(String correo, String contrasenia, String encodedPasword) {
         Usuario usuario = repo.findByEmail(correo);
         String texto = "";
-        if(usuario != null){
-            texto = "Le remitimos sus datos: Código --> " + usuario.getCodigo() + " Contraseña -->" + usuario.getContrasenia();
-            texto += "Si desea cambiar su contraseña acceda a Mi Perfil y edite sus datos.";
+        if (usuario != null) {
+
+            usuario.setContrasenia(encodedPasword);
+            repo.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), usuario.getEstadoCuenta(), usuario.getId());
+            texto = "Le remitimos sus datos: Código --> " + usuario.getCodigo() + " Su nueva contraseña --> "
+                    + contrasenia;
         } else {
             texto = "Ha intentado recuperar sus datos de Estepper sin estar registrado. Acceda a estepper.com para registrarse.";
         }
-        try{
-        mandarcorreo(correo, texto);}catch(Exception e){e.printStackTrace();}
-       
+        try {
+            mandarcorreo(correo, texto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException{
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(UsuarioServiceImpl.class.getResourceAsStream("/client_secret_997788153381-j7h2r75bek6g35no8jmsmfq729cgc1g1.apps.googleusercontent.com.json")));
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory, clientSecrets, Set.of(GmailScopes.GMAIL_SEND))
-        .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("tokens")))
-        .setAccessType("offline")
-        .build();
+    private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory)
+            throws IOException {
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
+                new InputStreamReader(UsuarioServiceImpl.class.getResourceAsStream(
+                        "/client_secret_997788153381-j7h2r75bek6g35no8jmsmfq729cgc1g1.apps.googleusercontent.com.json")));
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory,
+                clientSecrets, Set.of(GmailScopes.GMAIL_SEND))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("tokens")))
+                .setAccessType("offline")
+                .build();
 
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
         return credential;
     }
+
     private void mandarcorreo(String correo, String bodyText) throws Exception {
         String messageSubject = "Recuperación de datos - Estepper";
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
         Gmail service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory))
-            .setApplicationName("Estepper")
-            .build();
-            Properties props = new Properties();
-            Session session = Session.getDefaultInstance(props);
-            // Define message
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(correoEstepper));
-            message.setSubject(messageSubject);
-            message.addRecipient(javax.mail.Message.RecipientType.TO,new InternetAddress(correo));
-            message.setText(bodyText);
-    
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            message.writeTo(buffer);
-            byte[] rawMessageBytes = buffer.toByteArray();
-            String encodedEmail = Base64.encodeBase64URLSafeString(rawMessageBytes);
-            Message email = new Message();
-                email.setRaw(encodedEmail);
+                .setApplicationName("Estepper")
+                .build();
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props);
+        // Define message
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(correoEstepper));
+        message.setSubject(messageSubject);
+        message.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(correo));
+        message.setText(bodyText);
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        message.writeTo(buffer);
+        byte[] rawMessageBytes = buffer.toByteArray();
+        String encodedEmail = Base64.encodeBase64URLSafeString(rawMessageBytes);
+        Message email = new Message();
+        email.setRaw(encodedEmail);
         try {
             email = service.users().messages().send("me", email).execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-                
+
     }
 
-    
 }
