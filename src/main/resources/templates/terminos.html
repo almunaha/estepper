@@ -74,7 +74,7 @@
             momento.</p>
 
         <!--FORMULARIO ACEPTAR COOKIE-->
-        <form th:if="${user != null}" id="cookie-form" method="post" action="/aceptar-cookie">
+        <form th:if="${user != null}" id="cookie-form" method="post" th:action="@{/aceptar-cookie}">
             <input type="hidden" name="userId" th:value="${user.id}" />
             <div style="display: flex; flex-direction: row;">
               <input style="margin-right: 3%;" type="checkbox" id="consentimiento" name="consentimiento" required />

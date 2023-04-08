@@ -40,6 +40,7 @@ public class SecurityConfig{
                .requestMatchers("/findrisc").permitAll()
                .requestMatchers("/recomendaciones").permitAll()
                .requestMatchers("/terminos-y-condiciones").permitAll()
+               .requestMatchers("/aceptar-cookie").permitAll()
                .requestMatchers("/img/agua.png").permitAll()
                .requestMatchers("/img/alimentacion.png").permitAll()
                .requestMatchers("/img/deporte.png").permitAll()
