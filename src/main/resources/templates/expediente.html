@@ -257,8 +257,10 @@
                                 id="btn-part" title="Materiales"
                                 th:href="@{'/materialesGrupo/' + ${participante.idGrupo}}"> Materiales grupales </a>
                         </div>
-                        <div><a class="btn" id="btn-part" title="Fase de valoracion"
+                        <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Fase de valoracion"
                                 th:href="@{'/valoracion/' + ${participante.id}}"> Fase de valoración </a></div>
+                        <div><a class="btn" id="btn-part" title="Analítica"
+                            th:href="@{'/analitica/' + ${participante.id}}"> Mandar analítica </a></div>
                     </div>
                 </div>
             </div>

@@ -39,6 +39,8 @@ public class SecurityConfig{
                .requestMatchers("/recuperarcodigo").permitAll()
                .requestMatchers("/findrisc").permitAll()
                .requestMatchers("/recomendaciones").permitAll()
+               .requestMatchers("/terminos-y-condiciones").permitAll()
+               .requestMatchers("/aceptar-cookie").permitAll()
                .requestMatchers("/img/agua.png").permitAll()
                .requestMatchers("/img/alimentacion.png").permitAll()
                .requestMatchers("/img/deporte.png").permitAll()
@@ -50,8 +52,6 @@ public class SecurityConfig{
                .requestMatchers("/material/descargar/**").permitAll() // permitir acceso a todos
 
                .requestMatchers("/img/elecciones/**").permitAll()
-
-
                .anyRequest()
                .authenticated()
                .and()

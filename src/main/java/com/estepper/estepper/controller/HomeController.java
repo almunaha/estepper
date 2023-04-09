@@ -42,6 +42,11 @@ import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.service.UsuarioService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.ProgresoService;
@@ -90,7 +95,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest request) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
@@ -102,20 +107,31 @@ public class HomeController {
             lista.remove(user);
             model.addAttribute("usuarios", lista);
             return "admin";
-            
-        } else { // PARTICIPANTE
 
-            // si está dado de alta
-            if (user.getEstadoCuenta().equals(Estado.ALTA)) {
-                Optional<Participante> part = participante.findById(user.getId());
-                if (part.isPresent()){
-                        model.addAttribute("participante", part.get());
-                        //enviar alerta de peso
-                        LocalDateTime datosSemana = LocalDateTime.now().minusDays(7); //Buscar fechas de una semana atrás
-                        List<Progreso> datos = progreso.PesoPorFecha(datosSemana, TipoProgreso.PESO, part.get());
+        } else if(user instanceof Participante) { //PARTICIPANTE
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("consentimiento")
+                            && cookie.getValue().equals(getUsuario().getId().toString())) {
+                        // El usuario ha aceptado los términos y condiciones
+                        // si está dado de alta
+                        if (user.getEstadoCuenta().equals(Estado.ALTA)) {
+                            Optional<Participante> part = participante.findById(user.getId());
+                            if (part.isPresent()) {
+                                model.addAttribute("participante", part.get());
+                                // enviar alerta de peso
+                                LocalDateTime datosSemana = LocalDateTime.now().minusDays(7); // Buscar fechas de una
+                                                                                              // semana atrás
+                                List<Progreso> datos = progreso.PesoPorFecha(datosSemana, TipoProgreso.PESO,
+                                        part.get());
 
-                        if (datos.isEmpty()) {
-                            model.addAttribute("recordatorio", true);
+                                if (datos.isEmpty()) {
+                                    model.addAttribute("recordatorio", true);
+                                }
+                            }
+
+                            return "index";
                         }
                 }
                 
@@ -180,10 +196,10 @@ public class HomeController {
                 
                 return "index";
             }
-            // si está de baja
-            else
-                return "baja";
-        }
+            return "redirect:/terminos-y-condiciones";
+
+        } 
+        return "login";
     }
 
     @GetMapping("/findrisc")
@@ -198,7 +214,8 @@ public class HomeController {
 
     @GetMapping("/perfil/{id}")
     public String perfil(@PathVariable("id") Integer id, Model model) {
-        if(id != getUsuario().getId()) id= getUsuario().getId(); //mejor no pasar ids para evitar errores, cambiarlo más adelante
+        if (id != getUsuario().getId())
+            id = getUsuario().getId();
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
@@ -212,8 +229,9 @@ public class HomeController {
 
     @GetMapping("/mostrarperfil/{id}")
     public String mostrarperfil(@PathVariable("id") Integer id, Model model) {
-        
-        if(id != getUsuario().getId()) id= getUsuario().getId(); //mejor no pasar ids para evitar errores
+
+        if (id != getUsuario().getId())
+            id = getUsuario().getId(); // mejor no pasar ids para evitar errores
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
@@ -225,20 +243,26 @@ public class HomeController {
             String grupo = "No asignado";
             String edad = "No asignado";
             String sexo = "No asignado";
-          
-            if(p.getAsistencia() == null){p.setAsistencia(0);}
-            if(p.getPerdidaDePeso() == null){p.setPerdidaDePeso(0.0);}
-            if (p.getSexo() != null) {sexo = String.valueOf(p.getSexo());}
-            if (p.getEdad() != null) {edad = String.valueOf(p.getEdad());}
-            
+
+            if (p.getAsistencia() == null) {
+                p.setAsistencia(0);
+            }
+            if (p.getPerdidaDePeso() == null) {
+                p.setPerdidaDePeso(0.0);
+            }
+            if (p.getSexo() != null) {
+                sexo = String.valueOf(p.getSexo());
+            }
+            if (p.getEdad() != null) {
+                edad = String.valueOf(p.getEdad());
+            }
+
             if (p.getGrupo() != null)
                 grupo = p.getGrupo().getNombre();
 
             model.addAttribute("grupo", grupo);
             model.addAttribute("edad", edad);
             model.addAttribute("sexo", sexo);
-    
-         
 
             return "mostrarperfilParticipante";
         } else
@@ -250,7 +274,7 @@ public class HomeController {
     public String processPerfil(@PathVariable("id") Integer id, @ModelAttribute Usuario user,
             @ModelAttribute Participante p) {
 
-        if(getUsuario().getId() == id){
+        if (getUsuario().getId() == id) {
             Usuario orig = usuario.findById(user.getId()).get(); // usuario antes de editarlo
 
             if (user.getContrasenia() == "")
@@ -258,22 +282,27 @@ public class HomeController {
             else
                 user.setContrasenia(hash.encode(user.getContrasenia()));
 
-            usuario.update(user.getNickname(), user.getEmail(), user.getContrasenia(), orig.getEstadoCuenta(), orig.getId());
+            usuario.update(user.getNickname(), user.getEmail(), user.getContrasenia(), orig.getEstadoCuenta(),
+                    orig.getId());
 
             if (orig instanceof Participante) { // si es un participante
                 Participante part = participante.findById(id).get();
 
-                participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), part.getGrupo(), part.getAsistencia(),
-                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(), part.getPerdidacmcintura(), id);
+                participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), part.getGrupo(),
+                        part.getAsistencia(),
+                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(),
+                        part.getPerdidacmcintura(), id);
             }
 
             return "redirect:/mostrarperfil/{id}";
-        } else return "redirect:/";
+        } else
+            return "redirect:/";
     }
 
     @GetMapping("/baja")
     public String baja() {
-        if(!getUsuario().getEstadoCuenta().equals(Estado.BAJA)) return "redirect:/";
+        if (!getUsuario().getEstadoCuenta().equals(Estado.BAJA))
+            return "redirect:/";
         return "baja";
     }
 
@@ -283,8 +312,24 @@ public class HomeController {
         return "registro";
     }
 
+    @GetMapping("/terminos-y-condiciones")
+    public String terminosycondiciones(Model model) {
+        if (getUsuario() != null)
+            model.addAttribute("user", getUsuario());
+        return "terminos";
+    }
+
+    @PostMapping("/aceptar-cookie")
+    public String aceptarCookie(HttpServletResponse response, @RequestParam("userId") Integer userId) {
+        Cookie cookie = new Cookie("consentimiento", userId.toString());
+        cookie.setMaxAge(Integer.MAX_VALUE);
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
     @PostMapping("/process_register") // Procesar el registro
-    public String processRegister(Participante user, Model model) { // Model para poder enviar información a la vista
+    public String processRegister(Participante user, Model model, HttpServletRequest request,
+            HttpServletResponse response) { // Model para poder enviar información a la vista
 
         hash = new BCryptPasswordEncoder();
         String encodedPassword = hash.encode(user.getContrasenia());
@@ -303,6 +348,13 @@ public class HomeController {
 
         usuario.guardar(user);
 
+        // COOKIES
+        if (request.getParameter("consentimiento") != null) {
+            Cookie cookie = new Cookie("consentimiento", user.getId().toString());
+            cookie.setMaxAge(Integer.MAX_VALUE);
+            response.addCookie(cookie);
+        }
+
         fasevaloracion.crearFormularios(participante.findById(user.getId()).get());
 
         model.addAttribute("nickname", user.getNickname());
@@ -317,9 +369,25 @@ public class HomeController {
         return "recuperarCodigo";
     }
 
+    public String generarNuevaContrasenia() {
+        int longitudContrasenia = 8;
+        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder(longitudContrasenia);
+        for (int i = 0; i < longitudContrasenia; i++) {
+            int index = rand.nextInt(caracteres.length());
+            sb.append(caracteres.charAt(index));
+        }
+        return sb.toString();
+    }
+
     @PostMapping("/process_recuperarCodigo")
     public String procesoRecuperarCodigo(@RequestParam(value = "correo") String correo) {
-        usuario.recuperarCodigo(correo);
+
+        String contrasenia = generarNuevaContrasenia();
+        hash = new BCryptPasswordEncoder();
+        String encodedPassword = hash.encode(contrasenia);
+        usuario.recuperarCodigo(correo, contrasenia, encodedPassword);
         return "redirect:/login";
     }
 
@@ -328,43 +396,47 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
-        if (elusuario instanceof Coordinador && (participante.findById(id).get().getIdCoordinador() == elusuario.getId() || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
+        if (elusuario instanceof Coordinador && (participante.findById(id).get().getIdCoordinador() == elusuario.getId()
+                || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
             return "materialesCoor";
-        } else if(elusuario instanceof Participante && getUsuario().getId() == id && getUsuario().getEstadoCuenta().equals(Estado.ALTA)){
+        } else if (elusuario instanceof Participante && getUsuario().getId() == id
+                && getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("listado", materialS.materiales(id));
             return "materialesPart";
-        }
-        else if(elusuario instanceof Participante && getUsuario().getId() == id){
+        } else if (elusuario instanceof Participante && getUsuario().getId() == id) {
             return "acceso";
-        } else return "redirect:/";
+        } else
+            return "redirect:/";
     }
 
-    //subir material a un solo participante
+    // subir material a un solo participante
     @PostMapping("/process_material/{id}")
-    public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
+    public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material,
+            @RequestParam("file") MultipartFile file) {
         Participante p = participante.findById(id).get();
-            if(getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id || p.getEstadoCuenta().equals(Estado.BAJA)){
-                material.setParticipante(p);
-                material.setGrupo(p.getGrupo());
-                if(!file.isEmpty()){
-                    try {
-                        Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
-                        String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
-                        byte[] bytesArc = file.getBytes(); 
-                        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
-                        Files.write(rutaCompleta, bytesArc);
-                        material.setLink(rutaCompleta.toString());
-                        materialS.updateMaterial(material);
-                    } catch (Exception e) {
-                        String mensaje = "Ha ocurrido un error: " + e.getMessage();
-                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+        if (getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id
+                || p.getEstadoCuenta().equals(Estado.BAJA)) {
+            material.setParticipante(p);
+            material.setGrupo(p.getGrupo());
+            if (!file.isEmpty()) {
+                try {
+                    Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
+                    String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                    byte[] bytesArc = file.getBytes();
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesArc);
+                    material.setLink(rutaCompleta.toString());
+                    materialS.updateMaterial(material);
+                } catch (Exception e) {
+                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
+        }
         return "redirect:/materiales/{id}";
     }
 
@@ -385,5 +457,4 @@ public class HomeController {
         return null;
     }
 
-    
 }
