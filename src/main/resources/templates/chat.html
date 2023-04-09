@@ -15,6 +15,7 @@
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="/js/menu.js"></script>
+  <script src="/js/grupos.js"></script>
 
   <title>Chat - Estepper</title>
 </head>
@@ -77,8 +78,8 @@
         </li>
         <li>
           <a th:href="@{/chat}">
-            <i class="fa-solid fa-comments"></i>
-            <span class="nombre-enlaces">Chat</span>
+            <i class="fa-solid fa-people-group"></i>
+            <span class="nombre-enlaces">Mi grupo</span>
           </a>
         </li>
 
@@ -160,42 +161,192 @@
 
       <div style="margin-left: 10%; margin-top: 2%; padding-top: 75px;">
         <div
-          style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5%;margin-right: 10%;">
-          <h4 style="margin-top: 8%; color:azure">Chat</h4>
+          style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);margin-right: 10%;margin-bottom: 2%;">
+          <h4 style="margin-top: 4%; color:azure" th:text=" 'GRUPO: ' + ${user.grupo.nombre}"></h4>
         </div>
 
 
-        <div class="wrapper">
-          <section class="chat-area">
-            <header>
 
-              <img src="/img/avatar1.png" alt="">
-              <h4 th:text="${user.grupo.nombre}"></h4>
-              <div class="details">
+
+
+        <div class="container" style="margin-bottom: 5%;">
+          <div class="row">
+            <div class="miGrupo">
+              <div class="zonasMiGrupoIzq">
+
+                <div class="botones-chatEscogido">
+                  <div class="row">
+                    <div class="col-6">
+                      <button class="btn-chatEsc w-100 p-1 mb-3" id="chatGrupal">Chat grupal</button>
+                    </div>
+                    <div class="col-6">
+                      <button class="btn-chatEsc w-100 p-1 mb-3" id="chatCoordinador">Chat coordinador</button>
+                    </div>
+                  </div> 
+                  
+                  
+                </div>
+                <div class="bordes-chat">
+
+                  <div class="chatGrupal">
+                    <section class="chat-area">
+                      <header>
+                        <img th:src="${user.grupo.fotoGrupo}" alt="Foto de grupo">
+                        <h4 th:text="${user.grupo.nombre}"></h4>
+                        <div class="details">
+                        </div>
+                      </header>
+                      <div class="chat-box">
+                        <div th:each="m : ${mensajes}" class="contenedor-mensaje mb-2">
+                          <div th:if="${m.usuario.id != user.id}" class="mensaje d-flex justify-content-start align-items-end">
+                            <img th:src="${m.usuario.fotoParticipante}" class="avatar" style="width: 40px;" alt="m.usuario.nickname" />
+                            <div class="contenido-mensaje grey ms-2 p-2">
+                              <div th:text="${m.usuario.nickname}" class="nickname"></div>
+                              <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                              <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                class="fecha text-end"></div>
+                            </div>
+                          </div>
+                          <div th:unless="${m.usuario.id != user.id}"
+                            class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
+                            <img th:src="${user.fotoParticipante}" class="avatar" style="width: 40px;"alt="m.usuario.nickname" />
+                            <div class="contenido-mensaje green me-2 p-2">
+                              <div class="nickname">Yo</div>
+                              <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                              <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                class="fecha text-end"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <form th:action="@{'/mensajes/guardar/' + ${user.grupo.id}}" th:object="${message}" method="post"
+                        class="typing-area">
+
+                        <input type="text" th:field="*{mensaje}" class="input-field"
+                          placeholder="Escribe un mensaje aquí ..." autocomplete="off">
+
+                        <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                    
+                      </form>
+                    </section>
+                  </div>
+
+                  <div class="chatCoordinador">
+                    <div class="bordes-chat">
+                      <section class="chat-area">
+                        <header>
+                          <img src="img/p1.png" alt="Foto de grupo">
+                          <h4>Tu coordinador</h4>
+                  
+                        </header>
+                        <div class="chat-box">
+                          <div th:each="m : ${mensajesPrivados}" class="contenedor-mensaje mb-2">
+                            <div th:if="${m.usuario.id != user.id}"
+                              class="mensaje d-flex justify-content-start align-items-end">
+                              <img th:src="${m.usuario.fotoParticipante}" class="avatar" style="width: 40px;" alt="m.usuario.nickname" />
+                              <div class="contenido-mensaje grey ms-2 p-2">
+                                <div th:text="${m.usuario.nickname}" class="nickname"></div>
+                                <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                  class="fecha text-end"></div>
+                              </div>
+                            </div>
+                            <div th:unless="${m.usuario.id != user.id}"
+                              class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
+                              <img th:src="${user.fotoParticipante}" class="avatar" style="width: 40px;"alt="m.usuario.nickname" />
+                              <div class="contenido-mensaje green me-2 p-2">
+                                <div class="nickname">Yo</div>
+                                <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                  class="fecha text-end"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <form th:action="@{'/mensajesPrivados/guardar/' + ${user.id}}" th:object="${messagePriv}"
+                          method="post" class="typing-area">
+
+                          <input type="text" th:field="*{mensaje}" class="input-field"
+                            placeholder="Escribe un mensaje aquí ..." autocomplete="off">
+
+                          <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+
+                        </form>
+                      </section>
+                    </div>
+                  </div>
+
+                </div>
               </div>
-            </header>
-            <div class="chat-box">
-              <ul>
-                <li th:each="m : ${mensajes}">
-                  <span th:text="${m.usuario.nickname} + ': '"></span>
-                  <span th:text="${m.mensaje}"></span>
-                </li>
-              </ul>
+
+
+              <div class="zonasMiGrupo">
+
+                <div class="miGrupoParticipantes">
+                  <div class="header-miGrupo">
+                    <h4 th:text=" 'Participantes del grupo: ' + ${user.grupo.numParticipantes}"></h4>
+                  </div>
+
+                  <div class="layout-participantes">
+
+                    <div class="listaDeParticipantes mb-2">
+                      <div class="row">
+                        <div class="col-2" th:each="lis:${listadoParticipantesGrupo}">
+                          <img th:if="${lis.id == user.id}" th:src="@{${lis.fotoParticipante}}" class="avatar" alt="Yo" title="Yo" />
+                          <img th:unless="${lis.id == user.id}" th:src="@{${lis.fotoParticipante}}" alt="Imagen de perfil de ${lis.nickname}"
+                            th:title="${lis.nickname}" class="avatar" />
+                          <div class="perdida-peso-individual" style="text-align: center;display: none; "
+                            th:text="@{${lis.perdidaDePeso}}"></div>
+                          <div class="asistencia-individual" style="text-align: center;display: none; "
+                            th:text="@{${lis.asistencia}}"></div>
+                          <div class="perdida-cmcintura-individual" style="text-align: center; display: none;"
+                            th:text="@{${lis.perdidacmcintura}}"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="zonasMiGrupoProgreso">
+
+                  <div class="header-miGrupo">
+                    <h4>Progreso grupal</h4>
+                  </div>
+
+                  <div class="layout-participantes2">
+                    <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100);font-size: 50px;"></i>
+                    <p>Pérdida de peso media del grupo: <span id="perdida-peso-media"></span></p>
+                  </div>
+
+
+                  <div class="layout-participantes2">
+                    <i class="fa-solid fa-calendar-days" style="color: rgb(115, 77, 165);font-size: 50px;"></i>
+                    <p>Asistencia media del grupo: <span id="asistencia-media"></span></p>
+                  </div>
+
+                  <div class="layout-participantes2">
+                    <i class="fa-solid fa-child-reaching" style="color: rgb(77, 165, 77);font-size: 50px;"></i>
+                    <p>Pérdida de cm de cintura media del grupo: <span id="perdida-cmcintura-media"></span></p>
+                  </div>
+
+                </div>
+
+              </div>
             </div>
-            <form th:action="@{'/mensajes/guardar/' + ${user.grupo.id}}" th:object="${message}" method="post"
-              class="typing-area">
 
-              <input type="text" th:field="*{mensaje}" class="input-field" placeholder="Escribe un mensaje aquí ..."
-                autocomplete="off">
 
-              <button type="submit"><i class="fab fa-telegram-plane"></i></button>
-
-            </form>
-          </section>
+          </div>
         </div>
+
+
+
       </div>
     </div>
+
   </div>
+  </div>
+
 </body>
 
 </html>

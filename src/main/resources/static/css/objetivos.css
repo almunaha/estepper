@@ -1,63 +1,351 @@
-#agregar-evento{
-    display: block;
-    margin: 10px auto;
-    color: white;
-    background-color: #6ca4c7;
+.content {
+  margin-top: 85px;
+  margin-bottom: 50px;
 }
+
+.content .objetivos-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+
 .calendario {
-    font-family: 'Helvetica Neue', sans-serif;
-    width: 100%;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0,0,0,0.3);
-    padding: 10px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .meses {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    justify-content: center;
-  }
-  
-  .meses .fa {
-    cursor: pointer;
-  }
-  
-  .diasSemana {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    width: 100%;
-  }
-  
-  .diasSemana div {
-    width: calc(100% / 7);
-  }
-  
-  .dias {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-  
-  .dias > div {
-    flex-basis: calc(100% / 7);
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .calendario .dias .dia.today {
-    background-color: #f7f7f7;
-    border: 2px solid #00aaff;
-    border-radius: 50%;
-  }
-  
+  font-family: 'Helvetica Neue', sans-serif;
+  width: 100%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.meses {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+.meses .icon {
+  cursor: pointer;
+}
+
+.dias-semana {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.dias-semana .dia {
+  width: calc(100% / 7);
+  text-align: center;
+}
+
+.dias {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dias .dia {
+  flex-basis: calc(100% / 7);
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.calendario .dias .dia {
+  padding: 4px;
+}
+
+.calendario .dias .dia.objetivo {
+  border-bottom: 2px solid #6ca4c7;
+
+}
+
+
+
+.calendario .dias .dia.today {
+  background-color: #82b9cb42;
+  border-radius:50%;
+
+}
+
+
+.botones-objetivosRecomendados {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  display: flex;
+
+}
+
+.btn-objRecAgua {
+  background-color: rgb(145, 203, 210);
+  color: white;
+  padding: 0.5%;
+  font-size: 1.3rem;
+  border: 0px;
+  width: 40%;
+  border-right: 0.5px solid rgb(170, 170, 170);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+
+}
+
+.btn-objRecEjer {
+  background-color: rgb(175, 204, 185);
+  color: white;
+  padding: 0.5%;
+  font-size: 1.3rem;
+  border: 0px;
+  width: 40%;
+  border-right: 0.5px solid rgb(170, 170, 170);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.btn-objRecDesc {
+  background-color: rgb(200, 175, 204);
+  color: white;
+  padding: 0.5%;
+  font-size: 1.3rem;
+  border: 0px;
+  width: 40%;
+  border-right: 0.5px solid rgb(170, 170, 170);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.btn-objRecEstAnim {
+  background-color: rgb(198, 192, 131);
+  color: white;
+  padding: 0.5%;
+  font-size: 1.3rem;
+  border: 0px;
+  width: 40%;
+  border-right: 0.5px solid rgb(170, 170, 170);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+/*VER PARA QUE ES*/
+.btn-objRec>*:last-child {
+  border-right: none;
+}
+
+.vaso.clicked {
+  color: rgb(0, 166, 255);
+}
+
+.sin-datos {
+  padding: 40px 0;
+}
+
+ol {
+  margin-top: 20px;
+}
+
+.vaso {
+  font-size: 50px;
+  margin-right: 10px;
+}
+
+.azul {
+  color: #6ca4c7;
+}
+
+.estado-animo-label {
+  display: inline-block;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  border-width: 3px;
+}
+
+input[type="radio"]:checked+label {
+  border-color: #333;
+}
+
+.ejercicio {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  flex-direction: row;
+}
+
+.formulario-ejercicio {
+  width: 50%;
+}
+
+
+.ejercicioDeHoy {
+  width: 50%;
+}
+
+.cabeceraEjercicioDeHoy {
+  background-color: rgb(140, 170, 149);
+  text-align: center;
+  height: 20%;
+  padding: 0.5%;
+}
+
+.cabeceraEjercicioDeHoy p {
+  font-size: 1.3rem;
+  color: white;
+}
+
+.listaDeEjercicioPaticipante {
+  background-color: rgba(197, 213, 198, 0.483);
+}
+
+.tipo {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1%;
+ 
+}
+
+.btn-ejercicio {
+  background-color: rgba(106, 166, 97, 0.807);
+  color: white;
+  padding: 1%;
+  border-radius: 8px;
+  font-size: 17px;
+  box-shadow: rgba(71, 120, 81, 0.261) 0px 1px 3px 0px, rgba(56, 84, 53, 0.182) 0px 1px 2px 0px;
+  text-align: center;
+  border: none;
+}
+
+.btn-ejercicio:hover {
+  background-color: rgba(84, 111, 80, 0.807);
+}
+
+.btn-descanso {
+  background-color: rgba(205, 100, 193, 0.915);
+  color: white;
+  border-radius: 8px;
+  font-size: 17px;
+  box-shadow: rgba(77, 43, 78, 0.261) 0px 1px 3px 0px, rgba(98, 79, 98, 0.905) 0px 1px 2px 0px;
+  text-align: center;
+  border: none;
+  padding: 0.5%;
+}
+
+.btn-descanso:hover {
+  background-color: rgba(126, 97, 130, 0.83);
+}
+
+.btn-agua {
+  background-color: rgba(100, 182, 205, 0.915);
+  padding: 0.5%;
+  color: white;
+  border-radius: 8px;
+  font-size: 17px;
+  box-shadow: rgba(59, 162, 240, 0.261) 0px 1px 3px 0px, rgba(46, 55, 216, 0.138) 0px 1px 2px 0px;
+  text-align: center;
+  border: none;
+}
+
+.btn-agua:hover {
+  background-color: rgba(57, 126, 163, 0.736);
+}
+
+.btn-estadoAnimo {
+  background-color: rgba(205, 184, 100, 0.915);
+  padding: 0.8%;
+  color: white;
+  border-radius: 8px;
+  font-size: 17px;
+  box-shadow: rgba(59, 162, 240, 0.261) 0px 1px 3px 0px, rgba(46, 55, 216, 0.138) 0px 1px 2px 0px;
+  text-align: center;
+  border: none;
+}
+
+.btn-estadoAnimo:hover {
+  background-color: rgba(163, 147, 57, 0.736);
+}
+
+.encabezadoAgua {
+  background-color: #86cffc38;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 0px 10px 30px;
+  width: 55%;
+  align-items: center;
+  align-content: center;
+}
+
+.encabezadoAgua h5 {
+  color: #0f354df3;
+
+}
+
+.encabezadoAgua-vasitos {
+  padding: 20px 30px 20px 10px;
+}
+
+#finalAgua {
+  display: inline-flex;
+  width: 55%;
+  justify-content: space-between;
+  border-top: 2px solid #e7e7e7;
+}
+
+.encabezadoEstadoAnimo {
+  background-color: #efcd5d38;
+  ;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 0px 10px 30px;
+  width: 70%;
+  align-items: center;
+  align-content: center;
+}
+
+.encabezadoEstadoAnimo h5 {
+  color: #56480ef3;
+
+}
+
+.encabezadoEstadoAnimo-estados {
+  padding: 20px 30px 20px 5px;
+  margin-left: 5%;
+}
+
+#finalEstadoAnimo {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  border-top: 2px solid #e7e7e7;
+}
+
+.encabezadoDescanso {
+  background-color: #fc86f038;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 0px 10px 30px;
+  width: 55%;
+  align-items: center;
+  align-content: center;
+}
+
+.encabezadoDescanso h5 {
+  color: #4d0f4cf3;
+}
+
+.encabezadoDescanso-suenio {
+  padding: 20px 30px 20px 5px;
+}
+
+#finalDescanso {
+  display: flex;
+  width: 55%;
+  justify-content: space-between;
+  border-top: 2px solid #e7e7e7;
+}

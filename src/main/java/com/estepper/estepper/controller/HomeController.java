@@ -1,5 +1,6 @@
 package com.estepper.estepper.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -29,10 +30,15 @@ import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Materiales;
+import com.estepper.estepper.model.entity.ObjetivoAgua;
+import com.estepper.estepper.model.entity.ObjetivoDescanso;
+import com.estepper.estepper.model.entity.ObjetivoEjercicio;
+import com.estepper.estepper.model.entity.ObjetivoEstadoAnimo;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.service.UsuarioService;
@@ -40,6 +46,10 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.ObjetivoAguaService;
+import com.estepper.estepper.service.ObjetivoDescansoService;
+import com.estepper.estepper.service.ObjetivoEjercicioService;
+import com.estepper.estepper.service.ObjetivoEstadoAnimoService;
 
 @Controller
 public class HomeController {
@@ -58,6 +68,18 @@ public class HomeController {
 
     @Autowired
     private ProgresoService progreso;
+
+    @Autowired
+    private ObjetivoAguaService objAgua;
+
+    @Autowired
+    private ObjetivoEjercicioService objEjer;
+
+    @Autowired
+    private ObjetivoDescansoService objDesc;
+
+    @Autowired
+    private ObjetivoEstadoAnimoService objEstAnim;
 
     @Autowired
     private BCryptPasswordEncoder hash;
@@ -95,8 +117,67 @@ public class HomeController {
                         if (datos.isEmpty()) {
                             model.addAttribute("recordatorio", true);
                         }
-                    }
+                }
+                
+                Participante p = participante.findById(getUsuario().getId()).get();
+                ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+                Integer contadorObjetivos = 0;
 
+                if(objetivoAgua == null){
+                    objetivoAgua = new ObjetivoAgua();
+                    model.addAttribute("aguaCompletado", false);
+                }else{
+                    if(objetivoAgua.getEstadoObjetivo() == EstadoObjetivo.COMPLETADO){
+                        model.addAttribute("aguaCompletado", true);
+                        contadorObjetivos = contadorObjetivos + 1;
+                    }
+                    else{
+                        model.addAttribute("aguaCompletado", false);
+                    }
+                }
+
+                List<ObjetivoEjercicio> listaEjercicioParticipante = objEjer.listaEjercicio(new Date(), p);
+
+                if(listaEjercicioParticipante.isEmpty()){
+                    model.addAttribute("ejercicioCompletado", false);
+                }else{
+                    model.addAttribute("ejercicioCompletado", true);
+                    contadorObjetivos = contadorObjetivos + 1;
+                }
+             
+        
+                ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+        
+                if (objetivoDescanso == null) {
+                    objetivoDescanso = new ObjetivoDescanso();
+                    model.addAttribute("descansoCompletado", false);
+                }else{
+                    if(objetivoDescanso.getEstadoObjetivo() == EstadoObjetivo.COMPLETADO){
+                        model.addAttribute("descansoCompletado", true);
+                        contadorObjetivos = contadorObjetivos + 1;
+                    }
+                    else{
+                        model.addAttribute("descansoCompletado", false);
+                    }
+                }        
+        
+                ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
+        
+                if (objetivoEstadoAnimo == null) {
+                    objetivoEstadoAnimo = new ObjetivoEstadoAnimo();
+                    model.addAttribute("estadoAnimoCompletado", false);
+                }else{
+                    model.addAttribute("estadoAnimoCompletado", true);
+                    contadorObjetivos = contadorObjetivos + 1;
+                }
+
+                model.addAttribute("contadorObjetivos", contadorObjetivos);
+                Integer porcentajeObjetivos = contadorObjetivos*100/4;
+                model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
+
+    
+
+                
                 return "index";
             }
             // si está de baja

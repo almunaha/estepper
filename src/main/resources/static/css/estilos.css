@@ -380,7 +380,7 @@ th {
 
 .cardi2 {
     width: 90%;
-    height: 500px;
+    height: 540px;
     background: #fff;
     border-radius: 20px;
     position: relative;
@@ -454,6 +454,7 @@ th {
     padding: 10px 30px;
     border-radius: 10px;
     text-align: center;
+    width: 90%; /*VER SI QUITARLO*/
     /*display: none;*/
 
 
@@ -473,11 +474,18 @@ th {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
-#foto-perfil{
-    width: 50%;
+.cont-edit{
+    display: flex;
 }
 
-.col-edit {
+.cont-edit #foto-perfil{
+    border: 1px solid #999eaf;
+    border-radius: 50%;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.col-edit{
     padding: 10px;
 }
 

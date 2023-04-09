@@ -94,8 +94,8 @@
         </li>
         <li>
           <a th:href="@{/chat}">
-            <i class="fa-solid fa-comments"></i>
-            <span class="nombre-enlaces">Chat</span>
+            <i class="fa-solid fa-people-group"></i>
+            <span class="nombre-enlaces">Mi grupo</span>
           </a>
         </li>
 
@@ -158,6 +158,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
+          <!--<i class="fa-regular fa-bell"></i> -->
           <div class="der-header">
             <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
 
@@ -239,7 +240,6 @@
               <script>
                 //URL actual
                 var baseUrl = window.location.origin;
-                console.log(baseUrl);
 
                 let canvas = document.getElementById("graficoSesiones").getContext("2d");
                 let url = baseUrl + '/index/sesiones';
@@ -254,13 +254,15 @@
 
                       data: {
                         labels: ["Sesiones completadas", "Sesiones pendientes"],
+                
                         datasets: [
                           {
                             data: [data.sesionesCompletas, 10 - data.sesionesCompletas],
-                            // borderColor: 'rgb(251, 179, 116)'
-
+                            backgroundColor: [
+                              'rgba(100, 182, 205, 0.915)', // Color para sesiones completadas
+                              'rgba(229, 203, 108, 0.915)'    // Color para sesiones pendientes
+                            ]
                           }
-
                         ]
                       },
 
@@ -282,8 +284,6 @@
 
               <h4 id="nombre">OBJETIVOS</h4>
 
-
-
               <div class="card mt-4">
                 <div class="card-header text-black">
                   ¡Tú puedes!
@@ -291,13 +291,24 @@
                 <div class="card-body">
 
                   <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="3" aria-valuemin="0"
-                      aria-valuemax="5">3</div>
+                    <div class="progress-bar" role="progressbar" th:style="'width: ' + ${porcentajeObjetivos} + '%'"
+                      aria-valuemin="0" aria-valuemax="4">
+                      <div th:text="${contadorObjetivos}"></div>
+                    </div>
+
                   </div>
-                  <h5 class="card-title text-black mt-2">3 de 5 objetivos cumplidos</h5>
-                  <p class="card-text text-black">Cada vez queda menos para alcanzar todos tus objetivos. ¡No te
-                    rindas!
-                  </p>
+                  <h5 class="card-title text-black mt-2"><span th:text="${contadorObjetivos}"></span> de 4 objetivos
+                    cumplidos</h5>
+                  <div class="card-text text-black">
+                    <div th:unless="${aguaCompletado}">¡Termina de beber los 2L de agua!</div>
+                    <div th:unless="${ejercicioCompletado}">¡Registra el ejercicio de hoy!</div>
+                    <div th:unless="${descansoCompletado}">Te falta descansar 8 horas</div>
+                    <div th:unless="${estadoAnimoCompletado}">¡Registra tu estado de ánimo!</div>
+                  </div>
+
+                  <div th:if="${porcentajeObjetivos == 100}">
+                    <strong style="color:cadetblue">¡Enhorabuena!</strong>
+                  </div>
 
                 </div>
               </div>
@@ -309,6 +320,7 @@
             <!-- Botón progreso -->
             <div class="layout-util">
               <a class="btn-util" th:href="@{/progreso}">
+
                 <i class="fa-solid fa-chart-line"></i>
               </a>
 

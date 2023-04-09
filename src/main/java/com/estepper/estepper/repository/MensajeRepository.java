@@ -1,5 +1,6 @@
 package com.estepper.estepper.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,13 +13,10 @@ import com.estepper.estepper.model.entity.Usuario;
 
 import jakarta.transaction.Transactional;
 
-
-
-
-
 public interface MensajeRepository extends JpaRepository<Mensaje, Integer>{
     
     Optional<Mensaje> findById(Integer id);
+    List<Mensaje> findByGrupo(Grupo grupo);
     //List<Mensaje> findByIdUsuario(Integer idUsuario);
 
     @Modifying
@@ -30,4 +28,7 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Integer>{
     @Transactional
     @Query("DELETE FROM Mensaje m WHERE m.grupo = :g")
     void deleteAllByGrupo(Grupo g);
+
+
+    
 }

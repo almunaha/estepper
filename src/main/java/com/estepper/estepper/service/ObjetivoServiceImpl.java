@@ -3,9 +3,13 @@ package com.estepper.estepper.service;
 import com.estepper.estepper.repository.ObjetivoRepository;
 
 import com.estepper.estepper.model.entity.Objetivo;
+import com.estepper.estepper.model.entity.ObjetivoAgua;
 import com.estepper.estepper.model.entity.Participante;
 
+import java.util.Date;
 import java.util.List;
+
+import com.estepper.estepper.model.enums.EstadoObjetivo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,7 @@ public class ObjetivoServiceImpl implements ObjetivoService {
         repo.save(obj);
     }
 
+
     @Override
     public List<Objetivo> getObjetivos(){
         return repo.findAll();
@@ -30,6 +35,11 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     @Override
     public List<Objetivo> listaObjetivos(Participante p) {
         return(List<Objetivo>) repo.findByParticipante(p);    
+    }
+
+    @Override
+    public List<Objetivo> listaObjetivosPorMes(Participante p, Integer mes, Integer anio) {
+        return(List<Objetivo>) repo.findByParticipanteyMesyAnio(p, mes, anio);    
     }
 
     @Override
@@ -46,7 +56,6 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     public void deleteByParticipante(Participante p) {
         repo.deleteAllByParticipante(p);
     }
-
 
 }
 

@@ -2,6 +2,7 @@ package com.estepper.estepper.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import javax.swing.JOptionPane;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.nio.file.Files;
 
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -38,6 +41,10 @@ import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Invitacion;
 import com.estepper.estepper.model.entity.Materiales;
 import com.estepper.estepper.model.entity.Objetivo;
+import com.estepper.estepper.model.entity.ObjetivoAgua;
+import com.estepper.estepper.model.entity.ObjetivoDescanso;
+import com.estepper.estepper.model.entity.ObjetivoEjercicio;
+import com.estepper.estepper.model.entity.ObjetivoEstadoAnimo;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Receta;
 import com.estepper.estepper.model.entity.FichaEleccion;
@@ -55,8 +62,10 @@ import com.estepper.estepper.model.entity.Alimentacion;
 import com.estepper.estepper.model.entity.AlimentacionVal;
 import com.estepper.estepper.model.entity.AlimentosConsumidos;
 import com.estepper.estepper.model.enums.Asistencia;
+import com.estepper.estepper.model.enums.Ejercicio;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoInvitacion;
+import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
@@ -66,6 +75,10 @@ import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.MensajeService;
+import com.estepper.estepper.service.ObjetivoAguaService;
+import com.estepper.estepper.service.ObjetivoDescansoService;
+import com.estepper.estepper.service.ObjetivoEjercicioService;
+import com.estepper.estepper.service.ObjetivoEstadoAnimoService;
 import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
@@ -98,6 +111,18 @@ public class ParticipanteController {
 
     @Autowired
     private ObjetivoService obj;
+
+    @Autowired
+    private ObjetivoAguaService objAgua;
+
+    @Autowired
+    private ObjetivoEjercicioService objEjer;
+
+    @Autowired
+    private ObjetivoDescansoService objDesc;
+
+    @Autowired
+    private ObjetivoEstadoAnimoService objEstAnim;
 
     @Autowired
     private MaterialService materialS;
@@ -725,14 +750,63 @@ public class ParticipanteController {
         model.addAttribute("listaObjetivos", listaObjetivos);
         model.addAttribute("user", getUsuario());
 
+        LocalDate fechaActual = LocalDate.now();
+        int mesActual = fechaActual.getMonthValue();
+        int anioActual = fechaActual.getYear();
+        Integer mesActualInteger = mesActual;
+        Integer anioActualInteger = anioActual;
+
+        List<Objetivo> listaObjetivosPorMes = obj.listaObjetivosPorMes(p, mesActualInteger, anioActualInteger);
+        model.addAttribute("listaObjetivosPorMes", listaObjetivosPorMes);
+
+        ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+
+        if (objetivoAgua == null) {
+            objetivoAgua = new ObjetivoAgua();
+        }
+
+        model.addAttribute("objetivoAgua", objetivoAgua);
+
+        List<ObjetivoEjercicio> listaEjercicioParticipante = objEjer.listaEjercicio(new Date(), p);
+        model.addAttribute("listaEjercicioParticipante", listaEjercicioParticipante);
+
+        ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+
+        if (objetivoDescanso == null) {
+            objetivoDescanso = new ObjetivoDescanso();
+        }
+
+        model.addAttribute("objetivoDescanso", objetivoDescanso);
+
+
+        ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
+
+        if (objetivoEstadoAnimo == null) {
+            objetivoEstadoAnimo = new ObjetivoEstadoAnimo();
+        }
+
+        model.addAttribute("objetivoEstadoAnimo", objetivoEstadoAnimo);
+
         return "objetivos";
+    }
+
+    @GetMapping(value = "/objetivos/listaObjetivosPorMes/{mes}/{anio}", produces = "application/json")
+    @ResponseBody
+    public List<Objetivo> listaObjetivos(Model model, @PathVariable("mes") Integer mes,
+            @PathVariable("anio") Integer anio) {
+        Participante p = participante.findById(getUsuario().getId()).get();
+
+        List<Objetivo> listaObjetivosPorMes = obj.listaObjetivosPorMes(p, mes, anio);
+        return listaObjetivosPorMes;
     }
 
     @GetMapping("/objetivos/nuevo")
     public String mostrarFormularioDeNuevoObjetivo(Model model) {
+        Date fechaActual = new Date();
         if (getUsuario() instanceof Participante) {
             model.addAttribute("objetivo", new Objetivo());
             model.addAttribute("user", getUsuario());
+            model.addAttribute("fechaActual", fechaActual);
             return "nuevo_objetivo";
         } else
             return "redirect:/";
@@ -780,6 +854,14 @@ public class ParticipanteController {
         return "redirect:/objetivos";
         // } else
         // return "redirect:/";
+    }
+
+    @PostMapping("/objetivoAgua/guardar/{id}")
+    public String process_ObjetivoAgua(@PathVariable("id") Integer id, @ModelAttribute ObjetivoAgua objetivoAgua) {
+        Participante p = participante.findById(getUsuario().getId()).get();
+        objetivoAgua.setParticipante(p);
+        objAgua.guardar(objetivoAgua);
+        return "redirect:/objetivos";
     }
 
     // MATERIALES:
@@ -1327,4 +1409,189 @@ public class ParticipanteController {
             return "acceso";
     }
 
+
+    @GetMapping("/agregar_vaso/{idParticipante}")
+    public String agregarVaso(@PathVariable("idParticipante") Integer idParticipante, Model model) {
+
+        Participante p = participante.getParticipante(idParticipante);
+        ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+
+        if (objetivoAgua == null) {
+            objetivoAgua = new ObjetivoAgua();
+            objetivoAgua.setCantidadObjetivo(8);
+            objetivoAgua.setEstadoObjetivo(EstadoObjetivo.PENDIENTE);
+            objetivoAgua.setFecha(new Date());
+            objetivoAgua.setParticipante(p);
+            objetivoAgua.setVasos(1);
+        } else if (objetivoAgua.getVasos() < objetivoAgua.getCantidadObjetivo()) {
+            int vasos = objetivoAgua.getVasos() + 1;
+            objetivoAgua.setVasos(vasos);
+        }
+
+        if (objetivoAgua.getVasos() == objetivoAgua.getCantidadObjetivo()) {
+            objetivoAgua.setEstadoObjetivo(EstadoObjetivo.COMPLETADO);
+            // model.addAttribute("objetivoConseguido", "¡Enhorabuena! Has alcanzado tu
+            // objetivo");
+        }
+
+        objAgua.guardar(objetivoAgua);
+
+        return "redirect:/objetivos";
+
+    }
+
+    @GetMapping("/quitar_vaso/{idParticipante}")
+    public String quitarVaso(@PathVariable("idParticipante") Integer idParticipante, Model model) {
+
+        Participante p = participante.getParticipante(idParticipante);
+        ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+
+        if (objetivoAgua != null) {
+
+            if (objetivoAgua.getVasos() > 0) {
+                int vasos = objetivoAgua.getVasos() - 1;
+                objetivoAgua.setVasos(vasos);
+
+                if (objetivoAgua.getVasos() == objetivoAgua.getCantidadObjetivo()) {
+                    objetivoAgua.setEstadoObjetivo(EstadoObjetivo.COMPLETADO);
+                } else {
+                    objetivoAgua.setEstadoObjetivo(EstadoObjetivo.PENDIENTE);
+                }
+
+            }
+
+        }
+
+        objAgua.guardar(objetivoAgua);
+
+        return "redirect:/objetivos";
+
+    }
+
+    @PostMapping("/agregar_ejercicio/{idParticipante}")
+    public String agregarEjercicio(@PathVariable("idParticipante") Integer idParticipante,
+            ObjetivoEjercicio ejercicioObj) {
+
+        Participante p = participante.getParticipante(idParticipante);
+    
+        if(ejercicioObj.getEjercicio() != Ejercicio.NINGUNO){
+            ObjetivoEjercicio objetivoEjercicio = new ObjetivoEjercicio();
+            objetivoEjercicio.setEstadoObjetivo(EstadoObjetivo.PENDIENTE);
+            objetivoEjercicio.setFecha(new Date());
+            objetivoEjercicio.setParticipante(p);
+            objetivoEjercicio.setEjercicio(ejercicioObj.getEjercicio());
+            objetivoEjercicio.setDuracionEjercicio(ejercicioObj.getDuracionEjercicio());
+    
+            objEjer.guardar(objetivoEjercicio);
+        }
+
+        return "redirect:/objetivos";
+
+    }
+
+    @GetMapping("/eliminar_ejercicio/{idObjetivo}")
+    public String eliminarEjercicio(@PathVariable("idObjetivo") Integer idObjetivo, Model model) {
+      
+        ObjetivoEjercicio objetivoEjercicio= objEjer.getObjetivoEjercicio(idObjetivo);
+
+        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoEjercicio.getParticipante().getId()) {
+            objEjer.borrar(idObjetivo);
+            return "redirect:/objetivos";
+        } else
+            return "redirect:/";
+
+    }
+
+    @PostMapping("/agregar_descanso/{idParticipante}")
+    public String agregarDescanso(@PathVariable("idParticipante") Integer idParticipante,
+            ObjetivoDescanso descansoObj) {
+
+        Participante p = participante.getParticipante(idParticipante);
+        ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+
+        if (objetivoDescanso == null) {
+
+            objetivoDescanso = new ObjetivoDescanso();
+            objetivoDescanso.setFecha(new Date());
+            objetivoDescanso.setParticipante(p);
+            objetivoDescanso.setHorasSuenio(descansoObj.getHorasSuenio());
+            objetivoDescanso.setMinutosSuenio(descansoObj.getMinutosSuenio());
+
+            if (descansoObj.getHorasSuenio() >= descansoObj.getHorasSuenioObjetivo()) {
+                objetivoDescanso.setEstadoObjetivo(EstadoObjetivo.COMPLETADO);
+            } else {
+                objetivoDescanso.setEstadoObjetivo(EstadoObjetivo.PENDIENTE);
+            }
+
+        }
+
+        objDesc.guardar(objetivoDescanso);
+
+        return "redirect:/objetivos";
+
+    }
+
+    @GetMapping("/eliminar_descanso/{idParticipante}")
+    public String eliminarDescanso(@PathVariable("idParticipante") Integer idParticipante, Model model) {
+      
+        Participante p = participante.getParticipante(idParticipante);
+        ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+    
+        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoDescanso.getParticipante().getId()) {
+            objDesc.borrar(objetivoDescanso.getId());
+            return "redirect:/objetivos";
+        } else
+            return "redirect:/";
+
+    }
+
+    /*@GetMapping("/editar_descanso/{idParticipante}/{horasSuenio}")
+    public String editarDescanso(@PathVariable("idParticipante") Integer idParticipante,@PathVariable("horasSuenio") Integer horasSuenio, Model model) {
+      
+        Participante p = participante.getParticipante(idParticipante);
+        ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+    
+        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoDescanso.getParticipante().getId()) {
+            objetivoDescanso.setHorasSuenio(horasSuenio);
+            objDesc.guardar(objetivoDescanso);
+            return "redirect:/objetivos";
+        } else
+            return "redirect:/";
+
+    }*/
+
+    @PostMapping("/agregar_estadoAnimo/{idParticipante}")
+    public String agregarEstadoAnimo(@PathVariable("idParticipante") Integer idParticipante, ObjetivoEstadoAnimo estadoAnimoObj) {
+
+        Participante p = participante.getParticipante(idParticipante);
+        ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
+
+        if(objetivoEstadoAnimo == null){
+
+            objetivoEstadoAnimo = new ObjetivoEstadoAnimo();
+            objetivoEstadoAnimo.setEstadoAnimo(estadoAnimoObj.getEstadoAnimo());
+            objetivoEstadoAnimo.setFecha(new Date());
+            objetivoEstadoAnimo.setParticipante(p);
+            
+        }
+
+        objEstAnim.guardar(objetivoEstadoAnimo);
+        
+        return "redirect:/objetivos";
+    }
+
+
+    @GetMapping("/eliminar_estadoAnimo/{idParticipante}")
+    public String eliminarEstadoAnimo(@PathVariable("idParticipante") Integer idParticipante, Model model) {
+      
+        Participante p = participante.getParticipante(idParticipante);
+        ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
+    
+        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoEstadoAnimo.getParticipante().getId()) {
+            objEstAnim.borrar(objetivoEstadoAnimo.getId());
+            return "redirect:/objetivos";
+        } else
+            return "redirect:/";
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,11 +39,16 @@ public class Objetivo implements Serializable{
     private Participante participante;
 
     private String titulo;
-    private String descripcion;
+    //private String descripcion;  LA QUITO PORQUE ES MUY SIMILAR A LO DE TÍTULO
    
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "repeticion", columnDefinition = "ENUM('NINGUNA', 'DIARIAMENTE', 'SEMANALMENTE', 'MENSUALMENTE', 'ANUALMENTE')")
     private Repeticion repeticion;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = ISO.DATE)
+    @NotNull
+    private Date fechaInicio;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = ISO.DATE)
@@ -53,11 +59,11 @@ public class Objetivo implements Serializable{
     @Column(nullable = true, name = "estado", columnDefinition = "ENUM('COMPLETADO', 'PENDIENTE')")
     private EstadoObjetivo estado;
 
-    public Objetivo(Integer id, Participante participante, String titulo, String descripcion, Repeticion repeticion, Date fechaVencimiento, EstadoObjetivo estado) {
+    public Objetivo(Integer id, Participante participante, String titulo, Repeticion repeticion,Date fechaInicio, Date fechaVencimiento, EstadoObjetivo estado) {
         this.id = id;
         this.participante = participante;
         this.titulo = titulo;
-        this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
         this.repeticion = repeticion;
         this.fechaVencimiento = fechaVencimiento;
         this.estado = estado;
@@ -65,6 +71,7 @@ public class Objetivo implements Serializable{
 
     public Objetivo() {
         estado = EstadoObjetivo.PENDIENTE;
+        fechaInicio = new Date();
     }
 
 
@@ -92,13 +99,6 @@ public class Objetivo implements Serializable{
         this.titulo = titulo;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
     public Repeticion getRepeticion() {
         return repeticion;
@@ -106,6 +106,14 @@ public class Objetivo implements Serializable{
 
     public void setRepeticion(Repeticion repeticion) {
         this.repeticion = repeticion;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
     public Date getFechaVencimiento() {

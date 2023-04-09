@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.swing.JOptionPane;
 
@@ -16,6 +19,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,13 +37,20 @@ import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Mensaje;
+import com.estepper.estepper.model.entity.MensajePrivado;
+import com.estepper.estepper.model.entity.Observaciones;
 import com.estepper.estepper.model.enums.Estado;
-
+import com.estepper.estepper.model.enums.EstadoGrupo;
+import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.MensajeService;
+import com.estepper.estepper.service.ObservacionesService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.MensajePrivadoService;
 import com.estepper.estepper.service.UsuarioService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 //yo pasaria todo esto a CoordinadorController para no tener tantos
 @Controller
@@ -50,6 +63,9 @@ public class GruposController {
     private ParticipanteService part;
 
     @Autowired
+    private CoordinadorService cord;
+
+    @Autowired
     private UsuarioService user;
 
     @Autowired
@@ -58,10 +74,18 @@ public class GruposController {
     @Autowired
     private MensajeService mensaje;
 
+    @Autowired
+    private MensajePrivadoService mensajePrivado;
+
+    @Autowired // inyectar recursos de la clase GrupoService
+    private ObservacionesService observaciones;
+
     @GetMapping("/grupos/nuevo")
     public String mostrarFormularioDeNuevoGrupo(Model model) {
-        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de participantes de la base de
-                                                                    // datos
+        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de
+                                                                                                     // participantes de
+                                                                                                     // la base de
+        // datos
         model.addAttribute("participantesExistentes", participantesExistentes);
         model.addAttribute("grupo", new Grupo());
         model.addAttribute("user", getUsuario());
@@ -79,9 +103,7 @@ public class GruposController {
 
         // FUNCIONA PERO FALTA CONSEGUIR QUE SALGA LA ALERTA CON EL MENSAJITO
         if (grupo.findByNombre(elgrupo.getNombre()) != null) {
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            // model.addAttribute("errorcito", "El nombre del grupo ya existe en la base de
-            // datos");
+
             return "redirect:/listaGrupos";
 
         }
@@ -116,7 +138,18 @@ public class GruposController {
             elgrupo.setNumParticipantes(0);
         }
 
+        elgrupo.setFotoGrupo("/img/grupoA.png");
         elgrupo.setFechaInicioGrupo(LocalDate.now());
+
+        if(elgrupo.getFechaFinGrupo() == null){
+            elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
+        }
+        else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) { // Si quiero tmb que sea la misma: ||
+                                                                   // elgrupo.getFechaFinGrupo().isEqual(LocalDate.now())
+            elgrupo.setEstadoGrupo(EstadoGrupo.TERMINADO);
+        } else { 
+            elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
+        }
 
         grupo.save(elgrupo);
         return "redirect:/listaGrupos";
@@ -149,17 +182,47 @@ public class GruposController {
 
         } 
 
+        if(elgrupo.getFechaFinGrupo() == null){
+            elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
+        }
+        else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) { // Si quiero tmb que sea la misma: ||
+                                                                   // elgrupo.getFechaFinGrupo().isEqual(LocalDate.now())
+            elgrupo.setEstadoGrupo(EstadoGrupo.TERMINADO);
+         
+
+        } else { 
+            elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
+        }
+      
         grupo.save(elgrupo);
         return "redirect:/listaGrupos";
     }
 
-
-   
-
     @GetMapping("/listaGrupos")
-    public String grupos(Model model) {
+    public String grupos(@RequestParam Map<String, Object> params, Model model) {
+
         if (getUsuario() instanceof Coordinador) {
-            List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
+
+            int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+            PageRequest pageable = PageRequest.of(page, 5); // define página solicitada y tamaño de la página, se
+                                                            // inicializa a cero
+            Page<Grupo> paginaGrupo = grupo.paginas(pageable, getUsuario().getId()); // listado de páginas de 6 grupos
+                                                                                     // cada una
+            int totalPags = paginaGrupo.getTotalPages(); // total de páginas
+
+            if (totalPags > 0) {
+                List<Integer> paginas = IntStream.rangeClosed(1, totalPags).boxed().collect(Collectors.toList()); // listado
+                                                                                                                  // con
+                                                                                                                  // los
+                                                                                                                  // números
+                                                                                                                  // de
+                                                                                                                  // las
+                                                                                                                  // páginas
+                model.addAttribute("paginas", paginas);
+            }
+
+            List<Grupo> listaGrupos = paginaGrupo.getContent();
+            // List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
             model.addAttribute("user", getUsuario());
             model.addAttribute("grupo", new Grupo());
@@ -175,7 +238,9 @@ public class GruposController {
         ModelAndView modelo = new ModelAndView("editar_grupo");
         Grupo gr = grupo.getGrupo(id);
 
-        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de participantes de la base de
+        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de
+                                                                                                     // participantes de
+                                                                                                     // la base de
         modelo.addObject("participantesExistentes", participantesExistentes);
 
         modelo.addObject("grupo", gr);
@@ -185,8 +250,8 @@ public class GruposController {
         return modelo;
     }
 
-    @RequestMapping("/grupos/eliminar/{id}")
-    public String eliminarGrupo(@PathVariable(name = "id") Integer id) {
+    @GetMapping("/grupos/eliminar/{id}")
+    public String eliminarGrupo(@PathVariable("id") Integer id) {
         Grupo gr = grupo.getGrupo(id);
         if (getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()) {
             materialS.deleteByGrupo(gr);
@@ -198,8 +263,8 @@ public class GruposController {
     }
 
     @GetMapping("/unirAgrupo/{id}")
-    public String unirAgrupo(@PathVariable("id") Integer id, Model model){
-        if(getUsuario() instanceof Coordinador){
+    public String unirAgrupo(@PathVariable("id") Integer id, Model model) {
+        if (getUsuario() instanceof Coordinador) {
             model.addAttribute("participante", part.findById(id).get());
             model.addAttribute("user", user.findById(id).get());
             model.addAttribute("idparticipante", id);
@@ -214,23 +279,26 @@ public class GruposController {
     }
 
     @GetMapping("/unGrupo/{idGrupo}")
-    public String unGrupo(@PathVariable("idGrupo") Integer idGrupo, Model model){
+    public String unGrupo(@PathVariable("idGrupo") Integer idGrupo, Model model) {
         Grupo g = grupo.getGrupo(idGrupo);
-                
-        if(getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()){
+
+        if (getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()) {
             model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
             model.addAttribute("grupo", g);
             model.addAttribute("user", getUsuario());
             model.addAttribute("mensajito", "No asignada");
             Mensaje men = new Mensaje();
             model.addAttribute("message", men);
-            List<Mensaje> mensajes = mensaje.obtenerMensajes();
+            List<Mensaje> mensajes = mensaje.obtenerMensajes(g);
             model.addAttribute("mensajes", mensajes);
+
+            List<Observaciones> listaObservaciones = observaciones.findByIdGrupo(idGrupo);
+            model.addAttribute("listaObservaciones", listaObservaciones);
 
             return "unGrupo";
         } else
-        
-        return "redirect:/";
+
+            return "redirect:/";
     }
 
     // MATERIALES:
@@ -289,8 +357,8 @@ public class GruposController {
     }
 
     @GetMapping("/echargrupo/{id}")
-    public String echargrupo(@PathVariable("id") Integer id){
-        if(getUsuario() instanceof Coordinador){
+    public String echargrupo(@PathVariable("id") Integer id) {
+        if (getUsuario() instanceof Coordinador) {
             part.quitargrupo(id);
             return "redirect:/listaGrupos";
         } else return "redirect:/";
@@ -314,37 +382,128 @@ public class GruposController {
 
     }
 
-     //CHAT
-     @GetMapping("/chat")
-     public String chat(Model model) {
-         Usuario u = getUsuario();
-         model.addAttribute("user", getUsuario());
- 
-         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
-            model.addAttribute("mensajito", "No asignada");
+    @GetMapping("/chat") // Cambiar por miGrupo más tarde
+    public String chat(Model model) {
+        Usuario u = getUsuario();
+        model.addAttribute("user", getUsuario());
+
+        if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            Participante p = part.getParticipante(u.getId());
+            Grupo g = grupo.getGrupo(p.getIdGrupo());
+
             Mensaje men = new Mensaje();
+            MensajePrivado menPriv = new MensajePrivado();
+          
+            List<Mensaje> mensajes = mensaje.obtenerMensajes(g);
+            List<MensajePrivado> mensajesPrivados = mensajePrivado.obtenerMensajesPrivados(p);
+
+
             model.addAttribute("message", men);
-            List<Mensaje> mensajes = mensaje.obtenerMensajes();
             model.addAttribute("mensajes", mensajes);
-             return "chat";
-         } else
-             return "acceso";
-     }
+            model.addAttribute("grupo", g);
+            model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
+
+            model.addAttribute("messagePriv", menPriv);
+
+            model.addAttribute("mensajesPrivados", mensajesPrivados);
+
+            return "chat";
+        } else
+            return "acceso";
+    }
+
+    @GetMapping("/chatPrivado/{id}") // vista coordinador
+    public String chatPrivado(@PathVariable("id") Integer idParticipante, Model model) {
+
+        Usuario u = getUsuario();
+        model.addAttribute("user", u);
+        Participante p = part.getParticipante(idParticipante);
+
+        if (u instanceof Coordinador) { // revisar esto
+
+            MensajePrivado menPriv = new MensajePrivado();
+            List<MensajePrivado> mensajesPrivados = mensajePrivado.obtenerMensajesPrivados(p);
+            model.addAttribute("participante", p);
+            model.addAttribute("messagePriv", menPriv);
+            model.addAttribute("mensajesPrivados", mensajesPrivados);
+
+            return "chatPrivado";
+        } else
+
+            return "redirect:/";
+    }
 
     @PostMapping("/mensajes/guardar/{id}")
     public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, @PathVariable("id") Integer idGrupo) {
-        elmensaje.setGrupo(grupo.getGrupo(idGrupo));
-        elmensaje.setUsuario(getUsuario());
-        elmensaje.setId(0);
-        elmensaje.setFechayHoraEnvio(LocalDateTime.now());
-        mensaje.save(elmensaje);
+        if (elmensaje.getMensaje() != "") {
+            elmensaje.setGrupo(grupo.getGrupo(idGrupo));
+            elmensaje.setUsuario(getUsuario());
+            elmensaje.setId(0);
+            elmensaje.setFechayHoraEnvio(LocalDateTime.now());
+            mensaje.save(elmensaje);
 
-        if(getUsuario() instanceof Coordinador)
-        return "redirect:/unGrupo/{id}";
-        else if (getUsuario() instanceof Participante) return "redirect:/chat";
+            if (getUsuario() instanceof Coordinador)
+                return "redirect:/unGrupo/{id}";
+            else if (getUsuario() instanceof Participante)
+                return "redirect:/chat";
+        }
+
+        return "redirect:/chat";
+    }
+
+    @PostMapping("/mensajesPrivados/guardar/{idParticipante}")
+    public String guardarMensajePrivado(@ModelAttribute("messagePriv") MensajePrivado elmensajePrivado,
+            @PathVariable("idParticipante") Integer idParticipante) {
+        elmensajePrivado.setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getIdCoordinador()));
+        elmensajePrivado.setParticipante(part.getParticipante(idParticipante));
+        elmensajePrivado.setId(0);
+        elmensajePrivado.setFechayHoraEnvio(LocalDateTime.now());
+        elmensajePrivado.setUsuario(getUsuario());
+        mensajePrivado.save(elmensajePrivado);
+
+        if (getUsuario() instanceof Coordinador)
+            return "redirect:/chatPrivado/{idParticipante}";
+        else if (getUsuario() instanceof Participante)
+            return "redirect:/chat";
         return "redirect:/";
     }
 
+    @PostMapping("/observaciones/guardar/{idGrupo}")
+    public String guardarObervaciones(@ModelAttribute("observaciones") Observaciones observacion,
+            @PathVariable("idGrupo") Integer id, Model model, HttpServletRequest request) {
+
+        observacion.setIdCoordinador(getUsuario().getId());
+        observacion.setIdGrupo(id);
+        String nota = request.getParameter("nota");
+        observacion.setNota(nota);
+        observaciones.guardar(observacion);
+
+        return "redirect:/unGrupo/{idGrupo}";
+    }
+
+    @GetMapping("/eliminarNota/{id}/{idGrupo}")
+    public String eliminarNota(@PathVariable("id") Integer id, @PathVariable("idGrupo") Integer idGrupo) {
+        Observaciones ob = observaciones.getObservacion(id);
+        if (getUsuario() instanceof Coordinador && ob.getIdCoordinador() == getUsuario().getId()) {
+            observaciones.borrar(id);
+            return "redirect:/unGrupo/{idGrupo}";
+        } else
+            return "redirect:/";
+    }
+
+    @PostMapping("/observaciones/guardar2/{idGrupo}")
+    public String guardarObservaciones2(@ModelAttribute("unaObservacion") Observaciones observacion,
+            @PathVariable("idGrupo") Integer idGrupo, Model model, HttpServletRequest request) {
+
+        Observaciones observacionExistente = observaciones.getObservacion(observacion.getId());
+        observacionExistente.setIdCoordinador(getUsuario().getId());
+        observacionExistente.setIdGrupo(idGrupo);
+        String nota = request.getParameter("nota");
+        observacionExistente.setNota(nota);
+        observaciones.guardar(observacion);
+
+        return "redirect:/unGrupo/{idGrupo}";
+
+    }
 
 }
-

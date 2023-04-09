@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.estepper.estepper.model.enums.EstadoGrupo;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,8 +45,16 @@ public class Grupo implements Serializable{
     @Column
     private LocalDate fechaFinGrupo; 
 
+    @Column(nullable=true)
+    private String fotoGrupo;
+
     
-    public Grupo(Integer id, Integer idCoordinador, String codigo, String nombre, Integer numParticipantes, LocalDate fechaInicioGrupo, LocalDate fechaFinGrupo, List<Participante> participantes) {
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = true, name = "estado", columnDefinition = "ENUM('ACTIVO', 'TERMINADO')")
+    private EstadoGrupo estadoGrupo;
+
+    
+    public Grupo(Integer id, Integer idCoordinador, String codigo, String nombre, Integer numParticipantes, LocalDate fechaInicioGrupo, LocalDate fechaFinGrupo, List<Participante> participantes, String fotoGrupo, EstadoGrupo estadoGrupo) {
         this.id = id;
         this.idCoordinador = idCoordinador;
         this.codigo = codigo;
@@ -51,6 +63,8 @@ public class Grupo implements Serializable{
         this.fechaInicioGrupo = fechaInicioGrupo;
         this.fechaFinGrupo = fechaFinGrupo;
         this.participantes = participantes;
+        this.fotoGrupo = fotoGrupo;
+        this.estadoGrupo = estadoGrupo;
     }
     
     public Grupo() {
@@ -112,6 +126,22 @@ public class Grupo implements Serializable{
         this.idCoordinador = idCoordinador;
     }
 
+    public String getFotoGrupo() {
+        return fotoGrupo;
+    }
+
+    public void setFotoGrupo(String fotoGrupo) {
+        this.fotoGrupo = fotoGrupo;
+    }
+
+    
+    public EstadoGrupo getEstadoGrupo() {
+        return estadoGrupo;
+    }
+
+    public void setEstadoGrupo(EstadoGrupo estadoGrupo) {
+        this.estadoGrupo = estadoGrupo;
+    }
     
 
   

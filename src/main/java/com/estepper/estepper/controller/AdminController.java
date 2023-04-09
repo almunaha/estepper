@@ -121,14 +121,19 @@ public class AdminController {
                         materialS.deleteByGrupo(listgrupos.get(i));
                         mensajeS.deleteByGrupo(listgrupos.get(i));
                         grupoS.delete(listgrupos.get(i).getId());
+                        //grupoS.delete(id);
                     }
                 }
                 invitacion.eliminarPorCoordinador((Coordinador)usuario.findById(id).get());
-                usuario.eliminar(id); 
+                usuario.eliminar(id);
             }
-            else usuario.eliminar(id); 
-            
-            
+            else 
+                usuario.eliminar(id);
+
+            // pasar usuario logueado y listado
+            model.addAttribute("user", usuarioLogueado());
+            List<Usuario> lista = listadoUsuarios();
+            model.addAttribute("usuarios", lista);
         }
 
         return "redirect:/";

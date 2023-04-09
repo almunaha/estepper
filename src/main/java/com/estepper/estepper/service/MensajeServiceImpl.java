@@ -27,9 +27,11 @@ public class MensajeServiceImpl implements MensajeService {
         repo.save(mensaje);
     }
 
-    public List<Mensaje> obtenerMensajes(){
-        return repo.findAll();
+    @Override
+    public List<Mensaje> obtenerMensajes (Grupo grupo){
+        return repo.findByGrupo(grupo);
     }
+
 
     @Override
     public void deleteByParticipante(Usuario p) {

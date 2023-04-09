@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Participante;
@@ -55,6 +57,7 @@ public class GrupoServiceImpl implements GrupoService{
         repo.delete(grupo);
     }   
     
+
     @Override
     public void save(Grupo grupo) {
         repo.save(grupo);
@@ -70,7 +73,10 @@ public class GrupoServiceImpl implements GrupoService{
         return repo.findAll();
     }  
 
-
+    @Override
+    public Page<Grupo> paginas(Pageable pageable, Integer idCoordinador){
+        return(Page<Grupo>) repo.findByIdCoordinador(pageable, idCoordinador);
+    }
 
 }
 
