@@ -13,6 +13,10 @@ import com.estepper.estepper.model.entity.Usuario;
 
 import jakarta.transaction.Transactional;
 
+
+
+
+
 public interface MensajeRepository extends JpaRepository<Mensaje, Integer>{
     
     Optional<Mensaje> findById(Integer id);
