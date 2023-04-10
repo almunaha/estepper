@@ -837,9 +837,11 @@ public class ParticipanteController {
     @GetMapping("/objetivos/editar/{id}")
     public String editarObjetivo(@PathVariable("id") Integer id, Model model) {
         Objetivo o = obj.getObjetivo(id);
+ 
         if (getUsuario() instanceof Participante && getUsuario().getId() == o.getParticipante().getId()) {
             model.addAttribute("user", getUsuario());
             model.addAttribute("objetivo", o);
+
             return "editar_objetivo";
         } else
             return "redirect:/";
