@@ -92,7 +92,6 @@ public class GruposController {
         return "nuevo_grupo";
     }
 
-
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(@ModelAttribute("grupo") Grupo elgrupo,
             @RequestParam(value = "participantes", required = false) List<Integer> participantes,
@@ -140,20 +139,18 @@ public class GruposController {
         elgrupo.setFotoGrupo("/img/grupoA.png");
         elgrupo.setFechaInicioGrupo(LocalDate.now());
 
-        if(elgrupo.getFechaFinGrupo() == null){
+        if (elgrupo.getFechaFinGrupo() == null) {
             elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
-        }
-        else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) { // Si quiero tmb que sea la misma: ||
-                                                                   // elgrupo.getFechaFinGrupo().isEqual(LocalDate.now())
+        } else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) { // Si quiero tmb que sea la misma: ||
+            // elgrupo.getFechaFinGrupo().isEqual(LocalDate.now())
             elgrupo.setEstadoGrupo(EstadoGrupo.TERMINADO);
-        } else { 
+        } else {
             elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
         }
 
         grupo.save(elgrupo);
         return "redirect:/listaGrupos";
     }
-
 
     @PostMapping("/grupos/guardar2")
     public String guardarGrupo2(@ModelAttribute("grupo") Grupo elgrupo,
@@ -179,20 +176,18 @@ public class GruposController {
             }
             elgrupo.setParticipantes(participantesSeleccionadosList);
 
-        } 
-
-        if(elgrupo.getFechaFinGrupo() == null){
-            elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
         }
-        else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) { // Si quiero tmb que sea la misma: ||
-                                                                   // elgrupo.getFechaFinGrupo().isEqual(LocalDate.now())
+
+        if (elgrupo.getFechaFinGrupo() == null) {
+            elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
+        } else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) { // Si quiero tmb que sea la misma: ||
+            // elgrupo.getFechaFinGrupo().isEqual(LocalDate.now())
             elgrupo.setEstadoGrupo(EstadoGrupo.TERMINADO);
-         
 
-        } else { 
+        } else {
             elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
         }
-      
+
         grupo.save(elgrupo);
         return "redirect:/listaGrupos";
     }
@@ -230,7 +225,6 @@ public class GruposController {
         } else
             return "redirect:/";
     }
-
 
     @GetMapping("/grupos/editar/{id}")
     public ModelAndView mostrarFormularioDeEditarGrupo(@PathVariable(name = "id") Integer id) {
@@ -270,10 +264,10 @@ public class GruposController {
 
             List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
-        
+
             return "unirAgrupo";
-        } 
-        else return "redirect:/";
+        } else
+            return "redirect:/";
 
     }
 
@@ -304,7 +298,7 @@ public class GruposController {
     @GetMapping("/materialesGrupo/{id}")
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Grupo g = grupo.getGrupo(id);
-        if(getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()){
+        if (getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()) {
             Usuario elusuario = getUsuario();
             model.addAttribute("user", elusuario);
             model.addAttribute("listado", materialS.materialesGrupo(g));
@@ -312,47 +306,48 @@ public class GruposController {
             model.addAttribute("material", material);
             model.addAttribute("id", id);
             return "materialesGrupo";
-        } else return "redirect:/";
+        } else
+            return "redirect:/";
     }
 
     // subir material a un grupo
     @PostMapping("/process_materialGrupo/{id}")
-    public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material, @RequestParam("file") MultipartFile file){
-            Grupo elgrupo = grupo.getGrupo(id);
-            if(getUsuario() instanceof Coordinador && elgrupo.getIdCoordinador() == getUsuario().getId()){
-                material.setGrupo(elgrupo);
-                if(!file.isEmpty()){
-                    Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
-                    String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
-                    try {
-                        byte[] bytesArc = file.getBytes(); 
-                        Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
-                        Files.write(rutaCompleta, bytesArc);
-                        material.setLink(rutaCompleta.toString());
-                        List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
-                        for(int i = 0; i < losparticipantes.size(); i++){
-                            material.setParticipante(losparticipantes.get(i));
-                            materialS.updateMaterial(material);
-                        }
-                    } catch (Exception e) {
-                        String mensaje = "Ha ocurrido un error: " + e.getMessage();
-                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-                    }   
-                    
-
+    public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material,
+            @RequestParam("file") MultipartFile file) {
+        Grupo elgrupo = grupo.getGrupo(id);
+        if (getUsuario() instanceof Coordinador && elgrupo.getIdCoordinador() == getUsuario().getId()) {
+            material.setGrupo(elgrupo);
+            if (!file.isEmpty()) {
+                Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
+                String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+                try {
+                    byte[] bytesArc = file.getBytes();
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesArc);
+                    material.setLink(rutaCompleta.toString());
+                    List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
+                    for (int i = 0; i < losparticipantes.size(); i++) {
+                        material.setParticipante(losparticipantes.get(i));
+                        materialS.updateMaterial(material);
+                    }
+                } catch (Exception e) {
+                    String mensaje = "Ha ocurrido un error: " + e.getMessage();
+                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 }
+
             }
+        }
         return "redirect:/materialesGrupo/{id}";
     }
 
     @GetMapping("/eliminarMaterialGrupo/{id}")
     public String processElimMaterial(@PathVariable("id") Integer id) {
         Integer idG = materialS.getMaterial(id).getGrupo().getId();
-        if(getUsuario() instanceof Coordinador){
+        if (getUsuario() instanceof Coordinador) {
             materialS.eliminarMaterialGrupo(id);
         }
 
-       return "redirect:/materialesGrupo/" + idG;
+        return "redirect:/materialesGrupo/" + idG;
     }
 
     @GetMapping("/echargrupo/{id}")
@@ -360,7 +355,8 @@ public class GruposController {
         if (getUsuario() instanceof Coordinador) {
             part.quitargrupo(id);
             return "redirect:/listaGrupos";
-        } else return "redirect:/";
+        } else
+            return "redirect:/";
     }
 
     public Usuario getUsuario() {
@@ -392,10 +388,9 @@ public class GruposController {
 
             Mensaje men = new Mensaje();
             MensajePrivado menPriv = new MensajePrivado();
-          
+
             List<Mensaje> mensajes = mensaje.obtenerMensajes(g);
             List<MensajePrivado> mensajesPrivados = mensajePrivado.obtenerMensajesPrivados(p);
-
 
             model.addAttribute("message", men);
             model.addAttribute("mensajes", mensajes);
@@ -493,16 +488,17 @@ public class GruposController {
     @PostMapping("/observaciones/guardar2/{idGrupo}")
     public String guardarObservaciones2(@ModelAttribute("unaObservacion") Observaciones observacion,
             @PathVariable("idGrupo") Integer idGrupo, Model model, HttpServletRequest request) {
-
-        Observaciones observacionExistente = observaciones.getObservacion(observacion.getId());
-        observacionExistente.setIdCoordinador(getUsuario().getId());
-        observacionExistente.setIdGrupo(idGrupo);
-        String nota = request.getParameter("nota");
-        observacionExistente.setNota(nota);
-        observaciones.guardar(observacion);
+        Integer idNota = Integer.parseInt(request.getParameter("idNota"));
+        if (idNota != null) {
+            Observaciones observacionExistente = observaciones.getObservacion(idNota);
+            observacionExistente.setIdCoordinador(getUsuario().getId());
+            observacionExistente.setIdGrupo(idGrupo);
+            String nota = request.getParameter("nota");
+            observacionExistente.setNota(nota);
+            observaciones.guardar(observacionExistente);
+        }
 
         return "redirect:/unGrupo/{idGrupo}";
-
     }
 
 }
