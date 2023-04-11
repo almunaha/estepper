@@ -1084,6 +1084,16 @@ public class ParticipanteController {
             return "acceso";
     }
 
+    @GetMapping("/juego")
+    public String juego(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+            return "juego";
+        else
+            return "acceso";
+    }
+
     @GetMapping("/alimentos")
     public String alimentos(Model model) {
         Usuario user = getUsuario();
