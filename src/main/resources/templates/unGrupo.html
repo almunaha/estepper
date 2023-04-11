@@ -16,10 +16,15 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
+    <script src="/js/grupos.js"></script>
 
     <!--PARA EL BUSCADOR-->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- PARA EL MODAL DE ELIMINAR NOTA -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 
     <title>Grupo - Estepper</title>
@@ -170,7 +175,8 @@
                                 <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
                             </div>
                             <div class="der-valor">
-                                <div class="dato-valor"><span th:text="${grupo.id} + kg"></span></div>
+                                <!--<div class="dato-valor"><span th:text="${grupo.id} + kg"></span></div>-->
+                                <div class="dato-valor"><span id="perdida-peso-media"></span></div>
                                 <div class="bottom-valor"><span>Peso perdido </span></div>
                             </div>
                         </div>
@@ -182,37 +188,26 @@
                                 <i class="fa-solid fa-check" style="color: rgb(122, 218, 103)"></i>
                             </div>
                             <div class="der-valor">
-                                <div class="dato-valor"><span th:text="${grupo.id}"></span></div>
-                                <div class="bottom-valor"><span>Asistencia media</span></div>
+                                <div class="dato-valor"> <span id="asistencia-media" style="font-size: 24px;"></span></div>
+                                <div class="bottom-valor"><span>Asistencia media </span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="valor">
+                        <div class="flex-valor">
+                            <div class="iz-valor">
+                                <i class="fa-solid fa-child-reaching" style="color: rgb(103, 111, 218)"></i>
+                            </div>
+                            <div class="der-valor">
+                                <div class="dato-valor"> <span id="perdida-cmcintura-media" ></span></div>
+                                <div class="bottom-valor"><span>Cintura perdida</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-                <!--<div class="container-cards">
-
-                <tr th:each="lis:${listadoParticipantesGrupo}">
-
-                    <div class="cardi">
-                        <div class="cover">
-                            <img th:src="${lis.fotoParticipante}" alt="avatar">
-                            <div class="img-back"></div>
-                        </div>
-                        <div class="descripcion">
-                            <h2 th:text="${lis.nickname}"></h2>
-                            <h3 th:text="${lis.codigo}"></h3>
-                            <p th:text="${lis.edad} + ' ' + años"></p>
-                            <div style="display: flex; justify-content: space-around; flex-direction: column;">
-                                <a class="botonGr" th:href="@{'/valoracion/' + ${lis.id}}">Ver expediente</a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </tr>
-
-            </div>-->
 
                 <div class="graficas-progreso">
 
@@ -239,9 +234,24 @@
                                                 style="display: flex; justify-content: space-around; flex-direction: column;">
                                                 <a class="botonGr"
                                                     th:href="@{'/expediente/' + ${lis.id}}">Expediente</a>
+                                                <a class="botonGr" th:href="@{'/chatPrivado/' + ${lis.id}}">Mensaje</a>
                                             </div>
 
                                         </div>
+
+                                        <!--SON PRUEBAS-->
+                                        <div class="listaDeParticipantes mb-2">
+                                            <div class="perdida-peso-individual"
+                                                style="text-align: center;display: none; "
+                                                th:text="@{${lis.perdidaDePeso}}"></div>
+                                            <div class="asistencia-individual"
+                                                style="text-align: center;display: none; "
+                                                th:text="@{${lis.asistencia}}"></div>
+                                            <div class="perdida-cmcintura-individual"
+                                                style="text-align: center; display: none;"
+                                                th:text="@{${lis.perdidacmcintura}}"></div>
+                                        </div>
+
                                     </div>
 
                                 </tr>
@@ -250,62 +260,40 @@
                     </div>
 
 
-                    <!--<div class="progreso-datos2">
-                    <div class="header-progreso">
-                        <h4>Ver qué poner (tablón, chat grupal...)</h4>
-                    </div>
 
-                    HOLI
-                    <div class="layout-grafica">
-
-                    </div>
-
-
-
-
-                </div>-->
-
-
-                    <!--
-                    <div class="wrapper">
-                <section class="chat-area">
-                    <header>
-
-                        <img src="/img/avatar1.png" alt="">
-                        <h4 th:text="${grupo.nombre}"></h4>
-                        <div class="details">
-                         </div>
-                </header>
-                <div class="chat-box">
-
-                </div>
-                <form th:action="@{/mensajes/guardar}" th:object="${message}" method="post" class="typing-area">
-
-                    <input type="text" th:field="*{mensaje}" class="input-field"
-                        placeholder="Escribe un mensaje aquí ..." autocomplete="off">
-                    <button type="submit"><i class="fab fa-telegram-plane"></i></button>
-                </form>
-            </section>
-        </div>
-                -->
-
-
-                    <div class="wrapper">
+                    <div class="bordes-chat">
                         <section class="chat-area">
                             <header>
-
-                                <img src="/img/avatar1.png" alt="">
+                                <img th:src="${grupo.fotoGrupo}" alt="Foto de grupo">
                                 <h4 th:text="${grupo.nombre}"></h4>
                                 <div class="details">
                                 </div>
                             </header>
                             <div class="chat-box">
-                                <ul>
-                                    <li th:each="m : ${mensajes}">
-                                        <span th:text="${m.usuario.nickname} + ': '"></span>
-                                        <span th:text="${m.mensaje}"></span>
-                                    </li>
-                                </ul>
+                                <div th:each="m : ${mensajes}" class="contenedor-mensaje mb-2">
+                                    <div th:if="${m.usuario.id != user.id}"
+                                        class="mensaje d-flex justify-content-start align-items-end">
+                                        <img th:src="${m.usuario.fotoParticipante}" class="avatar" style="width: 40px;"
+                                            alt="m.usuario.nickname" />
+                                        <div class="contenido-mensaje grey ms-2 p-2">
+                                            <div th:text="${m.usuario.nickname}" class="nickname"></div>
+                                            <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                            <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                                class="fecha text-end"></div>
+                                        </div>
+                                    </div>
+                                    <div th:unless="${m.usuario.id != user.id}"
+                                        class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
+                                        <img th:src="${user.fotoParticipante}" class="avatar" style="width: 40px;"
+                                            alt="m.usuario.nickname" />
+                                        <div class="contenido-mensaje green me-2 p-2">
+                                            <div class="nickname">Yo</div>
+                                            <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                            <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                                class="fecha text-end"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <form th:action="@{'/mensajes/guardar/' + ${grupo.id}}" th:object="${message}" method="post"
                                 class="typing-area">
@@ -313,47 +301,283 @@
                                 <input type="text" th:field="*{mensaje}" class="input-field"
                                     placeholder="Escribe un mensaje aquí ..." autocomplete="off">
 
-                                <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+                                <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
 
                             </form>
                         </section>
                     </div>
                 </div>
 
-                <!--<div class="container-cards">
 
-                <tr th:each="lis:${listadoParticipantesGrupo}">
 
-                    <div class="cardi">
-                        <div class="cover">
-                            <img th:src="${lis.fotoParticipante}" alt="avatar">
-                            <div class="img-back"></div>
+                <div class="row" style="margin-right: 5%; margin-left: 3%;">
+
+                    <div class="zonasUnGrupoObservaciones">
+
+                        <div class="header-miGrupo">
+                            <h4>Notas y observaciones</h4>
                         </div>
-                        <div class="descripcion">
-                            <h2 th:text="${lis.nickname}"></h2>
-                            <h3 th:text="${lis.codigo}"></h3>
-                            <p th:text="${lis.edad} + ' ' + años"></p>
-                            <div style="display: flex; justify-content: space-around; flex-direction: column;">
-                                <a class="botonGr" th:href="@{'/valoracion/' + ${lis.id}}">Ver expediente</a>
+
+                        <div><a class="btn" id="btn-part" title="Crear" href="#" onclick="abrirIframe('mi-modal')">
+                                Crear una nota nueva</a>
+                        </div>
+
+                        <table class="table tablePart" th:if="${#lists.isEmpty(listaObservaciones) == false}">
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Nota</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="buscarGrupos">
+
+                                <tr th:each="lis:${listaObservaciones}">
+                                    <td th:text="${lis.fecha}"></td>
+                                    <td th:text="${lis.nota}"></td>
+                                    <td>
+
+                                        <button class="btn note-delete-button"
+                                            style="background-color:rgb(221, 116, 100); color:white;"
+                                            th:id="'nota-' + ${lis.id} + '-' + ${grupo.id}"><i
+                                                class="fa-solid fa-trash"></i></button>
+                                        <button class="btn note-edit-button"
+                                            style="background-color:rgb(221, 203, 100); color:white;"
+                                            th:id="'nota-' + ${lis.id} + '-' + ${grupo.id}"
+                                            th:data-message="${lis.nota}" th:data-observacion="${lis}">
+                                            <i class="fa-regular fa-pen-to-square"></i></button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <!--Modal-->
+                        <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Notas y observaciones</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form th:action="@{'/observaciones/guardar/' + ${grupo.id}}"
+                                            th:object="${listaObservaciones}" method="post"
+                                            enctype="multipart/form-data">
+                                            <div class="m-3">
+                                                <div class="form-group row">
+
+                                                    <label class="col-form-label col-sm-4">Nota:</label>
+
+                                                    <div class="col-sm-8 mb-2">
+                                                        <input type="text" name="nota" class="form-control" required
+                                                            id="nota" />
+                                                    </div>
+
+                                                </div>
+                                                <div class="text-center p">
+                                                    <button type="submit" class="btn" id="btn-part">Añadir</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--FIN MODAL-->
+
+                        <!--Modal-->
+                        <div class="modal fade" id="mi-modal2" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Notas y observaciones</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+
+
+                                        <form th:action="@{'/observaciones/guardar2/' + ${grupo.id}}"
+                                            th:object="${unaObservacion}" id="formulario-modal" method="post"
+                                            enctype="multipart/form-data">
+
+                                            <!--
+                                                
+                                        <form th:action="@{'/observaciones/guardar2/' + ${grupo.id}}"
+                                            th:object="${listaObservaciones}"
+                                             method="post"
+                                            enctype="multipart/form-data">
+                                            -->
+
+                                            <!--QUITAR ESTO CUANDO LO CONSIGA SOLUCIONAR-->
+                                            <th:block th:unless="${unaObservacion}">
+                                                <p>No hay observaciones disponiblees</p>
+                                            </th:block>
+                                            <div class="m-3">
+                                                <div class="form-group row">
+
+                                                    <label class="col-form-label col-sm-4">Nota:</label>
+
+                                                    <div class="col-sm-8 mb-2">
+                                                        <input type="text" name="nota" class="form-control" required
+                                                            id="nota-cargada" />
+                                                    </div>
+
+                                                </div>
+
+                                                <!-- Agrega un botón oculto para enviar el objeto completo de la observación -->
+                                                <input type="hidden" name="observacion" th:value="${unaObservacion}" />
+
+                                                <div class="text-center p">
+                                                    <button type="submit" class="btn" id="btn-part">Editar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
                             </div>
 
+
                         </div>
+
+
+
+
+                        <div style="float: right;">
+                            <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                                onclick="window.print();">
+                        </div>
+
                     </div>
 
-                </tr>
-
-            </div>-->
-
-                <div style="float: right;">
-                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
-                        onclick="window.print();">
                 </div>
 
+
+
+
+
+
             </div>
-
         </div>
-    </div>
+        <script> //PASARLO TODO AL GRUPOS.JS, NO LO HE PASADO PORQUE NO SÉ PORQUE SINO NO ME IBA, PROBARLO MÁS ADELANNTEE
 
+            // Función que abre el modal solicitado
+            function abrirIframe(modalId) {
+                const modal = new bootstrap.Modal(document.getElementById(modalId));
+                modal.show();
+            }
+
+            // Cargamos los eventos de los botones DELETE NOTA
+            const deleteButtons = document.getElementsByClassName('note-delete-button');
+            Array.prototype.forEach.call(deleteButtons, function (button) {
+                button.addEventListener('click', function () {
+                    // Obtendremos el id del grupo y de la nota
+                    const notaInfo = this.getAttribute('id').split('-');
+                    const id = notaInfo[1];
+                    const idGrupo = notaInfo[2];
+                    console.log(id, idGrupo);
+
+                    Swal.fire({
+                        position: 'center',
+                        title: '<h4>¿Estás seguro de eliminar la nota?</h4>',
+                        showConfirmButton: true,
+                        showCancelButton: true,
+                        cancelButtonText: 'Cancelar',
+                        confirmButtonColor: "rgb(218, 77, 73)",
+                        confirmButtonText: '<a href="/eliminarNota/' + id + '/' + idGrupo + '" id ="conf">Eliminar</a>',
+
+                        didRender: function () {
+                            const confirm = document.querySelector('#conf');
+
+                            if (confirm) {
+                                confirm.style.color = 'white';
+                            }
+                        },
+
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+
+                    });
+
+                })
+            });
+
+            // Cargamos los eventos de los botones EDIT NOTA
+            const editButtons = document.getElementsByClassName('note-edit-button');
+            Array.prototype.forEach.call(editButtons, function (button) {
+                button.addEventListener('click', function () {
+                    // Obtendremos el id del grupo y de la nota
+                    const notaInfo = this.getAttribute('id').split('-');
+                    const id = notaInfo[1];
+                    const idGrupo = notaInfo[2];
+                    const mensaje = this.getAttribute('data-message');
+                    console.log(id, idGrupo);
+                    console.log(mensaje);
+
+                    document.getElementById('nota-cargada').value = mensaje;
+                    abrirIframe('mi-modal2');
+
+                    // Obtiene el objeto de la observación como una cadena JSON
+                    const observacion = this.getAttribute('data-observacion');
+                    console.log(observacion);
+                    const observacionObj = JSON.parse(observacion);
+                    // var observacion = $(this).data('observacion');
+                    console.log(observacionObj);
+
+                    // Asigna el objeto completo de la observación al formulario del modal
+                    $('unaObservacion').data('data-observacion', observacionObj);
+
+                })
+
+
+            });
+
+            const listadoParticipantesGrupoPeso = document.querySelectorAll('.listaDeParticipantes .perdida-peso-individual');
+            const listadoParticipantesGrupoAsistencia = document.querySelectorAll('.listaDeParticipantes .asistencia-individual');
+            const listadoParticipantesGrupoCmCintura = document.querySelectorAll('.listaDeParticipantes .perdida-cmcintura-individual');
+
+            var perdidaPesoIndividual = document.getElementsByClassName("perdida-peso-individual");
+            var asistenciaIndividual = document.getElementsByClassName("asistencia-individual");
+            var perdidaCmCinturaIndividual = document.getElementsByClassName("perdida-cmcintura-individual");
+            var totalPerdidaPeso = 0;
+            var totalAsistencia = 0;
+            var totalPerdidaCmCintura = 0;
+
+            for (var i = 0; i < perdidaPesoIndividual.length; i++) {
+                var pesoIndividual = parseFloat(perdidaPesoIndividual[i].innerText);
+                var asistIndividual = parseFloat(asistenciaIndividual[i].innerText);
+                var cmCinIndividual = parseFloat(perdidaCmCinturaIndividual[i].innerText);
+
+                if (!isNaN(pesoIndividual)) {
+                    totalPerdidaPeso += pesoIndividual;
+                    totalAsistencia += asistIndividual;
+                    totalPerdidaCmCintura += cmCinIndividual;
+                }
+            }
+
+            const perdidaPesoMedia = (totalPerdidaPeso / listadoParticipantesGrupoPeso.length).toFixed(2);
+            const asistenciaMedia = (totalAsistencia / listadoParticipantesGrupoAsistencia.length).toFixed(2);
+            const perdidaCmCinturaMedia = (totalPerdidaCmCintura / listadoParticipantesGrupoCmCintura.length).toFixed(2);
+
+
+            document.querySelector('#perdida-peso-media').textContent = perdidaPesoMedia + ' kg';
+            document.querySelector('#asistencia-media').textContent = asistenciaMedia + ' sesiones';
+            document.querySelector('#perdida-cmcintura-media').textContent = perdidaCmCinturaMedia + ' cm';
+
+
+
+        </script>
 </body>
 
 </html>

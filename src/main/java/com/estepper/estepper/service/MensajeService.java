@@ -10,7 +10,7 @@ public interface MensajeService {
  
     public Mensaje getMensaje(Integer id);
     public void save(Mensaje mensaje);
-    public List<Mensaje> obtenerMensajes();
+    public List<Mensaje> obtenerMensajes(Grupo grupo);
     public void deleteByParticipante(Usuario p);
     public void deleteByGrupo(Grupo g);
 }

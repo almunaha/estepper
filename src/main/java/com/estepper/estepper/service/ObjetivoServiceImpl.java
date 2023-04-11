@@ -21,6 +21,7 @@ public class ObjetivoServiceImpl implements ObjetivoService {
         repo.save(obj);
     }
 
+
     @Override
     public List<Objetivo> getObjetivos(){
         return repo.findAll();
@@ -30,6 +31,11 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     @Override
     public List<Objetivo> listaObjetivos(Participante p) {
         return(List<Objetivo>) repo.findByParticipante(p);    
+    }
+
+    @Override
+    public List<Objetivo> listaObjetivosPorMes(Participante p, Integer mes, Integer anio) {
+        return(List<Objetivo>) repo.findByParticipanteyMesyAnio(p, mes, anio);    
     }
 
     @Override
@@ -46,7 +52,6 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     public void deleteByParticipante(Participante p) {
         repo.deleteAllByParticipante(p);
     }
-
 
 }
 

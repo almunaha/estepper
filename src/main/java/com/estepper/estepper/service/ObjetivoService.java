@@ -8,6 +8,7 @@ import com.estepper.estepper.model.entity.Participante;
 public interface ObjetivoService {
 
     public List<Objetivo> listaObjetivos(Participante p);
+    public List<Objetivo> listaObjetivosPorMes(Participante p, Integer mes, Integer anio);
     public void guardar(Objetivo o);
     public void borrar(Integer id);
     public Objetivo getObjetivo(Integer id);
@@ -15,5 +16,6 @@ public interface ObjetivoService {
    // public List<Objetivo> objetivosPorEstado(Participante participante, EstadoObjetivo estado);
    // public List<Objetivo> ObjetivosPorFecha(Date fecha, EstadoObjetivo estado, Participante participante);
    public void deleteByParticipante(Participante p);
+
 }
 

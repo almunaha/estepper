@@ -115,7 +115,9 @@
                         <h4>Crear un nuevo grupo</h4>
                     </div>
 
-                    <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post">
+                    <!--ESTA ES LA BASE, A PARTIR DE AQUÍ PONERLO COMO QUIERA-->
+
+                    <form th:action="@{/grupos/guardar}" th:object="${grupo}" method="post" enctype="multipart/form-data">
                         <div class="m-3">
                             <div class="form-group row">
                                 <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>

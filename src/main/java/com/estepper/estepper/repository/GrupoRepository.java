@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 import com.estepper.estepper.model.entity.Grupo;
@@ -26,5 +29,10 @@ public interface GrupoRepository extends JpaRepository<Grupo, Integer>{
     @Transactional
     @Query("update Grupo SET numParticipantes = :numParticipantes WHERE id = :idGrupo")
     void update(Integer idGrupo, Integer numParticipantes);
+
+
+    @Query("SELECT g FROM Grupo g WHERE g.idCoordinador = :idCoordinador")
+    public Page<Grupo> findByIdCoordinador(Pageable pageable, Integer idCoordinador);
+
 }
 

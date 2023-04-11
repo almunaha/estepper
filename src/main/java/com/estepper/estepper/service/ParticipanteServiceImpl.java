@@ -65,4 +65,9 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }
 
     
+    @Override
+    public void save(Participante participante) {
+        repo.save(participante);
+    }
+    
 }

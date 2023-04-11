@@ -18,26 +18,6 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto">
 
-    <style>
-        .datos {
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: 4%;
-        }
-
-        .dato {
-            display: flex;
-            flex-basis: calc(100% / 5);
-            align-items: center;
-            border: 1px solid #ccc;
-            justify-content: space-around;
-            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-            padding: 4%;
-            margin: 2%;
-        }
-
-    </style>
-
     <title>Perfil - Estepper</title>
 </head>
 
@@ -99,8 +79,8 @@
                 </li>
                 <li>
                     <a th:href="@{/chat}">
-                        <i class="fa-solid fa-comments"></i>
-                        <span class="nombre-enlaces">Chat</span>
+                        <i class="fa-solid fa-people-group"></i>
+                        <span class="nombre-enlaces">Mi grupo</span>
                     </a>
                 </li>
 
@@ -184,54 +164,233 @@
             </nav>
 
             <div class="cuerpoPerfil">
-                <div class="container">
-                    <div class="cardi2 mt-3">
-                        <div class="imagenPerfil">
-                            <img width="100" th:src="${user.fotoParticipante}" alt="imagenPerfil" />
-                        </div>
-                        <div class="col-md-8">
-                            <div style="margin-top: 3%;" class="contenidoPerfil mt-10">
-                                <h3 th:text="${user.nickname}">Nombre</h3>
-                                        <div class="row datos">
-                                            <div class="dato">
-                                                <h5><i class="fa-solid fa-barcode" title="Código"></i></h5>
+
+                <div class="row justify-content-end" style="width: 100%; margin-right: 150px;">
+                    <a class="btn" style="width: 15%" id="btn-part" th:href="@{'/perfil/' + ${user.id}}">Editar
+                        perfil</a>
+                </div>
+
+                <div class="cardi2 mt-3">
+
+                    <div class="imagenPerfil">
+                        <img width="100" th:src="${user.fotoParticipante}" alt="imagenPerfil" />
+                    </div>
+
+                    <div class="contenidoPerfil mt-4">
+
+                        <h3 th:text="${user.nickname}">Nombre</h3>
+
+                        <!--<div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary" id="botonContacto">Contacto</button>
+                            <button type="button" class="btn btn-outline-primary" id="botonDetalles">Detalles</button>
+                            <button type="button" class="btn btn-outline-primary" id="botonActividad"> Actividad</button>
+                        </div>-->
+
+                        <div class="centroPerfil">
+
+
+                            <div class="box" id="contacto">
+
+                                <!-- <p><i class="icono fas fa-key"></i><span th:text="' Código: ' + ${user.codigo}" /></p>-->
+                                <!-- <p><i class="icono fas fa-envelope"></i><span th:text="' Email: ' + ${user.email}" /></p>
+                                <p><i class="icono fas fa-thumbtack"></i><span th:text="' Estado de la cuenta: ' + ${user.estadoCuenta}" /></p>-->
+
+                                <!--<div class="box1">
+                                    <h4><i class="icono fas fa-key"></i>Código</h4>
+                                    <h4 th:text="${user.codigo}"></h4>
+                                </div>
+                                <div class="box1">
+                                    <h4><i class="icono fas fa-envelope"></i>Email </h4>
+                                    <h4 th:text="${user.email}"></h4>
+                                </div>
+                                <div class="box1">
+                                    <h4><i class="icono fas fa-key"></i>Estado </h4>
+                                    <h4 th:text="${user.estadoCuenta}"></h4>
+                                </div>-->
+
+                                <div class="row" style="justify-content: center;">
+
+                                    <div class="col-sm-3">
+                                        <div class="card" data-bs-toggle="tooltip" title="Código participante">
+                                            <div class="card-body">
+                                                <h5><i class="fa-solid fa-barcode"></i><!--Código--></h5>
                                                 <h5 th:text="${user.codigo}"></h5>
                                             </div>
-                                            <div class="dato">
-                                                <h5><i title="Email" class="icono fas fa-envelope"></i></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card" data-bs-toggle="tooltip" title="Email del participante">
+                                            <div class="card-body">
+                                                <h5><i class="icono fas fa-envelope"></i><!--Email--> </h5>
                                                 <h5 th:text="${user.email}"></h5>
                                             </div>
-                                            <div class="dato">
-                                                <h5><i class="fa-solid fa-gears" title="Estado"></i></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="card" data-bs-toggle="tooltip" title="Estado de la cuenta">
+                                            <div class="card-body">
+                                                <h5><i class="fa-solid fa-gears"></i></i><!--Estado--> </h5>
                                                 <h5 th:text="${user.estadoCuenta}"></h5>
                                             </div>
-                                            <div class="dato">
-                                                <h5><i class="fa-solid fa-calendar-day" title="Edad"></i></h5>
-                                                <h5 th:text="'Edad:'+ ' ' + ${edad}"></h5>
-                                            </div>
-                                            <div class="dato">
-                                                <h5><i class="fa-solid fa-venus-mars" title="Género"></i></h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="card" data-bs-toggle="tooltip" title="Sexo">
+                                            <div class="card-body">
+                                                <h5><i class="fa-solid fa-venus-mars"></i><!--Sexo--> </h5>
                                                 <h5 th:text="${sexo}"></h5>
                                             </div>
                                         </div>
-    
-                                
+                                    </div>
+                                </div>
+                                <div class="row mt-3" style="justify-content: center;">
+                                    <div class="col-sm-2">
+                                        <div class="card" data-bs-toggle="tooltip" title="Edad">
+                                            <div class="card-body">
+                                                <h5><i class="fa-solid fa-calendar-day"></i><!--Edad--> </h5>
+                                                <h5 th:text="'Edad:'+ ' ' + ${edad}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="card" data-bs-toggle="tooltip" title="Asistencia">
+                                            <div class="card-body">
+                                                <h5><i class="fa-solid fa-list-check"></i><!--Asistencia --></h5>
+                                                <h5 th:text="${participante.asistencia} + ' ' + '% sesiones'"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="card" data-bs-toggle="tooltip" title="Pérdida de peso">
+                                            <div class="card-body">
+                                                <h5><i class="fa-solid fa-weight-scale"></i><!--Pérdida de peso--> </h5>
+                                                <h5 th:text="${-participante.perdidaDePeso}+ ' ' + 'kg perdidos'"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="card" data-bs-toggle="tooltip" title="Pérdida de cm cintura">
+                                            <div class="card-body">
+                                                <h5><i
+                                                        class="fa-sharp fa-solid fa-ruler"></i><!--Pérdida de cmcintura-->
+                                                </h5>
+                                                <h5 th:text="${-participante.perdidacmcintura}+ ' ' + 'cm perdidos'">
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="card" data-bs-toggle="tooltip" title="Grupo al que pertenece">
+                                            <div class="card-body">
+                                                <h5><i class="fa-solid fa-users-between-lines"></i><!--Grupo--> </h5>
+                                                <h5 th:text="${grupo}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+
+
+
+
+
+
+                            <!-- <div class="box" id="detalles">
+    
+                                <p><i class="icono fas fa-anchor"></i><span th:text="' Sexo: ' + ${participante.sexo}" /><p>
+                                <p><i class="icono fas fa-bug"></i><span th:text="' Edad: ' + ${participante.edad}" /></p>
+
+                                <div class="box1">
+                                    <h4><i class="icono fas fa-anchor"></i>Sexo</h4>
+                                    <h4 th:text="${participante.sexo}"></h4>
+                                </div>
+                                <div class="box1">
+                                    <h4><i class="icono fas fa-bug"></i>Edad</h4>
+                                    <h4 th:text="${participante.edad}"></h4>
+                                </div>
+
+                            </div>-->
+
+                            <!--<div class="box" id="actividad">
+    
+                                <<p><i class="icono fas fa-list-alt"></i><span th:text="' Asistencia: ' + ${participante.asistencia}" /></p>
+                                <p><i class="icono fas fa-weight"></i><span th:text="' Pérdida de peso: ' + ${participante.perdidaDePeso}" /></p>
+                                <p><i class="icono fas fa-people-carry"></i><span th:text="' Grupo: ' + ${grupo}" /></p>
+
+                                <div class="box1">
+                                    <h4><i class="icono fas fa-list-alt"></i>Asistencia</h4>
+                                    <h4 th:text="${participante.asistencia}"></h4>
+                                </div>
+                                <div class="box1">
+                                    <h4><i class="icono fas fa-weight"></i>Pérdida de peso</h4>
+                                    <h4 th:text="${participante.perdidaDePeso}"></h4>
+                                </div>
+                                <div class="box1">
+                                    <h4><i class="icono fas fa-people-carry"></i>Grupo</h4>
+                                    <h4 th:text="${grupo}"></h4>
+                                </div>
+                                
+                            </div>-->
+
+
                         </div>
 
+                    </div>
 
-                    </div>
-                    <div class="row justify-content-end" style="width: 50%; margin-left: 20%; margin-top: 3%;">
-                        <a class="btn" style="width: 115%" id="btn-part" th:href="@{'/perfil/' + ${user.id}}">Editar
-                            perfil</a>
-                    </div>
+
                 </div>
+
+
 
 
 
             </div>
 
+
+            <!--<script type="text/javascript">
+
+                const contacto = document.getElementById('contacto');
+                const detalles = document.getElementById('detalles');
+                const actividad = document.getElementById('actividad');
+
+                function mostrarContacto() {
+                contacto.style.display = 'flex';
+                detalles.style.display = 'none';
+                actividad.style.display = 'none';
+                }
+
+                function mostrarDetalles() {
+                contacto.style.display = 'none';
+                detalles.style.display = 'flex';
+                actividad.style.display = 'none';
+                }
+
+                function mostrarActividad() {
+                contacto.style.display = 'none';
+                detalles.style.display = 'none';
+                actividad.style.display = 'flex';
+                }
+
+                const botonContacto = document.getElementById('botonContacto');
+                botonContacto.addEventListener('click', mostrarContacto);
+
+                const botonDetalles = document.getElementById('botonDetalles');
+                botonDetalles.addEventListener('click', mostrarDetalles);
+
+                const botonActividad = document.getElementById('botonActividad');
+                botonActividad.addEventListener('click', mostrarActividad);
+
+
+
+            </script>-->
+
+
         </div>
+
+    </div>
 
 </body>
 

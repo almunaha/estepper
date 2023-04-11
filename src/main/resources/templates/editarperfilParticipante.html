@@ -77,8 +77,8 @@
                 </li>
                 <li>
                     <a th:href="@{/chat}">
-                        <i class="fa-solid fa-comments"></i>
-                        <span class="nombre-enlaces">Chat</span>
+                        <i class="fa-solid fa-people-group"></i>
+                        <span class="nombre-enlaces">Mi grupo</span>
                     </a>
                 </li>
 
@@ -86,8 +86,8 @@
 
         </div>
 
-          <!-- MENÚ MÓVIL -->
-          <div class="menu-movil">
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
 
             <a th:href="@{/}">
                 <i class="fa-solid fa-house"></i>
@@ -133,7 +133,7 @@
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
             </div>
-            
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -143,7 +143,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img  width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header"/>
+                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -169,87 +170,107 @@
                   <div class="row">
                     <!--IMAGEN -->
                     <div class="col-md-3 mb-3">
-                      <img id="foto-perfil" th:src="${participante.fotoParticipante}" alt="">
+                      <img id="foto-perfil" th:src="${participante.fotoParticipante}" class="w-50" alt="">
                     </div>
-              
-                    <!--FORMULARIO -->
-                    <div class="col-md-8">
-                      <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${participante.id}}" th:object="${participante}">
-                        <div class="mb-3">
-                          <label class="form-label">Alias</label>
-                          <input type="text" th:field="*{nickname}" class="form-control" required>
+                    <div class="row">
+                        <!--IMAGEN -->
+                        <div class="col-md-3 mb-3">
+                            <img id="foto-perfil" th:src="${participante.fotoParticipante}" alt="">
                         </div>
-              
-                        <div class="mb-3">
-                          <label class="form-label">Correo</label>
-                          <input type="email" th:field="*{email}" class="form-control" required>
-                        </div>
-              
-                        <div class="mb-3">
-                          <label class="form-label">Contraseña</label>
-                          <input type="password" class="form-control" placeholder="**********" th:field="*{contrasenia}">
-                        </div>
-              
-                        <div class="mb-3">
-                          <label class="form-label">Sexo</label>
-                          <select th:field="*{sexo}" class="form-select" required>
-                            <option value="MASCULINO" th:text="MASCULINO"></option>
-                            <option value="FEMENINO" th:text="FEMENINO"></option>
-                          </select>
-                        </div>
-                        <div th:unless="${participante.estadoCuenta == 'BAJA'}" class="mb-3">
-                          <label class="form-label">Estado</label>
-                          <select th:field="*{estadoCuenta}" class="form-select" required>
-                            <option value="ALTA" th:text="ALTA"></option>
-                            <option value="BAJA" th:text="BAJA"></option>
-                          </select>
-                        </div>
-              
-                        <div class="mb-3">
-                          <label class="form-label">Edad</label>
-                          <input type="number" th:field="*{edad}" class="form-control" required>
-                        </div>
-              
-                        <div class="mb-3">
-                          <label class="form-label">Avatar</label>
-                          <select id="avatar" class="form-select" th:field="*{fotoParticipante}">
-                            <option value="/img/p1.png">Sin avatar</option>
-                            <option value="/img/avatar1.png">Avatar 1</option>
-                            <option value="/img/avatar2.png">Avatar 2</option>
-                            <option value="/img/avatar3.png">Avatar 3</option>
-                            <option value="/img/avatar4.png">Avatar 4</option>
-                            <option value="/img/avatar5.png">Avatar 5</option>
-                            <option value="/img/avatar6.png">Avatar 6</option>
-                            <option value="/img/avatar7.png">Avatar 7</option>
-              
-                                    <option value="/img/avatar8.png">Avatar 8</option>
-                                    <option value="/img/avatar9.png">Avatar 9</option>
-                                    <option value="/img/avatar10.png">Avatar 10</option>
-                                </select>
-                            </div>
 
-                            <!-- LISTADO DE AVATARES -->
-                            <div class="avatares">
-                                <img src="/img/avatar1.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar2.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar3.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar4.png" class="avatar"width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar5.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar6.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar7.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar8.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar9.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                                <img src="/img/avatar10.png" class="avatar" width="10%" heigh="20%" alt="" onclick="cambiarAvatar('/img/avatar1.png')">
-                            </div>
-                            <div style="display: flex; justify-content: center;">
-                                <a th:href="@{'/eliminarcuenta/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px; background-color: rgb(237, 125, 125); color: white">Eliminar Cuenta</a>
-                                <a th:href="@{'/mostrarperfil/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px;">Cancelar</a>
-                               <button class="btn mt-4" id="btn-edit" type="submit">Guardar</button>
-                            </div>
-                        </form>
+                        <!--FORMULARIO -->
+                        <div class="col-md-8">
+                            <form class="form-perfil" method="post"
+                                th:action="@{'/process_perfil/' + ${participante.id}}" th:object="${participante}">
+                                <div class="mb-3">
+                                    <label class="form-label">Alias</label>
+                                    <input type="text" th:field="*{nickname}" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Correo</label>
+                                    <input type="email" th:field="*{email}" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" placeholder="**********"
+                                        th:field="*{contrasenia}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Sexo</label>
+                                    <select th:field="*{sexo}" class="form-select" required>
+                                        <option value="MASCULINO" th:text="MASCULINO"></option>
+                                        <option value="FEMENINO" th:text="FEMENINO"></option>
+                                    </select>
+                                </div>
+                                <div th:unless="${participante.estadoCuenta == 'BAJA'}" class="mb-3">
+                                    <label class="form-label">Estado</label>
+                                    <select th:field="*{estadoCuenta}" class="form-select" required>
+                                        <option value="ALTA" th:text="ALTA"></option>
+                                        <option value="BAJA" th:text="BAJA"></option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Edad</label>
+                                    <input type="number" th:field="*{edad}" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Avatar</label>
+                                    <select id="avatar" class="form-select" th:field="*{fotoParticipante}">
+                                        <option value="/img/p1.png">Sin avatar</option>
+                                        <option value="/img/avatar1.png">Avatar 1</option>
+                                        <option value="/img/avatar2.png">Avatar 2</option>
+                                        <option value="/img/avatar3.png">Avatar 3</option>
+                                        <option value="/img/avatar4.png">Avatar 4</option>
+                                        <option value="/img/avatar5.png">Avatar 5</option>
+                                        <option value="/img/avatar6.png">Avatar 6</option>
+                                        <option value="/img/avatar7.png">Avatar 7</option>
+
+                                        <option value="/img/avatar8.png">Avatar 8</option>
+                                        <option value="/img/avatar9.png">Avatar 9</option>
+                                        <option value="/img/avatar10.png">Avatar 10</option>
+                                    </select>
+                                </div>
+
+                                <!-- LISTADO DE AVATARES -->
+                                <div class="avatares">
+                                    <img title="Avatar 1" src="/img/avatar1.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 2" src="/img/avatar2.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 3" src="/img/avatar3.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 4" src="/img/avatar4.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 5" src="/img/avatar5.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 6" src="/img/avatar6.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 7" src="/img/avatar7.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 8" src="/img/avatar8.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 9" src="/img/avatar9.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                    <img title="Avatar 10" src="/img/avatar10.png" class="avatar" width="10%" heigh="20%" alt=""
+                                        onclick="cambiarAvatar('/img/avatar1.png')">
+                                </div>
+                                <div style="display: flex; justify-content: center;">
+                                    <a th:href="@{'/eliminarcuenta/' + ${user.id}}" class="btn mt-4" id="btn-cancel"
+                                        style="margin-right: 15px; background-color: rgb(237, 125, 125); color: white">Eliminar
+                                        Cuenta</a>
+                                    <a th:href="@{'/mostrarperfil/' + ${user.id}}" class="btn mt-4" id="btn-cancel"
+                                        style="margin-right: 15px;">Cancelar</a>
+                                    <button class="btn mt-4" id="btn-edit" type="submit">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
-
-                </div>
                 </div>
             </div>
 

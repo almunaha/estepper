@@ -87,7 +87,7 @@
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
             </div>
-            
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -97,7 +97,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -114,13 +114,14 @@
                 </div>
             </nav>
 
-            <div style="padding-top: 75px; margin-bottom: 15%;">
+            <div style="padding-top: 75px;">
                 <div class="p-4 mt-4" id="grupos">
                     <div>
                         <h4>Editar un grupo</h4>
                     </div>
 
-                    <form th:action="@{/grupos/guardar2}" th:object="${grupo}" method="post">
+                    <form th:action="@{/grupos/guardar2}" th:object="${grupo}" method="post"
+                        enctype="multipart/form-data">
                         <div class="m-3">
 
                             <div class="form-group row">
@@ -155,12 +156,50 @@
                                 </div>
 
 
-                                <!--Si cambio también el nombre del grupo si que me cambia esta fecha, sino no,ver xq-->
                                 <!--TAMBIÉN FALTA PONER LA Q YA ESTABA POR DEFECTO POR SI NO SE QUIERE CAMBIAR-->
                                 <label class="col-form-label col-sm-4">Fecha de finalización del grupo:</label>
                                 <div class="col-sm-8 mb-2">
+                           
                                     <input type="date" th:name="fechaFinGrupo" th:field="*{fechaFinGrupo}"
-                                        class="form-control" />
+                                        class="form-control" id="fechaFinGrupo" required
+                                        th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+
+                                </div>
+
+
+
+
+
+
+                                <label class="col-form-label col-sm-4">Foto del grupo: </label>
+                                <div class="col-sm-8 mb-2">
+                                    <select id="avatar" class="form-select" th:field="*{fotoGrupo}">
+                                        <option value="/img/p1.png">Sin icono</option>
+                                        <option value="/img/grupoA.png">Icono 1</option>
+                                        <option value="/img/grupoA.png">Icono 2</option>
+                                        <option value="/img/grupoA.png">Icono 3</option>
+                                        <option value="/img/grupoA.png">Icono 4</option>
+                                        <option value="/img/grupoA.png">Icono 5</option>
+                                    </select>
+                                </div>
+
+                                <!-- LISTADO DE ICONOS FALTA COGERLOS BIEN-->
+                                <div class="avatares" style="margin-top: 1%; margin-left: 50%; margin-bottom: 1%;">
+                                    <img src="/img/grupoA.png" class="avatar"
+                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupoA.png')">
+                                    <img src="/img/grupoA.png" class="avatar"
+                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupoA.png')">
+                                    <img src="/img/grupoA.png" class="avatar"
+                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupoA.png')">
+                                    <img src="/img/grupoA.png" class="avatar"
+                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupoA.png')">
+                                    <img src="/img/grupoA.png" class="avatar"
+                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupoA.png')">
                                 </div>
 
 
@@ -175,24 +214,11 @@
                                     </select>
                                 </div>
 
-                                <!--FALTA HACER QUE SE PUEDAN AÑADIR DESDE AQUI a nuevos miembros del grupo-->
+
                                 <label class="col-form-label col-sm-4">Participantes actuales del grupo:</label>
                                 <div class="container-participantes">
                                     <tr th:each="lis:${listadoParticipantesGrupo}">
 
-                                        <!-- <div class="card">
-                                        <div class="cover"> 
-                                            <img th:src="${lis.fotoParticipante}" alt="avatar">
-                                            <div class="img-back"></div>
-                                        </div>
-                                        <div class="descripcion">
-                                            <h2 th:text="${lis.nickname}"></h2>
-                                            <h3 th:text="${lis.codigo}"></h3>
-                                          
-                                            <a class="botonGr" th:href="@{'/eliminarDeUnGrupo/' + ${lis.id} + '/' + *{id}}">Eliminar</a>
-                
-                                        </div>
-                                    </div>-->
 
                                         <div class="participantesGrupo">
                                             <div class="fondoParticipante">

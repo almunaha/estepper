@@ -20,8 +20,12 @@
       overflow: hidden;
       margin-bottom: 7%;
       margin-top: 5%;
-      font-size: 2vw; 
     }
+
+    .material .cover h5 {
+      font-size: calc(2vw - (10px * (100 - length('${lis.nombre}'))) / 100);
+    }
+    
 
     .material .descripcion {
       padding: 10%;
@@ -32,21 +36,25 @@
 
     .btn-part {
       height: 10vw;
+      max-width: 70%;
       width: 15vw;
       font-size: 2.5vw;
       padding: 4vw;
       margin: 2.5vw;
     }
 
-    @media (min-width: 768px) {
-      .material{
-        min-width: 70px;
+    @media (max-width: 768px) {
+      .table-responsive {
+      display: block;
       }
-      .btn-part {
-        height: auto;
-        width: auto;
-        font-size: 0.5rem;
-        padding: 0.5rem;
-        margin: 2.5vw;
+      
+      .material {
+      width: 90%;
+      margin: 5%;
       }
-    }
+
+      .material:hover {
+        width: 100%;
+      }
+      
+      }

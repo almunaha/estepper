@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Participante;
@@ -11,71 +13,73 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
 
-
 @Service
-public class GrupoServiceImpl implements GrupoService{
-    
-    @Autowired
-    private GrupoRepository repo; //inyección de dependencias del grupo dao api
+public class GrupoServiceImpl implements GrupoService {
 
-    @Autowired ParticipanteRepository repoP;
+    @Autowired
+    private GrupoRepository repo; // inyección de dependencias del grupo dao api
+
+    @Autowired
+    ParticipanteRepository repoP;
 
     @Override
     public List<Grupo> listaGrupos(Integer id) {
-        return(List<Grupo>) repo.findByIdCoordinador(id);
-    }  
-
-    @Override 
-    public void update (Grupo grupo){
-        repo.update(grupo.getNombre(), grupo.getCodigo(), grupo.getIdCoordinador(), grupo.getNumParticipantes(), grupo.getId());
+        return (List<Grupo>) repo.findByIdCoordinador(id);
     }
 
     @Override
-    public Grupo findByCodigo(String codigo){
+    public void update(Grupo grupo) {
+        repo.update(grupo.getNombre(), grupo.getCodigo(), grupo.getIdCoordinador(), grupo.getNumParticipantes(),
+                grupo.getId());
+    }
+
+    @Override
+    public Grupo findByCodigo(String codigo) {
         return repo.findByCodigo(codigo);
     }
 
     @Override
-    public Grupo findByNombre(String nombre){
+    public Grupo findByNombre(String nombre) {
         return repo.findByNombre(nombre);
     }
 
     @Override
-    public Grupo getGrupo(Integer id){
+    public Grupo getGrupo(Integer id) {
         return repo.findById(id).get();
-    }    
+    }
+
 
     @Override
     public void delete(Integer id) {
         Grupo grupo = repo.findById(id).get();
-        List<Participante> p = repoP.findByGrupo(grupo);
-        for(int i = 0; i < p.size(); i++){
-            p.get(i).setGrupo(null);
+        List<Participante> participantes = repoP.findByGrupo(grupo);
+        for (Participante participante : participantes) {
+            participante.setGrupo(null);
+            repoP.save(participante);
         }
+        grupo.setParticipantes(null);
+        repo.save(grupo);
         repo.delete(grupo);
-    }   
-    
+    }
+
     @Override
     public void save(Grupo grupo) {
         repo.save(grupo);
     }
 
     @Override
-    public void updateParticipantes(Integer idGrupo, Integer numParticipantes){
+    public void updateParticipantes(Integer idGrupo, Integer numParticipantes) {
         repo.update(idGrupo, numParticipantes);
     }
 
     @Override
     public List<Grupo> getGrupos() {
         return repo.findAll();
-    }  
+    }
 
-
+    @Override
+    public Page<Grupo> paginas(Pageable pageable, Integer idCoordinador) {
+        return (Page<Grupo>) repo.findByIdCoordinador(pageable, idCoordinador);
+    }
 
 }
-
-
-
-
-
-
