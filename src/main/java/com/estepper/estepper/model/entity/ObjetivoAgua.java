@@ -1,7 +1,6 @@
 package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +16,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.estepper.estepper.model.enums.EstadoObjetivo;
-import com.estepper.estepper.model.enums.Repeticion;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

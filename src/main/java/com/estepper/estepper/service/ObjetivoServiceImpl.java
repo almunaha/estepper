@@ -3,13 +3,9 @@ package com.estepper.estepper.service;
 import com.estepper.estepper.repository.ObjetivoRepository;
 
 import com.estepper.estepper.model.entity.Objetivo;
-import com.estepper.estepper.model.entity.ObjetivoAgua;
 import com.estepper.estepper.model.entity.Participante;
 
-import java.util.Date;
 import java.util.List;
-
-import com.estepper.estepper.model.enums.EstadoObjetivo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
