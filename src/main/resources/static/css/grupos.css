@@ -812,3 +812,15 @@ input[type=number]::-webkit-outer-spin-button {
     vertical-align: middle;
     text-align: center; 
 }
+
+@media (max-width: 768px) {
+  .valores-progreso {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .valor {
+    width: 48%;
+    margin-bottom: 2%;
+  }
+}
