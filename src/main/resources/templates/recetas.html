@@ -194,7 +194,7 @@
                         <div th:unless="${listaRecetas.empty}">
                             <!--BOTONES GEOMETRÍA NUTRICIONAL, RECOMENDACIONESRECETAS Y NUEVARECETA-->
                             <div style="display: flex; justify-content: center;">
-                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" href="#">
+                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" th:href="@{/nutrientes}">
                                         Nutrientes</a>
                                 </div>
                                 <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Recetas"

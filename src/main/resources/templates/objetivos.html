@@ -128,17 +128,18 @@
 
         <div id="contenido">
             <div class="header-movil">
-                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header" onclick="desplegable()"/>
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{img/logo.png}" />
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
-              </div>
-        
-              <div class="desplegable-perfil">
+            </div>
+
+            <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                  <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
-              </div>
+            </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -306,9 +307,16 @@
                                 <div class="listaDeEjercicioPaticipante p-2">
                                     <div class="row">
                                         <div class="col-6" th:each="lis:${listaEjercicioParticipante}">
-                                            <div class="tipo d-flex justify-content-between align-items-center py-2 px-3 mb-2">
-                                                <div class="title" th:text="@{ ${lis.ejercicio}} + ': ' +  ${lis.duracionEjercicio} + ' ' + minutos"></div>
-                                                <div class="trash"><a class="btn-part" th:href="@{'/eliminar_ejercicio/' + ${lis.id}}"><i class="fa-solid fa-trash" style="font-size: 15px; color: rgb(195, 69, 69); margin-left: 3px;"></i></a></div>
+                                            <div
+                                                class="tipo d-flex justify-content-between align-items-center py-2 px-3 mb-2">
+                                                <div class="title"
+                                                    th:text="@{ ${lis.ejercicio}} + ': ' +  ${lis.duracionEjercicio} + ' ' + minutos">
+                                                </div>
+                                                <div class="trash"><a class="btn-part"
+                                                        th:href="@{'/eliminar_ejercicio/' + ${lis.id}}"><i
+                                                            class="fa-solid fa-trash"
+                                                            style="font-size: 15px; color: rgb(195, 69, 69); margin-left: 3px;"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -319,7 +327,7 @@
 
                         </div>
                         <div class="descanso">
-                            
+
                             <div>
 
                                 <div class="encabezadoDescanso">
@@ -328,19 +336,19 @@
 
                                 <div class="encabezadoDescanso-suenio">
                                     <div id="formularioDescanso" th:if="${objetivoDescanso.horasSuenio == null} ">
-                                        <form th:action="@{'/agregar_descanso/' + ${user.id}}" th:object="${objetivoDescanso}"
-                                            method="post" class="typing-area">
-        
-        
+                                        <form th:action="@{'/agregar_descanso/' + ${user.id}}"
+                                            th:object="${objetivoDescanso}" method="post" class="typing-area">
+
+
                                             <label for="horasSuenio">Horas de sueño:</label>
-                                            <input type="number" id="horasSuenio" name="horasSuenio" min="0" max="24" required
-                                                placeholder="horas">
-        
-                                            <input type="number" id="minutosSuenio" name="minutosSuenio" min="0" max="59"
-                                                placeholder="minutos" required style="width: 7%;">
-        
+                                            <input type="number" id="horasSuenio" name="horasSuenio" min="0" max="24"
+                                                required placeholder="horas">
+
+                                            <input type="number" id="minutosSuenio" name="minutosSuenio" min="0"
+                                                max="59" placeholder="minutos" required style="width: 7%;">
+
                                             <button type="submit" class="btn-descanso">Registrar</button>
-        
+
                                         </form>
                                     </div>
                                 </div>
@@ -349,25 +357,29 @@
                                     <div th:if="${objetivoDescanso.horasSuenio == null}">
                                         <strong>Todavía no has registrado el descanso de hoy</strong>
                                     </div>
-                                    <div 
+                                    <div
                                         th:if="${objetivoDescanso.horasSuenio > 0 && objetivoDescanso.horasSuenio < objetivoDescanso.horasSuenioObjetivo}">
                                         <p>Has dormido [[${objetivoDescanso.horasSuenio}]] horas y
                                             [[${objetivoDescanso.minutosSuenio}
                                             ]] minutos</p>
-                                        <a class="btn-descanso" style="padding: 2%;" th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar registro</a>
+                                        <a class="btn-descanso" style="padding: 2%;"
+                                            th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar registro</a>
                                         <!--<a th:href="@{'/editar_descanso/' + ${user.id} + ${objetivoDescanso.horasSuenio}}">Editar registro de sueño</a>-->
                                     </div>
-                                    <div th:if="${objetivoDescanso.horasSuenio >= objetivoDescanso.horasSuenioObjetivo}">
-                                        <p style="color:green"><strong>¡Objetivo conseguido! Has dormido [[${objetivoDescanso.horasSuenio}
-                                            ]] horas y [[${objetivoDescanso.minutosSuenio}
-                                            ]] minutos </strong></p>
-                                        <a class="btn-descanso" th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar registro</a>
+                                    <div
+                                        th:if="${objetivoDescanso.horasSuenio >= objetivoDescanso.horasSuenioObjetivo}">
+                                        <p style="color:green"><strong>¡Objetivo conseguido! Has dormido
+                                                [[${objetivoDescanso.horasSuenio}
+                                                ]] horas y [[${objetivoDescanso.minutosSuenio}
+                                                ]] minutos </strong></p>
+                                        <a class="btn-descanso" th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar
+                                            registro</a>
                                         <!--<a th:href="@{'/editar_descanso/' + ${user.id}}">Editar registro de sueño</a> -->
                                     </div>
                                 </div>
-                                
+
                             </div>
-   
+
 
                         </div>
 
@@ -438,7 +450,8 @@
                                                     class="fa-solid fa-face-angry"
                                                     style="font-size: 50px;color: rgb(228, 76, 76);"></i></label>
 
-                                            <div class="botonEstadoAnimico" style="margin-top: 1%;margin-bottom: 1%; margin-left:28%">
+                                            <div class="botonEstadoAnimico"
+                                                style="margin-top: 1%;margin-bottom: 1%; margin-left:28%">
                                                 <button type="submit" class="btn-estadoAnimo">Guardar</button>
 
                                             </div>
@@ -455,10 +468,10 @@
                                 </div>
                                 <div th:unless="${objetivoEstadoAnimo.estadoAnimo == null}" style="width:70%">
                                     <p th:text="'Hoy estás ' + ${objetivoEstadoAnimo.estadoAnimo}"></p>
-                                    <a class="btn-estadoAnimo"  
+                                    <a class="btn-estadoAnimo"
                                         th:href="@{'/eliminar_estadoAnimo/' + ${user.id}}">Eliminar registro </a>
                                 </div>
-                           
+
                             </div>
 
 
@@ -467,9 +480,68 @@
 
                         <h2 style="margin-top: 2%;">Objetivos personalizados</h2>
                         <div class="botones-container d-flex justify-content">
-                            <a class="btn my-4" id="btn-part" th:href="@{/objetivos/nuevo}">Crear un objetivo
-                                nuevo</a>
+                            <!--<a class="btn my-4" id="btn-part" th:href="@{/objetivos/nuevo}">Crear un objetivo
+                                nuevo</a>-->
+                            <a class="btn" id="btn-part" title="Crear" href="#"
+                                onclick="abrirIframe('modalNuevoObjetivo')">
+                                Crear un objetivo nuevo</a>
                         </div>
+
+                        <div class="modal fade" id="modalNuevoObjetivo" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Crear un nuevo objetivo</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body" >
+
+
+                                        <form th:action="@{/objetivos/guardar}" th:object="${objetivo}" method="post">
+                                            <div class="m-3">
+                                                <div class="form-group row">
+
+                                                    <label class="col-form-label col-sm-4">Título del nuevo
+                                                        objetivo:</label>
+                                                    <div class="col-sm-8 mb-2">
+                                                        <input type="text" th:field="*{titulo}" class="form-control"
+                                                            required id="titulo" />
+                                                    </div>
+
+                                                    <label class="col-form-label col-sm-4">Fecha tope para cumplirlo:</label>
+                                                    <div class="col-sm-8 mb-2">
+                                                        <input type="date" th:field="*{fechaVencimiento}"
+                                                            class="form-control" id="fechaVencimiento" name="fecha"
+                                                            required
+                                                            th:min="${#dates.format(fechaActual1, 'yyyy-MM-dd')}" />
+                                                    </div>
+
+                                                    <label class="col-form-label col-sm-4">Repetición:</label>
+                                                    <div class="col-sm-8 mb-2">
+                                                        <select id="repeticion" th:field="*{repeticion}"
+                                                            class="form-control" required>
+                                                            <option value="NINGUNA">NINGUNA</option>
+                                                            <option value="DIARIAMENTE">DIARIAMENTE</option>
+                                                            <option value="SEMANALMENTE">SEMANALMENTE</option>
+                                                            <option value="SEMANALMENTE">MENSUALMENTE</option>
+                                                            <option value="SEMANALMENTE">ANUALMENTE</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="text-center p">
+                                                <button type="submit" class="btn" id="btn-part"
+                                                    onclick="agregarObjetivo()">Añadir</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="calendario-container">
                             <div class="row">
                                 <div class="col-6">
@@ -509,6 +581,14 @@
 
     </div>
     </div>
+
+    <script>
+        function abrirIframe(modalId) {
+            const modal = new bootstrap.Modal(document.getElementById(modalId));
+            modal.show();
+        }
+
+    </script>
 
 </body>
 

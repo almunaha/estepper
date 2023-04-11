@@ -61,6 +61,12 @@ public class ObservacionesServiceImpl implements ObservacionesService {
     }
 
 
- 
+    @Override
+    public void actualizar(Observaciones o){
+        repo.update(o.getNota(),o.getId());
+    }
+
+
+
 
 }

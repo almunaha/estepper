@@ -14,6 +14,7 @@ public interface ObservacionesService {
     public void borrar(Integer id);
     public void deleteByGrupo(Grupo g);
     public Observaciones getObservacion(Integer idObservacion);
+    public void actualizar(Observaciones o);
 
 }
 

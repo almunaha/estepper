@@ -743,12 +743,18 @@ public class ParticipanteController {
         return "redirect:/progreso";
     }
 
+
     @GetMapping("/objetivos")
     public String objetivos(Model model) {
         Participante p = participante.findById(getUsuario().getId()).get();
         List<Objetivo> listaObjetivos = obj.listaObjetivos(p);
+        Date fechaActual1 = new Date();
+
         model.addAttribute("listaObjetivos", listaObjetivos);
         model.addAttribute("user", getUsuario());
+        model.addAttribute("objetivo", new Objetivo());
+        model.addAttribute("fechaActual1", fechaActual1);
+
 
         LocalDate fechaActual = LocalDate.now();
         int mesActual = fechaActual.getMonthValue();
@@ -800,17 +806,7 @@ public class ParticipanteController {
         return listaObjetivosPorMes;
     }
 
-    @GetMapping("/objetivos/nuevo")
-    public String mostrarFormularioDeNuevoObjetivo(Model model) {
-        Date fechaActual = new Date();
-        if (getUsuario() instanceof Participante) {
-            model.addAttribute("objetivo", new Objetivo());
-            model.addAttribute("user", getUsuario());
-            model.addAttribute("fechaActual", fechaActual);
-            return "nuevo_objetivo";
-        } else
-            return "redirect:/";
-    }
+  
 
     @PostMapping("/objetivos/guardar")
     public String guardarObjetivo(Objetivo objetivo) {
@@ -1128,6 +1124,45 @@ public class ParticipanteController {
             // BORRAR ALIMENTOS DE HACE MÁS DE 1 SEMANA
             alimentacion.borraralconSem(participante.findById(user.getId()).get());
             return "alimentos";
+        } else
+            return "acceso";
+    }
+
+    //Esto es de prueba, porque estoy viedo como funciona lo de alimentación que ya hay hecho
+    @GetMapping("/nutrientes")
+    public String nutrientes(Model model) {
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
+            model.addAttribute("alimentoCon", new AlimentosConsumidos());
+            List<AlimentosConsumidos> listal = alimentacion.getAlimentosCon(participante.findById(user.getId()).get());
+            List<Float> nutrienteshoy = new ArrayList<Float>(Arrays.asList(0f, 0f, 0f, 0f, 0f)); // Inicializar con
+                                                                                                 // ceros
+            for (int i = 0; i < listal.size(); i++) {
+                nutrienteshoy.set(0, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(0)
+                        + (listal.get(i).getAlimento().getFibra_alimentaria() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+                nutrienteshoy.set(1, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(1)
+                        + (listal.get(i).getAlimento().getGrasas_saturadas() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+                nutrienteshoy.set(2, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(2)
+                        + (listal.get(i).getAlimento().getHidratos_de_carbono() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+                nutrienteshoy.set(3, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(3)
+                        + (listal.get(i).getAlimento().getProteinas() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+                nutrienteshoy.set(4, Float.parseFloat(String.format("%.2f", nutrienteshoy.get(4)
+                        + (listal.get(i).getAlimento().getSal() * listal.get(i).getRaciones()))
+                        .replace(",", ".")));
+
+            }
+            model.addAttribute("listaAlimentos", alimentacion.getAlimentos());
+            model.addAttribute("nutrientes", nutrienteshoy);
+            model.addAttribute("listaAlimentosCon", listal);
+
+            // BORRAR ALIMENTOS DE HACE MÁS DE 1 SEMANA
+            alimentacion.borraralconSem(participante.findById(user.getId()).get());
+            return "nutrientes";
         } else
             return "acceso";
     }
