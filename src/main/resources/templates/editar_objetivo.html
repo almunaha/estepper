@@ -193,7 +193,7 @@
                             <!--Falta controlar que no se pueda meter la fecha que te de la gana y esas cosas-->
                             <label class="col-form-label col-sm-4">Fecha tope para cumplir mi objetivo:</label>
                             <div class="col-sm-8 mb-2">
-                                <input type="date" th:field="*{fechaVencimiento}" class="form-control" id="fecha" name="fecha"  required />
+                                <input type="date" th:field="*{fechaVencimiento}" class="form-control" id="fecha" name="fecha" required th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
                             </div>
                             
 

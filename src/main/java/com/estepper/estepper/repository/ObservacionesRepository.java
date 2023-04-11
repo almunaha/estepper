@@ -30,6 +30,10 @@ public interface ObservacionesRepository extends JpaRepository<Observaciones, In
     @Query("DELETE FROM Observaciones o WHERE o.idGrupo = :g")
     void deleteAllByGrupo(Grupo g);
 
+    @Modifying
+    @Transactional
+    @Query("update Observaciones SET nota = :nota WHERE id = :id")
+    void update(String nota, Integer id);
 
 
 }

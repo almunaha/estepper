@@ -79,19 +79,6 @@ public class GruposController {
     @Autowired // inyectar recursos de la clase GrupoService
     private ObservacionesService observaciones;
 
-    @GetMapping("/grupos/nuevo")
-    public String mostrarFormularioDeNuevoGrupo(Model model) {
-        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de
-                                                                                                     // participantes de
-                                                                                                     // la base de
-        // datos
-        model.addAttribute("participantesExistentes", participantesExistentes);
-        model.addAttribute("grupo", new Grupo());
-        model.addAttribute("user", getUsuario());
-
-        return "nuevo_grupo";
-    }
-
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(@ModelAttribute("grupo") Grupo elgrupo,
@@ -197,10 +184,14 @@ public class GruposController {
         return "redirect:/listaGrupos";
     }
 
+
+
     @GetMapping("/listaGrupos")
     public String grupos(@RequestParam Map<String, Object> params, Model model) {
 
         if (getUsuario() instanceof Coordinador) {
+
+            List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);
 
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
             PageRequest pageable = PageRequest.of(page, 5); // define página solicitada y tamaño de la página, se
@@ -224,8 +215,9 @@ public class GruposController {
             // List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
             model.addAttribute("user", getUsuario());
-            model.addAttribute("grupo", new Grupo());
             model.addAttribute("mensajito", "No asignada");
+            model.addAttribute("participantesExistentes", participantesExistentes);
+            model.addAttribute("grupo", new Grupo());
             return "grupos";
         } else
             return "redirect:/";
