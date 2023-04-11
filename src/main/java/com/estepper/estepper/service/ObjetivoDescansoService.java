@@ -2,7 +2,6 @@ package com.estepper.estepper.service;
 
 
 import java.util.Date;
-import java.util.List;
 
 import com.estepper.estepper.model.entity.ObjetivoDescanso;
 import com.estepper.estepper.model.entity.Participante;

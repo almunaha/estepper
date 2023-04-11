@@ -1,7 +1,6 @@
 package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

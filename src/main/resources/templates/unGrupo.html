@@ -103,7 +103,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -188,7 +188,8 @@
                                 <i class="fa-solid fa-check" style="color: rgb(122, 218, 103)"></i>
                             </div>
                             <div class="der-valor">
-                                <div class="dato-valor"> <span id="asistencia-media" style="font-size: 24px;"></span></div>
+                                <div class="dato-valor"> <span id="asistencia-media" style="font-size: 24px;"></span>
+                                </div>
                                 <div class="bottom-valor"><span>Asistencia media </span></div>
                             </div>
                         </div>
@@ -200,7 +201,7 @@
                                 <i class="fa-solid fa-child-reaching" style="color: rgb(103, 111, 218)"></i>
                             </div>
                             <div class="der-valor">
-                                <div class="dato-valor"> <span id="perdida-cmcintura-media" ></span></div>
+                                <div class="dato-valor"> <span id="perdida-cmcintura-media"></span></div>
                                 <div class="bottom-valor"><span>Cintura perdida</span></div>
                             </div>
                         </div>
@@ -355,6 +356,44 @@
                         </table>
 
                         <!--Modal-->
+                        <div class="modal fade" id="mi-modal2" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Notas y observaciones</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+
+
+                                        <form th:action="@{'/observaciones/guardar2/' + ${grupo.id}}"
+                                            th:object="${unaObservacion}" id="formulario-modal" method="post"
+                                            enctype="multipart/form-data">
+                                            <div class="m-3">
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-sm-4">Nota:</label>
+                                                    <div class="col-sm-8 mb-2">
+                                                        <input type="text" name="nota" class="form-control" required
+                                                            id="nota-cargada" />
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="idNota" id="nota-id" />
+                                                <div class="text-center p">
+                                                    <button type="submit" class="btn" id="btn-part">Editar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!--Modal-->
                         <div class="modal fade" id="mi-modal" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -390,64 +429,6 @@
                             </div>
                         </div>
                         <!--FIN MODAL-->
-
-                        <!--Modal-->
-                        <div class="modal fade" id="mi-modal2" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Notas y observaciones</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Cerrar"></button>
-                                    </div>
-                                    <div class="modal-body">
-
-
-                                        <form th:action="@{'/observaciones/guardar2/' + ${grupo.id}}"
-                                            th:object="${unaObservacion}" id="formulario-modal" method="post"
-                                            enctype="multipart/form-data">
-
-                                            <!--
-                                                
-                                        <form th:action="@{'/observaciones/guardar2/' + ${grupo.id}}"
-                                            th:object="${listaObservaciones}"
-                                             method="post"
-                                            enctype="multipart/form-data">
-                                            -->
-
-                                            <!--QUITAR ESTO CUANDO LO CONSIGA SOLUCIONAR-->
-                                            <th:block th:unless="${unaObservacion}">
-                                                <p>No hay observaciones disponiblees</p>
-                                            </th:block>
-                                            <div class="m-3">
-                                                <div class="form-group row">
-
-                                                    <label class="col-form-label col-sm-4">Nota:</label>
-
-                                                    <div class="col-sm-8 mb-2">
-                                                        <input type="text" name="nota" class="form-control" required
-                                                            id="nota-cargada" />
-                                                    </div>
-
-                                                </div>
-
-                                                <!-- Agrega un botón oculto para enviar el objeto completo de la observación -->
-                                                <input type="hidden" name="observacion" th:value="${unaObservacion}" />
-
-                                                <div class="text-center p">
-                                                    <button type="submit" class="btn" id="btn-part">Editar</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                        </div>
-
-
 
 
                         <div style="float: right;">
@@ -526,6 +507,7 @@
                     console.log(mensaje);
 
                     document.getElementById('nota-cargada').value = mensaje;
+                    document.getElementById('nota-id').value = id;
                     abrirIframe('mi-modal2');
 
                     // Obtiene el objeto de la observación como una cadena JSON

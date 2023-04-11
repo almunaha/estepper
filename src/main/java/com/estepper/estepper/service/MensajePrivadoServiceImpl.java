@@ -1,7 +1,6 @@
 package com.estepper.estepper.service;
 
 import com.estepper.estepper.model.entity.Coordinador;
-import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.MensajePrivado;
 import com.estepper.estepper.model.entity.Participante;
 
