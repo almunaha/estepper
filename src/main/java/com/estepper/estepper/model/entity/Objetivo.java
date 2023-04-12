@@ -33,7 +33,7 @@ public class Objetivo implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne //Asegurarme de que sea asi
+    @ManyToOne 
     @JoinColumn(name="idParticipante", nullable=false)
     private Participante participante;
 
