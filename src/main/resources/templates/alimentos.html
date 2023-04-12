@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
         integrity="sha512-nUf8aohwTZxv0l0d4A4kmOE+fj7W9PvCO2aS0E1Yjh81pN+w4ezn/jn8wNlvMxvNUnax/aLdQ+z/8W7X9DvI+A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
         integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -26,10 +26,10 @@
     <!--ALERTA ELIMINAR-->
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.all.min.js"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="sweetalert2.all.min.js" type="javascript"></script>
+    <script src="sweetalert2.min.js" type="javascript"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css" type="css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     <title>Alimentos - Estepper</title>
 </head>
@@ -46,7 +46,7 @@
 
 
             <div class="logo">
-                <img width="75" th:src="@{img/logo.png}" />
+                <img width="75" th:src="@{img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -140,14 +140,14 @@
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
                     alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{img/logo.png}" />
+                <img width="35" th:src="@{img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -167,7 +167,7 @@
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
                         </li>
@@ -331,11 +331,12 @@
                             <div class="input-group mt-2">
                                 <select style="margin-left: 3%;" th:field="*{alimento}" class="form-control"
                                     id="lista-alimentos" required>
+                                    <option value="">Seleccione una opción</option>
                                     <option th:each="al : ${listaAlimentos}" th:value="${al.id}"
                                         th:text="${al.nombre} + ' (' + ${al.porcion} + ' ' + ${al.unidad} + ')'">
                                     </option>
                                 </select>
-                                <script language="JavaScript" th:inline="javascript">
+                                <script th:inline="javascript">
                                     $(document).ready(function () {
                                         // Obtener la lista de opciones del select
                                         var opciones = $("#lista-alimentos option");
