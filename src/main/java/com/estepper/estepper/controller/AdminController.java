@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
@@ -59,11 +60,11 @@ public class AdminController {
 
     @Autowired
     private ParticipanteService participante;
-    
+
     @Autowired
     private AlimentacionService alimentacion;
-    
-    @Autowired 
+
+    @Autowired
     private SesionService ses;
 
     @Autowired
@@ -85,7 +86,8 @@ public class AdminController {
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model) {
         if (usuarioLogueado() instanceof Administrador) {
             // eliminar usuario
-            if (usuario.findById(id).get() instanceof Participante && usuario.findById(id).get().getEstadoCuenta().equals(Estado.ALTA)) {
+            if (usuario.findById(id).get() instanceof Participante
+                    && usuario.findById(id).get().getEstadoCuenta().equals(Estado.ALTA)) {
                 Participante p = participante.findById(id).get();
                 materialS.deleteByParticipante(p);
                 ses.deleteByParticipante(p);
@@ -94,8 +96,8 @@ public class AdminController {
                 alimentacion.deleteByParticipante(p);
                 f.deleteByParticipante(p);
                 mensajeS.deleteByParticipante(p);
-                invitacion.eliminarPorParticipante(p); //invitacionesPart
-                //eliminar asistencia y aumentar plazas
+                invitacion.eliminarPorParticipante(p); // invitacionesPart
+                // eliminar asistencia y aumentar plazas
                 List<Actividad> actividades = acti.asistenciaParticipante(id);
                 for (Actividad actividad : actividades) {
                     actividad.setNumParticipantes(actividad.getNumParticipantes() - 1);
@@ -104,30 +106,27 @@ public class AdminController {
                     acti.guardar(actividad);
                 }
                 fasevaloracion.eliminarcuenta(p);
-                
-                if(p.getGrupo() != null) {
-                    p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes()-1);
+
+                if (p.getGrupo() != null) {
+                    p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
                     grupoS.update(p.getGrupo());
                 }
-            }
-            else if(usuario.findById(id).get() instanceof Participante){
+            } else if (usuario.findById(id).get() instanceof Participante) {
                 Participante p = participante.findById(id).get();
                 fasevaloracion.eliminarcuenta(p);
-            }
-            else if (usuario.findById(id).get() instanceof Coordinador) {
+            } else if (usuario.findById(id).get() instanceof Coordinador) {
                 List<Grupo> listgrupos = grupoS.getGrupos();
-                for(int i = 0; i < listgrupos.size(); i++){
-                    if(listgrupos.get(i).getIdCoordinador() == id){
+                for (int i = 0; i < listgrupos.size(); i++) {
+                    if (listgrupos.get(i).getIdCoordinador() == id) {
                         materialS.deleteByGrupo(listgrupos.get(i));
                         mensajeS.deleteByGrupo(listgrupos.get(i));
                         grupoS.delete(listgrupos.get(i).getId());
-                        //grupoS.delete(id);
+                        // grupoS.delete(id);
                     }
                 }
-                invitacion.eliminarPorCoordinador((Coordinador)usuario.findById(id).get());
+                invitacion.eliminarPorCoordinador((Coordinador) usuario.findById(id).get());
                 usuario.eliminar(id);
-            }
-            else 
+            } else
                 usuario.eliminar(id);
 
             // pasar usuario logueado y listado
@@ -177,9 +176,21 @@ public class AdminController {
             model.addAttribute("usuarios", lista);
 
             return "admin";
-        }
-        else return "redirect:/";
+        } else
+            return "redirect:/";
 
+    }
+
+    @GetMapping("/actualizar-usuario/{id}")
+    public String actualizarUsuario(@PathVariable(name = "id") Integer id, @RequestParam String nickname, @RequestParam String estado, @RequestParam String email) {
+        
+        
+        Usuario elusuario = usuario.findById(id).get();
+        Estado state = elusuario.getEstadoCuenta();
+        if(estado.equals(Estado.ALTA.toString())) state = Estado.ALTA;
+        else state = Estado.BAJA;
+        usuario.update(nickname, email, elusuario.getContrasenia(), state, id);
+        return "redirect:/";
     }
 
     public Usuario usuarioLogueado() {

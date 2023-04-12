@@ -13,9 +13,8 @@
     <script src="/js/menu.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-
     <!--PARA EL BUSCADOR-->
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--ALERTA ELIMINAR-->
@@ -151,6 +150,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">Alias</th>
+                                        <th scope="col">Correo</th>
                                         <th scope="col">Código</th>
                                         <th scope="col">Rol</th>
                                         <th scope="col">Estado</th>
@@ -160,9 +160,9 @@
                                 </thead>
                                 <tbody class="buscarUsuarios">
                                     <tr th:each="lis:${usuarios}">
-
-                                        <td th:text="${lis.nickname}"></td>
-                                        <td th:text="${lis.codigo}"></td>
+                                        <td><span class="editable" th:text="${lis.nickname}"></span></td>
+                                        <td><span class="editable" th:text="${lis.email}"></span></td>
+                                        <td><span th:text="${lis.codigo}"></span></td>
                                         <td>
                                             <span
                                                 th:if="${lis instanceof T(com.estepper.estepper.model.entity.Participante)}">Participante</span>
@@ -171,47 +171,121 @@
                                             <span
                                                 th:if="${lis instanceof T(com.estepper.estepper.model.entity.Administrador)}">Administrador</span>
                                         </td>
-                                        <td th:text="${lis.estadoCuenta}"></td>
                                         <td>
+                                            <span class="editable-state" th:text="${lis.estadoCuenta}"></span>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary edit-button"><i title="Editar"
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a class="btn btn-primary cancel-button" style="display: none;"><i
+                                                    title="Cancelar" class="fa-solid fa-times"></i></a>
                                             <a class="btn btn-primary"><i title="Mensaje"
                                                     class="fa-solid fa-envelope"></i></a>
                                             <a class="btn btn-primary" id="eliminar" th:data-id="${lis.id}"><i
                                                     title="Eliminar" class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>
-                                    <script>
-                                        $('#eliminar').click(function () {
-                                            var id = $(this).data('id');
+                                </tbody>
+                                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                <script>
+                                    $(document).ready(function () {
+                                        function habilitarEdicion(row) {
+                                            row.find('.edit-button').prop('disabled', true);
+                                            row.find('.cancel-button').show();
+                                            row.find('.fa-user-pen').removeClass('fa-user-pen').addClass('fa-save');
+                                            row.find('.editable').prop('contenteditable', true).addClass('border border-secondary rounded');
+                                            row.find('.editable-state').replaceWith('<select class="form-select editable-state"><option value="ALTA">ALTA</option><option value="BAJA">BAJA</option></select>');
+                                        }
+
+                                        function guardarEdicion(row) {
+
+                                            var nickname = row.find('.editable:eq(0)').text();
+                                            var email = row.find('.editable:eq(1)').text();
+                                            var id = row.find('#eliminar').attr('data-id');
+                                            var state = row.find('.editable-state').val();
 
                                             Swal.fire({
-                                                position: 'center',
-                                                title: '<h4>¿Estás seguro de eliminar el usuario?</h4>',
-                                                showConfirmButton: true,
-                                                showCancelButton: true,
-                                                cancelButtonText: 'Cancelar',
-                                                confirmButtonColor: "rgb(218, 77, 73)",
-                                                confirmButtonText: '<a href="/eliminarUsuario/' + id + '" id ="conf">Eliminar</a>',
+                                            position: 'center',
+                                            title: '<h4>¿Estás seguro de editar el usuario?</h4>',
+                                            showConfirmButton: true,
+                                            showCancelButton: true,
+                                            cancelButtonText: 'Cancelar',
+                                            confirmButtonColor: "rgb(218, 77, 73)",
+                                            confirmButtonText: '<a href="/actualizar-usuario/' + id + '?estado=' + state + '&nickname=' + nickname + '&email=' + email + '" id ="conf">Editar</a>',
 
-                                                didRender: function () {
-                                                    const confirm = document.querySelector('#conf');
 
-                                                    if (confirm) {
-                                                        confirm.style.color = 'white';
-                                                    }
-                                                },
 
-                                                showClass: {
-                                                    popup: 'animate__animated animate__fadeInDown'
-                                                },
-                                                hideClass: {
-                                                    popup: 'animate__animated animate__fadeOutUp'
+                                            didRender: function () {
+                                                const confirm = document.querySelector('#conf');
+
+                                                if (confirm) {
+                                                    confirm.style.color = 'white';
                                                 }
+                                            },
 
-                                            })
+                                            showClass: {
+                                                popup: 'animate__animated animate__fadeInDown'
+                                            },
+                                            hideClass: {
+                                                popup: 'animate__animated animate__fadeOutUp'
+                                            }
 
+                                        })
+                                        }
+
+                                        function cancelarEdicion(row) {
+                                            window.location.reload();
+                                        }
+
+                                        $(document).on('click', '.edit-button', function () {
+                                            var row = $(this).closest('tr');
+                                            habilitarEdicion(row);
                                         });
-                                    </script>
-                                </tbody>
+
+                                        $(document).on('click', '.fa-save', function () {
+                                            var row = $(this).closest('tr');
+                                            guardarEdicion(row);
+                                        });
+
+                                        $(document).on('click', '.cancel-button', function () {
+                                            var row = $(this).closest('tr');
+                                            cancelarEdicion(row);
+                                        });
+                                    });
+                                </script>
+
+                                <script>
+                                    $('#eliminar').click(function () {
+                                        var id = $(this).data('id');
+
+                                        Swal.fire({
+                                            position: 'center',
+                                            title: '<h4>¿Estás seguro de eliminar el usuario?</h4>',
+                                            showConfirmButton: true,
+                                            showCancelButton: true,
+                                            cancelButtonText: 'Cancelar',
+                                            confirmButtonColor: "rgb(218, 77, 73)",
+                                            confirmButtonText: '<a href="/eliminarUsuario/' + id + '" id ="conf">Eliminar</a>',
+
+                                            didRender: function () {
+                                                const confirm = document.querySelector('#conf');
+
+                                                if (confirm) {
+                                                    confirm.style.color = 'white';
+                                                }
+                                            },
+
+                                            showClass: {
+                                                popup: 'animate__animated animate__fadeInDown'
+                                            },
+                                            hideClass: {
+                                                popup: 'animate__animated animate__fadeOutUp'
+                                            }
+
+                                        })
+
+                                    });
+                                </script>
                             </table>
                         </div>
                     </div>
