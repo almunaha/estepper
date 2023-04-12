@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -360,7 +361,7 @@ public class CoordinadorController {
     @PostMapping("/process_invitacion/{id}")
     public String process_invitacion(@PathVariable Integer id, @RequestParam("codigoG") String codigoG,
             @RequestParam("tipo") String tipo, @RequestParam(name = "codigoP", required = false) Integer codigoP,
-            Model model) {
+            RedirectAttributes redirAttrs) {
 
         Actividad actividad = act.actividad(id);
         Coordinador coordinador = (Coordinador) getUsuario();
@@ -392,6 +393,11 @@ public class CoordinadorController {
                     if (invitacion == null)
                         inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
                 }
+            }
+
+            else { // no existe un usuario con ese códgio o el código introducido no pertenece a un participante
+                String alerta = "No existe un participante con el código: " + codigoP;
+                redirAttrs.addFlashAttribute("alerta", alerta);
             }
 
         }
