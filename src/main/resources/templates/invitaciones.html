@@ -200,6 +200,36 @@
 
                     </div>
 
+                    <!--ALERTA MODAL -->
+
+                    <div class="modal fade" id="alertaInvit" tabindex="-1" aria-labelledby="alertaModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="alertaModalLabel"><i
+                                            class="fa-solid fa-triangle-exclamation" style="color: goldenrod;"></i>
+                                        No
+                                        se ha
+                                        podido completar la acción </h5>
+
+                                </div>
+                                <div class="modal-body">
+                                    <p th:text="${alerta}"></p>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                        style="float:right">Cerrar</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <script th:if="${alerta}">
+                        $(document).ready(function () {
+                            $('#alertaInvit').modal('show');
+                        });
+                    </script>
+
                 </div>
 
             </div>
