@@ -123,25 +123,27 @@
             <div style="margin-left: 5%; margin-right: 5%; margin-top: 2%; padding-top: 75px;">
                 <input type="hidden" id="idPart" th:value="${idPart}">
 
-                <h4 style="margin-bottom: 2%;">Progreso individual</h4>
+                <div class="header-coor">
+                    <h4 style="margin-bottom: 2%;" th:text="'Progreso individual: ' + ${participante.codigo}">Progreso individual</h4>
 
-                <!-- Contenido del progreso vista coordinador -->
+                    <!-- Contenido del progreso vista coordinador -->
 
-                <div class="valor-perdida">
-                    <!-- VALOR PÉRDIDA DE PESO -->
-                    <div class="perdida-indi">
-                        <div class="header-progreso">
-                            <h5>Peso perdido</h5>
-                            <span th:text="${-participante.perdidaDePeso} + kg"></span>
+                    <div class="valor-perdida">
+                        <!-- VALOR PÉRDIDA DE PESO -->
+                        <div class="perdida-indi">
+                            <div class="header-progreso" style="align-items: center;">
+                                <h5>Peso perdido</h5>
+                                <span th:text="${-participante.perdidaDePeso} + kg"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- VALOR PÉRDIDA DE PERÍMETRO -->
-                    <div class="perdida-indi">
-                        <div class="header-progreso">
-                            <h5>Perímetro perdido</h5>
-                            <span th:text="${-participante.perdidacmcintura} + kg"></span>
+                        <!-- VALOR PÉRDIDA DE PERÍMETRO -->
+                        <div class="perdida-indi">
+                            <div class="header-progreso" style="align-items: center;">
+                                <h5>Perímetro perdido</h5>
+                                <span th:text="${-participante.perdidacmcintura} + cm"></span>
 
+                            </div>
                         </div>
                     </div>
                 </div>
