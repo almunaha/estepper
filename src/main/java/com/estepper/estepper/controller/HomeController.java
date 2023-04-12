@@ -130,65 +130,63 @@ public class HomeController {
                                     model.addAttribute("recordatorio", true);
                                 }
                             }
+                            Participante p = participante.findById(getUsuario().getId()).get();
+                            ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+                            Integer contadorObjetivos = 0;
 
+                            if (objetivoAgua == null) {
+                                objetivoAgua = new ObjetivoAgua();
+                                model.addAttribute("aguaCompletado", false);
+                            } else {
+                                if (objetivoAgua.getEstadoObjetivo() == EstadoObjetivo.COMPLETADO) {
+                                    model.addAttribute("aguaCompletado", true);
+                                    contadorObjetivos = contadorObjetivos + 1;
+                                } else {
+                                    model.addAttribute("aguaCompletado", false);
+                                }
+                            }
+
+                            List<ObjetivoEjercicio> listaEjercicioParticipante = objEjer.listaEjercicio(new Date(), p);
+
+                            if (listaEjercicioParticipante.isEmpty()) {
+                                model.addAttribute("ejercicioCompletado", false);
+                            } else {
+                                model.addAttribute("ejercicioCompletado", true);
+                                contadorObjetivos = contadorObjetivos + 1;
+                            }
+
+                            ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+
+                            if (objetivoDescanso == null) {
+                                objetivoDescanso = new ObjetivoDescanso();
+                                model.addAttribute("descansoCompletado", false);
+                            } else {
+                                if (objetivoDescanso.getEstadoObjetivo() == EstadoObjetivo.COMPLETADO) {
+                                    model.addAttribute("descansoCompletado", true);
+                                    contadorObjetivos = contadorObjetivos + 1;
+                                } else {
+                                    model.addAttribute("descansoCompletado", false);
+                                }
+                            }
+
+                            ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(),
+                                    p);
+
+                            if (objetivoEstadoAnimo == null) {
+                                objetivoEstadoAnimo = new ObjetivoEstadoAnimo();
+                                model.addAttribute("estadoAnimoCompletado", false);
+                            } else {
+                                model.addAttribute("estadoAnimoCompletado", true);
+                                contadorObjetivos = contadorObjetivos + 1;
+                            }
+
+                            model.addAttribute("contadorObjetivos", contadorObjetivos);
+                            Integer porcentajeObjetivos = contadorObjetivos * 100 / 4;
+                            model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
                             return "index";
-                        }
+                        } else return "baja";
                     }
 
-                    Participante p = participante.findById(getUsuario().getId()).get();
-                    ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
-                    Integer contadorObjetivos = 0;
-
-                    if (objetivoAgua == null) {
-                        objetivoAgua = new ObjetivoAgua();
-                        model.addAttribute("aguaCompletado", false);
-                    } else {
-                        if (objetivoAgua.getEstadoObjetivo() == EstadoObjetivo.COMPLETADO) {
-                            model.addAttribute("aguaCompletado", true);
-                            contadorObjetivos = contadorObjetivos + 1;
-                        } else {
-                            model.addAttribute("aguaCompletado", false);
-                        }
-                    }
-
-                    List<ObjetivoEjercicio> listaEjercicioParticipante = objEjer.listaEjercicio(new Date(), p);
-
-                    if (listaEjercicioParticipante.isEmpty()) {
-                        model.addAttribute("ejercicioCompletado", false);
-                    } else {
-                        model.addAttribute("ejercicioCompletado", true);
-                        contadorObjetivos = contadorObjetivos + 1;
-                    }
-
-                    ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
-
-                    if (objetivoDescanso == null) {
-                        objetivoDescanso = new ObjetivoDescanso();
-                        model.addAttribute("descansoCompletado", false);
-                    } else {
-                        if (objetivoDescanso.getEstadoObjetivo() == EstadoObjetivo.COMPLETADO) {
-                            model.addAttribute("descansoCompletado", true);
-                            contadorObjetivos = contadorObjetivos + 1;
-                        } else {
-                            model.addAttribute("descansoCompletado", false);
-                        }
-                    }
-
-                    ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
-
-                    if (objetivoEstadoAnimo == null) {
-                        objetivoEstadoAnimo = new ObjetivoEstadoAnimo();
-                        model.addAttribute("estadoAnimoCompletado", false);
-                    } else {
-                        model.addAttribute("estadoAnimoCompletado", true);
-                        contadorObjetivos = contadorObjetivos + 1;
-                    }
-
-                    model.addAttribute("contadorObjetivos", contadorObjetivos);
-                    Integer porcentajeObjetivos = contadorObjetivos * 100 / 4;
-                    model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
-
-                    return "index";
                 }
                 return "redirect:/terminos-y-condiciones";
 
