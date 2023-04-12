@@ -75,10 +75,6 @@ import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.MensajeService;
-import com.estepper.estepper.service.ObjetivoAguaService;
-import com.estepper.estepper.service.ObjetivoDescansoService;
-import com.estepper.estepper.service.ObjetivoEjercicioService;
-import com.estepper.estepper.service.ObjetivoEstadoAnimoService;
 import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
@@ -111,18 +107,6 @@ public class ParticipanteController {
 
     @Autowired
     private ObjetivoService obj;
-
-    @Autowired
-    private ObjetivoAguaService objAgua;
-
-    @Autowired
-    private ObjetivoEjercicioService objEjer;
-
-    @Autowired
-    private ObjetivoDescansoService objDesc;
-
-    @Autowired
-    private ObjetivoEstadoAnimoService objEstAnim;
 
     @Autowired
     private MaterialService materialS;
@@ -763,7 +747,7 @@ public class ParticipanteController {
         List<Objetivo> listaObjetivosPorMes = obj.listaObjetivosPorMes(p, mesActualInteger, anioActualInteger);
         model.addAttribute("listaObjetivosPorMes", listaObjetivosPorMes);
 
-        ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+        ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
 
         if (objetivoAgua == null) {
             objetivoAgua = new ObjetivoAgua();
@@ -771,10 +755,10 @@ public class ParticipanteController {
 
         model.addAttribute("objetivoAgua", objetivoAgua);
 
-        List<ObjetivoEjercicio> listaEjercicioParticipante = objEjer.listaEjercicio(new Date(), p);
+        List<ObjetivoEjercicio> listaEjercicioParticipante = obj.listaEjercicio(new Date(), p);
         model.addAttribute("listaEjercicioParticipante", listaEjercicioParticipante);
 
-        ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+        ObjetivoDescanso objetivoDescanso = obj.findByFechaAndParticipanteDescanso(new Date(), p);
 
         if (objetivoDescanso == null) {
             objetivoDescanso = new ObjetivoDescanso();
@@ -782,7 +766,8 @@ public class ParticipanteController {
 
         model.addAttribute("objetivoDescanso", objetivoDescanso);
 
-        ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
+
+        ObjetivoEstadoAnimo objetivoEstadoAnimo = obj.findByFechaAndParticipanteEstadoAnimo(new Date(), p);
 
         if (objetivoEstadoAnimo == null) {
             objetivoEstadoAnimo = new ObjetivoEstadoAnimo();
@@ -853,7 +838,7 @@ public class ParticipanteController {
     public String process_ObjetivoAgua(@PathVariable("id") Integer id, @ModelAttribute ObjetivoAgua objetivoAgua) {
         Participante p = participante.findById(getUsuario().getId()).get();
         objetivoAgua.setParticipante(p);
-        objAgua.guardar(objetivoAgua);
+        obj.guardarAgua(objetivoAgua);
         return "redirect:/objetivos";
     }
 
@@ -1479,7 +1464,7 @@ public class ParticipanteController {
     public String agregarVaso(@PathVariable("idParticipante") Integer idParticipante, Model model) {
 
         Participante p = participante.getParticipante(idParticipante);
-        ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+        ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
 
         if (objetivoAgua == null) {
             objetivoAgua = new ObjetivoAgua();
@@ -1499,7 +1484,7 @@ public class ParticipanteController {
             // objetivo");
         }
 
-        objAgua.guardar(objetivoAgua);
+        obj.guardarAgua(objetivoAgua);
 
         return "redirect:/objetivos";
 
@@ -1509,7 +1494,7 @@ public class ParticipanteController {
     public String quitarVaso(@PathVariable("idParticipante") Integer idParticipante, Model model) {
 
         Participante p = participante.getParticipante(idParticipante);
-        ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+        ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
 
         if (objetivoAgua != null) {
 
@@ -1527,7 +1512,7 @@ public class ParticipanteController {
 
         }
 
-        objAgua.guardar(objetivoAgua);
+        obj.guardarAgua(objetivoAgua);
 
         return "redirect:/objetivos";
 
@@ -1546,8 +1531,8 @@ public class ParticipanteController {
             objetivoEjercicio.setParticipante(p);
             objetivoEjercicio.setEjercicio(ejercicioObj.getEjercicio());
             objetivoEjercicio.setDuracionEjercicio(ejercicioObj.getDuracionEjercicio());
-
-            objEjer.guardar(objetivoEjercicio);
+    
+            obj.guardarEjercicio(objetivoEjercicio);
         }
 
         return "redirect:/objetivos";
@@ -1557,11 +1542,11 @@ public class ParticipanteController {
     @GetMapping("/eliminar_ejercicio/{idObjetivo}")
     public String eliminarEjercicio(@PathVariable("idObjetivo") Integer idObjetivo, Model model) {
 
-        ObjetivoEjercicio objetivoEjercicio = objEjer.getObjetivoEjercicio(idObjetivo);
+      
+        ObjetivoEjercicio objetivoEjercicio= obj.getObjetivoEjercicio(idObjetivo);
 
-        if (getUsuario() instanceof Participante
-                && getUsuario().getId() == objetivoEjercicio.getParticipante().getId()) {
-            objEjer.borrar(idObjetivo);
+        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoEjercicio.getParticipante().getId()) {
+            obj.borrarObjetivoEjercicio(idObjetivo);
             return "redirect:/objetivos";
         } else
             return "redirect:/";
@@ -1573,7 +1558,7 @@ public class ParticipanteController {
             ObjetivoDescanso descansoObj) {
 
         Participante p = participante.getParticipante(idParticipante);
-        ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+        ObjetivoDescanso objetivoDescanso = obj.findByFechaAndParticipanteDescanso(new Date(), p);
 
         if (objetivoDescanso == null) {
 
@@ -1591,7 +1576,7 @@ public class ParticipanteController {
 
         }
 
-        objDesc.guardar(objetivoDescanso);
+        obj.guardarDescanso(objetivoDescanso);
 
         return "redirect:/objetivos";
 
@@ -1601,11 +1586,11 @@ public class ParticipanteController {
     public String eliminarDescanso(@PathVariable("idParticipante") Integer idParticipante, Model model) {
 
         Participante p = participante.getParticipante(idParticipante);
-        ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
 
-        if (getUsuario() instanceof Participante
-                && getUsuario().getId() == objetivoDescanso.getParticipante().getId()) {
-            objDesc.borrar(objetivoDescanso.getId());
+        ObjetivoDescanso objetivoDescanso = obj.findByFechaAndParticipanteDescanso(new Date(), p);
+    
+        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoDescanso.getParticipante().getId()) {
+            obj.borrarObjetivoDescanso(objetivoDescanso.getId());
             return "redirect:/objetivos";
         } else
             return "redirect:/";
@@ -1638,7 +1623,7 @@ public class ParticipanteController {
             ObjetivoEstadoAnimo estadoAnimoObj) {
 
         Participante p = participante.getParticipante(idParticipante);
-        ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
+        ObjetivoEstadoAnimo objetivoEstadoAnimo = obj.findByFechaAndParticipanteEstadoAnimo(new Date(), p);
 
         if (objetivoEstadoAnimo == null) {
 
@@ -1649,8 +1634,8 @@ public class ParticipanteController {
 
         }
 
-        objEstAnim.guardar(objetivoEstadoAnimo);
-
+        obj.guardarEstadoAnimo(objetivoEstadoAnimo);
+        
         return "redirect:/objetivos";
     }
 
@@ -1658,11 +1643,11 @@ public class ParticipanteController {
     public String eliminarEstadoAnimo(@PathVariable("idParticipante") Integer idParticipante, Model model) {
 
         Participante p = participante.getParticipante(idParticipante);
-        ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
 
-        if (getUsuario() instanceof Participante
-                && getUsuario().getId() == objetivoEstadoAnimo.getParticipante().getId()) {
-            objEstAnim.borrar(objetivoEstadoAnimo.getId());
+        ObjetivoEstadoAnimo objetivoEstadoAnimo = obj.findByFechaAndParticipanteEstadoAnimo(new Date(), p);
+    
+        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoEstadoAnimo.getParticipante().getId()) {
+            obj.borrarObjetivoEstadoAnimo(objetivoEstadoAnimo.getId());
             return "redirect:/objetivos";
         } else
             return "redirect:/";
