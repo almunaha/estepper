@@ -114,7 +114,7 @@
       </a>
 
       <a th:href="@{/chat}">
-        <i class="fa-solid fa-comments"></i>
+        <i class="fa-solid fa-people-group"></i>
       </a>
 
     </div>
@@ -182,9 +182,9 @@
                     <div class="col-6">
                       <button class="btn-chatEsc w-100 p-1 mb-3" id="chatCoordinador">Chat coordinador</button>
                     </div>
-                  </div> 
-                  
-                  
+                  </div>
+
+
                 </div>
                 <div class="bordes-chat">
 
@@ -198,8 +198,10 @@
                       </header>
                       <div class="chat-box">
                         <div th:each="m : ${mensajes}" class="contenedor-mensaje mb-2">
-                          <div th:if="${m.usuario.id != user.id}" class="mensaje d-flex justify-content-start align-items-end">
-                            <img th:src="${m.usuario.fotoParticipante}" class="avatar" style="width: 40px;" alt="m.usuario.nickname" />
+                          <div th:if="${m.usuario.id != user.id}"
+                            class="mensaje d-flex justify-content-start align-items-end">
+                            <img th:src="${m.usuario.fotoParticipante}" class="avatar" style="width: 40px;"
+                              alt="m.usuario.nickname" />
                             <div class="contenido-mensaje grey ms-2 p-2">
                               <div th:text="${m.usuario.nickname}" class="nickname"></div>
                               <div th:text="${m.mensaje}" class="mensaje my-1"></div>
@@ -209,7 +211,8 @@
                           </div>
                           <div th:unless="${m.usuario.id != user.id}"
                             class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
-                            <img th:src="${user.fotoParticipante}" class="avatar" style="width: 40px;"alt="m.usuario.nickname" />
+                            <img th:src="${user.fotoParticipante}" class="avatar" style="width: 40px;"
+                              alt="m.usuario.nickname" />
                             <div class="contenido-mensaje green me-2 p-2">
                               <div class="nickname">Yo</div>
                               <div th:text="${m.mensaje}" class="mensaje my-1"></div>
@@ -219,15 +222,53 @@
                           </div>
                         </div>
                       </div>
-                      <form th:action="@{'/mensajes/guardar/' + ${user.grupo.id}}" th:object="${message}" method="post"
-                        class="typing-area">
+                      <form id="formulario-mensaje" th:action="@{'/mensajes/guardar/' + ${user.grupo.id}}"
+                        th:object="${message}" method="post" class="typing-area">
 
                         <input type="text" th:field="*{mensaje}" class="input-field"
                           placeholder="Escribe un mensaje aquí ..." autocomplete="off">
 
                         <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
-                    
+
                       </form>
+
+                      <script>
+                        var palabrasProhibidas = [ //añadir más palabras
+                          "puto",
+                          "puta",
+                          "gilipollas",
+                          "joder",
+                          "coño",
+                          "cabrón",
+                          "maricón",
+                          "chinga tu madre",
+                          "hijueputa",
+                          "bastardo",
+                          "perra",
+                          "malparido",
+                          "mamón",
+                          "zorra",
+                          "pendejo",
+                          "conchatumadre",
+                          "imbécil",
+                          "idiota",
+                          "estúpido"
+                        ];
+
+                        var formulario = document.getElementById("formulario-mensaje");
+                        formulario.addEventListener("submit", function (evento) {
+
+                          var mensaje = formulario.elements.mensaje.value;
+
+                          palabrasProhibidas.forEach(function (palabra) {
+                            var expresionRegular = new RegExp(palabra, "gi");
+                            mensaje = mensaje.replace(expresionRegular, "******");
+                          });
+
+                          formulario.elements.mensaje.value = mensaje;
+                        });
+
+                      </script>
                     </section>
                   </div>
 
@@ -237,13 +278,14 @@
                         <header>
                           <img src="img/p1.png" alt="Foto de grupo">
                           <h4>Tu coordinador</h4>
-                  
+
                         </header>
                         <div class="chat-box">
                           <div th:each="m : ${mensajesPrivados}" class="contenedor-mensaje mb-2">
                             <div th:if="${m.usuario.id != user.id}"
                               class="mensaje d-flex justify-content-start align-items-end">
-                              <img th:src="${m.usuario.fotoParticipante}" class="avatar" style="width: 40px;" alt="m.usuario.nickname" />
+                              <img th:src="${m.usuario.fotoParticipante}" class="avatar" style="width: 40px;"
+                                alt="m.usuario.nickname" />
                               <div class="contenido-mensaje grey ms-2 p-2">
                                 <div th:text="${m.usuario.nickname}" class="nickname"></div>
                                 <div th:text="${m.mensaje}" class="mensaje my-1"></div>
@@ -253,7 +295,8 @@
                             </div>
                             <div th:unless="${m.usuario.id != user.id}"
                               class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
-                              <img th:src="${user.fotoParticipante}" class="avatar" style="width: 40px;"alt="m.usuario.nickname" />
+                              <img th:src="${user.fotoParticipante}" class="avatar" style="width: 40px;"
+                                alt="m.usuario.nickname" />
                               <div class="contenido-mensaje green me-2 p-2">
                                 <div class="nickname">Yo</div>
                                 <div th:text="${m.mensaje}" class="mensaje my-1"></div>
@@ -292,9 +335,10 @@
                     <div class="listaDeParticipantes mb-2">
                       <div class="row">
                         <div class="col-2" th:each="lis:${listadoParticipantesGrupo}">
-                          <img th:if="${lis.id == user.id}" th:src="@{${lis.fotoParticipante}}" class="avatar" alt="Yo" title="Yo" />
-                          <img th:unless="${lis.id == user.id}" th:src="@{${lis.fotoParticipante}}" alt="Imagen de perfil de ${lis.nickname}"
-                            th:title="${lis.nickname}" class="avatar" />
+                          <img th:if="${lis.id == user.id}" th:src="@{${lis.fotoParticipante}}" class="avatar" alt="Yo"
+                            title="Yo" />
+                          <img th:unless="${lis.id == user.id}" th:src="@{${lis.fotoParticipante}}"
+                            alt="Imagen de perfil de ${lis.nickname}" th:title="${lis.nickname}" class="avatar" />
                           <div class="perdida-peso-individual" style="text-align: center;display: none; "
                             th:text="@{${lis.perdidaDePeso}}"></div>
                           <div class="asistencia-individual" style="text-align: center;display: none; "
