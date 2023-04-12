@@ -126,7 +126,27 @@
                 <h4 style="margin-bottom: 2%;">Progreso individual</h4>
 
                 <!-- Contenido del progreso vista coordinador -->
-                <div class="grid-progreso">
+
+                <div class="valor-perdida">
+                    <!-- VALOR PÉRDIDA DE PESO -->
+                    <div class="perdida-indi">
+                        <div class="header-progreso">
+                            <h5>Peso perdido</h5>
+                            <span th:text="${-participante.perdidaDePeso} + kg"></span>
+                        </div>
+                    </div>
+
+                    <!-- VALOR PÉRDIDA DE PERÍMETRO -->
+                    <div class="perdida-indi">
+                        <div class="header-progreso">
+                            <h5>Perímetro perdido</h5>
+                            <span th:text="${-participante.perdidacmcintura} + kg"></span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-progreso">
                     <!-- PESO -->
                     <div class="progreso-datos-coor">
                         <div class="header-progreso">
@@ -155,20 +175,13 @@
                             </div>
 
                             <!-- Ver gráfica peso -->
-                            <div id="top-grafica"><canvas id="graficaPesoCoor" width="500" height="200"></canvas></div>
+                            <div id="top-grafica"><canvas id="graficaPesoCoor" width="500" height="100"></canvas></div>
 
                             <!-- Botones para cambiar de vista del peso -->
                             <div class="botones-prog">
                                 <button class="btn-reg" id="registroPesoC">Ver registros</button>
                                 <button class="btn-reg" id="graficaPesoC">Ver gráfica</button>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- VALOR PÉRDIDA DE PESO -->
-                    <div class="progreso-datos-coor">
-                        <div class="header-progreso">
-                            <h4>Peso perdido</h4>
                         </div>
                     </div>
 
@@ -200,7 +213,7 @@
                             </div>
 
                             <!-- Ver gráfica perímetro -->
-                            <div id="top-grafica"><canvas id="graficaPerCoor" width="500" height="200"></canvas></div>
+                            <div id="top-grafica"><canvas id="graficaPerCoor" width="500" height="100"></canvas></div>
 
                             <!-- Botones para cambiar de vista del perimetro -->
                             <div class="botones-prog">
@@ -210,12 +223,7 @@
                         </div>
                     </div>
 
-                    <!-- VALOR PÉRDIDA DE PERÍMETRO -->
-                    <div class="progreso-datos-coor">
-                        <div class="header-progreso">
-                            <h4>Perímetro perdido</h4>
-                        </div>
-                    </div>
+
 
                 </div>
             </div>

@@ -664,6 +664,8 @@ public class ParticipanteController {
 
                 if (p.getIdCoordinador().equals(user.getId())) { // si el progreso que quiere ver es de un participante
                                                                  // que le pertenece
+
+                    model.addAttribute("participante", p);
                     List<Progreso> peso = pro.datos(p, TipoProgreso.PESO);
                     model.addAttribute("peso", peso);
                     model.addAttribute("idPart", id);

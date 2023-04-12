@@ -227,11 +227,27 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* Progreso indivual (vista coordinador) */
-.grid-progreso {
-    display: grid;
-    grid-template-columns: 1.7fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 30px;
+.valor-perdida{
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.3%;
+}
+
+.perdida-indi{
+    width: 20%;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 12px;
+    margin-bottom: 2%;
+    font-size: 1.5rem;
+}
+
+.flex-progreso {
+    display: flex;
+    flex-direction: column;
 }
 
 .progreso-datos-coor {
@@ -241,6 +257,8 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: white;
     border-radius: 12px;
     margin-bottom: 2%;
+    height: 360px;
+
 }
 
 @media (max-width: 767px) {
