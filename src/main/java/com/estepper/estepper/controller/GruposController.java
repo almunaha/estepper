@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -78,7 +79,6 @@ public class GruposController {
 
     @Autowired // inyectar recursos de la clase GrupoService
     private ObservacionesService observaciones;
-
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(@ModelAttribute("grupo") Grupo elgrupo,
@@ -179,8 +179,6 @@ public class GruposController {
         grupo.save(elgrupo);
         return "redirect:/listaGrupos";
     }
-
-
 
     @GetMapping("/listaGrupos")
     public String grupos(@RequestParam Map<String, Object> params, Model model) {
@@ -441,6 +439,33 @@ public class GruposController {
     @PostMapping("/mensajesPrivados/guardar/{idParticipante}")
     public String guardarMensajePrivado(@ModelAttribute("messagePriv") MensajePrivado elmensajePrivado,
             @PathVariable("idParticipante") Integer idParticipante) {
+        String mensaje = elmensajePrivado.getMensaje();
+        Map<String, String> filtros = new HashMap<>();
+        filtros.put("puta", "******");
+        filtros.put("puto", "******");
+        filtros.put("gilipollas", "******");
+        filtros.put("joder", "******");
+        filtros.put("coño", "******");
+        filtros.put("cabrón", "******");
+        filtros.put("maricón", "******");
+        filtros.put("chinga tu madre", "******");
+        filtros.put("hijueputa", "******");
+        filtros.put("bastardo", "******");
+        filtros.put("perra", "******");
+        filtros.put("malparido", "******");
+        filtros.put("mamón", "******");
+        filtros.put("zorra", "******");
+        filtros.put("pendejo", "******");
+        filtros.put("conchatumadre", "******");
+        filtros.put("imbécil", "******");
+        filtros.put("idiota", "******");
+        filtros.put("estúpido", "******");
+        for (String palabra : mensaje.split("\\s+")) {
+            if (filtros.containsKey(palabra.toLowerCase())) {
+                mensaje = mensaje.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
+            }
+        }
+        elmensajePrivado.setMensaje(mensaje);
         elmensajePrivado.setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getIdCoordinador()));
         elmensajePrivado.setParticipante(part.getParticipante(idParticipante));
         elmensajePrivado.setId(0);
