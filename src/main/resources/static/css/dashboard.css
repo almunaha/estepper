@@ -217,6 +217,8 @@ input[type=number]::-webkit-outer-spin-button {
     padding-right: 1%;
     justify-content: space-between;
     gap: 1%;
+    margin-bottom: 1%;
+    margin-top: 2%;
 }
 
 .filtro {
