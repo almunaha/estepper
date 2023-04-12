@@ -435,7 +435,7 @@ public class GruposController {
     @PostMapping("/mensajesPrivados/guardar/{idParticipante}")
     public String guardarMensajePrivado(@ModelAttribute("messagePriv") MensajePrivado elmensajePrivado,
             @PathVariable("idParticipante") Integer idParticipante) {
-        String mensaje = elmensajePrivado.getMensaje();
+        String elmensaje = elmensajePrivado.getMensaje();
         Map<String, String> filtros = new HashMap<>();
         filtros.put("puta", "******");
         filtros.put("puto", "******");
@@ -456,12 +456,12 @@ public class GruposController {
         filtros.put("imbécil", "******");
         filtros.put("idiota", "******");
         filtros.put("estúpido", "******");
-        for (String palabra : mensaje.split("\\s+")) {
+        for (String palabra : elmensaje.split("\\s+")) {
             if (filtros.containsKey(palabra.toLowerCase())) {
-                mensaje = mensaje.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
+                elmensaje = elmensaje.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
             }
         }
-        elmensajePrivado.setMensaje(mensaje);
+        elmensajePrivado.setMensaje(elmensaje);
         elmensajePrivado.setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getIdCoordinador()));
         elmensajePrivado.setParticipante(part.getParticipante(idParticipante));
         elmensajePrivado.setId(0);
