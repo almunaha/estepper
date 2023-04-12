@@ -66,6 +66,22 @@ $(document).ready(function () {
             pesoCoor.update();
         });
 
+    //PERÍMETRO
+
+    //Botones del PERÍMETRO
+    $(".perimetroTabla").hide();
+    $("#graficaPerCoor").show();
+
+    $("#registroPerimetroC").click(function () {
+        $(".perimetroTabla").show();
+        $("#graficaPerCoor").hide();
+    });
+
+    $("#graficaPerimetroC").click(function () {
+        $("#graficaPerCoor").show();
+        $(".perimetroTabla").hide();
+    });
+
     // GRÁFICA PERÍMETRO
     let graficaPerimetroCoor = document.getElementById("graficaPerCoor").getContext("2d");
 

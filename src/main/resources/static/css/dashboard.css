@@ -1,16 +1,16 @@
-.dashboard{
+.dashboard {
     padding-left: 2%;
     padding-right: 2%;
 
     padding-top: 75px;
 }
 
-.tit-dash{
+.tit-dash {
     padding: 1.3%;
 }
 
 /* valores progreso, lo de arriba del todo */
-.valores-progreso{
+.valores-progreso {
     display: flex;
     width: 100%;
     height: 140px;
@@ -21,7 +21,7 @@
     gap: 1%;
 }
 
-.valor{
+.valor {
     box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
     align-items: center;
     background-color: white;
@@ -31,13 +31,13 @@
     border-radius: 12px;
 }
 
-.flex-valor{
+.flex-valor {
     display: flex;
     width: 100%;
     height: 100%;
 }
 
-.iz-valor{
+.iz-valor {
     font-size: 220%;
     width: 30%;
     padding-left: 5%;
@@ -46,7 +46,7 @@
     justify-content: center;
 }
 
-.der-valor{
+.der-valor {
     width: 70%;
     justify-content: center;
     display: flex;
@@ -54,7 +54,7 @@
     flex-direction: column;
 }
 
-.dato-valor{
+.dato-valor {
     float: left;
     width: 100%;
     padding-left: 5%;
@@ -62,7 +62,7 @@
     font-size: 170%;
 }
 
-.bottom-valor{
+.bottom-valor {
     float: left;
     width: 100%;
     padding-left: 5%;
@@ -70,7 +70,7 @@
 }
 
 /* Gráficas */
-.graficas-progreso{
+.graficas-progreso {
     padding-left: 1%;
     padding-right: 1%;
     width: 100%;
@@ -80,7 +80,7 @@
     gap: 1%;
 }
 
-.progreso-datos{
+.progreso-datos {
     width: 50%;
     padding: 20px;
     box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
@@ -91,38 +91,39 @@
 }
 
 /* contenido de Peso y perímetro abdominal */
-.layout-grafica{
+.layout-grafica {
     display: flex;
     flex-direction: column;
 }
 
-.header-progreso{
-    display:flex; 
+.header-progreso {
+    display: flex;
     justify-content: space-between;
 }
 
-#top-grafica{
+#top-grafica {
     flex-basis: 60%;
 }
 
-.botones-prog{
+.botones-prog {
     display: flex;
     justify-content: center;
     margin-top: 1%;
     flex-basis: 40%;
 }
-.botones-prog button{
+
+.botones-prog button {
     margin-right: 10px;
 }
 
-.btn-form{
+.btn-form {
     display: flex;
     gap: 2%;
     justify-content: center;
 }
 
-.btn-reg{
-    font-size: 15px; 
+.btn-reg {
+    font-size: 15px;
     background-color: rgb(251, 179, 116);
     border: 0.5px solid rgb(251, 179, 116);
     color: white;
@@ -134,8 +135,9 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
-.btn-plus, .btn-plus2 {
-    font-size: 22px; 
+.btn-plus,
+.btn-plus2 {
+    font-size: 22px;
     color: rgb(251, 179, 116);
 }
 
@@ -147,11 +149,11 @@
     transform: scale(1.1);
 }
 
-#form-peso{
+#form-peso {
     display: none;
 }
 
-.pesoTabla{
+.pesoTabla {
     overflow-y: scroll;
     flex-basis: 60%;
     box-sizing: border-box;
@@ -159,25 +161,25 @@
 }
 
 /* para que no aparezcan las flechitas en el input de tipo number */
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* asistencia sesiones */
-.asis-gr{
+.asis-gr {
     display: flex;
     width: 100%;
 }
 
-.tit-asis{
+.tit-asis {
     width: 50%;
     margin-left: 1.3%;
     margin-top: 2%;
 }
 
-.asistencia{
+.asistencia {
     width: 100%;
     height: 150px;
     display: flex;
@@ -189,7 +191,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 1%;
 }
 
-.asis-ind{
+.asis-ind {
     display: flex;
     width: 50%;
     background-color: white;
@@ -200,16 +202,16 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 12px;
 }
 
-.asis-sesion{
+.asis-sesion {
     width: 10%;
 }
 
-.asis-sesion i{
+.asis-sesion i {
     font-size: 160%;
 }
 
 /* filtro */
-.filtro-fechas{
+.filtro-fechas {
     display: flex;
     padding-left: 1%;
     padding-right: 1%;
@@ -217,60 +219,77 @@ input[type=number]::-webkit-outer-spin-button {
     gap: 1%;
 }
 
-.filtro{
+.filtro {
     gap: 1%;
     display: flex;
-    vertical-align: middle; 
+    vertical-align: middle;
     width: 50%;
 }
 
-/* Progreso indivual */
+/* Progreso indivual (vista coordinador) */
+.grid-progreso {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 30px;
+}
+
+.progreso-datos-coor {
+    padding: 20px;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
+    align-items: center;
+    background-color: white;
+    border-radius: 12px;
+    margin-bottom: 2%;
+}
 
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 
-    #sidebar-container{
+    #sidebar-container {
         display: none;
     }
 
-    .graficas-progreso{
+    .graficas-progreso {
         flex-direction: column;
     }
 
-    .progreso-datos{
+    .progreso-datos {
         width: 100%;
         margin-top: 2%;
     }
 
-    .btn-reg{
+    .btn-reg {
         width: 40%;
     }
 
-    .valores-progreso{
+    .valores-progreso {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);;
+        grid-template-columns: repeat(2, 1fr);
+        ;
         grid-template-rows: repeat(2, 1fr);
         grid-gap: 3%;
         height: 200px;
     }
 
-    .valor{
+    .valor {
         width: 100%;
     }
 
-    .asis-ind{
+    .asis-ind {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);;
+        grid-template-columns: repeat(5, 1fr);
+        ;
         grid-template-rows: repeat(2, 1fr);
         grid-gap: 2%;
         padding: 6%;
     }
 
-    .asis-gr h5{
+    .asis-gr h5 {
         font-size: 1rem;
     }
 
-    .dashboard{
+    .dashboard {
         margin-bottom: 12%;
         margin-left: 1.5%;
         margin-right: 1.5%;
