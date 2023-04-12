@@ -541,6 +541,10 @@ public class ParticipanteController {
             materialS.deleteByParticipante(p);
             ses.deleteByParticipante(p);
             obj.deleteByParticipante(p);
+            obj.deleteAguaByParticipante(p);
+            obj.deleteDescansoByParticipante(p);
+            obj.deleteEjercicioByParticipante(p);
+            obj.deleteEstadoAnimoByParticipante(p);
             pro.deleteByParticipante(p);
             alimentacion.deleteByParticipante(p);
             f.deleteByParticipante(p);

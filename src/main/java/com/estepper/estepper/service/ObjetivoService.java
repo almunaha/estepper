@@ -28,24 +28,28 @@ public interface ObjetivoService {
    public void borrarObjetivoAgua(Integer id);
    public ObjetivoAgua getObjetivoAgua(Integer id);
    public ObjetivoAgua findByFechaAndParticipanteAgua(Date fecha,Participante p);
+   public void deleteAguaByParticipante(Participante p);
    //DESCANSO
    public void guardarDescanso(ObjetivoDescanso o);
    public void borrarObjetivoDescanso(Integer id);
    public ObjetivoDescanso getObjetivoDescanso(Integer id);
    public ObjetivoDescanso findByFechaAndParticipanteDescanso(Date fecha,Participante p);
    public ObjetivoDescanso findByParticipanteDescanso(Participante p);
+   public void deleteDescansoByParticipante(Participante p);
    //EJERCICIO
    public void guardarEjercicio(ObjetivoEjercicio o);
    public void borrarObjetivoEjercicio(Integer id);
    public ObjetivoEjercicio getObjetivoEjercicio(Integer id);
    public ObjetivoEjercicio findByParticipanteEjercicio(Participante p);
    public List<ObjetivoEjercicio> listaEjercicio(Date fecha, Participante p);
+   public void deleteEjercicioByParticipante(Participante p);
    //ESTADO ANIMO
    public void guardarEstadoAnimo(ObjetivoEstadoAnimo o);
    public void borrarObjetivoEstadoAnimo(Integer id);
    public ObjetivoEstadoAnimo getObjetivoEstadoAnimo(Integer id);
    public ObjetivoEstadoAnimo findByFechaAndParticipanteEstadoAnimo(Date fecha,Participante p);
    public ObjetivoEstadoAnimo findByParticipanteEstadoAnimo(Participante p);
+   public void deleteEstadoAnimoByParticipante(Participante p);
 
 }
 
