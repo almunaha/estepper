@@ -68,4 +68,10 @@ public class InvitacionServiceImpl implements InvitacionService{
         repo.deleteByCoordinador(c);
     }
 
+    @Override 
+    public Integer numInvitacionesPosibles(Actividad a, EstadoInvitacion e){
+        return repo.countByActividadAndEstado(a, e);
+    }
+
+
 }

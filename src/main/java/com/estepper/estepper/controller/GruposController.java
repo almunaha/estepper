@@ -47,7 +47,6 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.MensajeService;
 import com.estepper.estepper.service.ObservacionesService;
 import com.estepper.estepper.service.MaterialService;
-import com.estepper.estepper.service.MensajePrivadoService;
 import com.estepper.estepper.service.UsuarioService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,9 +72,6 @@ public class GruposController {
 
     @Autowired
     private MensajeService mensaje;
-
-    @Autowired
-    private MensajePrivadoService mensajePrivado;
 
     @Autowired // inyectar recursos de la clase GrupoService
     private ObservacionesService observaciones;
@@ -381,7 +377,7 @@ public class GruposController {
             MensajePrivado menPriv = new MensajePrivado();
 
             List<Mensaje> mensajes = mensaje.obtenerMensajes(g);
-            List<MensajePrivado> mensajesPrivados = mensajePrivado.obtenerMensajesPrivados(p);
+            List<MensajePrivado> mensajesPrivados = mensaje.obtenerMensajesPrivados(p);
 
             model.addAttribute("message", men);
             model.addAttribute("mensajes", mensajes);
@@ -407,7 +403,7 @@ public class GruposController {
         if (u instanceof Coordinador) { // revisar esto
 
             MensajePrivado menPriv = new MensajePrivado();
-            List<MensajePrivado> mensajesPrivados = mensajePrivado.obtenerMensajesPrivados(p);
+            List<MensajePrivado> mensajesPrivados = mensaje.obtenerMensajesPrivados(p);
             model.addAttribute("participante", p);
             model.addAttribute("messagePriv", menPriv);
             model.addAttribute("mensajesPrivados", mensajesPrivados);
@@ -471,7 +467,7 @@ public class GruposController {
         elmensajePrivado.setId(0);
         elmensajePrivado.setFechayHoraEnvio(LocalDateTime.now());
         elmensajePrivado.setUsuario(getUsuario());
-        mensajePrivado.save(elmensajePrivado);
+        mensaje.saveMensajePrivado(elmensajePrivado);
 
         if (getUsuario() instanceof Coordinador)
             return "redirect:/chatPrivado/{idParticipante}";

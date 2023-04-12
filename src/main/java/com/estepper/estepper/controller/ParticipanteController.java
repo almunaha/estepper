@@ -541,6 +541,10 @@ public class ParticipanteController {
             materialS.deleteByParticipante(p);
             ses.deleteByParticipante(p);
             obj.deleteByParticipante(p);
+            obj.deleteAguaByParticipante(p);
+            obj.deleteDescansoByParticipante(p);
+            obj.deleteEjercicioByParticipante(p);
+            obj.deleteEstadoAnimoByParticipante(p);
             pro.deleteByParticipante(p);
             alimentacion.deleteByParticipante(p);
             f.deleteByParticipante(p);
@@ -727,7 +731,6 @@ public class ParticipanteController {
         return "redirect:/progreso";
     }
 
-
     @GetMapping("/objetivos")
     public String objetivos(Model model) {
         Participante p = participante.findById(getUsuario().getId()).get();
@@ -738,7 +741,6 @@ public class ParticipanteController {
         model.addAttribute("user", getUsuario());
         model.addAttribute("objetivo", new Objetivo());
         model.addAttribute("fechaActual1", fechaActual1);
-
 
         LocalDate fechaActual = LocalDate.now();
         int mesActual = fechaActual.getMonthValue();
@@ -790,8 +792,6 @@ public class ParticipanteController {
         return listaObjetivosPorMes;
     }
 
-  
-
     @PostMapping("/objetivos/guardar")
     public String guardarObjetivo(Objetivo objetivo) {
         Participante p = participante.findById(getUsuario().getId()).get();
@@ -817,7 +817,7 @@ public class ParticipanteController {
     @GetMapping("/objetivos/editar/{id}")
     public String editarObjetivo(@PathVariable("id") Integer id, Model model) {
         Objetivo o = obj.getObjetivo(id);
- 
+
         if (getUsuario() instanceof Participante && getUsuario().getId() == o.getParticipante().getId()) {
             model.addAttribute("user", getUsuario());
             model.addAttribute("objetivo", o);
@@ -908,9 +908,18 @@ public class ParticipanteController {
                 List<Actividad> listado = act.actividadesPendientes(LocalDateTime.now());
                 model.addAttribute("listado", listado);
 
+                // inscripciones posibles: número de plazas - invitaciones pendientes
+                List<Integer> inscripciones = new ArrayList<Integer>();
+                for (Actividad actividad : listado) {
+                    Integer maximo = actividad.getPlazas() - invi.numInvitacionesPosibles(actividad, EstadoInvitacion.PENDIENTE);
+                    inscripciones.add(maximo);
+                }
+                model.addAttribute("inscripciones", inscripciones);
+
                 // asistencia confirmada
                 List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
                 model.addAttribute("asistencia", asistencia);
+
                 return "actividades";
             } else
                 return "acceso";
@@ -927,6 +936,10 @@ public class ParticipanteController {
             Actividad acti = act.actividad(id);
             model.addAttribute("user", user);
             model.addAttribute("actividad", acti);
+
+            // inscripciones posibles: número de plazas - invitaciones pendientes
+            Integer maximo = acti.getPlazas() - invi.numInvitacionesPosibles(acti, EstadoInvitacion.PENDIENTE);
+            model.addAttribute("maximoInvit", maximo);
 
             if (user instanceof Participante) { // si es participante comprobar asistencia confirmada a actividad
                 boolean asiste = false;
@@ -1112,7 +1125,8 @@ public class ParticipanteController {
             return "acceso";
     }
 
-    //Esto es de prueba, porque estoy viedo como funciona lo de alimentación que ya hay hecho
+    // Esto es de prueba, porque estoy viedo como funciona lo de alimentación que ya
+    // hay hecho
     @GetMapping("/nutrientes")
     public String nutrientes(Model model) {
         Usuario user = getUsuario();
@@ -1409,21 +1423,22 @@ public class ParticipanteController {
             if (exploracion != null) {
                 model.addAttribute("exploracion", exploracion);
 
-                //altura
-                String talla = String.format("%.2f", exploracion.getTalla() / 100.0).replace(",", "."); // Formatear a dos decimales
+                // altura
+                String talla = String.format("%.2f", exploracion.getTalla() / 100.0).replace(",", "."); // Formatear a
+                                                                                                        // dos decimales
                 model.addAttribute("talla", talla);
 
-                //peso saludable para imc de 25
-                Double s = 25.00 * ((exploracion.getTalla() / 100.0) * (exploracion.getTalla() / 100.0)); 
+                // peso saludable para imc de 25
+                Double s = 25.00 * ((exploracion.getTalla() / 100.0) * (exploracion.getTalla() / 100.0));
                 String saludable = String.format("%.2f", s).replace(",", ".");
                 model.addAttribute("saludable", saludable);
 
-                //5% del peso con 2 decimales
+                // 5% del peso con 2 decimales
                 Double cincoPeso = exploracion.getPeso() * 0.05;
                 String cinco = String.format("%.2f", cincoPeso).replace(",", ".");
                 model.addAttribute("cinco", cinco);
 
-                //10% del peso con 2 decimales
+                // 10% del peso con 2 decimales
                 Double diezPeso = exploracion.getPeso() * 0.1;
                 String diez = String.format("%.2f", diezPeso).replace(",", ".");
                 model.addAttribute("diez", diez);
@@ -1448,7 +1463,6 @@ public class ParticipanteController {
         } else
             return "acceso";
     }
-
 
     @GetMapping("/agregar_vaso/{idParticipante}")
     public String agregarVaso(@PathVariable("idParticipante") Integer idParticipante, Model model) {
@@ -1513,8 +1527,8 @@ public class ParticipanteController {
             ObjetivoEjercicio ejercicioObj) {
 
         Participante p = participante.getParticipante(idParticipante);
-    
-        if(ejercicioObj.getEjercicio() != Ejercicio.NINGUNO){
+
+        if (ejercicioObj.getEjercicio() != Ejercicio.NINGUNO) {
             ObjetivoEjercicio objetivoEjercicio = new ObjetivoEjercicio();
             objetivoEjercicio.setEstadoObjetivo(EstadoObjetivo.PENDIENTE);
             objetivoEjercicio.setFecha(new Date());
@@ -1531,6 +1545,7 @@ public class ParticipanteController {
 
     @GetMapping("/eliminar_ejercicio/{idObjetivo}")
     public String eliminarEjercicio(@PathVariable("idObjetivo") Integer idObjetivo, Model model) {
+
       
         ObjetivoEjercicio objetivoEjercicio= obj.getObjetivoEjercicio(idObjetivo);
 
@@ -1573,8 +1588,9 @@ public class ParticipanteController {
 
     @GetMapping("/eliminar_descanso/{idParticipante}")
     public String eliminarDescanso(@PathVariable("idParticipante") Integer idParticipante, Model model) {
-      
+
         Participante p = participante.getParticipante(idParticipante);
+
         ObjetivoDescanso objetivoDescanso = obj.findByFechaAndParticipanteDescanso(new Date(), p);
     
         if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoDescanso.getParticipante().getId()) {
@@ -1585,34 +1601,41 @@ public class ParticipanteController {
 
     }
 
-    /*@GetMapping("/editar_descanso/{idParticipante}/{horasSuenio}")
-    public String editarDescanso(@PathVariable("idParticipante") Integer idParticipante,@PathVariable("horasSuenio") Integer horasSuenio, Model model) {
-      
-        Participante p = participante.getParticipante(idParticipante);
-        ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
-    
-        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoDescanso.getParticipante().getId()) {
-            objetivoDescanso.setHorasSuenio(horasSuenio);
-            objDesc.guardar(objetivoDescanso);
-            return "redirect:/objetivos";
-        } else
-            return "redirect:/";
-
-    }*/
+    /*
+     * @GetMapping("/editar_descanso/{idParticipante}/{horasSuenio}")
+     * public String editarDescanso(@PathVariable("idParticipante") Integer
+     * idParticipante,@PathVariable("horasSuenio") Integer horasSuenio, Model model)
+     * {
+     * 
+     * Participante p = participante.getParticipante(idParticipante);
+     * ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new
+     * Date(), p);
+     * 
+     * if (getUsuario() instanceof Participante && getUsuario().getId() ==
+     * objetivoDescanso.getParticipante().getId()) {
+     * objetivoDescanso.setHorasSuenio(horasSuenio);
+     * objDesc.guardar(objetivoDescanso);
+     * return "redirect:/objetivos";
+     * } else
+     * return "redirect:/";
+     * 
+     * }
+     */
 
     @PostMapping("/agregar_estadoAnimo/{idParticipante}")
-    public String agregarEstadoAnimo(@PathVariable("idParticipante") Integer idParticipante, ObjetivoEstadoAnimo estadoAnimoObj) {
+    public String agregarEstadoAnimo(@PathVariable("idParticipante") Integer idParticipante,
+            ObjetivoEstadoAnimo estadoAnimoObj) {
 
         Participante p = participante.getParticipante(idParticipante);
         ObjetivoEstadoAnimo objetivoEstadoAnimo = obj.findByFechaAndParticipanteEstadoAnimo(new Date(), p);
 
-        if(objetivoEstadoAnimo == null){
+        if (objetivoEstadoAnimo == null) {
 
             objetivoEstadoAnimo = new ObjetivoEstadoAnimo();
             objetivoEstadoAnimo.setEstadoAnimo(estadoAnimoObj.getEstadoAnimo());
             objetivoEstadoAnimo.setFecha(new Date());
             objetivoEstadoAnimo.setParticipante(p);
-            
+
         }
 
         obj.guardarEstadoAnimo(objetivoEstadoAnimo);
@@ -1620,11 +1643,11 @@ public class ParticipanteController {
         return "redirect:/objetivos";
     }
 
-
     @GetMapping("/eliminar_estadoAnimo/{idParticipante}")
     public String eliminarEstadoAnimo(@PathVariable("idParticipante") Integer idParticipante, Model model) {
-      
+
         Participante p = participante.getParticipante(idParticipante);
+
         ObjetivoEstadoAnimo objetivoEstadoAnimo = obj.findByFechaAndParticipanteEstadoAnimo(new Date(), p);
     
         if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoEstadoAnimo.getParticipante().getId()) {
@@ -1634,6 +1657,7 @@ public class ParticipanteController {
             return "redirect:/";
 
     }
+
     @GetMapping("/analitica/{id}")
     public String analitica(@PathVariable Integer id, Model model) {
         Participante p = participante.findById(id).get();

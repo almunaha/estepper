@@ -94,6 +94,10 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     public ObjetivoAgua findByFechaAndParticipanteAgua(Date fecha,Participante p){
         return repoAgua.findByFechaAndParticipante(fecha,p);
     }
+    @Override
+    public void deleteAguaByParticipante(Participante p) {
+        repoAgua.deleteAllByParticipante(p);
+    }
 
     //DESCANSO
     @Override
@@ -119,6 +123,11 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     @Override
     public ObjetivoDescanso findByParticipanteDescanso(Participante p){
         return repoDescanso.findByParticipante(p);
+    }
+
+    @Override
+    public void deleteDescansoByParticipante(Participante p) {
+        repoDescanso.deleteAllByParticipante(p);
     }
 
     //EJERCICIO
@@ -147,6 +156,11 @@ public class ObjetivoServiceImpl implements ObjetivoService {
         return(List<ObjetivoEjercicio>) repoEjercicio.findByFechaAndParticipante(fecha,p);
     }
 
+    @Override
+    public void deleteEjercicioByParticipante(Participante p) {
+        repoEjercicio.deleteAllByParticipante(p);
+    }
+
     //ESTADO ANIMO
     @Override
     public void guardarEstadoAnimo(ObjetivoEstadoAnimo obj){
@@ -173,6 +187,10 @@ public class ObjetivoServiceImpl implements ObjetivoService {
         return repoEstadoAnimo.findByParticipante(p);
     }
 
+    @Override
+    public void deleteEstadoAnimoByParticipante(Participante p) {
+        repoEstadoAnimo.deleteAllByParticipante(p);
+    }
 
 }
 
