@@ -937,10 +937,6 @@ public class ParticipanteController {
             model.addAttribute("user", user);
             model.addAttribute("actividad", acti);
 
-            // inscripciones posibles: número de plazas - invitaciones pendientes
-            Integer maximo = acti.getPlazas() - invi.numInvitacionesPosibles(acti, EstadoInvitacion.PENDIENTE);
-            model.addAttribute("maximoInvit", maximo);
-
             if (user instanceof Participante) { // si es participante comprobar asistencia confirmada a actividad
                 boolean asiste = false;
                 Integer asistencia = act.asistencia(acti.getId(), getUsuario().getId());
@@ -1032,6 +1028,12 @@ public class ParticipanteController {
 
         List<Invitacion> pendientes = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
                 EstadoInvitacion.PENDIENTE);
+        for (Invitacion invitacion : pendientes) {
+            if(invitacion.getActividad().getPlazas() == 0){
+                invi.borrar(invitacion);
+            }
+        }
+
         model.addAttribute("pendientes", pendientes);
 
         List<Invitacion> aceptadas = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
