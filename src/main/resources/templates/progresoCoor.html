@@ -20,7 +20,7 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
-    <script src="/js/progreso.js"></script>
+    <script src="/js/progresoCoordinador.js"></script>
     <script src="/js/validaciones.js"></script>
 
     <!--PARA GRÁFICOS-->
@@ -121,6 +121,7 @@
                 </div>
             </nav>
             <div style="margin-left: 5%; margin-right: 5%; margin-top: 2%; padding-top: 75px;">
+                <input type="hidden" id="idPart" th:value="${idPart}">
 
                 <h4>Progreso individual</h4>
 
@@ -152,12 +153,12 @@
                         </div>
 
                         <!-- Ver gráfica peso -->
-                        <div id="top-grafica"><canvas id="grafica" width="500" height="200"></canvas></div>
+                        <div id="top-grafica"><canvas id="graficaPesoCoor" width="500" height="200"></canvas></div>
 
                         <!-- Botones para cambiar de vista del peso -->
                         <div class="botones-prog">
-                            <button class="btn-reg" id="registroPeso">Ver registros</button>
-                            <button class="btn-reg" id="graficaPeso">Ver gráfica</button>
+                            <button class="btn-reg" id="registroPesoC">Ver registros</button>
+                            <button class="btn-reg" id="graficaPesoC">Ver gráfica</button>
                         </div>
                     </div>
                 </div>
@@ -191,7 +192,7 @@
                         </div>
 
                         <!-- Ver gráfica perímetro -->
-                        <div id="top-grafica"><canvas id="grafica2" width="500" height="200"></canvas></div>
+                        <div id="top-grafica"><canvas id="graficaPerCoor" width="500" height="200"></canvas></div>
 
                         <!-- Botones para cambiar de vista del perimetro -->
                         <div class="botones-prog">

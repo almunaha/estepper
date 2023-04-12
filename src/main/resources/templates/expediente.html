@@ -205,10 +205,11 @@
                     </div>
 
                     <div th:unless="${participante.sexo == null}"
-                        style="display: flex; justify-content: center; margin-bottom: 3%;">
+                        style="display: flex; gap: 1.5%; justify-content: center; align-items: center; margin-bottom: 3%;">
                         <a class="btn-sesion" id="guardar" title="Fichas" onclick="abrirIframe('mi-modal')" href="#">
                             Fichas </a>
-                        <!--<a class="btn-sesion" th:href="@{/progreso}">Progreso individual</a>-->
+                        <a class="btn-sesion" id="guardar"  th:href="@{'/progreso/' + ${participante.id}}">
+                            Progreso </a>
                     </div>
 
                     <!--Modal-->

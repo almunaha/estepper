@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,15 +34,15 @@ public class ApiRestController {
     @Autowired
     private ProgresoService progreso;
 
-    @GetMapping("/progreso/peso") 
-    public List<Progreso> datosPeso() {
-        Participante p =  part.findById(getUsuario().getId()).get();
+    @GetMapping("/progreso/peso/{id}") 
+    public List<Progreso> datosPeso(@PathVariable Integer id) {
+        Participante p =  part.findById(id).get();
         return progreso.datos(p, TipoProgreso.PESO);
     }
 
-    @GetMapping("/progreso/perimetro") 
-    public List<Progreso> datosPerimetro() {
-        Participante p =  part.findById(getUsuario().getId()).get();
+    @GetMapping("/progreso/perimetro/{id}") 
+    public List<Progreso> datosPerimetro(@PathVariable Integer id) {
+        Participante p =  part.findById(id).get();
         return progreso.datos(p, TipoProgreso.PERIMETRO);
     }
 
