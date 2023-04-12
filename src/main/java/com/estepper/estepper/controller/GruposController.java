@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,7 +47,6 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.MensajeService;
 import com.estepper.estepper.service.ObservacionesService;
 import com.estepper.estepper.service.MaterialService;
-import com.estepper.estepper.service.MensajePrivadoService;
 import com.estepper.estepper.service.UsuarioService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,12 +73,8 @@ public class GruposController {
     @Autowired
     private MensajeService mensaje;
 
-    @Autowired
-    private MensajePrivadoService mensajePrivado;
-
     @Autowired // inyectar recursos de la clase GrupoService
     private ObservacionesService observaciones;
-
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(@ModelAttribute("grupo") Grupo elgrupo,
@@ -179,8 +175,6 @@ public class GruposController {
         grupo.save(elgrupo);
         return "redirect:/listaGrupos";
     }
-
-
 
     @GetMapping("/listaGrupos")
     public String grupos(@RequestParam Map<String, Object> params, Model model) {
@@ -383,7 +377,7 @@ public class GruposController {
             MensajePrivado menPriv = new MensajePrivado();
 
             List<Mensaje> mensajes = mensaje.obtenerMensajes(g);
-            List<MensajePrivado> mensajesPrivados = mensajePrivado.obtenerMensajesPrivados(p);
+            List<MensajePrivado> mensajesPrivados = mensaje.obtenerMensajesPrivados(p);
 
             model.addAttribute("message", men);
             model.addAttribute("mensajes", mensajes);
@@ -409,7 +403,7 @@ public class GruposController {
         if (u instanceof Coordinador) { // revisar esto
 
             MensajePrivado menPriv = new MensajePrivado();
-            List<MensajePrivado> mensajesPrivados = mensajePrivado.obtenerMensajesPrivados(p);
+            List<MensajePrivado> mensajesPrivados = mensaje.obtenerMensajesPrivados(p);
             model.addAttribute("participante", p);
             model.addAttribute("messagePriv", menPriv);
             model.addAttribute("mensajesPrivados", mensajesPrivados);
@@ -441,12 +435,39 @@ public class GruposController {
     @PostMapping("/mensajesPrivados/guardar/{idParticipante}")
     public String guardarMensajePrivado(@ModelAttribute("messagePriv") MensajePrivado elmensajePrivado,
             @PathVariable("idParticipante") Integer idParticipante) {
+        String elmensaje = elmensajePrivado.getMensaje();
+        Map<String, String> filtros = new HashMap<>();
+        filtros.put("puta", "******");
+        filtros.put("puto", "******");
+        filtros.put("gilipollas", "******");
+        filtros.put("joder", "******");
+        filtros.put("coño", "******");
+        filtros.put("cabrón", "******");
+        filtros.put("maricón", "******");
+        filtros.put("chinga tu madre", "******");
+        filtros.put("hijueputa", "******");
+        filtros.put("bastardo", "******");
+        filtros.put("perra", "******");
+        filtros.put("malparido", "******");
+        filtros.put("mamón", "******");
+        filtros.put("zorra", "******");
+        filtros.put("pendejo", "******");
+        filtros.put("conchatumadre", "******");
+        filtros.put("imbécil", "******");
+        filtros.put("idiota", "******");
+        filtros.put("estúpido", "******");
+        for (String palabra : elmensaje.split("\\s+")) {
+            if (filtros.containsKey(palabra.toLowerCase())) {
+                elmensaje = elmensaje.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
+            }
+        }
+        elmensajePrivado.setMensaje(elmensaje);
         elmensajePrivado.setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getIdCoordinador()));
         elmensajePrivado.setParticipante(part.getParticipante(idParticipante));
         elmensajePrivado.setId(0);
         elmensajePrivado.setFechayHoraEnvio(LocalDateTime.now());
         elmensajePrivado.setUsuario(getUsuario());
-        mensajePrivado.save(elmensajePrivado);
+        mensaje.saveMensajePrivado(elmensajePrivado);
 
         if (getUsuario() instanceof Coordinador)
             return "redirect:/chatPrivado/{idParticipante}";
