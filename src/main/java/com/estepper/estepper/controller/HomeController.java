@@ -51,10 +51,8 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.MaterialService;
-import com.estepper.estepper.service.ObjetivoAguaService;
-import com.estepper.estepper.service.ObjetivoDescansoService;
-import com.estepper.estepper.service.ObjetivoEjercicioService;
-import com.estepper.estepper.service.ObjetivoEstadoAnimoService;
+import com.estepper.estepper.service.ObjetivoService;
+
 
 @Controller
 public class HomeController {
@@ -75,16 +73,8 @@ public class HomeController {
     private ProgresoService progreso;
 
     @Autowired
-    private ObjetivoAguaService objAgua;
+    private ObjetivoService obj;
 
-    @Autowired
-    private ObjetivoEjercicioService objEjer;
-
-    @Autowired
-    private ObjetivoDescansoService objDesc;
-
-    @Autowired
-    private ObjetivoEstadoAnimoService objEstAnim;
 
     @Autowired
     private BCryptPasswordEncoder hash;
@@ -136,7 +126,7 @@ public class HomeController {
                     }
 
                     Participante p = participante.findById(getUsuario().getId()).get();
-                    ObjetivoAgua objetivoAgua = objAgua.findByFechaAndParticipante(new Date(), p);
+                    ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                     Integer contadorObjetivos = 0;
 
                     if (objetivoAgua == null) {
@@ -151,7 +141,7 @@ public class HomeController {
                         }
                     }
 
-                    List<ObjetivoEjercicio> listaEjercicioParticipante = objEjer.listaEjercicio(new Date(), p);
+                    List<ObjetivoEjercicio> listaEjercicioParticipante = obj.listaEjercicio(new Date(), p);
 
                     if (listaEjercicioParticipante.isEmpty()) {
                         model.addAttribute("ejercicioCompletado", false);
@@ -160,7 +150,7 @@ public class HomeController {
                         contadorObjetivos = contadorObjetivos + 1;
                     }
 
-                    ObjetivoDescanso objetivoDescanso = objDesc.findByFechaAndParticipante(new Date(), p);
+                    ObjetivoDescanso objetivoDescanso = obj.findByFechaAndParticipanteDescanso(new Date(), p);
 
                     if (objetivoDescanso == null) {
                         objetivoDescanso = new ObjetivoDescanso();
@@ -174,7 +164,7 @@ public class HomeController {
                         }
                     }
 
-                    ObjetivoEstadoAnimo objetivoEstadoAnimo = objEstAnim.findByFechaAndParticipante(new Date(), p);
+                    ObjetivoEstadoAnimo objetivoEstadoAnimo = obj.findByFechaAndParticipanteEstadoAnimo(new Date(), p);
 
                     if (objetivoEstadoAnimo == null) {
                         objetivoEstadoAnimo = new ObjetivoEstadoAnimo();
@@ -187,6 +177,12 @@ public class HomeController {
                     model.addAttribute("contadorObjetivos", contadorObjetivos);
                     Integer porcentajeObjetivos = contadorObjetivos * 100 / 4;
                     model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
+
+
+                    //para ver q poner en el porcentaje de progreso
+                    /*FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(u.getId()).get());
+                    model.addAttribute("ficha", fichaObjetivo);*/
+
 
                     return "index";
                 }
