@@ -164,12 +164,12 @@
 
                     <div class="der-gestion">
                         <h5>Realizar invitación</h5>
-                        <p style="text-align: center;" th:if="${actividad.plazas == 0}">No hay disponibilidad para esta
+                        <p style="text-align: center;" th:if="${maximoInvit == 0}">No hay disponibilidad para esta
                             actividad.</p>
-                        <p style="text-align: center;" th:if="${actividad.plazas > 0}"
-                            th:text="'Puedes realizar '+ ${actividad.plazas} + ' invitaciones'">Puede realizar </p>
+                        <p style="text-align: center;" th:if="${maximoInvit > 0}"
+                            th:text="'Puedes realizar '+ ${maximoInvit} + ' invitaciones'"></p>
 
-                        <form th:if="${actividad.plazas > 0}" class="form-invitacion"
+                        <form th:if="${maximoInvit > 0}" class="form-invitacion"
                             th:action="@{'/process_invitacion/' + ${actividad.id}}" method="post" id="form-invi">
                             <div class="campo">
                                 <label for="tipo">Destinatario </label>
