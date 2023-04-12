@@ -31,6 +31,10 @@ public interface InvitacionRepository extends JpaRepository<Invitacion, Integer>
     @Query("DELETE FROM Invitacion i WHERE i.coordinador = :coordinador")
     void deleteByCoordinador(Coordinador coordinador);
 
+    @Query("SELECT COUNT(i) FROM Invitacion i WHERE i.actividad = :actividad AND i.estado = :estado")
+    Integer countByActividadAndEstado(Actividad actividad, EstadoInvitacion estado);
+
+
 
 }
 

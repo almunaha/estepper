@@ -20,5 +20,6 @@ public interface InvitacionService {
     public Invitacion invitacionByPartAndActi(Participante p, Actividad a);
     public void eliminarPorParticipante(Participante p);
     public void eliminarPorCoordinador(Coordinador c);
+    public Integer numInvitacionesPosibles(Actividad a, EstadoInvitacion e);
 
 }
