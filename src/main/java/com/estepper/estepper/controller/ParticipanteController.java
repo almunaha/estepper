@@ -1409,15 +1409,24 @@ public class ParticipanteController {
             if (exploracion != null) {
                 model.addAttribute("exploracion", exploracion);
 
-                String talla = String.format("%.2f", exploracion.getTalla() / 100.0); // Formatear a dos decimales
+                //altura
+                String talla = String.format("%.2f", exploracion.getTalla() / 100.0).replace(",", "."); // Formatear a dos decimales
                 model.addAttribute("talla", talla);
 
-                Double s = 25.00 * ((exploracion.getTalla() / 100.0) * (exploracion.getTalla() / 100.0)); // peso
-                                                                                                          // saludable
-                                                                                                          // para imc de
-                                                                                                          // 25
-                String saludable = String.format("%.2f", s);
+                //peso saludable para imc de 25
+                Double s = 25.00 * ((exploracion.getTalla() / 100.0) * (exploracion.getTalla() / 100.0)); 
+                String saludable = String.format("%.2f", s).replace(",", ".");
                 model.addAttribute("saludable", saludable);
+
+                //5% del peso con 2 decimales
+                Double cincoPeso = exploracion.getPeso() * 0.05;
+                String cinco = String.format("%.2f", cincoPeso).replace(",", ".");
+                model.addAttribute("cinco", cinco);
+
+                //10% del peso con 2 decimales
+                Double diezPeso = exploracion.getPeso() * 0.1;
+                String diez = String.format("%.2f", diezPeso).replace(",", ".");
+                model.addAttribute("diez", diez);
 
                 return "fichaObjetivo";
             }

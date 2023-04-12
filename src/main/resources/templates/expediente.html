@@ -21,6 +21,14 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Agrega la referencia a SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <title>Expediente - Estepper</title>
 
     <style>
@@ -116,7 +124,7 @@
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
             </div>
-            
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -259,8 +267,40 @@
                         </div>
                         <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Fase de valoracion"
                                 th:href="@{'/valoracion/' + ${participante.id}}"> Fase de valoración </a></div>
-                        <div><a class="btn" id="btn-part" title="Analítica"
-                            th:href="@{'/analitica/' + ${participante.id}}"> Mandar analítica </a></div>
+                        <div><a class="btn analitica" id="btn-part" title="Analítica" data-bs-toggle="tooltip"
+                                th:data-id="${participante.id}" type="button"> Mandar analítica </a></div>
+                        <script>
+                            $('.analitica').click(function () {
+                                var id = $(this).data('id');
+
+                                Swal.fire({
+                                    position: 'center',
+                                    title: '<h4>¿Estás seguro de que desea solicitarle una analítica?</h4>',
+                                    showConfirmButton: true,
+                                    showCancelButton: true,
+                                    cancelButtonText: 'Cancelar',
+                                    confirmButtonColor: "rgb(218, 77, 73)",
+                                    confirmButtonText: '<a href="/analitica/' + id + '" id ="conf">Mandar</a>',
+
+                                    didRender: function () {
+                                        const confirm = document.querySelector('#conf');
+
+                                        if (confirm) {
+                                            confirm.style.color = 'white';
+                                        }
+                                    },
+
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeInDown'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOutUp'
+                                    }
+
+                                })
+
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
