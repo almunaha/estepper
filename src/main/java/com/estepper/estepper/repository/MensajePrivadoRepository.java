@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.MensajePrivado;
 import com.estepper.estepper.model.entity.Participante;
+import com.estepper.estepper.model.entity.Usuario;
 
 import jakarta.transaction.Transactional;
 
@@ -29,6 +30,10 @@ public interface MensajePrivadoRepository extends JpaRepository<MensajePrivado, 
     @Query("DELETE FROM MensajePrivado m WHERE m.participante = :p")
     void deleteAllByParticipante(Participante p);
 
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM MensajePrivado m WHERE m.usuario = :u")
+    void deleteAllByUsuario(Usuario u);
 
     
 }

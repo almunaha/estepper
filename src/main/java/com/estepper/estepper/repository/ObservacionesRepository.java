@@ -1,6 +1,5 @@
 package com.estepper.estepper.repository;
 
-import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Observaciones;
 
 import jakarta.transaction.Transactional;
@@ -28,7 +27,13 @@ public interface ObservacionesRepository extends JpaRepository<Observaciones, In
     @Modifying
     @Transactional
     @Query("DELETE FROM Observaciones o WHERE o.idGrupo = :g")
-    void deleteAllByGrupo(Grupo g);
+    void deleteAllByGrupo(Integer g);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Observaciones o WHERE o.idCoordinador = :c")
+    void deleteAllByCoordinador(Integer c);
+
 
     @Modifying
     @Transactional

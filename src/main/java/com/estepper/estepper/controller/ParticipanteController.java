@@ -541,10 +541,6 @@ public class ParticipanteController {
             materialS.deleteByParticipante(p);
             ses.deleteByParticipante(p);
             obj.deleteByParticipante(p);
-            obj.deleteAguaByParticipante(p);
-            obj.deleteDescansoByParticipante(p);
-            obj.deleteEjercicioByParticipante(p);
-            obj.deleteEstadoAnimoByParticipante(p);
             pro.deleteByParticipante(p);
             alimentacion.deleteByParticipante(p);
             f.deleteByParticipante(p);
@@ -558,9 +554,10 @@ public class ParticipanteController {
                 actividad.getParticipantes().remove(p);
                 act.guardar(actividad);
             }
-
+            if(p.getGrupo() != null){
             p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
             grupoS.update(p.getGrupo());
+            }
 
             if (getUsuario() == null)
                 return "redirect:/login";
