@@ -679,7 +679,9 @@ public class ParticipanteController {
                 return "redirect:/";
 
         } 
-        
+        else if (p != null && p.getEstadoCuenta().equals(Estado.BAJA) && p instanceof Participante){
+            return "acceso";
+        }
         else {
             return "redirect:/"; // si el id proporcionado no pertenece a un participante no existe progreso
         }
