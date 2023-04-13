@@ -72,8 +72,8 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     @Override
     public void deleteByParticipante(Participante p) {
         repo.deleteAllByParticipante(p);
-        repoAgua.deleteAllByParticipante(p);
         repoDescanso.deleteAllByParticipante(p);
+        repoAgua.deleteAllByParticipante(p);
         repoEstadoAnimo.deleteAllByParticipante(p);
         repoEjercicio.deleteAllByParticipante(p);
     }
