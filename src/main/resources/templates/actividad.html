@@ -89,7 +89,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/progreso}">
+                    <a th:href="@{'/progreso/' + ${user.id}}">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nombre-enlaces">Progreso</span>
                     </a>
@@ -160,7 +160,7 @@
                 <i class="fa-solid fa-folder-open"></i>
             </a>
 
-            <a th:href="@{/progreso}">
+            <a th:href="@{'/progreso/' + ${user.id}}">
                 <i class="fa-solid fa-chart-line"></i>
             </a>
 
@@ -239,7 +239,7 @@
                         <p th:text="${actividad.descripcion}"></p>
 
                         <h5>Plazas disponibles</h5>
-                        <p th:text="${maximoInvit}"></p>
+                        <p th:text="${actividad.plazas}"></p>
 
                     </div>
 

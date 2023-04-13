@@ -20,7 +20,7 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
-    <script src="/js/progreso.js"></script>
+    <script src="/js/progresoCoordinador.js"></script>
     <script src="/js/validaciones.js"></script>
 
     <!--PARA GRÁFICOS-->
@@ -121,84 +121,112 @@
                 </div>
             </nav>
             <div style="margin-left: 5%; margin-right: 5%; margin-top: 2%; padding-top: 75px;">
+                <input type="hidden" id="idPart" th:value="${idPart}">
 
-                <h4>Progreso individual</h4>
+                <div class="header-coor">
+                    <h4 style="margin-bottom: 2%;" th:text="'Progreso individual: ' + ${participante.codigo}">Progreso individual</h4>
 
-                <!-- PESO -->
-                <div class="progreso-datos">
-                    <div class="header-progreso">
-                        <h4>Peso</h4>
-                    </div>
+                    <!-- Contenido del progreso vista coordinador -->
 
-                    <!-- Ver registros peso -->
-                    <div class="layout-grafica">
-                        <div class="pesoTabla">
-                            <table class="table tablePart" id="tablaPesoCoor">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="lis:${peso}">
-                                        <td th:text="${lis.dato} + ' kg'"></td>
-                                        <td th:text="${#temporals.format(lis.fecha, 'dd MMM yyyy')}"></td>
-                                        <td th:text="${#temporals.format(lis.fecha, 'HH:mm')}"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="valor-perdida">
+                        <!-- VALOR PÉRDIDA DE PESO -->
+                        <div class="perdida-indi">
+                            <div class="header-progreso" style="align-items: center;">
+                                <h5>Peso perdido</h5>
+                                <span th:text="${-participante.perdidaDePeso} + kg"></span>
+                            </div>
                         </div>
 
-                        <!-- Ver gráfica peso -->
-                        <div id="top-grafica"><canvas id="grafica" width="500" height="200"></canvas></div>
+                        <!-- VALOR PÉRDIDA DE PERÍMETRO -->
+                        <div class="perdida-indi">
+                            <div class="header-progreso" style="align-items: center;">
+                                <h5>Perímetro perdido</h5>
+                                <span th:text="${-participante.perdidacmcintura} + cm"></span>
 
-                        <!-- Botones para cambiar de vista del peso -->
-                        <div class="botones-prog">
-                            <button class="btn-reg" id="registroPeso">Ver registros</button>
-                            <button class="btn-reg" id="graficaPeso">Ver gráfica</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-
-                <!-- PERÍMETRO ABDOMINAL -->
-                <div class="progreso-datos">
-                    <div class="header-progreso">
-                        <h4>Perímetro</h4>
-                    </div>
-
-                    <!-- Ver registros perímetro -->
-                    <div class="layout-grafica">
-                        <div class="perimetroTabla">
-                            <table class="table tablePart" id="tablaPeso">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="per:${perimetro}">
-                                        <td th:text="${per.dato} + ' cm'"></td>
-                                        <td th:text="${#temporals.format(per.fecha, 'dd MMM yyyy')}"></td>
-                                        <td th:text="${#temporals.format(per.fecha, 'HH:mm')}"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <div class="flex-progreso">
+                    <!-- PESO -->
+                    <div class="progreso-datos-coor">
+                        <div class="header-progreso">
+                            <h4>Peso</h4>
                         </div>
 
-                        <!-- Ver gráfica perímetro -->
-                        <div id="top-grafica"><canvas id="grafica2" width="500" height="200"></canvas></div>
+                        <!-- Ver registros peso -->
+                        <div class="layout-grafica">
+                            <div class="pesoTabla">
+                                <table class="table tablePart" id="tablaPesoCoor">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="lis:${peso}">
+                                            <td th:text="${lis.dato} + ' kg'"></td>
+                                            <td th:text="${#temporals.format(lis.fecha, 'dd MMM yyyy')}"></td>
+                                            <td th:text="${#temporals.format(lis.fecha, 'HH:mm')}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <!-- Botones para cambiar de vista del perimetro -->
-                        <div class="botones-prog">
-                            <button class="btn-reg" id="registroPerimetro">Ver registros</button>
-                            <button class="btn-reg" id="graficaPerimetro">Ver gráfica</button>
+                            <!-- Ver gráfica peso -->
+                            <div id="top-grafica"><canvas id="graficaPesoCoor" width="500" height="100"></canvas></div>
+
+                            <!-- Botones para cambiar de vista del peso -->
+                            <div class="botones-prog">
+                                <button class="btn-reg" id="registroPesoC">Ver registros</button>
+                                <button class="btn-reg" id="graficaPesoC">Ver gráfica</button>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- PERÍMETRO ABDOMINAL -->
+                    <div class="progreso-datos-coor">
+                        <div class="header-progreso">
+                            <h4>Perímetro</h4>
+                        </div>
+
+                        <!-- Ver registros perímetro -->
+                        <div class="layout-grafica">
+                            <div class="perimetroTabla">
+                                <table class="table tablePart" id="tablaPeso">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="per:${perimetro}">
+                                            <td th:text="${per.dato} + ' cm'"></td>
+                                            <td th:text="${#temporals.format(per.fecha, 'dd MMM yyyy')}"></td>
+                                            <td th:text="${#temporals.format(per.fecha, 'HH:mm')}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Ver gráfica perímetro -->
+                            <div id="top-grafica"><canvas id="graficaPerCoor" width="500" height="100"></canvas></div>
+
+                            <!-- Botones para cambiar de vista del perimetro -->
+                            <div class="botones-prog">
+                                <button class="btn-reg" id="registroPerimetroC">Ver registros</button>
+                                <button class="btn-reg" id="graficaPerimetroC">Ver gráfica</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
         </div>

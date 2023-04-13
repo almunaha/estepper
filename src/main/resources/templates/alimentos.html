@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="sweetalert2.min.css" type="css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
+    <script src="/js/alimentacion.js"></script>
+
+
     <title>Alimentos - Estepper</title>
 </head>
 
@@ -87,7 +90,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/progreso}">
+                    <a th:href="@{'/progreso/' + ${user.id}}">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nombre-enlaces">Progreso</span>
                     </a>
@@ -125,7 +128,7 @@
                 <i class="fa-solid fa-folder-open"></i>
             </a>
 
-            <a th:href="@{/progreso}">
+            <a th:href="@{'/progreso/' + ${user.id}}">
                 <i class="fa-solid fa-chart-line"></i>
             </a>
 
@@ -279,38 +282,6 @@
                                                 style="color: red" id="eliminar" data-bs-toggle="tooltip"
                                                 title="Eliminar"></a></td>
                                     </tr>
-                                    <script>
-                                        $('#eliminar').click(function () {
-                                            var id = $(this).data('id');
-
-                                            Swal.fire({
-                                                position: 'center',
-                                                title: '<h4>¿Estás seguro de eliminar el alimento consumido?</h4>',
-                                                showConfirmButton: true,
-                                                showCancelButton: true,
-                                                cancelButtonText: 'Cancelar',
-                                                confirmButtonColor: "rgb(218, 77, 73)",
-                                                confirmButtonText: '<a href="/alimento/eliminar/' + id + '" id ="conf">Eliminar</a>',
-
-                                                didRender: function () {
-                                                    const confirm = document.querySelector('#conf');
-
-                                                    if (confirm) {
-                                                        confirm.style.color = 'white';
-                                                    }
-                                                },
-
-                                                showClass: {
-                                                    popup: 'animate__animated animate__fadeInDown'
-                                                },
-                                                hideClass: {
-                                                    popup: 'animate__animated animate__fadeOutUp'
-                                                }
-
-                                            })
-
-                                        });
-                                    </script>
                                 </tbody>
                             </table>
                         </div>
@@ -336,43 +307,7 @@
                                         th:text="${al.nombre} + ' (' + ${al.porcion} + ' ' + ${al.unidad} + ')'">
                                     </option>
                                 </select>
-                                <script th:inline="javascript">
-                                    $(document).ready(function () {
-                                        // Obtener la lista de opciones del select
-                                        var opciones = $("#lista-alimentos option");
-
-                                        // Crear un input de búsqueda
-                                        var inputBusqueda = $('<input type="text" class="form-control mt-2" placeholder="Buscar...">');
-
-                                        // Agregar el input de búsqueda antes del select
-                                        $("#lista-alimentos").before(inputBusqueda);
-
-                                        // Escuchar el evento keyup del input de búsqueda
-                                        inputBusqueda.keyup(function () {
-                                            // Obtener el término de búsqueda
-                                            var term = $(this).val().toLowerCase();
-
-                                            // Filtrar las opciones que contengan el término de búsqueda
-                                            var opcionesFiltradas = opciones.filter(function () {
-                                                return $(this).text().toLowerCase().indexOf(term) > -1;
-                                            });
-
-                                            // Actualizar las opciones del select con las opciones filtradas
-                                            $("#lista-alimentos").empty().append(opcionesFiltradas);
-                                        });
-
-                                        // Restaurar todas las opciones del select cuando se cierre
-                                        $("#lista-alimentos").on("hidden.bs.select", function () {
-                                            $("#lista-alimentos").empty().append(opciones);
-                                        });
-
-                                        $("#lista-alimentos").keydown("hidden.bs.select", function () {
-                                            $("#lista-alimentos").empty().append(opciones);
-                                        });
-                                    });
-                                </script>
                             </div>
-
 
                             <div>
                                 <h6 style="text-align: center; margin-top: 3%;">¿No está el alimento que buscas? <a
