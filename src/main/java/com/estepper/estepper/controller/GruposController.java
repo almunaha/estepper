@@ -38,6 +38,7 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Mensaje;
 import com.estepper.estepper.model.entity.MensajePrivado;
+import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.model.entity.Observaciones;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoGrupo;
@@ -45,6 +46,7 @@ import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.MensajeService;
+import com.estepper.estepper.service.NotificacionService;
 import com.estepper.estepper.service.ObservacionesService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.UsuarioService;
@@ -78,6 +80,9 @@ public class GruposController {
 
     @Autowired // inyectar recursos de la clase GrupoService
     private ObservacionesService observaciones;
+
+    @Autowired
+    private NotificacionService noti;
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(@ModelAttribute("grupo") Grupo elgrupo,
@@ -321,6 +326,11 @@ public class GruposController {
                         material.setParticipante(losparticipantes.get(i));
                         material.setId(0);
                         materialS.updateMaterial(material);
+                        // Crear notificación de nuevo material
+                        Notificacion notificacion = new Notificacion(0, losparticipantes.get(i),
+                                "Nuevo material para descargar: " + material.getTitulo(), LocalDateTime.now(),
+                                false, "/materiales/" + losparticipantes.get(i).getId());
+                        noti.guardar(notificacion);
                     }
                 } catch (Exception e) {
                     String mensaje = "Ha ocurrido un error: " + e.getMessage();

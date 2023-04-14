@@ -30,6 +30,7 @@ import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Materiales;
+import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.model.entity.ObjetivoAgua;
 import com.estepper.estepper.model.entity.ObjetivoDescanso;
 import com.estepper.estepper.model.entity.ObjetivoEjercicio;
@@ -51,6 +52,7 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.NotificacionService;
 import com.estepper.estepper.service.ObjetivoService;
 
 @Controller
@@ -73,6 +75,9 @@ public class HomeController {
 
     @Autowired
     private ObjetivoService obj;
+
+    @Autowired
+    private NotificacionService noti;
 
     @Autowired
     private BCryptPasswordEncoder hash;
@@ -103,6 +108,7 @@ public class HomeController {
                     if (cookie.getName().equals("consentimiento")
                             && cookie.getValue().equals(getUsuario().getId().toString())) {
                         // El usuario ha aceptado los términos y condiciones
+
                         // si está dado de alta
                         if (user.getEstadoCuenta().equals(Estado.ALTA)) {
                             Optional<Participante> part = participante.findById(user.getId());
@@ -117,8 +123,14 @@ public class HomeController {
                                 if (datos.isEmpty()) {
                                     model.addAttribute("recordatorio", true);
                                 }
+
+                                //buscar notificaciones
+                                List<Notificacion> notificaciones = noti.notificaciones(part.get());
+                                model.addAttribute("notificaciones", notificaciones);
+
+
                             }
-                            Participante p = participante.findById(getUsuario().getId()).get();
+                            Participante p = participante.findById(getUsuario().getId()).get(); //porque se vuelve a crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
 
@@ -422,6 +434,12 @@ public class HomeController {
                     material.setLink(rutaCompleta.toString());
                     material.setId(0);
                     materialS.updateMaterial(material);
+
+                    //Crear notificación de nuevo material
+                    Notificacion notificacion = new Notificacion(0, p, "Nuevo material para descargar: "+ material.getTitulo(), LocalDateTime.now(), 
+                    false, "/materiales/" + p.getId());
+                    noti.guardar(notificacion);
+
                 } catch (Exception e) {
                     String mensaje = "Ha ocurrido un error: " + e.getMessage();
                     JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);

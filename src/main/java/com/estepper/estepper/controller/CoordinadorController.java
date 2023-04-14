@@ -2,6 +2,7 @@ package com.estepper.estepper.controller;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Invitacion;
 import com.estepper.estepper.model.entity.Materiales;
-
+import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
@@ -58,6 +59,7 @@ import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.InvitacionService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.NotificacionService;
 
 @Controller
 public class CoordinadorController {
@@ -82,6 +84,9 @@ public class CoordinadorController {
 
     @Autowired
     private InvitacionService inv;
+
+    @Autowired
+    private NotificacionService noti;
 
     @GetMapping("/listado")
     public String participantes(@RequestParam Map<String, Object> params, Model model) {
@@ -385,7 +390,9 @@ public class CoordinadorController {
 
                 if (invitacion == null)
                     inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
-            }
+                    Notificacion notificacion = new Notificacion(0, p, "Nueva invitación a la actividad: "+ actividad.getNombre(), LocalDateTime.now(), false, "/panel_invitaciones");
+                    noti.guardar(notificacion);
+                }
         }
 
         else {

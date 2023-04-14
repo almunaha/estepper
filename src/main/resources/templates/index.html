@@ -151,18 +151,39 @@
         </form>
       </div>
 
-
       <!-- encabezado -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-          <!--<i class="fa-regular fa-bell"></i> -->
           <div class="der-header">
-            <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
 
-            <ul class="navbar-nav ml-auto">
+            <!-- Desplegable notificaciones -->
+            <ul class="navbar-nav ml-auto" id="cont-notif">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                  <h6>Notificaciones</h6>
+                  <div class="dropdown-divider"></div>
+                  <div th:each="notif : ${notificaciones}">
+                    <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
+                    <div class="dropdown-divider"></div>
+                  </div>
+                  <form th:action="@{/logout}" method="post">
+                    <button style="text-align: center; font-size: 0.85rem;" class="dropdown-item" type="submit">Ver todas</a>
+                  </form>
+                </div>
+              </li>
+
+            </ul>
+
+            <!-- Desplegable perfil y cerrar sesión -->
+            <ul class="navbar-nav ml-auto" id="cont-despl">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -170,7 +191,7 @@
                   <span sec:authentication="principal.nombre"></span>
                 </a>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                   <div class="dropdown-divider"></div>
                   <form th:action="@{/logout}" method="post">
@@ -254,7 +275,7 @@
 
                       data: {
                         labels: ["Sesiones completadas", "Sesiones pendientes"],
-                
+
                         datasets: [
                           {
                             data: [data.sesionesCompletas, 10 - data.sesionesCompletas],
@@ -396,10 +417,10 @@
 
       <div class="hello-movil">
         <h2 th:text="'Hola, ' + ${user.nickname} + '!'"></h2>
-      </div>      
+      </div>
 
       <div class="utilidades-movil">
-        
+
         <a class="btn-movil" th:href="@{/sesiones}">
           <i class="fa-solid fa-list-check"></i>
           <div>Sesiones</div>
@@ -421,8 +442,8 @@
         </a>
 
         <a class="btn-movil" th:href="@{/actividades}">
-            <i class="fa-solid fa-person-hiking"></i>
-            <div>Actividades</div>
+          <i class="fa-solid fa-person-hiking"></i>
+          <div>Actividades</div>
         </a>
         <a class="btn-movil" th:href="@{/alimentacion}">
           <i class="fa-solid fa-carrot"></i>
