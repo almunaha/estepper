@@ -230,7 +230,8 @@
                                         <div class="descripcion">
                                             <h5 th:text="${lis.nickname}"></h5>
                                             <h5 th:text="${lis.codigo}"></h5>
-                                            <p th:text="${lis.edad} + ' ' + años"></p>
+                                            <p th:unless="${lis.edad == null}" th:text="${lis.edad} + ' ' + años"></p>
+                                            <p th:if="${lis.edad == null}">Edad no añadida</p>
                                             <div
                                                 style="display: flex; justify-content: space-around; flex-direction: column;">
                                                 <a class="botonGr"
@@ -244,13 +245,13 @@
                                         <div class="listaDeParticipantes mb-2">
                                             <div class="perdida-peso-individual"
                                                 style="text-align: center;display: none; "
-                                                th:text="@{${lis.perdidaDePeso}}"></div>
+                                                th:text="@{${-lis.perdidaDePeso}}"></div>
                                             <div class="asistencia-individual"
                                                 style="text-align: center;display: none; "
                                                 th:text="@{${lis.asistencia}}"></div>
                                             <div class="perdida-cmcintura-individual"
                                                 style="text-align: center; display: none;"
-                                                th:text="@{${lis.perdidacmcintura}}"></div>
+                                                th:text="@{${-lis.perdidacmcintura}}"></div>
                                         </div>
 
                                     </div>
