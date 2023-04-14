@@ -105,17 +105,17 @@
 
             <ul th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">
                 <li>
-                  <a th:href="@{/}">
-                    <i class="fa-solid fa-house"></i>
-                    <span class="nombre-enlaces">Inicio</span>
-                  </a>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
                 </li>
-        
+
                 <li>
-                  <a th:href="@{/actividades}">
-                    <i class="fa-solid fa-person-hiking"></i>
-                    <span class="nombre-enlaces">Actividades</span>
-                  </a>
+                    <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
                 </li>
             </ul>
 
@@ -192,24 +192,45 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-                    <!--<i class="fa-regular fa-bell"></i> -->
                     <div class="der-header">
-                        <a th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                        <!-- Desplegable notificaciones -->
+                        <ul th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
+                            class="navbar-nav ml-auto" id="cont-notif">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                                </a>
 
-                        <ul class="navbar-nav ml-auto">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                                    <h6>Notificaciones</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <div th:each="notif : ${notificaciones}">
+                                        <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                            th:text="${notif.mensaje}"></a>
+                                        <div class="dropdown-divider"></div>
+                                    </div>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button style="text-align: center; font-size: 0.85rem;" class="dropdown-item"
+                                            type="submit">Ver todas</a>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Desplegable perfil y cerrar sesión -->
+                        <ul class="navbar-nav mr-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
                                         id="avatar-header" />
-                                    <span th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"> 
-                                        <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
-                                    </span>
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi
+                                        Perfil</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -223,15 +244,17 @@
             </nav>
 
             <div style="padding-top: 75px;">
-                
+
                 <div class="actividad-info">
                     <h2 th:text="${actividad.nombre}"></h2>
 
                     <div class="botones-info">
                         <button class="btn-info" id="descripcion">Descripción</button>
                         <button class="btn-info" id="detalles">Detalles</button>
-                        <button th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}" class="btn-info" id="asistentes">Asistentes</button>
-                        <button th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" class="btn-info" id="inscripcion">Inscripción</button>
+                        <button th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
+                            class="btn-info" id="asistentes">Asistentes</button>
+                        <button th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
+                            class="btn-info" id="inscripcion">Inscripción</button>
                     </div>
 
                     <div class="descripcion">
@@ -248,17 +271,23 @@
                         <div th:text="${#temporals.format(actividad.fechaRealizacion,'d MMMM yyyy')}"></div>
 
                         <h5>Horario</h5>
-                        <div th:text="'La actividad empezará a las ' + ${#temporals.format(actividad.fechaRealizacion, 'HH:mm')} + ' horas'"></div>
+                        <div
+                            th:text="'La actividad empezará a las ' + ${#temporals.format(actividad.fechaRealizacion, 'HH:mm')} + ' horas'">
+                        </div>
 
                         <h5>Ubicación</h5>
                         <div th:text="${actividad.ubicacion}"></div>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12151.873410052962!2d-3.7478706061849993!3d40.40955187146981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227fe6494ee1b%3A0x2f7478dc20f928a3!2sP.%C2%BA%20de%20Extremadura%2C%20147%2C%2028011%20Madrid!5e0!3m2!1ses!2ses!4v1667763779015!5m2!1ses!2ses" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12151.873410052962!2d-3.7478706061849993!3d40.40955187146981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227fe6494ee1b%3A0x2f7478dc20f928a3!2sP.%C2%BA%20de%20Extremadura%2C%20147%2C%2028011%20Madrid!5e0!3m2!1ses!2ses!4v1667763779015!5m2!1ses!2ses"
+                            width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
 
                     </div>
 
                     <div class="asistentes">
                         <h5>Listado de asistentes confirmados</h5>
-                        <h6 style="color: rgb(49, 107, 127)" th:text="'Total asistentes: ' + ${actividad.numParticipantes}"></h6>
+                        <h6 style="color: rgb(49, 107, 127)"
+                            th:text="'Total asistentes: ' + ${actividad.numParticipantes}"></h6>
 
                         <div class="table-responsive" style="margin-top: 3%;">
                             <table class="table" id="tabla-asistencia">
@@ -266,10 +295,10 @@
                                     <tr>
                                         <th scope="col">Alias</th>
                                         <th scope="col">Código</th>
-                                        <th scope="col">Grupo</th>    
+                                        <th scope="col">Grupo</th>
                                     </tr>
                                 </thead>
-                                <tbody >
+                                <tbody>
                                     <tr th:each="lis:${asistentes}">
                                         <td th:text="${lis.nickname}"></td>
                                         <td style="font-weight: bold;" th:text="${lis.codigo}"></td>
@@ -282,19 +311,24 @@
 
                     </div>
 
-                    <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" class="inscripcion">
+                    <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
+                        class="inscripcion">
                         <h5>Realizar la inscripción</h5>
-                        <p th:if="${!asistencia and actividad.plazas > 0}">Si desea inscribirse en esta actividad, pinche en "confirmar asistencia".</p>
-                        <p th:if="${!asistencia and actividad.plazas > 0}">La actividad será añadida a tu listado de actividades.</p>
-                        <a th:if="${!asistencia and actividad.plazas > 0}" th:href="'/confirmar/' + ${actividad.id}" class="btn-confirm">Confirmar asistencia</a>
+                        <p th:if="${!asistencia and actividad.plazas > 0}">Si desea inscribirse en esta actividad,
+                            pinche en "confirmar asistencia".</p>
+                        <p th:if="${!asistencia and actividad.plazas > 0}">La actividad será añadida a tu listado de
+                            actividades.</p>
+                        <a th:if="${!asistencia and actividad.plazas > 0}" th:href="'/confirmar/' + ${actividad.id}"
+                            class="btn-confirm">Confirmar asistencia</a>
 
                         <p th:if="${asistencia}">¡Enhorabuena! Ya estás inscrito en esta actividad.</p>
-                        <p th:if="${!asistencia and actividad.plazas == 0}">Lo sentimos, actualmente no hay disponibilidad en esta actividad.</p>
+                        <p th:if="${!asistencia and actividad.plazas == 0}">Lo sentimos, actualmente no hay
+                            disponibilidad en esta actividad.</p>
                     </div>
                 </div>
                 <a class="atras-info" th:href="@{/actividades}">Atrás</a>
             </div>
-    </div>
+        </div>
 
 </body>
 
