@@ -178,7 +178,7 @@
                                     <div class="input-group mt-2">
                                         <label class="col-2 col-form-label">¿Desea cambiarla?</label>
                                         <input type="datetime-local" th:field="*{fechaRealizacion}"
-                                            id="fechaRealizacion" class="form-control">
+                                            id="fechaRealizacion" th:value="${actividad.fechaRealizacion}" class="form-control">
                                     </div>
                                     <div id="error_fechaRealizacion">
                                         <p style="margin-left: 16%; color: red"><i
@@ -188,7 +188,7 @@
 
                                     <div class="input-group mt-2">
                                         <label class="col-1 col-form-label">Foto </label>
-                                        <img th:src="${actividad.foto}" alt="" />
+                                        <img th:src="${actividad.foto}" alt="" style="width: 50px; height: 50px;"/>
                                     </div>
                                     <div class="input-group mt-2">
                                         <label class="col-1 col-form-label">¿Desea cambiarla? </label>
