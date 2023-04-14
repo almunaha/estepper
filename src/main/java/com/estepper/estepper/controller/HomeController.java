@@ -411,7 +411,7 @@ public class HomeController {
         if (getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id
                 || p.getEstadoCuenta().equals(Estado.BAJA)) {
             material.setParticipante(p);
-            material.setGrupo(p.getGrupo());
+            material.setGrupo(null);
             if (!file.isEmpty()) {
                 try {
                     Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
@@ -420,6 +420,7 @@ public class HomeController {
                     Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
                     Files.write(rutaCompleta, bytesArc);
                     material.setLink(rutaCompleta.toString());
+                    material.setId(0);
                     materialS.updateMaterial(material);
                 } catch (Exception e) {
                     String mensaje = "Ha ocurrido un error: " + e.getMessage();

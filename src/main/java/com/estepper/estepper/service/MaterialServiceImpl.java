@@ -30,7 +30,7 @@ public class MaterialServiceImpl implements MaterialService {
     public List<Materiales> materialesGrupo(Grupo grupo){
         List<Materiales> todos = repoM.findByGrupo(grupo);
         for(int i = todos.size()-1; i > 0 ; i--){
-            if(todos.get(i-1).getLink().equals(todos.get(i).getLink()) ){
+            if(todos.get(i-1).getLink().equals(todos.get(i).getLink()) && todos.get(i-1).getTitulo().equals(todos.get(i).getTitulo()) && todos.get(i-1).getDescripcion().equals(todos.get(i).getDescripcion()) ){
                 todos.remove(i);
             }
         }
@@ -45,7 +45,7 @@ public class MaterialServiceImpl implements MaterialService {
     @Override
     public void eliminarMaterialGrupo(Integer id){
         Materiales material = repoM.findById(id).get();
-        repoM.deleteByGrupoAndLink(material.getGrupo(), material.getLink());
+        repoM.deleteByGrupoAndLinkAndDescripcionAndTitulo(material.getGrupo(), material.getLink(), material.getDescripcion(), material.getTitulo());
     }
 
     @Override
