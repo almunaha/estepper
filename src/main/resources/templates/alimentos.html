@@ -278,9 +278,8 @@
                                         <td th:text="${lis.alimento.nombre}"></td>
                                         <td th:text="${lis.raciones}"></td>
                                         <td th:text="${#temporals.format(lis.fecha_consumicion, 'HH:mm')}"></td>
-                                        <td><a class="fa-solid fa-trash-can fa-2x" th:data-id="${lis.id}"
-                                                style="color: red" id="eliminar" data-bs-toggle="tooltip"
-                                                title="Eliminar"></a></td>
+                                        <td><a class="btn eliminar" th:data-id="${lis.id}" data-bs-toggle="tooltip"><i
+                                                title="Eliminar" style="color: red" class="fa-solid fa-trash-can fa-2x"></i></a></td>
                                     </tr>
                                 </tbody>
                             </table>

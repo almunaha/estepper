@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#eliminar').click(function () {
+    $('.eliminar').click(function () {
         var id = $(this).data('id');
 
         Swal.fire({

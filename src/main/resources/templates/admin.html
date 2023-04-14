@@ -181,7 +181,7 @@
                                                     title="Cancelar" class="fa-solid fa-times"></i></a>
                                             <a class="btn btn-primary"><i title="Mensaje"
                                                     class="fa-solid fa-envelope"></i></a>
-                                            <a class="btn btn-primary" id="eliminar" th:data-id="${lis.id}"><i
+                                            <a class="btn eliminar" id="btn-primary" th:data-id="${lis.id}"><i
                                                     title="Eliminar" class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>
@@ -255,7 +255,7 @@
                                 </script>
 
                                 <script>
-                                    $('#eliminar').click(function () {
+                                    $('.eliminar').click(function () {
                                         var id = $(this).data('id');
 
                                         Swal.fire({
