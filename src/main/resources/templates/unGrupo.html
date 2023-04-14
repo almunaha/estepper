@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
     <script src="/js/grupos.js"></script>
-
+    <th:import namespace="com.estepper.estepper.model.enums" />
     <!--PARA EL BUSCADOR-->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -236,7 +236,9 @@
                                                 style="display: flex; justify-content: space-around; flex-direction: column;">
                                                 <a class="botonGr"
                                                     th:href="@{'/expediente/' + ${lis.id}}">Expediente</a>
-                                                <a class="botonGr" th:href="@{'/chatPrivado/' + ${lis.id}}">Mensaje</a>
+
+                                                <a th:if="${lis.estadoCuenta.equals(T(com.estepper.estepper.model.enums.Estado).ALTA)}"
+                                                    class="botonGr" th:href="@{'/chatPrivado/' + ${lis.id}}">Mensaje</a>
                                             </div>
 
                                         </div>
