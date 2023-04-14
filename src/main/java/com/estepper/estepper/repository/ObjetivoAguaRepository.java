@@ -17,7 +17,7 @@ public interface ObjetivoAguaRepository extends JpaRepository<ObjetivoAgua, Inte
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Objetivo o WHERE o.participante = :p")
+    @Query("DELETE FROM ObjetivoAgua o WHERE o.participante = :p")
     void deleteAllByParticipante(Participante p);
 
     ObjetivoAgua findByFechaAndParticipante(Date fecha, Participante p);
