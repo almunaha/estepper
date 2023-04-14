@@ -553,9 +553,9 @@
             const perdidaCmCinturaMedia = (totalPerdidaCmCintura / listadoParticipantesGrupoCmCintura.length).toFixed(2);
 
 
-            document.querySelector('#perdida-peso-media').textContent = perdidaPesoMedia + ' kg';
-            document.querySelector('#asistencia-media').textContent = asistenciaMedia + ' sesiones';
-            document.querySelector('#perdida-cmcintura-media').textContent = perdidaCmCinturaMedia + ' cm';
+            document.querySelector('#perdida-peso-media').textContent = -perdidaPesoMedia + ' kg';
+            document.querySelector('#asistencia-media').textContent = asistenciaMedia + '% sesiones';
+            document.querySelector('#perdida-cmcintura-media').textContent = -perdidaCmCinturaMedia + ' cm';
 
 
 
