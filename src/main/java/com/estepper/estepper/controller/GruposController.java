@@ -68,6 +68,9 @@ public class GruposController {
     private UsuarioService user;
 
     @Autowired
+    private ObservacionesService obs;
+
+    @Autowired
     private MaterialService materialS;
 
     @Autowired
@@ -236,6 +239,7 @@ public class GruposController {
         if (getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()) {
             materialS.deleteByGrupo(gr);
             mensaje.deleteByGrupo(gr);
+            obs.deleteByGrupo(gr);
             grupo.delete(id);
             return "redirect:/listaGrupos";
         } else
@@ -315,6 +319,7 @@ public class GruposController {
                     List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
                     for (int i = 0; i < losparticipantes.size(); i++) {
                         material.setParticipante(losparticipantes.get(i));
+                        material.setId(0);
                         materialS.updateMaterial(material);
                     }
                 } catch (Exception e) {
@@ -417,6 +422,33 @@ public class GruposController {
     @PostMapping("/mensajes/guardar/{id}")
     public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, @PathVariable("id") Integer idGrupo) {
         if (elmensaje.getMensaje() != "") {
+            String elmensaje1 = elmensaje.getMensaje();
+            Map<String, String> filtros = new HashMap<>();
+            filtros.put("puta", "******");
+            filtros.put("puto", "******");
+            filtros.put("gilipollas", "******");
+            filtros.put("joder", "******");
+            filtros.put("coño", "******");
+            filtros.put("cabrón", "******");
+            filtros.put("maricón", "******");
+            filtros.put("chinga tu madre", "******");
+            filtros.put("hijueputa", "******");
+            filtros.put("bastardo", "******");
+            filtros.put("perra", "******");
+            filtros.put("malparido", "******");
+            filtros.put("mamón", "******");
+            filtros.put("zorra", "******");
+            filtros.put("pendejo", "******");
+            filtros.put("conchatumadre", "******");
+            filtros.put("imbécil", "******");
+            filtros.put("idiota", "******");
+            filtros.put("estúpido", "******");
+            for (String palabra : elmensaje1.split("\\s+")) {
+                if (filtros.containsKey(palabra.toLowerCase())) {
+                    elmensaje1 = elmensaje1.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
+                }
+            }
+            elmensaje.setMensaje(elmensaje1);
             elmensaje.setGrupo(grupo.getGrupo(idGrupo));
             elmensaje.setUsuario(getUsuario());
             elmensaje.setId(0);

@@ -94,14 +94,15 @@ $(document).ready(function () {
     const validarFechaRealizacion = () => { //validar si la fecha no ha pasado
         var fechaIntroducida = new Date($('#fechaRealizacion').val());
         var fechaActual = Date.now();
+        if(fechaIntroducida != null){
+            if (fechaIntroducida < fechaActual) {
+                $('#error_fechaRealizacion').show();
+                campos['fechaRealizacion'] = false;
 
-        if (fechaIntroducida < fechaActual) {
-            $('#error_fechaRealizacion').show();
-            campos['fechaRealizacion'] = false;
-
-        } else {
-            $('#error_fechaRealizacion').hide();
-            campos['fechaRealizacion'] = true;
+            } else {
+                $('#error_fechaRealizacion').hide();
+                campos['fechaRealizacion'] = true;
+            }
         }
     }
 

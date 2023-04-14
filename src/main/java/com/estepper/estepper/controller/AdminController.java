@@ -35,6 +35,7 @@ import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.InvitacionService;
 import com.estepper.estepper.service.ObjetivoService;
+import com.estepper.estepper.service.ObservacionesService;
 import com.estepper.estepper.service.ProgresoService;
 
 @Controller
@@ -57,6 +58,9 @@ public class AdminController {
 
     @Autowired
     private ObjetivoService obj;
+
+    @Autowired
+    private ObservacionesService obs;
 
     @Autowired
     private ParticipanteService participante;
@@ -86,8 +90,7 @@ public class AdminController {
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model) {
         if (usuarioLogueado() instanceof Administrador) {
             // eliminar usuario
-            if (usuario.findById(id).get() instanceof Participante
-                    && usuario.findById(id).get().getEstadoCuenta().equals(Estado.ALTA)) {
+            if (usuario.findById(id).get() instanceof Participante) {
                 Participante p = participante.findById(id).get();
                 materialS.deleteByParticipante(p);
                 ses.deleteByParticipante(p);
@@ -111,16 +114,18 @@ public class AdminController {
                     p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
                     grupoS.update(p.getGrupo());
                 }
-            } else if (usuario.findById(id).get() instanceof Participante) {
-                Participante p = participante.findById(id).get();
-                fasevaloracion.eliminarcuenta(p);
             } else if (usuario.findById(id).get() instanceof Coordinador) {
+                Coordinador c = (Coordinador) usuario.findById(id).get();
+                mensajeS.deleteByCoordinadorMensajePrivado(c);
+                obs.deleteByCoordinador(c);
                 List<Grupo> listgrupos = grupoS.getGrupos();
                 for (int i = 0; i < listgrupos.size(); i++) {
                     if (listgrupos.get(i).getIdCoordinador() == id) {
                         materialS.deleteByGrupo(listgrupos.get(i));
                         mensajeS.deleteByGrupo(listgrupos.get(i));
+                        obs.deleteByGrupo(listgrupos.get(i));
                         grupoS.delete(listgrupos.get(i).getId());
+                        
                         // grupoS.delete(id);
                     }
                 }

@@ -22,7 +22,7 @@ public class Materiales implements Serializable{
     private Participante participante;
 
     @ManyToOne
-    @JoinColumn(name="idGrupo")
+    @JoinColumn(name="idGrupo", nullable = true)
     private Grupo grupo;
     
     private String link;

@@ -127,7 +127,7 @@
             </a>
 
             <a th:href="@{/chat}">
-                <i class="fa-solid fa-comments"></i>
+                <i class="fa-solid fa-people-group"></i>
             </a>
 
         </div>
@@ -194,7 +194,8 @@
                         <div th:unless="${listaRecetas.empty}">
                             <!--BOTONES GEOMETRÍA NUTRICIONAL, RECOMENDACIONESRECETAS Y NUEVARECETA-->
                             <div style="display: flex; justify-content: center;">
-                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria" th:href="@{/nutrientes}">
+                                <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Geometria"
+                                        th:href="@{/nutrientes}">
                                         Nutrientes</a>
                                 </div>
                                 <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Recetas"
@@ -396,10 +397,28 @@
                                 <div class="input-group mt-2">
                                     <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
                                     <div class="col-sm-8 mb-2">
-                                        <input type="file" th:name="file" class="form-control" required />
+                                        <input type="file" th:name="file" class="form-control" required
+                                            accept="application/pdf" onchange="validatePDF(this)"/>
                                     </div>
+                                    <script>
+                                        function validatePDF(input) {
+                                          if (input.files && input.files[0]) {
+                                            const file = input.files[0];
+                                            const reader = new FileReader();
+                                            reader.onload = function(e) {
+                                              if (e.target.result.startsWith("data:application/pdf")) {
+                                              } else {
+                                                input.value = null; // Limpiar el campo de entrada de archivo
+                                                alert("Por favor, seleccione un archivo PDF");
+                                              }
+                                            }
+                                            reader.readAsDataURL(file);
+                                          }
+                                        }
+                                        </script>  
                                 </div>
                             </div>
+
                             <button class="btn btn-info text-white mt-4 w-100" type="submit">Crear</button>
                         </form>
                         <!-- Modal -->
@@ -469,8 +488,25 @@
                                             <div class="input-group mt-2">
                                                 <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
                                                 <div class="col-sm-6 mb-2">
-                                                    <input type="file" th:name="file" class="form-control" required />
+                                                    <input type="file" th:name="file" class="form-control" required
+                                                        accept="application/pdf" onchange="validatePDF(this)" />
                                                 </div>
+                                                <script>
+                                                    function validatePDF(input) {
+                                                      if (input.files && input.files[0]) {
+                                                        const file = input.files[0];
+                                                        const reader = new FileReader();
+                                                        reader.onload = function(e) {
+                                                          if (e.target.result.startsWith("data:application/pdf")) {
+                                                          } else {
+                                                            input.value = null; // Limpiar el campo de entrada de archivo
+                                                            alert("Por favor, seleccione un archivo PDF");
+                                                          }
+                                                        }
+                                                        reader.readAsDataURL(file);
+                                                      }
+                                                    }
+                                                    </script>                                                    
                                             </div>
                                             <button class="btn btn-info text-white mt-4 w-100"
                                                 type="submit">Crear</button>

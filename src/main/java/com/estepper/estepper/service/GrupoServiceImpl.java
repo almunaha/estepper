@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Participante;
-
+import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
 
@@ -55,6 +55,7 @@ public class GrupoServiceImpl implements GrupoService {
         List<Participante> participantes = repoP.findByGrupo(grupo);
         for (Participante participante : participantes) {
             participante.setGrupo(null);
+            participante.setEstadoCuenta(Estado.BAJA);
             repoP.save(participante);
         }
         grupo.setParticipantes(null);

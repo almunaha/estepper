@@ -185,6 +185,8 @@ public class CoordinadorController {
                     usuario.getAsistencia(),
                     usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
                     usuario.getPerdidacmcintura(), idP);
+            
+            user.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), Estado.BAJA, idP);
 
             Integer participantes = g.getNumParticipantes() - 1;
             grupo.updateParticipantes(idG, participantes);

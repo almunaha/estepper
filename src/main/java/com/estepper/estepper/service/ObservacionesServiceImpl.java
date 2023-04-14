@@ -1,6 +1,7 @@
 package com.estepper.estepper.service;
 
 import com.estepper.estepper.repository.ObservacionesRepository;
+import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Observaciones;
 
@@ -57,13 +58,18 @@ public class ObservacionesServiceImpl implements ObservacionesService {
 
     @Override
     public void deleteByGrupo(Grupo g) {
-        repo.deleteAllByGrupo(g);
+        repo.deleteAllByGrupo(g.getId());
     }
 
 
     @Override
     public void actualizar(Observaciones o){
         repo.update(o.getNota(),o.getId());
+    }
+
+    @Override
+    public void deleteByCoordinador(Coordinador c) {
+        repo.deleteAllByCoordinador(c.getId());
     }
 
 

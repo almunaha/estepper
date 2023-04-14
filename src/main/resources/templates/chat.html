@@ -231,44 +231,6 @@
                         <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
 
                       </form>
-
-                      <script>
-                        var palabrasProhibidas = [ //añadir más palabras
-                          "puto",
-                          "puta",
-                          "gilipollas",
-                          "joder",
-                          "coño",
-                          "cabrón",
-                          "maricón",
-                          "chinga tu madre",
-                          "hijueputa",
-                          "bastardo",
-                          "perra",
-                          "malparido",
-                          "mamón",
-                          "zorra",
-                          "pendejo",
-                          "conchatumadre",
-                          "imbécil",
-                          "idiota",
-                          "estúpido"
-                        ];
-
-                        var formulario = document.getElementById("formulario-mensaje");
-                        formulario.addEventListener("submit", function (evento) {
-
-                          var mensaje = formulario.elements.mensaje.value;
-
-                          palabrasProhibidas.forEach(function (palabra) {
-                            var expresionRegular = new RegExp(palabra, "gi");
-                            mensaje = mensaje.replace(expresionRegular, "******");
-                          });
-
-                          formulario.elements.mensaje.value = mensaje;
-                        });
-
-                      </script>
                     </section>
                   </div>
 
@@ -340,11 +302,11 @@
                           <img th:unless="${lis.id == user.id}" th:src="@{${lis.fotoParticipante}}"
                             alt="Imagen de perfil de ${lis.nickname}" th:title="${lis.nickname}" class="avatar" />
                           <div class="perdida-peso-individual" style="text-align: center;display: none; "
-                            th:text="@{${lis.perdidaDePeso}}"></div>
+                            th:text="@{${-lis.perdidaDePeso}}"></div>
                           <div class="asistencia-individual" style="text-align: center;display: none; "
                             th:text="@{${lis.asistencia}}"></div>
                           <div class="perdida-cmcintura-individual" style="text-align: center; display: none;"
-                            th:text="@{${lis.perdidacmcintura}}"></div>
+                            th:text="@{${-lis.perdidacmcintura}}"></div>
                         </div>
                       </div>
                     </div>

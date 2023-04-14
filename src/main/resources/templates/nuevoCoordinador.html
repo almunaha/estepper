@@ -11,9 +11,12 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
+    <script src="/js/validaciones.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Nuevo coordinador - Estepper</title>
 </head>
 
@@ -101,27 +104,69 @@
                 </div>
             </nav>
 
-            <div style="padding-top: 75px;">
-                <div class="crearCoordinador bg-white p-5" style="width: 30%">
-                    <h4 style="text-align: center;" class="p-2">Nueva actividad</h4>
-
-                    <form method="post" th:action="@{/process_coordinador}" th:object="${coordinador}">
-                        <div class="mb-3">
-                            <label>Nickname</label>
-                            <input type="text" th:field="*{nickname}">
+            <div class="bg-light d-flex flex-column justify-content-center align-items-center">
+                <div class="bg-white border border-1 p-5 rounded-4" id="registro">
+            
+                    <form class="form-signin" id="form-registro" method="post" th:action="@{/process_coordinador}" th:object="${coordinador}">
+                        <h2 class="text-center mb-3" style="margin-top: 20%;">Nuevo coordinador</h2>
+            
+                        <label>Alias/Nickname </label>
+                        <div class="input-group mt-2">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" th:field="*{nickname}" class="form-control" id="nickname" required />
                         </div>
-                        <div class="mb-3">
-                            <label>Email</label>
-                            <input type="text" th:field="*{email}" id="exampleInputPassword1">
+                        <div id="error_nick">
+                            <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Mínimo de 3 caracteres
+                                obligatorios</p>
                         </div>
-                        <div class="mb-3">
-                            <label>Contraseña</label>
-                            <input type="text" th:field="*{contrasenia}">
+            
+                        <label class="mt-3">Correo electrónico </label>
+                        <div class="input-group mt-2">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
+                            <input type="email" th:field="*{email}" class="form-control" id="email" required />
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <div id="error_email">
+                            <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> El correo electrónico no es
+                                válido</p>
+                        </div>
+            
+                        <label class="mt-3">Contraseña </label>
+                        <div class="input-group mt-2">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" id="pass1" th:field="*{contrasenia}" class="form-control"
+                                style="border-right: 0;" required />
+                            <span class="input-group-text" style="background-color:white; border-left-style: none; cursor: pointer"
+                                id="ojo"><i class="fa-solid fa-eye" id="iconoOjo1" onmouseover="this.style.color = '#aaa'"
+                                    onmouseout="this.style.color = '#000'"></i></span>
+                        </div>
+                        <div id="error_pass1">
+                            <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Mínimo de 8 caracteres
+                                obligatorios</p>
+                        </div>
+            
+                        <label class="mt-3">Confirma tu contraseña </label>
+                        <div class="input-group mt-2" style=" margin-bottom: 5%;">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" id="pass2" name="contrasenia2" class="form-control" style="border-right: 0;"
+                                required />
+                            <span class="input-group-text"
+                                style="background-color:white; border-left-style: none; cursor: pointer; " id="ojo2"><i
+                                    class="fa-solid fa-eye" id="iconoOjo2" onmouseover="this.style.color = '#aaa'"
+                                    onmouseout="this.style.color = '#000'"></i></span>
+                        </div>
+                        <div id="error_pass2">
+                            <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Las contraseñas no coinciden</p>
+                        </div>
+            
+            
+            
+                        <button class="btn btn-info text-white mt-4 w-100" type="submit" id="btn-registro">Crear</button>
+            
+            
+            
                     </form>
                 </div>
-
+            
             </div>
         </div>
 

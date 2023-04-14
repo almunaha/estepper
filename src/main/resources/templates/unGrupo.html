@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
     <script src="/js/grupos.js"></script>
-
+    <th:import namespace="com.estepper.estepper.model.enums" />
     <!--PARA EL BUSCADOR-->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -230,12 +230,15 @@
                                         <div class="descripcion">
                                             <h5 th:text="${lis.nickname}"></h5>
                                             <h5 th:text="${lis.codigo}"></h5>
-                                            <p th:text="${lis.edad} + ' ' + años"></p>
+                                            <p th:unless="${lis.edad == null}" th:text="${lis.edad} + ' ' + años"></p>
+                                            <p th:if="${lis.edad == null}">Edad no añadida</p>
                                             <div
                                                 style="display: flex; justify-content: space-around; flex-direction: column;">
                                                 <a class="botonGr"
                                                     th:href="@{'/expediente/' + ${lis.id}}">Expediente</a>
-                                                <a class="botonGr" th:href="@{'/chatPrivado/' + ${lis.id}}">Mensaje</a>
+
+                                                <a th:if="${lis.estadoCuenta.equals(T(com.estepper.estepper.model.enums.Estado).ALTA)}"
+                                                    class="botonGr" th:href="@{'/chatPrivado/' + ${lis.id}}">Mensaje</a>
                                             </div>
 
                                         </div>
@@ -244,13 +247,13 @@
                                         <div class="listaDeParticipantes mb-2">
                                             <div class="perdida-peso-individual"
                                                 style="text-align: center;display: none; "
-                                                th:text="@{${lis.perdidaDePeso}}"></div>
+                                                th:text="@{${-lis.perdidaDePeso}}"></div>
                                             <div class="asistencia-individual"
                                                 style="text-align: center;display: none; "
                                                 th:text="@{${lis.asistencia}}"></div>
                                             <div class="perdida-cmcintura-individual"
                                                 style="text-align: center; display: none;"
-                                                th:text="@{${lis.perdidacmcintura}}"></div>
+                                                th:text="@{${-lis.perdidacmcintura}}"></div>
                                         </div>
 
                                     </div>
@@ -553,9 +556,9 @@
             const perdidaCmCinturaMedia = (totalPerdidaCmCintura / listadoParticipantesGrupoCmCintura.length).toFixed(2);
 
 
-            document.querySelector('#perdida-peso-media').textContent = perdidaPesoMedia + ' kg';
-            document.querySelector('#asistencia-media').textContent = asistenciaMedia + ' sesiones';
-            document.querySelector('#perdida-cmcintura-media').textContent = perdidaCmCinturaMedia + ' cm';
+            document.querySelector('#perdida-peso-media').textContent = -perdidaPesoMedia + ' kg';
+            document.querySelector('#asistencia-media').textContent = asistenciaMedia + '% sesiones';
+            document.querySelector('#perdida-cmcintura-media').textContent = -perdidaCmCinturaMedia + ' cm';
 
 
 

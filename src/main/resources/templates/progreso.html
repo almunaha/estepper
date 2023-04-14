@@ -127,7 +127,7 @@
             </a>
 
             <a th:href="@{/chat}">
-                <i class="fa-solid fa-comments"></i>
+                <i class="fa-solid fa-people-group"></i>
             </a>
 
         </div>
@@ -186,11 +186,11 @@
                     <div class="valor">
                         <div class="flex-valor">
                             <div class="iz-valor">
-                                <i class="fa-solid fa-bullseye" style="color: rgb(201, 75, 75)"></i>
+                                <i class="fa-solid fa-child-reaching" style="color: rgb(103, 111, 218)"></i>
                             </div>
                             <div class="der-valor">
-                                <div class="dato-valor"><span th:text="0"></span></div>
-                                <div class="bottom-valor"><span>Objetivos conseguidos</span></div>
+                                <div class="dato-valor"><span th:text="${-participante.perdidacmcintura} + cm"></span></div>
+                                <div class="bottom-valor"><span>Cintura perdida</span></div>
                             </div>
                         </div>
                     </div>

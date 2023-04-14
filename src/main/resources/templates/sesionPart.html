@@ -68,19 +68,19 @@
     <div class="menu-movil">
 
       <a th:href="@{/}">
-          <i class="fa-solid fa-house"></i>
+        <i class="fa-solid fa-house"></i>
       </a>
       <a th:href="@{/actividades}">
-          <i class="fa-solid fa-person-hiking"></i>
+        <i class="fa-solid fa-person-hiking"></i>
       </a>
       <a th:href="@{/listaGrupos}">
-          <i class="fa-solid fa-users"></i>
+        <i class="fa-solid fa-users"></i>
       </a>
       <a th:href="@{/listado}">
-          <i class="fa-solid fa-address-card"></i>
+        <i class="fa-solid fa-address-card"></i>
       </a>
 
-  </div>
+    </div>
 
     <div id="contenido">
 
@@ -163,6 +163,57 @@
                     <img width="20" th:src="@{/img/iconoPdf.png}" />
                     <a class="enlace-diapo" th:text="'Taller online sesion ' + ${sesion.numSesion} + '.pdf'"
                       th:href="@{'/diapos/descargar/' + ${sesion.numSesion}}"></a>
+                    <div class="mt-4"><label>Cuestionario</label></div>
+                    <div th:if="${sesion.numSesion == 1}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/75y7Fefk3Ld5RhPs9"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 2}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/UNZiJtLY6iDr4NtU7"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 3}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/7VY5uRBCd5zoTVXT6"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 4}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/JH6fshQk58rLdHPm7"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 5}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/9iq3CNi29Fk5TfMA8"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 6}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/2MjhTz7gzvmYXfrHA"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 7}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/pwERM3nnyARBCUxQ6"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 8}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/ywgnXwX21J9beZNP7"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 9}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/K131nEkjSniEWry86"></a>
+                    </div>
+                    <div th:if="${sesion.numSesion == 10}">
+                      <img width="20" th:src="@{/img/cuestionario.png}" />
+                      <a class="enlace-diapo" th:text="'Cuestionario sesión ' + ${sesion.numSesion}"
+                        href="https://forms.gle/XKD82zosN9pYbx7f7"></a>
+                    </div>
                   </div>
                 </div>
 

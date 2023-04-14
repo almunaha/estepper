@@ -45,6 +45,8 @@ public class MensajeServiceImpl implements MensajeService {
     @Override
     public void deleteByParticipante(Usuario p) {
         repo.deleteAllByUsuario(p);
+        repoPrivado.deleteAllByUsuario(p);
+        repoPrivado.deleteAllByParticipante((Participante) p);
     }
 
     @Override
