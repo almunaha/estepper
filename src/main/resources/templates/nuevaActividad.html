@@ -88,7 +88,7 @@
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
             </div>
-            
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -128,7 +128,8 @@
                                     id="nombreActividad" />
                             </div>
                             <div id="error_nombreActividad">
-                                <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Máximo 30
+                                <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                    Máximo 30
                                     caracteres</p>
                             </div>
 
@@ -158,7 +159,8 @@
                                 <input type="number" th:field="*{plazas}" class="form-control" required id="plazas" />
                             </div>
                             <div id="error_plazas">
-                                <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un
+                                <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                    Introduzca un
                                     número entre 1 y 150</p>
                             </div>
 
@@ -168,13 +170,32 @@
                                     id="fechaRealizacion" required />
                             </div>
                             <div id="error_fechaRealizacion">
-                                <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una
+                                <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                    Introduzca una
                                     fecha posterior a la actual</p>
                             </div>
 
                             <div class="input-group mt-2">
                                 <label class="col-2 col-form-label">Foto </label>
-                                <input type="file" th:name="file" class="form-control" required />
+                                <input type="file" th:name="file" class="form-control" required
+                                    accept="image/png, image/jpeg, image/jpg" onchange="validateImage(this)" />
+                                <script>
+                                    function validateImage(input) {
+                                        if (input.files && input.files[0]) {
+                                            const file = input.files[0];
+                                            const reader = new FileReader();
+                                            reader.onload = function (e) {
+                                                if (e.target.result.startsWith("data:image/png") || e.target.result.startsWith("data:image/jpeg") || e.target.result.startsWith("data:image/jpg")) {
+                                                } else {
+                                                    input.value = null; // Limpiar el campo de entrada de archivo
+                                                    alert("Por favor, seleccione un archivo PNG, JPEG o JPG");
+                                                }
+                                            }
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }
+                                </script>
+
                             </div>
 
                             <div class="btn-form">
