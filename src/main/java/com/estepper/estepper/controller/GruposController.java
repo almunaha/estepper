@@ -319,6 +319,7 @@ public class GruposController {
                     List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
                     for (int i = 0; i < losparticipantes.size(); i++) {
                         material.setParticipante(losparticipantes.get(i));
+                        material.setId(0);
                         materialS.updateMaterial(material);
                     }
                 } catch (Exception e) {
