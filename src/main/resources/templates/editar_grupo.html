@@ -157,13 +157,23 @@
 
 
                                 <!--TAMBIÉN FALTA PONER LA Q YA ESTABA POR DEFECTO POR SI NO SE QUIERE CAMBIAR-->
-                                <label class="col-form-label col-sm-4">Fecha de finalización del grupo:</label>
-                                <div class="col-sm-8 mb-2">
-                           
-                                    <input type="date" th:name="fechaFinGrupo" th:field="*{fechaFinGrupo}"
-                                        class="form-control" id="fechaFinGrupo" required
-                                        th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+                                <div th:if="${grupo.fechaFinGrupo != null}">
+                                    <label class="col-form-label col-sm-4">Fecha de finalización del grupo
+                                        actual:</label>
+                                    <div class="col-sm-8 mb-2">
 
+                                        <p th:text="${#temporals.format(grupo.fechaFinGrupo, 'dd/MM/yyyy')}"></p>
+                                    </div>
+                                    <label class="col-form-label col-sm-4">¿Desea cambiarla?</label>
+                                </div>
+                                <div th:if="${grupo.fechaFinGrupo == null}">
+                                    <label class="col-form-label col-sm-4">Fecha de finalización del grupo</label>
+                                </div>
+                                <div class="col-sm-8 mb-2">
+
+                                    <input type="date" th:name="fechaFinGrupo" th:field="*{fechaFinGrupo}"
+                                        class="form-control" id="fechaFinGrupo" value="${grupo.fechaFinGrupo}"
+                                        th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
                                 </div>
 
 
