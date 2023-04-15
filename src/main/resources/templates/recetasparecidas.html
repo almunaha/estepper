@@ -26,6 +26,7 @@
 
     <!-- Bootstrap -->
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Array.prototype.map"></script>
+    <script src="/js/recetas.js"></script>
 
 
     <title>Recetas Parecidas - Estepper</title>
@@ -229,32 +230,6 @@
                                 <input class="form-control me-2" type="search" placeholder="Buscar..."
                                     aria-label="Buscar" id="search-input">
                             </form>
-                            <script>
-                                $(document).ready(function () {
-                                    // Obtener los elementos de la lista de materiales
-                                    var materiales = $('.material');
-
-                                    // Manejar la presentación de resultados cuando se envía el formulario
-                                    $('#search-form').keyup(function (event) {
-                                        event.preventDefault();
-                                        var busqueda = $('#search-input').val().toLowerCase();
-
-                                        // Filtrar la lista de materiales para obtener los resultados
-                                        var resultados = materiales.filter(function () {
-                                            var descripcion = $(this).find('.cover').text().toLowerCase();
-                                            return descripcion.includes(busqueda);
-                                        });
-
-                                        // Ocultar todos los elementos de la lista de materiales y mostrar solo los resultados
-                                        materiales.hide();
-                                        resultados.show();
-
-                                    });
-
-                                    // Mostrar todos los elementos de la lista de materiales al cargar la página
-                                    materiales.show();
-                                });
-                            </script>
                             <!--TABLA RECETAS-->
                             <div class="table-responsive"
                                 style="display: flex; flex-wrap: wrap; flex-direction: row; margin-top: 3%; align-items: stretch;">
