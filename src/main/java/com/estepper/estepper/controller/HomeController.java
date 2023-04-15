@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -127,7 +128,6 @@ public class HomeController {
                                 //buscar notificaciones
                                 List<Notificacion> notificaciones = noti.notificaciones(part.get());
                                 model.addAttribute("notificaciones", notificaciones);
-
 
                             }
                             Participante p = participante.findById(getUsuario().getId()).get(); //porque se vuelve a crear??
@@ -408,6 +408,11 @@ public class HomeController {
         } else if (elusuario instanceof Participante && getUsuario().getId() == id
                 && getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("listado", materialS.materiales(id));
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(elusuario.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "materialesPart";
         } else if (elusuario instanceof Participante && getUsuario().getId() == id) {
             return "acceso";

@@ -366,6 +366,10 @@ public class CoordinadorController {
         Integer maximo = actividad.getPlazas() - inv.numInvitacionesPosibles(actividad, EstadoInvitacion.PENDIENTE);
         model.addAttribute("maximoInvit", maximo);
 
+        // buscar notificaciones
+        List<Notificacion> notificaciones = noti.notificaciones(part.getParticipante(user.getId()));
+        model.addAttribute("notificaciones", notificaciones);
+
         return "invitaciones";
     }
 

@@ -403,6 +403,10 @@ public class GruposController {
 
             model.addAttribute("mensajesPrivados", mensajesPrivados);
 
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(part.getParticipante(u.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "chat";
         } else
             return "acceso";
