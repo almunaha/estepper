@@ -28,6 +28,22 @@ function inscripcion(id) {
     })
 }
 
+
+function validateImage(input) {
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            if (e.target.result.startsWith("data:image/png") || e.target.result.startsWith("data:image/jpeg") || e.target.result.startsWith("data:image/jpg")) {
+            } else {
+                input.value = null; // Limpiar el campo de entrada de archivo
+                alert("Por favor, seleccione un archivo PNG, JPEG o JPG");
+            }
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
 $(document).ready(function () {
 
     //Botones actividad
