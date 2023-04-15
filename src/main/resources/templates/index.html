@@ -12,8 +12,6 @@
   <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-  <script src="/js/menu.js"></script>
-
 
   <!-- para jquery-->
   <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
@@ -32,6 +30,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   <script src="/js/progreso.js"></script>
+  <script src="/js/menu.js"></script>
 
   <title>Inicio - Estepper</title>
 
@@ -207,35 +206,7 @@
       </nav>
 
       <div th:if="${recordatorio}">
-        <script th:inline="javascript">
-          setTimeout(function () { //temporizador, al pasar un segundo salta la alerta
-            Swal.fire({
-              position: 'top',
-              title: '<h5>¡Hace más de una semana que no te pesas!</h5>',
-              showConfirmButton: true,
-              showCancelButton: true,
-              confirmButtonText: '<a href="/progreso" id="enlace">Registrar</a>',
-              cancelButtonText: "Cerrar",
-              confirmButtonColor: "#6ca4c7",
-
-              didRender: function () {
-                const registrar = document.querySelector('#enlace');
-
-                if (registrar) {
-                  registrar.style.color = 'white';
-                }
-              },
-              showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-              },
-              hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-              }
-
-            })
-
-          }, 200); 
-        </script>
+        <script>mostrarRecordatorio();</script>
       </div>
 
       <div class="utilidades">
@@ -257,41 +228,6 @@
               <div class="fondoGraficas">
                 <div><canvas id="graficoSesiones"></canvas></div>
               </div>
-
-
-              <script>
-                //URL actual
-                var baseUrl = window.location.origin;
-
-                let canvas = document.getElementById("graficoSesiones").getContext("2d");
-                let url = baseUrl + '/index/sesiones';
-
-                fetch(url)
-                  .then(response => response.json())
-                  .then(data => {
-
-                    var graficaSesiones = new Chart(canvas, {
-                      type: "pie",
-
-
-                      data: {
-                        labels: ["Sesiones completadas", "Sesiones pendientes"],
-
-                        datasets: [
-                          {
-                            data: [data.sesionesCompletas, 10 - data.sesionesCompletas],
-                            backgroundColor: [
-                              'rgba(100, 182, 205, 0.915)', // Color para sesiones completadas
-                              'rgba(229, 203, 108, 0.915)'    // Color para sesiones pendientes
-                            ]
-                          }
-                        ]
-                      },
-
-                    })
-                  })
-
-              </script>
 
             </div>
           </div>
@@ -350,65 +286,6 @@
 
               <div class="chart3" id="chart3"></div>
 
-              <script>
-                var options = {
-                  chart: {
-                    height: 280,
-                    type: "radialBar",
-                  },
-
-                  series: [67], //porcentaje
-                  colors: ["#20E647"],
-                  plotOptions: {
-                    radialBar: {
-                      hollow: {
-                        margin: 0,
-                        size: "70%",
-                        background: "#293450"
-                      },
-                      track: {
-                        dropShadow: {//para el bordecito de fuera la sombrita
-                          enabled: true,
-                          top: 3,
-                          left: 0,
-                          blur: 4,
-                          opacity: 0.20
-                        }
-                      },
-                      dataLabels: {
-                        name: {//Para el nombre de dentro de progreso
-                          offsetY: -10,
-                          color: "#fff",
-                          fontSize: "15px"
-                        },
-                        value: { //Para el porcentaje
-                          color: "#fff",
-                          fontSize: "35px",
-                          show: true
-                        }
-                      }
-                    }
-                  },
-                  fill: { //para el relleno
-                    type: "gradient",
-                    gradient: {
-                      shade: "dark",
-                      type: "vertical",
-                      gradientToColors: ["#87d4f9"], //que vaya hacia ese azulito
-                      stops: [0, 100]
-                    }
-                  },
-                  stroke: {
-                    lineCap: "round" //prolongación redondeada de la línea
-                  },
-                  labels: ["Progreso"] //el nombre de dentro
-                };
-
-                var chart = new ApexCharts(document.querySelector("#chart3"), options);
-
-                chart.render();
-
-              </script>
             </div>
           </div>
 
@@ -451,13 +328,9 @@
           <div>Alimentación</div>
         </a>
 
-
       </div>
 
-
     </div>
-
-
 
   </div>
 
