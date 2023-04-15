@@ -29,7 +29,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -72,15 +72,15 @@
         <div id="contenido">
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -92,7 +92,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header">
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -100,7 +100,7 @@
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
                         </li>
@@ -143,7 +143,7 @@
                                     basal(mg/dl): </label>
 
                                 <input style="margin-left: 10%" id="glucemia" type="number" th:field="*{glucemia}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
 
                             <div class="input-group mt-2">
@@ -151,7 +151,7 @@
                                     Total(mg/dl): </label>
 
                                 <input style="margin-left: 10%" id="colesterol" type="number" th:field="*{colesterol}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
 
                             <div class="input-group mt-2">
@@ -159,7 +159,7 @@
                                     colesterol(mg/dl): </label>
 
                                 <input style="margin-left: 10%" id="ldl" type="number" th:field="*{ldl}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -168,7 +168,7 @@
                                 </label>
 
                                 <input style="margin-left: 10%" id="sog" type="number" th:field="*{sog}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
 
                             <div class="input-group mt-2">
@@ -176,7 +176,7 @@
                                     colesterol(mg/dl): </label>
 
                                 <input style="margin-left: 10%" id="hdl" type="number" th:field="*{hdl}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
 
                             <div class="input-group mt-2">
@@ -184,14 +184,14 @@
                                     class="col-4 col-form-label">Trigliceridos(mg/dl): </label>
 
                                 <input style="margin-left: 12%" id="trigliceridos" type="number"
-                                    th:field="*{trigliceridos}" class="form-control" />
+                                    th:field="*{trigliceridos}" class="form-control">
                             </div>
                         </div>
                         <div class="input-group mt-2">
                             <label style="font-weight: bold; " class="col-4 col-form-label">HbA1c(%): </label>
 
                             <input id="hb" type="number" step="0.1" th:field="*{hbA1c}" min=0 max=100
-                                class="form-control" />
+                                class="form-control">
                         </div>
 
                         <div class="input-group mt-2">
@@ -211,7 +211,7 @@
                                 <option value=2>Prediabetes</option>
                                 <option value=3>T.F. > 14, normoglucemia e I.M.C >= 27</option>
                                 <option value=4>Obesidad I.M.C.>30</option>
-                                <option value=5>I.M.C.>27 y cintura riesgo</option>´
+                                <option value=5>I.M.C.>27 y cintura riesgo</option>
                                 <option value=6>Otros</option>
                             </select>
                         </div>
@@ -231,8 +231,7 @@
                             <div class="input-group mt-2">
                                 <label style="margin-left: 3%;" class="col-4 col-form-label"> Motivo: </label>
 
-                                <input id="motivomontesa" type="text" th:field="*{motivomontesa}"
-                                    class="form-control" />
+                                <input id="motivomontesa" type="text" th:field="*{motivomontesa}" class="form-control">
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -248,7 +247,7 @@
                             <div class="input-group mt-2">
                                 <label style="margin-left: 3%;" class="col-4 col-form-label"> Motivo: </label>
 
-                                <input id="motivotaller" type="text" th:field="*{motivotaller}" class="form-control" />
+                                <input id="motivotaller" type="text" th:field="*{motivotaller}" class="form-control">
                             </div>
                         </div>
                         <div class="input-group mt-2">
