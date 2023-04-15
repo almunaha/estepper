@@ -3,8 +3,12 @@ package com.estepper.estepper.model.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.estepper.estepper.model.enums.EstadoNotificacion;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +34,9 @@ public class Notificacion implements Serializable{
     @Column(name = "fechaEnvio", columnDefinition = "DATETIME")
     private LocalDateTime fechaEnvio;
 
-    private boolean visto;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "categoria", columnDefinition = "ENUM('VISTO', 'PENDIENTE')")
+    private EstadoNotificacion estado; 
 
     private String enlace;
     
@@ -38,13 +44,13 @@ public class Notificacion implements Serializable{
     public Notificacion() {
     }
 
-    public Notificacion(Integer id, Participante participante, String mensaje, LocalDateTime fechaEnvio, boolean visto,
+    public Notificacion(Integer id, Participante participante, String mensaje, LocalDateTime fechaEnvio, EstadoNotificacion estado,
             String enlace) {
         this.id = id;
         this.participante = participante;
         this.mensaje = mensaje;
         this.fechaEnvio = fechaEnvio;
-        this.visto = visto;
+        this.estado = estado;
         this.enlace = enlace;
     }
 
@@ -80,12 +86,12 @@ public class Notificacion implements Serializable{
         this.fechaEnvio = fechaEnvio;
     }
 
-    public boolean isVisto() {
-        return visto;
+    public EstadoNotificacion getEstado() {
+        return estado;
     }
 
-    public void setVisto(boolean visto) {
-        this.visto = visto;
+    public void setEstado(EstadoNotificacion estado) {
+        this.estado = estado;
     }
 
     public String getEnlace() {

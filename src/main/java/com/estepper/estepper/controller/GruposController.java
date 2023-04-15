@@ -42,6 +42,7 @@ import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.model.entity.Observaciones;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoGrupo;
+import com.estepper.estepper.model.enums.EstadoNotificacion;
 import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -329,7 +330,7 @@ public class GruposController {
                         // Crear notificación de nuevo material
                         Notificacion notificacion = new Notificacion(0, losparticipantes.get(i),
                                 "Nuevo material para descargar: " + material.getTitulo(), LocalDateTime.now(),
-                                false, "/materiales/" + losparticipantes.get(i).getId());
+                                EstadoNotificacion.PENDIENTE, "/materiales/" + losparticipantes.get(i).getId());
                         noti.guardar(notificacion);
                     }
                 } catch (Exception e) {

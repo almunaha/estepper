@@ -42,6 +42,7 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.EstadoInvitacion;
+import com.estepper.estepper.model.enums.EstadoNotificacion;
 import com.estepper.estepper.model.enums.EstadoSesion;
 
 import com.estepper.estepper.model.entity.Usuario;
@@ -190,7 +191,7 @@ public class CoordinadorController {
                     usuario.getAsistencia(),
                     usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
                     usuario.getPerdidacmcintura(), idP);
-            
+
             user.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), Estado.BAJA, idP);
 
             Integer participantes = g.getNumParticipantes() - 1;
@@ -362,13 +363,10 @@ public class CoordinadorController {
         List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
         model.addAttribute("invitaciones", invitaciones);
 
-        //número máximo de invitaciones que se pueden enviar: número de plazas - invitaciones pendientes
+        // número máximo de invitaciones que se pueden enviar: número de plazas -
+        // invitaciones pendientes
         Integer maximo = actividad.getPlazas() - inv.numInvitacionesPosibles(actividad, EstadoInvitacion.PENDIENTE);
         model.addAttribute("maximoInvit", maximo);
-
-        // buscar notificaciones
-        List<Notificacion> notificaciones = noti.notificaciones(part.getParticipante(user.getId()));
-        model.addAttribute("notificaciones", notificaciones);
 
         return "invitaciones";
     }
@@ -392,11 +390,14 @@ public class CoordinadorController {
             for (Participante p : participantes) {
                 Invitacion invitacion = inv.invitacionByPartAndActi(p, actividad);
 
-                if (invitacion == null)
+                if (invitacion == null) {
                     inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
-                    Notificacion notificacion = new Notificacion(0, p, "Nueva invitación a la actividad: "+ actividad.getNombre(), LocalDateTime.now(), false, "/panel_invitaciones");
+                    Notificacion notificacion = new Notificacion(0, p,
+                            "Nueva invitación a la actividad: " + actividad.getNombre(), LocalDateTime.now(),
+                            EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
                     noti.guardar(notificacion);
                 }
+            }
         }
 
         else {
@@ -412,7 +413,8 @@ public class CoordinadorController {
                 }
             }
 
-            else { // no existe un usuario con ese códgio o el código introducido no pertenece a un participante
+            else { // no existe un usuario con ese códgio o el código introducido no pertenece a un
+                   // participante
                 String alerta = "No existe un participante con el código: " + codigoP;
                 redirAttrs.addFlashAttribute("alerta", alerta);
             }

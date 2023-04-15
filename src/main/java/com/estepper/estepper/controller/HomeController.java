@@ -40,6 +40,7 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.EstadoNotificacion;
 import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
@@ -454,7 +455,7 @@ public class HomeController {
                     // Crear notificación de nuevo material
                     Notificacion notificacion = new Notificacion(0, p,
                             "Nuevo material para descargar: " + material.getTitulo(), LocalDateTime.now(),
-                            false, "/materiales/" + p.getId());
+                            EstadoNotificacion.PENDIENTE, "/materiales/" + p.getId());
                     noti.guardar(notificacion);
 
                 } catch (Exception e) {
