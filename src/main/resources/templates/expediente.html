@@ -22,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/participantes.js"></script>
     <!-- Agrega la referencia a SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
@@ -253,12 +254,6 @@
                             </div>
                         </div>
                     </div>
-                    <script>
-                        function abrirIframe(modalId) {
-                            const modal = new bootstrap.Modal(document.getElementById(modalId));
-                            modal.show();
-                        }
-                    </script>
                     <!--FIN MODAL-->
 
                     <div style="display: flex; justify-content: center;">
@@ -270,38 +265,6 @@
                                 th:href="@{'/valoracion/' + ${participante.id}}"> Fase de valoración </a></div>
                         <div><a class="btn analitica" id="btn-part" title="Analítica" data-bs-toggle="tooltip"
                                 th:data-id="${participante.id}" type="button"> Mandar analítica </a></div>
-                        <script>
-                            $('.analitica').click(function () {
-                                var id = $(this).data('id');
-
-                                Swal.fire({
-                                    position: 'center',
-                                    title: '<h4>¿Estás seguro de que desea solicitarle una analítica?</h4>',
-                                    showConfirmButton: true,
-                                    showCancelButton: true,
-                                    cancelButtonText: 'Cancelar',
-                                    confirmButtonColor: "rgb(218, 77, 73)",
-                                    confirmButtonText: '<a href="/analitica/' + id + '" id ="conf">Mandar</a>',
-
-                                    didRender: function () {
-                                        const confirm = document.querySelector('#conf');
-
-                                        if (confirm) {
-                                            confirm.style.color = 'white';
-                                        }
-                                    },
-
-                                    showClass: {
-                                        popup: 'animate__animated animate__fadeInDown'
-                                    },
-                                    hideClass: {
-                                        popup: 'animate__animated animate__fadeOutUp'
-                                    }
-
-                                })
-
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
