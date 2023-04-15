@@ -1025,6 +1025,7 @@ public class ParticipanteController {
 
     }
 
+    //confirmar inscripción
     @GetMapping("/confirmar/{id}")
     public String confirmar(@PathVariable Integer id) {
         Usuario user = getUsuario();
@@ -1043,6 +1044,28 @@ public class ParticipanteController {
 
         else
             return "redirect:/";
+    }
+
+    //eliminar inscripción
+    @GetMapping("/eliminar_inscripcion/{id}")
+    public String process_invitacion(@PathVariable(name = "id") Integer id, Model model) {
+
+        Participante p = participante.getParticipante(getUsuario().getId());
+        Actividad actividad = act.actividad(id);
+
+        // 1. Eliminar participante de la actividad
+        actividad.getParticipantes().remove(p);
+
+        // 2. Eliminar asistente del número de participantes
+        actividad.setNumParticipantes(actividad.getNumParticipantes() - 1);
+
+        // 3. Aumentar número de plazas
+        actividad.setPlazas(actividad.getPlazas() + 1);
+
+        // 4. Guardar actividad
+        act.guardar(actividad);
+
+        return "redirect:/actividades";
     }
 
     @GetMapping("/confirmar_invitacion/{id}")

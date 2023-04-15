@@ -176,7 +176,39 @@ $(document).ready(function () {
         $('#filtrarActividades').trigger('keyup');
     });
 
-    
+    //eliminar inscripción
+    $('.desinscripcion').click(function () {
+        var id = $(this).data('id');
+
+        Swal.fire({
+            position: 'center',
+            title: '<h4>¿Estás seguro de eliminar la inscripción?</h4>',
+            showConfirmButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: "rgb(218, 77, 73)",
+            confirmButtonText: '<a href="/eliminar_inscripcion/' + id + '" id ="conf">Eliminar</a>',
+
+            didRender: function () {
+                const confirm = document.querySelector('#conf');
+
+                if (confirm) {
+                    confirm.style.color = 'white';
+                }
+            },
+
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+
+        })
+
+    });
+
+
 
 });
 
@@ -195,3 +227,4 @@ function validateImage(input) {
         reader.readAsDataURL(file);
     }
 }
+
