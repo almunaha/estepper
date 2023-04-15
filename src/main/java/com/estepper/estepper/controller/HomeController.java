@@ -125,12 +125,13 @@ public class HomeController {
                                     model.addAttribute("recordatorio", true);
                                 }
 
-                                //buscar notificaciones
+                                // buscar notificaciones
                                 List<Notificacion> notificaciones = noti.notificaciones(part.get());
                                 model.addAttribute("notificaciones", notificaciones);
 
                             }
-                            Participante p = participante.findById(getUsuario().getId()).get(); //porque se vuelve a crear??
+                            Participante p = participante.findById(getUsuario().getId()).get(); // porque se vuelve a
+                                                                                                // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
 
@@ -192,7 +193,8 @@ public class HomeController {
                              */
 
                             return "index";
-                        } else return "baja";
+                        } else
+                            return "baja";
 
                     }
                 }
@@ -223,6 +225,11 @@ public class HomeController {
         model.addAttribute("user", elusuario);
         if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("participante", participante.findById(id).get());
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "editarperfilParticipante";
         } else
             return "editarperfil";
@@ -265,6 +272,10 @@ public class HomeController {
             model.addAttribute("grupo", grupo);
             model.addAttribute("edad", edad);
             model.addAttribute("sexo", sexo);
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
+            model.addAttribute("notificaciones", notificaciones);
 
             return "mostrarperfilParticipante";
         } else
@@ -440,9 +451,10 @@ public class HomeController {
                     material.setId(0);
                     materialS.updateMaterial(material);
 
-                    //Crear notificación de nuevo material
-                    Notificacion notificacion = new Notificacion(0, p, "Nuevo material para descargar: "+ material.getTitulo(), LocalDateTime.now(), 
-                    false, "/materiales/" + p.getId());
+                    // Crear notificación de nuevo material
+                    Notificacion notificacion = new Notificacion(0, p,
+                            "Nuevo material para descargar: " + material.getTitulo(), LocalDateTime.now(),
+                            false, "/materiales/" + p.getId());
                     noti.guardar(notificacion);
 
                 } catch (Exception e) {
