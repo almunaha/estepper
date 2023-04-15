@@ -14,6 +14,8 @@
     <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/participantes.js"></script>
     <title>Formulario de Antecedentes - Estepper</title>
 
 </head>
@@ -234,15 +236,6 @@
 
                         <button class="btn btn-info text-white mt-4 w-100" type="submit"
                             onclick=myFunction()>Guardar</button>
-                        <script language="JavaScript">
-                            function myFunction() {
-                                if (confirm("Desea guardar los datos?")) {
-                                    alert("Datos guardados exitosamente");
-                                } else {
-                                    alert("Usted cancelo la acción para guardar");
-                                }
-                            }
-                        </script>
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
                                 onclick="window.print();">

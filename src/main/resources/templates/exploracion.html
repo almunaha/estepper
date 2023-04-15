@@ -13,7 +13,8 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/exploracion.js"></script>
     <title>Formulario de Exploración - Estepper</title>
 
 </head>
@@ -165,31 +166,9 @@
                             <input style="border-color: blue;" id="imc" type="number" th:field="*{imc}"
                                 class="form-control" readonly />
                         </div>
-                        <script>
-                            function calcularpuntuacion() {
-                                var peso = parseInt(document.getElementById('peso').value);
-                                var altura = parseInt(document.getElementById('altura').value);
-                                altura = altura / 100;
-                                var resultado = peso / (altura * altura);
-                                document.getElementById('imc').value = resultado.toFixed(0);
-                            }
-
-                            document.getElementById('peso').addEventListener('input', calcularpuntuacion);
-                            document.getElementById('altura').addEventListener('input', calcularpuntuacion);
-
-                        </script>
 
                         <button class="btn btn-info text-white mt-4 w-100" type="submit"
                             onclick=myFunction()>Guardar</button>
-                        <script language="JavaScript">
-                            function myFunction() {
-                                if (confirm("Desea guardar los datos?")) {
-                                    alert("Datos guardados exitosamente");
-                                } else {
-                                    alert("Usted cancelo la acción para guardar");
-                                }
-                            }
-                        </script>
 
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"

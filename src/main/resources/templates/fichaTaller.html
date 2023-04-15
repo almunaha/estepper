@@ -13,7 +13,8 @@
     <script src="/js/menu.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/fichaTaller.js"></script>
     <title>Taller - Estepper</title>
 </head>
 
@@ -226,22 +227,6 @@
                             </datalist>
                             <span style="margin-left: 3%;" id="capacidad-value" th:text="${ficha.capacidad}">0</span>
                         </div>
-
-                        <script>
-                            const importanciaRange = document.getElementById('importancia-range');
-                            const importanciaValue = document.getElementById('importancia-value');
-
-                            const capacidadRange = document.getElementById('capacidad-range');
-                            const capacidadValue = document.getElementById('capacidad-value');
-
-                            importanciaRange.addEventListener('input', function () {
-                                importanciaValue.textContent = importanciaRange.value;
-                            });
-
-                            capacidadRange.addEventListener('input', function () {
-                                capacidadValue.textContent = capacidadRange.value;
-                            });
-                        </script>
 
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Mis temores: </label>
