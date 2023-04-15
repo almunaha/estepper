@@ -66,6 +66,7 @@ import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Ejercicio;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoInvitacion;
+import com.estepper.estepper.model.enums.EstadoNotificacion;
 import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.TipoProgreso;
@@ -541,6 +542,12 @@ public class ParticipanteController {
             if (!f.existe(p)) {
                 f.crearFichas(p);
             }
+
+            //notificsción cuenta activada
+            Notificacion notificacion = new Notificacion(0, p,
+                            "¡Bienvenido, has sido dado de alta en Estepper!", LocalDateTime.now(),
+                            EstadoNotificacion.PENDIENTE, "/");
+                    noti.guardar(notificacion);
 
             return "redirect:/listado";
         } else

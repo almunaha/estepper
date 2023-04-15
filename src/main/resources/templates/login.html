@@ -12,6 +12,12 @@
     <link rel="stylesheet" th:href="@{/css/out.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
+    <!-- para jquery-->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <script src="/js/out.js"></script>
+
     <title>Estepper</title>
 </head>
 
@@ -43,26 +49,6 @@
 
             <button class="btn btn-info text-white mt-4 w-100" type="submit">Iniciar sesión</button>
         </form>
-
-        <script>
-            const ojo = document.querySelector("#ojo");
-            const iconoOjo = document.getElementById('iconoOjo');
-
-            ojo.addEventListener('click', function () {
-                
-                if (this.previousElementSibling.type === 'password') {
-                    this.previousElementSibling.type = "text";
-                    iconoOjo.classList.remove('fa-eye');
-                    iconoOjo.classList.add('fa-eye-slash');
-                }
-
-                else if (this.previousElementSibling.type === 'text') {
-                    this.previousElementSibling.type = "password";
-                    iconoOjo.classList.remove('fa-eye-slash'); 
-                    iconoOjo.classList.add('fa-eye');                
-                }
-            })
-        </script>
 
         <p class="text-center mt-5">¿Has olvidado tu código o contraseña?</p>
         <p class="text-center"> Pincha <a class="text-decoration-none"
