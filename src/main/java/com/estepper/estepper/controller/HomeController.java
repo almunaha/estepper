@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Materiales;
+import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.model.entity.ObjetivoAgua;
 import com.estepper.estepper.model.entity.ObjetivoDescanso;
 import com.estepper.estepper.model.entity.ObjetivoEjercicio;
@@ -38,6 +40,7 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.model.enums.EstadoNotificacion;
 import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.TipoProgreso;
 
@@ -51,6 +54,7 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.NotificacionService;
 import com.estepper.estepper.service.ObjetivoService;
 
 @Controller
@@ -73,6 +77,9 @@ public class HomeController {
 
     @Autowired
     private ObjetivoService obj;
+
+    @Autowired
+    private NotificacionService noti;
 
     @Autowired
     private BCryptPasswordEncoder hash;
@@ -103,6 +110,7 @@ public class HomeController {
                     if (cookie.getName().equals("consentimiento")
                             && cookie.getValue().equals(getUsuario().getId().toString())) {
                         // El usuario ha aceptado los términos y condiciones
+
                         // si está dado de alta
                         if (user.getEstadoCuenta().equals(Estado.ALTA)) {
                             Optional<Participante> part = participante.findById(user.getId());
@@ -117,8 +125,14 @@ public class HomeController {
                                 if (datos.isEmpty()) {
                                     model.addAttribute("recordatorio", true);
                                 }
+
+                                // buscar notificaciones
+                                List<Notificacion> notificaciones = noti.notificaciones(part.get());
+                                model.addAttribute("notificaciones", notificaciones);
+
                             }
-                            Participante p = participante.findById(getUsuario().getId()).get();
+                            Participante p = participante.findById(getUsuario().getId()).get(); // porque se vuelve a
+                                                                                                // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
 
@@ -180,7 +194,8 @@ public class HomeController {
                              */
 
                             return "index";
-                        } else return "baja";
+                        } else
+                            return "baja";
 
                     }
                 }
@@ -211,6 +226,11 @@ public class HomeController {
         model.addAttribute("user", elusuario);
         if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("participante", participante.findById(id).get());
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "editarperfilParticipante";
         } else
             return "editarperfil";
@@ -253,6 +273,10 @@ public class HomeController {
             model.addAttribute("grupo", grupo);
             model.addAttribute("edad", edad);
             model.addAttribute("sexo", sexo);
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
+            model.addAttribute("notificaciones", notificaciones);
 
             return "mostrarperfilParticipante";
         } else
@@ -396,6 +420,11 @@ public class HomeController {
         } else if (elusuario instanceof Participante && getUsuario().getId() == id
                 && getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("listado", materialS.materiales(id));
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(elusuario.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "materialesPart";
         } else if (elusuario instanceof Participante && getUsuario().getId() == id) {
             return "acceso";
@@ -422,6 +451,13 @@ public class HomeController {
                     material.setLink(rutaCompleta.toString());
                     material.setId(0);
                     materialS.updateMaterial(material);
+
+                    // Crear notificación de nuevo material
+                    Notificacion notificacion = new Notificacion(0, p,
+                            "Nuevo material para descargar: " + material.getTitulo(), LocalDateTime.now(),
+                            EstadoNotificacion.PENDIENTE, "/materiales/" + p.getId());
+                    noti.guardar(notificacion);
+
                 } catch (Exception e) {
                     String mensaje = "Ha ocurrido un error: " + e.getMessage();
                     JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);

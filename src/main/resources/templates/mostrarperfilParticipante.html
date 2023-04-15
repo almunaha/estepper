@@ -38,7 +38,7 @@
         }
     </style>
 
-<title>Perfil - Estepper</title>
+    <title>Perfil - Estepper</title>
 </head>
 
 <body>
@@ -123,7 +123,7 @@
         <div id="contenido" style="background-color:#afc0cb; ">
             <div class="header-movil">
                 <img class="menu-icon" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                id="avatar-header" onclick="desplegable()" />
+                    id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{/img/logo.png}" />
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
@@ -136,75 +136,105 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                                    id="avatar-header" />
-                                <span sec:authentication="principal.nombre"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <div class="dropdown-divider"></div>
-                                <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
-                                </form>
+                    <div class="der-header">
+                        <!-- Desplegable notificaciones -->
+                        <ul class="navbar-nav ml-auto" id="cont-notif">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                                    <h6>Notificaciones</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <div style="overflow: auto; max-height: 250px;">
+                                        <div th:each="notif : ${notificaciones}">
+                                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                                th:text="${notif.mensaje}"></a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Desplegable perfil y cerrar sesión -->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                        id="avatar-header" />
+                                    <span sec:authentication="principal.nombre"></span>
+                                </a>
+
+                                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    </form>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+
+            <div class="cuerpoPerfil">
+                <div class="container">
+                    <div class="cardi2 mt-3">
+                        <div class="imagenPerfil">
+                            <img width="100" th:src="${user.fotoParticipante}" alt="imagenPerfil" />
+                        </div>
+                        <div class="col-md-8">
+                            <div style="margin-top: 3%;" class="contenidoPerfil mt-10">
+                                <h3 th:text="${user.nickname}">Nombre</h3>
+                                <div class="row datos">
+                                    <div class="dato">
+                                        <h5><i class="fa-solid fa-barcode" title="Código"></i></h5>
+                                        <h5 th:text="${user.codigo}"></h5>
+                                    </div>
+                                    <div class="dato">
+                                        <h5><i title="Email" class="icono fas fa-envelope"></i></h5>
+                                        <h5 th:text="${user.email}"></h5>
+                                    </div>
+                                    <div class="dato">
+                                        <h5><i class="fa-solid fa-gears" title="Estado"></i></h5>
+                                        <h5 th:text="${user.estadoCuenta}"></h5>
+                                    </div>
+                                    <div class="dato">
+                                        <h5><i class="fa-solid fa-calendar-day" title="Edad"></i></h5>
+                                        <h5 th:text="${edad}"></h5>
+                                    </div>
+                                    <div class="dato">
+                                        <h5><i class="fa-solid fa-venus-mars" title="Género"></i></h5>
+                                        <h5 th:text="${sexo}"></h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-20">
+                                        <a class="btn btn-primary btn-block" style="padding-bottom: 10%;"
+                                            th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
+                                    </div>
+                                </div>
+
                             </div>
-                        </li>
-                    </ul>
-                </div>
-</nav>
+                        </div>
 
-<div class="cuerpoPerfil">
-    <div class="container">
-        <div class="cardi2 mt-3">
-            <div class="imagenPerfil">
-                <img width="100" th:src="${user.fotoParticipante}" alt="imagenPerfil" />
-            </div>
-            <div class="col-md-8">
-                <div style="margin-top: 3%;" class="contenidoPerfil mt-10">
-                    <h3 th:text="${user.nickname}">Nombre</h3>
-                    <div class="row datos">
-                        <div class="dato">
-                            <h5><i class="fa-solid fa-barcode" title="Código"></i></h5>
-                            <h5 th:text="${user.codigo}"></h5>
-                        </div>
-                        <div class="dato">
-                            <h5><i title="Email" class="icono fas fa-envelope"></i></h5>
-                            <h5 th:text="${user.email}"></h5>
-                        </div>
-                        <div class="dato">
-                            <h5><i class="fa-solid fa-gears" title="Estado"></i></h5>
-                            <h5 th:text="${user.estadoCuenta}"></h5>
-                        </div>
-                        <div class="dato">
-                            <h5><i class="fa-solid fa-calendar-day" title="Edad"></i></h5>
-                            <h5 th:text="${edad}"></h5>
-                        </div>
-                        <div class="dato">
-                            <h5><i class="fa-solid fa-venus-mars" title="Género"></i></h5>
-                            <h5 th:text="${sexo}"></h5>
-                        </div>
+
                     </div>
-                    <div class="row">
-                        <div class="col-md-20">
-                            <a class="btn btn-primary btn-block" style="padding-bottom: 10%;" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
 
+
+
+            </div>
 
         </div>
-    </div>
-
-
-
-</div>
-
-</div>
 
 </body>
 

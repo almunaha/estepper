@@ -151,25 +151,52 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                                    id="avatar-header" />
-                                <span sec:authentication="principal.nombre"></span>
-                            </a>
+                    <div class="der-header">
+                        <!-- Desplegable notificaciones -->
+                        <ul class="navbar-nav ml-auto" id="cont-notif">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                                </a>
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <div class="dropdown-divider"></div>
-                                <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
-                                </form>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                                    <h6>Notificaciones</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <div style="overflow: auto; max-height: 250px;">
+                                        <div th:each="notif : ${notificaciones}">
+                                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                                th:text="${notif.mensaje}"></a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
 
-                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Desplegable perfil y cerrar sesión -->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                        id="avatar-header" />
+                                    <span sec:authentication="principal.nombre"></span>
+                                </a>
+
+                                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    </form>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
                 </div>
             </nav>
             <div style="padding-top: 75px;">
@@ -398,24 +425,24 @@
                                     <label class="col-form-label col-sm-4">Seleccione el archivo:</label>
                                     <div class="col-sm-8 mb-2">
                                         <input type="file" th:name="file" class="form-control" required
-                                            accept="application/pdf" onchange="validatePDF(this)"/>
+                                            accept="application/pdf" onchange="validatePDF(this)" />
                                     </div>
                                     <script>
                                         function validatePDF(input) {
-                                          if (input.files && input.files[0]) {
-                                            const file = input.files[0];
-                                            const reader = new FileReader();
-                                            reader.onload = function(e) {
-                                              if (e.target.result.startsWith("data:application/pdf")) {
-                                              } else {
-                                                input.value = null; // Limpiar el campo de entrada de archivo
-                                                alert("Por favor, seleccione un archivo PDF");
-                                              }
+                                            if (input.files && input.files[0]) {
+                                                const file = input.files[0];
+                                                const reader = new FileReader();
+                                                reader.onload = function (e) {
+                                                    if (e.target.result.startsWith("data:application/pdf")) {
+                                                    } else {
+                                                        input.value = null; // Limpiar el campo de entrada de archivo
+                                                        alert("Por favor, seleccione un archivo PDF");
+                                                    }
+                                                }
+                                                reader.readAsDataURL(file);
                                             }
-                                            reader.readAsDataURL(file);
-                                          }
                                         }
-                                        </script>  
+                                    </script>
                                 </div>
                             </div>
 
@@ -493,20 +520,20 @@
                                                 </div>
                                                 <script>
                                                     function validatePDF(input) {
-                                                      if (input.files && input.files[0]) {
-                                                        const file = input.files[0];
-                                                        const reader = new FileReader();
-                                                        reader.onload = function(e) {
-                                                          if (e.target.result.startsWith("data:application/pdf")) {
-                                                          } else {
-                                                            input.value = null; // Limpiar el campo de entrada de archivo
-                                                            alert("Por favor, seleccione un archivo PDF");
-                                                          }
+                                                        if (input.files && input.files[0]) {
+                                                            const file = input.files[0];
+                                                            const reader = new FileReader();
+                                                            reader.onload = function (e) {
+                                                                if (e.target.result.startsWith("data:application/pdf")) {
+                                                                } else {
+                                                                    input.value = null; // Limpiar el campo de entrada de archivo
+                                                                    alert("Por favor, seleccione un archivo PDF");
+                                                                }
+                                                            }
+                                                            reader.readAsDataURL(file);
                                                         }
-                                                        reader.readAsDataURL(file);
-                                                      }
                                                     }
-                                                    </script>                                                    
+                                                </script>
                                             </div>
                                             <button class="btn btn-info text-white mt-4 w-100"
                                                 type="submit">Crear</button>

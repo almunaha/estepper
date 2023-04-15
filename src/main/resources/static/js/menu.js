@@ -40,11 +40,24 @@ function desplegable() {
   var display = window.getComputedStyle(menuDesplegable).getPropertyValue('display');
 
 
-    // Muestra u oculta el menú desplegable según su estado actual
-    if (display === 'none') {
-      menuDesplegable.style.display = 'flex';
-    } else {
-      menuDesplegable.style.display = 'none';
-    }
-
+  // Muestra u oculta el menú desplegable según su estado actual
+  if (display === 'none') {
+    menuDesplegable.style.display = 'flex';
+  } else {
+    menuDesplegable.style.display = 'none';
   }
+
+}
+
+function notificaciones(){
+  var notifDesplegable = document.querySelector('.desplegable-notif');
+  var display = window.getComputedStyle(notifDesplegable).getPropertyValue('display');
+
+  // Muestra u oculta las notificaciones según su estado actual
+  if (display === 'none') {
+    notifDesplegable.style.display = 'flex';
+  } else {
+    notifDesplegable.style.display = 'none';
+  }
+
+}

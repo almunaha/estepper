@@ -168,22 +168,33 @@ a {
     cursor: pointer;
 }
 
-/* estos hay que pasarlo a ids*/
 .navbar-expand-lg .navbar-collapse {
     justify-content: space-between;
     font-size: 19px;
 }
 
-.navbar-expand-lg .navbar-nav {
+#cont-notif{
     margin-left: auto;
     left: -5%;
 }
 
-.navbar-expand-lg .burger {
+#cont-despl {
+    margin-left: auto;
+    left: -5%;
+}
+
+#list-notif{
+    left: -450%;
+    top: 110%;
+    width: 550%;
+    padding: 20%;
+}
+
+.burger {
     left: 4%;
 }
 
-.navbar-expand-lg .navbar-nav .dropdown-menu {
+#menu-desplegable {
     right: 0;
     left: auto;
 }
@@ -804,6 +815,10 @@ input[type="date"] {
 }
 
 .desplegable-perfil {
+    display: none;
+}
+
+.desplegable-notif{
     display: none;
 }
 

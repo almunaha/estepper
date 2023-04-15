@@ -404,13 +404,21 @@
     }
 
     .actividades-part {
-        flex-direction: column;
+        flex-direction: row;
         align-content: space-around;
+    }
+
+    .eventos{
+        display: none;
     }
 
     .actividad {
         width: 84%;
         margin-bottom: 3.5%;
+    }
+
+    .flex-act{
+        margin-bottom:15%;
     }
 
     .form-actividad label{
@@ -424,5 +432,7 @@
     .form-dato{
         width: 100%;
     }
+
+
 
 }

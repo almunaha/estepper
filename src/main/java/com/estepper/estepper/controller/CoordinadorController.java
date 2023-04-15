@@ -2,6 +2,7 @@ package com.estepper.estepper.controller;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Sesion;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.EstadoInvitacion;
+import com.estepper.estepper.model.enums.EstadoNotificacion;
 import com.estepper.estepper.model.enums.EstadoSesion;
 
 import com.estepper.estepper.model.entity.Usuario;
@@ -50,7 +52,7 @@ import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Invitacion;
 import com.estepper.estepper.model.entity.Materiales;
-
+import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
@@ -58,6 +60,7 @@ import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.InvitacionService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.NotificacionService;
 
 @Controller
 public class CoordinadorController {
@@ -82,6 +85,9 @@ public class CoordinadorController {
 
     @Autowired
     private InvitacionService inv;
+
+    @Autowired
+    private NotificacionService noti;
 
     @GetMapping("/listado")
     public String participantes(@RequestParam Map<String, Object> params, Model model) {
@@ -185,7 +191,7 @@ public class CoordinadorController {
                     usuario.getAsistencia(),
                     usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
                     usuario.getPerdidacmcintura(), idP);
-            
+
             user.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), Estado.BAJA, idP);
 
             Integer participantes = g.getNumParticipantes() - 1;
@@ -357,7 +363,8 @@ public class CoordinadorController {
         List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
         model.addAttribute("invitaciones", invitaciones);
 
-        //número máximo de invitaciones que se pueden enviar: número de plazas - invitaciones pendientes
+        // número máximo de invitaciones que se pueden enviar: número de plazas -
+        // invitaciones pendientes
         Integer maximo = actividad.getPlazas() - inv.numInvitacionesPosibles(actividad, EstadoInvitacion.PENDIENTE);
         model.addAttribute("maximoInvit", maximo);
 
@@ -383,8 +390,13 @@ public class CoordinadorController {
             for (Participante p : participantes) {
                 Invitacion invitacion = inv.invitacionByPartAndActi(p, actividad);
 
-                if (invitacion == null)
+                if (invitacion == null) {
                     inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
+                    Notificacion notificacion = new Notificacion(0, p,
+                            "Nueva invitación a la actividad: " + actividad.getNombre(), LocalDateTime.now(),
+                            EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
+                    noti.guardar(notificacion);
+                }
             }
         }
 
@@ -401,7 +413,8 @@ public class CoordinadorController {
                 }
             }
 
-            else { // no existe un usuario con ese códgio o el código introducido no pertenece a un participante
+            else { // no existe un usuario con ese códgio o el código introducido no pertenece a un
+                   // participante
                 String alerta = "No existe un participante con el código: " + codigoP;
                 redirAttrs.addFlashAttribute("alerta", alerta);
             }
