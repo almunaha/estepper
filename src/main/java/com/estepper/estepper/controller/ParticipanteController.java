@@ -543,11 +543,11 @@ public class ParticipanteController {
                 f.crearFichas(p);
             }
 
-            //notificsción cuenta activada
+            // notificación cuenta activada
             Notificacion notificacion = new Notificacion(0, p,
-                            "¡Bienvenido, has sido dado de alta en Estepper!", LocalDateTime.now(),
-                            EstadoNotificacion.PENDIENTE, "/");
-                    noti.guardar(notificacion);
+                    "¡Bienvenido, has sido dado de alta en Estepper!", LocalDateTime.now(),
+                    EstadoNotificacion.PENDIENTE, "/");
+            noti.guardar(notificacion);
 
             return "redirect:/listado";
         } else
@@ -574,6 +574,13 @@ public class ParticipanteController {
                 actividad.getParticipantes().remove(p);
                 act.guardar(actividad);
             }
+
+            //eliminar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(p);
+            for (Notificacion notif: notificaciones){
+                noti.eliminar(notif);
+            }
+
             if (p.getGrupo() != null) {
                 p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
                 grupoS.update(p.getGrupo());
@@ -965,15 +972,6 @@ public class ParticipanteController {
                 List<Actividad> listado = act.actividadesPendientes(LocalDateTime.now());
                 model.addAttribute("listado", listado);
 
-                // inscripciones posibles: número de plazas - invitaciones pendientes
-                List<Integer> inscripciones = new ArrayList<Integer>();
-                for (Actividad actividad : listado) {
-                    Integer maximo = actividad.getPlazas()
-                            - invi.numInvitacionesPosibles(actividad, EstadoInvitacion.PENDIENTE);
-                    inscripciones.add(maximo);
-                }
-                model.addAttribute("inscripciones", inscripciones);
-
                 // asistencia confirmada
                 List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
                 model.addAttribute("asistencia", asistencia);
@@ -1025,7 +1023,7 @@ public class ParticipanteController {
 
     }
 
-    //confirmar inscripción
+    // confirmar inscripción
     @GetMapping("/confirmar/{id}")
     public String confirmar(@PathVariable Integer id) {
         Usuario user = getUsuario();
@@ -1039,6 +1037,24 @@ public class ParticipanteController {
             acti.setPlazas(acti.getPlazas() - 1);
             act.guardar(acti);
 
+            // comprobar si las plazas se han quedado a cero
+            List<Invitacion> invitaciones = invi.listadoByAct(acti);
+            if (acti.getPlazas() == 0) {
+                for (Invitacion invitacion : invitaciones) {
+                    if (invitacion.getEstado().equals(EstadoInvitacion.PENDIENTE)) {
+                        invi.borrar(invitacion);
+
+                        // notificsción invitación a la que ya no hay disponibilidad
+                        Notificacion notificacion = new Notificacion(0, invitacion.getParticipante(),
+                                "Invitación eliminada a " + acti.getNombre() + "Se han acabado las plazas",
+                                LocalDateTime.now(),
+                                EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
+                        noti.guardar(notificacion);
+
+                    }
+                }
+            }
+
             return "redirect:/actividades";
         }
 
@@ -1046,7 +1062,7 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
-    //eliminar inscripción
+    // eliminar inscripción
     @GetMapping("/eliminar_inscripcion/{id}")
     public String process_invitacion(@PathVariable(name = "id") Integer id, Model model) {
 
@@ -1086,6 +1102,24 @@ public class ParticipanteController {
             invitacion.setEstado(EstadoInvitacion.ACEPTADA);
             invi.guardar(invitacion);
 
+            // Comprobar si las plazas se han quedado a cero
+            List<Invitacion> invitaciones = invi.listadoByAct(acti);
+            if (acti.getPlazas() == 0) {
+                for (Invitacion invit : invitaciones) {
+                    if (invit.getEstado().equals(EstadoInvitacion.PENDIENTE)) {
+                        invi.borrar(invit);
+
+                        // notificsción invitación a la que ya no hay disponibilidad
+                        Notificacion notificacion = new Notificacion(0, invit.getParticipante(),
+                                "Invitación eliminada a la actividad: " + acti.getNombre() + ". Sin disponibilidad",
+                                LocalDateTime.now(),
+                                EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
+                        noti.guardar(notificacion);
+
+                    }
+                }
+            }
+
             return "redirect:/panel_invitaciones";
         }
 
@@ -1117,11 +1151,6 @@ public class ParticipanteController {
 
         List<Invitacion> pendientes = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
                 EstadoInvitacion.PENDIENTE);
-        for (Invitacion invitacion : pendientes) {
-            if (invitacion.getActividad().getPlazas() == 0) {
-                invi.borrar(invitacion);
-            }
-        }
 
         model.addAttribute("pendientes", pendientes);
 

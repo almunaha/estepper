@@ -369,11 +369,6 @@ public class CoordinadorController {
         List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
         model.addAttribute("invitaciones", invitaciones);
 
-        // número máximo de invitaciones que se pueden enviar: número de plazas -
-        // invitaciones pendientes
-        Integer maximo = actividad.getPlazas() - inv.numInvitacionesPosibles(actividad, EstadoInvitacion.PENDIENTE);
-        model.addAttribute("maximoInvit", maximo);
-
         return "invitaciones";
     }
 
