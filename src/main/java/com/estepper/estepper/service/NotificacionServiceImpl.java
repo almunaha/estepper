@@ -24,4 +24,9 @@ public class NotificacionServiceImpl implements NotificacionService{
     public List<Notificacion> notificaciones(Participante p){
         return (List<Notificacion>) repo.findByParticipanteOrderByFechaEnvioDesc(p);
     }
+
+    @Override
+    public void eliminar(Notificacion n){
+        repo.delete(n);
+    }
 }

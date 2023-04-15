@@ -8,4 +8,6 @@ import com.estepper.estepper.model.entity.Participante;
 public interface NotificacionService {
     public void guardar(Notificacion n);
     public List<Notificacion> notificaciones(Participante p);
+    public void eliminar(Notificacion n);
+
 }

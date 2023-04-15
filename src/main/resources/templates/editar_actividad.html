@@ -17,6 +17,7 @@
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/js/validaciones.js"></script>
+    <script src="/js/actividades.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
@@ -194,22 +195,6 @@
                                         <label class="col-1 col-form-label">¿Desea cambiarla? </label>
                                         <input type="file" th:name="file" class="form-control" required
                                     accept="image/png, image/jpeg, image/jpg" onchange="validateImage(this)" />
-                                <script>
-                                    function validateImage(input) {
-                                        if (input.files && input.files[0]) {
-                                            const file = input.files[0];
-                                            const reader = new FileReader();
-                                            reader.onload = function (e) {
-                                                if (e.target.result.startsWith("data:image/png") || e.target.result.startsWith("data:image/jpeg") || e.target.result.startsWith("data:image/jpg")) {
-                                                } else {
-                                                    input.value = null; // Limpiar el campo de entrada de archivo
-                                                    alert("Por favor, seleccione un archivo PNG, JPEG o JPG");
-                                                }
-                                            }
-                                            reader.readAsDataURL(file);
-                                        }
-                                    }
-                                </script>
                                     </div>
                                 </div>
                             </div>

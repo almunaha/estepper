@@ -160,6 +160,12 @@ public class CoordinadorController {
             g.setNumParticipantes(participantes);
             grupo.update(g);
 
+            //notificación añadido a un grupo
+            Notificacion notificacion = new Notificacion(0, usuario,
+                            "Has sido añadido al grupo: " +g.getNombre(), LocalDateTime.now(),
+                            EstadoNotificacion.PENDIENTE, "/chat");
+                    noti.guardar(notificacion);
+
             // crear las sesiones del participante
             // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas
             // y le meta en otro, entonces ya tendría sus sesiones
@@ -362,11 +368,6 @@ public class CoordinadorController {
 
         List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
         model.addAttribute("invitaciones", invitaciones);
-
-        // número máximo de invitaciones que se pueden enviar: número de plazas -
-        // invitaciones pendientes
-        Integer maximo = actividad.getPlazas() - inv.numInvitacionesPosibles(actividad, EstadoInvitacion.PENDIENTE);
-        model.addAttribute("maximoInvit", maximo);
 
         return "invitaciones";
     }

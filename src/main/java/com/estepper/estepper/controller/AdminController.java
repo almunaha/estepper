@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.Administrador;
@@ -30,6 +31,7 @@ import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.MensajeService;
+import com.estepper.estepper.service.NotificacionService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.GrupoService;
@@ -86,6 +88,9 @@ public class AdminController {
     @Autowired
     private InvitacionService invitacion;
 
+    @Autowired
+    private NotificacionService noti;
+
     @GetMapping("/eliminarUsuario/{id}")
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model) {
         if (usuarioLogueado() instanceof Administrador) {
@@ -108,6 +113,13 @@ public class AdminController {
                     actividad.getParticipantes().remove(p);
                     acti.guardar(actividad);
                 }
+
+                // eliminar notificaciones
+                List<Notificacion> notificaciones = noti.notificaciones(p);
+                for (Notificacion notif : notificaciones) {
+                    noti.eliminar(notif);
+                }
+
                 fasevaloracion.eliminarcuenta(p);
 
                 if (p.getGrupo() != null) {
@@ -125,7 +137,7 @@ public class AdminController {
                         mensajeS.deleteByGrupo(listgrupos.get(i));
                         obs.deleteByGrupo(listgrupos.get(i));
                         grupoS.delete(listgrupos.get(i).getId());
-                        
+
                         // grupoS.delete(id);
                     }
                 }
@@ -187,13 +199,15 @@ public class AdminController {
     }
 
     @GetMapping("/actualizar-usuario/{id}")
-    public String actualizarUsuario(@PathVariable(name = "id") Integer id, @RequestParam String nickname, @RequestParam String estado, @RequestParam String email) {
-        
-        
+    public String actualizarUsuario(@PathVariable(name = "id") Integer id, @RequestParam String nickname,
+            @RequestParam String estado, @RequestParam String email) {
+
         Usuario elusuario = usuario.findById(id).get();
         Estado state = elusuario.getEstadoCuenta();
-        if(estado.equals(Estado.ALTA.toString())) state = Estado.ALTA;
-        else state = Estado.BAJA;
+        if (estado.equals(Estado.ALTA.toString()))
+            state = Estado.ALTA;
+        else
+            state = Estado.BAJA;
         usuario.update(nickname, email, elusuario.getContrasenia(), state, id);
         return "redirect:/";
     }

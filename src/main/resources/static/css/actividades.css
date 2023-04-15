@@ -394,6 +394,15 @@
     text-align: center; 
 }
 
+.desinscripcion{
+    display: flex;
+    padding-left: 2%;
+    cursor: pointer;
+    color: rgb(166, 166, 166);
+    font-size: 1.3rem;
+    align-items: center;
+    justify-content: center;
+}
 
 /* RESPONSIVE */
 @media (max-width: 767px) {
