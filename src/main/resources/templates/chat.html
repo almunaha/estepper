@@ -148,18 +148,17 @@
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
-                        <h6>Notificaciones</h6>
-                        <div class="dropdown-divider"></div>
-                        <div th:each="notif : ${notificaciones}">
-                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
-                                th:text="${notif.mensaje}"></a>
-                            <div class="dropdown-divider"></div>
-                        </div>
-                        <form th:action="@{/logout}" method="post">
-                            <button style="text-align: center; font-size: 0.85rem;" class="dropdown-item"
-                                type="submit">Ver todas</a>
-                        </form>
-                    </div>
+                      <h6>Notificaciones</h6>
+                      <div class="dropdown-divider"></div>
+                      <div style="overflow: auto; max-height: 250px;">
+                          <div th:each="notif : ${notificaciones}">
+                              <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                  th:text="${notif.mensaje}"></a>
+                              <div class="dropdown-divider"></div>
+                          </div>
+                      </div>
+    
+                  </div>
                 </li>
             </ul>
 

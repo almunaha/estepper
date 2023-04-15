@@ -133,7 +133,7 @@
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
             </div>
-            
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -150,15 +150,14 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
                                     <h6>Notificaciones</h6>
                                     <div class="dropdown-divider"></div>
-                                    <div th:each="notif : ${notificaciones}">
-                                        <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
-                                            th:text="${notif.mensaje}"></a>
-                                        <div class="dropdown-divider"></div>
+                                    <div style="overflow: auto; max-height: 250px;">
+                                        <div th:each="notif : ${notificaciones}">
+                                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                                th:text="${notif.mensaje}"></a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
                                     </div>
-                                    <form th:action="@{/logout}" method="post">
-                                        <button style="text-align: center; font-size: 0.85rem;" class="dropdown-item"
-                                            type="submit">Ver todas</a>
-                                    </form>
+
                                 </div>
                             </li>
                         </ul>
@@ -220,24 +219,24 @@
 
             <div class="utilidades-movil" style="grid-template-columns: repeat(2, 1fr);;
             grid-template-rows: repeat(4, 1fr); margin-top: 50%">
-        
+
                 <a class="btn-movil" th:href="@{/fichaEleccion/1}">
                     <i class="fa-solid fa-1"></i>
                 </a>
-        
+
                 <a class="btn-movil" th:href="@{/fichaEleccion/2}">
                     <i class="fa-solid fa-2"></i>
                 </a>
-        
+
                 <a class="btn-movil" th:href="@{/fichaEleccion/3}">
                     <i class="fa-solid fa-3"></i>
                 </a>
-        
+
                 <a class="btn-movil" th:href="@{/fichaEleccion/4}">
                     <i class="fa-solid fa-4"></i>
-                </a>       
-        
-              </div>
+                </a>
+
+            </div>
 
         </div>
     </div>

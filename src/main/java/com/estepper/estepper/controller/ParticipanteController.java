@@ -1340,6 +1340,11 @@ public class ParticipanteController {
         if (getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("link", link);
             model.addAttribute("user", getUsuario());
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "unareceta";
         } else
             return "redirect:/";
