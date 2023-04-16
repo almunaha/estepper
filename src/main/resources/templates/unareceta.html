@@ -29,7 +29,7 @@
 
 
             <div class="logo">
-                <img width="75" th:src="@{../img/logo.png}" />
+                <img width="75" th:src="@{../img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -122,15 +122,15 @@
         <div id="contenido">
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
-                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -167,7 +167,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                                        id="avatar-header" />
+                                        id="avatar-header">
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
@@ -175,7 +175,7 @@
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
-                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                     </form>
                                 </div>
                             </li>
@@ -191,7 +191,7 @@
                 <h4 style="margin-top: 8%; margin-bottom: 5%; color:azure">Recetas</h4>
             </div>
 
-            <iframe th:src="@{'/recetas/' + ${link}}" width="100%" height="250%" frameBorder="0"></iframe>
+            <iframe th:src="@{'/recetas/' + ${link}}" width="100%" height="250%"></iframe>
 
 
         </div>
