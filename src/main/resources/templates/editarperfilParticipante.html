@@ -21,7 +21,7 @@
     <div class="d-flex">
         <div id="sidebar-container">
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
             <ul>
@@ -99,14 +99,14 @@
         <div id="contenido">
             <div class="header-movil">
                 <img class="menu-icon" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
 
@@ -144,7 +144,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                                        id="avatar-header" />
+                                        id="avatar-header">
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
@@ -152,7 +152,7 @@
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
-                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                     </form>
                                 </div>
                             </li>
@@ -195,6 +195,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Sexo</label>
                                     <select th:field="*{sexo}" class="form-select" required>
+                                        <option value="">Seleccione una opción</option>
                                         <option value="MASCULINO" th:text="MASCULINO"></option>
                                         <option value="FEMENINO" th:text="FEMENINO"></option>
                                     </select>
@@ -202,6 +203,7 @@
                                 <div th:unless="${participante.estadoCuenta == 'BAJA'}" class="mb-3">
                                     <label class="form-label">Estado</label>
                                     <select th:field="*{estadoCuenta}" class="form-select" required>
+                                        <option value="">Seleccione una opción</option>
                                         <option value="ALTA" th:text="ALTA"></option>
                                         <option value="BAJA" th:text="BAJA"></option>
                                     </select>
