@@ -34,7 +34,5 @@ public interface InvitacionRepository extends JpaRepository<Invitacion, Integer>
     @Query("SELECT COUNT(i) FROM Invitacion i WHERE i.actividad = :actividad AND i.estado = :estado")
     Integer countByActividadAndEstado(Actividad actividad, EstadoInvitacion estado);
 
-
-
 }
 

@@ -75,14 +75,15 @@
 
         <!--FORMULARIO ACEPTAR COOKIE-->
         <form th:if="${user != null}" id="cookie-form" method="post" th:action="@{/aceptar-cookie}">
-            <input type="hidden" name="userId" th:value="${user.id}" />
+            <input type="hidden" name="userId" th:value="${user.id}">
             <div style="display: flex; flex-direction: row;">
-              <input style="margin-right: 3%;" type="checkbox" id="consentimiento" name="consentimiento" required />
-              <label for="consentimiento">Acepto los términos y condiciones y autorizo el uso de mis datos personales.</label>
+                <input style="margin-right: 3%;" type="checkbox" id="consentimiento" name="consentimiento" required>
+                <label for="consentimiento">Acepto los términos y condiciones y autorizo el uso de mis datos
+                    personales.</label>
             </div>
             <button type="submit">Aceptar</button>
-          </form>
-          
+        </form>
+
 
 
     </div>

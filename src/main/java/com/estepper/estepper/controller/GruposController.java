@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,13 +38,16 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Mensaje;
 import com.estepper.estepper.model.entity.MensajePrivado;
+import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.model.entity.Observaciones;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoGrupo;
+import com.estepper.estepper.model.enums.EstadoNotificacion;
 import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.MensajeService;
+import com.estepper.estepper.service.NotificacionService;
 import com.estepper.estepper.service.ObservacionesService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.UsuarioService;
@@ -67,6 +71,9 @@ public class GruposController {
     private UsuarioService user;
 
     @Autowired
+    private ObservacionesService obs;
+
+    @Autowired
     private MaterialService materialS;
 
     @Autowired
@@ -75,6 +82,8 @@ public class GruposController {
     @Autowired // inyectar recursos de la clase GrupoService
     private ObservacionesService observaciones;
 
+    @Autowired
+    private NotificacionService noti;
 
     @PostMapping("/grupos/guardar")
     public String guardarGrupo(@ModelAttribute("grupo") Grupo elgrupo,
@@ -176,8 +185,6 @@ public class GruposController {
         return "redirect:/listaGrupos";
     }
 
-
-
     @GetMapping("/listaGrupos")
     public String grupos(@RequestParam Map<String, Object> params, Model model) {
 
@@ -238,6 +245,7 @@ public class GruposController {
         if (getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()) {
             materialS.deleteByGrupo(gr);
             mensaje.deleteByGrupo(gr);
+            obs.deleteByGrupo(gr);
             grupo.delete(id);
             return "redirect:/listaGrupos";
         } else
@@ -317,7 +325,13 @@ public class GruposController {
                     List<Participante> losparticipantes = part.listadoGrupo(elgrupo);
                     for (int i = 0; i < losparticipantes.size(); i++) {
                         material.setParticipante(losparticipantes.get(i));
+                        material.setId(0);
                         materialS.updateMaterial(material);
+                        // Crear notificación de nuevo material
+                        Notificacion notificacion = new Notificacion(0, losparticipantes.get(i),
+                                "Nuevo material para descargar: " + material.getTitulo(), LocalDateTime.now(),
+                                EstadoNotificacion.PENDIENTE, "/materiales/" + losparticipantes.get(i).getId());
+                        noti.guardar(notificacion);
                     }
                 } catch (Exception e) {
                     String mensaje = "Ha ocurrido un error: " + e.getMessage();
@@ -390,6 +404,10 @@ public class GruposController {
 
             model.addAttribute("mensajesPrivados", mensajesPrivados);
 
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(part.getParticipante(u.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "chat";
         } else
             return "acceso";
@@ -419,6 +437,33 @@ public class GruposController {
     @PostMapping("/mensajes/guardar/{id}")
     public String guardarMensaje(@ModelAttribute("message") Mensaje elmensaje, @PathVariable("id") Integer idGrupo) {
         if (elmensaje.getMensaje() != "") {
+            String elmensaje1 = elmensaje.getMensaje();
+            Map<String, String> filtros = new HashMap<>();
+            filtros.put("puta", "******");
+            filtros.put("puto", "******");
+            filtros.put("gilipollas", "******");
+            filtros.put("joder", "******");
+            filtros.put("coño", "******");
+            filtros.put("cabrón", "******");
+            filtros.put("maricón", "******");
+            filtros.put("chinga tu madre", "******");
+            filtros.put("hijueputa", "******");
+            filtros.put("bastardo", "******");
+            filtros.put("perra", "******");
+            filtros.put("malparido", "******");
+            filtros.put("mamón", "******");
+            filtros.put("zorra", "******");
+            filtros.put("pendejo", "******");
+            filtros.put("conchatumadre", "******");
+            filtros.put("imbécil", "******");
+            filtros.put("idiota", "******");
+            filtros.put("estúpido", "******");
+            for (String palabra : elmensaje1.split("\\s+")) {
+                if (filtros.containsKey(palabra.toLowerCase())) {
+                    elmensaje1 = elmensaje1.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
+                }
+            }
+            elmensaje.setMensaje(elmensaje1);
             elmensaje.setGrupo(grupo.getGrupo(idGrupo));
             elmensaje.setUsuario(getUsuario());
             elmensaje.setId(0);
@@ -437,6 +482,33 @@ public class GruposController {
     @PostMapping("/mensajesPrivados/guardar/{idParticipante}")
     public String guardarMensajePrivado(@ModelAttribute("messagePriv") MensajePrivado elmensajePrivado,
             @PathVariable("idParticipante") Integer idParticipante) {
+        String elmensaje = elmensajePrivado.getMensaje();
+        Map<String, String> filtros = new HashMap<>();
+        filtros.put("puta", "******");
+        filtros.put("puto", "******");
+        filtros.put("gilipollas", "******");
+        filtros.put("joder", "******");
+        filtros.put("coño", "******");
+        filtros.put("cabrón", "******");
+        filtros.put("maricón", "******");
+        filtros.put("chinga tu madre", "******");
+        filtros.put("hijueputa", "******");
+        filtros.put("bastardo", "******");
+        filtros.put("perra", "******");
+        filtros.put("malparido", "******");
+        filtros.put("mamón", "******");
+        filtros.put("zorra", "******");
+        filtros.put("pendejo", "******");
+        filtros.put("conchatumadre", "******");
+        filtros.put("imbécil", "******");
+        filtros.put("idiota", "******");
+        filtros.put("estúpido", "******");
+        for (String palabra : elmensaje.split("\\s+")) {
+            if (filtros.containsKey(palabra.toLowerCase())) {
+                elmensaje = elmensaje.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
+            }
+        }
+        elmensajePrivado.setMensaje(elmensaje);
         elmensajePrivado.setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getIdCoordinador()));
         elmensajePrivado.setParticipante(part.getParticipante(idParticipante));
         elmensajePrivado.setId(0);

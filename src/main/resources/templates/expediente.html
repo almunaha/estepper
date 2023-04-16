@@ -12,6 +12,7 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/expediente.css}">
 
     <link rel="stylesheet" th:href="@{/css/sesiones.css}">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
@@ -19,45 +20,19 @@
 
     <!--PARA GRÁFICOS-->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/participantes.js"></script>
     <!-- Agrega la referencia a SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
     <script src="sweetalert2.min.js"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     <title>Expediente - Estepper</title>
 
-    <style>
-        /* Estilo para el encabezado de participante */
-        h3 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Estilo para los contenedores de información */
-        div {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Estilo para las imágenes de perfil */
-        .imagenPerfil img {
-            border-radius: 50%;
-            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
-        }
-
-
-        /* Estilo para el texto de información */
-        h5 {
-            font-size: 1rem;
-            font-weight: normal;
-            margin-bottom: 0;
-        }
-    </style>
 </head>
 
 <body>
@@ -70,7 +45,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -113,15 +88,15 @@
         <div id="contenido" style="background-color:#afc0cb;">
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
 
@@ -134,7 +109,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header">
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -142,7 +117,7 @@
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
 
@@ -156,7 +131,7 @@
                     <h3 style="margin-top: 8%;" th:text="${participante.nickname} + ': ' + ${participante.codigo}">
                         Nombre</h3>
                     <div class="imagenPerfil">
-                        <img width="100" th:src="${participante.fotoParticipante}" alt="imagenPerfil" />
+                        <img width="100" th:src="${participante.fotoParticipante}" alt="imagenPerfil">
                     </div>
                 </div>
                 <div style="background-color: whitesmoke; border-radius: 12px; margin-right: 10%;">
@@ -164,40 +139,39 @@
                         style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 5%; margin-bottom: 5%;">
                         <div th:unless="${participante.sexo == null}"
                             style="display: flex; align-items: center; margin-left:10px; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
-                            <h5><i title="Género" class="fa-solid fa-venus-mars" style="margin-right: 10px;"></i></h5>
+                            <i title="Género" class="fa-solid fa-venus-mars" style="margin-right: 10px;"></i>
                             <h5 th:text="${participante.sexo}" style="margin-left: 10px;"></h5>
                         </div>
                         <div th:unless="${participante.edad == null}"
                             style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
-                            <h5><i title="Edad" class="fa-solid fa-calendar-day" style="margin-right: 10px;"></i></h5>
+                            <i title="Edad" class="fa-solid fa-calendar-day" style="margin-right: 10px;"></i>
                             <h5 th:text="${participante.edad}" style="margin-left: 10px;"></h5>
                         </div>
                         <div th:unless="${participante.asistencia == null}"
                             style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
-                            <h5><i title="Asistencia" class="fa-solid fa-list-check" style="margin-right: 10px;"></i>
-                            </h5>
+                            <i title="Asistencia" class="fa-solid fa-list-check" style="margin-right: 10px;"></i>
+
                             <h5 th:text="'Asistencia: ' + ${participante.asistencia}" style="margin-left: 10px;"></h5>
                         </div>
                         <div th:unless="${participante.perdidaDePeso == null}"
                             style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
-                            <h5><i title="Pérdida de peso" class="fa-solid fa-weight-scale"
-                                    style="margin-right: 10px;"></i></h5>
+                            <i title="Pérdida de peso" class="fa-solid fa-weight-scale" style="margin-right: 10px;"></i>
                             <h5 th:text="${-participante.perdidaDePeso}+ ' ' + 'kg perdidos'"
                                 style="margin-left: 10px;">
                             </h5>
                         </div>
                         <div th:unless="${participante.perdidacmcintura == null}"
                             style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
-                            <h5><i title="Pérdida de cm cintura" class="fa-sharp fa-solid fa-scale-balanced"
-                                    style="margin-right: 10px;"></i></h5>
+                            <i title="Pérdida de cm cintura" class="fa-sharp fa-solid fa-scale-balanced"
+                                style="margin-right: 10px;"></i>
                             <h5 th:text="${-participante.perdidacmcintura}+ ' ' + 'cm perdidos'"
                                 style="margin-left: 10px;">
                             </h5>
                         </div>
                         <div th:unless="${participante.sesionesCompletas == null}"
                             style="display: flex; align-items: center; margin-top: 5%; margin-right: 10px; margin-bottom: 10px; border: 1px solid #ccc; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); padding: 10px;">
-                            <h5><i title="Sesiones completas" class="fa-solid fa-gears" style="margin-right: 10px;"></i>
-                            </h5>
+                            <i title="Sesiones completas" class="fa-solid fa-gears" style="margin-right: 10px;"></i>
+
                             <h5 th:text="${participante.sesionesCompletas}+ ' ' + 'sesiones completas'"
                                 style="margin-left: 10px;"></h5>
                         </div>
@@ -205,10 +179,11 @@
                     </div>
 
                     <div th:unless="${participante.sexo == null}"
-                        style="display: flex; justify-content: center; margin-bottom: 3%;">
+                        style="display: flex; gap: 1.5%; justify-content: center; align-items: center; margin-bottom: 3%;">
                         <a class="btn-sesion" id="guardar" title="Fichas" onclick="abrirIframe('mi-modal')" href="#">
                             Fichas </a>
-                        <!--<a class="btn-sesion" th:href="@{/progreso}">Progreso individual</a>-->
+                        <a class="btn-sesion" id="guardar" th:href="@{'/progreso/' + ${participante.id}}">
+                            Progreso </a>
                     </div>
 
                     <!--Modal-->
@@ -252,12 +227,6 @@
                             </div>
                         </div>
                     </div>
-                    <script>
-                        function abrirIframe(modalId) {
-                            const modal = new bootstrap.Modal(document.getElementById(modalId));
-                            modal.show();
-                        }
-                    </script>
                     <!--FIN MODAL-->
 
                     <div style="display: flex; justify-content: center;">
@@ -267,40 +236,8 @@
                         </div>
                         <div style="margin-right: 5%;"><a class="btn" id="btn-part" title="Fase de valoracion"
                                 th:href="@{'/valoracion/' + ${participante.id}}"> Fase de valoración </a></div>
-                        <div><a class="btn analitica" id="btn-part" title="Analítica" data-bs-toggle="tooltip"
-                                th:data-id="${participante.id}" type="button"> Mandar analítica </a></div>
-                        <script>
-                            $('.analitica').click(function () {
-                                var id = $(this).data('id');
-
-                                Swal.fire({
-                                    position: 'center',
-                                    title: '<h4>¿Estás seguro de que desea solicitarle una analítica?</h4>',
-                                    showConfirmButton: true,
-                                    showCancelButton: true,
-                                    cancelButtonText: 'Cancelar',
-                                    confirmButtonColor: "rgb(218, 77, 73)",
-                                    confirmButtonText: '<a href="/analitica/' + id + '" id ="conf">Mandar</a>',
-
-                                    didRender: function () {
-                                        const confirm = document.querySelector('#conf');
-
-                                        if (confirm) {
-                                            confirm.style.color = 'white';
-                                        }
-                                    },
-
-                                    showClass: {
-                                        popup: 'animate__animated animate__fadeInDown'
-                                    },
-                                    hideClass: {
-                                        popup: 'animate__animated animate__fadeOutUp'
-                                    }
-
-                                })
-
-                            });
-                        </script>
+                        <div><button class="btn analitica" id="btn-part" title="Analítica" data-bs-toggle="tooltip"
+                                th:data-id="${participante.id}" type="button"> Mandar analítica </button></div>
                     </div>
                 </div>
             </div>

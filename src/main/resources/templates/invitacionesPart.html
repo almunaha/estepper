@@ -90,7 +90,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/progreso}">
+                    <a th:href="@{'/progreso/' + ${user.id}}">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nombre-enlaces">Progreso</span>
                     </a>
@@ -128,12 +128,12 @@
                 <i class="fa-solid fa-folder-open"></i>
             </a>
 
-            <a th:href="@{/progreso}">
+            <a th:href="@{'/progreso/' + ${user.id}}">
                 <i class="fa-solid fa-chart-line"></i>
             </a>
 
             <a th:href="@{/chat}">
-                <i class="fa-solid fa-comments"></i>
+                <i class="fa-solid fa-people-group"></i>
             </a>
 
         </div>
@@ -141,17 +141,18 @@
         <div id="contenido">
 
             <div class="header-movil">
-                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header" onclick="desplegable()"/>
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{img/logo.png}" />
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
-              </div>
-        
-              <div class="desplegable-perfil">
+            </div>
+
+            <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                  <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
-              </div>
+            </div>
 
             <!-- encabezado -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
@@ -159,11 +160,32 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-                    <!--<i class="fa-regular fa-bell"></i> -->
                     <div class="der-header">
-                        <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                        <!-- Desplegable notificaciones -->
+                        <ul class="navbar-nav ml-auto" id="cont-notif">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                                </a>
 
-                        <ul class="navbar-nav ml-auto">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                                    <h6>Notificaciones</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <div style="overflow: auto; max-height: 250px;">
+                                        <div th:each="notif : ${notificaciones}">
+                                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                                th:text="${notif.mensaje}"></a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Desplegable perfil y cerrar sesión -->
+                        <ul class="navbar-nav mr-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -172,8 +194,9 @@
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi
+                                        Perfil</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -196,7 +219,8 @@
 
                 <div class="inv-pendientes">
                     <h5>Invitaciones pendientes</h5>
-                    <div style="min-height: 100px;" th:if="${#lists.isEmpty(pendientes)}">No tienes invitaciones pendientes</div>
+                    <div style="min-height: 100px;" th:if="${#lists.isEmpty(pendientes)}">No tienes invitaciones
+                        pendientes</div>
                     <div style="min-height: 130px;" th:unless="${#lists.isEmpty(pendientes)}">
 
                         <div class="tabla-cont">
@@ -234,7 +258,8 @@
 
                 <div class="inv-pendientes">
                     <h5>Invitaciones aceptadas</h5>
-                    <div style="min-height: 100px;" th:if="${#lists.isEmpty(aceptadas)}">No tienes invitaciones aceptadas</div>
+                    <div style="min-height: 100px;" th:if="${#lists.isEmpty(aceptadas)}">No tienes invitaciones
+                        aceptadas</div>
                     <div style="min-height: 130px;" th:unless="${#lists.isEmpty(aceptadas)}">
 
                         <div class="tabla-cont">
@@ -269,7 +294,8 @@
 
                 <div class="inv-pendientes">
                     <h5>Invitaciones rechazadas</h5>
-                    <div style="min-height: 100px;" th:if="${#lists.isEmpty(rechazadas)}" >No tienes invitaciones rechazadas</div>
+                    <div style="min-height: 100px;" th:if="${#lists.isEmpty(rechazadas)}">No tienes invitaciones
+                        rechazadas</div>
                     <div style="min-height: 130px;" th:unless="${#lists.isEmpty(rechazadas)}">
                         <div class="tabla-cont">
                             <table class="table" id="tabla-invit">

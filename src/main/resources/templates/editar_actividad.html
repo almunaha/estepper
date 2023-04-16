@@ -17,6 +17,7 @@
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/js/validaciones.js"></script>
+    <script src="/js/actividades.js"></script>
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
@@ -129,33 +130,38 @@
 
                                     <div class="input-group mt-2">
                                         <label class="col-3 col-form-label">Nombre </label>
-                                        <input type="text" th:field="*{nombre}" class="form-control" id="nombreActividad" required />
+                                        <input type="text" th:field="*{nombre}" class="form-control"
+                                            id="nombreActividad">
                                     </div>
                                     <div id="error_nombreActividad">
-                                        <p style="margin-left: 24%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Máximo 30
+                                        <p style="margin-left: 24%; color: red"><i
+                                                class="fa-solid fa-triangle-exclamation"></i> Máximo 30
                                             caracteres</p>
                                     </div>
 
                                     <div class="input-group mt-2">
                                         <label class="col-3 col-form-label">Descripción </label>
                                         <textarea style="resize: none" th:field="*{descripcion}" rows="4"
-                                            class="form-control" required></textarea>
+                                            class="form-control"></textarea>
                                     </div>
 
                                     <div class="input-group mt-2">
                                         <label for="categoria" class="col-3 col-form-label">Categoría </label>
-                                        <select id="categoria" th:field="*{categoria}" class="form-select" required>
+                                        <select id="categoria" th:field="*{categoria}" class="form-select">
                                             <option th:text="Deporte" th:value="DEPORTE"></option>
                                             <option th:text="Alimentación" th:value="ALIMENTACIÓN"></option>
+                                            <option th:text="'Salud ' + 'mental'" th:value="SALUDMENTAL"></option>
+                                            <option th:text="Educación" th:value="EDUCACIÓN"></option>
                                         </select>
                                     </div>
 
                                     <div class="input-group mt-2">
                                         <label class="col-3 col-form-label">Añadir plazas </label>
-                                        <input type="number" name="plazas" class="form-control" id="plazas"/>
+                                        <input type="number" name="plazas" class="form-control" id="plazas">
                                     </div>
                                     <div id="error_plazas">
-                                        <p style="margin-left: 24%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un
+                                        <p style="margin-left: 24%; color: red"><i
+                                                class="fa-solid fa-triangle-exclamation"></i> Introduzca un
                                             número entre 1 y 150</p>
                                     </div>
                                 </div>
@@ -163,22 +169,32 @@
                                 <div class="form-dato">
                                     <div class="input-group mt-2">
                                         <label class="col-2 col-form-label">Ubicación </label>
-                                        <input type="text" th:field="*{ubicacion}" class="form-control" required />
+                                        <input type="text" th:field="*{ubicacion}" class="form-control">
                                     </div>
 
                                     <div class="input-group mt-2">
-                                        <label class="col-2 col-form-label">Fecha </label>
-                                        <input type="datetime-local" th:field="*{fechaRealizacion}" id="fechaRealizacion" class="form-control"
-                                            required />
+                                        <label class="col-2 col-form-label">Fecha seleccionada: </label>
+                                        <p th:text="${#temporals.format(actividad.fechaRealizacion, 'dd/MM/yyyy')}"></p>
+                                    </div>
+                                    <div class="input-group mt-2">
+                                        <label class="col-2 col-form-label">¿Desea cambiarla?</label>
+                                        <input type="datetime-local" th:field="*{fechaRealizacion}"
+                                            id="fechaRealizacion" th:value="${actividad.fechaRealizacion}" class="form-control">
                                     </div>
                                     <div id="error_fechaRealizacion">
-                                        <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca una
+                                        <p style="margin-left: 16%; color: red"><i
+                                                class="fa-solid fa-triangle-exclamation"></i> Introduzca una
                                             fecha posterior a la actual</p>
                                     </div>
 
                                     <div class="input-group mt-2">
                                         <label class="col-1 col-form-label">Foto </label>
-                                        <div><input type="file" th:name="file" class="form-control" required /></div>
+                                        <img th:src="${actividad.foto}" alt="" style="width: 50px; height: 50px;"/>
+                                    </div>
+                                    <div class="input-group mt-2">
+                                        <label class="col-1 col-form-label">¿Desea cambiarla? </label>
+                                        <input type="file" th:name="file" class="form-control" required
+                                    accept="image/png, image/jpeg, image/jpg" onchange="validateImage(this)" />
                                     </div>
                                 </div>
                             </div>

@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="sweetalert2.min.css" type="css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
+    <script src="/js/alimentacion.js"></script>
+
+
     <title>Alimentos - Estepper</title>
 </head>
 
@@ -87,7 +90,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/progreso}">
+                    <a th:href="@{'/progreso/' + ${user.id}}">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nombre-enlaces">Progreso</span>
                     </a>
@@ -125,12 +128,12 @@
                 <i class="fa-solid fa-folder-open"></i>
             </a>
 
-            <a th:href="@{/progreso}">
+            <a th:href="@{'/progreso/' + ${user.id}}">
                 <i class="fa-solid fa-chart-line"></i>
             </a>
 
             <a th:href="@{/chat}">
-                <i class="fa-solid fa-comments"></i>
+                <i class="fa-solid fa-people-group"></i>
             </a>
 
         </div>
@@ -154,25 +157,52 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                                    id="avatar-header" />
-                                <span sec:authentication="principal.nombre"></span>
-                            </a>
+                    <div class="der-header">
+                        <!-- Desplegable notificaciones -->
+                        <ul class="navbar-nav ml-auto" id="cont-notif">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                                </a>
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <div class="dropdown-divider"></div>
-                                <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
-                                </form>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                                    <h6>Notificaciones</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <div style="overflow: auto; max-height: 250px;">
+                                        <div th:each="notif : ${notificaciones}">
+                                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                                th:text="${notif.mensaje}"></a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
 
-                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Desplegable perfil y cerrar sesión -->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                        id="avatar-header" />
+                                    <span sec:authentication="principal.nombre"></span>
+                                </a>
+
+                                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    </form>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
                 </div>
             </nav>
 
@@ -275,42 +305,10 @@
                                         <td th:text="${lis.alimento.nombre}"></td>
                                         <td th:text="${lis.raciones}"></td>
                                         <td th:text="${#temporals.format(lis.fecha_consumicion, 'HH:mm')}"></td>
-                                        <td><a class="fa-solid fa-trash-can fa-2x" th:data-id="${lis.id}"
-                                                style="color: red" id="eliminar" data-bs-toggle="tooltip"
-                                                title="Eliminar"></a></td>
+                                        <td><a class="btn eliminar" th:data-id="${lis.id}" data-bs-toggle="tooltip"><i
+                                                    title="Eliminar" style="color: red"
+                                                    class="fa-solid fa-trash-can fa-2x"></i></a></td>
                                     </tr>
-                                    <script>
-                                        $('#eliminar').click(function () {
-                                            var id = $(this).data('id');
-
-                                            Swal.fire({
-                                                position: 'center',
-                                                title: '<h4>¿Estás seguro de eliminar el alimento consumido?</h4>',
-                                                showConfirmButton: true,
-                                                showCancelButton: true,
-                                                cancelButtonText: 'Cancelar',
-                                                confirmButtonColor: "rgb(218, 77, 73)",
-                                                confirmButtonText: '<a href="/alimento/eliminar/' + id + '" id ="conf">Eliminar</a>',
-
-                                                didRender: function () {
-                                                    const confirm = document.querySelector('#conf');
-
-                                                    if (confirm) {
-                                                        confirm.style.color = 'white';
-                                                    }
-                                                },
-
-                                                showClass: {
-                                                    popup: 'animate__animated animate__fadeInDown'
-                                                },
-                                                hideClass: {
-                                                    popup: 'animate__animated animate__fadeOutUp'
-                                                }
-
-                                            })
-
-                                        });
-                                    </script>
                                 </tbody>
                             </table>
                         </div>
@@ -336,43 +334,7 @@
                                         th:text="${al.nombre} + ' (' + ${al.porcion} + ' ' + ${al.unidad} + ')'">
                                     </option>
                                 </select>
-                                <script th:inline="javascript">
-                                    $(document).ready(function () {
-                                        // Obtener la lista de opciones del select
-                                        var opciones = $("#lista-alimentos option");
-
-                                        // Crear un input de búsqueda
-                                        var inputBusqueda = $('<input type="text" class="form-control mt-2" placeholder="Buscar...">');
-
-                                        // Agregar el input de búsqueda antes del select
-                                        $("#lista-alimentos").before(inputBusqueda);
-
-                                        // Escuchar el evento keyup del input de búsqueda
-                                        inputBusqueda.keyup(function () {
-                                            // Obtener el término de búsqueda
-                                            var term = $(this).val().toLowerCase();
-
-                                            // Filtrar las opciones que contengan el término de búsqueda
-                                            var opcionesFiltradas = opciones.filter(function () {
-                                                return $(this).text().toLowerCase().indexOf(term) > -1;
-                                            });
-
-                                            // Actualizar las opciones del select con las opciones filtradas
-                                            $("#lista-alimentos").empty().append(opcionesFiltradas);
-                                        });
-
-                                        // Restaurar todas las opciones del select cuando se cierre
-                                        $("#lista-alimentos").on("hidden.bs.select", function () {
-                                            $("#lista-alimentos").empty().append(opciones);
-                                        });
-
-                                        $("#lista-alimentos").keydown("hidden.bs.select", function () {
-                                            $("#lista-alimentos").empty().append(opciones);
-                                        });
-                                    });
-                                </script>
                             </div>
-
 
                             <div>
                                 <h6 style="text-align: center; margin-top: 3%;">¿No está el alimento que buscas? <a

@@ -22,7 +22,7 @@ $(document).ready(function () {
 
         var nickname = row.find('.editable:eq(0)').text();
         var email = row.find('.editable:eq(1)').text();
-        var id = row.find('#eliminar').attr('data-id');
+        var id = row.find('.eliminar').attr('data-id');
         var state = row.find('.editable-state').val();
 
         Swal.fire({
@@ -73,7 +73,7 @@ $(document).ready(function () {
         cancelarEdicion(row);
     });
 
-    $('#eliminar').click(function () {
+    $('.eliminar').click(function () {
         var id = $(this).data('id');
 
         Swal.fire({

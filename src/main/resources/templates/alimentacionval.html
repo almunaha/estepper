@@ -14,6 +14,8 @@
     <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/alimentacionval.js"></script>
     <title>Formulario de Adherencia a la dieta mediterránea - Estepper</title>
 
 </head>
@@ -28,7 +30,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -72,15 +74,15 @@
         <div id="contenido">
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -92,7 +94,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header">
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -100,7 +102,7 @@
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
                         </li>
@@ -141,7 +143,7 @@
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosaceite" type="number"
-                                    th:field="*{ptosaceite}" class="form-control" readonly />
+                                    th:field="*{ptosaceite}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -149,13 +151,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas cucharadas de
                                     aceite de oliva consume en total al día? </label>
 
-                                <input id="racaceite" type="number" th:field="*{racaceite}" class="form-control" />
+                                <input id="racaceite" type="number" th:field="*{racaceite}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracaceite" type="number"
-                                    th:field="*{ptosracaceite}" class="form-control" readonly />
+                                    th:field="*{ptosracaceite}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -163,13 +165,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas raciones de
                                     verdura u hortalizas consume al día? </label>
 
-                                <input id="racverdura" type="number" th:field="*{racverdura}" class="form-control" />
+                                <input id="racverdura" type="number" th:field="*{racverdura}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracverdura" type="number"
-                                    th:field="*{ptosracverdura}" class="form-control" readonly />
+                                    th:field="*{ptosracverdura}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -177,13 +179,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas piezas de fruta
                                     consume al día? </label>
 
-                                <input id="racfruta" type="number" th:field="*{racfruta}" class="form-control" />
+                                <input id="racfruta" type="number" th:field="*{racfruta}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracfruta" type="number"
-                                    th:field="*{ptosracfruta}" class="form-control" readonly />
+                                    th:field="*{ptosracfruta}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -191,13 +193,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas raciones de
                                     carne roja/hamburguesa, salchicha o embutidos consume al día? </label>
 
-                                <input id="raccarne" type="number" th:field="*{raccarne}" class="form-control" />
+                                <input id="raccarne" type="number" th:field="*{raccarne}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosraccarne" type="number"
-                                    th:field="*{ptosraccarne}" class="form-control" readonly />
+                                    th:field="*{ptosraccarne}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -206,13 +208,13 @@
                                     mantequilla, margarina o nata consume al día? </label>
 
                                 <input id="racmantequilla" type="number" th:field="*{racmantequilla}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracmantequilla" type="number"
-                                    th:field="*{ptosracmantequilla}" class="form-control" readonly />
+                                    th:field="*{ptosracmantequilla}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -220,13 +222,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas bebidas
                                     carbonatadas y/o azucaradas consume al día? </label>
 
-                                <input id="racbebidas" type="number" th:field="*{racbebidas}" class="form-control" />
+                                <input id="racbebidas" type="number" th:field="*{racbebidas}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracbebidas" type="number"
-                                    th:field="*{ptosracbebidas}" class="form-control" readonly />
+                                    th:field="*{ptosracbebidas}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -234,13 +236,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Bebe vino? ¿Cuanto
                                     consume a la semana? </label>
 
-                                <input id="racvino" type="number" th:field="*{racvino}" class="form-control" />
+                                <input id="racvino" type="number" th:field="*{racvino}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracvino" type="number"
-                                    th:field="*{ptosracvino}" class="form-control" readonly />
+                                    th:field="*{ptosracvino}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -248,14 +250,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas raciones de
                                     legumbres consume a la semana? </label>
 
-                                <input id="raclegumbres" type="number" th:field="*{raclegumbres}"
-                                    class="form-control" />
+                                <input id="raclegumbres" type="number" th:field="*{raclegumbres}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosraclegumbres" type="number"
-                                    th:field="*{ptosraclegumbres}" class="form-control" readonly />
+                                    th:field="*{ptosraclegumbres}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -263,13 +264,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas raciones de
                                     pescado/marisco consume a la semana? </label>
 
-                                <input id="racpescado" type="number" th:field="*{racpescado}" class="form-control" />
+                                <input id="racpescado" type="number" th:field="*{racpescado}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracpescado" type="number"
-                                    th:field="*{ptosracpescado}" class="form-control" readonly />
+                                    th:field="*{ptosracpescado}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -278,13 +279,13 @@
                                     repostería comercial a la semana? </label>
 
                                 <input id="racreposteria" type="number" th:field="*{racreposteria}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracreposteria" type="number"
-                                    th:field="*{ptosracreposteria}" class="form-control" readonly />
+                                    th:field="*{ptosracreposteria}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -293,13 +294,13 @@
                                     frutos secos a la semana? </label>
 
                                 <input id="racfrutosecos" type="number" th:field="*{racfrutosecos}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracfrutosecos" type="number"
-                                    th:field="*{ptosracfrutosecos}" class="form-control" readonly />
+                                    th:field="*{ptosracfrutosecos}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -316,7 +317,7 @@
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptoscarneblanca" type="number"
-                                    th:field="*{ptoscarneblanca}" class="form-control" readonly />
+                                    th:field="*{ptoscarneblanca}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -326,13 +327,13 @@
                                     salsa de tomate, ajo, cebolla o puerro elaborada a fuego lento con aceite de oliva
                                     (sofrito)? </label>
 
-                                <input id="racsofrito" type="number" th:field="*{racsofrito}" class="form-control" />
+                                <input id="racsofrito" type="number" th:field="*{racsofrito}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracsofrito" type="number"
-                                    th:field="*{ptosracsofrito}" class="form-control" readonly />
+                                    th:field="*{ptosracsofrito}" class="form-control" readonly>
                             </div>
                         </div>
                         <div class="input-group mt-2">
@@ -340,7 +341,7 @@
                             </label>
 
                             <input style="border-color: blue;" id="puntuacion" type="number" th:field="*{puntuacion}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
                         <div class="input-group mt-2">
                             <label style="font-weight: bold; color:blue;" class="col-4 col-form-label">Adherencia a la
@@ -351,189 +352,8 @@
                                 <option value="alta">Alta</option>
                             </select>
                         </div>
-                        <script>
-                            document.getElementById('aceite').addEventListener('input', calcularaceite);
-                            document.getElementById('racaceite').addEventListener('input', calcularacraceite);
-                            document.getElementById('racfruta').addEventListener('input', calcularacfruta);
-                            document.getElementById('racverdura').addEventListener('input', calcularacverdura);
-                            document.getElementById('raccarne').addEventListener('input', calcularaccarne);
-                            document.getElementById('racmantequilla').addEventListener('input', calcularacmantequilla);
-                            document.getElementById('racbebidas').addEventListener('input', calcularacbebidas);
-                            document.getElementById('racvino').addEventListener('input', calcularacvino);
-                            document.getElementById('raclegumbres').addEventListener('input', calcularaclegumbres);
-                            document.getElementById('racpescado').addEventListener('input', calcularacpescado);
-                            document.getElementById('racreposteria').addEventListener('input', calcularacreposteria);
-                            document.getElementById('racfrutosecos').addEventListener('input', calcularacfrutosecos);
-                            document.getElementById('carneblanca').addEventListener('input', calcularcarneblanca);
-                            document.getElementById('racsofrito').addEventListener('input', calcularracsofrito);
-
-                            function calcularadherencia() {
-                                var ptos = Number(document.getElementById('puntuacion').value);
-                                if (ptos < 9) resultado = "baja";
-                                else resultado = "alta";
-                                document.getElementById('adherencia').value = resultado;
-                            }
-                            function calcularpuntuacion() {
-                                var ptosaceite = Number(document.getElementById('ptosaceite').value);
-                                var ptosracaceite = Number(document.getElementById('ptosracaceite').value);
-                                var ptosfruta = Number(document.getElementById('ptosracfruta').value);
-                                var ptosverdura = Number(document.getElementById('ptosracverdura').value);
-                                var ptoscarne = Number(document.getElementById('ptosraccarne').value);
-                                var ptosmantequilla = Number(document.getElementById('ptosracmantequilla').value);
-                                var ptosbebidas = Number(document.getElementById('ptosracbebidas').value);
-                                var ptosvino = Number(document.getElementById('ptosracvino').value);
-                                var ptoslegumbres = Number(document.getElementById('ptosraclegumbres').value);
-                                var ptospescado = Number(document.getElementById('ptosracpescado').value);
-                                var ptosreposteria = Number(document.getElementById('ptosracreposteria').value);
-                                var ptosfrutosecos = Number(document.getElementById('ptosracfrutosecos').value);
-                                var ptoscarneblanca = Number(document.getElementById('ptoscarneblanca').value);
-                                var ptossofrito = Number(document.getElementById('ptosracsofrito').value);
-
-                                var resultado = ptosaceite + ptosracaceite + ptosfruta + ptosverdura + ptoscarne + ptosmantequilla + ptosbebidas + ptosvino + ptoslegumbres + ptospescado + ptosreposteria + ptosfrutosecos + ptoscarneblanca + ptossofrito;
-
-                                document.getElementById('puntuacion').value = resultado;
-                                calcularadherencia();
-                            }
-
-                            function calcularaceite() {
-                                var aceite = document.getElementById('aceite').value;
-                                var resultado;
-                                if (aceite === "si") { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosaceite').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacraceite() {
-                                var aceite = document.getElementById('racaceite').value;
-                                var resultado;
-                                if (aceite > 1) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracaceite').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacfruta() {
-                                var aceite = document.getElementById('racfruta').value;
-                                var resultado;
-                                if (aceite > 2) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracfruta').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacverdura() {
-                                var aceite = document.getElementById('racverdura').value;
-                                var resultado;
-                                if (aceite > 1) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracverdura').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularaccarne() {
-                                var aceite = document.getElementById('raccarne').value;
-                                var resultado;
-                                if (aceite < 1) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosraccarne').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacmantequilla() {
-                                var aceite = document.getElementById('racmantequilla').value;
-                                var resultado;
-                                if (aceite < 1) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracmantequilla').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacbebidas() {
-                                var aceite = document.getElementById('racbebidas').value;
-                                var resultado;
-                                if (aceite < 1) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracbebidas').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacvino() {
-                                var aceite = document.getElementById('racvino').value;
-                                var resultado;
-                                if (aceite > 2) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracvino').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularaclegumbres() {
-                                var aceite = document.getElementById('raclegumbres').value;
-                                var resultado;
-                                if (aceite > 2) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosraclegumbres').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacpescado() {
-                                var aceite = document.getElementById('racpescado').value;
-                                var resultado;
-                                if (aceite > 2) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracpescado').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacreposteria() {
-                                var aceite = document.getElementById('racreposteria').value;
-                                var resultado;
-                                if (aceite < 3) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracreposteria').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularacfrutosecos() {
-                                var aceite = document.getElementById('racfrutosecos').value;
-                                var resultado;
-                                if (aceite > 0) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracfrutosecos').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularcarneblanca() {
-                                var aceite = document.getElementById('carneblanca').value;
-                                var resultado;
-                                if (aceite === "si") { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptoscarneblanca').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-                            function calcularracsofrito() {
-                                var aceite = document.getElementById('racsofrito').value;
-                                var resultado;
-                                if (aceite > 1) { resultado = 1; }
-                                else { resultado = 0; }
-                                document.getElementById('ptosracsofrito').value = resultado;
-                                calcularpuntuacion();
-                            }
-
-
-                        </script>
                         <button class="btn btn-info text-white mt-4 w-100" type="submit"
                             onclick=myFunction()>Guardar</button>
-                        <script language="JavaScript">
-                            function myFunction() {
-                                if (confirm("Desea guardar los datos?")) {
-                                    alert("Datos guardados exitosamente");
-                                } else {
-                                    alert("Usted cancelo la acción para guardar");
-                                }
-                            }
-                        </script>
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
                                 onclick="window.print();">

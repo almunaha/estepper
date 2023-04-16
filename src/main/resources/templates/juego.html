@@ -72,7 +72,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/progreso}">
+                    <a th:href="@{'/progreso/' + ${user.id}}">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nombre-enlaces">Progreso</span>
                     </a>
@@ -110,7 +110,7 @@
                 <i class="fa-solid fa-folder-open"></i>
             </a>
 
-            <a th:href="@{/progreso}">
+            <a th:href="@{'/progreso/' + ${user.id}}">
                 <i class="fa-solid fa-chart-line"></i>
             </a>
 
@@ -138,33 +138,62 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                                    id="avatar-header" />
-                                <span sec:authentication="principal.nombre"></span>
-                            </a>
+                    <div class="der-header">
+                        <!-- Desplegable notificaciones -->
+                        <ul class="navbar-nav ml-auto" id="cont-notif">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                                </a>
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <div class="dropdown-divider"></div>
-                                <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
-                                </form>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                                    <h6>Notificaciones</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <div style="overflow: auto; max-height: 250px;">
+                                        <div th:each="notif : ${notificaciones}">
+                                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                                th:text="${notif.mensaje}"></a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
 
-                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Desplegable perfil y cerrar sesión -->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                        id="avatar-header" />
+                                    <span sec:authentication="principal.nombre"></span>
+                                </a>
+
+                                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    </form>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
                 </div>
             </nav>
 
             <div class="juego">
 
                 <div class="header-juego">
-                    <h4 style="margin-left: auto;"><i class="fa-solid fa-gamepad"></i> Bienvenido al juego para crear tus propias dietas <i class="fa-solid fa-gamepad"></i></h4>
-                    <a style="margin-left: auto" class="btn-instrucciones" onclick="abrirIframe('instrucciones')" href="#">Instrucciones </a>
+                    <h4 style="margin-left: auto;"><i class="fa-solid fa-gamepad"></i> Bienvenido al juego para crear
+                        tus propias dietas <i class="fa-solid fa-gamepad"></i></h4>
+                    <a style="margin-left: auto" class="btn-instrucciones" onclick="abrirIframe('instrucciones')"
+                        href="#">Instrucciones </a>
                 </div>
 
                 <div>
@@ -177,16 +206,22 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title"><i class="fa-solid fa-circle-info"></i> Instrucciones</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Cerrar"></button>
                             </div>
                             <div class="modal-body">
-                                <div style="display: flex; flex-direction: column; justify-content: center; margin-bottom: 3%;">
-                                    <p>El objetivo del juego es crear dietas intercambiando alimentos del mismo grupo.</p>
-                                    <p>Los posibles grupos son: lácteos, alimentos proteicos, verduras, harinas, frutas y grasas.</p>
-                                    <p>Tienes que rellenar con un alimento la casilla correspondiente al grupo y momento del día elegido.</p>
+                                <div
+                                    style="display: flex; flex-direction: column; justify-content: center; margin-bottom: 3%;">
+                                    <p>El objetivo del juego es crear dietas intercambiando alimentos del mismo grupo.
+                                    </p>
+                                    <p>Los posibles grupos son: lácteos, alimentos proteicos, verduras, harinas, frutas
+                                        y grasas.</p>
+                                    <p>Tienes que rellenar con un alimento la casilla correspondiente al grupo y momento
+                                        del día elegido.</p>
                                     <p>Podrás elegir alimentos ya creados según el grupo seleccionado.</p>
                                     <p>Resultado correcto: podrá imprimir la dieta.</p>
-                                    <p>Resultado incorrecto: tendrá que modificar la dieta y se le proporcionarán recomendaciones.</p>
+                                    <p>Resultado incorrecto: tendrá que modificar la dieta y se le proporcionarán
+                                        recomendaciones.</p>
                                 </div>
                             </div>
                             <div class="modal-footer">

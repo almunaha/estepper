@@ -13,7 +13,8 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/findriscPart.js"></script>
     <title>Formulario de Findrisc - Estepper</title>
 
 </head>
@@ -28,7 +29,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -74,15 +75,15 @@
 
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
 
@@ -95,7 +96,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header">
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -103,7 +104,7 @@
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
                         </li>
@@ -113,7 +114,8 @@
             </nav>
 
             <div style="padding-top: 75px; margin-bottom: 15%;">
-                <div class="bg-white border border-1 p-5 rounded-4" style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
+                <div class="bg-white border border-1 p-5 rounded-4"
+                    style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
                     <div style="display: grid;justify-content: center;background-color:#0dcaf0;border-radius: 12px;">
                         <h4 style="margin-top: 8%; color:azure">Findrisc</h4>
                     </div>
@@ -204,34 +206,8 @@
                             <label style="font-weight: bold; color:blue" class="col-4 col-form-label">Puntuación de
                                 Findrisc: </label>
                             <input style="border-color: blue;" id="puntuacion" type="number" th:field="*{puntuacion}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
-
-                        <script>
-                            function calcularpuntuacion() {
-                                var edad = parseInt(document.getElementById('edad').value);
-                                var cmcintura = parseInt(document.getElementById('cmcintura').value);
-                                var imc = parseInt(document.getElementById('imc').value);
-                                var actfis = parseInt(document.getElementById('actfis').value);
-                                var fruta = parseInt(document.getElementById('fruta').value);
-                                var medicacion = parseInt(document.getElementById('medicacion').value);
-                                var glucosa = parseInt(document.getElementById('glucosa').value);
-                                var diabetes = parseInt(document.getElementById('diabetes').value);
-                                var resultado = edad + cmcintura + imc + actfis + fruta + medicacion + glucosa + diabetes;
-                                document.getElementById('puntuacion').value = resultado;
-                                calcularescala();
-                            }
-
-                            document.getElementById('edad').addEventListener('change', calcularpuntuacion);
-                            document.getElementById('cmcintura').addEventListener('change', calcularpuntuacion);
-                            document.getElementById('imc').addEventListener('change', calcularpuntuacion);
-                            document.getElementById('actfis').addEventListener('change', calcularpuntuacion);
-                            document.getElementById('fruta').addEventListener('change', calcularpuntuacion);
-                            document.getElementById('medicacion').addEventListener('change', calcularpuntuacion);
-                            document.getElementById('glucosa').addEventListener('change', calcularpuntuacion);
-                            document.getElementById('diabetes').addEventListener('change', calcularpuntuacion);
-
-                        </script>
 
                         <div class="input-group mt-2">
                             <label style="font-weight: bold; color:blue" class="col-4 col-form-label">Escala de riesgo
@@ -245,30 +221,8 @@
                                 <option th:value="|Muy alto|" th:text="|Muy alto|"></option>
                             </select>
                         </div>
-                        <script>
-                            function calcularescala() {
-                                var resultado;
-                                var puntuacion = parseInt(document.getElementById('puntuacion').value);
-                                if (puntuacion < 7) resultado = "Bajo";
-                                else if (puntuacion >= 7 && puntuacion < 12) resultado = "Ligeramente elevado";
-                                else if (puntuacion >= 12 && puntuacion < 15) resultado = "Moderado";
-                                else if (puntuacion >= 15 && puntuacion < 21) resultado = "Alto";
-                                else if (puntuacion > 21) resultado = "Muy alto";
-                                document.getElementById('escala').value = resultado;
-                            }
-
-                        </script>
                         <button class="btn btn-info text-white mt-4 w-100" type="submit"
                             onclick=myFunction()>Guardar</button>
-                        <script language="JavaScript">
-                            function myFunction() {
-                                if (confirm("Desea guardar los datos?")) {
-                                    alert("Datos guardados exitosamente");
-                                } else {
-                                    alert("Usted cancelo la acción para guardar");
-                                }
-                            }
-                        </script>
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
                                 onclick="window.print();">

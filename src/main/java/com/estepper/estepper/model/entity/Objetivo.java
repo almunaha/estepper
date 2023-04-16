@@ -1,6 +1,7 @@
 package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,20 +11,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.Repeticion;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "objetivo")
@@ -33,7 +26,7 @@ public class Objetivo implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne //Asegurarme de que sea asi
+    @ManyToOne 
     @JoinColumn(name="idParticipante", nullable=false)
     private Participante participante;
 
@@ -44,21 +37,17 @@ public class Objetivo implements Serializable{
     @Column(nullable = true, name = "repeticion", columnDefinition = "ENUM('NINGUNA', 'DIARIAMENTE', 'SEMANALMENTE', 'MENSUALMENTE', 'ANUALMENTE')")
     private Repeticion repeticion;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = ISO.DATE)
-    @NotNull
-    private Date fechaInicio;
+    @Column
+    private LocalDate fechaInicio;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = ISO.DATE)
-    @NotNull
-    private Date fechaVencimiento;
+    @Column
+    private LocalDate fechaVencimiento;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "estado", columnDefinition = "ENUM('COMPLETADO', 'PENDIENTE')")
     private EstadoObjetivo estado;
 
-    public Objetivo(Integer id, Participante participante, String titulo, Repeticion repeticion,Date fechaInicio, Date fechaVencimiento, EstadoObjetivo estado) {
+    public Objetivo(Integer id, Participante participante, String titulo, Repeticion repeticion,LocalDate fechaInicio, LocalDate fechaVencimiento, EstadoObjetivo estado) {
         this.id = id;
         this.participante = participante;
         this.titulo = titulo;
@@ -70,7 +59,7 @@ public class Objetivo implements Serializable{
 
     public Objetivo() {
         estado = EstadoObjetivo.PENDIENTE;
-        fechaInicio = new Date();
+        fechaInicio = LocalDate.now();
     }
 
 
@@ -107,19 +96,19 @@ public class Objetivo implements Serializable{
         this.repeticion = repeticion;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaVencimiento() {
+    public LocalDate getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(Date fechaVencimiento) {
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 

@@ -71,7 +71,7 @@
         </li>
 
         <li>
-          <a th:href="@{/progreso}">
+          <a th:href="@{'/progreso/' + ${user.id}}">
             <i class="fa-solid fa-chart-line"></i>
             <span class="nombre-enlaces">Progreso</span>
           </a>
@@ -109,7 +109,7 @@
         <i class="fa-solid fa-folder-open"></i>
       </a>
 
-      <a th:href="@{/progreso}">
+      <a th:href="@{'/progreso/' + ${user.id}}">
         <i class="fa-solid fa-chart-line"></i>
       </a>
 
@@ -138,24 +138,51 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header" />
-                <span sec:authentication="principal.nombre"></span>
-              </a>
+          <div class="der-header">
+            <!-- Desplegable notificaciones -->
+            <ul class="navbar-nav ml-auto" id="cont-notif">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                    </a>
 
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                <div class="dropdown-divider"></div>
-                <form th:action="@{/logout}" method="post">
-                  <button class="dropdown-item" type="submit">Cerrar sesión</a>
-                </form>
-              </div>
-            </li>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                      <h6>Notificaciones</h6>
+                      <div class="dropdown-divider"></div>
+                      <div style="overflow: auto; max-height: 250px;">
+                          <div th:each="notif : ${notificaciones}">
+                              <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                  th:text="${notif.mensaje}"></a>
+                              <div class="dropdown-divider"></div>
+                          </div>
+                      </div>
+    
+                  </div>
+                </li>
+            </ul>
 
-          </ul>
+            <!-- Desplegable perfil y cerrar sesión -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                            id="avatar-header" />
+                        <span sec:authentication="principal.nombre"></span>
+                    </a>
+
+                    <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <form th:action="@{/logout}" method="post">
+                            <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                        </form>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
         </div>
       </nav>
 
@@ -231,44 +258,6 @@
                         <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
 
                       </form>
-
-                      <script>
-                        var palabrasProhibidas = [ //añadir más palabras
-                          "puto",
-                          "puta",
-                          "gilipollas",
-                          "joder",
-                          "coño",
-                          "cabrón",
-                          "maricón",
-                          "chinga tu madre",
-                          "hijueputa",
-                          "bastardo",
-                          "perra",
-                          "malparido",
-                          "mamón",
-                          "zorra",
-                          "pendejo",
-                          "conchatumadre",
-                          "imbécil",
-                          "idiota",
-                          "estúpido"
-                        ];
-
-                        var formulario = document.getElementById("formulario-mensaje");
-                        formulario.addEventListener("submit", function (evento) {
-
-                          var mensaje = formulario.elements.mensaje.value;
-
-                          palabrasProhibidas.forEach(function (palabra) {
-                            var expresionRegular = new RegExp(palabra, "gi");
-                            mensaje = mensaje.replace(expresionRegular, "******");
-                          });
-
-                          formulario.elements.mensaje.value = mensaje;
-                        });
-
-                      </script>
                     </section>
                   </div>
 
@@ -340,11 +329,11 @@
                           <img th:unless="${lis.id == user.id}" th:src="@{${lis.fotoParticipante}}"
                             alt="Imagen de perfil de ${lis.nickname}" th:title="${lis.nickname}" class="avatar" />
                           <div class="perdida-peso-individual" style="text-align: center;display: none; "
-                            th:text="@{${lis.perdidaDePeso}}"></div>
+                            th:text="@{${-lis.perdidaDePeso}}"></div>
                           <div class="asistencia-individual" style="text-align: center;display: none; "
                             th:text="@{${lis.asistencia}}"></div>
                           <div class="perdida-cmcintura-individual" style="text-align: center; display: none;"
-                            th:text="@{${lis.perdidacmcintura}}"></div>
+                            th:text="@{${-lis.perdidacmcintura}}"></div>
                         </div>
                       </div>
                     </div>

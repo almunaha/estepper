@@ -40,6 +40,7 @@ import com.estepper.estepper.model.entity.Exploracion;
 import com.estepper.estepper.model.entity.Findrisc;
 import com.estepper.estepper.model.entity.Invitacion;
 import com.estepper.estepper.model.entity.Materiales;
+import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.model.entity.Objetivo;
 import com.estepper.estepper.model.entity.ObjetivoAgua;
 import com.estepper.estepper.model.entity.ObjetivoDescanso;
@@ -65,6 +66,7 @@ import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Ejercicio;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoInvitacion;
+import com.estepper.estepper.model.enums.EstadoNotificacion;
 import com.estepper.estepper.model.enums.EstadoObjetivo;
 import com.estepper.estepper.model.enums.EstadoSesion;
 import com.estepper.estepper.model.enums.TipoProgreso;
@@ -75,6 +77,7 @@ import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.MensajeService;
+import com.estepper.estepper.service.NotificacionService;
 import com.estepper.estepper.service.ObjetivoService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
@@ -130,6 +133,9 @@ public class ParticipanteController {
     @Autowired
     private InvitacionService invi;
 
+    @Autowired
+    private NotificacionService noti;
+
     @GetMapping("/menu")
     public String menu() {
         return "menu";
@@ -143,6 +149,10 @@ public class ParticipanteController {
         model.addAttribute("user", getUsuario());
 
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            Participante part = participante.findById(u.getId()).get();
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(part);
+            model.addAttribute("notificaciones", notificaciones);
             return "sesiones";
         } else
             return "acceso";
@@ -166,6 +176,10 @@ public class ParticipanteController {
                 model.addAttribute("lasesion", sesion);
 
                 model.addAttribute("participante", p); // coger participante
+
+                // buscar notificaciones
+                List<Notificacion> notificaciones = noti.notificaciones(p);
+                model.addAttribute("notificaciones", notificaciones);
 
                 return "sesion";
             } else
@@ -529,6 +543,12 @@ public class ParticipanteController {
                 f.crearFichas(p);
             }
 
+            // notificación cuenta activada
+            Notificacion notificacion = new Notificacion(0, p,
+                    "¡Bienvenido, has sido dado de alta en Estepper!", LocalDateTime.now(),
+                    EstadoNotificacion.PENDIENTE, "/");
+            noti.guardar(notificacion);
+
             return "redirect:/listado";
         } else
             return "redirect:/";
@@ -541,10 +561,6 @@ public class ParticipanteController {
             materialS.deleteByParticipante(p);
             ses.deleteByParticipante(p);
             obj.deleteByParticipante(p);
-            obj.deleteAguaByParticipante(p);
-            obj.deleteDescansoByParticipante(p);
-            obj.deleteEjercicioByParticipante(p);
-            obj.deleteEstadoAnimoByParticipante(p);
             pro.deleteByParticipante(p);
             alimentacion.deleteByParticipante(p);
             f.deleteByParticipante(p);
@@ -559,8 +575,16 @@ public class ParticipanteController {
                 act.guardar(actividad);
             }
 
-            p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
-            grupoS.update(p.getGrupo());
+            // eliminar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(p);
+            for (Notificacion notif : notificaciones) {
+                noti.eliminar(notif);
+            }
+
+            if (p.getGrupo() != null) {
+                p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
+                grupoS.update(p.getGrupo());
+            }
 
             if (getUsuario() == null)
                 return "redirect:/login";
@@ -589,76 +613,109 @@ public class ParticipanteController {
 
     // PROGRESO:
 
-    @GetMapping("/progreso")
-    public String progreso(Model model) {
+    @GetMapping("/progreso/{id}")
+    public String progreso(Model model, @PathVariable Integer id) {
 
         Usuario user = getUsuario();
-
         model.addAttribute("user", user);
 
-        if (user instanceof Participante) {
-            Participante p = participante.findById(getUsuario().getId()).get();
+        Participante p = participante.findById(id).orElse(null);
 
-            if (p.getEstadoCuenta().equals(Estado.ALTA)) {
-                model.addAttribute("participante", p);
+        if (p != null && p.getEstadoCuenta().equals(Estado.ALTA)) { // si el id proporcionado pertenece a un
+                                                                    // participante
+            if (user instanceof Participante) {
 
-                List<Progreso> peso = pro.datos(p, TipoProgreso.PESO);
-                model.addAttribute("peso", peso);
+                if (id.equals(user.getId())) { // si el id es el mismo que el logueado
+                    if (p.getEstadoCuenta().equals(Estado.ALTA)) {
+                        model.addAttribute("participante", p);
 
-                List<Progreso> perimetro = pro.datos(p, TipoProgreso.PERIMETRO);
-                model.addAttribute("perimetro", perimetro);
+                        List<Progreso> peso = pro.datos(p, TipoProgreso.PESO);
+                        model.addAttribute("peso", peso);
 
-                List<Sesion> sesiones = ses.sesiones(p);
-                model.addAttribute("sesiones", sesiones);
+                        List<Progreso> perimetro = pro.datos(p, TipoProgreso.PERIMETRO);
+                        model.addAttribute("perimetro", perimetro);
 
-                // CALCULAR IMC
-                // Coger formulario de exploración:
-                List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
-                Exploracion exploracion = null;
-                for (int i = 0; i < formularios.size(); i++) {
-                    if (formularios.get(i) instanceof Exploracion) {
-                        exploracion = (Exploracion) formularios.get(i);
+                        List<Sesion> sesiones = ses.sesiones(p);
+                        model.addAttribute("sesiones", sesiones);
+
+                        // CALCULAR IMC
+                        // Coger formulario de exploración:
+                        List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
+                        Exploracion exploracion = null;
+                        for (int i = 0; i < formularios.size(); i++) {
+                            if (formularios.get(i) instanceof Exploracion) {
+                                exploracion = (Exploracion) formularios.get(i);
+                            }
+                        }
+
+                        // Altura:
+                        if (exploracion != null) {
+                            Double altura = exploracion.getTalla().doubleValue();
+                            altura = altura / 100;
+
+                            // Buscar último registro de peso
+                            Progreso progrPes = pro.pesoAntiguo(p, TipoProgreso.PESO);
+                            Double ultPeso = null;
+
+                            if (progrPes != null) {
+                                ultPeso = progrPes.getDato().doubleValue();
+                            }
+
+                            else {
+                                ultPeso = exploracion.getPeso().doubleValue();
+                            }
+
+                            // Calcular IMC
+                            Double imc = ultPeso / (altura * altura);
+                            DecimalFormat imc2 = new DecimalFormat("#.00");
+
+                            model.addAttribute("imc", imc2.format(imc));
+                        }
+
+                        model.addAttribute("progreso", new Progreso());
+
+                        // buscar notificaciones
+                        List<Notificacion> notificaciones = noti.notificaciones(p);
+                        model.addAttribute("notificaciones", notificaciones);
+
+                        return "progreso";
                     }
+
+                    else // si no está dado de alta no puede acceder a esta funcionalidad
+                        return "acceso";
                 }
 
-                // Altura:
-                if (exploracion != null) {
-                    Double altura = exploracion.getTalla().doubleValue();
-                    altura = altura / 100;
+                else // si el id no es el mismo que el participante logueado no puede acceder al
+                     // progreso de otros participantes
+                    return "redirect:/";
+            }
 
-                    // Buscar último registro de peso
-                    Progreso progrPes = pro.pesoAntiguo(p, TipoProgreso.PESO);
-                    Double ultPeso = null;
+            else if (user instanceof Coordinador) { // si el usuario es un coordinador
 
-                    if (progrPes != null) {
-                        ultPeso = progrPes.getDato().doubleValue();
-                    }
+                if (p.getIdCoordinador().equals(user.getId())) { // si el progreso que quiere ver es de un participante
+                                                                 // que le pertenece
 
-                    else {
-                        ultPeso = exploracion.getPeso().doubleValue();
-                    }
+                    model.addAttribute("participante", p);
+                    List<Progreso> peso = pro.datos(p, TipoProgreso.PESO);
+                    model.addAttribute("peso", peso);
+                    model.addAttribute("idPart", id);
 
-                    // Calcular IMC
-                    Double imc = ultPeso / (altura * altura);
-                    DecimalFormat imc2 = new DecimalFormat("#.00");
-
-                    model.addAttribute("imc", imc2.format(imc));
+                    return "progresoCoor";
                 }
 
-                model.addAttribute("progreso", new Progreso());
-                return "progreso";
+                else
+                    return "redirect:/";
+
             }
 
             else
-                return "acceso";
-        }
+                return "redirect:/";
 
-        else if (user instanceof Coordinador) {
-            return "progresoCoor";
-        }
-
-        else
+        } else if (p != null && p.getEstadoCuenta().equals(Estado.BAJA) && p instanceof Participante) {
             return "acceso";
+        } else {
+            return "redirect:/"; // si el id proporcionado no pertenece a un participante no existe progreso
+        }
     }
 
     @PostMapping("/process_peso")
@@ -693,7 +750,7 @@ public class ParticipanteController {
 
             pro.guardar(progreso);
         }
-        return "redirect:/progreso";
+        return "redirect:/progreso/" + getUsuario().getId();
     }
 
     @PostMapping("/process_perimetro")
@@ -728,7 +785,7 @@ public class ParticipanteController {
             pro.guardar(progreso);
         }
 
-        return "redirect:/progreso";
+        return "redirect:/progreso/" + getUsuario().getId();
     }
 
     @GetMapping("/objetivos")
@@ -770,7 +827,6 @@ public class ParticipanteController {
 
         model.addAttribute("objetivoDescanso", objetivoDescanso);
 
-
         ObjetivoEstadoAnimo objetivoEstadoAnimo = obj.findByFechaAndParticipanteEstadoAnimo(new Date(), p);
 
         if (objetivoEstadoAnimo == null) {
@@ -778,6 +834,10 @@ public class ParticipanteController {
         }
 
         model.addAttribute("objetivoEstadoAnimo", objetivoEstadoAnimo);
+
+        // buscar notificaciones
+        List<Notificacion> notificaciones = noti.notificaciones(p);
+        model.addAttribute("notificaciones", notificaciones);
 
         return "objetivos";
     }
@@ -821,6 +881,10 @@ public class ParticipanteController {
         if (getUsuario() instanceof Participante && getUsuario().getId() == o.getParticipante().getId()) {
             model.addAttribute("user", getUsuario());
             model.addAttribute("objetivo", o);
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
+            model.addAttribute("notificaciones", notificaciones);
 
             return "editar_objetivo";
         } else
@@ -908,17 +972,13 @@ public class ParticipanteController {
                 List<Actividad> listado = act.actividadesPendientes(LocalDateTime.now());
                 model.addAttribute("listado", listado);
 
-                // inscripciones posibles: número de plazas - invitaciones pendientes
-                List<Integer> inscripciones = new ArrayList<Integer>();
-                for (Actividad actividad : listado) {
-                    Integer maximo = actividad.getPlazas() - invi.numInvitacionesPosibles(actividad, EstadoInvitacion.PENDIENTE);
-                    inscripciones.add(maximo);
-                }
-                model.addAttribute("inscripciones", inscripciones);
-
                 // asistencia confirmada
                 List<Actividad> asistencia = act.asistenciaParticipante(user.getId());
                 model.addAttribute("asistencia", asistencia);
+
+                // buscar notificaciones
+                List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+                model.addAttribute("notificaciones", notificaciones);
 
                 return "actividades";
             } else
@@ -937,10 +997,6 @@ public class ParticipanteController {
             model.addAttribute("user", user);
             model.addAttribute("actividad", acti);
 
-            // inscripciones posibles: número de plazas - invitaciones pendientes
-            Integer maximo = acti.getPlazas() - invi.numInvitacionesPosibles(acti, EstadoInvitacion.PENDIENTE);
-            model.addAttribute("maximoInvit", maximo);
-
             if (user instanceof Participante) { // si es participante comprobar asistencia confirmada a actividad
                 boolean asiste = false;
                 Integer asistencia = act.asistencia(acti.getId(), getUsuario().getId());
@@ -948,6 +1004,10 @@ public class ParticipanteController {
                 if (asistencia > 0)
                     asiste = true;
                 model.addAttribute("asistencia", asiste);
+
+                // buscar notificaciones
+                List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+                model.addAttribute("notificaciones", notificaciones);
             }
 
             else { // Coordinador, enviar listado de asistentes
@@ -963,6 +1023,7 @@ public class ParticipanteController {
 
     }
 
+    // confirmar inscripción
     @GetMapping("/confirmar/{id}")
     public String confirmar(@PathVariable Integer id) {
         Usuario user = getUsuario();
@@ -976,11 +1037,51 @@ public class ParticipanteController {
             acti.setPlazas(acti.getPlazas() - 1);
             act.guardar(acti);
 
+            // comprobar si las plazas se han quedado a cero
+            List<Invitacion> invitaciones = invi.listadoByAct(acti);
+            if (acti.getPlazas() == 0) {
+                for (Invitacion invitacion : invitaciones) {
+                    if (invitacion.getEstado().equals(EstadoInvitacion.PENDIENTE)) {
+                        invi.borrar(invitacion);
+
+                        // notificsción invitación a la que ya no hay disponibilidad
+                        Notificacion notificacion = new Notificacion(0, invitacion.getParticipante(),
+                                "Invitación eliminada a " + acti.getNombre() + "Se han acabado las plazas",
+                                LocalDateTime.now(),
+                                EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
+                        noti.guardar(notificacion);
+
+                    }
+                }
+            }
+
             return "redirect:/actividades";
         }
 
         else
             return "redirect:/";
+    }
+
+    // eliminar inscripción
+    @GetMapping("/eliminar_inscripcion/{id}")
+    public String process_invitacion(@PathVariable(name = "id") Integer id, Model model) {
+
+        Participante p = participante.getParticipante(getUsuario().getId());
+        Actividad actividad = act.actividad(id);
+
+        // 1. Eliminar participante de la actividad
+        actividad.getParticipantes().remove(p);
+
+        // 2. Eliminar asistente del número de participantes
+        actividad.setNumParticipantes(actividad.getNumParticipantes() - 1);
+
+        // 3. Aumentar número de plazas
+        actividad.setPlazas(actividad.getPlazas() + 1);
+
+        // 4. Guardar actividad
+        act.guardar(actividad);
+
+        return "redirect:/actividades";
     }
 
     @GetMapping("/confirmar_invitacion/{id}")
@@ -1000,6 +1101,24 @@ public class ParticipanteController {
 
             invitacion.setEstado(EstadoInvitacion.ACEPTADA);
             invi.guardar(invitacion);
+
+            // Comprobar si las plazas se han quedado a cero
+            List<Invitacion> invitaciones = invi.listadoByAct(acti);
+            if (acti.getPlazas() == 0) {
+                for (Invitacion invit : invitaciones) {
+                    if (invit.getEstado().equals(EstadoInvitacion.PENDIENTE)) {
+                        invi.borrar(invit);
+
+                        // notificsción invitación a la que ya no hay disponibilidad
+                        Notificacion notificacion = new Notificacion(0, invit.getParticipante(),
+                                "Invitación eliminada a la actividad: " + acti.getNombre() + ". Sin disponibilidad",
+                                LocalDateTime.now(),
+                                EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
+                        noti.guardar(notificacion);
+
+                    }
+                }
+            }
 
             return "redirect:/panel_invitaciones";
         }
@@ -1032,6 +1151,7 @@ public class ParticipanteController {
 
         List<Invitacion> pendientes = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
                 EstadoInvitacion.PENDIENTE);
+
         model.addAttribute("pendientes", pendientes);
 
         List<Invitacion> aceptadas = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
@@ -1042,6 +1162,10 @@ public class ParticipanteController {
                 EstadoInvitacion.RECHAZADA);
         model.addAttribute("rechazadas", rechazadas);
 
+        // buscar notificaciones
+        List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+        model.addAttribute("notificaciones", notificaciones);
+
         return "invitacionesPart";
     }
 
@@ -1050,9 +1174,12 @@ public class ParticipanteController {
     public String cuaderno(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+            model.addAttribute("notificaciones", notificaciones);
             return "cuaderno";
-        else
+        } else
             return "acceso";
     }
 
@@ -1060,9 +1187,12 @@ public class ParticipanteController {
     public String info(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+            model.addAttribute("notificaciones", notificaciones);
             return "info";
-        else
+        } else
             return "acceso";
     }
 
@@ -1071,9 +1201,13 @@ public class ParticipanteController {
     public String alimentacion(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "alimentacion";
-        else
+        } else
             return "acceso";
     }
 
@@ -1081,9 +1215,13 @@ public class ParticipanteController {
     public String juego(Model model) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA))
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "juego";
-        else
+        } else
             return "acceso";
     }
 
@@ -1120,6 +1258,10 @@ public class ParticipanteController {
 
             // BORRAR ALIMENTOS DE HACE MÁS DE 1 SEMANA
             alimentacion.borraralconSem(participante.findById(user.getId()).get());
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+            model.addAttribute("notificaciones", notificaciones);
             return "alimentos";
         } else
             return "acceso";
@@ -1183,6 +1325,11 @@ public class ParticipanteController {
         model.addAttribute("user", user);
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("alimento", new Alimentacion());
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "nuevoalimento";
         } else
             return "acceso";
@@ -1215,6 +1362,11 @@ public class ParticipanteController {
             model.addAttribute("lareceta", new Receta());
             model.addAttribute("listaRecetas", alimentacion.getRecetas());
             model.addAttribute("listaIng", alimentacion.getAlimentos());
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "recetas";
         } else
             return "acceso";
@@ -1247,6 +1399,11 @@ public class ParticipanteController {
         if (getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("link", link);
             model.addAttribute("user", getUsuario());
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "unareceta";
         } else
             return "redirect:/";
@@ -1257,6 +1414,7 @@ public class ParticipanteController {
             @RequestParam(required = false) String[] dontwant, Model model) {
         Usuario u = getUsuario();
         model.addAttribute("user", u);
+        List<Receta> listaRecetas = new ArrayList<>();
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             if (want.length == 0)
                 model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
@@ -1266,7 +1424,6 @@ public class ParticipanteController {
                 String[] recetasArray = service.recetasparecidas(want, dontwant);
                 recetas = Arrays.asList(recetasArray);
                 String[] recetaArray = recetas.get(0).split(",");
-                List<Receta> listaRecetas = new ArrayList<>();
                 for (String idReceta : recetaArray) {
                     if (!idReceta.equals("")) {
                         Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
@@ -1275,9 +1432,13 @@ public class ParticipanteController {
                         }
                     }
                 }
-                model.addAttribute("listaRecetas", listaRecetas);
 
             }
+            model.addAttribute("listaRecetas", listaRecetas);
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "recetasparecidas";
         } else
             return "acceso";
@@ -1321,6 +1482,10 @@ public class ParticipanteController {
 
             model.addAttribute("individuales", listaRecetas1);
 
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "recetasrecomendadas";
         } else
             return "redirect:/";
@@ -1334,6 +1499,9 @@ public class ParticipanteController {
         model.addAttribute("user", getUsuario());
 
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
+            model.addAttribute("notificaciones", notificaciones);
             return "fichas";
         } else
             return "acceso";
@@ -1347,6 +1515,9 @@ public class ParticipanteController {
         model.addAttribute("user", getUsuario());
 
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
+            model.addAttribute("notificaciones", notificaciones);
             return "fichaEleccion";
         } else
             return "acceso";
@@ -1361,6 +1532,11 @@ public class ParticipanteController {
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             FichaEleccion fichaEleccion = f.getFichaEleccion(participante.findById(u.getId()).get(), id);
             model.addAttribute("ficha", fichaEleccion);
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "fichaEleccionConcreta";
         } else
             return "acceso";
@@ -1385,6 +1561,11 @@ public class ParticipanteController {
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             FichaTaller fichaTaller = f.getFichaTaller(participante.findById(u.getId()).get());
             model.addAttribute("ficha", fichaTaller);
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
+            model.addAttribute("notificaciones", notificaciones);
+
             return "fichaTaller";
         } else
             return "acceso";
@@ -1442,6 +1623,10 @@ public class ParticipanteController {
                 Double diezPeso = exploracion.getPeso() * 0.1;
                 String diez = String.format("%.2f", diezPeso).replace(",", ".");
                 model.addAttribute("diez", diez);
+
+                // buscar notificaciones
+                List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
+                model.addAttribute("notificaciones", notificaciones);
 
                 return "fichaObjetivo";
             }
@@ -1535,7 +1720,7 @@ public class ParticipanteController {
             objetivoEjercicio.setParticipante(p);
             objetivoEjercicio.setEjercicio(ejercicioObj.getEjercicio());
             objetivoEjercicio.setDuracionEjercicio(ejercicioObj.getDuracionEjercicio());
-    
+
             obj.guardarEjercicio(objetivoEjercicio);
         }
 
@@ -1546,10 +1731,10 @@ public class ParticipanteController {
     @GetMapping("/eliminar_ejercicio/{idObjetivo}")
     public String eliminarEjercicio(@PathVariable("idObjetivo") Integer idObjetivo, Model model) {
 
-      
-        ObjetivoEjercicio objetivoEjercicio= obj.getObjetivoEjercicio(idObjetivo);
+        ObjetivoEjercicio objetivoEjercicio = obj.getObjetivoEjercicio(idObjetivo);
 
-        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoEjercicio.getParticipante().getId()) {
+        if (getUsuario() instanceof Participante
+                && getUsuario().getId() == objetivoEjercicio.getParticipante().getId()) {
             obj.borrarObjetivoEjercicio(idObjetivo);
             return "redirect:/objetivos";
         } else
@@ -1592,8 +1777,9 @@ public class ParticipanteController {
         Participante p = participante.getParticipante(idParticipante);
 
         ObjetivoDescanso objetivoDescanso = obj.findByFechaAndParticipanteDescanso(new Date(), p);
-    
-        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoDescanso.getParticipante().getId()) {
+
+        if (getUsuario() instanceof Participante
+                && getUsuario().getId() == objetivoDescanso.getParticipante().getId()) {
             obj.borrarObjetivoDescanso(objetivoDescanso.getId());
             return "redirect:/objetivos";
         } else
@@ -1639,7 +1825,7 @@ public class ParticipanteController {
         }
 
         obj.guardarEstadoAnimo(objetivoEstadoAnimo);
-        
+
         return "redirect:/objetivos";
     }
 
@@ -1649,8 +1835,9 @@ public class ParticipanteController {
         Participante p = participante.getParticipante(idParticipante);
 
         ObjetivoEstadoAnimo objetivoEstadoAnimo = obj.findByFechaAndParticipanteEstadoAnimo(new Date(), p);
-    
-        if (getUsuario() instanceof Participante && getUsuario().getId() == objetivoEstadoAnimo.getParticipante().getId()) {
+
+        if (getUsuario() instanceof Participante
+                && getUsuario().getId() == objetivoEstadoAnimo.getParticipante().getId()) {
             obj.borrarObjetivoEstadoAnimo(objetivoEstadoAnimo.getId());
             return "redirect:/objetivos";
         } else

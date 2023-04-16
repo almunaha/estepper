@@ -9,36 +9,14 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/perfilparticipante.css}">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
     <!--PARA GRÁFICOS-->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-    <style>
-        .datos {
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: 4%;
-        }
-
-        .dato {
-            display: flex;
-            flex-basis: calc(100% / 5);
-            align-items: center;
-            border: 1px solid #ccc;
-            justify-content: space-around;
-            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-            padding: 4%;
-            margin: 2%;
-        }
-
-        .dato h5 {
-            padding: 3%;
-        }
-    </style>
-
-<title>Perfil - Estepper</title>
+    <title>Perfil - Estepper</title>
 </head>
 
 <body>
@@ -48,7 +26,7 @@
     <div class="d-flex">
         <div id="sidebar-container">
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
             <ul>
@@ -83,7 +61,7 @@
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/progreso}">
+                    <a th:href="@{'/progreso/' + ${user.id}}">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nombre-enlaces">Progreso</span>
                     </a>
@@ -113,7 +91,7 @@
             <a th:href="@{'/materiales/' + ${user.id}}">
                 <i class="fa-solid fa-folder-open"></i>
             </a>
-            <a th:href="@{/progreso}">
+            <a th:href="@{'/progreso/' + ${user.id}}">
                 <i class="fa-solid fa-chart-line"></i>
             </a>
             <a th:href="@{/chat}">
@@ -123,89 +101,119 @@
         <div id="contenido" style="background-color:#afc0cb; ">
             <div class="header-movil">
                 <img class="menu-icon" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                                    id="avatar-header" />
-                                <span sec:authentication="principal.nombre"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <div class="dropdown-divider"></div>
-                                <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
-                                </form>
+                    <div class="der-header">
+                        <!-- Desplegable notificaciones -->
+                        <ul class="navbar-nav ml-auto" id="cont-notif">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                                    <h6>Notificaciones</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <div style="overflow: auto; max-height: 250px;">
+                                        <div th:each="notif : ${notificaciones}">
+                                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                                th:text="${notif.mensaje}"></a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Desplegable perfil y cerrar sesión -->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                        id="avatar-header">
+                                    <span sec:authentication="principal.nombre"></span>
+                                </a>
+
+                                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</button>
+                                    </form>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+
+            <div class="cuerpoPerfil">
+                <div class="container">
+                    <div class="cardi2 mt-3">
+                        <div class="imagenPerfil">
+                            <img width="100" th:src="${user.fotoParticipante}" alt="imagenPerfil">
+                        </div>
+                        <div class="col-md-8">
+                            <div style="margin-top: 3%;" class="contenidoPerfil mt-10">
+                                <h3 th:text="${user.nickname}">Nombre</h3>
+                                <div class="row datos">
+                                    <div class="dato">
+                                        <i class="fa-solid fa-barcode" title="Código"></i>
+                                        <h5 th:text="${user.codigo}"></h5>
+                                    </div>
+                                    <div class="dato">
+                                        <i title="Email" class="icono fas fa-envelope"></i>
+                                        <h5 th:text="${user.email}"></h5>
+                                    </div>
+                                    <div class="dato">
+                                        <i class="fa-solid fa-gears" title="Estado"></i>
+                                        <h5 th:text="${user.estadoCuenta}"></h5>
+                                    </div>
+                                    <div class="dato">
+                                        <i class="fa-solid fa-calendar-day" title="Edad"></i>
+                                        <h5 th:text="${edad}"></h5>
+                                    </div>
+                                    <div class="dato">
+                                        <i class="fa-solid fa-venus-mars" title="Género"></i>
+                                        <h5 th:text="${sexo}"></h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-20">
+                                        <a class="btn btn-primary btn-block" style="padding-bottom: 10%;"
+                                            th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
+                                    </div>
+                                </div>
+
                             </div>
-                        </li>
-                    </ul>
-                </div>
-</nav>
+                        </div>
 
-<div class="cuerpoPerfil">
-    <div class="container">
-        <div class="cardi2 mt-3">
-            <div class="imagenPerfil">
-                <img width="100" th:src="${user.fotoParticipante}" alt="imagenPerfil" />
-            </div>
-            <div class="col-md-8">
-                <div style="margin-top: 3%;" class="contenidoPerfil mt-10">
-                    <h3 th:text="${user.nickname}">Nombre</h3>
-                    <div class="row datos">
-                        <div class="dato">
-                            <h5><i class="fa-solid fa-barcode" title="Código"></i></h5>
-                            <h5 th:text="${user.codigo}"></h5>
-                        </div>
-                        <div class="dato">
-                            <h5><i title="Email" class="icono fas fa-envelope"></i></h5>
-                            <h5 th:text="${user.email}"></h5>
-                        </div>
-                        <div class="dato">
-                            <h5><i class="fa-solid fa-gears" title="Estado"></i></h5>
-                            <h5 th:text="${user.estadoCuenta}"></h5>
-                        </div>
-                        <div class="dato">
-                            <h5><i class="fa-solid fa-calendar-day" title="Edad"></i></h5>
-                            <h5 th:text="${edad}"></h5>
-                        </div>
-                        <div class="dato">
-                            <h5><i class="fa-solid fa-venus-mars" title="Género"></i></h5>
-                            <h5 th:text="${sexo}"></h5>
-                        </div>
+
                     </div>
-                    <div class="row">
-                        <div class="col-md-20">
-                            <a class="btn btn-primary btn-block" style="padding-bottom: 10%;" th:href="@{'/perfil/' + ${user.id}}">Editar perfil</a>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
 
+
+
+            </div>
 
         </div>
     </div>
-
-
-
-</div>
-
-</div>
-
 </body>
 
 </html>

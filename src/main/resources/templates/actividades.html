@@ -31,6 +31,7 @@
     <script src="sweetalert2.min.js"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="/js/actividades.js"></script>
 
     <title>Actividades - Estepper</title>
 
@@ -88,7 +89,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/progreso}">
+                    <a th:href="@{'/progreso/' + ${user.id}}">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nombre-enlaces">Progreso</span>
                     </a>
@@ -126,12 +127,12 @@
                 <i class="fa-solid fa-folder-open"></i>
             </a>
 
-            <a th:href="@{/progreso}">
+            <a th:href="@{'/progreso/' + ${user.id}}">
                 <i class="fa-solid fa-chart-line"></i>
             </a>
 
             <a th:href="@{/chat}">
-                <i class="fa-solid fa-comments"></i>
+                <i class="fa-solid fa-people-group"></i>
             </a>
 
         </div>
@@ -157,10 +158,32 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
 
-                    <!--<i class="fa-regular fa-bell"></i> -->
                     <div class="der-header">
-                        <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
 
+                        <!-- Desplegable notificaciones -->
+                        <ul class="navbar-nav ml-auto" id="cont-notif">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle-no-caret" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="list-notif">
+                                    <h6>Notificaciones</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <div style="overflow: auto; max-height: 250px;">
+                                        <div th:each="notif : ${notificaciones}">
+                                            <a style="font-size: 0.85rem;" th:href="${notif.enlace}"
+                                                th:text="${notif.mensaje}"></a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Desplegable perfil y cerrar sesión -->
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -170,7 +193,7 @@
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
@@ -211,43 +234,6 @@
                         </select>
                     </div>
                 </div>
-
-                <script type="text/javascript">
-                    $(document).ready(function () {
-
-                        $('#filtrarActividades').on('keyup', function () {
-                            var buscado = $('#filtrarActividades').val().toLowerCase();
-                            var categSeleccionada = $('#categoria').val().toLowerCase();
-                            const actividades = $('.actividad');
-
-                            for (var i = 0; i < actividades.length; i++) {
-                                var nombre = actividades.eq(i).find('.nombre-act').text().toLowerCase();
-                                var categoria = actividades.eq(i).find('#categoria-acti').data('categoria').toLowerCase();
-
-                                if(buscado === '' && categSeleccionada === 'todas' || buscado === '' && categSeleccionada === categoria){
-                                    actividades.eq(i).show();
-                                }
-
-                                else if(nombre.includes(buscado) && categSeleccionada === 'todas'){
-                                    actividades.eq(i).show();
-                                }
-                               
-                                else if (nombre.includes(buscado) && categoria === categSeleccionada) {
-                                    actividades.eq(i).show();
-                                }
-                                else {
-                                    actividades.eq(i).hide();
-                                }
-                            }
-                        });
-
-                        $('#categoria').on('change', function () { //cuando se cambia la categoria vuelve a hacer el keyup
-                            $('#filtrarActividades').trigger('keyup');
-                        });
-
-
-                    });
-                </script>
 
                 <!-- Actividades y calendario -->
                 <div class="flex-act">
@@ -299,39 +285,6 @@
                         </div>
                     </div>
 
-                    <script>
-                        function inscripcion(id) {
-                            Swal.fire({
-                                position: 'center',
-                                title: '<h4>¿Estás seguro de realizar la inscripción?</h4>',
-                                text: 'Una vez acepte, se añadirá a tu listado de actividades',
-                                showConfirmButton: true,
-                                showCancelButton: true,
-                                cancelButtonText: '<a href="/actividad/' + id + '" id="enlace">Más información</a>',
-                                confirmButtonText: '<a href="/confirmar/' + id + '" id ="conf">Confirmar</a>',
-                                confirmButtonColor: "#6ca4c7",
-
-                                didRender: function () {
-                                    const cancel = document.querySelector('#enlace');
-                                    const confirm = document.querySelector('#conf');
-
-                                    if (cancel && confirm) {
-                                        cancel.style.color = 'white';
-                                        confirm.style.color = 'white';
-                                    }
-                                },
-                                showClass: {
-                                    popup: 'animate__animated animate__fadeInDown'
-                                },
-                                hideClass: {
-                                    popup: 'animate__animated animate__fadeOutUp'
-                                }
-
-                            })
-                        }
-
-                    </script>
-
                     <!-- Calendario o asistencia confirmada -->
                     <div class="eventos">
                         <div class="asistencia">
@@ -351,6 +304,7 @@
                                     <div th:text="${asis.nombre}"></div>
                                     <div th:text="${#temporals.format(asis.fechaRealizacion, 'HH:mm')}"></div>
                                 </div>
+                                <a class="desinscripcion" th:data-id="${asis.id}"><i class="fa-solid fa-xmark"></i></a>
                             </div>
                         </div>
                     </div>

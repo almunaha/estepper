@@ -18,7 +18,7 @@ public interface ObjetivoEjercicioRepository extends JpaRepository<ObjetivoEjerc
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Objetivo o WHERE o.participante = :p")
+    @Query("DELETE FROM ObjetivoEjercicio o WHERE o.participante = :p")
     void deleteAllByParticipante(Participante p);
 
     //ObjetivoEjercicio findByFechaAndParticipante(Date fecha, Participante p);

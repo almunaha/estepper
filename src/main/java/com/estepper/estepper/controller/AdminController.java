@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
+
 import com.estepper.estepper.model.entity.MensajeAdmin;
+import com.estepper.estepper.model.entity.Notificacion;
+
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.Administrador;
@@ -34,11 +37,13 @@ import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.MensajeService;
+import com.estepper.estepper.service.NotificacionService;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.InvitacionService;
 import com.estepper.estepper.service.ObjetivoService;
+import com.estepper.estepper.service.ObservacionesService;
 import com.estepper.estepper.service.ProgresoService;
 
 @Controller
@@ -61,6 +66,9 @@ public class AdminController {
 
     @Autowired
     private ObjetivoService obj;
+
+    @Autowired
+    private ObservacionesService obs;
 
     @Autowired
     private ParticipanteService participante;
@@ -92,12 +100,14 @@ public class AdminController {
     @Autowired
     private InvitacionService invitacion;
 
+    @Autowired
+    private NotificacionService noti;
+
     @GetMapping("/eliminarUsuario/{id}")
     public String eliminarUsuario(@PathVariable(name = "id") Integer id, Model model) {
         if (usuarioLogueado() instanceof Administrador) {
             // eliminar usuario
-            if (usuario.findById(id).get() instanceof Participante
-                    && usuario.findById(id).get().getEstadoCuenta().equals(Estado.ALTA)) {
+            if (usuario.findById(id).get() instanceof Participante) {
                 Participante p = participante.findById(id).get();
                 materialS.deleteByParticipante(p);
                 ses.deleteByParticipante(p);
@@ -120,24 +130,33 @@ public class AdminController {
                     actividad.getParticipantes().remove(p);
                     acti.guardar(actividad);
                 }
+
+                // eliminar notificaciones
+                List<Notificacion> notificaciones = noti.notificaciones(p);
+                for (Notificacion notif : notificaciones) {
+                    noti.eliminar(notif);
+                }
+
                 fasevaloracion.eliminarcuenta(p);
 
                 if (p.getGrupo() != null) {
                     p.getGrupo().setNumParticipantes(p.getGrupo().getNumParticipantes() - 1);
                     grupoS.update(p.getGrupo());
                 }
-            } else if (usuario.findById(id).get() instanceof Participante) {
-                Participante p = participante.findById(id).get();
-                fasevaloracion.eliminarcuenta(p);
             } else if (usuario.findById(id).get() instanceof Coordinador) {
+                Coordinador c = (Coordinador) usuario.findById(id).get();
+                mensajeS.deleteByCoordinadorMensajePrivado(c);
+                obs.deleteByCoordinador(c);
                 List<Grupo> listgrupos = grupoS.getGrupos();
-                Coordinador c = coordinador.getCoordinador(id);
+               // Coordinador c = coordinador.getCoordinador(id); VER CUÁL DE LOS DOS ERA EL BUENO
                 for (int i = 0; i < listgrupos.size(); i++) {
                     if (listgrupos.get(i).getIdCoordinador() == id) {
                         materialS.deleteByGrupo(listgrupos.get(i));
                         mensajeS.deleteByGrupo(listgrupos.get(i));
+                        obs.deleteByGrupo(listgrupos.get(i));
                         grupoS.delete(listgrupos.get(i).getId());
                         mensajeS.deleteByCoordinadorMensajePrivado(c);
+
                         // grupoS.delete(id);
                     }
                 }
@@ -199,13 +218,15 @@ public class AdminController {
     }
 
     @GetMapping("/actualizar-usuario/{id}")
-    public String actualizarUsuario(@PathVariable(name = "id") Integer id, @RequestParam String nickname, @RequestParam String estado, @RequestParam String email) {
-        
-        
+    public String actualizarUsuario(@PathVariable(name = "id") Integer id, @RequestParam String nickname,
+            @RequestParam String estado, @RequestParam String email) {
+
         Usuario elusuario = usuario.findById(id).get();
         Estado state = elusuario.getEstadoCuenta();
-        if(estado.equals(Estado.ALTA.toString())) state = Estado.ALTA;
-        else state = Estado.BAJA;
+        if (estado.equals(Estado.ALTA.toString()))
+            state = Estado.ALTA;
+        else
+            state = Estado.BAJA;
         usuario.update(nickname, email, elusuario.getContrasenia(), state, id);
         return "redirect:/";
     }
