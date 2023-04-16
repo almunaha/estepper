@@ -50,18 +50,18 @@ class EstepperApplicationTests {
 		// Usuario tipo PARTICIPANTE
 		Participante almu = usuarioRepo
 				.save(new Participante(0, 111, "Almudena", "almunaha@ucm.es", hash.encode("almupass"),
-						Estado.BAJA, null, null, 0.0, 0, 0, 0, null, "/img/p1.png", 0.0));
+						Estado.BAJA, null, null, 0.0, 0, 0, 0, null, "/img/p1.png", 0.0,3));
 		exploracionRepo.save(new Exploracion(0, almu, Sexo.MASCULINO, "no", 0.0, 0.0, 0, 0, 0));
 		findriscRepo.save(new Findrisc(0, almu, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Bajo"));
 
 		// Usuario tipo COORDINADOR
 		Coordinador coor = usuarioRepo
 				.save(new Coordinador(0, 222, "Mercedes", "mercedes@madrid.es", hash.encode("mercedespass"),
-						Estado.ALTA,"/img/p1.png"));
+						Estado.ALTA,"/img/p1.png",3));
 
 		// Usuario tipo ADMINISTRADOR
 		usuarioRepo.save(new Administrador(0, 333, "Javier", "javier@ucm.es", hash.encode("javierpass"),
-				Estado.ALTA));
+				Estado.ALTA,"/img/p1.png"));
 
 		grupoRepo.save(new Grupo(1, coor.getId(), "909A67BZ5", "Las saltimbanquis", 0, LocalDate.now(), null, null, "/img/grupoA.png", EstadoGrupo.ACTIVO));
 
