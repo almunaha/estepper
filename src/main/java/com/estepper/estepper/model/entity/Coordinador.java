@@ -12,14 +12,18 @@ public class Coordinador extends Usuario{
 
     @Column(nullable=true)
     private String fotoParticipante;
+
+    @Column(unique=false, nullable=true)
+    private Integer idAdministrador;
     
     public Coordinador(){
         super();
     }
 
-    public Coordinador(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta, String fotoParticipante){
+    public Coordinador(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta, String fotoParticipante,Integer idAdministrador){
         super(id, codigo, nickname, email, contrasenia, estadoCuenta);
         this.fotoParticipante=fotoParticipante;
+        this.idAdministrador = idAdministrador;
     }
 
     public String getFotoParticipante() {
@@ -28,6 +32,13 @@ public class Coordinador extends Usuario{
 
     public void setFotoParticipante(String fotoParticipante) {
         this.fotoParticipante = fotoParticipante;
+    }
+
+    public Integer getIdAdministrador() {
+        return idAdministrador;
+    }
+    public void setIdAdministrador(Integer idAdministrador) {
+        this.idAdministrador = idAdministrador;
     }
     
 }

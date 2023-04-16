@@ -9,6 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" th:href="@{/css/estilos.css}">
+  <link rel="stylesheet" th:href="@{/css/grupos.css}">
   <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
@@ -46,7 +47,7 @@
 
 
       <div class="logo">
-        <img width="75" th:src="@{img/logo.png}" />
+        <img width="75" th:src="@{/img/logo.png}" />
         <h4>Estepper</h4>
       </div>
 
@@ -186,215 +187,70 @@
         </div>
       </nav>
 
-      <div th:if="${recordatorio}">
-        <script th:inline="javascript">
-          setTimeout(function () { //temporizador, al pasar un segundo salta la alerta
-            Swal.fire({
-              position: 'top',
-              title: '<h5>¡Hace más de una semana que no te pesas!</h5>',
-              showConfirmButton: true,
-              showCancelButton: true,
-              confirmButtonText: '<a href="/progreso" id="enlace">Registrar</a>',
-              cancelButtonText: "Cerrar",
-              confirmButtonColor: "#6ca4c7",
+      <div style="padding-top: 75px;">
 
-              didRender: function () {
-                const registrar = document.querySelector('#enlace');
+        <div class="encabezado-grupo">
 
-                if (registrar) {
-                  registrar.style.color = 'white';
-                }
-              },
-              showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-              },
-              hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-              }
-
-            })
-
-          }, 200); 
-        </script>
-      </div>
-
-      <div class="utilidades">
-
-        <div class="row " style="width: 100%">
-
-          <div class="col">
-
-            <!-- Botón sesiones -->
-            <div class="layout-util">
-              <a class="btn-util" th:href="@{/sesiones}">
-                <i class="fa-solid fa-list-check"></i>
-              </a>
-
-              <h4 id="nombre">SESIONES</h4>
-
-              <!-- Ver gráfica -->
-              <!--<div><canvas id="chart1" width="400" height="300"></canvas></div>-->
-              <div class="fondoGraficas">
-                <div><canvas id="graficoSesiones"></canvas></div>
-              </div>
+            <!-- <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${participante.nickname}"></h3>-->
+            <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${administrador.nickname}"></h3>
 
 
-              <script>
-                //URL actual
-                var baseUrl = window.location.origin;
-
-                let canvas = document.getElementById("graficoSesiones").getContext("2d");
-                let url = baseUrl + '/index/sesiones';
-
-                fetch(url)
-                  .then(response => response.json())
-                  .then(data => {
-
-                    var graficaSesiones = new Chart(canvas, {
-                      type: "pie",
-
-
-                      data: {
-                        labels: ["Sesiones completadas", "Sesiones pendientes"],
-                
-                        datasets: [
-                          {
-                            data: [data.sesionesCompletas, 10 - data.sesionesCompletas],
-                            backgroundColor: [
-                              'rgba(100, 182, 205, 0.915)', // Color para sesiones completadas
-                              'rgba(229, 203, 108, 0.915)'    // Color para sesiones pendientes
-                            ]
-                          }
-                        ]
-                      },
-
-                    })
-                  })
-
-              </script>
-
-            </div>
-          </div>
-
-
-          <div class="col">
-            <!-- Botón objetivos -->
-            <div class="layout-util">
-              <a class="btn-util" th:href="@{/objetivos}">
-                <i class="fa-solid fa-bullseye"></i>
-              </a>
-
-              <h4 id="nombre">OBJETIVOS</h4>
-
-              <div class="card mt-4">
-                <div class="card-header text-black">
-                  ¡Tú puedes!
-                </div>
-                <div class="card-body">
-
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" th:style="'width: ' + ${porcentajeObjetivos} + '%'"
-                      aria-valuemin="0" aria-valuemax="4">
-                      <div th:text="${contadorObjetivos}"></div>
+            <div class="bordes-chat" style="width: 90%;">
+                <section class="chat-area">
+                    <header>
+                        <img th:src="${administrador.fotoParticipante}" alt="">
+                        <h4 th:text="${administrador.nickname}"></h4>
+                    </header>
+                    <div class="chat-box">
+                        <div th:each="m : ${mensajesAdminyParticipante}" class="contenedor-mensaje mb-2">
+                            <div th:if="${m.emisor.id != user.id}"
+                                class="mensaje d-flex justify-content-start align-items-end">
+                                <img th:src="${m.emisor.fotoParticipante}" style="width: 40px;"class="avatar"
+                                    alt="m.emisor.nickname" />
+                                <div class="contenido-mensaje grey ms-2 p-2">
+                                    <div th:text="${m.emisor.nickname}" class="nickname"></div>
+                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                        class="fecha text-end"></div>
+                                </div>
+                            </div>
+                            <div th:unless="${m.emisor.id != user.id}"
+                                class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
+                                <img th:src="${user.fotoParticipante}" style="width: 40px;" class="avatar"
+                                    alt="m.usuario.nickname" />
+                                <div class="contenido-mensaje green me-2 p-2">
+                                    <div class="nickname">Yo</div>
+                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                        class="fecha text-end"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <form th:action="@{'/mensajesAdmin2/guardar/' + ${administrador.id}}"
+                        th:object="${messageAdmin}" method="post" class="typing-area">
 
-                  </div>
-                  <h5 class="card-title text-black mt-2"><span th:text="${contadorObjetivos}"></span> de 4 objetivos
-                    cumplidos</h5>
-                  <div class="card-text text-black">
-                    <div th:unless="${aguaCompletado}">¡Termina de beber los 2L de agua!</div>
-                    <div th:unless="${ejercicioCompletado}">¡Registra el ejercicio de hoy!</div>
-                    <div th:unless="${descansoCompletado}">Te falta descansar 8 horas</div>
-                    <div th:unless="${estadoAnimoCompletado}">¡Registra tu estado de ánimo!</div>
-                  </div>
+                        <input type="text" th:field="*{mensaje}" class="input-field"
+                            placeholder="Escribe un mensaje aquí ..." autocomplete="off">
 
-                  <div th:if="${porcentajeObjetivos == 100}">
-                    <strong style="color:cadetblue">¡Enhorabuena!</strong>
-                  </div>
+                        <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
 
+                    </form>
+                </section>                      
+            </div>
+            <div style="width: 90%">
+                <div class="d-flex justify-content-end mt-4">
+                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
+                        onclick="window.print();">
                 </div>
-              </div>
-
             </div>
-          </div>
-
-          <div class="col">
-            <!-- Botón progreso -->
-            <div class="layout-util">
-              <a class="btn-util" th:href="@{/progreso}">
-
-                <i class="fa-solid fa-chart-line"></i>
-              </a>
-
-              <h4 id="nombre">PROGRESO</h4>
-
-              <div class="chart3" id="chart3"></div>
-
-              <script>
-                var options = {
-                  chart: {
-                    height: 280,
-                    type: "radialBar",
-                  },
-
-                  series: [67], //porcentaje
-                  colors: ["#20E647"],
-                  plotOptions: {
-                    radialBar: {
-                      hollow: {
-                        margin: 0,
-                        size: "70%",
-                        background: "#293450"
-                      },
-                      track: {
-                        dropShadow: {//para el bordecito de fuera la sombrita
-                          enabled: true,
-                          top: 3,
-                          left: 0,
-                          blur: 4,
-                          opacity: 0.20
-                        }
-                      },
-                      dataLabels: {
-                        name: {//Para el nombre de dentro de progreso
-                          offsetY: -10,
-                          color: "#fff",
-                          fontSize: "15px"
-                        },
-                        value: { //Para el porcentaje
-                          color: "#fff",
-                          fontSize: "35px",
-                          show: true
-                        }
-                      }
-                    }
-                  },
-                  fill: { //para el relleno
-                    type: "gradient",
-                    gradient: {
-                      shade: "dark",
-                      type: "vertical",
-                      gradientToColors: ["#87d4f9"], //que vaya hacia ese azulito
-                      stops: [0, 100]
-                    }
-                  },
-                  stroke: {
-                    lineCap: "round" //prolongación redondeada de la línea
-                  },
-                  labels: ["Progreso"] //el nombre de dentro
-                };
-
-                var chart = new ApexCharts(document.querySelector("#chart3"), options);
-
-                chart.render();
-
-              </script>
-            </div>
-          </div>
-
         </div>
 
-      </div>
+
+
+    </div>
+
+      
 
       <div class="hello-movil">
         <h2 th:text="'Hola, ' + ${user.nickname} + '!'"></h2>

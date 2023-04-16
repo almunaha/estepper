@@ -50,7 +50,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a th:href="@{/mensajesAdmin}">
                         <i class="fa-solid fa-envelope"></i>
                         <span class="nombre-enlaces">Mensajes</span>
                     </a>
@@ -150,6 +150,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">Alias</th>
+                                        <th scope="col">Id</th>
                                         <th scope="col">Correo</th>
                                         <th scope="col">Código</th>
                                         <th scope="col">Rol</th>
@@ -161,6 +162,7 @@
                                 <tbody class="buscarUsuarios">
                                     <tr th:each="lis:${usuarios}">
                                         <td><span class="editable" th:text="${lis.nickname}"></span></td>
+                                        <td><span class="editable" th:text="${lis.id}"></span></td>
                                         <td><span class="editable" th:text="${lis.email}"></span></td>
                                         <td><span th:text="${lis.codigo}"></span></td>
                                         <td>
@@ -179,15 +181,33 @@
                                                     class="fa-solid fa-user-pen"></i></a>
                                             <a class="btn btn-primary cancel-button" style="display: none;"><i
                                                     title="Cancelar" class="fa-solid fa-times"></i></a>
-                                            <a class="btn btn-primary"><i title="Mensaje"
-                                                    class="fa-solid fa-envelope"></i></a>
+                                            <a class="btn btn-primary" th:attr="data-modalid=${lis.id}"
+                                                onclick="abrirIframe(this.getAttribute('data-modalid'))">
+                                                <i title="Mensaje" class="fa-solid fa-envelope"></i>
+                                            </a>
                                             <a class="btn btn-primary" id="eliminar" th:data-id="${lis.id}"><i
                                                     title="Eliminar" class="fa-solid fa-trash"></i></a>
+
                                         </td>
+
                                     </tr>
                                 </tbody>
+
+
                                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                                 <script>
+
+                                    // Función que abre el modal solicitado
+                                    function abrirIframe(modalId) {
+                                        console.log(modalId);
+                                        const modal = new bootstrap.Modal(document.getElementById('ModalNuevoMensaje'));
+                                        const idElementoP = document.querySelector('#ModalNuevoMensaje p');
+                                        const formulario = document.querySelector('#ModalNuevoMensaje form');
+                                        formulario.action = '/mensajesAdmin/guardar/' + modalId;
+                                      //  idElementoP.textContent = modalId;
+
+                                        modal.show();
+                                    }
                                     $(document).ready(function () {
                                         function habilitarEdicion(row) {
                                             row.find('.edit-button').prop('disabled', true);
@@ -205,32 +225,32 @@
                                             var state = row.find('.editable-state').val();
 
                                             Swal.fire({
-                                            position: 'center',
-                                            title: '<h4>¿Estás seguro de editar el usuario?</h4>',
-                                            showConfirmButton: true,
-                                            showCancelButton: true,
-                                            cancelButtonText: 'Cancelar',
-                                            confirmButtonColor: "rgb(218, 77, 73)",
-                                            confirmButtonText: '<a href="/actualizar-usuario/' + id + '?estado=' + state + '&nickname=' + nickname + '&email=' + email + '" id ="conf">Editar</a>',
+                                                position: 'center',
+                                                title: '<h4>¿Estás seguro de editar el usuario?</h4>',
+                                                showConfirmButton: true,
+                                                showCancelButton: true,
+                                                cancelButtonText: 'Cancelar',
+                                                confirmButtonColor: "rgb(218, 77, 73)",
+                                                confirmButtonText: '<a href="/actualizar-usuario/' + id + '?estado=' + state + '&nickname=' + nickname + '&email=' + email + '" id ="conf">Editar</a>',
 
 
 
-                                            didRender: function () {
-                                                const confirm = document.querySelector('#conf');
+                                                didRender: function () {
+                                                    const confirm = document.querySelector('#conf');
 
-                                                if (confirm) {
-                                                    confirm.style.color = 'white';
+                                                    if (confirm) {
+                                                        confirm.style.color = 'white';
+                                                    }
+                                                },
+
+                                                showClass: {
+                                                    popup: 'animate__animated animate__fadeInDown'
+                                                },
+                                                hideClass: {
+                                                    popup: 'animate__animated animate__fadeOutUp'
                                                 }
-                                            },
 
-                                            showClass: {
-                                                popup: 'animate__animated animate__fadeInDown'
-                                            },
-                                            hideClass: {
-                                                popup: 'animate__animated animate__fadeOutUp'
-                                            }
-
-                                        })
+                                            })
                                         }
 
                                         function cancelarEdicion(row) {
@@ -251,6 +271,7 @@
                                             var row = $(this).closest('tr');
                                             cancelarEdicion(row);
                                         });
+
                                     });
                                 </script>
 
@@ -292,6 +313,36 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="ModalNuevoMensaje" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuevo mensaje</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}" method="post"
+                        enctype="multipart/form-data">
+                        <div class="m-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">Mensaje:</label>
+                                <div class="col-sm-8 mb-2">
+                                    <input type="text" th:field="*{mensaje}" class="form-control" required />
+                                </div>
+
+                            </div>
+                            <div class="text-center p">
+                                <button type="submit" class="btn" id="btn-part">Enviar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
 
