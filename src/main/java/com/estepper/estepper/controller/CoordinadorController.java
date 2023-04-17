@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -160,11 +161,11 @@ public class CoordinadorController {
             g.setNumParticipantes(participantes);
             grupo.update(g);
 
-            //notificación añadido a un grupo
+            // notificación añadido a un grupo
             Notificacion notificacion = new Notificacion(0, usuario,
-                            "Has sido añadido al grupo: " +g.getNombre(), LocalDateTime.now(),
-                            EstadoNotificacion.PENDIENTE, "/chat");
-                    noti.guardar(notificacion);
+                    "Has sido añadido al grupo: " + g.getNombre(), LocalDateTime.now(),
+                    EstadoNotificacion.PENDIENTE, "/chat");
+            noti.guardar(notificacion);
 
             // crear las sesiones del participante
             // hay una posibilidad de que le eche del grupo y ya tenga unas sesiones creadas
@@ -288,6 +289,24 @@ public class CoordinadorController {
         return "nuevaActividad";
     }
 
+    public void subirFoto(MultipartFile file, Actividad actividad) {
+        Path rutaArchivo = Paths.get("src//main//resources//static/actividades");
+        String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+
+        try {
+            byte[] bytesArc = file.getBytes();
+            Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
+            Files.write(rutaCompleta, bytesArc);
+
+            actividad.setFoto("/actividades/" + file.getOriginalFilename());
+            act.guardar(actividad); // guardar la nueva actividad en la bd
+
+        } catch (Exception e) {
+            String mensaje = "Ha ocurrido un error: " + e.getMessage();
+            JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     @PostMapping("/process_actividad")
     public String process_actividad(Model model, @ModelAttribute Actividad actividad,
             @RequestParam("file") MultipartFile file) {
@@ -297,23 +316,9 @@ public class CoordinadorController {
         actividad.setNumParticipantes(0); // participantes apuntados: inicializar a cero
 
         // Foto de la actividad
-        if (!file.isEmpty()) {
-            Path rutaArchivo = Paths.get("src//main//resources//static/actividades");
-            String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();
+        if (!file.isEmpty())
+            subirFoto(file, actividad);
 
-            try {
-                byte[] bytesArc = file.getBytes();
-                Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + file.getOriginalFilename());
-                Files.write(rutaCompleta, bytesArc);
-
-                actividad.setFoto("/actividades/" + file.getOriginalFilename());
-                act.guardar(actividad); // guardar la nueva actividad en la bd
-
-            } catch (Exception e) {
-                String mensaje = "Ha ocurrido un error: " + e.getMessage();
-                JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
         return "redirect:/actividades";
     }
 
@@ -333,7 +338,9 @@ public class CoordinadorController {
 
     @PostMapping("/guardar_actividad")
     public String guardarActividad(@ModelAttribute Actividad actividad,
-            @RequestParam(name = "plazas", required = false) Integer plazas) {
+            @RequestParam(name = "plazas", required = false) Integer plazas,
+            @RequestParam(name = "fecha", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime fechaRealizacion,
+            @RequestParam("file") MultipartFile file) {
         Usuario elusuario = getUsuario();
 
         if (elusuario instanceof Coordinador) {
@@ -343,8 +350,20 @@ public class CoordinadorController {
                 actividad.setPlazas(orig.getPlazas() + plazas);
             else
                 actividad.setPlazas(orig.getPlazas());
-
             actividad.setNumParticipantes(orig.getNumParticipantes());
+
+            if (fechaRealizacion != null)
+                actividad.setFechaRealizacion(fechaRealizacion);
+
+            else
+                actividad.setFechaRealizacion(orig.getFechaRealizacion());
+
+            // foto
+            if (!file.isEmpty())
+                subirFoto(file, actividad);
+            else{
+                actividad.setFoto(orig.getFoto());
+            }
 
             // guardar actividad
             act.guardar(actividad);

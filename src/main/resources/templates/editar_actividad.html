@@ -135,13 +135,13 @@
                                     </div>
                                     <div id="error_nombreActividad">
                                         <p style="margin-left: 24%; color: red"><i
-                                                class="fa-solid fa-triangle-exclamation"></i> Máximo 30
+                                                class="fa-solid fa-triangle-exclamation"></i> Máximo 25
                                             caracteres</p>
                                     </div>
 
                                     <div class="input-group mt-2">
                                         <label class="col-3 col-form-label">Descripción </label>
-                                        <textarea style="resize: none" th:field="*{descripcion}" rows="4"
+                                        <textarea style="resize: none" id="descripcionAct" th:field="*{descripcion}" rows="4"
                                             class="form-control"></textarea>
                                     </div>
 
@@ -168,18 +168,17 @@
 
                                 <div class="form-dato">
                                     <div class="input-group mt-2">
-                                        <label class="col-2 col-form-label">Ubicación </label>
+                                        <label class="col-4 col-form-label">Ubicación </label>
                                         <input type="text" th:field="*{ubicacion}" class="form-control">
                                     </div>
 
                                     <div class="input-group mt-2">
-                                        <label class="col-2 col-form-label">Fecha seleccionada: </label>
+                                        <label class="col-4 col-form-label">Fecha seleccionada: </label>
                                         <p th:text="${#temporals.format(actividad.fechaRealizacion, 'dd/MM/yyyy')}"></p>
                                     </div>
                                     <div class="input-group mt-2">
-                                        <label class="col-2 col-form-label">¿Desea cambiarla?</label>
-                                        <input type="datetime-local" th:field="*{fechaRealizacion}"
-                                            id="fechaRealizacion" th:value="${actividad.fechaRealizacion}" class="form-control">
+                                        <label class="col-4 col-form-label">¿Desea cambiarla?</label>
+                                        <input name="fecha" type="datetime-local" id="fechaRealizacion" class="form-control">
                                     </div>
                                     <div id="error_fechaRealizacion">
                                         <p style="margin-left: 16%; color: red"><i
@@ -188,12 +187,12 @@
                                     </div>
 
                                     <div class="input-group mt-2">
-                                        <label class="col-1 col-form-label">Foto </label>
+                                        <label class="col-4 col-form-label">Foto </label>
                                         <img th:src="${actividad.foto}" alt="" style="width: 50px; height: 50px;"/>
                                     </div>
                                     <div class="input-group mt-2">
-                                        <label class="col-1 col-form-label">¿Desea cambiarla? </label>
-                                        <input type="file" th:name="file" class="form-control" required
+                                        <label class="col-4 col-form-label">¿Desea cambiarla? </label>
+                                        <input type="file" th:name="file" class="form-control"
                                     accept="image/png, image/jpeg, image/jpg" onchange="validateImage(this)" />
                                     </div>
                                 </div>
