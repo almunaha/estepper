@@ -19,13 +19,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
         integrity="sha512-nUf8aohwTZxv0l0d4A4kmOE+fj7W9PvCO2aS0E1Yjh81pN+w4ezn/jn8wNlvMxvNUnax/aLdQ+z/8W7X9DvI+A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
         integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Bootstrap -->
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Array.prototype.map"></script>
+    <script src="/js/recetas.js"></script>
 
 
     <title>Recetas Parecidas - Estepper</title>
@@ -43,7 +44,7 @@
 
 
             <div class="logo">
-                <img width="75" th:src="@{img/logo.png}" />
+                <img width="75" th:src="@{img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -136,15 +137,15 @@
         <div id="contenido">
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
-                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{img/logo.png}" />
+                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -181,7 +182,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
-                                        id="avatar-header" />
+                                        id="avatar-header">
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
@@ -189,7 +190,7 @@
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
-                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                     </form>
                                 </div>
                             </li>
@@ -229,32 +230,6 @@
                                 <input class="form-control me-2" type="search" placeholder="Buscar..."
                                     aria-label="Buscar" id="search-input">
                             </form>
-                            <script>
-                                $(document).ready(function () {
-                                    // Obtener los elementos de la lista de materiales
-                                    var materiales = $('.material');
-
-                                    // Manejar la presentación de resultados cuando se envía el formulario
-                                    $('#search-form').keyup(function (event) {
-                                        event.preventDefault();
-                                        var busqueda = $('#search-input').val().toLowerCase();
-
-                                        // Filtrar la lista de materiales para obtener los resultados
-                                        var resultados = materiales.filter(function () {
-                                            var descripcion = $(this).find('.cover').text().toLowerCase();
-                                            return descripcion.includes(busqueda);
-                                        });
-
-                                        // Ocultar todos los elementos de la lista de materiales y mostrar solo los resultados
-                                        materiales.hide();
-                                        resultados.show();
-
-                                    });
-
-                                    // Mostrar todos los elementos de la lista de materiales al cargar la página
-                                    materiales.show();
-                                });
-                            </script>
                             <!--TABLA RECETAS-->
                             <div class="table-responsive"
                                 style="display: flex; flex-wrap: wrap; flex-direction: row; margin-top: 3%; align-items: stretch;">

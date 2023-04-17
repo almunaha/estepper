@@ -29,78 +29,78 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
             <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}">
-            <ul>
-                <li>
-                    <a th:href="@{/}">
-                        <i class="fa-solid fa-house"></i>
-                        <span class="nombre-enlaces">Inicio</span>
-                    </a>
-                </li>
+                <ul>
+                    <li>
+                        <a th:href="@{/}">
+                            <i class="fa-solid fa-house"></i>
+                            <span class="nombre-enlaces">Inicio</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a th:href="@{/cuaderno}">
-                        <i class="fa-solid fa-pen"></i>
-                        <span class="nombre-enlaces">Cuaderno</span>
-                    </a>
-                </li>
+                    <li>
+                        <a th:href="@{/cuaderno}">
+                            <i class="fa-solid fa-pen"></i>
+                            <span class="nombre-enlaces">Cuaderno</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a th:href="@{/actividades}">
-                        <i class="fa-solid fa-person-hiking"></i>
-                        <span class="nombre-enlaces">Actividades</span>
-                    </a>
-                </li>
+                    <li>
+                        <a th:href="@{/actividades}">
+                            <i class="fa-solid fa-person-hiking"></i>
+                            <span class="nombre-enlaces">Actividades</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a th:href="@{/alimentacion}">
-                        <i class="fa-solid fa-carrot"></i>
-                        <span class="nombre-enlaces">Alimentación</span>
-                    </a>
-                </li>
+                    <li>
+                        <a th:href="@{/alimentacion}">
+                            <i class="fa-solid fa-carrot"></i>
+                            <span class="nombre-enlaces">Alimentación</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a th:href="@{'/materiales/' + ${user.id}}">
-                        <i class="fa-solid fa-folder-open"></i>
-                        <span class="nombre-enlaces">Materiales</span>
-                    </a>
-                </li>
+                    <li>
+                        <a th:href="@{'/materiales/' + ${user.id}}">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <span class="nombre-enlaces">Materiales</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a th:href="@{'/progreso/' + ${user.id}}">
-                        <i class="fa-solid fa-chart-line"></i>
-                        <span class="nombre-enlaces">Progreso</span>
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/chat}">
-                        <i class="fa-solid fa-people-group"></i>
-                        <span class="nombre-enlaces">Mi grupo</span>
-                    </a>
-                </li>
+                    <li>
+                        <a th:href="@{'/progreso/' + ${user.id}}">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span class="nombre-enlaces">Progreso</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/chat}">
+                            <i class="fa-solid fa-people-group"></i>
+                            <span class="nombre-enlaces">Mi grupo</span>
+                        </a>
+                    </li>
 
-            </ul>
+                </ul>
             </div>
             <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">
                 <ul>
                     <li>
-                      <a th:href="@{/}">
-                        <i class="fa-solid fa-house"></i>
-                        <span class="nombre-enlaces">Inicio</span>
-                      </a>
+                        <a th:href="@{/}">
+                            <i class="fa-solid fa-house"></i>
+                            <span class="nombre-enlaces">Inicio</span>
+                        </a>
                     </li>
-            
+
                     <li>
-                      <a th:href="@{/actividades}">
-                        <i class="fa-solid fa-person-hiking"></i>
-                        <span class="nombre-enlaces">Actividades</span>
-                      </a>
+                        <a th:href="@{/actividades}">
+                            <i class="fa-solid fa-person-hiking"></i>
+                            <span class="nombre-enlaces">Actividades</span>
+                        </a>
                     </li>
-                  </ul>
+                </ul>
             </div>
 
             <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Administrador)}">
@@ -111,7 +111,7 @@
                             <span class="nombre-enlaces">Usuarios</span>
                         </a>
                     </li>
-    
+
                     <li>
                         <a href="#">
                             <i class="fa-solid fa-envelope"></i>
@@ -124,7 +124,7 @@
         </div>
 
         <!-- MENÚ MÓVIL -->
-        <div class="menu-movil" th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}" >
+        <div class="menu-movil" th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}">
 
             <a th:href="@{/}">
                 <i class="fa-solid fa-house"></i>
@@ -139,8 +139,8 @@
                 <i class="fa-solid fa-address-card"></i>
             </a>
 
-        </div>  
-        
+        </div>
+
         <div class="menu-movil" th:if="${user instanceof T(com.estepper.estepper.model.entity.Administrador)}">
 
             <a th:href="@{/}">
@@ -152,7 +152,7 @@
 
         </div>
 
-        <div class="menu-movil"  th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}">
+        <div class="menu-movil" th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}">
 
             <a th:href="@{/}">
                 <i class="fa-solid fa-house"></i>
@@ -186,15 +186,15 @@
         <div id="contenido">
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
-    
+
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -206,7 +206,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil"id="avatar-header" /> 
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header">
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -214,7 +214,7 @@
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
                         </li>
@@ -224,42 +224,46 @@
             </nav>
 
             <div class="container" style="padding-top: 75px;">
-                <div style="margin-right: 10%; margin-left: 10%; margin-top: 4%;" class="bg-white border border-1 p-5 rounded-4">
-                <div>
-                    <h3 style="text-align: center; margin-bottom: 25px;">Editar perfil</h3>
+                <div style="margin-right: 10%; margin-left: 10%; margin-top: 4%;"
+                    class="bg-white border border-1 p-5 rounded-4">
+                    <div>
+                        <h3 style="text-align: center; margin-bottom: 25px;">Editar perfil</h3>
+                    </div>
+                    <div style="display:flex; justify-content: center;" class="row">
+                        <div class="col-md-8">
+                            <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${user.id}}"
+                                th:object="${user}">
+                                <div class="mb-3">
+                                    <label class="form-label">Alias</label>
+                                    <input type="text" th:field="*{nickname}" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Correo</label>
+                                    <input type="email" th:field="*{email}" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" placeholder="**********"
+                                        th:field="*{contrasenia}">
+                                </div>
+
+                                <div style="display: flex; justify-content: center;">
+                                    <a th:href="@{'/mostrarperfil/' + ${user.id}}" class="btn mt-4" id="btn-cancel"
+                                        style="margin-right: 15px;">Cancelar</a>
+                                    <button class="btn mt-4" id="btn-edit" type="submit">Guardar</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
-                <div style="display:flex; justify-content: center;" class="row">
-                <div class="col-md-8">
-                <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${user.id}}" th:object="${user}">
-                    <div class="mb-3">
-                        <label class="form-label">Alias</label>
-                        <input type="text" th:field="*{nickname}" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Correo</label>
-                        <input type="email" th:field="*{email}" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" placeholder="**********" th:field="*{contrasenia}"/>
-                    </div>
-
-                    <div style="display: flex; justify-content: center;">
-                        <a th:href="@{'/mostrarperfil/' + ${user.id}}" class="btn mt-4" id="btn-cancel" style="margin-right: 15px;">Cancelar</a>
-                       <button class="btn mt-4" id="btn-edit" type="submit">Guardar</button>
-                    </div>
-
-                </form>
             </div>
 
         </div>
-        </div>
     </div>
-
-</div>
-</div>
 
 </body>
 

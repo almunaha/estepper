@@ -1,5 +1,6 @@
 package com.estepper.estepper.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
+
+import com.estepper.estepper.model.entity.MensajeAdmin;
 import com.estepper.estepper.model.entity.Notificacion;
+
 import com.estepper.estepper.model.entity.Usuario;
 import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.Administrador;
@@ -25,7 +29,9 @@ import com.estepper.estepper.model.entity.Participante;
 
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.service.ActividadService;
+import com.estepper.estepper.service.AdministradorService;
 import com.estepper.estepper.service.AlimentacionService;
+import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.UsuarioService;
@@ -68,6 +74,12 @@ public class AdminController {
     private ParticipanteService participante;
 
     @Autowired
+    private CoordinadorService coordinador;
+
+    @Autowired
+    private AdministradorService administrador;
+
+    @Autowired
     private AlimentacionService alimentacion;
 
     @Autowired
@@ -100,10 +112,15 @@ public class AdminController {
                 materialS.deleteByParticipante(p);
                 ses.deleteByParticipante(p);
                 obj.deleteByParticipante(p);
+                obj.deleteAguaByParticipante(p);
+                obj.deleteDescansoByParticipante(p);
+                obj.deleteEjercicioByParticipante(p);
+                obj.deleteEstadoAnimoByParticipante(p);
                 pro.deleteByParticipante(p);
                 alimentacion.deleteByParticipante(p);
                 f.deleteByParticipante(p);
                 mensajeS.deleteByParticipante(p);
+                mensajeS.deleteByParticipanteMensajePrivado(p);
                 invitacion.eliminarPorParticipante(p); // invitacionesPart
                 // eliminar asistencia y aumentar plazas
                 List<Actividad> actividades = acti.asistenciaParticipante(id);
@@ -131,12 +148,14 @@ public class AdminController {
                 mensajeS.deleteByCoordinadorMensajePrivado(c);
                 obs.deleteByCoordinador(c);
                 List<Grupo> listgrupos = grupoS.getGrupos();
+               // Coordinador c = coordinador.getCoordinador(id); VER CUÁL DE LOS DOS ERA EL BUENO
                 for (int i = 0; i < listgrupos.size(); i++) {
                     if (listgrupos.get(i).getIdCoordinador() == id) {
                         materialS.deleteByGrupo(listgrupos.get(i));
                         mensajeS.deleteByGrupo(listgrupos.get(i));
                         obs.deleteByGrupo(listgrupos.get(i));
                         grupoS.delete(listgrupos.get(i).getId());
+                        mensajeS.deleteByCoordinadorMensajePrivado(c);
 
                         // grupoS.delete(id);
                     }
@@ -238,4 +257,49 @@ public class AdminController {
         return lista;
     }
 
+    @PostMapping("/mensajesAdmin/guardar/{idUsuario}")
+    public String guardarMensajeAdmin(@ModelAttribute("mensajeAdmin") MensajeAdmin elmensajeAdmin,
+            @PathVariable("idUsuario") Integer idUsuario) {
+        
+        Usuario u = usuarioLogueado();
+        Administrador a = (Administrador) u;
+        
+        elmensajeAdmin.setAdministrador(a);
+        elmensajeAdmin.setEmisor(u);
+        elmensajeAdmin.setFechayHoraEnvio(LocalDateTime.now());
+        elmensajeAdmin.setUsuario(usuario.findById(idUsuario).get());
+
+        mensajeS.saveMensajeAdmin(elmensajeAdmin);
+
+       /*  if (getUsuario() instanceof Coordinador)
+            return "redirect:/chatPrivado/{idParticipante}";
+        else if (getUsuario() instanceof Participante)
+            return "redirect:/chat";*/
+        return "redirect:/mensajesAdmin";
+    }
+
+    @PostMapping("/mensajesAdmin2/guardar/{idAdministrador}")
+    public String guardarMensajeAdmin2(@ModelAttribute("mensajeAdmin") MensajeAdmin elmensajeAdmin,
+            @PathVariable("idAdministrador") Integer idAdministrador) {
+        
+        Usuario u = usuarioLogueado();
+        Administrador a = administrador.getAdministrador(idAdministrador);
+        
+        elmensajeAdmin.setAdministrador(a);
+        elmensajeAdmin.setEmisor(u);
+        elmensajeAdmin.setFechayHoraEnvio(LocalDateTime.now());
+        elmensajeAdmin.setUsuario(u);
+        mensajeS.saveMensajeAdmin(elmensajeAdmin);
+
+        if(u instanceof Coordinador){
+            return "redirect:/chatCordAdmin/{idAdministrador}";
+        }
+        else{
+            return "redirect:/chatPartAdmin/{idAdministrador}";
+        }
+
+     
+    }
+
+    
 }

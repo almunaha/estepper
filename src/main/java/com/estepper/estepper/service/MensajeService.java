@@ -2,10 +2,12 @@ package com.estepper.estepper.service;
 
 import java.util.List;
 
+import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Mensaje;
 import com.estepper.estepper.model.entity.MensajePrivado;
+import com.estepper.estepper.model.entity.MensajeAdmin;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
 
@@ -24,4 +26,12 @@ public interface MensajeService {
     public List<MensajePrivado> obtenerMensajesPrivados(Participante participante);
     public void deleteByParticipanteMensajePrivado(Participante p);
     public void deleteByCoordinadorMensajePrivado(Coordinador c);
+
+    //MENSAJE ADMINISTRADOR
+    public MensajeAdmin getMensajeAdmin(Integer id);
+    public void saveMensajeAdmin(MensajeAdmin mensaje);
+    public List<MensajeAdmin> obtenerMensajesAdmin(Administrador administrador);
+    public List<MensajeAdmin> obtenerMensajesAdminyUsuario(Administrador administrador, Usuario usuario);
+    public void deleteByUsuarioMensajeAdmin(Usuario u);
+    //public void deleteByAdministradorMensajeAdmin(Coordinador c);
 }

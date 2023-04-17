@@ -21,13 +21,13 @@ class EstepperApplicationTests {
 	@Test
 	public void crearAdministrador() {
 		usuarioRepo.save(new Administrador(0, 333, "Javier", "javier@ucm.es", hash.encode("javierpass"),
-				Estado.ALTA));
+				Estado.ALTA,"/img/p1.png"));
 	}
 
 	@Test
 	public void crearCoordinador() {
 		usuarioRepo.save(new Coordinador(0, 222, "Mercedes", "proyectoestepper@gmail.com", hash.encode("mercedespass"),
-						Estado.ALTA,"/img/p1.png"));
+						Estado.ALTA,"/img/p1.png",3));
 	}
 
 

@@ -31,7 +31,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -74,15 +74,15 @@
         <div id="contenido">
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
 
@@ -95,7 +95,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header">
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -103,7 +103,7 @@
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
                         </li>
@@ -132,8 +132,8 @@
                     <form class="form-perfil" method="post" th:action="@{'/process_actfisica/' + ${participante.id}}"
                         th:object="${actfisica}">
 
-                        <div><label class="col-20 col-form-label">
-                                <h4>ACTIVIDAD FÍSICA VIGOROSA (A.F.V)</h4>
+                        <div><label style="font-size: large;" class="col-20 col-form-label">
+                                ACTIVIDAD FÍSICA VIGOROSA (A.F.V)
                             </label></div>
                         <div><label class="col-20 col-form-label">Piense acerca de todas aquellas actividades vigorosas
                                 que usted realizó en los últimos 7 días. Actividades vigorosas son las que requieren un
@@ -145,30 +145,30 @@
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº días/semana: </label>
 
-                            <input id="vecesafv" type="number" th:field="*{vecesafv}" class="form-control" />
+                            <input id="vecesafv" type="number" th:field="*{vecesafv}" class="form-control">
                         </div>
                         <label class="col-20 col-form-label">2.- ¿Cuánto tiempo en total usualmente le tomó realizar
                             A.F.V. en uno de esos días que las realizó?</label>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº horas/día: </label>
 
-                            <input id="horaafv" type="number" th:field="*{horaafv}" class="form-control" />
+                            <input id="horaafv" type="number" th:field="*{horaafv}" class="form-control">
                         </div>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº minutos/día: </label>
 
                             <input style="border-color: blue;" id="minafv" type="number" th:field="*{minafv}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Vigorosa METS-minuto/semana: </label>
 
                             <input style="border-color: blue;" id="metsafv" type="number" th:field="*{metsafv}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
 
-                        <div><label class="col-20 col-form-label">
-                                <h4>ACTIVIDAD FÍSICA MODERADA (A.F.M)</h4>
+                        <div><label style="font-size: large;" class="col-20 col-form-label">
+                                ACTIVIDAD FÍSICA MODERADA (A.F.M)
                             </label></div>
                         <div><label class="col-20 col-form-label">Piense acerca de todas aquellas actividades vigorosas
                                 que usted realizó en los últimos 7 días. Actividades moderadas son las que requieren un
@@ -180,30 +180,30 @@
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº días/semana: </label>
 
-                            <input id="vecesafm" type="number" th:field="*{vecesafm}" class="form-control" />
+                            <input id="vecesafm" type="number" th:field="*{vecesafm}" class="form-control">
                         </div>
                         <label class="col-20 col-form-label">4.- Usualmente, ¿cuánto tiempo dedica usted en uno de esos
                             días haciendo A.F.M.? </label>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº horas/día: </label>
 
-                            <input id="horaafm" type="number" th:field="*{horaafm}" class="form-control" />
+                            <input id="horaafm" type="number" th:field="*{horaafm}" class="form-control">
                         </div>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº minutos/día: </label>
 
                             <input style="border-color: blue;" id="minafm" type="number" th:field="*{minafm}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Moderada METS-minuto/semana: </label>
 
                             <input style="border-color: blue;" id="metsafm" type="number" th:field="*{metsafm}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
 
-                        <div><label class="col-20 col-form-label">
-                                <h4>CAMINANDO</h4>
+                        <div><label style="font-size: large;" class="col-20 col-form-label">
+                                CAMINANDO
                             </label></div>
                         <div><label class="col-20 col-form-label">Piense acerca del tiempo que usted dedicó a caminar en
                                 los últimos 7 días. Esto incluye trabajo en la casa, caminatas para ir de un sitio a
@@ -214,32 +214,32 @@
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº días/semana: </label>
 
-                            <input id="vecescaminar" type="number" th:field="*{vecescaminar}" class="form-control" />
+                            <input id="vecescaminar" type="number" th:field="*{vecescaminar}" class="form-control">
                         </div>
                         <label class="col-20 col-form-label">6.- Usualmente, ¿durante cuánto tiempo caminó, un día
                             cualquiera? </label>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº horas/día: </label>
 
-                            <input id="horacaminar" type="number" th:field="*{horacaminar}" class="form-control" />
+                            <input id="horacaminar" type="number" th:field="*{horacaminar}" class="form-control">
                         </div>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº minutos/día: </label>
 
                             <input style="border-color: blue;" id="mincaminar" type="number" th:field="*{mincaminar}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Caminar METS-minuto/semana: </label>
 
                             <input style="border-color: blue;" id="metscaminar" type="number" th:field="*{metscaminar}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
 
 
 
-                        <div><label class="col-20 col-form-label">
-                                <h4>SENTADO</h4>
+                        <div><label style="font-size: large;" class="col-20 col-form-label">
+                                SENTADO
                             </label></div>
                         <div><label class="col-20 col-form-label">La última pregunta se refieree al tiemppo que usted
                                 permaneció sentado/a en la semana en los últimos 7 días. Incluya el tiempo sentado/a en
@@ -251,24 +251,24 @@
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº horas/día: </label>
 
-                            <input id="horasentado" type="number" th:field="*{horasentado}" class="form-control" />
+                            <input id="horasentado" type="number" th:field="*{horasentado}" class="form-control">
                         </div>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nº minutos/día: </label>
 
                             <input style="border-color: blue;" id="minsentado" type="number" th:field="*{minsentado}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
 
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">METs totales: </label>
 
                             <input style="border-color: blue;" id="metstotales" type="number" th:field="*{metstotales}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
 
-                        <label class="col-4 col-form-label">
-                            <h4>NIVEL DE ACTIVIDAD FÍSICA</h4>
+                        <label style=" font-size: large;" class="col-4 col-form-label">
+                            NIVEL DE ACTIVIDAD FÍSICA
                         </label>
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Clasificación nivel actividad física</label>

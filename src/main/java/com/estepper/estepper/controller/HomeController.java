@@ -28,8 +28,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
+import com.estepper.estepper.model.entity.FichaObjetivo;
 import com.estepper.estepper.model.entity.Progreso;
 import com.estepper.estepper.model.entity.Materiales;
+import com.estepper.estepper.model.entity.MensajeAdmin;
 import com.estepper.estepper.model.entity.Notificacion;
 import com.estepper.estepper.model.entity.ObjetivoAgua;
 import com.estepper.estepper.model.entity.ObjetivoDescanso;
@@ -50,9 +52,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.estepper.estepper.service.ParticipanteService;
+import com.estepper.estepper.service.AdministradorService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.MaterialService;
+import com.estepper.estepper.service.MensajeService;
 import com.estepper.estepper.service.NotificacionService;
 import com.estepper.estepper.service.ObjetivoService;
 
@@ -69,6 +73,9 @@ public class HomeController {
     private ParticipanteService participante;
 
     @Autowired
+    private AdministradorService administrador;
+
+    @Autowired
     private MaterialService materialS;
 
     @Autowired
@@ -77,6 +84,9 @@ public class HomeController {
     @Autowired
     private ObjetivoService obj;
 
+    @Autowired
+    private MensajeService mensaje;
+    
     @Autowired
     private NotificacionService noti;
 
@@ -93,6 +103,8 @@ public class HomeController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
+            Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+            model.addAttribute("administrador", admin);
             return "coordinador";
         }
 
@@ -100,6 +112,16 @@ public class HomeController {
             List<Usuario> lista = usuario.listadoTotal();
             lista.remove(user);
             model.addAttribute("usuarios", lista);
+
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("mensajeAdmin", new MensajeAdmin());
+
+           // MensajeAdmin menAdmin = new MensajeAdmin();
+            //List<MensajeAdmin> mensajesadmin = mensaje.obtenerMensajesAdmin(u);
+            //model.addAttribute("participante", p);
+            //model.addAttribute("messageAdmin", menAdmin);
+           // model.addAttribute("mensajesPrivados", mensajesPrivados);
+
             return "admin";
 
         } else if (user instanceof Participante) { // PARTICIPANTE
@@ -134,6 +156,8 @@ public class HomeController {
                                                                                                 // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
+                            Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+                            model.addAttribute("administrador", admin);
 
                             if (objetivoAgua == null) {
                                 objetivoAgua = new ObjetivoAgua();
@@ -185,12 +209,11 @@ public class HomeController {
                             Integer porcentajeObjetivos = contadorObjetivos * 100 / 4;
                             model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
 
-                            // para ver q poner en el porcentaje de progreso
-                            /*
-                             * FichaObjetivo fichaObjetivo =
-                             * f.getFichaObjetivo(participante.findById(u.getId()).get());
-                             * model.addAttribute("ficha", fichaObjetivo);
-                             */
+                            
+                            /*FichaObjetivo fichaObjetivo =
+                            f.getFichaObjetivo(participante.findById(u.getId()).get());
+                            model.addAttribute("ficha", fichaObjetivo);*/
+                             
 
                             return "index";
                         } else
@@ -483,4 +506,73 @@ public class HomeController {
         return null;
     }
 
+    @GetMapping("/mensajesAdmin")
+    public String mensajesAdmin(Model model) {
+
+        Usuario user = getUsuario();
+        List<Usuario> lista = usuario.listadoTotal();
+        lista.remove(user);
+        MensajeAdmin menAdmin = new MensajeAdmin();
+        Administrador admin = (Administrador) user;
+        List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin(admin);
+
+        model.addAttribute("user", user);
+        model.addAttribute("usuarios", lista);
+        model.addAttribute("mensajeAdmin", menAdmin);
+        model.addAttribute("mensajesAdmin", mensajesAdmin);
+
+        return "mensajesAdmin";
+
+    }
+
+    
+    @GetMapping("/chatCordAdmin/{id}") // vista coordinador
+    public String chatCordAdmin(@PathVariable("id") Integer idAdministrador, Model model) {
+
+        Usuario u = getUsuario();
+        model.addAttribute("user", u);
+        Administrador admin = administrador.getAdministrador(idAdministrador);
+    
+        if (u instanceof Coordinador) { // revisar esto
+
+            MensajeAdmin menAdmin = new MensajeAdmin();
+            List<MensajeAdmin> mensajesAdministrador = mensaje.obtenerMensajesAdmin(admin);
+            List<MensajeAdmin> mensajesAdminyCoordinador = mensaje.obtenerMensajesAdminyUsuario(admin, u);
+            model.addAttribute("administrador", admin);
+            model.addAttribute("messageAdmin", menAdmin);
+            model.addAttribute("mensajesAdministrador", mensajesAdministrador);
+            model.addAttribute("mensajesAdminyCoordinador", mensajesAdminyCoordinador);
+
+            return "chatCordAdmin";
+        } else
+
+            return "redirect:/";
+    }
+
+    @GetMapping("/chatPartAdmin/{id}") // vista participante --> MEZCLARLA LUEGO CO NLA DEL COORDINADOR PARA TENER SOLO 1 Y NO DOS IGUALES
+    public String chatPartAdmin(@PathVariable("id") Integer idAdministrador, Model model) {
+
+        Usuario u = getUsuario();
+        model.addAttribute("user", u);
+        Administrador admin = administrador.getAdministrador(idAdministrador);
+    
+        if (u instanceof Participante) { // revisar esto
+
+            MensajeAdmin menAdmin = new MensajeAdmin();
+            List<MensajeAdmin> mensajesAdministrador = mensaje.obtenerMensajesAdmin(admin);
+            List<MensajeAdmin> mensajesAdminyParticipante = mensaje.obtenerMensajesAdminyUsuario(admin, u);
+            model.addAttribute("administrador", admin);
+            model.addAttribute("messageAdmin", menAdmin);
+            model.addAttribute("mensajesAdministrador", mensajesAdministrador);
+            model.addAttribute("mensajesAdminyParticipante", mensajesAdminyParticipante);
+
+            return "chatPartAdmin";
+        } else
+
+            return "redirect:/";
+    }
+
+
+    
+   
 }

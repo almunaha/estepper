@@ -14,12 +14,14 @@ class PythonServiceImpl(PythonService):
     def recetasparecidas(self, want, dontwant):
         want = [str(x) for x in want]
         dontwant = [str(x) for x in dontwant]
+
         if not want:
-            return []
+            want = []
         if not dontwant:
             dontwant = []
 
         # FUNCIONES DE MACHINE LEARNING:
+
         def cosine_similarity(vector1, vector2):
             dot_product = sum(p*q for p, q in zip(vector1, vector2))
             magnitude1 = math.sqrt(sum([val**2 for val in vector1]))
@@ -186,11 +188,14 @@ class PythonServiceImpl(PythonService):
             else:
                 conteo_alimentos[alimento_id] = 1
 
-        conteo_alimentos_ordenado = sorted(conteo_alimentos.items(), key=lambda x: x[1], reverse=True)
+        conteo_alimentos_ordenado = sorted(
+            conteo_alimentos.items(), key=lambda x: x[1], reverse=True)
         if len(conteo_alimentos_ordenado) >= 4:
-            alimentos_top_4 = [alimento[0] for alimento in conteo_alimentos_ordenado[:4]]
+            alimentos_top_4 = [alimento[0]
+                               for alimento in conteo_alimentos_ordenado[:4]]
         else:
-            alimentos_top_4 = [alimento[0] for alimento in conteo_alimentos_ordenado]
+            alimentos_top_4 = [alimento[0]
+                               for alimento in conteo_alimentos_ordenado]
 
         ingredientes_want = set()
         for i in ingredientes:
@@ -203,7 +208,6 @@ class PythonServiceImpl(PythonService):
             if any(str(a) in ingredientes_want for a in i[1]):
                 recetas_want.extend(i[1])
         recetas_want = recetas_want[:6]
-
 
         cadena_unida = ','.join(recetas_want)
         cadena_unicode = unicode(cadena_unida, 'utf-8')
@@ -268,11 +272,14 @@ class PythonServiceImpl(PythonService):
             else:
                 conteo_alimentos[alimento_id] = 1
 
-        conteo_alimentos_ordenado = sorted(conteo_alimentos.items(), key=lambda x: x[1], reverse=True)
+        conteo_alimentos_ordenado = sorted(
+            conteo_alimentos.items(), key=lambda x: x[1], reverse=True)
         if len(conteo_alimentos_ordenado) >= 4:
-            alimentos_top_4 = [alimento[0] for alimento in conteo_alimentos_ordenado[:4]]
+            alimentos_top_4 = [alimento[0]
+                               for alimento in conteo_alimentos_ordenado[:4]]
         else:
-            alimentos_top_4 = [alimento[0] for alimento in conteo_alimentos_ordenado]
+            alimentos_top_4 = [alimento[0]
+                               for alimento in conteo_alimentos_ordenado]
 
         ingredientes_want = set()
         for i in ingredientes:

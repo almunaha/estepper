@@ -1,8 +1,10 @@
 package com.estepper.estepper.service;
 
+import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Mensaje;
+import com.estepper.estepper.model.entity.MensajeAdmin;
 import com.estepper.estepper.model.entity.MensajePrivado;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
@@ -12,6 +14,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.estepper.estepper.repository.MensajeAdminRepository;
 import com.estepper.estepper.repository.MensajePrivadoRepository;
 import com.estepper.estepper.repository.MensajeRepository;
 
@@ -23,6 +26,9 @@ public class MensajeServiceImpl implements MensajeService {
 
     @Autowired
     private MensajePrivadoRepository repoPrivado;
+
+    @Autowired
+    private MensajeAdminRepository repoAdmin;
 
 
     //MENSAJES GRUPALES
@@ -81,4 +87,35 @@ public class MensajeServiceImpl implements MensajeService {
     public void deleteByCoordinadorMensajePrivado(Coordinador c) {
         repoPrivado.deleteAllByCoordinador(c);
     }
+
+
+    //MENSAJES ADMINISTRADOR
+
+   @Override
+   public MensajeAdmin getMensajeAdmin(Integer id){
+       return repoAdmin.findById(id).get();
+   } 
+   
+   @Override
+   public void saveMensajeAdmin(MensajeAdmin mensaje) {
+       repoAdmin.save(mensaje);
+   }
+
+   @Override
+   public List<MensajeAdmin> obtenerMensajesAdmin(Administrador administrador){
+       return repoAdmin.findByAdministrador(administrador);
+   }
+
+   @Override
+   public List<MensajeAdmin> obtenerMensajesAdminyUsuario(Administrador administrador,Usuario usuario){
+       return repoAdmin.findByAdministradorAndUsuario(administrador,usuario);
+   }
+
+
+   @Override
+   public void deleteByUsuarioMensajeAdmin(Usuario u) {
+        repoAdmin.deleteAllByUsuario(u);
+   }
+
+
 }

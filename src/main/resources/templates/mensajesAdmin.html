@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/grupos.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+    <script src="/js/menu.js"></script>
+
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+    <!--PARA EL BUSCADOR-->
+    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!--ALERTA ELIMINAR-->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js" type="javascript"></script>
+    <script src="sweetalert2.min.js" type="javascript"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css" type="css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <title>Administración - Estepper</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <div class="d-flex">
+
+        <div id="sidebar-container">
+
+            <div class="logo">
+                <img width="75" th:src="@{/img/logo.png}" alt="">
+                <h4>Estepper</h4>
+            </div>
+
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-user-pen"></i>
+                        <span class="nombre-enlaces">Usuarios</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span class="nombre-enlaces">Mensajes</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-user-pen"></i>
+            </a>
+            <a href="#">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+
+        </div>
+
+        <div id="contenido">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img width="40" th:src="@{img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+                                <span sec:authentication="principal.nombre"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container" style="padding-top: 75px;">
+                <div class="p-4 mt-5" id="participantes">
+
+                    <div style="display: grid;justify-content: center;" class="top-admin">
+                        <h4>Tus conversaciones</h4>
+                    </div>
+
+                    <div class="conversacionesAdmin" style="display: flex;">
+                        <div class="mitadIzquierdaAdmin" style="width: 50%;">
+                            <table class="table tablePart" id="tablePart">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">idMensaje</th>
+                                        <th scope="col">idAdmin</th>
+                                        <th scope="col">idUsuario</th>
+                                        <th scope="col">Chatear</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="buscarUsuarios">
+                                    <tr th:each="lis:${mensajesAdmin}">
+                                        <td><span class="editable" th:text="${lis.id}"></span></td>
+                                        <td><span class="editable" th:text="${lis.administrador.id}"></span></td>
+                                        <td><span class="editable" th:text="${lis.usuario.id}"></span></td>
+                                        <td>
+                                            <a class="btn btn-primary"
+                                                th:attr="data-chatid=${lis.usuario.id} + '&nickname=' + ${lis.usuario.nickname}"
+                                                onclick="abrirChat(this.getAttribute('data-chatid'))">
+                                                <i title="Mensaje" class="fa-solid fa-envelope"></i>
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mitadDerechaAdmin" id="derechaAdmin"
+                            style="margin-left: 3%; width:50%; display:none">
+                            <div class="bordes-chat" style="width: 90%;">
+                                <section class="chat-area">
+                                    <header>
+                                        <h4 id="nombreDelUsuario"></h4>
+                                        <h4 id="idDelUsuario"></h4>
+                                    </header>
+                                    <div class="chat-box">
+                                        <div th:each="m : ${mensajesAdmin}" class="contenedor-mensaje mb-2">
+
+                                            <div th:if="${m.emisor.id != user.id}"
+                                                class="mensaje d-flex justify-content-start align-items-end">
+                                                <img th:src="${m.usuario.fotoParticipante}" style="width: 40px;"
+                                                    class="avatar" alt="m.usuario.nickname" />
+                                                <div class="contenido-mensaje grey ms-2 p-2">
+                                                    <div th:text="${m.usuario.nickname}" class="nickname"></div>
+                                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                                        class="fecha text-end"></div>
+                                                </div>
+                                            </div>
+                                            <div th:unless="${m.emisor.id != user.id}"
+                                                class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
+                                                <img th:src="${user.fotoParticipante}" style="width: 40px;"
+                                                    class="avatar" alt="m.user.nickname" />
+                                                <div class="contenido-mensaje green me-2 p-2">
+                                                    <div class="nickname">Yo</div>
+                                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                                        class="fecha text-end"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}"
+                                        method="post" enctype="multipart/form-data">
+                                        <div class="m-3" style="display:flex">
+                        
+                                                <div class="col-sm-10 mb-2" style="margin-left:3%">
+                                                    <input type="text" th:field="*{mensaje}" class="form-control" placeholder="Escribe un mensaje aquí ..." autocomplete="off"
+                                                        required />
+                                                </div>
+
+                                            <div class="text-center p" style="margin-left: 3%;">
+                                                <button type="submit" class="btn" id="btn-part"><i class="fa-solid fa-paper-plane"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <script>
+
+                                        function abrirChat(url) {
+                                            const [modalId, nickname] = url.split('&');
+                                            const id = modalId.split('=')[0];
+                                            const name = nickname.split('=')[1];
+
+                                            document.getElementById("idDelUsuario").innerHTML = id;
+                                            document.getElementById("nombreDelUsuario").innerHTML = name;
+
+                                            const elemento = document.getElementById('derechaAdmin');
+                                            elemento.style.display = 'block';
+
+                                            const form = document.querySelector('#derechaAdmin form');
+                                            form.action = '/mensajesAdmin/guardar/' + id;
+                                        }
+
+
+                                    </script>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalNuevoMensaje" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuevo mensaje</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}" method="post"
+                        enctype="multipart/form-data">
+                        <div class="m-3">
+
+                            <div class="text-center p">
+                                <button type="submit" class="btn" id="btn-part">Enviar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

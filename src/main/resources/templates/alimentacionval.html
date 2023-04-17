@@ -30,7 +30,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="">
                 <h4>Estepper</h4>
             </div>
 
@@ -74,15 +74,15 @@
         <div id="contenido">
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                    id="avatar-header" onclick="desplegable()">
+                <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -94,7 +94,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+                                <img width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header">
                                 <span sec:authentication="principal.nombre"></span>
                             </a>
 
@@ -102,7 +102,7 @@
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
                         </li>
@@ -143,7 +143,7 @@
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosaceite" type="number"
-                                    th:field="*{ptosaceite}" class="form-control" readonly />
+                                    th:field="*{ptosaceite}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -151,13 +151,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas cucharadas de
                                     aceite de oliva consume en total al día? </label>
 
-                                <input id="racaceite" type="number" th:field="*{racaceite}" class="form-control" />
+                                <input id="racaceite" type="number" th:field="*{racaceite}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracaceite" type="number"
-                                    th:field="*{ptosracaceite}" class="form-control" readonly />
+                                    th:field="*{ptosracaceite}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -165,13 +165,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas raciones de
                                     verdura u hortalizas consume al día? </label>
 
-                                <input id="racverdura" type="number" th:field="*{racverdura}" class="form-control" />
+                                <input id="racverdura" type="number" th:field="*{racverdura}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracverdura" type="number"
-                                    th:field="*{ptosracverdura}" class="form-control" readonly />
+                                    th:field="*{ptosracverdura}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -179,13 +179,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas piezas de fruta
                                     consume al día? </label>
 
-                                <input id="racfruta" type="number" th:field="*{racfruta}" class="form-control" />
+                                <input id="racfruta" type="number" th:field="*{racfruta}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracfruta" type="number"
-                                    th:field="*{ptosracfruta}" class="form-control" readonly />
+                                    th:field="*{ptosracfruta}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -193,13 +193,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas raciones de
                                     carne roja/hamburguesa, salchicha o embutidos consume al día? </label>
 
-                                <input id="raccarne" type="number" th:field="*{raccarne}" class="form-control" />
+                                <input id="raccarne" type="number" th:field="*{raccarne}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosraccarne" type="number"
-                                    th:field="*{ptosraccarne}" class="form-control" readonly />
+                                    th:field="*{ptosraccarne}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -208,13 +208,13 @@
                                     mantequilla, margarina o nata consume al día? </label>
 
                                 <input id="racmantequilla" type="number" th:field="*{racmantequilla}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracmantequilla" type="number"
-                                    th:field="*{ptosracmantequilla}" class="form-control" readonly />
+                                    th:field="*{ptosracmantequilla}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -222,13 +222,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas bebidas
                                     carbonatadas y/o azucaradas consume al día? </label>
 
-                                <input id="racbebidas" type="number" th:field="*{racbebidas}" class="form-control" />
+                                <input id="racbebidas" type="number" th:field="*{racbebidas}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracbebidas" type="number"
-                                    th:field="*{ptosracbebidas}" class="form-control" readonly />
+                                    th:field="*{ptosracbebidas}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -236,13 +236,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Bebe vino? ¿Cuanto
                                     consume a la semana? </label>
 
-                                <input id="racvino" type="number" th:field="*{racvino}" class="form-control" />
+                                <input id="racvino" type="number" th:field="*{racvino}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracvino" type="number"
-                                    th:field="*{ptosracvino}" class="form-control" readonly />
+                                    th:field="*{ptosracvino}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -250,14 +250,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas raciones de
                                     legumbres consume a la semana? </label>
 
-                                <input id="raclegumbres" type="number" th:field="*{raclegumbres}"
-                                    class="form-control" />
+                                <input id="raclegumbres" type="number" th:field="*{raclegumbres}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosraclegumbres" type="number"
-                                    th:field="*{ptosraclegumbres}" class="form-control" readonly />
+                                    th:field="*{ptosraclegumbres}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -265,13 +264,13 @@
                                 <label style="margin-right: 10%;" class="col-6 col-form-label">¿Cuántas raciones de
                                     pescado/marisco consume a la semana? </label>
 
-                                <input id="racpescado" type="number" th:field="*{racpescado}" class="form-control" />
+                                <input id="racpescado" type="number" th:field="*{racpescado}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracpescado" type="number"
-                                    th:field="*{ptosracpescado}" class="form-control" readonly />
+                                    th:field="*{ptosracpescado}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -280,13 +279,13 @@
                                     repostería comercial a la semana? </label>
 
                                 <input id="racreposteria" type="number" th:field="*{racreposteria}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracreposteria" type="number"
-                                    th:field="*{ptosracreposteria}" class="form-control" readonly />
+                                    th:field="*{ptosracreposteria}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -295,13 +294,13 @@
                                     frutos secos a la semana? </label>
 
                                 <input id="racfrutosecos" type="number" th:field="*{racfrutosecos}"
-                                    class="form-control" />
+                                    class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracfrutosecos" type="number"
-                                    th:field="*{ptosracfrutosecos}" class="form-control" readonly />
+                                    th:field="*{ptosracfrutosecos}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -318,7 +317,7 @@
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptoscarneblanca" type="number"
-                                    th:field="*{ptoscarneblanca}" class="form-control" readonly />
+                                    th:field="*{ptoscarneblanca}" class="form-control" readonly>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -328,13 +327,13 @@
                                     salsa de tomate, ajo, cebolla o puerro elaborada a fuego lento con aceite de oliva
                                     (sofrito)? </label>
 
-                                <input id="racsofrito" type="number" th:field="*{racsofrito}" class="form-control" />
+                                <input id="racsofrito" type="number" th:field="*{racsofrito}" class="form-control">
                             </div>
                             <div class="input-group mt-2">
                                 <label style="margin-left: 10%;" class="col-4 col-form-label">Puntos: </label>
 
                                 <input style="border-color: blue;" id="ptosracsofrito" type="number"
-                                    th:field="*{ptosracsofrito}" class="form-control" readonly />
+                                    th:field="*{ptosracsofrito}" class="form-control" readonly>
                             </div>
                         </div>
                         <div class="input-group mt-2">
@@ -342,7 +341,7 @@
                             </label>
 
                             <input style="border-color: blue;" id="puntuacion" type="number" th:field="*{puntuacion}"
-                                class="form-control" readonly />
+                                class="form-control" readonly>
                         </div>
                         <div class="input-group mt-2">
                             <label style="font-weight: bold; color:blue;" class="col-4 col-form-label">Adherencia a la

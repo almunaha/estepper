@@ -575,9 +575,9 @@ public class ParticipanteController {
                 act.guardar(actividad);
             }
 
-            //eliminar notificaciones
+            // eliminar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(p);
-            for (Notificacion notif: notificaciones){
+            for (Notificacion notif : notificaciones) {
                 noti.eliminar(notif);
             }
 
@@ -1414,6 +1414,7 @@ public class ParticipanteController {
             @RequestParam(required = false) String[] dontwant, Model model) {
         Usuario u = getUsuario();
         model.addAttribute("user", u);
+        List<Receta> listaRecetas = new ArrayList<>();
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             if (want.length == 0)
                 model.addAttribute("nohaywants", "No ha seleccionado ningún ingrediente que busque");
@@ -1423,7 +1424,6 @@ public class ParticipanteController {
                 String[] recetasArray = service.recetasparecidas(want, dontwant);
                 recetas = Arrays.asList(recetasArray);
                 String[] recetaArray = recetas.get(0).split(",");
-                List<Receta> listaRecetas = new ArrayList<>();
                 for (String idReceta : recetaArray) {
                     if (!idReceta.equals("")) {
                         Receta receta = alimentacion.getRecetasById(Integer.parseInt(idReceta));
@@ -1432,9 +1432,9 @@ public class ParticipanteController {
                         }
                     }
                 }
-                model.addAttribute("listaRecetas", listaRecetas);
-            }
 
+            }
+            model.addAttribute("listaRecetas", listaRecetas);
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
