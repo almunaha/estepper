@@ -139,7 +139,7 @@
     <div id="contenido">
 
       <div class="header-movil">
-        <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+        <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
           id="avatar-header" onclick="desplegable()" />
         <img width="35" th:src="@{img/logo.png}" />
         <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
@@ -168,7 +168,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil" id="avatar-header" />
+                  <img width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil" id="avatar-header" />
                   <span sec:authentication="principal.nombre"></span>
                 </a>
 
@@ -198,14 +198,14 @@
             <div class="bordes-chat" style="width: 90%;">
                 <section class="chat-area">
                     <header>
-                        <img th:src="${administrador.fotoParticipante}" alt="">
+                        <img th:src="${administrador.fotoUsuario}" alt="">
                         <h4 th:text="${administrador.nickname}"></h4>
                     </header>
                     <div class="chat-box">
                         <div th:each="m : ${mensajesAdminyParticipante}" class="contenedor-mensaje mb-2">
                             <div th:if="${m.emisor.id != user.id}"
                                 class="mensaje d-flex justify-content-start align-items-end">
-                                <img th:src="${m.emisor.fotoParticipante}" style="width: 40px;"class="avatar"
+                                <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;"class="avatar"
                                     alt="m.emisor.nickname" />
                                 <div class="contenido-mensaje grey ms-2 p-2">
                                     <div th:text="${m.emisor.nickname}" class="nickname"></div>
@@ -216,7 +216,7 @@
                             </div>
                             <div th:unless="${m.emisor.id != user.id}"
                                 class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
-                                <img th:src="${user.fotoParticipante}" style="width: 40px;" class="avatar"
+                                <img th:src="${user.fotoUsuario}" style="width: 40px;" class="avatar"
                                     alt="m.usuario.nickname" />
                                 <div class="contenido-mensaje green me-2 p-2">
                                     <div class="nickname">Yo</div>

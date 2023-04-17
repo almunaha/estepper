@@ -116,7 +116,7 @@ public class GruposController {
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
-                part.update(participante.edad, participante.getSexo(), participante.getFotoParticipante(), g,
+                part.update(participante.edad, participante.getSexo(), participante.getFotoUsuario(), g,
                         participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
@@ -160,7 +160,7 @@ public class GruposController {
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
-                part.update(participante.getEdad(), participante.getSexo(), participante.getFotoParticipante(), g,
+                part.update(participante.getEdad(), participante.getSexo(), participante.getFotoUsuario(), g,
                         participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 

@@ -26,18 +26,20 @@ public class Usuario implements Serializable{
     private String nickname;
     private String email;
     private String contrasenia;
+    private String fotoUsuario;
 
     @Enumerated(value = EnumType.STRING)
     @Column(columnDefinition = "ENUM('BAJA', 'ALTA')")
     private Estado estadoCuenta;
     
-    public Usuario(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta) {
+    public Usuario(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta, String fotoUsuario) {
         this.id = id;
         this.codigo = codigo;
         this.nickname = nickname;
         this.email = email;
         this.contrasenia = contrasenia;
         this.estadoCuenta = estadoCuenta;
+        this.fotoUsuario = fotoUsuario;
     }
     
     public Usuario() {
@@ -79,6 +81,14 @@ public class Usuario implements Serializable{
     }
     public void setEstadoCuenta(Estado estadoCuenta) {
         this.estadoCuenta = estadoCuenta;
+    }
+
+    public String getFotoUsuario() {
+        return fotoUsuario;
+    }
+
+    public void setFotoUsuario(String fotoUsuario) {
+        this.fotoUsuario = fotoUsuario;
     }
 }
 

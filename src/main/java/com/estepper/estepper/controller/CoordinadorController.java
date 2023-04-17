@@ -153,7 +153,7 @@ public class CoordinadorController {
             Participante usuario = part.findById(idP).get();
             model.addAttribute("user", getUsuario());
 
-            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), g, usuario.getAsistencia(),
+            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoUsuario(), g, usuario.getAsistencia(),
                     usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
                     usuario.getPerdidacmcintura(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
@@ -193,7 +193,7 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
             Grupo g = grupo.getGrupo(idG);
 
-            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), null,
+            part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoUsuario(), null,
                     usuario.getAsistencia(),
                     usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
                     usuario.getPerdidacmcintura(), idP);

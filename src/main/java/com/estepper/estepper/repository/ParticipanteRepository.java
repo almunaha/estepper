@@ -33,8 +33,8 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     
     @Modifying //modifca la base de datos
     @Transactional //la consulta se ejecuta en una transacción
-    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo, p.fotoParticipante = :fotoParticipante, p.grupo = :grupo, p.asistencia = :asistencia, p.idCoordinador = :idCoor, p.perdidaDePeso = :perdidadepeso, p.sesionesCompletas = :sesionescompletas, p.perdidacmcintura = :percmcintura WHERE p.id = :id")
-    void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Double perdidadepeso, Integer sesionescompletas, Double percmcintura, Integer id);
+    @Query("UPDATE Participante p SET p.edad = :edad, p.sexo = :sexo, p.fotoUsuario = :fotoUsuario, p.grupo = :grupo, p.asistencia = :asistencia, p.idCoordinador = :idCoor, p.perdidaDePeso = :perdidadepeso, p.sesionesCompletas = :sesionescompletas, p.perdidacmcintura = :percmcintura WHERE p.id = :id")
+    void update(Integer edad, Sexo sexo, String fotoUsuario, Grupo grupo, Integer asistencia, Integer idCoor, Double perdidadepeso, Integer sesionescompletas, Double percmcintura, Integer id);
 
     @Query("SELECT p FROM Participante p WHERE p.idCoordinador = :idCoordinador OR p.estadoCuenta = :estadoCuenta")
     public Page<Participante> findByIdCoordinadonOrEstado(Pageable pageable, Integer idCoordinador, Estado estadoCuenta);

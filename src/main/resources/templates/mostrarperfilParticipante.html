@@ -100,7 +100,7 @@
         </div>
         <div id="contenido" style="background-color:#afc0cb; ">
             <div class="header-movil">
-                <img class="menu-icon" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                <img class="menu-icon" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
                     id="avatar-header" onclick="desplegable()">
                 <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
@@ -143,7 +143,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    <img width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil"
                                         id="avatar-header">
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
@@ -167,7 +167,7 @@
                 <div class="container">
                     <div class="cardi2 mt-3">
                         <div class="imagenPerfil">
-                            <img width="100" th:src="${user.fotoParticipante}" alt="imagenPerfil">
+                            <img width="100" th:src="${user.fotoUsuario}" alt="imagenPerfil">
                         </div>
                         <div class="col-md-8">
                             <div style="margin-top: 3%;" class="contenidoPerfil mt-10">

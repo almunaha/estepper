@@ -205,7 +205,7 @@ public class ParticipanteController {
                 if (lista.get(i).getAsistencia().equals(Asistencia.SI))
                     asistencia++;
             }
-            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), asistencia * 10,
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), asistencia * 10,
                     p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(),
                     p.getId());
             return "redirect:/sesiones";
@@ -233,7 +233,7 @@ public class ParticipanteController {
                 if (lista.get(i).getEstado().equals(EstadoSesion.COMPLETA))
                     completas++;
             }
-            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
                     p.getIdCoordinador(), p.getPerdidaDePeso(), completas, p.getPerdidacmcintura(), p.getId());
             return "redirect:/sesiones";
         } else
@@ -745,7 +745,7 @@ public class ParticipanteController {
                 pesoPerdido = progreso.getDato() - pe;
 
             p.setPerdidaDePeso(pesoPerdido);
-            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
                     p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
 
             pro.guardar(progreso);
@@ -779,7 +779,7 @@ public class ParticipanteController {
                 cmCinturaPerdido = progreso.getDato() - pe;
 
             p.setPerdidacmcintura(cmCinturaPerdido);
-            participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), p.getGrupo(), p.getAsistencia(),
+            participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
                     p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), cmCinturaPerdido, p.getId());
 
             pro.guardar(progreso);

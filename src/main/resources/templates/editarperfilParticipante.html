@@ -98,7 +98,7 @@
         </div>
         <div id="contenido">
             <div class="header-movil">
-                <img class="menu-icon" width="35" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                <img class="menu-icon" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
                     id="avatar-header" onclick="desplegable()">
                 <img width="35" th:src="@{/img/logo.png}" alt="">
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
@@ -143,7 +143,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    <img width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil"
                                         id="avatar-header">
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
@@ -170,7 +170,7 @@
                     </div>
                     <div class="row" style=" display: flex; flex-direction: row; align-items: center;">
                         <!--IMAGEN -->
-                        <img id="foto-perfil" th:src="${participante.fotoParticipante}" class="w-25" alt="">
+                        <img id="foto-perfil" th:src="${participante.fotoUsuario}" class="w-25" alt="">
 
                         <!--FORMULARIO -->
                         <div class="col-md-8">
@@ -216,7 +216,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Avatar</label>
-                                    <select id="avatar" class="form-select" th:field="*{fotoParticipante}">
+                                    <select id="avatar" class="form-select" th:field="*{fotoUsuario}">
                                         <option value="/img/p1.png">Sin avatar</option>
                                         <option value="/img/avatar1.png">Avatar 1</option>
                                         <option value="/img/avatar2.png">Avatar 2</option>

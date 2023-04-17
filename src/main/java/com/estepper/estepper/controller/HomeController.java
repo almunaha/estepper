@@ -324,7 +324,7 @@ public class HomeController {
             if (orig instanceof Participante) { // si es un participante
                 Participante part = participante.findById(id).get();
 
-                participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), part.getGrupo(),
+                participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), part.getGrupo(),
                         part.getAsistencia(),
                         part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(),
                         part.getPerdidacmcintura(), id);
@@ -380,7 +380,7 @@ public class HomeController {
 
         user.setCodigo(elcodigo);
         user.setEstadoCuenta(Estado.BAJA);
-        user.setFotoParticipante("/img/p1.png");
+        user.setFotoUsuario("/img/p1.png");
 
         usuario.guardar(user);
 
