@@ -1,4 +1,78 @@
+function showAlertWithLink(link) {
+    var alertMessage = "El usuario aún no pertenece a ningún grupo";
+    var linkText = "Haga click aquí para agregarlo a un grupo";
+    var alertHTML = '<div>' + alertMessage + '<br><a style="color: blue;" href="' + link + '">' + linkText + '</a></div>';
+
+    $('<div></div>').html(alertHTML).dialog({
+        modal: true,
+        title: '¡Alerta!',
+        buttons: {
+            Ok: function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const btn_part = document.getElementById('btn-part1');
+    btn_part.addEventListener('click', function (e) {
+
+        const grupo = btn_part.dataset.grupo;
+        const estado = btn_part.dataset.estado;
+        const id = btn_part.dataset.id;
+        const formularios = btn_part.dataset.formularios;
+
+        if (!grupo) {
+            e.preventDefault();
+            var link = '/unirAgrupo/' + id;
+            showAlertWithLink(link);
+
+        } else if (estado === 'ALTA') {
+            e.preventDefault();
+            alert("El usuario ya está dado de alta.");
+        } else if (!formularios) {
+            e.preventDefault();
+            alert("Debe rellenar correctamente los formularios de Exploracion y Findrisc. Para entrar en el proyecto el usuario debe ser mayor de 35 años y su puntuación de Findrisc mayor a 14.");
+        }
+        else {
+            btn_part.disabled = true;
+            alert("La cuenta del usuario se ha dado de alta correctamente.");
+        }
+    });
+});
 $(document).ready(function () {
+
+    $('.eliminar').click(function () {
+        var id = $(this).data('id');
+
+        Swal.fire({
+            position: 'center',
+            title: '<h4>¿Estás seguro de eliminar la cuenta?</h4>',
+            showConfirmButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: "rgb(218, 77, 73)",
+            confirmButtonText: '<a href="/eliminarcuenta/' + id + '" id ="conf">Eliminar</a>',
+
+            didRender: function () {
+                const confirm = document.querySelector('#conf');
+
+                if (confirm) {
+                    confirm.style.color = 'white';
+                }
+            },
+
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+
+        })
+
+    });
 
     //FORMULARIO ACTFISICA.HTML
     document.getElementById('minafv').addEventListener('input', calcularmetsafv);
@@ -105,3 +179,4 @@ function myFunction() {
         alert("Usted cancelo la acción para guardar");
     }
 }
+

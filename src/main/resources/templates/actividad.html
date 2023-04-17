@@ -222,8 +222,12 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil"
+                                    <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
+                                        width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil"
                                         id="avatar-header" />
+                                    <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
+                                        width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
@@ -276,11 +280,6 @@
 
                         <h5>Ubicación</h5>
                         <div th:text="${actividad.ubicacion}"></div>
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12151.873410052962!2d-3.7478706061849993!3d40.40955187146981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227fe6494ee1b%3A0x2f7478dc20f928a3!2sP.%C2%BA%20de%20Extremadura%2C%20147%2C%2028011%20Madrid!5e0!3m2!1ses!2ses!4v1667763779015!5m2!1ses!2ses"
-                            width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-
                     </div>
 
                     <div class="asistentes">

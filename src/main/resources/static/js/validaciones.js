@@ -15,12 +15,18 @@ $(document).ready(function () {
         datoPerimetro: false,
     }
 
+    if ($("#form-editarActividad").length > 0) {
+		for (var campo in campos) {
+			campos[campo] = true;
+		}
+	}
+
     //expresiones regulares
     const expresiones = {
         nickname: /^.{3,20}/, //de 3 a 20 caracteres
         email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
         password: /^.{8,}$/, //minimo 8 caracteres -> consultar como de segura la quieren
-        nombreActividad: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{0,25}$/, //de 1 a 25 caracteres, alfanumerico
+        nombreActividad: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{0,25}$/, //de 0 a 25 caracteres, alfanumerico
     }
 
     //validar campo
@@ -80,21 +86,29 @@ $(document).ready(function () {
         }
     }
 
-    const validarPlazas = () => { //validar si las contraseñas coinciden
-        if ($('#plazas').val() <= 0 || $('#plazas').val() > 150) {
-            $('#error_plazas').show();
-            campos['plazas'] = false;
+    const validarPlazas = () => { //validar si plazas está entre 1 y 150 y si está vacío
 
-        } else {
+        if ($('#plazas').val() === '') {
             $('#error_plazas').hide();
             campos['plazas'] = true;
+        }
+
+        else {
+            if ($('#plazas').val() <= 0 || $('#plazas').val() > 150) {
+                $('#error_plazas').show();
+                campos['plazas'] = false;
+
+            } else {
+                $('#error_plazas').hide();
+                campos['plazas'] = true;
+            }
         }
     }
 
     const validarFechaRealizacion = () => { //validar si la fecha no ha pasado
         var fechaIntroducida = new Date($('#fechaRealizacion').val());
         var fechaActual = Date.now();
-        if(fechaIntroducida != null){
+        if (fechaIntroducida != null) {
             if (fechaIntroducida < fechaActual) {
                 $('#error_fechaRealizacion').show();
                 campos['fechaRealizacion'] = false;
@@ -192,9 +206,9 @@ $(document).ready(function () {
 
     //Validar formulario EDITAR ACTIVIDAD
     $("#form-editarActividad #fechaRealizacion").change(validarFormulario);
-    $("#form-editarActividad #nombreActividad").keyup(validarFormulario);
-    $("#form-editarActividad #plazas").keyup(validarFormulario);
-
+    $("#form-editarActividad #nombreActividad").on('keyup input', validarFormulario);
+    $("#form-editarActividad #plazas").on('keyup input', validarFormulario);
+    
     //validar formularios PROGRESO
     $("#form-registroPeso #fechaPeso").change(validarFormulario);
     $("#form-registroPerimetro #fechaPerimetro").change(validarFormulario);
