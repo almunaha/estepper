@@ -198,6 +198,7 @@ public class AdminController {
             coordinador.setCodigo(elcodigo);
             coordinador.setEstadoCuenta(Estado.ALTA);
             coordinador.setFotoUsuario("/img/p1.png");
+            coordinador.setIdAdministrador(usuarioLogueado().getId());
 
             usuario.guardar(coordinador);
 

@@ -73,6 +73,7 @@ import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.AlimentacionService;
+import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
@@ -98,6 +99,9 @@ public class ParticipanteController {
 
     @Autowired // inyectar recursos de la clase UsuarioService
     private UsuarioService usuario;
+
+    @Autowired
+    private CoordinadorService coordinador;
 
     @Autowired
     private SesionService ses;
@@ -206,7 +210,7 @@ public class ParticipanteController {
                     asistencia++;
             }
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), asistencia * 10,
-                    p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(),
+                    p.getIdCoordinador(),p.getIdAdministrador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(),
                     p.getId());
             return "redirect:/sesiones";
         } else
@@ -234,7 +238,7 @@ public class ParticipanteController {
                     completas++;
             }
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
-                    p.getIdCoordinador(), p.getPerdidaDePeso(), completas, p.getPerdidacmcintura(), p.getId());
+                    p.getIdCoordinador(),p.getIdAdministrador(), p.getPerdidaDePeso(), completas, p.getPerdidacmcintura(), p.getId());
             return "redirect:/sesiones";
         } else
             return "acceso";
@@ -520,6 +524,7 @@ public class ParticipanteController {
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
             Findrisc findrisc = null;
             Exploracion exploracion = null;
+            Coordinador c = (Coordinador) usuario.findById(id).get();
             for (int i = 0; i < formularios.size(); i++) {
                 if (formularios.get(i) instanceof Findrisc) {
                     findrisc = (Findrisc) formularios.get(i);
@@ -528,7 +533,7 @@ public class ParticipanteController {
                     exploracion = (Exploracion) formularios.get(i);
                 }
             }
-            fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().getId());
+            fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().getId(),c.getIdAdministrador()); //TAMBIÉN EL DEL ADMINISTRADOR
             // crear las sesiones del participante
             Sesion sesion1 = ses.buscarSesion(p, 1);
             if (sesion1 == null) { // si no tiene la sesion1 creada
@@ -746,7 +751,7 @@ public class ParticipanteController {
 
             p.setPerdidaDePeso(pesoPerdido);
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
-                    p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
+                    p.getIdCoordinador(),p.getIdAdministrador(), pesoPerdido, p.getSesionesCompletas(), p.getPerdidacmcintura(), p.getId());
 
             pro.guardar(progreso);
         }
@@ -780,7 +785,7 @@ public class ParticipanteController {
 
             p.setPerdidacmcintura(cmCinturaPerdido);
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
-                    p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), cmCinturaPerdido, p.getId());
+                    p.getIdCoordinador(),p.getIdAdministrador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), cmCinturaPerdido, p.getId());
 
             pro.guardar(progreso);
         }

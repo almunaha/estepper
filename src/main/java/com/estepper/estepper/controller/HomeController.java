@@ -103,7 +103,9 @@ public class HomeController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
-            Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+            Coordinador c = (Coordinador) user;
+           // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "coordinador";
         }
@@ -156,7 +158,9 @@ public class HomeController {
                                                                                                 // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
-                            Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+                           // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+                         
+                            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
                             model.addAttribute("administrador", admin);
 
                             if (objetivoAgua == null) {
@@ -326,7 +330,7 @@ public class HomeController {
 
                 participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), part.getGrupo(),
                         part.getAsistencia(),
-                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(),
+                        part.getIdCoordinador(),part.getIdAdministrador(),part.getPerdidaDePeso(), part.getSesionesCompletas(),
                         part.getPerdidacmcintura(), id);
             }
 
