@@ -250,6 +250,9 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
+        Coordinador c = (Coordinador) elusuario;
+        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+        model.addAttribute("administrador", admin);
         if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("participante", participante.findById(id).get());
 
@@ -271,6 +274,9 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
+        Coordinador c = (Coordinador) elusuario;
+        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+        model.addAttribute("administrador", admin);
         if (elusuario instanceof Participante) {
             Participante p = participante.findById(id).get();
             model.addAttribute("participante", p);
@@ -436,12 +442,17 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
+   
         if (elusuario instanceof Coordinador && (participante.findById(id).get().getIdCoordinador() == elusuario.getId()
                 || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
+            
+            Coordinador c = (Coordinador) elusuario;
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
             return "materialesCoor";
         } else if (elusuario instanceof Participante && getUsuario().getId() == id
                 && getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
@@ -450,6 +461,10 @@ public class HomeController {
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(elusuario.getId()));
             model.addAttribute("notificaciones", notificaciones);
+
+            Participante p = (Participante) elusuario;
+            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            model.addAttribute("administrador", admin);
 
             return "materialesPart";
         } else if (elusuario instanceof Participante && getUsuario().getId() == id) {

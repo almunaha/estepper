@@ -175,6 +175,7 @@
 
                 <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                  <a class="dropdown-item" th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Escribir al administrador</a>
                   <div class="dropdown-divider"></div>
                   <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</button>

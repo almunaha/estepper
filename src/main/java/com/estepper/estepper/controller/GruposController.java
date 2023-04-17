@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Materiales;
+import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
@@ -43,6 +44,7 @@ import com.estepper.estepper.model.entity.Observaciones;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoGrupo;
 import com.estepper.estepper.model.enums.EstadoNotificacion;
+import com.estepper.estepper.service.AdministradorService;
 import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -66,6 +68,9 @@ public class GruposController {
 
     @Autowired
     private CoordinadorService cord;
+
+    @Autowired
+    private AdministradorService administrador;
 
     @Autowired
     private UsuarioService user;
@@ -217,6 +222,11 @@ public class GruposController {
             model.addAttribute("mensajito", "No asignada");
             model.addAttribute("participantesExistentes", participantesExistentes);
             model.addAttribute("grupo", new Grupo());
+
+            Coordinador c = (Coordinador) getUsuario();
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+            
             return "grupos";
         } else
             return "redirect:/";
@@ -236,6 +246,10 @@ public class GruposController {
         modelo.addObject("user", getUsuario());
         modelo.addObject("listadoParticipantesGrupo", part.listadoGrupo(gr));
 
+        Coordinador c = (Coordinador) getUsuario();
+        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+        modelo.addObject("administrador", admin);
+
         return modelo;
     }
 
@@ -247,6 +261,7 @@ public class GruposController {
             mensaje.deleteByGrupo(gr);
             obs.deleteByGrupo(gr);
             grupo.delete(id);
+
             return "redirect:/listaGrupos";
         } else
             return "redirect:/";
@@ -261,6 +276,10 @@ public class GruposController {
 
             List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
+
+            Coordinador c = (Coordinador) getUsuario();
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
 
             return "unirAgrupo";
         } else
@@ -285,6 +304,10 @@ public class GruposController {
             List<Observaciones> listaObservaciones = observaciones.findByIdGrupo(idGrupo);
             model.addAttribute("listaObservaciones", listaObservaciones);
 
+            Coordinador c = (Coordinador) getUsuario();
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             return "unGrupo";
         } else
 
@@ -302,6 +325,11 @@ public class GruposController {
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
+
+            Coordinador c = (Coordinador) getUsuario();
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             return "materialesGrupo";
         } else
             return "redirect:/";
@@ -408,6 +436,9 @@ public class GruposController {
             List<Notificacion> notificaciones = noti.notificaciones(part.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
+            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             return "chat";
         } else
             return "acceso";
@@ -427,6 +458,10 @@ public class GruposController {
             model.addAttribute("participante", p);
             model.addAttribute("messagePriv", menPriv);
             model.addAttribute("mensajesPrivados", mensajesPrivados);
+
+            Coordinador c = (Coordinador) getUsuario();
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
 
             return "chatPrivado";
         } else
