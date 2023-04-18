@@ -134,7 +134,7 @@ public class GruposController {
             elgrupo.setNumParticipantes(0);
         }
 
-        elgrupo.setFotoGrupo("/img/grupoA.png");
+        elgrupo.setFotoGrupo("/img/grupos/grupo1.png");
         elgrupo.setFechaInicioGrupo(LocalDate.now());
 
         if (elgrupo.getFechaFinGrupo() == null) {

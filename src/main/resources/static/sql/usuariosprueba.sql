@@ -51,8 +51,8 @@ INSERT INTO `administradores` (`id`) VALUES
 --
 
 INSERT INTO `grupos` (`id`, `codigo`, `estado`, `fecha_fin_grupo`, `fecha_inicio_grupo`, `foto_grupo`, `id_coordinador`, `nombre`, `num_participantes`) VALUES
-(1, 'CM3SEOCFTBD02G2', 'ACTIVO', NULL, '2023-04-13', '/img/grupoA.png', 6, 'Clase A', 2),
-(2, 'CFH7QMBDW2SCI66', 'ACTIVO', '2023-04-21', '2023-04-13', '/img/grupoA.png', 6, 'Clase B', 1);
+(1, 'CM3SEOCFTBD02G2', 'ACTIVO', NULL, '2023-04-13', '/img/grupos/grupo1.png', 6, 'Clase A', 2),
+(2, 'CFH7QMBDW2SCI66', 'ACTIVO', '2023-04-21', '2023-04-13', '/img/grupos/grupo1.png', 6, 'Clase B', 1);
 
 --
 -- Volcado de datos para la tabla `participantes`
