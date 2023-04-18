@@ -35,13 +35,15 @@ $(document).ready(function () {
     })
 
   //progreso de inicio 
+  
+  var porcentajeProgreso = document.getElementById('chartPorcentajeProgreso').getAttribute('data-porcentaje-progreso');
   var options = {
     chart: {
       height: 280,
       type: "radialBar",
     },
 
-    series: [67], //porcentaje
+    series: [porcentajeProgreso], //porcentaje
     colors: ["#20E647"],
     plotOptions: {
       radialBar: {

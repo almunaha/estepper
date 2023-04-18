@@ -54,6 +54,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.AdministradorService;
 import com.estepper.estepper.service.FaseValoracionService;
+import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.MensajeService;
@@ -89,6 +90,9 @@ public class HomeController {
     
     @Autowired
     private NotificacionService noti;
+
+    @Autowired
+    private FichaService f;
 
     @Autowired
     private BCryptPasswordEncoder hash;
@@ -213,11 +217,11 @@ public class HomeController {
                             Integer porcentajeObjetivos = contadorObjetivos * 100 / 4;
                             model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
 
-                            
-                            /*FichaObjetivo fichaObjetivo =
-                            f.getFichaObjetivo(participante.findById(u.getId()).get());
-                            model.addAttribute("ficha", fichaObjetivo);*/
-                             
+                        
+                            FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(p.getId()).get());
+                            model.addAttribute("ficha", fichaObjetivo);
+                            Double porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100 / f.getFichaObjetivo(p).getObjetivo();
+                            model.addAttribute("porcentajeProgreso", porcentajeProgreso);
 
                             return "index";
                         } else
