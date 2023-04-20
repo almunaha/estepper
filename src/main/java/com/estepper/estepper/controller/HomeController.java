@@ -220,7 +220,8 @@ public class HomeController {
                         
                             FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(p.getId()).get());
                             model.addAttribute("ficha", fichaObjetivo);
-                            Double porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100 / f.getFichaObjetivo(p).getObjetivo();
+                            Double porcentajeProgreso = 0.00;
+                            if(f.getFichaObjetivo(p).getPerdida() != null) porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100 / f.getFichaObjetivo(p).getObjetivo();
                             model.addAttribute("porcentajeProgreso", porcentajeProgreso);
 
                             return "index";
