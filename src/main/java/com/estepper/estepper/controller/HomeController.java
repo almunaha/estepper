@@ -97,11 +97,23 @@ public class HomeController {
     @Autowired
     private BCryptPasswordEncoder hash;
 
+    /**
+     * @brief Esta función maneja la solicitud GET de la ruta "/login" y devuelve la plantilla de inicio de sesión "login.html".
+     * La plantilla "login.html" es una página HTML que contiene un formulario de inicio de sesión para que los usuarios ingresen sus credenciales.
+     * 
+     * @return "login.html"
+     */
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    /**
+     * @brief CUANDO ESTÉ COMPLETA ESCRIBIR LO QUE HACE
+     * @param model
+     * @param request
+     * @return coordinador/admin/index/baja/login/terminosycondiciones
+     */
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request) {
         Usuario user = getUsuario();
@@ -229,8 +241,9 @@ public class HomeController {
                             return "baja";
 
                     }
+                    else return "redirect:/terminos-y-condiciones";
                 }
-                return "redirect:/terminos-y-condiciones";
+                
 
             }
         }
