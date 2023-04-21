@@ -217,15 +217,15 @@
                 </div>
 
                 <!-- Buscador de actividades -->
-                <div class="d-flex" style=" width: 71.5%; margin-top: 1.5%">
-                    <form style="width: 70%; margin-top: 25px;" id="buscadorActi">
+                <div class="d-flex" id="busqueda-actividad">
+                    <form id="buscadorActi">
                         <div style="display: flex; justify-content: center; align-items: center;" class="input-group">
                             <input style="height: 5%;" id="filtrarActividades" class="form-control light-table-filter"
                                 data-table="tableActi" type="text" placeholder="Buscar actividad...">
                         </div>
                     </form>
                     <div style="margin-left: 2%;">
-                        <label for="categoria">Filtrar por categoría </label>
+                        <label class="categoria-actividad" for="categoria">Filtrar por categoría </label>
                         <select name="categoria" class="form-select" style="width:110%" id="categoria">
                             <option th:value="TODAS" th:text="TODAS"></option>
                             <div th:each="cat : ${T(com.estepper.estepper.model.enums.Categoria).values()}">

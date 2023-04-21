@@ -61,6 +61,7 @@ import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.model.entity.ActividadFisica;
 import com.estepper.estepper.model.entity.Alimentacion;
 import com.estepper.estepper.model.entity.AlimentacionVal;
+import com.estepper.estepper.model.entity.AlimentoIntercambio;
 import com.estepper.estepper.model.entity.AlimentosConsumidos;
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.Ejercicio;
@@ -73,6 +74,7 @@ import com.estepper.estepper.model.enums.TipoProgreso;
 
 import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.AlimentacionService;
+import com.estepper.estepper.service.AlimentoIntercambioService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.MaterialService;
@@ -135,6 +137,9 @@ public class ParticipanteController {
 
     @Autowired
     private NotificacionService noti;
+
+    @Autowired
+    private AlimentoIntercambioService inter;
 
     @GetMapping("/menu")
     public String menu() {
@@ -1144,6 +1149,8 @@ public class ParticipanteController {
             return "redirect:/";
     }
 
+    //Vista del panel de invitaciones que recibe el participante donde puede ver las invitaciones pendientes (aceptar o rechazar),
+    //invitaciones aceptadas e invitaciones rechazadas
     @GetMapping("/panel_invitaciones")
     public String invitacionesPart(Model model) {
         Usuario user = getUsuario();
@@ -1211,6 +1218,8 @@ public class ParticipanteController {
             return "acceso";
     }
 
+    //Juego en la funcionalidad de alimentación con el objetivo de que el participante pueda crear dietas personalizadas
+    //según la cantidad de calorías que seleccione
     @GetMapping("/juego")
     public String juego(Model model) {
         Usuario user = getUsuario();
@@ -1219,6 +1228,10 @@ public class ParticipanteController {
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
             model.addAttribute("notificaciones", notificaciones);
+
+            //alimentos intercambio
+            List<AlimentoIntercambio> alimentos = inter.alimentos();
+            model.addAttribute("listado", alimentos);
 
             return "juego";
         } else

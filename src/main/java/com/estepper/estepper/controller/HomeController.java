@@ -103,7 +103,7 @@ public class HomeController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
-            Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+            Administrador admin = administrador.getAdministrador(2); //CAMBIARLO!!!!!!
             model.addAttribute("administrador", admin);
             return "coordinador";
         }
@@ -156,7 +156,7 @@ public class HomeController {
                                                                                                 // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
-                            Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+                            Administrador admin = administrador.getAdministrador(2); //CAMBIARLO!!!!!!
                             model.addAttribute("administrador", admin);
 
                             if (objetivoAgua == null) {
