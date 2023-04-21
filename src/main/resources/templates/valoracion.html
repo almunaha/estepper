@@ -90,6 +90,8 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
@@ -110,7 +112,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
@@ -177,8 +179,8 @@
                     </div>
 
                     <a class="btn btn-unir" style="color: white; background-color: #6ca4c7;" id="btn-part1"
-                        th:href="@{'/activarcuenta/' + ${participante.id}}" th:data-grupo="${participante.grupo}" 
-                        th:data-estado="${participante.estadoCuenta}" th:data-id="${participante.id}" 
+                        th:href="@{'/activarcuenta/' + ${participante.id}}" th:data-grupo="${participante.grupo}"
+                        th:data-estado="${participante.estadoCuenta}" th:data-id="${participante.id}"
                         th:data-formularios="${formularios}">Activar cuenta</a>
                     <a class="btn eliminar" id="btn-part" data-bs-toggle="tooltip"
                         th:data-id="${participante.id}">Eliminar

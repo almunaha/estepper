@@ -83,6 +83,8 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -103,7 +105,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -173,7 +175,7 @@
                                             th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
                                     </div>
                                 </div>
-                                
+
                                 <label class="col-form-label col-sm-4">Foto del grupo: </label>
                                 <div class="col-sm-8 mb-2">
                                     <select id="avatar" class="form-select" th:field="*{fotoGrupo}">

@@ -53,6 +53,18 @@
 
         </div>
 
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+
+        </div>
+
         <div class="w-100" style="margin-left: 250px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
@@ -69,7 +81,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -99,7 +111,7 @@
                                 <div th:each="m : ${mensajesAdminyCoordinador}" class="contenedor-mensaje mb-2">
                                     <div th:if="${m.emisor.id != user.id}"
                                         class="mensaje d-flex justify-content-start align-items-end">
-                                        <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;"class="avatar"
+                                        <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;" class="avatar"
                                             alt="m.emisor.nickname" />
                                         <div class="contenido-mensaje grey ms-2 p-2">
                                             <div th:text="${m.emisor.nickname}" class="nickname"></div>
@@ -130,7 +142,7 @@
                                 <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
 
                             </form>
-                        </section>                      
+                        </section>
                     </div>
                     <div style="width: 90%">
                         <div class="d-flex justify-content-end mt-4">

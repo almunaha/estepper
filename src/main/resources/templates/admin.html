@@ -82,6 +82,7 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
@@ -191,7 +192,7 @@
                                         const idElementoP = document.querySelector('#ModalNuevoMensaje p');
                                         const formulario = document.querySelector('#ModalNuevoMensaje form');
                                         formulario.action = '/mensajesAdmin/guardar/' + modalId;
-                                      //  idElementoP.textContent = modalId;
+                                        //  idElementoP.textContent = modalId;
 
                                         modal.show();
                                     }

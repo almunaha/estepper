@@ -82,6 +82,7 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
@@ -173,8 +174,8 @@
                                             </div>
                                             <div th:unless="${m.emisor.id != user.id}"
                                                 class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
-                                                <img th:src="${user.fotoUsuario}" style="width: 40px;"
-                                                    class="avatar" alt="m.user.nickname" />
+                                                <img th:src="${user.fotoUsuario}" style="width: 40px;" class="avatar"
+                                                    alt="m.user.nickname" />
                                                 <div class="contenido-mensaje green me-2 p-2">
                                                     <div class="nickname">Yo</div>
                                                     <div th:text="${m.mensaje}" class="mensaje my-1"></div>
@@ -184,18 +185,20 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                     <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}"
                                         method="post" enctype="multipart/form-data">
                                         <div class="m-3" style="display:flex">
-                        
-                                                <div class="col-sm-10 mb-2" style="margin-left:3%">
-                                                    <input type="text" th:field="*{mensaje}" class="form-control" placeholder="Escribe un mensaje aquí ..." autocomplete="off"
-                                                        required />
-                                                </div>
+
+                                            <div class="col-sm-10 mb-2" style="margin-left:3%">
+                                                <input type="text" th:field="*{mensaje}" class="form-control"
+                                                    placeholder="Escribe un mensaje aquí ..." autocomplete="off"
+                                                    required />
+                                            </div>
 
                                             <div class="text-center p" style="margin-left: 3%;">
-                                                <button type="submit" class="btn" id="btn-part"><i class="fa-solid fa-paper-plane"></i></button>
+                                                <button type="submit" class="btn" id="btn-part"><i
+                                                        class="fa-solid fa-paper-plane"></i></button>
                                             </div>
                                         </div>
                                     </form>

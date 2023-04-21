@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <html xmlns:th="https://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}"> 
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <title>Estepper</title>
 </head>
+
 <body class="bg-light d-flex flex-column justify-content-center align-items-center vh-100">
     <div class="container text-center">
         <p>Felicidades <span th:text="${nickname}"></span>, ya tienes cuenta en Estepper.
-                Tu código de usuario es:  <div th:text="${codigo}"> </div>
-            ¡No lo olvides! Lo necesitarás para acceder a la aplicación.
+            Tu código de usuario es:
+        <div th:text="${codigo}"> </div>
+        ¡No lo olvides! Lo necesitarás para acceder a la aplicación.
         </p>
         <h3>ESTADO DE LA CUENTA: <span th:text="${estadoCuenta}"></span></h3>
         <p>Actualmente tu cuenta esta desactivada, para que el
-             médico te la active tienes que ir a consulta
+            médico te la active tienes que ir a consulta
         </p>
 
         <p>Contacta con el médico para pedir tu cita</p>
-        
+
         <p>Teléfono: +34677543322</p>
         <p>E-mail: mercedes@madrid.es</p>
 
     </div>
 </body>
+
 </html>

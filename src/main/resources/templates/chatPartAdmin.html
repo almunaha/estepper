@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-  <title>Inicio - Estepper</title>
+  <title>Chat administrador- Estepper</title>
 
 </head>
 
@@ -147,6 +147,7 @@
 
       <div class="desplegable-perfil">
         <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+        <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
         <div class="dropdown-divider"></div>
         <form th:action="@{/logout}" method="post">
           <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -174,7 +175,7 @@
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                  <a class="dropdown-item" th:href="@{'/chatPartAdmin/' + ${administrador.id}}" >Escribir al administrador</a>          
+                  <a class="dropdown-item" th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
                   <div class="dropdown-divider"></div>
                   <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -191,73 +192,69 @@
 
         <div class="encabezado-grupo">
 
-            <!-- <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${participante.nickname}"></h3>-->
-            <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${administrador.nickname}"></h3>
+          <!-- <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${participante.nickname}"></h3>-->
+          <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${administrador.nickname}"></h3>
 
 
-            <div class="bordes-chat" style="width: 90%;">
-                <section class="chat-area">
-                    <header>
-                        <img th:src="${administrador.fotoUsuario}" alt="">
-                        <h4 th:text="${administrador.nickname}"></h4>
-                    </header>
-                    <div class="chat-box">
-                        <div th:each="m : ${mensajesAdminyParticipante}" class="contenedor-mensaje mb-2">
-                            <div th:if="${m.emisor.id != user.id}"
-                                class="mensaje d-flex justify-content-start align-items-end">
-                                <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;"class="avatar"
-                                    alt="m.emisor.nickname" />
-                                <div class="contenido-mensaje grey ms-2 p-2">
-                                    <div th:text="${m.emisor.nickname}" class="nickname"></div>
-                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
-                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
-                                        class="fecha text-end"></div>
-                                </div>
-                            </div>
-                            <div th:unless="${m.emisor.id != user.id}"
-                                class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
-                                <img th:src="${user.fotoUsuario}" style="width: 40px;" class="avatar"
-                                    alt="m.usuario.nickname" />
-                                <div class="contenido-mensaje green me-2 p-2">
-                                    <div class="nickname">Yo</div>
-                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
-                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
-                                        class="fecha text-end"></div>
-                                </div>
-                            </div>
-                        </div>
+          <div class="bordes-chat" style="width: 90%;">
+            <section class="chat-area">
+              <header>
+                <img th:src="${administrador.fotoUsuario}" alt="">
+                <h4 th:text="${administrador.nickname}"></h4>
+              </header>
+              <div class="chat-box">
+                <div th:each="m : ${mensajesAdminyParticipante}" class="contenedor-mensaje mb-2">
+                  <div th:if="${m.emisor.id != user.id}" class="mensaje d-flex justify-content-start align-items-end">
+                    <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;" class="avatar" alt="m.emisor.nickname" />
+                    <div class="contenido-mensaje grey ms-2 p-2">
+                      <div th:text="${m.emisor.nickname}" class="nickname"></div>
+                      <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                      <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                        class="fecha text-end"></div>
                     </div>
-                    <form th:action="@{'/mensajesAdmin2/guardar/' + ${administrador.id}}"
-                        th:object="${messageAdmin}" method="post" class="typing-area">
-
-                        <input type="text" th:field="*{mensaje}" class="input-field"
-                            placeholder="Escribe un mensaje aquí ..." autocomplete="off">
-
-                        <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
-
-                    </form>
-                </section>                      
-            </div>
-            <div style="width: 90%">
-                <div class="d-flex justify-content-end mt-4">
-                    <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
-                        onclick="window.print();">
+                  </div>
+                  <div th:unless="${m.emisor.id != user.id}"
+                    class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
+                    <img th:src="${user.fotoUsuario}" style="width: 40px;" class="avatar" alt="m.usuario.nickname" />
+                    <div class="contenido-mensaje green me-2 p-2">
+                      <div class="nickname">Yo</div>
+                      <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                      <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                        class="fecha text-end"></div>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <form th:action="@{'/mensajesAdmin2/guardar/' + ${administrador.id}}" th:object="${messageAdmin}"
+                method="post" class="typing-area">
+
+                <input type="text" th:field="*{mensaje}" class="input-field" placeholder="Escribe un mensaje aquí ..."
+                  autocomplete="off">
+
+                <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+
+              </form>
+            </section>
+          </div>
+          <div style="width: 90%">
+            <div class="d-flex justify-content-end mt-4">
+              <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir" onclick="window.print();">
             </div>
+          </div>
         </div>
 
 
 
-    </div>
+      </div>
 
-      
+
 
       <div class="hello-movil">
         <h2 th:text="'Hola, ' + ${user.nickname} + '!'"></h2>
-      </div>      
+      </div>
 
       <div class="utilidades-movil">
-        
+
         <a class="btn-movil" th:href="@{/sesiones}">
           <i class="fa-solid fa-list-check"></i>
           <div>Sesiones</div>
@@ -279,8 +276,8 @@
         </a>
 
         <a class="btn-movil" th:href="@{/actividades}">
-            <i class="fa-solid fa-person-hiking"></i>
-            <div>Actividades</div>
+          <i class="fa-solid fa-person-hiking"></i>
+          <div>Actividades</div>
         </a>
         <a class="btn-movil" th:href="@{/alimentacion}">
           <i class="fa-solid fa-carrot"></i>
