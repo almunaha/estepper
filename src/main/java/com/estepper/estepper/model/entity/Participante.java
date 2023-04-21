@@ -19,9 +19,6 @@ public class Participante extends Usuario{
     @Column(unique=false, nullable=true)
     private Integer idCoordinador;
 
-   /*@Column(nullable=true)
-   private String fotoParticipante;*/
-
     @Column(nullable=true)
     private Double perdidaDePeso;
     @Column(nullable=true)
@@ -138,14 +135,6 @@ public class Participante extends Usuario{
             return grupo.getId();
         } 
     }
-
-    /*public String getFotoParticipante() {
-        return fotoParticipante;
-    }
-
-    public void setFotoParticipante(String fotoParticipante) {
-        this.fotoParticipante = fotoParticipante;
-    }*/
 
     public Double getPerdidacmcintura() {
         return perdidacmcintura;

@@ -121,7 +121,6 @@ public class HomeController {
         if (user instanceof Coordinador) {
 
             Coordinador c = (Coordinador) user;
-           // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "coordinador";

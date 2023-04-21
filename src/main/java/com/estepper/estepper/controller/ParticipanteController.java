@@ -169,8 +169,7 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(part);
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) u;
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            Administrador admin = administrador.getAdministrador(part.getIdAdministrador());
             model.addAttribute("administrador", admin);
 
             return "sesiones";
@@ -571,7 +570,7 @@ public class ParticipanteController {
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
             Findrisc findrisc = null;
             Exploracion exploracion = null;
-            Coordinador c = (Coordinador) usuario.findById(id).get();
+            Coordinador c = (Coordinador) getUsuario();
             for (int i = 0; i < formularios.size(); i++) {
                 if (formularios.get(i) instanceof Findrisc) {
                     findrisc = (Findrisc) formularios.get(i);
