@@ -95,6 +95,8 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
@@ -115,6 +117,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
@@ -131,7 +134,7 @@
                     <h3 style="margin-top: 8%;" th:text="${participante.nickname} + ': ' + ${participante.codigo}">
                         Nombre</h3>
                     <div class="imagenPerfil">
-                        <img width="100" th:src="${participante.fotoParticipante}" alt="imagenPerfil">
+                        <img width="100" th:src="${participante.fotoUsuario}" alt="imagenPerfil">
                     </div>
                 </div>
                 <div style="background-color: whitesmoke; border-radius: 12px; margin-right: 10%;">

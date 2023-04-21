@@ -53,6 +53,7 @@ public class SecurityConfig{
                .requestMatchers("/material/descargar/**").permitAll() // permitir acceso a todos
 
                .requestMatchers("/img/elecciones/**").permitAll()
+               .requestMatchers("/img/grupos/**").permitAll()
                .anyRequest()
                .authenticated()
                .and()

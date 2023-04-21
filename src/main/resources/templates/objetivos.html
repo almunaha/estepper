@@ -30,6 +30,13 @@
     <!-- PARA TIPOGRAFÍAS -->
     <link href="https://fonts.googleapis.com/css?family=Roboto">
 
+    <!--ALERTAS-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
 </head>
 
 <body>
@@ -128,14 +135,16 @@
 
         <div id="contenido">
             <div class="header-movil">
-                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoParticipante}"
-                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{img/logo.png}" />
                 <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -174,13 +183,15 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img width="40" th:src="${user.fotoParticipante}" alt="imagenPerfil"
+                                    <img width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil"
                                         id="avatar-header" />
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
                                 <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                    <a class="dropdown-item"
+                                        th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -199,319 +210,346 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="objetivos-container">
-                                <!--VER SI CERRARLO AQUIII QUE CREO QUE ME GUSTA MÁS, PERO FALTARÍA AJUSTARLO TODO BIEN-->
-                                <div class="titulo">
-                                    <h1>Mis Objetivos</h1>
+                            <!--<div class="objetivos-container">-->
+                            <!-- <div class="titulo">-->
+                            <h1 style="padding: 10px;">Mis Objetivos</h1>
+                            <!--</div>-->
+
+                            <!--</div>-->
+
+                            <div class="objetivosRecomendados-container">
+                                <h2>Objetivos recomendados</h2>
+                            </div>
+
+                            <div class="objetivos-container" style="margin-top: 2%;">
+                                <div class="botones-objetivosRecomendados">
+                                    <button class="btn-objRecAgua" id="agua">Agua</button>
+                                    <button class="btn-objRecEjer" id="ejercicio">Ejercicio</button>
+                                    <button class="btn-objRecDesc" id="descanso">Descanso</button>
+                                    <button class="btn-objRecEstAnim" id="testAnimico">Test anímico</button>
                                 </div>
 
-                            </div>
 
-                            <h2 style="margin-top: 2%;">Objetivos recomendados</h2>
-                            <div class="botones-objetivosRecomendados">
-                                <button class="btn-objRecAgua" id="agua">Agua</button>
-                                <button class="btn-objRecEjer" id="ejercicio">Ejercicio</button>
-                                <button class="btn-objRecDesc" id="descanso">Descanso</button>
-                                <button class="btn-objRecEstAnim" id="testAnimico">Test anímico</button>
-                            </div>
+                                <div class="agua">
 
+                                    <div>
+                                        <div class="encabezadoAgua">
+                                            <h5>Beber 2L diarios de agua</h5>
+                                        </div>
+                                        <div class="encabezadoAgua-vasitos">
+                                            <div class="col-2">
+                                                <div class="d-flex" style="margin-left: 25%;">
+                                                    <div
+                                                        th:each="i: ${#numbers.sequence(1, objetivoAgua.cantidadObjetivo)}">
+                                                        <i class="fa-solid fa-glass-water vaso azul"
+                                                            th:if="${i <= objetivoAgua.vasos }"></i>
+                                                        <i class="fa-solid fa-glass-water vaso"
+                                                            th:if="${i > objetivoAgua.vasos }"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                            <div class="agua">
-
-                                <div>
-                                    <div class="encabezadoAgua">
-                                        <h5>Beber 2L diarios de agua</h5>
+                                        </div>
                                     </div>
-                                    <div class="encabezadoAgua-vasitos">
-                                        <div class="col-6">
-                                            <div class="d-flex" style="margin-left: 25%;">
-                                                <div
-                                                    th:each="i: ${#numbers.sequence(1, objetivoAgua.cantidadObjetivo)}">
-                                                    <i class="fa-solid fa-glass-water vaso azul"
-                                                        th:if="${i <= objetivoAgua.vasos }"></i>
-                                                    <i class="fa-solid fa-glass-water vaso"
-                                                        th:if="${i > objetivoAgua.vasos }"></i>
+
+
+                                    <div id="finalAgua">
+                                        <div style="width:100%">
+                                            <div th:if="${objetivoAgua.vasos == 0}">
+                                                <p style="margin-top:10px"><strong>Todavía no has bebido ningún
+                                                        vaso</strong></p>
+                                            </div>
+                                            <div th:unless="${objetivoAgua.vasos == 0}">
+                                                <p><strong>Cantidad bebida (en litros): </strong>[[${objetivoAgua.vasos
+                                                    *
+                                                    0.25}]] / [[${objetivoAgua.cantidadObjetivo
+                                                    * 0.25}]] litros</p>
+                                            </div>
+                                            <div style="margin-top: -15px;"
+                                                th:if="${objetivoAgua.vasos > 0 && objetivoAgua.vasos < objetivoAgua.cantidadObjetivo}">
+                                                <p><strong>Cantidad bebida (en vasos):
+                                                    </strong>[[${objetivoAgua.vasos}]] /
+                                                    [[${objetivoAgua.cantidadObjetivo}]] vasos</p>
+                                            </div>
+                                            <div style="margin-top: -15px;"
+                                                th:if="${objetivoAgua.vasos == objetivoAgua.cantidadObjetivo}">
+                                                <p style="color:green"><strong>¡Objetivo completado! Bebiste los
+                                                        [[${objetivoAgua.cantidadObjetivo}
+                                                        ]] vasos</strong></p>
+                                            </div>
+                                        </div>
+
+                                        <div style="display: flex; align-items: center;  width: 90%;">
+                                            <a style="margin-right: 2%; padding: 5px;" class="btn-agua"
+                                                th:href="@{'/agregar_vaso/' + ${user.id}}">Añadir un vaso</a>
+                                            <a style="margin-left: 2%; padding: 5px;" class="btn-agua"
+                                                th:href="@{'/quitar_vaso/' + ${user.id}}">Eliminar un vaso</a>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+
+
+
+
+
+                                <div class="ejercicio">
+
+                                    <div class="formulario-ejercicio">
+                                        <div id="formularioEjercicio">
+
+                                            <h5>¿Hoy has hecho ejercicio?</h5>
+                                            <form th:action="@{'/agregar_ejercicio/' + ${user.id}}"
+                                                th:object="${objetivoEjercicio}" method="post" class="typing-area">
+
+                                                <div id="opcionesEjercicio">
+                                                    <div
+                                                        style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                        <label for="ejercicio" style="width:30%">Tipo de
+                                                            ejercicio:</label>
+                                                        <select name="ejercicio" class="form-control" style="width:60%">
+                                                            <option value="NINGUNO" disabled selected>NINGUNO</option>
+                                                            <option value="ANDAR">ANDAR</option>
+                                                            <option value="CORRER">CORRER</option>
+                                                            <option value="NATACION">NATACIÓN</option>
+                                                            <option value="BICICLETA">BICICLETA</option>
+                                                            <option value="GIMNASIO">GIMNASIO</option>
+                                                            <option value="FUTBOL">FUTBOL</option>
+                                                            <option value="BALONCESTO">BALONCESTO</option>
+                                                            <option value="TENIS">TENIS</option>
+                                                            <option value="PADEL">PADEL</option>
+                                                            <option value="BOXEO">BOXEO</option>
+                                                            <option value="BAILE">BAILE</option>
+                                                            <option value="YOGA">YOGA</option>
+                                                            <option value="PILATES">PILATES</option>
+                                                            <option value="OTRO">OTRO</option>
+                                                        </select>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                        <label for="duracionEjercicio" style="width:30%">Duración (en
+                                                            minutos):</label>
+                                                        <input type="number" id="duracionEjercicio"
+                                                            name="duracionEjercicio" class="form-control" min="0"
+                                                            style="width:60%" required>
+                                                    </div>
+                                                </div>
+
+                                                <button type="submit" class="btn-ejercicio"
+                                                    style="margin-left:30%">Agregar
+                                                    ejercicio</button>
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                    <div class="ejercicioDeHoy">
+
+                                        <div class="cabeceraEjercicioDeHoy">
+                                            <p>EJERCICIO DE HOY</p>
+                                        </div>
+
+                                        <div class="listaDeEjercicioPaticipante p-2">
+                                            <div class="row">
+                                                <div class="col-6" th:each="lis:${listaEjercicioParticipante}">
+                                                    <div
+                                                        class="tipo d-flex justify-content-between align-items-center py-2 px-3 mb-2">
+                                                        <div class="title"
+                                                            th:text="@{ ${lis.ejercicio}} + ': ' +  ${lis.duracionEjercicio} + ' ' + minutos">
+                                                        </div>
+                                                        <div class="trash"><a class="btn-part"
+                                                                th:href="@{'/eliminar_ejercicio/' + ${lis.id}}"><i
+                                                                    class="fa-solid fa-trash"
+                                                                    style="font-size: 15px; color: rgb(195, 69, 69); margin-left: 3px;"></i></a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                </div>
-                                <div id="finalAgua">
-                                    <div style="width:100%">
-                                        <div th:if="${objetivoAgua.vasos == 0}">
-                                            <p style="margin-top:10px"><strong>Todavía no has bebido ningún
-                                                    vaso</strong></p>
-                                        </div>
-                                        <div th:unless="${objetivoAgua.vasos == 0}">
-                                            <p><strong>Cantidad bebida (en litros): </strong>[[${objetivoAgua.vasos *
-                                                0.25}]] / [[${objetivoAgua.cantidadObjetivo
-                                                * 0.25}]] litros</p>
-                                        </div>
-                                        <div style="margin-top: -15px;"
-                                            th:if="${objetivoAgua.vasos > 0 && objetivoAgua.vasos < objetivoAgua.cantidadObjetivo}">
-                                            <p><strong>Cantidad bebida (en vasos): </strong>[[${objetivoAgua.vasos}]] /
-                                                [[${objetivoAgua.cantidadObjetivo}]] vasos</p>
-                                        </div>
-                                        <div style="margin-top: -15px;"
-                                            th:if="${objetivoAgua.vasos == objetivoAgua.cantidadObjetivo}">
-                                            <p style="color:green"><strong>¡Objetivo completado! Bebiste los
-                                                    [[${objetivoAgua.cantidadObjetivo}
-                                                    ]] vasos</strong></p>
-                                        </div>
-                                    </div>
-
-                                    <div style="display: flex; align-items: center;  width: 90%;">
-                                        <a style="margin-right: 2%; padding: 5px;" class="btn-agua"
-                                            th:href="@{'/agregar_vaso/' + ${user.id}}">Añadir un vaso</a>
-                                        <a style="margin-left: 2%; padding: 5px;" class="btn-agua"
-                                            th:href="@{'/quitar_vaso/' + ${user.id}}">Eliminar un vaso</a>
                                     </div>
 
 
 
                                 </div>
+                                <div class="descanso">
 
-                            </div>
+                                    <div>
+
+                                        <div class="encabezadoDescanso">
+                                            <h5>Te recomendamos dormir 8 horas diarias</h5>
+                                        </div>
+
+                                        <div class="encabezadoDescanso-suenio">
+                                            <div id="formularioDescanso"
+                                                th:if="${objetivoDescanso.horasSuenio == null} ">
+                                                <form th:action="@{'/agregar_descanso/' + ${user.id}}"
+                                                    th:object="${objetivoDescanso}" method="post" class="typing-area">
 
 
+                                                    <label for="horasSuenio">Horas de sueño:</label>
+                                                    <input type="number" id="horasSuenio" name="horasSuenio" min="0"
+                                                        max="24" required placeholder="horas">
 
-                        </div>
+                                                    <input type="number" id="minutosSuenio" name="minutosSuenio" min="0"
+                                                        max="59" placeholder="minutos" required style="width: 21%;">
 
-                        <div class="ejercicio">
+                                                    <button type="submit" class="btn-descanso"
+                                                        style="margin-left:3%">Registrar</button>
 
-                            <div class="formulario-ejercicio">
-                                <div id="formularioEjercicio">
-
-                                    <h5>¿Hoy has hecho ejercicio?</h5>
-                                    <form th:action="@{'/agregar_ejercicio/' + ${user.id}}"
-                                        th:object="${objetivoEjercicio}" method="post" class="typing-area">
-
-                                        <div id="opcionesEjercicio">
-                                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                                                <label for="ejercicio" style="width:30%">Tipo de
-                                                    ejercicio:</label>
-                                                <select name="ejercicio" class="form-control" style="width:60%">
-                                                    <option value="NINGUNO" disabled selected>NINGUNO</option>
-                                                    <option value="ANDAR">ANDAR</option>
-                                                    <option value="CORRER">CORRER</option>
-                                                    <option value="NATACION">NATACIÓN</option>
-                                                    <option value="BICICLETA">BICICLETA</option>
-                                                    <option value="GIMNASIO">GIMNASIO</option>
-                                                    <option value="FUTBOL">FUTBOL</option>
-                                                    <option value="BALONCESTO">BALONCESTO</option>
-                                                    <option value="TENIS">TENIS</option>
-                                                    <option value="PADEL">PADEL</option>
-                                                    <option value="BOXEO">BOXEO</option>
-                                                    <option value="BAILE">BAILE</option>
-                                                    <option value="YOGA">YOGA</option>
-                                                    <option value="PILATES">PILATES</option>
-                                                    <option value="OTRO">OTRO</option>
-                                                </select>
-                                            </div>
-                                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                                                <label for="duracionEjercicio" style="width:30%">Duración (en
-                                                    minutos):</label>
-                                                <input type="number" id="duracionEjercicio" name="duracionEjercicio"
-                                                    class="form-control" min="0" style="width:60%" required>
+                                                </form>
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn-ejercicio" style="margin-left:30%">Agregar
-                                            ejercicio</button>
-
-                                    </form>
-                                </div>
-
-                            </div>
-                            <div class="ejercicioDeHoy">
-
-                                <div class="cabeceraEjercicioDeHoy">
-                                    <p>EJERCICIO DE HOY</p>
-                                </div>
-
-                                <div class="listaDeEjercicioPaticipante p-2">
-                                    <div class="row">
-                                        <div class="col-6" th:each="lis:${listaEjercicioParticipante}">
+                                        <div id="finalDescanso" style="margin-top:-1%;">
+                                            <div th:if="${objetivoDescanso.horasSuenio == null}">
+                                                <strong>Todavía no has registrado el descanso de hoy</strong>
+                                            </div>
                                             <div
-                                                class="tipo d-flex justify-content-between align-items-center py-2 px-3 mb-2">
-                                                <div class="title"
-                                                    th:text="@{ ${lis.ejercicio}} + ': ' +  ${lis.duracionEjercicio} + ' ' + minutos">
-                                                </div>
-                                                <div class="trash"><a class="btn-part"
-                                                        th:href="@{'/eliminar_ejercicio/' + ${lis.id}}"><i
-                                                            class="fa-solid fa-trash"
-                                                            style="font-size: 15px; color: rgb(195, 69, 69); margin-left: 3px;"></i></a>
-                                                </div>
+                                                th:if="${objetivoDescanso.horasSuenio > 0 && objetivoDescanso.horasSuenio < objetivoDescanso.horasSuenioObjetivo}">
+                                                <p>Has dormido [[${objetivoDescanso.horasSuenio}]] horas y
+                                                    [[${objetivoDescanso.minutosSuenio}
+                                                    ]] minutos</p>
+                                                <a class="btn-descanso" style="padding: 2%;"
+                                                    th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar
+                                                    registro</a>
+                                                <!--<a th:href="@{'/editar_descanso/' + ${user.id} + ${objetivoDescanso.horasSuenio}}">Editar registro de sueño</a>-->
+                                            </div>
+                                            <div
+                                                th:if="${objetivoDescanso.horasSuenio >= objetivoDescanso.horasSuenioObjetivo}">
+                                                <p style="color:green"><strong>¡Objetivo conseguido! Has dormido
+                                                        [[${objetivoDescanso.horasSuenio}
+                                                        ]] horas y [[${objetivoDescanso.minutosSuenio}
+                                                        ]] minutos </strong></p>
+                                                <a class="btn-descanso"
+                                                    th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar
+                                                    registro</a>
+                                                <!--<a th:href="@{'/editar_descanso/' + ${user.id}}">Editar registro de sueño</a> -->
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="testAnimico">
+
+                                    <div style="margin-bottom:-2%;">
+                                        <div class="encabezadoEstadoAnimo">
+                                            <h5>¿Cómo te sientes hoy?</h5>
+                                        </div>
+                                        <div class="encabezadoEstadoAnimo-estados">
+                                            <div id="formularioTestAnimico"
+                                                th:if="${objetivoEstadoAnimo.estadoAnimo == null} ">
+                                                <form th:action="@{'/agregar_estadoAnimo/' + ${user.id}}"
+                                                    th:object="${objetivoEstadoAnimo}" method="post"
+                                                    class="typing-area">
+
+                                                    <input type="radio" id="feliz" name="estadoAnimo" value="FELIZ"
+                                                        hidden>
+                                                    <label for="feliz" data-toggle="tooltip" data-placement="top"
+                                                        title="Muy feliz" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-laugh-beam"
+                                                            style="font-size: 50px; color:green"></i></label>
+                                                    <input type="radio" id="contento" name="estadoAnimo"
+                                                        value="CONTENTO" hidden>
+                                                    <label for="contento" data-toggle="tooltip" data-placement="top"
+                                                        title="Contento" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-smile"
+                                                            style="font-size: 50px; color: rgb(228, 198, 76);"></i></label>
+
+                                                    <input type="radio" id="enamorado" name="estadoAnimo"
+                                                        value="ENAMORADO" hidden>
+                                                    <label for="enamorado" data-toggle="tooltip" data-placement="top"
+                                                        title="Enamorado" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-grin-hearts"
+                                                            style="font-size: 50px; color: rgb(213, 73, 171);"></i></label>
+
+                                                    <input type="radio" id="serio" name="estadoAnimo" value="SERIO"
+                                                        hidden>
+                                                    <label for="serio" data-toggle="tooltip" data-placement="top"
+                                                        title="Serio" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-meh"
+                                                            style="font-size: 50px;color: rgb(82, 40, 13);"></i></label>
+                                                    <input type="radio" id="cansado" name="estadoAnimo" value="CANSADO"
+                                                        hidden>
+                                                    <label for="cansado" data-toggle="tooltip" data-placement="top"
+                                                        title="Cansado" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-tired"
+                                                            style="font-size: 50px;color: rgb(144, 76, 228);"></i></label>
+
+                                                    <input type="radio" id="nervioso" name="estadoAnimo"
+                                                        value="NERVIOSO" hidden>
+                                                    <label for="nervioso" data-toggle="tooltip" data-placement="top"
+                                                        title="Nervioso" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-grimace"
+                                                            style="font-size: 50px; color: rgb(107, 155, 108);"></i></label>
+
+                                                    <input type="radio" id="triste" name="estadoAnimo" value="TRISTE"
+                                                        hidden>
+                                                    <label for="triste" data-toggle="tooltip" data-placement="top"
+                                                        title="Triste" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-frown"
+                                                            style="font-size: 50px; color: rgb(76, 137, 228);"></i></label>
+
+                                                    <input type="radio" id="deprimido" name="estadoAnimo"
+                                                        value="DEPRIMIDO" hidden>
+                                                    <label for="deprimido" data-toggle="tooltip" data-placement="top"
+                                                        title="Deprimido" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-sad-cry"
+                                                            style="font-size: 50px;color: rgb(70, 165, 175);"></i></label>
+
+                                                    <input type="radio" id="enfadado" name="estadoAnimo"
+                                                        value="ENFADADO" hidden>
+                                                    <label for="enfadado" data-toggle="tooltip" data-placement="top"
+                                                        title="Enfadado" class="estado-animo-label"><i
+                                                            class="fa-solid fa-face-angry"
+                                                            style="font-size: 50px;color: rgb(228, 76, 76);"></i></label>
+
+                                                    <div class="botonEstadoAnimico"
+                                                        style="margin-top: 2%;margin-bottom: 1.5%; margin-left:45%">
+                                                        <button type="submit" class="btn-estadoAnimo">Guardar</button>
+
+                                                    </div>
+
+
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div id="finalEstadoAnimo">
+                                        <div th:if="${objetivoEstadoAnimo.estadoAnimo == null}">
+                                            <strong>Todavía no has registrado cómo te sientes</strong>
+                                        </div>
+                                        <div th:unless="${objetivoEstadoAnimo.estadoAnimo == null}" style="width:70%">
+                                            <p th:text="'Hoy estás ' + ${objetivoEstadoAnimo.estadoAnimo}"></p>
+                                            <a class="btn-estadoAnimo"
+                                                th:href="@{'/eliminar_estadoAnimo/' + ${user.id}}">Eliminar registro
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+
+
                                 </div>
                             </div>
-
-
-
-                        </div>
-                        <div class="descanso">
-
-                            <div>
-
-                                <div class="encabezadoDescanso">
-                                    <h5>Te recomendamos dormir 8 horas diarias</h5>
-                                </div>
-
-                                <div class="encabezadoDescanso-suenio">
-                                    <div id="formularioDescanso" th:if="${objetivoDescanso.horasSuenio == null} ">
-                                        <form th:action="@{'/agregar_descanso/' + ${user.id}}"
-                                            th:object="${objetivoDescanso}" method="post" class="typing-area">
-
-
-                                            <label for="horasSuenio">Horas de sueño:</label>
-                                            <input type="number" id="horasSuenio" name="horasSuenio" min="0" max="24"
-                                                required placeholder="horas">
-
-                                            <input type="number" id="minutosSuenio" name="minutosSuenio" min="0"
-                                                max="59" placeholder="minutos" required style="width: 7%;">
-
-                                            <button type="submit" class="btn-descanso">Registrar</button>
-
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div id="finalDescanso" style="margin-top:-1%;">
-                                    <div th:if="${objetivoDescanso.horasSuenio == null}">
-                                        <strong>Todavía no has registrado el descanso de hoy</strong>
-                                    </div>
-                                    <div
-                                        th:if="${objetivoDescanso.horasSuenio > 0 && objetivoDescanso.horasSuenio < objetivoDescanso.horasSuenioObjetivo}">
-                                        <p>Has dormido [[${objetivoDescanso.horasSuenio}]] horas y
-                                            [[${objetivoDescanso.minutosSuenio}
-                                            ]] minutos</p>
-                                        <a class="btn-descanso" style="padding: 2%;"
-                                            th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar registro</a>
-                                        <!--<a th:href="@{'/editar_descanso/' + ${user.id} + ${objetivoDescanso.horasSuenio}}">Editar registro de sueño</a>-->
-                                    </div>
-                                    <div
-                                        th:if="${objetivoDescanso.horasSuenio >= objetivoDescanso.horasSuenioObjetivo}">
-                                        <p style="color:green"><strong>¡Objetivo conseguido! Has dormido
-                                                [[${objetivoDescanso.horasSuenio}
-                                                ]] horas y [[${objetivoDescanso.minutosSuenio}
-                                                ]] minutos </strong></p>
-                                        <a class="btn-descanso" th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar
-                                            registro</a>
-                                        <!--<a th:href="@{'/editar_descanso/' + ${user.id}}">Editar registro de sueño</a> -->
-                                    </div>
-                                </div>
-
-                            </div>
-
-
                         </div>
 
-                        <div class="testAnimico">
-
-                            <div style="margin-bottom:-2%;">
-                                <div class="encabezadoEstadoAnimo">
-                                    <h5>¿Cómo te sientes hoy?</h5>
-                                </div>
-                                <div class="encabezadoEstadoAnimo-estados">
-                                    <div id="formularioTestAnimico" th:if="${objetivoEstadoAnimo.estadoAnimo == null} ">
-                                        <form th:action="@{'/agregar_estadoAnimo/' + ${user.id}}"
-                                            th:object="${objetivoEstadoAnimo}" method="post" class="typing-area">
-
-                                            <input type="radio" id="feliz" name="estadoAnimo" value="FELIZ" hidden>
-                                            <label for="feliz" data-toggle="tooltip" data-placement="top"
-                                                title="Muy feliz" class="estado-animo-label"><i
-                                                    class="fa-solid fa-face-laugh-beam"
-                                                    style="font-size: 50px; color:green"></i></label>
-                                            <input type="radio" id="contento" name="estadoAnimo" value="CONTENTO"
-                                                hidden>
-                                            <label for="contento" data-toggle="tooltip" data-placement="top"
-                                                title="Contento" class="estado-animo-label"><i
-                                                    class="fa-solid fa-face-smile"
-                                                    style="font-size: 50px; color: rgb(228, 198, 76);"></i></label>
-
-                                            <input type="radio" id="enamorado" name="estadoAnimo" value="ENAMORADO"
-                                                hidden>
-                                            <label for="enamorado" data-toggle="tooltip" data-placement="top"
-                                                title="Enamorado" class="estado-animo-label"><i
-                                                    class="fa-solid fa-face-grin-hearts"
-                                                    style="font-size: 50px; color: rgb(213, 73, 171);"></i></label>
-
-                                            <input type="radio" id="serio" name="estadoAnimo" value="SERIO" hidden>
-                                            <label for="serio" data-toggle="tooltip" data-placement="top" title="Serio"
-                                                class="estado-animo-label"><i class="fa-solid fa-face-meh"
-                                                    style="font-size: 50px;color: rgb(82, 40, 13);"></i></label>
-                                            <input type="radio" id="cansado" name="estadoAnimo" value="CANSADO" hidden>
-                                            <label for="cansado" data-toggle="tooltip" data-placement="top"
-                                                title="Cansado" class="estado-animo-label"><i
-                                                    class="fa-solid fa-face-tired"
-                                                    style="font-size: 50px;color: rgb(144, 76, 228);"></i></label>
-
-                                            <input type="radio" id="nervioso" name="estadoAnimo" value="NERVIOSO"
-                                                hidden>
-                                            <label for="nervioso" data-toggle="tooltip" data-placement="top"
-                                                title="Nervioso" class="estado-animo-label"><i
-                                                    class="fa-solid fa-face-grimace"
-                                                    style="font-size: 50px; color: rgb(107, 155, 108);"></i></label>
-
-                                            <input type="radio" id="triste" name="estadoAnimo" value="TRISTE" hidden>
-                                            <label for="triste" data-toggle="tooltip" data-placement="top"
-                                                title="Triste" class="estado-animo-label"><i
-                                                    class="fa-solid fa-face-frown"
-                                                    style="font-size: 50px; color: rgb(76, 137, 228);"></i></label>
-
-                                            <input type="radio" id="deprimido" name="estadoAnimo" value="DEPRIMIDO"
-                                                hidden>
-                                            <label for="deprimido" data-toggle="tooltip" data-placement="top"
-                                                title="Deprimido" class="estado-animo-label"><i
-                                                    class="fa-solid fa-face-sad-cry"
-                                                    style="font-size: 50px;color: rgb(70, 165, 175);"></i></label>
-
-                                            <input type="radio" id="enfadado" name="estadoAnimo" value="ENFADADO"
-                                                hidden>
-                                            <label for="enfadado" data-toggle="tooltip" data-placement="top"
-                                                title="Enfadado" class="estado-animo-label"><i
-                                                    class="fa-solid fa-face-angry"
-                                                    style="font-size: 50px;color: rgb(228, 76, 76);"></i></label>
-
-                                            <div class="botonEstadoAnimico"
-                                                style="margin-top: 1%;margin-bottom: 1%; margin-left:28%">
-                                                <button type="submit" class="btn-estadoAnimo">Guardar</button>
-
-                                            </div>
-
-
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="finalEstadoAnimo">
-                                <div th:if="${objetivoEstadoAnimo.estadoAnimo == null}">
-                                    <strong>Todavía no has registrado cómo te sientes</strong>
-                                </div>
-                                <div th:unless="${objetivoEstadoAnimo.estadoAnimo == null}" style="width:70%">
-                                    <p th:text="'Hoy estás ' + ${objetivoEstadoAnimo.estadoAnimo}"></p>
-                                    <a class="btn-estadoAnimo"
-                                        th:href="@{'/eliminar_estadoAnimo/' + ${user.id}}">Eliminar registro </a>
-                                </div>
-
-                            </div>
-
-
-
+                        <div class="objetivosRecomendados-container" style="margin-top: 2%;">
+                            <h2>Objetivos personalizados</h2>
                         </div>
-
-                        <h2 style="margin-top: 2%;">Objetivos personalizados</h2>
-                        <div class="botones-container d-flex justify-content">
-                            <!--<a class="btn my-4" id="btn-part" th:href="@{/objetivos/nuevo}">Crear un objetivo
-                                nuevo</a>-->
+                        <!--<div class="botones-container d-flex justify-content">
+                        <a class="btn my-4" id="btn-part" th:href="@{/objetivos/nuevo}">Crear un objetivo
+                                nuevo</a>
                             <a class="btn" id="btn-part" title="Crear" href="#"
                                 onclick="abrirIframe('modalNuevoObjetivo')">
                                 Crear un objetivo nuevo</a>
-                        </div>
+                        </div>-->
 
                         <div class="modal fade" id="modalNuevoObjetivo" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -569,7 +607,7 @@
                             </div>
                         </div>
 
-                        <div class="calendario-container">
+                        <div class="calendario-container" style="margin-top: 2%;">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="calendario">
@@ -594,6 +632,11 @@
                                     <div id="objetivos" style="margin-top:2%"></div>
                                 </div>
                             </div>
+
+                            <a class="btn" style="margin-top: 2%;" id="btn-part" title="Crear" href="#"
+                                onclick="abrirIframe('modalNuevoObjetivo')">
+                                Crear un objetivo nuevo</a>
+
                             <div id="tabla-objetivos">
                                 <div id="filtro"></div>
                                 <div id="datos" class="d-flex justify-content-center align-items-center">

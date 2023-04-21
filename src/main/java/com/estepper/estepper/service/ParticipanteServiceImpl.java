@@ -40,8 +40,8 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }   
 
     @Override
-    public void update(Integer edad, Sexo sexo, String fotoParticipante, Grupo grupo, Integer asistencia, Integer idCoor, Double perdidadepeso, Integer sesionescompletas, Double perdcmcintura, Integer id){
-        repo.update(edad, sexo, fotoParticipante, grupo, asistencia, idCoor, perdidadepeso, sesionescompletas, perdcmcintura, id);
+    public void update(Integer edad, Sexo sexo, String fotoUsuario, Grupo grupo, Integer asistencia, Integer idCoor, Integer idAdmin, Double perdidadepeso, Integer sesionescompletas, Double perdcmcintura, Integer id){
+        repo.update(edad, sexo, fotoUsuario, grupo, asistencia, idCoor, idAdmin, perdidadepeso, sesionescompletas, perdcmcintura, id);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ParticipanteServiceImpl implements ParticipanteService{
         if(grup.getNumParticipantes() >0) grup.setNumParticipantes(grup.getNumParticipantes()-1);
         repoG.update(grup.getNombre(), grup.getCodigo(), grup.getIdCoordinador(), grup.getNumParticipantes(), grup.getId());
         p.setGrupo(null);
-        repo.update(p.getEdad(),p.getSexo(), p.getFotoParticipante(), null, p.getAsistencia(), p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), id);
+        repo.update(p.getEdad(),p.getSexo(), p.getFotoUsuario(), null, p.getAsistencia(), p.getIdCoordinador(),p.getIdAdministrador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), id);
     }
 
     

@@ -144,7 +144,7 @@ $(document).ready(function () {
         } else {
             contenido += '<ol>';
             for (i = 0; i < objetivosAux.length; i++) {
-                contenido += '<li>' + objetivosAux[i].titulo + '</li>';
+                contenido += '<li class="listaObj">' + objetivosAux[i].titulo + '</li>';
             };
             contenido += '</ol>';
         }
@@ -312,11 +312,12 @@ $(document).ready(function () {
                 tabla += '<td>' + objetivos[i].estadoObjetivo + '</td>';
                 tabla += '<td>' + objetivos[i].repeticion + '</td>';
                 tabla += '<td>';
-                tabla += '<a class="fa-solid fa-pen-to-square fa-1x ps-4 pe-2" id="btn-icono" data-bs-toggle="tooltip" title="Editar objetivo" href="/objetivos/editar/' + objetivos[i].id + '"></a>';
-                tabla += '<a class="fa-solid fa-trash-can fa-1x" id="btn-icono" data-bs-toggle="tooltip" title="Eliminar objetivo" href="/objetivos/eliminar/' + objetivos[i].id + '"></a>';
+                tabla += '<a class="fa-solid fa-pen-to-square fa-1x ps-4 pe-2" style="color:rgba(127, 179, 120, 0.903)" id="btn-icono" data-bs-toggle="tooltip" title="Editar objetivo" href="/objetivos/editar/' + objetivos[i].id + '"></a>';
+                tabla += '<a class="eliminarObjetivo" style="color:rgb(201, 101, 101)" id="btn-icono" data-id="' + objetivos[i].id + '" data-bs-toggle="tooltip" title="Eliminar objetivo"><i class="fa-solid fa-trash-can fa-1x  pe-2"></i></a>'
                 tabla += '</td></tr>';
             }
-    
+            
+
             tabla += '</tbody></table>';
             document.getElementById('datos').innerHTML = tabla;    
         } else {
@@ -325,7 +326,39 @@ $(document).ready(function () {
         
     }
 
+
     actualizarCalendario();
+
+    $(document).on('click', '.eliminarObjetivo', function() {
+        var id = $(this).data('id');
+        console.log("hola");
+        Swal.fire({
+          position: 'center',
+          title: '<h4>¿Estás seguro de eliminar el objetivo?</h4>',
+          showConfirmButton: true,
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: "rgb(218, 77, 73)",
+          confirmButtonText: '<a href="/objetivos/eliminar/' + id + '" id ="conf">Eliminar</a>',
+    
+          didRender: function () {
+            const confirm = document.querySelector('#conf');
+    
+            if (confirm) {
+              confirm.style.color = 'white';
+            }
+          },
+    
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+    
+        })
+    
+    })
 
 
 

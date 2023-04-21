@@ -3,12 +3,41 @@
   margin-bottom: 50px;
 }
 
-.content .objetivos-container {
+.objetivos-container {
   background-color: white;
   padding: 30px;
   border-radius: 12px;
 }
 
+.objetivosRecomendados-container {
+  background-color: white;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 600px;
+  /* ajusta el valor según tus necesidades */
+  margin: 0 auto;
+  /* centra horizontalmente */
+}
+
+.listaObj {
+  /*background-color: #c7b66c;*/
+  padding: 5px;
+  border-radius: 12px;
+  margin-top: 3%;
+}
+
+.tableObj thead{
+  background-color: rgb(137, 169, 208);
+  color: white;
+}
+
+.tableObj td, th {
+  vertical-align: middle;
+}
 
 .calendario {
   font-family: 'Helvetica Neue', sans-serif;
@@ -76,7 +105,7 @@
 
 .calendario .dias .dia.today {
   background-color: #82b9cb42;
-  border-radius:50%;
+  border-radius: 50%;
 
 }
 
@@ -98,6 +127,27 @@
   border-right: 0.5px solid rgb(170, 170, 170);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 
+}
+
+.agua {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.descanso {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.testAnimico {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .btn-objRecEjer {
@@ -208,7 +258,7 @@ input[type="radio"]:checked+label {
   background-color: white;
   border-radius: 12px;
   padding: 1%;
- 
+
 }
 
 .btn-ejercicio {
@@ -276,7 +326,7 @@ input[type="radio"]:checked+label {
   text-align: center;
   font-size: 15px;
   padding: 10px 0px 10px 30px;
-  width: 55%;
+  /*width: 55%;*/
   align-items: center;
   align-content: center;
 }
@@ -299,11 +349,10 @@ input[type="radio"]:checked+label {
 
 .encabezadoEstadoAnimo {
   background-color: #efcd5d38;
-  ;
   text-align: center;
   font-size: 15px;
-  padding: 10px 0px 10px 30px;
-  width: 70%;
+  padding: 10px 30px 10px 30px;
+ /* width: 70%;*/
   align-items: center;
   align-content: center;
 }
@@ -315,7 +364,6 @@ input[type="radio"]:checked+label {
 
 .encabezadoEstadoAnimo-estados {
   padding: 20px 30px 20px 5px;
-  margin-left: 5%;
 }
 
 #finalEstadoAnimo {
@@ -329,8 +377,9 @@ input[type="radio"]:checked+label {
   background-color: #fc86f038;
   text-align: center;
   font-size: 15px;
-  padding: 10px 0px 10px 30px;
-  width: 55%;
+  /*padding: 10px 10px 10px 30px;*/
+  padding: 10px 30px 10px 30px;
+  /*width: 55%;*/
   align-items: center;
   align-content: center;
 }
@@ -340,12 +389,13 @@ input[type="radio"]:checked+label {
 }
 
 .encabezadoDescanso-suenio {
-  padding: 20px 30px 20px 5px;
+  /*padding: 20px 30px 20px 5px;*/
+  padding: 20px;
 }
 
 #finalDescanso {
   display: flex;
-  width: 55%;
+  /*width: 55%;*/
   justify-content: space-between;
   border-top: 2px solid #e7e7e7;
 }

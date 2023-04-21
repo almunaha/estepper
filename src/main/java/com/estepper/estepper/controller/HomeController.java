@@ -54,6 +54,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.AdministradorService;
 import com.estepper.estepper.service.FaseValoracionService;
+import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.ProgresoService;
 import com.estepper.estepper.service.MaterialService;
 import com.estepper.estepper.service.MensajeService;
@@ -91,19 +92,37 @@ public class HomeController {
     private NotificacionService noti;
 
     @Autowired
+    private FichaService f;
+
+    @Autowired
     private BCryptPasswordEncoder hash;
 
+    /**
+     * @brief Esta función maneja la solicitud GET de la ruta "/login" y devuelve la plantilla de inicio de sesión "login.html".
+     * La plantilla "login.html" es una página HTML que contiene un formulario de inicio de sesión para que los usuarios ingresen sus credenciales.
+     * 
+     * @return "login.html"
+     */
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    /**
+     * @brief CUANDO ESTÉ COMPLETA ESCRIBIR LO QUE HACE
+     * @param model
+     * @param request
+     * @return coordinador/admin/index/baja/login/terminosycondiciones
+     */
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
-            Administrador admin = administrador.getAdministrador(2); //CAMBIARLO!!!!!!
+
+            Coordinador c = (Coordinador) user;
+           // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "coordinador";
         }
@@ -156,7 +175,8 @@ public class HomeController {
                                                                                                 // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
-                            Administrador admin = administrador.getAdministrador(2); //CAMBIARLO!!!!!!
+                         
+                            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
                             model.addAttribute("administrador", admin);
 
                             if (objetivoAgua == null) {
@@ -209,19 +229,21 @@ public class HomeController {
                             Integer porcentajeObjetivos = contadorObjetivos * 100 / 4;
                             model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
 
-                            
-                            /*FichaObjetivo fichaObjetivo =
-                            f.getFichaObjetivo(participante.findById(u.getId()).get());
-                            model.addAttribute("ficha", fichaObjetivo);*/
-                             
+                        
+                            FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(p.getId()).get());
+                            model.addAttribute("ficha", fichaObjetivo);
+                            Double porcentajeProgreso = 0.00;
+                            if(f.getFichaObjetivo(p).getPerdida() != null) porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100 / f.getFichaObjetivo(p).getObjetivo();
+                            model.addAttribute("porcentajeProgreso", porcentajeProgreso);
 
                             return "index";
                         } else
                             return "baja";
 
                     }
+                    else return "redirect:/terminos-y-condiciones";
                 }
-                return "redirect:/terminos-y-condiciones";
+                
 
             }
         }
@@ -246,6 +268,9 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
+        Coordinador c = (Coordinador) elusuario;
+        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+        model.addAttribute("administrador", admin);
         if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("participante", participante.findById(id).get());
 
@@ -267,6 +292,9 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
+        Coordinador c = (Coordinador) elusuario;
+        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+        model.addAttribute("administrador", admin);
         if (elusuario instanceof Participante) {
             Participante p = participante.findById(id).get();
             model.addAttribute("participante", p);
@@ -324,9 +352,9 @@ public class HomeController {
             if (orig instanceof Participante) { // si es un participante
                 Participante part = participante.findById(id).get();
 
-                participante.update(p.getEdad(), p.getSexo(), p.getFotoParticipante(), part.getGrupo(),
+                participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), part.getGrupo(),
                         part.getAsistencia(),
-                        part.getIdCoordinador(), part.getPerdidaDePeso(), part.getSesionesCompletas(),
+                        part.getIdCoordinador(),part.getIdAdministrador(),part.getPerdidaDePeso(), part.getSesionesCompletas(),
                         part.getPerdidacmcintura(), id);
             }
 
@@ -380,7 +408,7 @@ public class HomeController {
 
         user.setCodigo(elcodigo);
         user.setEstadoCuenta(Estado.BAJA);
-        user.setFotoParticipante("/img/p1.png");
+        user.setFotoUsuario("/img/p1.png");
 
         usuario.guardar(user);
 
@@ -432,12 +460,17 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
+   
         if (elusuario instanceof Coordinador && (participante.findById(id).get().getIdCoordinador() == elusuario.getId()
                 || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
+            
+            Coordinador c = (Coordinador) elusuario;
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
             return "materialesCoor";
         } else if (elusuario instanceof Participante && getUsuario().getId() == id
                 && getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
@@ -446,6 +479,10 @@ public class HomeController {
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(elusuario.getId()));
             model.addAttribute("notificaciones", notificaciones);
+
+            Participante p = (Participante) elusuario;
+            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            model.addAttribute("administrador", admin);
 
             return "materialesPart";
         } else if (elusuario instanceof Participante && getUsuario().getId() == id) {

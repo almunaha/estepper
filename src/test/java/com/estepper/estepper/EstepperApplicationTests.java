@@ -27,7 +27,7 @@ class EstepperApplicationTests {
 	@Test
 	public void crearCoordinador() {
 		usuarioRepo.save(new Coordinador(0, 222, "Mercedes", "proyectoestepper@gmail.com", hash.encode("mercedespass"),
-						Estado.ALTA,"/img/p1.png",3));
+						Estado.ALTA,3,"/img/p1.png"));
 	}
 
 

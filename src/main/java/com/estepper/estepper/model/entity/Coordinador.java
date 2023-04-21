@@ -10,8 +10,8 @@ import jakarta.persistence.Table;
 @Table(name="coordinadores")
 public class Coordinador extends Usuario{ 
 
-    @Column(nullable=true)
-    private String fotoParticipante;
+    /* @Column(nullable=true)
+    private String fotoParticipante;*/
 
     @Column(unique=false, nullable=true)
     private Integer idAdministrador;
@@ -20,19 +20,19 @@ public class Coordinador extends Usuario{
         super();
     }
 
-    public Coordinador(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta, String fotoParticipante,Integer idAdministrador){
-        super(id, codigo, nickname, email, contrasenia, estadoCuenta);
-        this.fotoParticipante=fotoParticipante;
+    public Coordinador(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idAdministrador, String fotoUsuario){
+        super(id, codigo, nickname, email, contrasenia, estadoCuenta,fotoUsuario);
+        //this.fotoParticipante=fotoParticipante;
         this.idAdministrador = idAdministrador;
     }
 
-    public String getFotoParticipante() {
+    /*public String getFotoParticipante() {
         return fotoParticipante;
     }
 
     public void setFotoParticipante(String fotoParticipante) {
         this.fotoParticipante = fotoParticipante;
-    }
+    }*/
 
     public Integer getIdAdministrador() {
         return idAdministrador;

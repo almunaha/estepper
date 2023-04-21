@@ -19,8 +19,8 @@ public class Participante extends Usuario{
     @Column(unique=false, nullable=true)
     private Integer idCoordinador;
 
-   @Column(nullable=true)
-   private String fotoParticipante;
+   /*@Column(nullable=true)
+   private String fotoParticipante;*/
 
     @Column(nullable=true)
     private Double perdidaDePeso;
@@ -56,8 +56,8 @@ public class Participante extends Usuario{
     }
 
     public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Double perdidaDePeso,Integer asistencia,
-    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante, Double perdidacmcintura, Integer idAdministrador){
-        super(id, codigo, nickname, email, contrasenia, estadoCuenta);
+    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante, Double perdidacmcintura, Integer idAdministrador, String fotoUsuario){
+        super(id, codigo, nickname, email, contrasenia, estadoCuenta,fotoUsuario);
         this.idCoordinador=idCoordinador;
         this.grupo=grupo;
         this.perdidaDePeso=perdidaDePeso;
@@ -65,7 +65,7 @@ public class Participante extends Usuario{
         this.edad=edad;
         this.sesionesCompletas=sesionesCompletas;
         this.sexo=sexo;
-        this.fotoParticipante=fotoParticipante;
+        //this.fotoParticipante=fotoParticipante;
         this.perdidacmcintura = perdidacmcintura;
         this.idAdministrador = idAdministrador;
 
@@ -139,13 +139,13 @@ public class Participante extends Usuario{
         } 
     }
 
-    public String getFotoParticipante() {
+    /*public String getFotoParticipante() {
         return fotoParticipante;
     }
 
     public void setFotoParticipante(String fotoParticipante) {
         this.fotoParticipante = fotoParticipante;
-    }
+    }*/
 
     public Double getPerdidacmcintura() {
         return perdidacmcintura;

@@ -112,15 +112,10 @@ public class AdminController {
                 materialS.deleteByParticipante(p);
                 ses.deleteByParticipante(p);
                 obj.deleteByParticipante(p);
-                obj.deleteAguaByParticipante(p);
-                obj.deleteDescansoByParticipante(p);
-                obj.deleteEjercicioByParticipante(p);
-                obj.deleteEstadoAnimoByParticipante(p);
                 pro.deleteByParticipante(p);
                 alimentacion.deleteByParticipante(p);
                 f.deleteByParticipante(p);
                 mensajeS.deleteByParticipante(p);
-                mensajeS.deleteByParticipanteMensajePrivado(p);
                 invitacion.eliminarPorParticipante(p); // invitacionesPart
                 // eliminar asistencia y aumentar plazas
                 List<Actividad> actividades = acti.asistenciaParticipante(id);
@@ -155,7 +150,6 @@ public class AdminController {
                         mensajeS.deleteByGrupo(listgrupos.get(i));
                         obs.deleteByGrupo(listgrupos.get(i));
                         grupoS.delete(listgrupos.get(i).getId());
-                        mensajeS.deleteByCoordinadorMensajePrivado(c);
 
                         // grupoS.delete(id);
                     }
@@ -203,6 +197,8 @@ public class AdminController {
 
             coordinador.setCodigo(elcodigo);
             coordinador.setEstadoCuenta(Estado.ALTA);
+            coordinador.setFotoUsuario("/img/p1.png");
+            coordinador.setIdAdministrador(usuarioLogueado().getId());
 
             usuario.guardar(coordinador);
 

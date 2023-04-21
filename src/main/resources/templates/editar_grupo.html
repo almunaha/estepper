@@ -83,6 +83,8 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -103,6 +105,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -155,61 +158,73 @@
                                     <input type="text" th:field="*{nombre}" class="form-control" required />
                                 </div>
 
-
                                 <!--TAMBIÉN FALTA PONER LA Q YA ESTABA POR DEFECTO POR SI NO SE QUIERE CAMBIAR-->
-                                <div th:if="${grupo.fechaFinGrupo != null}">
+                                <div th:if="${grupo.fechaFinGrupo != null}" style="display:flex">
                                     <label class="col-form-label col-sm-4">Fecha de finalización del grupo
                                         actual:</label>
                                     <div class="col-sm-8 mb-2">
-
                                         <p th:text="${#temporals.format(grupo.fechaFinGrupo, 'dd/MM/yyyy')}"></p>
                                     </div>
                                     <label class="col-form-label col-sm-4">¿Desea cambiarla?</label>
                                 </div>
-                                <div th:if="${grupo.fechaFinGrupo == null}">
+                                <div th:if="${grupo.fechaFinGrupo == null}" style="display:flex">
                                     <label class="col-form-label col-sm-4">Fecha de finalización del grupo</label>
+                                    <div class="col-sm-8 mb-2" style="margin-left:0.5%">
+                                        <input type="date" th:name="fechaFinGrupo" th:field="*{fechaFinGrupo}"
+                                            class="form-control" id="fechaFinGrupo" value="${grupo.fechaFinGrupo}"
+                                            th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+                                    </div>
                                 </div>
-                                <div class="col-sm-8 mb-2">
-
-                                    <input type="date" th:name="fechaFinGrupo" th:field="*{fechaFinGrupo}"
-                                        class="form-control" id="fechaFinGrupo" value="${grupo.fechaFinGrupo}"
-                                        th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
-                                </div>
-
-
-
-
-
 
                                 <label class="col-form-label col-sm-4">Foto del grupo: </label>
                                 <div class="col-sm-8 mb-2">
                                     <select id="avatar" class="form-select" th:field="*{fotoGrupo}">
                                         <option value="/img/p1.png">Sin icono</option>
-                                        <option value="/img/grupoA.png">Icono 1</option>
-                                        <option value="/img/grupoA.png">Icono 2</option>
-                                        <option value="/img/grupoA.png">Icono 3</option>
-                                        <option value="/img/grupoA.png">Icono 4</option>
-                                        <option value="/img/grupoA.png">Icono 5</option>
+                                        <option value="/img/grupos/grupo1.png">Icono 1</option>
+                                        <option value="/img/grupos/grupo2.png">Icono 2</option>
+                                        <option value="/img/grupos/grupo3.png">Icono 3</option>
+                                        <option value="/img/grupos/grupo4.png">Icono 4</option>
+                                        <option value="/img/grupos/grupo5.png">Icono 5</option>
+                                        <option value="/img/grupos/grupo6.png">Icono 6</option>
+                                        <option value="/img/grupos/grupo7.png">Icono 7</option>
+                                        <option value="/img/grupos/grupo8.png">Icono 8</option>
+                                        <option value="/img/grupos/grupo9.png">Icono 9</option>
+                                        <option value="/img/grupos/grupo10.png">Icono 10</option>
                                     </select>
                                 </div>
 
                                 <!-- LISTADO DE ICONOS FALTA COGERLOS BIEN-->
-                                <div class="avatares" style="margin-top: 1%; margin-left: 50%; margin-bottom: 1%;">
-                                    <img src="/img/grupoA.png" class="avatar"
-                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
-                                        onclick="cambiarAvatar('/img/grupoA.png')">
-                                    <img src="/img/grupoA.png" class="avatar"
-                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
-                                        onclick="cambiarAvatar('/img/grupoA.png')">
-                                    <img src="/img/grupoA.png" class="avatar"
-                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
-                                        onclick="cambiarAvatar('/img/grupoA.png')">
-                                    <img src="/img/grupoA.png" class="avatar"
-                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
-                                        onclick="cambiarAvatar('/img/grupoA.png')">
-                                    <img src="/img/grupoA.png" class="avatar"
-                                        style="width: 70px; height:70px; margin-right:10px;" alt=""
-                                        onclick="cambiarAvatar('/img/grupoA.png')">
+                                <div class="avatares" style="margin-top: 1%;justify-content:end; margin-bottom: 1%;">
+                                    <img src="/img/grupos/grupo1.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo1.png')">
+                                    <img src="/img/grupos/grupo2.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo2.png')">
+                                    <img src="/img/grupos/grupo3.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo3.png')">
+                                    <img src="/img/grupos/grupo4.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo4.png')">
+                                    <img src="/img/grupos/grupo5.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo5.png')">
+                                    <img src="/img/grupos/grupo6.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo6.png')">
+                                    <img src="/img/grupos/grupo7.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo7.png')">
+                                    <img src="/img/grupos/grupo8.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo8.png')">
+                                    <img src="/img/grupos/grupo9.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo9.png')">
+                                    <img src="/img/grupos/grupo10.png" class="avatar"
+                                        style="width: 60px; height:60px; margin-right:10px;" alt=""
+                                        onclick="cambiarAvatar('/img/grupos/grupo10.png')">
                                 </div>
 
 
@@ -235,7 +250,7 @@
                                                 <div class="participante-arriba">
                                                     <div class="element-top">
                                                         <div class="img-baja">
-                                                            <img width="80" th:src="${lis.fotoParticipante}"
+                                                            <img width="80" th:src="${lis.fotoUsuario}"
                                                                 alt="img-baja" />
                                                         </div>
                                                         <div>

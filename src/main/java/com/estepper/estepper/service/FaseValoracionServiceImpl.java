@@ -150,17 +150,18 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
     }
 
     @Override
-    public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id, Integer idCoor){
+    public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id, Integer idCoor, Integer idAdmin){
         Participante usuario = repoP.findById(id).get();
         usuario.setEstadoCuenta(Estado.ALTA);
         usuario.setEdad(exploracion.getEdad());
         usuario.setSexo(exploracion.getSexo());
         usuario.setIdCoordinador(idCoor);
+        usuario.setIdAdministrador(idAdmin);
         usuario.setAsistencia(0);
         usuario.setSesionesCompletas(0);
         usuario.setPerdidaDePeso(0.0);
 
-        repoP.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoParticipante(), usuario.getGrupo(), usuario.getAsistencia(), idCoor, usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), id);
+        repoP.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoUsuario(), usuario.getGrupo(), usuario.getAsistencia(), idCoor,idAdmin, usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), id);
         repoU.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), usuario.getEstadoCuenta(), id);
     }
 

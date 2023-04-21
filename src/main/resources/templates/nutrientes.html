@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/grupos.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+    <script src="/js/menu.js"></script>
+    <script src="/js/nutrientes.js"></script>
+
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+    <!-- BUSCADOR DE ALIMENTOS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+        integrity="sha512-nUf8aohwTZxv0l0d4A4kmOE+fj7W9PvCO2aS0E1Yjh81pN+w4ezn/jn8wNlvMxvNUnax/aLdQ+z/8W7X9DvI+A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
+        integrity="sha512-0eGJaBrEYHKPoL3qCz9QvIMQiV7G0QwyG8V7vhkbDUpxFpVtY5l0stzVYZX9k1/1EtxuQ2Q8vnEsptL++Z/w5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!--ALERTA ELIMINAR-->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <title>Nutricion - Estepper</title>
+</head>
+
+<body>
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <div class="d-flex">
+
+        <div id="sidebar-container">
+
+
+            <div class="logo">
+                <img width="75" th:src="@{img/logo.png}" />
+                <h4>Estepper</h4>
+            </div>
+
+            <ul>
+                <li>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="nombre-enlaces">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/cuaderno}">
+                        <i class="fa-solid fa-pen"></i>
+                        <span class="nombre-enlaces">Cuaderno</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/actividades}">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <span class="nombre-enlaces">Actividades</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/alimentacion}">
+                        <i class="fa-solid fa-carrot"></i>
+                        <span class="nombre-enlaces">Alimentación</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{'/materiales/' + ${user.id}}">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span class="nombre-enlaces">Materiales</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/progreso}">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="nombre-enlaces">Progreso</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/chat}">
+                        <i class="fa-solid fa-people-group"></i>
+                        <span class="nombre-enlaces">Mi grupo</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+
+            <a th:href="@{/cuaderno}">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+
+            <a th:href="@{/alimentacion}">
+                <i class="fa-solid fa-carrot"></i>
+            </a>
+
+            <a th:href="@{'/materiales/' + ${user.id}}">
+                <i class="fa-solid fa-folder-open"></i>
+            </a>
+
+            <a th:href="@{/progreso}">
+                <i class="fa-solid fa-chart-line"></i>
+            </a>
+
+            <a th:href="@{/chat}">
+                <i class="fa-solid fa-comments"></i>
+            </a>
+
+        </div>
+
+
+        <div id="contenido">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()" />
+                <img width="35" th:src="@{img/logo.png}" />
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
+
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil" id="avatar-header" />
+                                <span sec:authentication="principal.nombre"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
+                                <a class="dropdown-item" th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div style="padding-top: 75px;">
+
+                <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
+                    <div style="display: flex; justify-content: center; flex-direction: column;">
+                        <div>
+                            <h3 style="text-align: center;">LOS NUTRIENTES DE LO QUE HAS COMIDO HOY SON: (cambiarlo mas
+                                tarde)</h3>
+                        </div>
+
+                    </div>
+                </div>
+                <div style="margin: 1%;" class="bg-white border border-1 p-5 rounded-4 ">
+                    <div style="display: flex; justify-content: center; flex-direction: column;">
+                        <!--META CALORÍAS DIARIAS Y CUÁNTAS HA CONSUMIDO YA-->
+                        <div class="valores-progreso">
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-apple-whole" style="color:red"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor" id="fibraCon"><span
+                                                th:text="${nutrientes.get(0)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Fibra</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-hotdog" style="color: rgb(105, 70, 15)"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor" id="grasasCon"><span
+                                                th:text="${nutrientes.get(1)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Grasas saturadas</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-pizza-slice" style="color: rgb(210, 165, 91)"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor" id="carbohidratosCon"><span
+                                                th:text="${nutrientes.get(2)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Hidratos de carbono</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-bacon" style="color: rgb(105, 15, 38)"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor" id="proteinasCon"><span
+                                                th:text="${nutrientes.get(3)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Proteinas</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="valor">
+                                <div class="flex-valor">
+                                    <div class="iz-valor">
+                                        <i class="fa-solid fa-cubes-stacked" style="color: rgb(161, 219, 239)"></i>
+                                    </div>
+                                    <div class="der-valor">
+                                        <div class="dato-valor" id="salCon"><span
+                                                th:text="${nutrientes.get(4)} + ' g'"></span>
+                                        </div>
+                                        <div class="bottom-valor"><span>Sales</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--TABLA ALIMENTOS CONSUMIDOS-->
+                        <div th:if="${listaAlimentosCon.empty}">
+                            <div>
+                                <h6 style="text-align: center;">¡No has agregado ningún alimento hoy!</h6>
+                            </div>
+                        </div>
+                        <div th:unless="${listaAlimentosCon.empty}" class="table-responsive">
+                            <table class="table tablePart" id="tablePart">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Alimento</th>
+                                        <th scope="col">Raciones</th>
+                                        <th scope="col">Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="buscarParticipantes">
+                                    <tr th:each="lis:${listaAlimentosCon}">
+                                        <td th:text="${lis.alimento.nombre}"></td>
+                                        <td th:text="${lis.raciones}"></td>
+                                        <td th:text="${#temporals.format(lis.fecha_consumicion, 'HH:mm')}"></td>
+                                        <td><a class="fa-solid fa-trash-can fa-2x" th:data-id="${lis.id}"
+                                                style="color: red" id="eliminar" data-bs-toggle="tooltip"
+                                                title="Eliminar"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <script>
+
+                            //CAMBIAR TODO ESTE ARCHIVO
+
+                            // Definir los requerimientos nutricionales en gramos
+                            const reqFibra = 100;
+                            const reqGrasasSaturadas = 100;
+                            const reqCarbohidratos = 100;
+                            const reqProteinas = 100;
+                            const reqSal = 100;
+
+                            // Definir la cantidad de nutrientes consumidos por el usuario en gramos
+                            const consumoFibra = parseFloat(document.getElementById('fibraCon').textContent);
+                            const consumoGrasasSaturadas = parseFloat(document.getElementById('grasasCon').textContent);
+                            const consumoCarbohidratos = parseFloat(document.getElementById('carbohidratosCon').textContent);
+                            const consumoProteinas = parseFloat(document.getElementById('proteinasCon').textContent);
+                            const consumoSal = parseFloat(document.getElementById('salCon').textContent);
+
+                            // Calcular la cantidad de nutrientes faltantes en gramos
+                            const fibraFaltante = reqFibra - consumoFibra;
+                            const grasasFaltante = reqGrasasSaturadas - consumoGrasasSaturadas;
+                            const carbohidratosFaltante = reqCarbohidratos - consumoCarbohidratos;
+                            const proteinasFaltante = reqProteinas - consumoProteinas;
+                            const salFaltante = reqSal - consumoSal;
+
+                            // Imprimir la cantidad de nutrientes faltantes en gramos
+                            console.log("Fibra que falta: " + fibraFaltante);
+                            console.log("Grasas que faltan: " + grasasFaltante);
+                            console.log("Carbohidratos que faltan: " + carbohidratosFaltante);
+                            console.log("Proteinas que faltan: " + proteinasFaltante);
+                            console.log("Sal que falta: " + salFaltante);
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
