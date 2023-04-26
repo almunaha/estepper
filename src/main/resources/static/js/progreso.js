@@ -1,29 +1,22 @@
+function abrirIframe(modalInst) {
+    const modal = new bootstrap.Modal(document.getElementById(modalInst));
+    modal.show();
+}
+
 $(document).ready(function () {
 
     //Botones del PESO
     $(".pesoTabla").hide();
-    $("#form-peso").hide();
     $("#grafica").show();
 
     $("#registroPeso").click(function () {
         $(".pesoTabla").show();
         $("#grafica").hide();
-        $("#form-peso").hide();
     });
 
     $("#graficaPeso").click(function () {
         $("#grafica").show();
         $(".pesoTabla").hide();
-        $("#form-peso").hide();
-    });
-
-    $(".btn-plus").click(function () {
-        $("#grafica").hide();
-        $(".pesoTabla").hide();
-        $("#registroPeso").hide();
-        $("#graficaPeso").hide();
-        $(".btn-plus").hide();
-        $("#form-peso").show();
     });
 
     $("#cancelar-pes").click(function(){
@@ -32,7 +25,6 @@ $(document).ready(function () {
         $("#registroPeso").show();
         $("#graficaPeso").show();
         $(".btn-plus").show();
-        $("#form-peso").hide();        
     });
 
     //URL actual
@@ -51,7 +43,7 @@ $(document).ready(function () {
             datasets: [
                 {
                     label: "Peso",
-                    borderColor: 'rgb(75, 192, 192)',
+                    borderColor: '#6ca4c7',
                 }
             ]
         },
@@ -92,7 +84,7 @@ $(document).ready(function () {
             datasets: [
                 {
                     label: "Perimetro",
-                    borderColor: 'rgb(75, 192, 192)',
+                    borderColor: '#6ca4c7',
                 }
             ]
         },
@@ -127,28 +119,16 @@ $(document).ready(function () {
 
     //Botones del PERÍMETRO
     $(".perimetroTabla").hide();
-    $("#form-perimetro").hide();
     $("#grafica2").show();
 
     $("#registroPerimetro").click(function () {
         $(".perimetroTabla").show();
         $("#grafica2").hide();
-        $("#form-perimetro").hide();
     });
 
     $("#graficaPerimetro").click(function () {
         $("#grafica2").show();
         $(".perimetroTabla").hide();
-        $("#form-perimetro").hide();
-    });
-
-    $(".btn-plus2").click(function () {
-        $("#grafica2").hide();
-        $(".perimetroTabla").hide();
-        $("#registroPerimetro").hide();
-        $("#graficaPerimetro").hide();
-        $(".btn-plus2").hide();
-        $("#form-perimetro").show();
     });
 
     $("#cancelar-per").click(function () {
@@ -157,7 +137,6 @@ $(document).ready(function () {
         $("#registroPerimetro").show();
         $("#graficaPerimetro").show();
         $(".btn-plus2").show();
-        $("#form-perimetro").hide();
     });
 
     //IMC

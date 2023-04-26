@@ -481,6 +481,7 @@
     #busqueda-actividad{
         width: 90%;
         align-items: center;
+        margin-bottom: 3%;
     }
 
     .form-actividad label{
