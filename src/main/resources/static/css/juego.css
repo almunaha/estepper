@@ -18,6 +18,10 @@
     font-size: 2rem;
 }
 
+.bienvenido{
+    margin-left: auto;
+}
+
 .tableJuego {
     margin-top: 2.5%;
     background-color: white;
@@ -108,4 +112,75 @@
     margin-top: 2%;
     font-size: 1.05rem;
     font-weight: bold;
+}
+
+#calorias{
+    width: 10%; 
+    display: inline-block;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    #calorias{
+        width: 25%;
+    }
+
+    .filtro-alimento select {
+        width: 28%;
+    }
+
+    .filtro-alimento form {
+        width: 70%;
+    }
+
+    .elementos{
+        grid-template-columns: repeat(2, 2fr);
+        margin-top: 2%;
+    }
+
+    .juego{
+        margin-bottom: 20%;
+    }
+
+    .comprobar{
+        padding: 3%;
+    }
+
+    .verRes{
+        padding-top: 5%;
+    }
+
+    .resultado{
+        padding-top: 2%;
+    }
+
+    .header-juego{
+        display: none;
+    }
+
+    .header-juego-movil {
+        margin-bottom: 2%;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    
+    .header-juego-movil i {
+        color: rgb(253, 196, 122);
+        font-size: 2rem;
+    }
+
+    .header-juego-movil a{
+        justify-content: center;
+    }
+
+    .btn-instrucciones-movil i{
+        color: black;
+        font-size: 1.5rem;
+    }
+
 }

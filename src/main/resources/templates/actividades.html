@@ -217,7 +217,52 @@
                         <h3>Actividades</h3>
                         <p>Revisa las invitaciones de tu coordinador</p>
                     </div>
-                    <a th:href="@{/panel_invitaciones}" class="btn-invit">Invitaciones</a>
+                    <div class="btn-funcion">
+                        <a th:href="@{/panel_invitaciones}" class="btn-invit">Invitaciones</a>
+                        <a class="btn-invit" style="margin-top: 4%" onclick="abrirIframe('asistenciaConfir')"
+                            href="#">Asistencia</a>
+                    </div>
+                </div>
+
+                <!-- Modal asistencia -->
+                <div class="modal fade" id="asistenciaConfir" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"> Asistencia confirmada</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Calendario o asistencia confirmada -->
+                                <div class="eventos-movil">
+                                    <div class="asistencia">
+                                        <h5>Recordatorio de actividades inscritas</h5>
+                                    </div>
+
+                                    <div class="layout-asis">
+                                        <div class="asis-indi" th:each="asis:${asistencia}">
+                                            <div class="iz-asis">
+                                                <div style="font-size: 1.3rem"
+                                                    th:text="${#temporals.format(asis.fechaRealizacion, 'dd')}"></div>
+                                                <div th:text="${#temporals.format(asis.fechaRealizacion, 'MMM')}"></div>
+                                            </div>
+                                            <div class="der-asis">
+                                                <div th:text="${asis.nombre}"></div>
+                                                <div th:text="${#temporals.format(asis.fechaRealizacion, 'HH:mm')}">
+                                                </div>
+                                            </div>
+                                            <a class="desinscripcion" th:data-id="${asis.id}"><i
+                                                    class="fa-solid fa-xmark"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Buscador de actividades -->

@@ -415,6 +415,7 @@
     justify-content: center;
 }
 
+
 /* RESPONSIVE */
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
@@ -427,10 +428,32 @@
         flex-direction: row;
         align-content: space-around;
         width: 100%;
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .flex-act{
+        justify-content: center;
+    }
+
+    .actividad-info{
+        height: 300px;
+    }
+
+    .eventos-movil{
+        width: 100%;
+        background-color: white;
+        margin-right: 2%;
     }
 
     .eventos{
-        width: 60%;
+        display: none;
+    }
+
+    .layout-asis{
+        padding: 0;
+        padding-top: 3%;
+        padding-right: 1%;
     }
 
     #buscadorActi{
@@ -472,5 +495,34 @@
         display: none;
     }
 
+    .actividad-info{
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+    }
+
+    .botones-info button{
+        font-size: 1.2rem;
+    }
+
+    .atras-info{
+        margin-left: 2.5%;
+    }
+
+    .inscripcion a{
+        width: 50%;
+    }
+
+    .btn-invit{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+    }
+
+    .btn-funcion{
+        display: flex;
+        flex-direction: column;
+    }
 
 }

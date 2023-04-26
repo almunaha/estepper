@@ -204,14 +204,15 @@
             <div class="juego">
 
                 <div class="header-juego">
-                    <h4 style="margin-left: auto;"><i class="fa-solid fa-gamepad"></i> Bienvenido al juego para crear
+                    <h4 class="bienvenido"><i class="fa-solid fa-gamepad"></i> Bienvenido al juego para crear
                         tus propias dietas <i class="fa-solid fa-gamepad"></i></h4>
                     <a style="margin-left: auto" class="btn-instrucciones" onclick="abrirIframe('instrucciones')"
                         href="#">Instrucciones </a>
                 </div>
 
-                <div>
-
+                <div class="header-juego-movil">
+                    <a class="btn-instrucciones-movil" onclick="abrirIframe('instrucciones')" href="#"><i style="color: black" class="fa-solid fa-circle-info"></i></a>
+                    <h4 class="bienvenido"><i class="fa-solid fa-gamepad"></i> Juego para crear tus dietas <i class="fa-solid fa-gamepad"></i></h4>
                 </div>
 
                 <!-- Modal instrucciones -->
@@ -227,21 +228,28 @@
                                 <div
                                     style="display: flex; flex-direction: column; justify-content: center; margin-bottom: 3%;">
                                     <p style="font-weight: bold;">Objetivo</p>
-                                    <p style="font-size: 0.9rem">El objetivo del juego es crear dietas intercambiando alimentos del mismo grupo y manteniendo
+                                    <p style="font-size: 0.9rem">El objetivo del juego es crear dietas intercambiando
+                                        alimentos del mismo grupo y manteniendo
                                         el número de unidades total.</p>
-                                    <p style="font-size: 0.9rem">Los posibles grupos son: lácteos, alimentos proteicos, verduras, harinas, frutas
+                                    <p style="font-size: 0.9rem">Los posibles grupos son: lácteos, alimentos proteicos,
+                                        verduras, harinas, frutas
                                         y grasas.</p>
 
                                     <p style="font-weight: bold;">Reglas</p>
-                                    <p style="font-size: 0.9rem">Tienes que arrastrar un alimento a la celda correspondiente y se le asignará en la tabla la 
+                                    <p style="font-size: 0.9rem">Tienes que arrastrar un alimento a la celda
+                                        correspondiente y se le asignará en la tabla la
                                         cantidad necesaria del alimento.</p>
-                                    <p style="font-size: 0.9rem">Si quieres eliminar el contenido de una celda, pincha en ella.</p>
+                                    <p style="font-size: 0.9rem">Si quieres eliminar el contenido de una celda, pincha
+                                        en ella.</p>
 
                                     <p style="font-weight: bold;">Resultado</p>
-                                    <p style="font-size: 0.9rem">Para saber tu resultado, pincha en el botón "Comprobar" cuando hayas terminado.</p>
+                                    <p style="font-size: 0.9rem">Para saber tu resultado, pincha en el botón "Comprobar"
+                                        cuando hayas terminado.</p>
                                     <p style="font-size: 0.9rem">Resultado correcto: podrá imprimir la dieta.</p>
-                                    <p style="font-size: 0.9rem">Resultado incorrecto: tendrá que modificar la dieta.</p>
-                                    <p style="font-size: 0.9rem">Celda amarilla: nº uds incorrecto y puede ser que el grupo también.</p>
+                                    <p style="font-size: 0.9rem">Resultado incorrecto: tendrá que modificar la dieta.
+                                    </p>
+                                    <p style="font-size: 0.9rem">Celda amarilla: nº uds incorrecto y puede ser que el
+                                        grupo también.</p>
                                     <p style="font-size: 0.9rem">Celda roja: grupo de alimento incorrecto.</p>
 
                                 </div>
@@ -255,7 +263,7 @@
 
                 <div>
                     <label style="display: inline-block; margin-bottom: 2%">Elige las calorías: </label>
-                    <select id="calorias" class="form-select" style="width: 10%; display: inline-block">
+                    <select id="calorias" class="form-select">
                         <option th:value="1200">1200</option>
                         <option th:value="1500">1500</option>
                         <option th:value="1800">1800</option>
@@ -265,7 +273,7 @@
                     <div>
                         <!-- ondragstart especifica que debe pasar cuando se arrastre al elemento 
                         draggable indica que el elemento se puede arrastrar -->
-                      
+
                         <!-- ondrop especifica que hace cuando se suelta el elemento arrastrado
                             ondragover especifica donde se puede soltar los datos arrastrados-->
                     </div>
@@ -301,87 +309,126 @@
                         </div>
                     </div>
 
-                    <table class="table tableJuego" id="tableJuego">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Lácteos</th>
-                                <th scope="col">Alimentos proteicos</th>
-                                <th scope="col">Verdura</th>
-                                <th scope="col">Harinas</th>
-                                <th scope="col">Frutas</th>
-                                <th scope="col">Grasas</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Desayuno</td>
-                                <td id="00" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="01" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="02" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="03" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="04" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="05" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                            </tr>
-                            <tr>
-                                <td>Media mañana</td>
-                                <td id="10" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="11" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="12" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="13" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="14" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="15" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                            </tr>
-                            <tr>
-                                <td>Comida</td>
-                                <td id="20" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="21" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="22" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="23" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="24" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="25" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                            </tr>
+                    <div class="table-responsive">
+                        <table class="table tableJuego" id="tableJuego">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Lácteos</th>
+                                    <th scope="col">Alimentos proteicos</th>
+                                    <th scope="col">Verdura</th>
+                                    <th scope="col">Harinas</th>
+                                    <th scope="col">Frutas</th>
+                                    <th scope="col">Grasas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Desayuno</td>
+                                    <td id="00" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="01" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="02" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="03" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="04" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="05" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                </tr>
+                                <tr>
+                                    <td>Media mañana</td>
+                                    <td id="10" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="11" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="12" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="13" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="14" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="15" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                </tr>
+                                <tr>
+                                    <td>Comida</td>
+                                    <td id="20" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="21" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="22" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="23" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="24" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="25" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                </tr>
 
-                            <tr>
-                                <td>Merienda</td>
-                                <td id="30" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="31" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="32" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="33" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="34" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="35" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                            </tr>
+                                <tr>
+                                    <td>Merienda</td>
+                                    <td id="30" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="31" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="32" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="33" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="34" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="35" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                </tr>
 
-                            <tr>
-                                <td>Cena</td>
-                                <td id="40" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="41" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="42" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="43" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="44" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="45" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                            </tr>
+                                <tr>
+                                    <td>Cena</td>
+                                    <td id="40" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="41" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="42" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="43" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="44" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="45" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                </tr>
 
-                            <tr>
-                                <td>Antes de acostarse</td>
-                                <td id="50" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="51" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="52" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="53" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="54" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                                <td id="55" class="box" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="eliminarAlimento(event, this.id)"></td>
-                            </tr>
+                                <tr>
+                                    <td>Antes de acostarse</td>
+                                    <td id="50" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="51" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="52" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="53" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="54" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                    <td id="55" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"
+                                        onclick="eliminarAlimento(event, this.id)"></td>
+                                </tr>
 
-                        </tbody>
-                    </table>
-                    <div>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="verRes">
                         <a class="comprobar">Comprobar</a>
-                        <div class="resultado"> 
+                        <div class="resultado">
                             <span id="correcto">
-                                <p>Resultado: CORRECTO</p> 
-                                <p>¡Enhorabuena, has creado correctamente la dieta! Pincha en "Imprimir" para guardártela.</p>
+                                <p>Resultado: CORRECTO</p>
+                                <p>¡Enhorabuena, has creado correctamente la dieta! Pincha en "Imprimir" para
+                                    guardártela.</p>
                                 <span><input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
-                                    onclick="window.print();"></span>
+                                        onclick="window.print();"></span>
                             </span>
                             <span id="incorrecto">
                                 <p>Resultado: INCORRECTO</p>
