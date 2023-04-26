@@ -59,6 +59,7 @@ import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ActividadService;
 import com.estepper.estepper.service.AdministradorService;
+import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.InvitacionService;
 import com.estepper.estepper.service.MaterialService;
@@ -72,6 +73,9 @@ public class CoordinadorController {
 
     @Autowired // inyectar recursos de la clase UsuarioService
     private UsuarioService user;
+
+    @Autowired
+    private CoordinadorService coordinador;
 
     @Autowired
     private AdministradorService administrador;
@@ -123,7 +127,7 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
             model.addAttribute("listado", listado);
 
-            Coordinador c = (Coordinador) getUsuario();
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
 
@@ -187,7 +191,7 @@ public class CoordinadorController {
                 }
             }
 
-            Coordinador c = (Coordinador) getUsuario();
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
 
@@ -225,7 +229,7 @@ public class CoordinadorController {
              * }
              */
 
-             Coordinador c = (Coordinador) getUsuario();
+             Coordinador c = coordinador.getCoordinador(getUsuario().getId());
              Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
              model.addAttribute("administrador", admin);
 
@@ -301,13 +305,16 @@ public class CoordinadorController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        model.addAttribute("actividad", new Actividad());
+        if(user instanceof Coordinador){
+            model.addAttribute("actividad", new Actividad());
 
-        Coordinador c = (Coordinador) getUsuario();
-        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+            Coordinador c = coordinador.getCoordinador(user.getId());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
 
-        return "nuevaActividad";
+            return "nuevaActividad";
+        }
+        else return "redirect:/";
     }
 
     public void subirFoto(MultipartFile file, Actividad actividad) {
@@ -351,7 +358,8 @@ public class CoordinadorController {
 
         if (elusuario instanceof Coordinador) {
             model.addAttribute("actividad", act.actividad(id));
-            Coordinador c = (Coordinador) getUsuario();
+
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "editar_actividad";
@@ -403,20 +411,25 @@ public class CoordinadorController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        Actividad actividad = act.actividad(id);
-        model.addAttribute("actividad", actividad);
+        if(user instanceof Coordinador){
 
-        List<Grupo> grupos = grupo.listaGrupos(user.getId());
-        model.addAttribute("grupos", grupos);
+            Actividad actividad = act.actividad(id);
+            model.addAttribute("actividad", actividad);
 
-        List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
-        model.addAttribute("invitaciones", invitaciones);
+            List<Grupo> grupos = grupo.listaGrupos(user.getId());
+            model.addAttribute("grupos", grupos);
 
-        Coordinador c = (Coordinador) user;
-        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+            List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
+            model.addAttribute("invitaciones", invitaciones);
 
-        return "invitaciones";
+            Coordinador c = coordinador.getCoordinador(user.getId());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
+            return "invitaciones";
+        }
+
+        else return "redirect:/";
     }
 
     @PostMapping("/process_invitacion/{id}")
@@ -425,7 +438,7 @@ public class CoordinadorController {
             RedirectAttributes redirAttrs) {
 
         Actividad actividad = act.actividad(id);
-        Coordinador coordinador = (Coordinador) getUsuario();
+        Coordinador c= coordinador.getCoordinador(getUsuario().getId());
 
         if (tipo.equals("GRUPAL")) {
             // grupo
@@ -439,7 +452,7 @@ public class CoordinadorController {
                 Invitacion invitacion = inv.invitacionByPartAndActi(p, actividad);
 
                 if (invitacion == null) {
-                    inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
+                    inv.guardar(new Invitacion(0, actividad, p, c, EstadoInvitacion.PENDIENTE));
                     Notificacion notificacion = new Notificacion(0, p,
                             "Nueva invitación a la actividad: " + actividad.getNombre(), LocalDateTime.now(),
                             EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
@@ -457,7 +470,7 @@ public class CoordinadorController {
                 if (p != null) {
                     Invitacion invitacion = inv.invitacionByPartAndActi(p, actividad);
                     if (invitacion == null)
-                        inv.guardar(new Invitacion(0, actividad, p, coordinador, EstadoInvitacion.PENDIENTE));
+                        inv.guardar(new Invitacion(0, actividad, p, c, EstadoInvitacion.PENDIENTE));
                 }
             }
 
@@ -475,22 +488,29 @@ public class CoordinadorController {
     @GetMapping("/eliminar_actividad/{id}")
     public String process_invitacion(@PathVariable(name = "id") Integer id, Model model) {
 
-        Actividad actividad = act.actividad(id);
+        Usuario user = getUsuario();
+        model.addAttribute("user", user);
 
-        // 1. Eliminar las invitaciones a esa actividad
-        List<Invitacion> invitaciones = inv.listadoByAct(actividad);
+        if(user instanceof Coordinador){
+            Actividad actividad = act.actividad(id);
 
-        for (Invitacion invitacion : invitaciones)
-            inv.borrar(invitacion);
+            // 1. Eliminar las invitaciones a esa actividad
+            List<Invitacion> invitaciones = inv.listadoByAct(actividad);
 
-        // 2. Eliminar la actividad
-        act.borrar(actividad);
+            for (Invitacion invitacion : invitaciones)
+                inv.borrar(invitacion);
 
-        Coordinador c = (Coordinador) getUsuario();
-        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+            // 2. Eliminar la actividad
+            act.borrar(actividad);
 
-        return "redirect:/actividades";
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
+            return "redirect:/actividades";
+        }
+
+        else return "redirect:/";
     }
 
 }
