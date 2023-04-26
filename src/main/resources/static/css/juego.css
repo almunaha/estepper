@@ -119,6 +119,10 @@
     display: inline-block;
 }
 
+.header-juego-movil{
+    display: none;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 767px) {
