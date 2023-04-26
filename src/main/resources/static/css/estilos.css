@@ -375,7 +375,9 @@ th {
 }
 
 #buscadorPart {
-    width: 25%;
+    width: 60%;
+    margin-top: 39px;
+    margin-right: 2%;
 }
 
 /*BOTONCITOS ICONOS CON LO DE ARRIBA*/
@@ -829,6 +831,12 @@ input[type="date"] {
 .utilidades-movil{
     display: none;
 }
+
+#estado{
+    width: 110%;
+}
+
+
 
 /* RESPONSIVE */
 
