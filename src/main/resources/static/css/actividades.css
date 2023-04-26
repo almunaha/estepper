@@ -11,10 +11,10 @@
     align-items: center;
 }
 
-.btn-invit {
+.btn-invit, .btn-asis-movil{
     background-color: rgb(221, 171, 99);
     color: white;
-    padding: 1%;
+    padding: 8%;
     border-radius: 8px;
     font-size: 17px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
@@ -23,8 +23,12 @@
     text-align: center;
 }
 
-.btn-invit:hover {
+.btn-invit:hover, .btn-asis-movil:hover {
     transform: scale(1.1);
+}
+
+.btn-asis-movil{
+    display: none;
 }
 
 .flex-act {
@@ -512,7 +516,7 @@
         width: 50%;
     }
 
-    .btn-invit{
+    .btn-invit, .btn-asis-movil{
         display: flex;
         text-align: center;
         justify-content: center;
