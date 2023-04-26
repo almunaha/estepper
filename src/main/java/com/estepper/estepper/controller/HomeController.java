@@ -237,7 +237,9 @@ public class HomeController {
                             model.addAttribute("ficha", fichaObjetivo);
                             Double porcentajeProgreso = 0.00;
                             if(f.getFichaObjetivo(p).getPerdida() != null) porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100 / f.getFichaObjetivo(p).getObjetivo();
-                            model.addAttribute("porcentajeProgreso", porcentajeProgreso);
+                            
+                            String progresoPer = String.format("%.2f",porcentajeProgreso).replace(",", "."); // Formatear a dos decimales
+                            model.addAttribute("porcentajeProgreso", progresoPer);
 
                             return "index";
                         } else
