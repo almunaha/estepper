@@ -169,18 +169,6 @@ public class AdminController {
         return "redirect:/";
     }
 
-    @GetMapping("/nuevoCoordinador")
-    public String nuevoCoordinador(Model model) {
-        Usuario u = usuarioLogueado();
-
-        if (u instanceof Administrador) {
-            model.addAttribute("user", u);
-            model.addAttribute("coordinador", new Coordinador());
-            return "nuevoCoordinador";
-        } else
-            return "redirect:/";
-    }
-
     @PostMapping("/process_coordinador")
     public String crear(@ModelAttribute Coordinador coordinador, Model model) {
         if (usuarioLogueado() instanceof Administrador) {
@@ -208,7 +196,7 @@ public class AdminController {
             List<Usuario> lista = listadoUsuarios();
             model.addAttribute("usuarios", lista);
 
-            return "admin";
+            return "redirect:/";
         } else
             return "redirect:/";
 

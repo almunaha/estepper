@@ -25,6 +25,7 @@
     <script src="sweetalert2.min.js" type="javascript"></script>
     <link rel="stylesheet" href="sweetalert2.min.css" type="css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="/js/validaciones.js"></script>
 
     <title>Administración - Estepper</title>
 </head>
@@ -129,7 +130,100 @@
                             </div>
                         </form>
                         <div style="margin-left: 5%;"><a class="btn" id="btn-admi"
-                                th:href="@{'/nuevoCoordinador'}">Nuevo coordinador</a></div>
+                            onclick="abrirIframe('nuevoCoordinador')" href="#">Nuevo coordinador</a></div>
+                    </div>
+
+                    <!-- Modal nuevo coordinador -->
+                    <div class="modal fade" id="nuevoCoordinador" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Crear nuevo coordinador</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-signin" id="form-registro" method="post"
+                                        th:action="@{/process_coordinador}" th:object="${coordinador}">
+
+                                        <label>Alias/Nickname </label>
+                                        <div class="input-group mt-2">
+                                            <span class="input-group-text" id="basic-addon1"><i
+                                                    class="fa-solid fa-user"></i></span>
+                                            <input type="text" th:field="*{nickname}" class="form-control" id="nickname"
+                                                required />
+                                        </div>
+                                        <div id="error_nick">
+                                            <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                                Mínimo de 3
+                                                caracteres
+                                                obligatorios</p>
+                                        </div>
+
+                                        <label class="mt-3">Correo electrónico </label>
+                                        <div class="input-group mt-2">
+                                            <span class="input-group-text" id="basic-addon1"><i
+                                                    class="fa-solid fa-envelope"></i></span>
+                                            <input type="email" th:field="*{email}" class="form-control" id="email"
+                                                required />
+                                        </div>
+                                        <div id="error_email">
+                                            <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> El
+                                                correo electrónico
+                                                no es
+                                                válido</p>
+                                        </div>
+
+                                        <label class="mt-3">Contraseña </label>
+                                        <div class="input-group mt-2">
+                                            <span class="input-group-text" id="basic-addon1"><i
+                                                    class="fa-solid fa-lock"></i></span>
+                                            <input type="password" id="pass1" th:field="*{contrasenia}"
+                                                class="form-control" style="border-right: 0;" required />
+                                            <span class="input-group-text"
+                                                style="background-color:white; border-left-style: none; cursor: pointer"
+                                                id="ojo"><i class="fa-solid fa-eye" id="iconoOjo1"
+                                                    onmouseover="this.style.color = '#aaa'"
+                                                    onmouseout="this.style.color = '#000'"></i></span>
+                                        </div>
+                                        <div id="error_pass1">
+                                            <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                                Mínimo de 8
+                                                caracteres
+                                                obligatorios</p>
+                                        </div>
+
+                                        <label class="mt-3">Confirma tu contraseña </label>
+                                        <div class="input-group mt-2" style=" margin-bottom: 5%;">
+                                            <span class="input-group-text" id="basic-addon1"><i
+                                                    class="fa-solid fa-lock"></i></span>
+                                            <input type="password" id="pass2" name="contrasenia2" class="form-control"
+                                                style="border-right: 0;" required />
+                                            <span class="input-group-text"
+                                                style="background-color:white; border-left-style: none; cursor: pointer; "
+                                                id="ojo2"><i class="fa-solid fa-eye" id="iconoOjo2"
+                                                    onmouseover="this.style.color = '#aaa'"
+                                                    onmouseout="this.style.color = '#000'"></i></span>
+                                        </div>
+                                        <div id="error_pass2">
+                                            <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Las
+                                                contraseñas no
+                                                coinciden</p>
+                                        </div>
+
+
+                                        <div class="btn-form">
+                                            <button class="btn"  type="submit" id="btn-part">Guardar</button>
+                                          </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="p-4">
@@ -168,7 +262,7 @@
                                             <a class="btn btn-primary cancel-button" style="display: none;"><i
                                                     title="Cancelar" class="fa-solid fa-times"></i></a>
                                             <a class="btn btn-primary" th:attr="data-modalid=${lis.id}"
-                                                onclick="abrirIframe(this.getAttribute('data-modalid'))">
+                                                onclick="abrirIframe2(this.getAttribute('data-modalid'))">
                                                 <i title="Mensaje" class="fa-solid fa-envelope"></i>
                                             </a>
                                             <a class="btn eliminar" id="btn-primary" th:data-id="${lis.id}"><i
@@ -182,7 +276,7 @@
                                 <script>
 
                                     // Función que abre el modal solicitado
-                                    function abrirIframe(modalId) {
+                                    function abrirIframe2(modalId) {
                                         console.log(modalId);
                                         const modal = new bootstrap.Modal(document.getElementById('ModalNuevoMensaje'));
                                         const idElementoP = document.querySelector('#ModalNuevoMensaje p');
@@ -191,10 +285,10 @@
 
                                         modal.show();
                                     }
-                                   
+
                                 </script>
 
-                                
+
                             </table>
                         </div>
                     </div>

@@ -138,6 +138,8 @@ public class HomeController {
             model.addAttribute("user", getUsuario());
             model.addAttribute("mensajeAdmin", new MensajeAdmin());
 
+            model.addAttribute("coordinador", new Coordinador());
+
            // MensajeAdmin menAdmin = new MensajeAdmin();
             //List<MensajeAdmin> mensajesadmin = mensaje.obtenerMensajesAdmin(u);
             //model.addAttribute("participante", p);
