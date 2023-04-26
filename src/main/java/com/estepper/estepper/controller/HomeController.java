@@ -53,6 +53,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.AdministradorService;
+import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.ProgresoService;
@@ -75,6 +76,9 @@ public class HomeController {
 
     @Autowired
     private AdministradorService administrador;
+
+    @Autowired
+    private CoordinadorService coordinador;
 
     @Autowired
     private MaterialService materialS;
@@ -120,7 +124,7 @@ public class HomeController {
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
 
-            Coordinador c = (Coordinador) user;
+            Coordinador c= coordinador.getCoordinador(user.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "coordinador";
@@ -267,7 +271,8 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
-        Coordinador c = (Coordinador) elusuario;
+        
+        Coordinador c = coordinador.getCoordinador(elusuario.getId());
         Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
         model.addAttribute("administrador", admin);
         if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
@@ -291,7 +296,8 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
-        Coordinador c = (Coordinador) elusuario;
+
+        Coordinador c = coordinador.getCoordinador(elusuario.getId());
         Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
         model.addAttribute("administrador", admin);
         if (elusuario instanceof Participante) {
@@ -467,7 +473,7 @@ public class HomeController {
             model.addAttribute("material", material);
             model.addAttribute("id", id);
             
-            Coordinador c = (Coordinador) elusuario;
+            Coordinador c = coordinador.getCoordinador(elusuario.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "materialesCoor";

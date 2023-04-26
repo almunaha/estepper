@@ -419,10 +419,11 @@ public class CoordinadorController {
             List<Grupo> grupos = grupo.listaGrupos(user.getId());
             model.addAttribute("grupos", grupos);
 
-            List<Invitacion> invitaciones = inv.listadoCoordAct((Coordinador) user, actividad);
+            Coordinador c = coordinador.getCoordinador(user.getId());
+
+            List<Invitacion> invitaciones = inv.listadoCoordAct(c, actividad);
             model.addAttribute("invitaciones", invitaciones);
 
-            Coordinador c = coordinador.getCoordinador(user.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
 
