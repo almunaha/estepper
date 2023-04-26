@@ -301,12 +301,14 @@ public class HomeController {
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
 
-        Coordinador c = coordinador.getCoordinador(elusuario.getId());
-        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+       
         if (elusuario instanceof Participante) {
             Participante p = participante.findById(id).get();
             model.addAttribute("participante", p);
+
+            Coordinador c = coordinador.getCoordinador(p.getIdCoordinador());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
 
             // Nombre del grupo
             String grupo = "No asignado";
@@ -338,8 +340,18 @@ public class HomeController {
             model.addAttribute("notificaciones", notificaciones);
 
             return "mostrarperfilParticipante";
-        } else
+        } else if(elusuario instanceof Coordinador){
+            Coordinador c = coordinador.getCoordinador(elusuario.getId());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             return "mostrarperfil";
+        }
+        else {
+            Administrador admin = administrador.getAdministrador(elusuario.getId());
+            model.addAttribute("administrador", admin);
+            return "mostrarperfil";
+        }
 
     }
 
