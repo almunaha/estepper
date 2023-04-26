@@ -257,15 +257,15 @@
                                             <span class="editable-state" th:text="${lis.estadoCuenta}"></span>
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary edit-button"><i title="Editar"
+                                            <a class="btn" id="btn-accion"><i title="Editar"
                                                     class="fa-solid fa-user-pen"></i></a>
-                                            <a class="btn btn-primary cancel-button" style="display: none;"><i
+                                            <a class="btn" id="btn-accion" style="display: none;"><i
                                                     title="Cancelar" class="fa-solid fa-times"></i></a>
-                                            <a class="btn btn-primary" th:attr="data-modalid=${lis.id}"
+                                            <a class="btn" id="btn-accion" th:attr="data-modalid=${lis.id}"
                                                 onclick="abrirIframe2(this.getAttribute('data-modalid'))">
                                                 <i title="Mensaje" class="fa-solid fa-envelope"></i>
                                             </a>
-                                            <a class="btn eliminar" id="btn-primary" th:data-id="${lis.id}"><i
+                                            <a class="btn" id="btn-accion" th:data-id="${lis.id}"><i
                                                     title="Eliminar" class="fa-solid fa-trash"></i></a>
 
                                         </td>

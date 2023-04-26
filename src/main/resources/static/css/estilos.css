@@ -313,7 +313,7 @@ a {
 }
 
 #btn-part,
-#btn-admi {
+#btn-admi, #btn-accion {
     color: white;
     background-color: #6ca4c7;
 }
