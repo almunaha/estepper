@@ -91,7 +91,7 @@ public class HomeController {
 
     @Autowired
     private MensajeService mensaje;
-    
+
     @Autowired
     private NotificacionService noti;
 
@@ -102,8 +102,11 @@ public class HomeController {
     private BCryptPasswordEncoder hash;
 
     /**
-     * @brief Esta función maneja la solicitud GET de la ruta "/login" y devuelve la plantilla de inicio de sesión "login.html".
-     * La plantilla "login.html" es una página HTML que contiene un formulario de inicio de sesión para que los usuarios ingresen sus credenciales.
+     * @brief Esta función maneja la solicitud GET de la ruta "/login" y devuelve la
+     *        plantilla de inicio de sesión "login.html".
+     *        La plantilla "login.html" es una página HTML que contiene un
+     *        formulario de inicio de sesión para que los usuarios ingresen sus
+     *        credenciales.
      * 
      * @return "login.html"
      */
@@ -124,7 +127,7 @@ public class HomeController {
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
 
-            Coordinador c= coordinador.getCoordinador(user.getId());
+            Coordinador c = coordinador.getCoordinador(user.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "coordinador";
@@ -140,11 +143,11 @@ public class HomeController {
 
             model.addAttribute("coordinador", new Coordinador());
 
-           // MensajeAdmin menAdmin = new MensajeAdmin();
-            //List<MensajeAdmin> mensajesadmin = mensaje.obtenerMensajesAdmin(u);
-            //model.addAttribute("participante", p);
-            //model.addAttribute("messageAdmin", menAdmin);
-           // model.addAttribute("mensajesPrivados", mensajesPrivados);
+            // MensajeAdmin menAdmin = new MensajeAdmin();
+            // List<MensajeAdmin> mensajesadmin = mensaje.obtenerMensajesAdmin(u);
+            // model.addAttribute("participante", p);
+            // model.addAttribute("messageAdmin", menAdmin);
+            // model.addAttribute("mensajesPrivados", mensajesPrivados);
 
             return "admin";
 
@@ -180,7 +183,7 @@ public class HomeController {
                                                                                                 // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
-                         
+
                             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
                             model.addAttribute("administrador", admin);
 
@@ -234,23 +237,25 @@ public class HomeController {
                             Integer porcentajeObjetivos = contadorObjetivos * 100 / 4;
                             model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
 
-                        
                             FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(p.getId()).get());
                             model.addAttribute("ficha", fichaObjetivo);
                             Double porcentajeProgreso = 0.00;
-                            if(f.getFichaObjetivo(p).getPerdida() != null) porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100 / f.getFichaObjetivo(p).getObjetivo();
-                            
-                            String progresoPer = String.format("%.2f",porcentajeProgreso).replace(",", "."); // Formatear a dos decimales
+                            if (f.getFichaObjetivo(p).getPerdida() != null)
+                                porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100
+                                        / f.getFichaObjetivo(p).getObjetivo();
+
+                            String progresoPer = String.format("%.2f", porcentajeProgreso).replace(",", "."); // Formatear
+                                                                                                              // a dos
+                                                                                                              // decimales
                             model.addAttribute("porcentajeProgreso", progresoPer);
 
                             return "index";
                         } else
                             return "baja";
 
-                    }
-                    else return "redirect:/terminos-y-condiciones";
+                    } else
+                        return "redirect:/terminos-y-condiciones";
                 }
-                
 
             }
         }
@@ -275,11 +280,14 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
-        
-        Coordinador c = coordinador.getCoordinador(elusuario.getId());
-        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+
         if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
+            Participante p = participante.findById(id).get();
+
+            Coordinador c = coordinador.getCoordinador(p.getIdCoordinador());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             model.addAttribute("participante", participante.findById(id).get());
 
             // buscar notificaciones
@@ -287,8 +295,15 @@ public class HomeController {
             model.addAttribute("notificaciones", notificaciones);
 
             return "editarperfilParticipante";
-        } else
+        } else if (elusuario instanceof Coordinador) {
+            Coordinador c = coordinador.getCoordinador(elusuario.getId());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             return "editarperfil";
+        } else {
+            return "editarperfil";
+        }
 
     }
 
@@ -301,7 +316,6 @@ public class HomeController {
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
 
-       
         if (elusuario instanceof Participante) {
             Participante p = participante.findById(id).get();
             model.addAttribute("participante", p);
@@ -340,16 +354,13 @@ public class HomeController {
             model.addAttribute("notificaciones", notificaciones);
 
             return "mostrarperfilParticipante";
-        } else if(elusuario instanceof Coordinador){
+        } else if (elusuario instanceof Coordinador) {
             Coordinador c = coordinador.getCoordinador(elusuario.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
 
             return "mostrarperfil";
-        }
-        else {
-            Administrador admin = administrador.getAdministrador(elusuario.getId());
-            model.addAttribute("administrador", admin);
+        } else {
             return "mostrarperfil";
         }
 
@@ -375,7 +386,8 @@ public class HomeController {
 
                 participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), part.getGrupo(),
                         part.getAsistencia(),
-                        part.getIdCoordinador(),part.getIdAdministrador(),part.getPerdidaDePeso(), part.getSesionesCompletas(),
+                        part.getIdCoordinador(), part.getIdAdministrador(), part.getPerdidaDePeso(),
+                        part.getSesionesCompletas(),
                         part.getPerdidacmcintura(), id);
             }
 
@@ -481,14 +493,14 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
-   
+
         if (elusuario instanceof Coordinador && (participante.findById(id).get().getIdCoordinador() == elusuario.getId()
                 || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
-            
+
             Coordinador c = coordinador.getCoordinador(elusuario.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
@@ -583,14 +595,13 @@ public class HomeController {
 
     }
 
-    
     @GetMapping("/chatCordAdmin/{id}") // vista coordinador
     public String chatCordAdmin(@PathVariable("id") Integer idAdministrador, Model model) {
 
         Usuario u = getUsuario();
         model.addAttribute("user", u);
         Administrador admin = administrador.getAdministrador(idAdministrador);
-    
+
         if (u instanceof Coordinador) { // revisar esto
 
             MensajeAdmin menAdmin = new MensajeAdmin();
@@ -607,13 +618,14 @@ public class HomeController {
             return "redirect:/";
     }
 
-    @GetMapping("/chatPartAdmin/{id}") // vista participante --> MEZCLARLA LUEGO CO NLA DEL COORDINADOR PARA TENER SOLO 1 Y NO DOS IGUALES
+    @GetMapping("/chatPartAdmin/{id}") // vista participante --> MEZCLARLA LUEGO CO NLA DEL COORDINADOR PARA TENER SOLO
+                                       // 1 Y NO DOS IGUALES
     public String chatPartAdmin(@PathVariable("id") Integer idAdministrador, Model model) {
 
         Usuario u = getUsuario();
         model.addAttribute("user", u);
         Administrador admin = administrador.getAdministrador(idAdministrador);
-    
+
         if (u instanceof Participante) { // revisar esto
 
             MensajeAdmin menAdmin = new MensajeAdmin();
@@ -630,7 +642,4 @@ public class HomeController {
             return "redirect:/";
     }
 
-
-    
-   
 }
