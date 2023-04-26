@@ -299,24 +299,6 @@ public class CoordinadorController {
         }
     }
 
-    // ACTIVIDADES
-    @GetMapping("nuevaActividad")
-    public String nuevaActividad(Model model) {
-        Usuario user = getUsuario();
-        model.addAttribute("user", user);
-
-        if(user instanceof Coordinador){
-            model.addAttribute("actividad", new Actividad());
-
-            Coordinador c = coordinador.getCoordinador(user.getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
-
-            return "nuevaActividad";
-        }
-        else return "redirect:/";
-    }
-
     public void subirFoto(MultipartFile file, Actividad actividad) {
         Path rutaArchivo = Paths.get("src//main//resources//static/actividades");
         String rutaAbsoluta = rutaArchivo.toFile().getAbsolutePath();

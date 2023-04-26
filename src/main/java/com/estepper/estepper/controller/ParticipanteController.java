@@ -1047,6 +1047,7 @@ public class ParticipanteController {
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             model.addAttribute("listado", listado);
+            model.addAttribute("actividad", new Actividad());
 
             return "actividadesCoor";
         }
