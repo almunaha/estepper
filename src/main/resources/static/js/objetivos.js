@@ -313,7 +313,7 @@ $(document).ready(function () {
                 tabla += '<td>' + objetivos[i].repeticion + '</td>';
                 tabla += '<td>';
                 tabla += '<a class="fa-solid fa-pen-to-square fa-1x ps-4 pe-2" style="color:rgba(127, 179, 120, 0.903)" id="btn-icono" data-bs-toggle="tooltip" title="Editar objetivo" href="/objetivos/editar/' + objetivos[i].id + '"></a>';
-                tabla += '<a class="eliminarObjetivo" style="color:rgb(201, 101, 101)" id="btn-icono" data-id="' + objetivos[i].id + '" data-bs-toggle="tooltip" title="Eliminar objetivo"><i class="fa-solid fa-trash-can fa-1x  pe-2"></i></a>'
+                tabla += '<a class="eliminarObjetivo" style="color:rgb(201, 101, 101); cursor: pointer" id="btn-icono" data-id="' + objetivos[i].id + '" data-bs-toggle="tooltip" title="Eliminar objetivo"><i class="fa-solid fa-trash-can fa-1x  pe-2"></i></a>'
                 tabla += '</td></tr>';
             }
             
