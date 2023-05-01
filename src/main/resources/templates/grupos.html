@@ -94,6 +94,7 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -144,11 +145,11 @@
                             <div style="margin-bottom: 5%; display: flex; justify-content: center; align-items: center;"
                                 class="input-group">
 
-                                <input style="height: 5%;" id="filtrarGrupos" class="form-control light-table-filter"
+                                <input style="height: 5%;" id="filtrarGrupos" class="form-control light-table-filter buscadorGr"
                                     data-table="tablePart" type="text" placeholder="Buscar...">
 
 
-                                <div class="d-flex justify-content-center align-items-center" style=" margin-left: 2%;">
+                                <div class="d-flex justify-content-center align-items-center filtroGr" style=" margin-left: 2%;">
                                     <div class="me-4" for="estadoGrupo">Estado:</div>
                                     <div>
                                         <select class="form-control" name="estadoGrupo" id="estadoGrupo">
@@ -160,6 +161,9 @@
                                 </div>
 
                             </div>
+
+                            
+                            
                         </form>
                     </div>
 
@@ -191,7 +195,7 @@
                                     <td th:text="${lis.fechaFinGrupo}" th:unless="${lis.fechaFinGrupo == null}"></td>
                                     <td th:text="${lis.estadoGrupo}"></td>
                                     <td>
-
+                                        <div class="botonesGrupos" style="display: flex; gap:1px;">
                                         <!--LOS BOTONES CON ICONOS-->
                                         <a class="fa-solid fa-eye fa-2x" id="btn-icono" data-bs-toggle="tooltip"
                                             title="Ver grupo" th:href="@{'/unGrupo/' + ${lis.id}}"></a>
@@ -207,6 +211,8 @@
                                         <a class="fa-solid fa-folder-open fa-2x" id="btn-icono" data-bs-toggle="tooltip"
                                             title="Materiales" th:href="@{'/materialesGrupo/' + ${lis.id}}"></a>
 
+                                        </div>
+
                                     </td>
 
                                 </tr>
@@ -216,13 +222,21 @@
 
                     </div>
 
-                    <div class="row">
+                    <div class="row filaDebajoGrupos">
+                        
                         <div class="col-4 text-start">
-                            <div>
+                            <!--<div>
                                 <a class="btn" id="btn-part" title="Crear" href="#"
                                     onclick="abrirIframe('modalNuevoGrupo')">
                                     Crear un grupo nuevo</a>
-                            </div>
+                            </div>-->
+
+                            <div>
+                                <a class="btn" id="btn-part" title="Crear" href="#" onclick="abrirIframe('modalNuevoGrupo')">
+                                  Crear un grupo nuevo
+                                </a>
+                              </div>
+                              
                         </div>
 
                         <div class="modal fade" id="modalNuevoGrupo" tabindex="-1" aria-hidden="true">
@@ -238,7 +252,7 @@
                                             enctype="multipart/form-data">
                                             <div class="m-3">
                                                 <div class="form-group row">
-                                                    <label class="col-form-label col-sm-4">Nombre del nuevo
+                                                    <label class="col-form-label col-sm-4 nuevoGrupito">Nombre del nuevo
                                                         grupo:</label>
                                                     <div class="col-sm-8 mb-2">
                                                         <input type="text" th:field="*{nombre}" class="form-control"
@@ -250,7 +264,7 @@
                                                     </div>
 
 
-                                                    <label class="col-form-label col-sm-4">Participantes del nuevo
+                                                    <label class="col-form-label col-sm-4 nuevoGrupito">Participantes del nuevo
                                                         grupo:</label>
                                                     <div class="col-sm-8 mb-2">
                                                         <select th:field="*{participantes}" class="form-control"

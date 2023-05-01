@@ -137,7 +137,7 @@
                                         <td><span class="editable" th:text="${lis.usuario.id}"></span></td>
                                         <td>
                                             <a class="btn btn-primary"
-                                                th:attr="data-chatid=${lis.usuario.id} + '&nickname=' + ${lis.usuario.nickname}"
+                                                th:attr="data-chatid=${lis.usuario.id} + '&nickname=' + ${lis.usuario.nickname} + '&listaMensajes=' + ${mensajesAdmin}"
                                                 onclick="abrirChat(this.getAttribute('data-chatid'))">
                                                 <i title="Mensaje" class="fa-solid fa-envelope"></i>
                                             </a>
@@ -157,10 +157,11 @@
                                         <h4 id="nombreDelUsuario"></h4>
                                         <h4 id="idDelUsuario"></h4>
                                     </header>
+                                    <!-- <div class="chat-box">
+                                        <div th:each="m : ${mensajesConAdministrador}" class="contenedor-mensaje mb-2">-->
                                     <div class="chat-box">
-                                        <div th:each="m : ${mensajesAdmin}" class="contenedor-mensaje mb-2">
-
-                                            <div th:if="${m.emisor.id != user.id}"
+                                        <div th:each="m : ${mensajesConAdministrador}" class="contenedor-mensaje mb-2">
+                                            <div id="bloque-condicion" th:if="${m.emisor.id != user.id}"
                                                 class="mensaje d-flex justify-content-start align-items-end">
                                                 <img th:src="${m.usuario.fotoUsuario}" style="width: 40px;"
                                                     class="avatar" alt="m.usuario.nickname" />
@@ -171,10 +172,11 @@
                                                         class="fecha text-end"></div>
                                                 </div>
                                             </div>
+
                                             <div th:unless="${m.emisor.id != user.id}"
                                                 class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
-                                                <img th:src="${user.fotoUsuario}" style="width: 40px;"
-                                                    class="avatar" alt="m.user.nickname" />
+                                                <img th:src="${user.fotoUsuario}" style="width: 40px;" class="avatar"
+                                                    alt="m.user.nickname" />
                                                 <div class="contenido-mensaje green me-2 p-2">
                                                     <div class="nickname">Yo</div>
                                                     <div th:text="${m.mensaje}" class="mensaje my-1"></div>
@@ -184,38 +186,50 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                     <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}"
                                         method="post" enctype="multipart/form-data">
                                         <div class="m-3" style="display:flex">
-                        
-                                                <div class="col-sm-10 mb-2" style="margin-left:3%">
-                                                    <input type="text" th:field="*{mensaje}" class="form-control" placeholder="Escribe un mensaje aquí ..." autocomplete="off"
-                                                        required />
-                                                </div>
+
+                                            <div class="col-sm-10 mb-2" style="margin-left:3%">
+                                                <input type="text" th:field="*{mensaje}" class="form-control"
+                                                    placeholder="Escribe un mensaje aquí ..." autocomplete="off"
+                                                    required />
+                                            </div>
 
                                             <div class="text-center p" style="margin-left: 3%;">
-                                                <button type="submit" class="btn" id="btn-part"><i class="fa-solid fa-paper-plane"></i></button>
+                                                <button type="submit" class="btn" id="btn-part"><i
+                                                        class="fa-solid fa-paper-plane"></i></button>
                                             </div>
                                         </div>
                                     </form>
                                     <script>
 
                                         function abrirChat(url) {
-                                            const [modalId, nickname] = url.split('&');
+                                            const [modalId, nickname, listaMensajes] = url.split('&');
                                             const id = modalId.split('=')[0];
                                             const name = nickname.split('=')[1];
+                                            const mensajes = listaMensajes.split('=')[1];
+                                            //console.log(mensajes);
+                                            //console.log(typeof mensajes);
+                                           // var bloqueCondicion = document.getElementById("bloque-condicion");
+                                           // bloqueCondicion.setAttribute("data-id-comparar", idComparar);
 
                                             document.getElementById("idDelUsuario").innerHTML = id;
                                             document.getElementById("nombreDelUsuario").innerHTML = name;
+
 
                                             const elemento = document.getElementById('derechaAdmin');
                                             elemento.style.display = 'block';
 
                                             const form = document.querySelector('#derechaAdmin form');
                                             form.action = '/mensajesAdmin/guardar/' + id;
-                                        }
 
+
+                                            $.get('/messages/' + id);
+
+                                            //console.log(mensajes);
+                                        }
 
                                     </script>
                                 </section>

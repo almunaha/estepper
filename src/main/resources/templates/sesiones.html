@@ -133,6 +133,7 @@
 
       <div class="desplegable-perfil">
         <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+        <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
         <form th:action="@{/logout}" method="post">
           <button class="dropdown-item" type="submit">Cerrar sesión</button>
         </form>

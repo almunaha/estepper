@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
@@ -108,7 +110,7 @@ public class HomeController {
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
             Coordinador c = (Coordinador) user;
-           // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+            // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "coordinador";
@@ -122,11 +124,11 @@ public class HomeController {
             model.addAttribute("user", getUsuario());
             model.addAttribute("mensajeAdmin", new MensajeAdmin());
 
-           // MensajeAdmin menAdmin = new MensajeAdmin();
-            //List<MensajeAdmin> mensajesadmin = mensaje.obtenerMensajesAdmin(u);
-            //model.addAttribute("participante", p);
-            //model.addAttribute("messageAdmin", menAdmin);
-           // model.addAttribute("mensajesPrivados", mensajesPrivados);
+            // MensajeAdmin menAdmin = new MensajeAdmin();
+            // List<MensajeAdmin> mensajesadmin = mensaje.obtenerMensajesAdmin(u);
+            // model.addAttribute("participante", p);
+            // model.addAttribute("messageAdmin", menAdmin);
+            // model.addAttribute("mensajesPrivados", mensajesPrivados);
 
             return "admin";
 
@@ -162,8 +164,8 @@ public class HomeController {
                                                                                                 // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
-                           // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
-                         
+                            // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+
                             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
                             model.addAttribute("administrador", admin);
 
@@ -217,10 +219,13 @@ public class HomeController {
                             Integer porcentajeObjetivos = contadorObjetivos * 100 / 4;
                             model.addAttribute("porcentajeObjetivos", porcentajeObjetivos);
 
-                        
                             FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(p.getId()).get());
                             model.addAttribute("ficha", fichaObjetivo);
-                            Double porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100 / f.getFichaObjetivo(p).getObjetivo();
+                            Double porcentajeProgreso = 0.0;
+                            if (fichaObjetivo != null) {
+                                porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100
+                                        / f.getFichaObjetivo(p).getObjetivo();
+                            }
                             model.addAttribute("porcentajeProgreso", porcentajeProgreso);
 
                             return "index";
@@ -340,7 +345,8 @@ public class HomeController {
 
                 participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), part.getGrupo(),
                         part.getAsistencia(),
-                        part.getIdCoordinador(),part.getIdAdministrador(),part.getPerdidaDePeso(), part.getSesionesCompletas(),
+                        part.getIdCoordinador(), part.getIdAdministrador(), part.getPerdidaDePeso(),
+                        part.getSesionesCompletas(),
                         part.getPerdidacmcintura(), id);
             }
 
@@ -446,14 +452,14 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
-   
+
         if (elusuario instanceof Coordinador && (participante.findById(id).get().getIdCoordinador() == elusuario.getId()
                 || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
-            
+
             Coordinador c = (Coordinador) elusuario;
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
@@ -530,7 +536,7 @@ public class HomeController {
     }
 
     @GetMapping("/mensajesAdmin")
-    public String mensajesAdmin(Model model) {
+    public String mensajesAdmin(Model model, @RequestParam(required = false) List<MensajeAdmin> mensajesConAdministrador) {
 
         Usuario user = getUsuario();
         List<Usuario> lista = usuario.listadoTotal();
@@ -539,23 +545,55 @@ public class HomeController {
         Administrador admin = (Administrador) user;
         List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin(admin);
 
+        /*System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
+
+        System.out.println("Valor de userId: " + userId); // Imprime el valor de userId en la consola // Imprime el valor de userId en la consola
+
+        List<MensajeAdmin> alvaro = null;
+        if (userId != null) {
+            alvaro = mensaje.obtenerMensajesAdminyUsuario(admin, usuario.findById(userId).get());
+        } 
+        System.out.println(mensajesAdmin);
+        System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
+        System.out.println(alvaro);*/
+
         model.addAttribute("user", user);
         model.addAttribute("usuarios", lista);
         model.addAttribute("mensajeAdmin", menAdmin);
         model.addAttribute("mensajesAdmin", mensajesAdmin);
+        model.addAttribute("mensajesConAdministrador", mensajesConAdministrador);
+        
+        System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
+        System.out.println(mensajesConAdministrador);
+        System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
+
+        //List<MensajeAdmin> mensajesConAdministrador = (List<MensajeAdmin>) redirAttrs.getFlashAttributes().get("mensajesConAdministrador");
+    
 
         return "mensajesAdmin";
 
     }
 
-    
+    @GetMapping("/messages/{userId}")
+    public String getUserMessages(@PathVariable Integer userId, RedirectAttributes redirAttrs) {
+
+        Administrador admin = (Administrador) getUsuario();
+        List<MensajeAdmin> messages = mensaje.obtenerMensajesAdminyUsuario(admin, usuario.findById(userId).get());
+
+       // redirAttrs.addFlashAttribute("mensajesConAdministrador", messages);
+        //redirAttrs.addAttribute("userId", userId);
+        redirAttrs.addAttribute("mensajesConAdministrador", messages);
+
+        return "redirect:/mensajesAdmin";
+    }
+
     @GetMapping("/chatCordAdmin/{id}") // vista coordinador
     public String chatCordAdmin(@PathVariable("id") Integer idAdministrador, Model model) {
 
         Usuario u = getUsuario();
         model.addAttribute("user", u);
         Administrador admin = administrador.getAdministrador(idAdministrador);
-    
+
         if (u instanceof Coordinador) { // revisar esto
 
             MensajeAdmin menAdmin = new MensajeAdmin();
@@ -572,13 +610,14 @@ public class HomeController {
             return "redirect:/";
     }
 
-    @GetMapping("/chatPartAdmin/{id}") // vista participante --> MEZCLARLA LUEGO CO NLA DEL COORDINADOR PARA TENER SOLO 1 Y NO DOS IGUALES
+    @GetMapping("/chatPartAdmin/{id}") // vista participante --> MEZCLARLA LUEGO CO NLA DEL COORDINADOR PARA TENER SOLO
+                                       // 1 Y NO DOS IGUALES
     public String chatPartAdmin(@PathVariable("id") Integer idAdministrador, Model model) {
 
         Usuario u = getUsuario();
         model.addAttribute("user", u);
         Administrador admin = administrador.getAdministrador(idAdministrador);
-    
+
         if (u instanceof Participante) { // revisar esto
 
             MensajeAdmin menAdmin = new MensajeAdmin();

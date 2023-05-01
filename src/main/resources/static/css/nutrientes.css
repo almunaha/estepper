@@ -1,0 +1,164 @@
+.valor2 {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.valor2 h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.flex-valor2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iz-valor2 {
+  margin-right: 10px;
+}
+
+.dato-valor2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.bottom-valor2 {
+  font-size: 14px;
+  color: #999;
+}
+
+
+
+
+
+/*CÁLCULO ICDR FORMULARIO*/
+
+.formulario-ICDR {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#formularioICDR h5 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  flex: 1;
+  margin-right: 20px;
+  margin-bottom: 5px;
+}
+
+
+
+.form-control {
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+}
+
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 6'%3E%3Cpath d='M0 0l6 6 6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 6px;
+}
+
+button.btn {
+  background-color: #ffc107;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button.btn:hover {
+  background-color: #ff9800;
+}
+
+
+#resultadoICDR {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 20px;
+  display: none;
+}
+
+/*SALES*/
+#salesRes {
+  font-weight: bold;
+}
+
+.encabezadoNutrientes{
+  display: flex;
+  justify-content: center; 
+  width: fit-content; 
+  margin-left: 30%;
+  gap:2px;
+}
+
+.botonInfoICDR{
+  transition-duration: 0.4s;
+  color: orange; 
+}
+
+.botonInfoICDR:hover{
+  color:rgb(204, 130, 4)
+}
+
+.resultaados-alimentos{
+  background-color: white;
+}
+
+
+@media (max-width: 767px) {
+  .encabezadoNutrientes{
+    margin-left: 0%;
+  }
+
+  #inputPeso::placeholder {
+    font-size: 15px;
+  }
+
+  #inputAltura::placeholder {
+    font-size: 15px;
+  }
+
+  #inputActFisica {
+    font-size: 15px;
+  }
+  .resultadosICDR{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+}

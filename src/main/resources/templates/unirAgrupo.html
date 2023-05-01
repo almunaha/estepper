@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/grupos.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
 
@@ -82,6 +83,7 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -120,13 +122,14 @@
 
                     <div>
                         <h4
-                            th:text="'AÑADIR A UN GRUPO A: ' +${participante.nickname} + ' (' + ${participante.codigo} + ')'">
+                            th:text="'Añadir a ' + ${participante.nickname} + ' a un grupo'  ">
+                            <!--th:text="'AÑADIR A UN GRUPO A: ' +${participante.nickname} + ' (' + ${participante.codigo} + ')'">-->
                         </h4>
                     </div>
 
 
-
-                    <table class="table tablePart">
+                    <div class="table-responsive">
+                    <table class="table tablePart" id="tableAnadirAGrupo">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Nombre</th>
@@ -138,7 +141,7 @@
 
                             <tr th:each="lis:${listaGrupos}">
                                 <td th:text="${lis.nombre}"></td>
-                                <td th:text="${lis.numParticipantes}"></td>
+                                <td th:text="${lis.numParticipantes}" class="numPartAniadirAGrupo"></td>
                                 <td><a class="btn" id="btn-part"
                                         th:href="@{'/actualizarGrupos/' + ${participante.id} + '/' + ${lis.id}}">Seleccionar</a>
                                 </td>
@@ -147,6 +150,7 @@
                         </tbody>
 
                     </table>
+                    </div>
 
                 </div>
             </div>

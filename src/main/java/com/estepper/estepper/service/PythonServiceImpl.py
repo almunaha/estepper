@@ -297,3 +297,70 @@ class PythonServiceImpl(PythonService):
         cadena_unicode = unicode(cadena_unida, 'utf-8')
 
         return [cadena_unicode]
+
+
+#PARTE DE NUTRICION
+
+"""
+def recomendarAlimentos(fibra, proteina, carbohidratos, grasas, sal, icdr):
+
+    conn = jaydebeapi.connect(
+        "com.mysql.jdbc.Driver",
+        "jdbc:mysql://localhost:3306/estepper",
+        ["estepper", "estepper"],
+    )
+
+
+    # obtener todos los alimentos de la base de datos
+    alimentos = []
+    with conn.cursor() as cur:
+        cur.execute(
+            "SELECT nombre, sal, proteinas, hidratos_de_carbono, fibra_alimentaria, grasas_saturadas, id FROM alimentacion"
+        )
+        rows = cur.fetchall()
+        for row in rows:
+            alimento = (
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                str(row[6]).split(","),
+            )
+            alimentos.append(alimento)
+
+    n = len(alimentos)
+
+    # Creamos una matriz de n x m para guardar el valor de cada combinación de alimentos
+    m = int(icdr)
+    dp = [[0 for x in range(m+1)] for y in range(n+1)]
+
+    # Iteramos por cada alimento y por cada cantidad de calorías desde 0 hasta m
+    for i in range(1, n+1):
+        for j in range(m+1):
+            # si el alimento cabe en la mochila, calculamos el valor que aporta y lo sumamos al valor de la combinación anterior
+            if alimentos[i-1]['calorias'] <= j:
+                valor = alimentos[i-1]['valor'] * (1 - alimentos[i-1]['grasas_saturadas'] / 10) * (1 - alimentos[i-1]['sal'] / 2.3)
+                dp[i][j] = max(dp[i-1][j], dp[i-1][j-alimentos[i-1]['calorias']] + valor)
+
+    # Ahora que tenemos el valor de cada combinación, buscamos la combinación que más valor aporta y que cumple las restricciones
+    res = []
+    i = n
+    j = m
+    while i > 0 and j > 0:
+        if dp[i][j] == dp[i-1][j]:
+            i -= 1
+        else:
+            res.append(alimentos[i-1])
+            j -= alimentos[i-1]['calorias']
+            i -= 1
+
+    # Devolvemos los alimentos recomendados ordenados por cantidad recomendada de consumo
+    res.reverse()
+
+    return res"""
+
+    
+
+

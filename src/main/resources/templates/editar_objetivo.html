@@ -137,6 +137,7 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -208,7 +209,7 @@
 
                             <div class="form-group row">
 
-                                <label class="col-form-label col-sm-4">Título del nuevo objetivo:</label>
+                                <label class="col-sm-4">Título del objetivo:</label>
                                 <div class="col-sm-8 mb-2">
                                     <input type="text" th:field="*{titulo}" class="form-control" required />
                                 </div>
@@ -219,7 +220,7 @@
                             </div>-->
 
                                 <!--Falta controlar que no se pueda meter la fecha que te de la gana y esas cosas-->
-                                <label class="col-form-label col-sm-4">Fecha tope para cumplir mi objetivo:</label>
+                                <label class="col-sm-4">Fecha tope para cumplir mi objetivo:</label>
                                 <div class="col-sm-8 mb-2">
                                     <input type="date" th:field="*{fechaVencimiento}" class="form-control" id="fecha"
                                         name="fecha" required
@@ -227,9 +228,7 @@
                                 </div>
 
 
-                                <label class="col-form-label col-sm-4">Estado del objetivo (cambiarlo por pasos para
-                                    cumplir
-                                    el objetivo):</label>
+                                <label class="col-sm-4">Estado del objetivo:</label>
                                 <div class="col-sm-8 mb-2">
                                     <select id="estadoObjetivo" th:field="*{estadoObjetivo}" class="form-control"
                                         required>
@@ -238,7 +237,7 @@
                                     </select>
                                 </div>
 
-                                <label class="col-form-label col-sm-4">Repetición</label>
+                                <label class="col-sm-4">Repetición</label>
                                 <div class="col-sm-8 mb-2">
                                     <select id="repeticion" th:field="*{repeticion}" class="form-control" required>
                                         <option value="NINGUNA">NINGUNA</option>

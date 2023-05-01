@@ -294,31 +294,32 @@ $(document).ready(function () {
 
         if(objetivos.length > 0){
             let tabla = '';
-            tabla += '<table class="table tableObj mt-4"><thead class="thead-dark"><tr>';
-            tabla += '<th scope="col">Título</th>';
-            tabla += '<th scope="col">Fecha inicio</th>';
-            tabla += '<th scope="col">Fecha finalización</th>';
-            tabla += '<th scope="col">Estado</th>';
-            tabla += '<th scope="col">Repeticion</th>';
-            tabla += '<th scope="col">Acciones</th>';
+            tabla += '<div class="tabla-responsive" style="margin-top: 3%;">'
+            tabla += '<table class="table tableObj mt-4" id ="tablaObjetivos"><thead class="thead-dark"><tr>';
+            tabla += '<th scope="col" >Título</th>';
+            tabla += '<th scope="col" >Fecha inicio</th>';
+            tabla += '<th scope="col" >Fecha finalización</th>';
+            tabla += '<th scope="col" >Estado</th>';
+            tabla += '<th scope="col" >Repeticion</th>';
+            tabla += '<th scope="col" +>Acciones</th>';
             tabla += '</tr></thead>';
             tabla += '<tbody class="buscarObjetivos">';
 
             for (let i = 0; i < objetivos.length; i++) {
                 tabla += '<tr>';
-                tabla += '<td>' + objetivos[i].titulo + '</td>';
+                tabla += '<td contObj>' + objetivos[i].titulo + '</td>';
                 tabla += '<td>' + objetivos[i].fechaInicio + '</td>';
                 tabla += '<td>' + objetivos[i].fechaVencimiento + '</td>';
                 tabla += '<td>' + objetivos[i].estadoObjetivo + '</td>';
                 tabla += '<td>' + objetivos[i].repeticion + '</td>';
-                tabla += '<td>';
+                tabla += '<td class="btnsObj">';
                 tabla += '<a class="fa-solid fa-pen-to-square fa-1x ps-4 pe-2" style="color:rgba(127, 179, 120, 0.903)" id="btn-icono" data-bs-toggle="tooltip" title="Editar objetivo" href="/objetivos/editar/' + objetivos[i].id + '"></a>';
                 tabla += '<a class="eliminarObjetivo" style="color:rgb(201, 101, 101)" id="btn-icono" data-id="' + objetivos[i].id + '" data-bs-toggle="tooltip" title="Eliminar objetivo"><i class="fa-solid fa-trash-can fa-1x  pe-2"></i></a>'
                 tabla += '</td></tr>';
             }
             
 
-            tabla += '</tbody></table>';
+            tabla += '</tbody></table></div>';
             document.getElementById('datos').innerHTML = tabla;    
         } else {
             document.getElementById('datos').innerHTML = '<div class="sin-datos"><h5>Aún no tienes objetivos para este mes</h5></div>';

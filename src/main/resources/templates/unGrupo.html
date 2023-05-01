@@ -90,6 +90,7 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -109,7 +110,8 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir
+                                    al administrador</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -339,19 +341,23 @@
                             <tbody class="buscarGrupos">
 
                                 <tr th:each="lis:${listaObservaciones}">
-                                    <td th:text="${lis.fecha}"></td>
+                                    <td th:text="${lis.fecha}" class="tablaNotitasFecha"></td>
                                     <td th:text="${lis.nota}"></td>
                                     <td>
 
-                                        <button class="btn note-delete-button"
-                                            style="background-color:rgb(221, 116, 100); color:white;"
-                                            th:id="'nota-' + ${lis.id} + '-' + ${grupo.id}"><i
-                                                class="fa-solid fa-trash"></i></button>
-                                        <button class="btn note-edit-button"
-                                            style="background-color:rgb(221, 203, 100); color:white;"
-                                            th:id="'nota-' + ${lis.id} + '-' + ${grupo.id}"
-                                            th:data-message="${lis.nota}" th:data-observacion="${lis}">
-                                            <i class="fa-regular fa-pen-to-square"></i></button>
+                                        <div class="botonesNotitas">
+                                            <button class="btn note-delete-button"
+                                                style="background-color:rgb(221, 116, 100); color:white;"
+                                                th:id="'nota-' + ${lis.id} + '-' + ${grupo.id}"><i
+                                                    class="fa-solid fa-trash"></i></button>
+                                            <button class="btn note-edit-button"
+                                                style="background-color:rgb(221, 203, 100); color:white;"
+                                                th:id="'nota-' + ${lis.id} + '-' + ${grupo.id}"
+                                                th:data-message="${lis.nota}" th:data-observacion="${lis}">
+                                                <i class="fa-regular fa-pen-to-square"></i></button>
+                                        </div>
+
+
                                     </td>
 
                                 </tr>
@@ -376,7 +382,7 @@
                                             enctype="multipart/form-data">
                                             <div class="m-3">
                                                 <div class="form-group row">
-                                                    <label class="col-form-label col-sm-4">Nota:</label>
+                                                    <label class="col-form-label col-sm-4 editarNotita">Nota:</label>
                                                     <div class="col-sm-8 mb-2">
                                                         <input type="text" name="nota" class="form-control" required
                                                             id="nota-cargada" />
@@ -414,7 +420,7 @@
                                             <div class="m-3">
                                                 <div class="form-group row">
 
-                                                    <label class="col-form-label col-sm-4">Nota:</label>
+                                                    <label class="col-form-label col-sm-4 editarNotita">Nota:</label>
 
                                                     <div class="col-sm-8 mb-2">
                                                         <input type="text" name="nota" class="form-control" required
@@ -558,7 +564,7 @@
 
 
             document.querySelector('#perdida-peso-media').textContent = -perdidaPesoMedia + ' kg';
-            document.querySelector('#asistencia-media').textContent = asistenciaMedia + '% sesiones';
+            document.querySelector('#asistencia-media').textContent = asistenciaMedia + '%';
             document.querySelector('#perdida-cmcintura-media').textContent = -perdidaCmCinturaMedia + ' cm';
 
 

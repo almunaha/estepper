@@ -27,7 +27,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <div class="d-flex">
+    <div class="d-flex chatCordAdmin">
         <div id="sidebar-container">
 
             <div class="logo">
@@ -53,7 +53,39 @@
 
         </div>
 
-        <div class="w-100" style="margin-left: 250px">
+        <!-- MENÚ MÓVIL -->
+        <div class="menu-movil">
+
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <a th:href="@{/actividades}">
+                <i class="fa-solid fa-person-hiking"></i>
+            </a>
+            <a th:href="@{/listaGrupos}">
+                <i class="fa-solid fa-users"></i>
+            </a>
+            <a th:href="@{/listado}">
+                <i class="fa-solid fa-address-card"></i>
+            </a>
+
+        </div>
+
+        <div class="w-100 chatitoCordAdmin" style="margin-left: 250px">
+            <div class="header-movil">
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()" />
+                <img width="35" th:src="@{/img/logo.png}" />
+                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+            </div>
+
+            <div class="desplegable-perfil">
+                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                </form>
+            </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -69,7 +101,8 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir
+                                    al administrador</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -86,7 +119,11 @@
                 <div class="encabezado-grupo">
 
                     <!-- <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${participante.nickname}"></h3>-->
-                    <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${administrador.nickname}"></h3>
+                    <!--<h3 th:text="'MENSAJES PRIVADOS CON : ' + ${administrador.nickname}"></h3>-->
+
+                    <div class="encabezadoMensajes">
+                        <h3 th:text="'Mensajes privados con ' + ${administrador.nickname}"></h3>
+                    </div>
 
 
                     <div class="bordes-chat" style="width: 90%;">
@@ -99,7 +136,7 @@
                                 <div th:each="m : ${mensajesAdminyCoordinador}" class="contenedor-mensaje mb-2">
                                     <div th:if="${m.emisor.id != user.id}"
                                         class="mensaje d-flex justify-content-start align-items-end">
-                                        <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;"class="avatar"
+                                        <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;" class="avatar"
                                             alt="m.emisor.nickname" />
                                         <div class="contenido-mensaje grey ms-2 p-2">
                                             <div th:text="${m.emisor.nickname}" class="nickname"></div>
@@ -130,7 +167,7 @@
                                 <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
 
                             </form>
-                        </section>                      
+                        </section>
                     </div>
                     <div style="width: 90%">
                         <div class="d-flex justify-content-end mt-4">

@@ -83,6 +83,7 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -127,46 +128,43 @@
 
                             <div class="form-group row">
 
-                                <label class="col-form-label col-sm-4">ID del grupo:</label>
+        
+                                <input type="number" name="id" th:field="*{id}" hidden />
+
+                                <label class="col-form-label col-sm-4 nuevoGrupito">Código del grupo:</label>
                                 <div class="col-sm-8 mb-2">
-                                    <input type="text" th:field="*{id}" class="form-control" readonly="readonly" />
+                                    <input type="text" th:field="*{codigo}" class="form-control" readonly="readonly" style="background-color: #f2f2f2; cursor: not-allowed;" />
                                 </div>
 
-                                <label class="col-form-label col-sm-4">Código del nuevo grupo:</label>
-                                <div class="col-sm-8 mb-2">
-                                    <input type="text" th:field="*{codigo}" class="form-control" readonly="readonly" />
-                                </div>
 
-
-                                <label class="col-form-label col-sm-4">Número de participantes del grupo:</label>
+                                <label class="col-form-label col-sm-4 nuevoGrupito">Número de participantes del grupo:</label>
                                 <div class="col-sm-8 mb-2">
                                     <input type="text" th:field="*{numParticipantes}" class="form-control"
-                                        readonly="readonly" />
+                                        readonly="readonly"style="background-color: #f2f2f2; cursor: not-allowed;" />
                                 </div>
 
-                                <label class="col-form-label col-sm-4">Fecha de inicio del grupo:</label>
+                                <label class="col-form-label col-sm-4 nuevoGrupito">Fecha de inicio del grupo:</label>
                                 <div class="col-sm-8 mb-2">
                                     <input type="text" th:field="*{fechaInicioGrupo}" class="form-control"
-                                        readonly="readonly" />
+                                        readonly="readonly" style="background-color: #f2f2f2; cursor: not-allowed;" />
                                 </div>
 
 
-                                <label class="col-form-label col-sm-4">Nombre del nuevo grupo:</label>
+                                <label class="col-form-label col-sm-4 nuevoGrupito">Nombre del grupo:</label>
                                 <div class="col-sm-8 mb-2">
                                     <input type="text" th:field="*{nombre}" class="form-control" required />
                                 </div>
 
                                 <!--TAMBIÉN FALTA PONER LA Q YA ESTABA POR DEFECTO POR SI NO SE QUIERE CAMBIAR-->
                                 <div th:if="${grupo.fechaFinGrupo != null}" style="display:flex">
-                                    <label class="col-form-label col-sm-4">Fecha de finalización del grupo
-                                        actual:</label>
+                                    <label class="col-form-label col-sm-4 nuevoGrupito">Fecha de finalización del grupo:</label>
                                     <div class="col-sm-8 mb-2">
                                         <p th:text="${#temporals.format(grupo.fechaFinGrupo, 'dd/MM/yyyy')}"></p>
                                     </div>
                                     <label class="col-form-label col-sm-4">¿Desea cambiarla?</label>
                                 </div>
-                                <div th:if="${grupo.fechaFinGrupo == null}" style="display:flex">
-                                    <label class="col-form-label col-sm-4">Fecha de finalización del grupo</label>
+                                <div th:if="${grupo.fechaFinGrupo == null}" class = "fechaFinGrupito" style="display:flex">
+                                    <label class="col-form-label col-sm-4 nuevoGrupito">Fecha de finalización del grupo</label>
                                     <div class="col-sm-8 mb-2" style="margin-left:0.5%">
                                         <input type="date" th:name="fechaFinGrupo" th:field="*{fechaFinGrupo}"
                                             class="form-control" id="fechaFinGrupo" value="${grupo.fechaFinGrupo}"
@@ -174,7 +172,7 @@
                                     </div>
                                 </div>
                                 
-                                <label class="col-form-label col-sm-4">Foto del grupo: </label>
+                                <label class="col-form-label col-sm-4 nuevoGrupito">Foto del grupo: </label>
                                 <div class="col-sm-8 mb-2">
                                     <select id="avatar" class="form-select" th:field="*{fotoGrupo}">
                                         <option value="/img/p1.png">Sin icono</option>
@@ -226,7 +224,7 @@
                                 </div>
 
 
-                                <label class="col-form-label col-sm-4">Selecciona otros participantes que quieras añadir
+                                <label class="col-form-label col-sm-4 nuevoGrupito">Selecciona otros participantes que quieras añadir
                                     al grupo:</label>
                                 <div class="col-sm-8 mb-2">
                                     <select th:field="*{participantes}" class="form-control" multiple>
@@ -238,7 +236,7 @@
                                 </div>
 
 
-                                <label class="col-form-label col-sm-4">Participantes actuales del grupo:</label>
+                                <label class="col-form-label col-sm-4 nuevoGrupito">Participantes actuales del grupo:</label>
                                 <div class="container-participantes">
                                     <tr th:each="lis:${listadoParticipantesGrupo}">
 

@@ -147,6 +147,7 @@
 
       <div class="desplegable-perfil">
         <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+        <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}" >Ayuda</a>          
         <div class="dropdown-divider"></div>
         <form th:action="@{/logout}" method="post">
           <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -330,6 +331,10 @@
         <a class="btn-movil" th:href="@{/alimentacion}">
           <i class="fa-solid fa-carrot"></i>
           <div>Alimentación</div>
+        </a>
+        <a class="btn-movil" th:href="@{/chat}">
+          <i class="fa-solid fa-people-group"></i>
+          <div>Mi grupo</div>
         </a>
 
       </div>

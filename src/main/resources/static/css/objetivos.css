@@ -399,3 +399,98 @@ input[type="radio"]:checked+label {
   justify-content: space-between;
   border-top: 2px solid #e7e7e7;
 }
+
+
+@media (max-width: 767px) {
+
+  .pequeno {
+    font-size: 30px;
+ }
+
+ #finalAgua{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+ }
+
+ .ejercicio {
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario-ejercicio {
+  width: 100%;
+}
+
+
+.ejercicioDeHoy {
+  width: 100%;
+}
+
+.tabla-responsive{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#tablaObjetivos th:first-child{
+  width: 500px;
+}
+
+.cabeceraEjercicioDeHoy{
+  margin-top: 5px;
+}
+
+.formulario-ejercicio h5{
+  text-align: center;
+}
+
+label[for="ejercicio"] {
+  width: 80% !important;
+}
+
+label[for="duracionEjercicio"] {
+  width: 80% !important;
+}
+
+.btn-descanso{
+  margin-top: 3%;
+
+}
+
+.encabezadoDescanso-suenio{
+  text-align: center;
+}
+
+.encabezadoEstadoAnimo-estados{
+  text-align: center;
+}
+
+.botonEstadoAnimico{
+  margin-left: 0% !important;
+}
+
+.estAnim{
+  width: 100% !important;
+}
+
+.calen{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calenIzq{
+  width: 100%;
+}
+
+.calenDer{
+  margin-top: 3%;
+  width: 92% !important;
+  margin-bottom: 3%;
+}
+
+.nuevoObjetivito{
+  font-size: medium;
+}
+
+}

@@ -93,7 +93,7 @@ $(document).ready(function () {
 
 
   document.querySelector('#perdida-peso-media').textContent = perdidaPesoMedia + ' kg';
-  document.querySelector('#asistencia-media').textContent = asistenciaMedia + '% sesiones';
+  document.querySelector('#asistencia-media').textContent = asistenciaMedia + '%';
   document.querySelector('#perdida-cmcintura-media').textContent = perdidaCmCinturaMedia + ' cm';
 
 });
