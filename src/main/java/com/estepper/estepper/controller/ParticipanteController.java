@@ -168,8 +168,8 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(part);
             model.addAttribute("notificaciones", notificaciones);
 
-            Administrador admin = administrador.getAdministrador(part.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Administrador admin = administrador.getAdministrador(part.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
 
             return "sesiones";
         } else
@@ -187,8 +187,8 @@ public class ParticipanteController {
             // correspondiente
             model.addAttribute("user", getUsuario());
             Participante p = participante.findById(getUsuario().getId()).get();
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
             if (p.getEstadoCuenta().equals(Estado.ALTA)) {
                 // sesión seleccionada
                 Sesion sesion = ses.buscarSesion(p, num); // cambiar segun sesion
@@ -226,7 +226,7 @@ public class ParticipanteController {
                     asistencia++;
             }
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), asistencia * 10,
-                    p.getIdCoordinador(), p.getIdAdministrador(), p.getPerdidaDePeso(), p.getSesionesCompletas(),
+                    p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(),
                     p.getPerdidacmcintura(),
                     p.getId());
             return "redirect:/sesiones";
@@ -255,7 +255,7 @@ public class ParticipanteController {
                     completas++;
             }
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
-                    p.getIdCoordinador(), p.getIdAdministrador(), p.getPerdidaDePeso(), completas,
+                    p.getIdCoordinador(), p.getPerdidaDePeso(), completas,
                     p.getPerdidacmcintura(), p.getId());
             return "redirect:/sesiones";
         } else
@@ -587,7 +587,7 @@ public class ParticipanteController {
                     exploracion = (Exploracion) formularios.get(i);
                 }
             }
-            fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().getId(), c.getIdAdministrador()); // TAMBIÉN
+            fasevaloracion.activarcuenta(exploracion, findrisc, id, getUsuario().getId()); // TAMBIÉN
                                                                                                                    // EL
                                                                                                                    // DEL
                                                                                                                    // ADMINISTRADOR
@@ -689,8 +689,8 @@ public class ParticipanteController {
         model.addAttribute("user", user);
 
         Participante p = participante.findById(id).orElse(null);
-        Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+        //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+        //model.addAttribute("administrador", admin);
 
         if (p != null && p.getEstadoCuenta().equals(Estado.ALTA)) { // si el id proporcionado pertenece a un
                                                                     // participante
@@ -817,7 +817,7 @@ public class ParticipanteController {
 
             p.setPerdidaDePeso(pesoPerdido);
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
-                    p.getIdCoordinador(), p.getIdAdministrador(), pesoPerdido, p.getSesionesCompletas(),
+                    p.getIdCoordinador(), pesoPerdido, p.getSesionesCompletas(),
                     p.getPerdidacmcintura(), p.getId());
 
             pro.guardar(progreso);
@@ -852,7 +852,7 @@ public class ParticipanteController {
 
             p.setPerdidacmcintura(cmCinturaPerdido);
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
-                    p.getIdCoordinador(), p.getIdAdministrador(), p.getPerdidaDePeso(), p.getSesionesCompletas(),
+                    p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(),
                     cmCinturaPerdido, p.getId());
 
             pro.guardar(progreso);
@@ -914,8 +914,8 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(p);
             model.addAttribute("notificaciones", notificaciones);
 
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
 
             return "objetivos";
         } else {
@@ -990,8 +990,8 @@ public class ParticipanteController {
                     model.addAttribute("notificaciones", notificaciones);
     
                     Participante p = (Participante) getUsuario();
-                    Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-                    model.addAttribute("administrador", admin);
+                    //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+                    //model.addAttribute("administrador", admin);
     
                     return "editar_objetivo";
                 } else
@@ -1110,8 +1110,8 @@ public class ParticipanteController {
                 model.addAttribute("notificaciones", notificaciones);
 
                 Participante p = participante.findById(user.getId()).get();
-                Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-                model.addAttribute("administrador", admin);
+                //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+                //model.addAttribute("administrador", admin);
 
                 return "actividades";
             } else
@@ -1125,11 +1125,11 @@ public class ParticipanteController {
 
         Usuario user = getUsuario();
 
-        if (user instanceof Participante) {
+        /*if (user instanceof Participante) {
             Participante p = (Participante) user;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
             model.addAttribute("administrador", admin);
-        }
+        }*/
 
         if (user instanceof Coordinador) {
             Coordinador c = coordinador.getCoordinador(user.getId());
@@ -1240,8 +1240,8 @@ public class ParticipanteController {
         Usuario user = getUsuario();
 
         Participante p = (Participante) user;
-        Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+        //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+        //model.addAttribute("administrador", admin);
 
         if (user instanceof Participante) {
             Invitacion invitacion = invi.findById(id);
@@ -1347,8 +1347,8 @@ public class ParticipanteController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         Participante p = (Participante) user;
-        Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+        //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+        //model.addAttribute("administrador", admin);
         if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
@@ -1368,8 +1368,8 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
             model.addAttribute("notificaciones", notificaciones);
             Participante p = (Participante) user;
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
             return "info";
         } else
             return "acceso";
@@ -1386,9 +1386,9 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) user;
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Participante p = (Participante) user;
+            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
 
             return "alimentacion";
         } else
@@ -1412,9 +1412,9 @@ public class ParticipanteController {
             List<AlimentoIntercambio> alimentos = inter.alimentos();
             model.addAttribute("listado", alimentos);
 
-            Participante p = (Participante) user;
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Participante p = (Participante) user;
+            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
             return "juego";
         } else
             return "acceso";
@@ -1459,9 +1459,9 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) user;
+            /*Participante p = (Participante) user;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "alimentos";
         } else
@@ -1507,8 +1507,8 @@ public class ParticipanteController {
             alimentacion.borraralconSem(participante.findById(user.getId()).get());
 
             Participante p = (Participante) user;
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            /*Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            model.addAttribute("administrador", admin);*/
 
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(p);
@@ -1543,9 +1543,9 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) user;
+            /*Participante p = (Participante) user;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "nuevoalimento";
         } else
@@ -1585,9 +1585,9 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(user.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) user;
+            /*Participante p = (Participante) user;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "recetas";
         } else
@@ -1625,9 +1625,9 @@ public class ParticipanteController {
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
             model.addAttribute("notificaciones", notificaciones);
-            Participante p = (Participante) getUsuario();
+            /*Participante p = (Participante) getUsuario();
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "unareceta";
         } else
@@ -1665,9 +1665,9 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) u;
+            /*Participante p = (Participante) u;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "recetasparecidas";
         } else
@@ -1717,9 +1717,9 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(getUsuario().getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) getUsuario();
+            /*Participante p = (Participante) getUsuario();
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "recetasrecomendadas";
         } else
@@ -1737,9 +1737,9 @@ public class ParticipanteController {
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
-            Participante p = (Participante) u;
+            /*Participante p = (Participante) u;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "fichas";
         } else
             return "acceso";
@@ -1756,9 +1756,9 @@ public class ParticipanteController {
             // buscar notificaciones
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
-            Participante p = (Participante) u;
+            /*Participante p = (Participante) u;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "fichaEleccion";
         } else
             return "acceso";
@@ -1778,9 +1778,9 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) u;
+            /*Participante p = (Participante) u;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "fichaEleccionConcreta";
         } else
@@ -1811,9 +1811,9 @@ public class ParticipanteController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) u;
+            /*Participante p = (Participante) u;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "fichaTaller";
         } else
@@ -1839,8 +1839,8 @@ public class ParticipanteController {
         if (u instanceof Participante && u.getEstadoCuenta().equals(Estado.ALTA)) {
             Participante p = participante.getParticipante(u.getId());
 
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            /*Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            model.addAttribute("administrador", admin);*/
 
             FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(u.getId()).get());
             model.addAttribute("ficha", fichaObjetivo);

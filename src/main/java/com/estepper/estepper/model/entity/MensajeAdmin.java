@@ -30,20 +30,19 @@ public class MensajeAdmin implements Serializable{
     @JoinColumn(name="idUsuario", nullable=false)
     private Usuario usuario;
 
-    @ManyToOne 
+    /*@ManyToOne 
     @JoinColumn(name="idAdministrador", nullable=false)
-    private Administrador administrador;
+    private Administrador administrador;*/
 
     @ManyToOne 
     @JoinColumn(name="idEmisor", nullable=false)
     private Usuario emisor;
 
-    public MensajeAdmin(Integer id, LocalDateTime fechayHoraEnvio, String mensaje, Usuario usuario, Administrador administrador, Usuario emisor) {
+    public MensajeAdmin(Integer id, LocalDateTime fechayHoraEnvio, String mensaje, Usuario usuario,Usuario emisor) {
         this.id = id;
         this.fechayHoraEnvio = fechayHoraEnvio;
         this.mensaje = mensaje;
         this.usuario = usuario;
-        this.administrador = administrador;
         this.emisor = emisor;
     }
     
@@ -82,13 +81,13 @@ public class MensajeAdmin implements Serializable{
         this.usuario = usuario;
     }
 
-    public Administrador getAdministrador() {
+    /*public Administrador getAdministrador() {
         return administrador;
     }
 
     public void setAdministrador(Administrador administrador) {
         this.administrador = administrador;
-    }
+    }*/
 
     public Usuario getEmisor() {
         return emisor;

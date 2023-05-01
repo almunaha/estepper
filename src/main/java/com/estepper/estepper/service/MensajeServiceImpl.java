@@ -101,7 +101,7 @@ public class MensajeServiceImpl implements MensajeService {
        repoAdmin.save(mensaje);
    }
 
-   @Override
+   /*@Override
    public List<MensajeAdmin> obtenerMensajesAdmin(Administrador administrador){
        return repoAdmin.findByAdministrador(administrador);
    }
@@ -109,13 +109,19 @@ public class MensajeServiceImpl implements MensajeService {
    @Override
    public List<MensajeAdmin> obtenerMensajesAdminyUsuario(Administrador administrador,Usuario usuario){
        return repoAdmin.findByAdministradorAndUsuario(administrador,usuario);
-   }
+   }*/
 
+   @Override
+    public List<MensajeAdmin> obtenerMensajesUsuario(Usuario usuario) {
+        return repoAdmin.findByUsuario(usuario);
+    }
 
    @Override
    public void deleteByUsuarioMensajeAdmin(Usuario u) {
         repoAdmin.deleteAllByUsuario(u);
    }
+
+
 
 
 }

@@ -81,7 +81,7 @@
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
-                <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
+                <a th:href="@{/chatCordAdmin}">Ayuda</a>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -101,7 +101,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">EAyuda</a>
+                                <a class="dropdown-item" th:href="@{chatCordAdmin}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -121,18 +121,21 @@
                     <!--<h3 th:text="'MENSAJES PRIVADOS CON : ' + ${administrador.nickname}"></h3>-->
 
                     <div class="encabezadoMensajes">
-                        <h3 th:text="'Mensajes privados con ' + ${administrador.nickname}"></h3>
+                        <!--<h3 th:text="'Mensajes privados con ' + ${administrador.nickname}"></h3>-->
+                        <h3 th:text="'Mensajes privados con el administrador'"></h3>
                     </div>
 
 
                     <div class="bordes-chat" style="width: 90%;">
                         <section class="chat-area">
                             <header>
-                                <img th:src="${administrador.fotoUsuario}" alt="">
-                                <h4 th:text="${administrador.nickname}"></h4>
+                                <!--<img th:src="${administrador.fotoUsuario}" alt="">
+                                <h4 th:text="${administrador.nickname}"></h4>-->
+                                <h4>Administrador</h4>
+
                             </header>
                             <div class="chat-box">
-                                <div th:each="m : ${mensajesAdminyCoordinador}" class="contenedor-mensaje mb-2">
+                                <div th:each="m : ${mensajesAdministrador}" class="contenedor-mensaje mb-2">
                                     <div th:if="${m.emisor.id != user.id}"
                                         class="mensaje d-flex justify-content-start align-items-end">
                                         <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;" class="avatar"
@@ -157,7 +160,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form th:action="@{'/mensajesAdmin2/guardar/' + ${administrador.id}}"
+                            <form th:action="@{/mensajesAdmin2/guardar}"
                                 th:object="${messageAdmin}" method="post" class="typing-area">
 
                                 <input type="text" th:field="*{mensaje}" class="input-field"

@@ -41,8 +41,8 @@ public class Participante extends Usuario{
     @JsonIgnore
     private Grupo grupo; 
 
-    @Column(unique=false, nullable=true)
-    private Integer idAdministrador;
+    /*@Column(unique=false, nullable=true)
+    private Integer idAdministrador;*/
     
     public Participante(){
         super();
@@ -53,7 +53,7 @@ public class Participante extends Usuario{
     }
 
     public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Double perdidaDePeso,Integer asistencia,
-    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante, Double perdidacmcintura, Integer idAdministrador, String fotoUsuario){
+    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante, Double perdidacmcintura, String fotoUsuario){
         super(id, codigo, nickname, email, contrasenia, estadoCuenta,fotoUsuario);
         this.idCoordinador=idCoordinador;
         this.grupo=grupo;
@@ -64,7 +64,7 @@ public class Participante extends Usuario{
         this.sexo=sexo;
         //this.fotoParticipante=fotoParticipante;
         this.perdidacmcintura = perdidacmcintura;
-        this.idAdministrador = idAdministrador;
+        //this.idAdministrador = idAdministrador;
 
     }
 
@@ -144,11 +144,11 @@ public class Participante extends Usuario{
         this.perdidacmcintura = perdidacmcintura;
     }
 
-    public Integer getIdAdministrador() {
+    /*public Integer getIdAdministrador() {
         return idAdministrador;
     }
     public void setIdAdministrador(Integer idAdministrador) {
         this.idAdministrador = idAdministrador;
-    }
+    }*/
     
 }

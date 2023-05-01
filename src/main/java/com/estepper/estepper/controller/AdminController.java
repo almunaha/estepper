@@ -249,7 +249,7 @@ public class AdminController {
         Usuario u = usuarioLogueado();
         Administrador a = (Administrador) u;
         
-        elmensajeAdmin.setAdministrador(a);
+        //elmensajeAdmin.setAdministrador(a);
         elmensajeAdmin.setEmisor(u);
         elmensajeAdmin.setFechayHoraEnvio(LocalDateTime.now());
         elmensajeAdmin.setUsuario(usuario.findById(idUsuario).get());
@@ -263,24 +263,23 @@ public class AdminController {
         return "redirect:/mensajesAdmin";
     }
 
-    @PostMapping("/mensajesAdmin2/guardar/{idAdministrador}")
-    public String guardarMensajeAdmin2(@ModelAttribute("mensajeAdmin") MensajeAdmin elmensajeAdmin,
-            @PathVariable("idAdministrador") Integer idAdministrador) {
+    @PostMapping("/mensajesAdmin2/guardar")
+    public String guardarMensajeAdmin2(@ModelAttribute("mensajeAdmin") MensajeAdmin elmensajeAdmin) {
         
         Usuario u = usuarioLogueado();
-        Administrador a = administrador.getAdministrador(idAdministrador);
+        //Administrador a = administrador.getAdministrador(idAdministrador);
         
-        elmensajeAdmin.setAdministrador(a);
+       // elmensajeAdmin.setAdministrador(a);
         elmensajeAdmin.setEmisor(u);
         elmensajeAdmin.setFechayHoraEnvio(LocalDateTime.now());
         elmensajeAdmin.setUsuario(u);
         mensajeS.saveMensajeAdmin(elmensajeAdmin);
 
         if(u instanceof Coordinador){
-            return "redirect:/chatCordAdmin/{idAdministrador}";
+            return "redirect:/chatCordAdmin";
         }
         else{
-            return "redirect:/chatPartAdmin/{idAdministrador}";
+            return "redirect:/chatPartAdmin";
         }
 
      

@@ -18,8 +18,8 @@ public interface MensajeAdminRepository extends JpaRepository<MensajeAdmin, Inte
     
     Optional<MensajeAdmin> findById(Integer id);
     List<MensajeAdmin> findByUsuario(Usuario usuario);
-    List<MensajeAdmin> findByAdministrador(Administrador administrador);
-    List<MensajeAdmin> findByAdministradorAndUsuario(Administrador administrador, Usuario usuario);
+    //List<MensajeAdmin> findByAdministrador(Administrador administrador);
+    //List<MensajeAdmin> findByAdministradorAndUsuario(Administrador administrador, Usuario usuario);
 
     @Modifying
     @Transactional
