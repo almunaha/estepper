@@ -146,7 +146,7 @@ public class AdminController {
                 List<Grupo> listgrupos = grupoS.getGrupos();
 
                 for (int i = 0; i < listgrupos.size(); i++) {
-                    if (listgrupos.get(i).getIdCoordinador() == id) {
+                    if (listgrupos.get(i).getCoordinador().getId() == id) {
                         materialS.deleteByGrupo(listgrupos.get(i));
                         mensajeS.deleteByGrupo(listgrupos.get(i));
                         obs.deleteByGrupo(listgrupos.get(i));

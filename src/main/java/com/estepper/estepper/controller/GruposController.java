@@ -97,7 +97,10 @@ public class GruposController {
             @RequestParam(value = "participantes", required = false) List<Integer> participantes,
             Model model) {
 
-        elgrupo.setIdCoordinador(getUsuario().getId());
+        //elgrupo.setIdCoordinador(getUsuario().getId());
+        Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+        elgrupo.setCoordinador(c);
+
 
         // FUNCIONA PERO FALTA CONSEGUIR QUE SALGA LA ALERTA CON EL MENSAJITO
         if (grupo.findByNombre(elgrupo.getNombre()) != null) {
@@ -124,7 +127,7 @@ public class GruposController {
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
                 part.update(participante.edad, participante.getSexo(), participante.getFotoUsuario(), g,
-                        participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
+                        participante.getAsistencia(), participante.getCoordinador(), participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(participantesSeleccionadosList.size());
@@ -157,7 +160,10 @@ public class GruposController {
             @RequestParam(value = "participantes", required = false) List<Integer> participantes,
             Model model) {
 
-        elgrupo.setIdCoordinador(getUsuario().getId());
+        //elgrupo.setIdCoordinador(getUsuario().getId());
+        Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+        elgrupo.setCoordinador(c);
+    
 
         if (participantes != null) {
             List<Participante> participantesSeleccionadosList = new ArrayList<>();
@@ -168,7 +174,7 @@ public class GruposController {
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
                 part.update(participante.getEdad(), participante.getSexo(), participante.getFotoUsuario(), g,
-                        participante.getAsistencia(), participante.getIdCoordinador(),participante.getPerdidaDePeso(),
+                        participante.getAsistencia(), participante.getCoordinador(),participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(g.getNumParticipantes() + participantesSeleccionadosList.size());
@@ -196,13 +202,14 @@ public class GruposController {
     public String grupos(@RequestParam Map<String, Object> params, Model model) {
 
         if (getUsuario() instanceof Coordinador) {
-
+            
             List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);
 
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
             PageRequest pageable = PageRequest.of(page, 5); // define página solicitada y tamaño de la página, se
                                                             // inicializa a cero
-            Page<Grupo> paginaGrupo = grupo.paginas(pageable, getUsuario().getId()); // listado de páginas de 6 grupos
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            Page<Grupo> paginaGrupo = grupo.paginas(pageable, c); // listado de páginas de 6 grupos
                                                                                      // cada una
             int totalPags = paginaGrupo.getTotalPages(); // total de páginas
 
@@ -264,7 +271,7 @@ public class GruposController {
     @GetMapping("/grupos/eliminar/{id}")
     public String eliminarGrupo(@PathVariable("id") Integer id) {
         Grupo gr = grupo.getGrupo(id);
-        if (getUsuario() instanceof Coordinador && gr.getIdCoordinador() == getUsuario().getId()) {
+        if (getUsuario() instanceof Coordinador && gr.getCoordinador().getId() == getUsuario().getId()) {
             materialS.deleteByGrupo(gr);
             mensaje.deleteByGrupo(gr);
             obs.deleteByGrupo(gr);
@@ -299,7 +306,7 @@ public class GruposController {
     public String unGrupo(@PathVariable("idGrupo") Integer idGrupo, Model model) {
         Grupo g = grupo.getGrupo(idGrupo);
 
-        if (getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()) {
+        if (getUsuario() instanceof Coordinador && g.getCoordinador().getId() == getUsuario().getId()) {
             model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(g));
             model.addAttribute("grupo", g);
             model.addAttribute("user", getUsuario());
@@ -326,7 +333,7 @@ public class GruposController {
     @GetMapping("/materialesGrupo/{id}")
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Grupo g = grupo.getGrupo(id);
-        if (getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()) {
+        if (getUsuario() instanceof Coordinador && g.getCoordinador().getId() == getUsuario().getId()) {
             Usuario elusuario = getUsuario();
             model.addAttribute("user", elusuario);
             model.addAttribute("listado", materialS.materialesGrupo(g));
@@ -348,7 +355,7 @@ public class GruposController {
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material,
             @RequestParam("file") MultipartFile file) {
         Grupo elgrupo = grupo.getGrupo(id);
-        if (getUsuario() instanceof Coordinador && elgrupo.getIdCoordinador() == getUsuario().getId()) {
+        if (getUsuario() instanceof Coordinador && elgrupo.getCoordinador().getId() == getUsuario().getId()) {
             material.setGrupo(elgrupo);
             if (!file.isEmpty()) {
                 Path rutaArchivo = Paths.get("src//main//resources//static/materiales");
@@ -552,7 +559,7 @@ public class GruposController {
             }
         }
         elmensajePrivado.setMensaje(elmensaje);
-        elmensajePrivado.setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getIdCoordinador()));
+        elmensajePrivado.setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getCoordinador().getId()));
         elmensajePrivado.setParticipante(part.getParticipante(idParticipante));
         elmensajePrivado.setId(0);
         elmensajePrivado.setFechayHoraEnvio(LocalDateTime.now());
@@ -570,8 +577,8 @@ public class GruposController {
     public String guardarObervaciones(@ModelAttribute("observaciones") Observaciones observacion,
             @PathVariable("idGrupo") Integer id, Model model, HttpServletRequest request) {
 
-        observacion.setIdCoordinador(getUsuario().getId());
-        observacion.setIdGrupo(id);
+        observacion.setCoordinador(coordinador.getCoordinador(getUsuario().getId()));
+        observacion.setGrupo(grupo.getGrupo(id));
         String nota = request.getParameter("nota");
         observacion.setNota(nota);
         observaciones.guardar(observacion);
@@ -582,7 +589,7 @@ public class GruposController {
     @GetMapping("/eliminarNota/{id}/{idGrupo}")
     public String eliminarNota(@PathVariable("id") Integer id, @PathVariable("idGrupo") Integer idGrupo) {
         Observaciones ob = observaciones.getObservacion(id);
-        if (getUsuario() instanceof Coordinador && ob.getIdCoordinador() == getUsuario().getId()) {
+        if (getUsuario() instanceof Coordinador && ob.getCoordinador().getId() == getUsuario().getId()) {
             observaciones.borrar(id);
             return "redirect:/unGrupo/{idGrupo}";
         } else
@@ -595,8 +602,8 @@ public class GruposController {
         Integer idNota = Integer.parseInt(request.getParameter("idNota"));
         if (idNota != null) {
             Observaciones observacionExistente = observaciones.getObservacion(idNota);
-            observacionExistente.setIdCoordinador(getUsuario().getId());
-            observacionExistente.setIdGrupo(idGrupo);
+            observacionExistente.setCoordinador(cord.getCoordinador(getUsuario().getId()));
+            observacionExistente.setGrupo(grupo.getGrupo(idGrupo));
             String nota = request.getParameter("nota");
             observacionExistente.setNota(nota);
             observaciones.guardar(observacionExistente);

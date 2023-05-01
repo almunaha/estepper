@@ -242,6 +242,8 @@
 
                                                 <a th:if="${lis.estadoCuenta.equals(T(com.estepper.estepper.model.enums.Estado).ALTA)}"
                                                     class="botonGr" th:href="@{'/chatPrivado/' + ${lis.id}}">Mensaje</a>
+                                                <a th:unless="${lis.estadoCuenta.equals(T(com.estepper.estepper.model.enums.Estado).ALTA)}"
+                                                    class="botonGr botonMenDesactivado" th:disabled="true">Mensaje</a>
                                             </div>
 
                                         </div>

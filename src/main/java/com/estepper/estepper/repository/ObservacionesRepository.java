@@ -1,5 +1,7 @@
 package com.estepper.estepper.repository;
 
+import com.estepper.estepper.model.entity.Coordinador;
+import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Observaciones;
 
 import jakarta.transaction.Transactional;
@@ -16,8 +18,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ObservacionesRepository extends JpaRepository<Observaciones, Integer>{
 
-    List<Observaciones> findByIdCoordinador(Integer idCoordinador);
-    List<Observaciones> findByIdGrupo(Integer idGrupo);
+    List<Observaciones> findByCoordinador(Coordinador coordinador);
+    List<Observaciones> findByGrupo(Grupo grupo);
     Optional<Observaciones> findById(Integer idObservacion);
 
     //List<Observaciones> findByIdCoordinadoryIdGrupo(Integer idCoordinador, Integer idGrupo);
@@ -26,13 +28,13 @@ public interface ObservacionesRepository extends JpaRepository<Observaciones, In
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Observaciones o WHERE o.idGrupo = :g")
-    void deleteAllByGrupo(Integer g);
+    @Query("DELETE FROM Observaciones o WHERE o.grupo = :g")
+    void deleteAllByGrupo(Grupo g);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Observaciones o WHERE o.idCoordinador = :c")
-    void deleteAllByCoordinador(Integer c);
+    @Query("DELETE FROM Observaciones o WHERE o.coordinador = :c")
+    void deleteAllByCoordinador(Coordinador c);
 
 
     @Modifying

@@ -387,7 +387,7 @@ public class HomeController {
 
                 participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), part.getGrupo(),
                         part.getAsistencia(),
-                        part.getIdCoordinador(), part.getPerdidaDePeso(),
+                        part.getCoordinador(), part.getPerdidaDePeso(),
                         part.getSesionesCompletas(),
                         part.getPerdidacmcintura(), id);
             }
@@ -495,7 +495,7 @@ public class HomeController {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
 
-        if (elusuario instanceof Coordinador && (participante.findById(id).get().getIdCoordinador() == elusuario.getId()
+        if (elusuario instanceof Coordinador && (participante.findById(id).get().getCoordinador().getId() == elusuario.getId()
                 || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
@@ -530,7 +530,7 @@ public class HomeController {
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material,
             @RequestParam("file") MultipartFile file) {
         Participante p = participante.findById(id).get();
-        if (getUsuario().getId() == p.getIdCoordinador() || getUsuario().getId() == id
+        if (getUsuario().getId() == p.getCoordinador().getId() || getUsuario().getId() == id
                 || p.getEstadoCuenta().equals(Estado.BAJA)) {
             material.setParticipante(p);
             material.setGrupo(null);
@@ -582,7 +582,7 @@ public class HomeController {
 
         Usuario user = getUsuario();
         List<Usuario> lista = usuario.listadoTotal();
-        lista.remove(user);
+        lista.remove(user); 
         MensajeAdmin menAdmin = new MensajeAdmin();
         Administrador admin = (Administrador) user;
         //List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin(admin);

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
+import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.enums.Estado;
+import com.estepper.estepper.repository.CoordinadorRepository;
 import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
 
@@ -22,14 +24,22 @@ public class GrupoServiceImpl implements GrupoService {
     @Autowired
     ParticipanteRepository repoP;
 
-    @Override
+    @Autowired
+    CoordinadorRepository repoC;
+
+    /*@Override
     public List<Grupo> listaGrupos(Integer id) {
         return (List<Grupo>) repo.findByIdCoordinador(id);
+    }*/
+
+    @Override
+    public List<Grupo> listaGrupos(Integer id) {
+        return (List<Grupo>) repo.findByCoordinador(repoC.findById(id).get());
     }
 
     @Override
     public void update(Grupo grupo) {
-        repo.update(grupo.getNombre(), grupo.getCodigo(), grupo.getIdCoordinador(), grupo.getNumParticipantes(),
+        repo.update(grupo.getNombre(), grupo.getCodigo(), grupo.getCoordinador(), grupo.getNumParticipantes(),
                 grupo.getId());
     }
 
@@ -79,8 +89,8 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
-    public Page<Grupo> paginas(Pageable pageable, Integer idCoordinador) {
-        return (Page<Grupo>) repo.findByIdCoordinador(pageable, idCoordinador);
+    public Page<Grupo> paginas(Pageable pageable, Coordinador coordinador) {
+        return (Page<Grupo>) repo.findByIdCoordinador(pageable, coordinador);
     }
 
 }

@@ -23,6 +23,7 @@ import com.estepper.estepper.repository.FindriscRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
 import com.estepper.estepper.repository.UsuarioRepository;
 import com.estepper.estepper.repository.ClasificacionRepository;
+import com.estepper.estepper.repository.CoordinadorRepository;
 import com.estepper.estepper.repository.AntecedentesRepository;
 import com.estepper.estepper.repository.AlimentacionValRepository;
 import com.estepper.estepper.repository.ActividadFisicaRepository;
@@ -45,6 +46,9 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
 
     @Autowired
     private UsuarioRepository repoU;
+
+    @Autowired
+    private CoordinadorRepository repoCoord;
 
     @Autowired
     private ClasificacionRepository repoC;
@@ -155,13 +159,13 @@ public class FaseValoracionServiceImpl implements FaseValoracionService {
         usuario.setEstadoCuenta(Estado.ALTA);
         usuario.setEdad(exploracion.getEdad());
         usuario.setSexo(exploracion.getSexo());
-        usuario.setIdCoordinador(idCoor);
+        usuario.setCoordinador(repoCoord.findById(idCoor).get());
         //usuario.setIdAdministrador(idAdmin);
         usuario.setAsistencia(0);
         usuario.setSesionesCompletas(0);
         usuario.setPerdidaDePeso(0.0);
 
-        repoP.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoUsuario(), usuario.getGrupo(), usuario.getAsistencia(), idCoor, usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), id);
+        repoP.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoUsuario(), usuario.getGrupo(), usuario.getAsistencia(), repoCoord.findById(idCoor).get(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(), usuario.getPerdidacmcintura(), id);
         repoU.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), usuario.getEstadoCuenta(), id);
     }
 

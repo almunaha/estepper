@@ -1,5 +1,7 @@
 package com.estepper.estepper.service;
 
+import com.estepper.estepper.repository.CoordinadorRepository;
+import com.estepper.estepper.repository.GrupoRepository;
 import com.estepper.estepper.repository.ObservacionesRepository;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
@@ -17,14 +19,20 @@ public class ObservacionesServiceImpl implements ObservacionesService {
     @Autowired
     private ObservacionesRepository repo;
 
+    @Autowired
+    private CoordinadorRepository repoC;
+
+    @Autowired
+    private GrupoRepository repoG;
+
     @Override
     public List<Observaciones> findByIdCoordinador(Integer idCoordinador) {
-        return(List<Observaciones>) repo.findByIdCoordinador(idCoordinador);
+        return(List<Observaciones>) repo.findByCoordinador(repoC.findById(idCoordinador).get());
     }  
 
     @Override
     public List<Observaciones> findByIdGrupo(Integer idGrupo) {
-        return(List<Observaciones>) repo.findByIdGrupo(idGrupo);
+        return(List<Observaciones>) repo.findByGrupo(repoG.findById(idGrupo).get());
     }  
 
 
@@ -58,7 +66,7 @@ public class ObservacionesServiceImpl implements ObservacionesService {
 
     @Override
     public void deleteByGrupo(Grupo g) {
-        repo.deleteAllByGrupo(g.getId());
+        repo.deleteAllByGrupo(g);
     }
 
 
@@ -69,7 +77,7 @@ public class ObservacionesServiceImpl implements ObservacionesService {
 
     @Override
     public void deleteByCoordinador(Coordinador c) {
-        repo.deleteAllByCoordinador(c.getId());
+        repo.deleteAllByCoordinador(c);
     }
 
 
