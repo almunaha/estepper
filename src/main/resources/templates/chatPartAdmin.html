@@ -131,7 +131,7 @@
       </a>
 
       <a th:href="@{/chat}">
-        <i class="fa-solid fa-comments"></i>
+        <i class="fa-solid fa-people-group"></i>
       </a>
 
     </div>
@@ -141,8 +141,8 @@
       <div class="header-movil">
         <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
           id="avatar-header" onclick="desplegable()" />
-        <img width="35" th:src="@{img/logo.png}" />
-        <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+        <img width="35" th:src="@{/img/logo.png}" />
+        <a onclick="notificaciones()"><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
       </div>
 
       <div class="desplegable-perfil">
@@ -152,6 +152,17 @@
         <form th:action="@{/logout}" method="post">
           <button class="dropdown-item" type="submit">Cerrar sesión</a>
         </form>
+      </div>
+
+      <div class="desplegable-notificaciones">
+        <h6>Notificaciones</h6>
+        <div class="dropdown-divider"></div>
+        <div style="overflow: auto; max-height: 250px;">
+          <div th:each="notif : ${notificaciones}">
+            <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
+            <div class="dropdown-divider"></div>
+          </div>
+        </div>
       </div>
 
 

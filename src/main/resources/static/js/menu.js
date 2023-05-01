@@ -52,7 +52,7 @@ function desplegable() {
 }
 
 function notificaciones() {
-  var notifDesplegable = document.querySelector('.desplegable-notif');
+  var notifDesplegable = document.querySelector('.desplegable-notificaciones');
   var display = window.getComputedStyle(notifDesplegable).getPropertyValue('display');
 
   // Muestra u oculta las notificaciones según su estado actual
