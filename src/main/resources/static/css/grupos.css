@@ -432,12 +432,21 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: rgba(84, 82, 82, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
+.bordes-chatADMIN {
+  background: #fff;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1), 0 32px 64px -48px rgba(0, 0, 0, 0.5);
+}
+
+
 
 .chat-area header {
   display: flex;
   align-items: center;
   padding: 18px 5px;
 }
+
 
 .chat-area header .back-icon {
   color: #2196f3;

@@ -152,16 +152,16 @@
 
                         <div class="mitadDerechaAdmin" id="derechaAdmin"
                             style="margin-left: 3%; width:50%; display:none">
-                            <div class="bordes-chat" style="width: 90%;">
-                                <section class="chat-area">
-                                    <header>
+                            <div class="bordes-chatADMIN" style="width: 90%;">
+                                <section class="chat-area" >
+                                    <header style="flex-direction: column;">
                                         <h4 id="nombreDelUsuario"></h4>
-                                        <h4 id="idDelUsuario"></h4>
+                                        <h4 id="idDelUsuario" hidden></h4>
                                     </header>
                                     <!-- <div class="chat-box">
                                         <div th:each="m : ${mensajesConAdministrador}" class="contenedor-mensaje mb-2">-->
                                     <div class="chat-box">
-                                        <div th:each="m : ${mensajesConAdministrador}" class="contenedor-mensaje mb-2">
+                                        <div th:each="m : ${mensajesAdmin}" class="contenedor-mensaje mb-2">
                                             <div id="bloque-condicion" th:if="${m.emisor.id != user.id}"
                                                 class="mensaje d-flex justify-content-start align-items-end">
                                                 <img th:src="${m.usuario.fotoUsuario}" style="width: 40px;"
