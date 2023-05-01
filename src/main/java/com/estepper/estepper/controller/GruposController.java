@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Materiales;
@@ -74,6 +73,9 @@ public class GruposController {
 
     @Autowired
     private UsuarioService user;
+
+    @Autowired
+    private CoordinadorService coordinador;
 
     @Autowired
     private ObservacionesService obs;
@@ -223,7 +225,7 @@ public class GruposController {
             model.addAttribute("participantesExistentes", participantesExistentes);
             model.addAttribute("grupo", new Grupo());
 
-            Coordinador c = (Coordinador) getUsuario();
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             
@@ -233,24 +235,30 @@ public class GruposController {
     }
 
     @GetMapping("/grupos/editar/{id}")
-    public ModelAndView mostrarFormularioDeEditarGrupo(@PathVariable(name = "id") Integer id) {
-        ModelAndView modelo = new ModelAndView("editar_grupo");
-        Grupo gr = grupo.getGrupo(id);
+    public String mostrarFormularioDeEditarGrupo(@PathVariable(name = "id") Integer id, Model model) {
 
-        List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de
-                                                                                                     // participantes de
-                                                                                                     // la base de
-        modelo.addObject("participantesExistentes", participantesExistentes);
+        Usuario user = getUsuario();
 
-        modelo.addObject("grupo", gr);
-        modelo.addObject("user", getUsuario());
-        modelo.addObject("listadoParticipantesGrupo", part.listadoGrupo(gr));
+        if(user instanceof Coordinador){
+            Grupo gr = grupo.getGrupo(id);
 
-        Coordinador c = (Coordinador) getUsuario();
-        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-        modelo.addObject("administrador", admin);
+            List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de
+                                                                                                        // participantes de
+                                                                                                        // la base de
+            model.addAttribute("participantesExistentes", participantesExistentes);
 
-        return modelo;
+            model.addAttribute("grupo", gr);
+            model.addAttribute("user", getUsuario());
+            model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(gr));
+
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
+            return "editar_grupo";
+        }
+
+        else return "redirect:/";
     }
 
     @GetMapping("/grupos/eliminar/{id}")
@@ -277,7 +285,7 @@ public class GruposController {
             List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
 
-            Coordinador c = (Coordinador) getUsuario();
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
 
@@ -304,7 +312,7 @@ public class GruposController {
             List<Observaciones> listaObservaciones = observaciones.findByIdGrupo(idGrupo);
             model.addAttribute("listaObservaciones", listaObservaciones);
 
-            Coordinador c = (Coordinador) getUsuario();
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
 
@@ -326,7 +334,7 @@ public class GruposController {
             model.addAttribute("material", material);
             model.addAttribute("id", id);
 
-            Coordinador c = (Coordinador) getUsuario();
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
 
@@ -451,7 +459,7 @@ public class GruposController {
         model.addAttribute("user", u);
         Participante p = part.getParticipante(idParticipante);
 
-        if (u instanceof Coordinador) { // revisar esto
+        if (u instanceof Coordinador && p != null) { //revisar
 
             MensajePrivado menPriv = new MensajePrivado();
             List<MensajePrivado> mensajesPrivados = mensaje.obtenerMensajesPrivados(p);
@@ -459,7 +467,7 @@ public class GruposController {
             model.addAttribute("messagePriv", menPriv);
             model.addAttribute("mensajesPrivados", mensajesPrivados);
 
-            Coordinador c = (Coordinador) getUsuario();
+            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
 

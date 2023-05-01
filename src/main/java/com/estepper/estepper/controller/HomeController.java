@@ -55,6 +55,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.AdministradorService;
+import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.FaseValoracionService;
 import com.estepper.estepper.service.FichaService;
 import com.estepper.estepper.service.ProgresoService;
@@ -79,6 +80,9 @@ public class HomeController {
     private AdministradorService administrador;
 
     @Autowired
+    private CoordinadorService coordinador;
+
+    @Autowired
     private MaterialService materialS;
 
     @Autowired
@@ -89,7 +93,7 @@ public class HomeController {
 
     @Autowired
     private MensajeService mensaje;
-    
+
     @Autowired
     private NotificacionService noti;
 
@@ -99,18 +103,33 @@ public class HomeController {
     @Autowired
     private BCryptPasswordEncoder hash;
 
+    /**
+     * @brief Esta función maneja la solicitud GET de la ruta "/login" y devuelve la
+     *        plantilla de inicio de sesión "login.html".
+     *        La plantilla "login.html" es una página HTML que contiene un
+     *        formulario de inicio de sesión para que los usuarios ingresen sus
+     *        credenciales.
+     * 
+     * @return "login.html"
+     */
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    /**
+     * @brief CUANDO ESTÉ COMPLETA ESCRIBIR LO QUE HACE
+     * @param model
+     * @param request
+     * @return coordinador/admin/index/baja/login/terminosycondiciones
+     */
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
-            Coordinador c = (Coordinador) user;
-            // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
+
+            Coordinador c = coordinador.getCoordinador(user.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "coordinador";
@@ -123,6 +142,8 @@ public class HomeController {
 
             model.addAttribute("user", getUsuario());
             model.addAttribute("mensajeAdmin", new MensajeAdmin());
+
+            model.addAttribute("coordinador", new Coordinador());
 
             // MensajeAdmin menAdmin = new MensajeAdmin();
             // List<MensajeAdmin> mensajesadmin = mensaje.obtenerMensajesAdmin(u);
@@ -164,7 +185,6 @@ public class HomeController {
                                                                                                 // crear??
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
-                            // Administrador admin = administrador.getAdministrador(3); //CAMBIARLO!!!!!!
 
                             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
                             model.addAttribute("administrador", admin);
@@ -221,20 +241,23 @@ public class HomeController {
 
                             FichaObjetivo fichaObjetivo = f.getFichaObjetivo(participante.findById(p.getId()).get());
                             model.addAttribute("ficha", fichaObjetivo);
-                            Double porcentajeProgreso = 0.0;
-                            if (fichaObjetivo != null) {
+                            Double porcentajeProgreso = 0.00;
+                            if (f.getFichaObjetivo(p).getPerdida() != null)
                                 porcentajeProgreso = f.getFichaObjetivo(p).getPerdida() * 100
                                         / f.getFichaObjetivo(p).getObjetivo();
-                            }
-                            model.addAttribute("porcentajeProgreso", porcentajeProgreso);
+
+                            String progresoPer = String.format("%.2f", porcentajeProgreso).replace(",", "."); // Formatear
+                                                                                                              // a dos
+                                                                                                              // decimales
+                            model.addAttribute("porcentajeProgreso", progresoPer);
 
                             return "index";
                         } else
                             return "baja";
 
-                    }
+                    } else
+                        return "redirect:/terminos-y-condiciones";
                 }
-                return "redirect:/terminos-y-condiciones";
 
             }
         }
@@ -259,10 +282,14 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
-        Coordinador c = (Coordinador) elusuario;
-        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+
         if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
+            Participante p = participante.findById(id).get();
+
+            Coordinador c = coordinador.getCoordinador(p.getIdCoordinador());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             model.addAttribute("participante", participante.findById(id).get());
 
             // buscar notificaciones
@@ -270,8 +297,15 @@ public class HomeController {
             model.addAttribute("notificaciones", notificaciones);
 
             return "editarperfilParticipante";
-        } else
+        } else if (elusuario instanceof Coordinador) {
+            Coordinador c = coordinador.getCoordinador(elusuario.getId());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             return "editarperfil";
+        } else {
+            return "editarperfil";
+        }
 
     }
 
@@ -283,12 +317,14 @@ public class HomeController {
 
         Usuario elusuario = usuario.findById(id).get();
         model.addAttribute("user", elusuario);
-        Coordinador c = (Coordinador) elusuario;
-        Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-        model.addAttribute("administrador", admin);
+
         if (elusuario instanceof Participante) {
             Participante p = participante.findById(id).get();
             model.addAttribute("participante", p);
+
+            Coordinador c = coordinador.getCoordinador(p.getIdCoordinador());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
 
             // Nombre del grupo
             String grupo = "No asignado";
@@ -320,8 +356,15 @@ public class HomeController {
             model.addAttribute("notificaciones", notificaciones);
 
             return "mostrarperfilParticipante";
-        } else
+        } else if (elusuario instanceof Coordinador) {
+            Coordinador c = coordinador.getCoordinador(elusuario.getId());
+            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);
+
             return "mostrarperfil";
+        } else {
+            return "mostrarperfil";
+        }
 
     }
 
@@ -460,7 +503,7 @@ public class HomeController {
             model.addAttribute("material", material);
             model.addAttribute("id", id);
 
-            Coordinador c = (Coordinador) elusuario;
+            Coordinador c = coordinador.getCoordinador(elusuario.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
             return "materialesCoor";
@@ -634,7 +677,4 @@ public class HomeController {
             return "redirect:/";
     }
 
-
-    
-   
 }

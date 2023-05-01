@@ -6,6 +6,38 @@
     width: 30%;
 }
 
+#success{
+    width: 54%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.8%;
+}
+
+.codigo{
+    background-color: rgb(122, 184, 212);
+    color: white;
+    padding: 2%;
+    width: 50%;
+    font-size: 1.1rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    border-radius: 12px;
+}
+
+.contactos{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.info-contacto{
+    border-radius: 12px;
+    padding: 2%;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    background-color: rgb(71, 126, 149);
+    color: white;
+}
+
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 

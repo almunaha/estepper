@@ -25,19 +25,12 @@ SET time_zone = "+00:00";
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `codigo`, `contrasenia`, `email`, `estado_cuenta`, `nickname`,`fotoUsuario`) VALUES
+INSERT INTO `usuarios` (`id`, `codigo`, `contrasenia`, `email`, `estado_cuenta`, `nickname`,`foto_usuario`) VALUES
 (2, 172, '$2a$10$XaVd6pxk4/ooyaBelcAfheM0TlMQzzg1tkRA5g2beC6vJ5XujEyq6', 'pplata@ucm.es', 'ALTA', 'Patricia','/img/p1.png'), -- Participante recién dado de alta
 (3, 52654, '$2a$10$QEE77L9EWlFAjIdflmVGDOOQBEM0iCkFXlhjUwHwgaXY0OyZ5p2Ta', 'almunaha@ucm.es', 'ALTA', 'Almudena','/img/p1.png'), -- Participante recién dado de alta
-(4, 98129, '$2a$10$NkmDZLFCLWxUTkag.PdQkexQsUv5k1b6mGXljXawlg8oVRowrFRGi', 'ineher02@ucm.es', 'BAJA', 'Inés'),'/img/p1.png', -- Participante recién registrado. Estado baja.
+(4, 98129, '$2a$10$NkmDZLFCLWxUTkag.PdQkexQsUv5k1b6mGXljXawlg8oVRowrFRGi', 'ineher02@ucm.es', 'BAJA', 'Inés','/img/p1.png'), -- Participante recién registrado. Estado baja.
 (5, 333, '$2a$10$9iotMQ9mCZTrM3bmoVlM.e9AgHiq31KwGGDLC21EOg31lnlCIblNi', 'javier@ucm.es', 'ALTA', 'Javier','/img/p1.png'), -- Administrador principal
 (6, 222, '$2a$10$jUFlLILjJJOmUOpy23NlyugxyGHKVE/zJxmRKkjWLDXBixlEljT7G', 'proyectoestepper@gmail.com', 'ALTA', 'Mercedes','/img/p1.png'); -- Coordinador principal
-
---
--- Volcado de datos para la tabla `coordinadores`
---
-
-INSERT INTO `coordinadores` (`id`) VALUES
-(6);
 
 --
 -- Volcado de datos para la tabla `administradores`
@@ -45,6 +38,13 @@ INSERT INTO `coordinadores` (`id`) VALUES
 
 INSERT INTO `administradores` (`id`) VALUES
 (5);
+
+--
+-- Volcado de datos para la tabla `coordinadores`
+--
+
+INSERT INTO `coordinadores` (`id`, `id_administrador`) VALUES
+(6, 5);
 
 --
 -- Volcado de datos para la tabla `grupos`
@@ -58,10 +58,10 @@ INSERT INTO `grupos` (`id`, `codigo`, `estado`, `fecha_fin_grupo`, `fecha_inicio
 -- Volcado de datos para la tabla `participantes`
 --
 
-INSERT INTO `participantes` (`asistencia`, `edad`, `id_coordinador`, `perdida_de_peso`, `perdidacmcintura`, `sesiones_completas`, `sexo`, `id`, `id_grupo`) VALUES
-(0, 40, 6, 0, 0, 0, 'FEMENINO', 2, 1),
-(0, 52, 6, 0, 0, 0, 'FEMENINO', 3, 2),
-(0, NULL, NULL, 0, 0, 0, NULL, 4, 1);
+INSERT INTO `participantes` (`asistencia`, `edad`, `id_coordinador`, `perdida_de_peso`, `perdidacmcintura`, `sesiones_completas`, `sexo`, `id`, `id_grupo`, `id_administrador`) VALUES
+(0, 40, 6, 0, 0, 0, 'FEMENINO', 2, 1, 5),
+(0, 52, 6, 0, 0, 0, 'FEMENINO', 3, 2, 5),
+(0, NULL, NULL, 0, 0, 0, NULL, 4, 1, 5);
 
 --
 -- Volcado de datos para la tabla `fasevaloracion`

@@ -1,4 +1,4 @@
-.juego{
+.juego {
     padding-top: 75px;
     margin-top: 3%;
     margin-left: 4%;
@@ -6,26 +6,39 @@
     margin-bottom: 12%;
 }
 
-.header-juego{
+.header-juego {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6%;
+    margin-bottom: 2%;
 }
 
-.header-juego i{
+.header-juego i {
     color: rgb(253, 196, 122);
     font-size: 2rem;
 }
 
-.tableJuego{
+.bienvenido{
+    margin-left: auto;
+}
+
+.tableJuego {
     margin-top: 2.5%;
     background-color: white;
     border-radius: 12px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    margin-bottom: 2%;
 }
 
-.btn-instrucciones{
+.tableJuego td{
+    width: 100px;
+}
+
+.tableJuego td:not(:first-child) {
+    color: #88c0e5;
+}
+
+.btn-instrucciones {
     color: white;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     background-color: rgb(253, 196, 122);
@@ -37,6 +50,141 @@
     justify-content: center;
 }
 
-.btn-instrucciones:hover{
+.btn-instrucciones:hover {
     background-color: rgb(255, 183, 88);
+}
+
+.filtro-alimento {
+    display: flex;
+    width: 100%;
+    gap: 1.2%;
+}
+
+.filtro-alimento select {
+    width: 10%;
+}
+
+.filtro-alimento form {
+    width: 30%;
+}
+
+.elementos {
+    display: grid;
+    grid-template-columns: repeat(7, 2fr);
+    grid-auto-rows: minmax(50px, auto); /* Las filas se ajustan automáticamente */
+    height: 110px; /* Altura fija del contenedor */
+    overflow: auto; /* Agrega scroll cuando se desborda el contenedor */
+    gap: 1%;
+    padding: 1%;
+    justify-content: center;
+    align-items: center;
+    border-color: #13405d;
+
+}
+
+
+.elemento-intercambio {
+    display: flex;
+    background-color: #88c0e5;
+    border-radius: 12px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    padding: 2%;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    color: white;
+}
+
+.comprobar{
+    cursor: pointer;
+    background-color: #4782a9;
+    color: white;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    padding: 1%;
+    border-radius: 12px;
+}
+
+.comprobar:hover{
+    background-color: #335e7b;
+}
+
+.resultado{
+    margin-top: 2%;
+    font-size: 1.05rem;
+    font-weight: bold;
+}
+
+#calorias{
+    width: 10%; 
+    display: inline-block;
+}
+
+.header-juego-movil{
+    display: none;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 767px) {
+    /* Pantallas de menos de 768 píxeles de ancho */
+
+    #calorias{
+        width: 25%;
+    }
+
+    .filtro-alimento select {
+        width: 28%;
+    }
+
+    .filtro-alimento form {
+        width: 70%;
+    }
+
+    .elementos{
+        grid-template-columns: repeat(2, 2fr);
+        margin-top: 2%;
+    }
+
+    .juego{
+        margin-bottom: 20%;
+    }
+
+    .comprobar{
+        padding: 3%;
+    }
+
+    .verRes{
+        padding-top: 5%;
+    }
+
+    .resultado{
+        padding-top: 2%;
+    }
+
+    .header-juego{
+        display: none;
+    }
+
+    .header-juego-movil {
+        margin-bottom: 2%;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    
+    .header-juego-movil i {
+        color: rgb(253, 196, 122);
+        font-size: 2rem;
+    }
+
+    .header-juego-movil a{
+        justify-content: center;
+    }
+
+    .btn-instrucciones-movil i{
+        color: black;
+        font-size: 1.5rem;
+    }
+
 }

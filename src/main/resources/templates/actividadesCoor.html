@@ -18,6 +18,8 @@
 
   <script src="/js/menu.js"></script>
   <script src="/js/actividades.js"></script>
+  <script src="/js/validaciones.js"></script>
+
 
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
@@ -94,6 +96,7 @@
       <div class="desplegable-perfil">
         <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
         <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
+        <div class="dropdown-divider"></div>
         <form th:action="@{/logout}" method="post">
           <button class="dropdown-item" type="submit">Cerrar sesión</a>
         </form>
@@ -112,7 +115,7 @@
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                 <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                   <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -127,7 +130,90 @@
       <div style="padding-top: 75px;">
         <div class="header-act">
           <h3>Actividades</h3>
-          <a class="btn-act" th:href="@{/nuevaActividad}">Nueva actividad</a>
+          <a class="btn-act" onclick="abrirIframe('nuevaActividad')" href="#">Nueva actividad</a>
+        </div>
+
+        <!-- Modal de nueva activiad -->
+        <div class="modal fade" id="nuevaActividad" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Crear nueva actividad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <form class="form-actividad" th:action="@{/process_actividad}" th:object="${actividad}"
+                  id="form-actividad" enctype="multipart/form-data" method="post">
+                  <div class="input-group mt-2">
+                    <label class="col-2 col-form-label">Nombre </label>
+                    <input type="text" th:field="*{nombre}" class="form-control" required id="nombreActividad" />
+                  </div>
+                  <div id="error_nombreActividad">
+                    <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                      Máximo 25
+                      caracteres</p>
+                  </div>
+
+                  <div class="input-group mt-2">
+                    <label class="col-2 col-form-label">Descripción </label>
+                    <textarea style="resize: none" id="descripcionAct" th:field="*{descripcion}" rows="4"
+                      class="form-control" required></textarea>
+                  </div>
+
+                  <div class="input-group mt-2">
+                    <label for="categoria" class="col-2 col-form-label">Categoría </label>
+                    <select id="categoria" th:field="*{categoria}" class="form-select" required>
+                      <option th:text="Deporte" th:value="DEPORTE"></option>
+                      <option th:text="Alimentación" th:value="ALIMENTACIÓN"></option>
+                      <option th:text="'Salud ' + 'mental'" th:value="SALUDMENTAL"></option>
+                      <option th:text="Educación" th:value="EDUCACIÓN"></option>
+                    </select>
+                  </div>
+
+                  <div class="input-group mt-2">
+                    <label class="col-2 col-form-label">Ubicación </label>
+                    <input type="text" th:field="*{ubicacion}" class="form-control" required />
+                  </div>
+
+                  <div class="input-group mt-2">
+                    <label class="col-2 col-form-label">Plazas </label>
+                    <input type="number" th:field="*{plazas}" class="form-control" required id="plazas" />
+                  </div>
+                  <div id="error_plazas">
+                    <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                      Introduzca un
+                      número entre 1 y 150</p>
+                  </div>
+
+                  <div class="input-group mt-2">
+                    <label class="col-2 col-form-label">Fecha </label>
+                    <input type="datetime-local" th:field="*{fechaRealizacion}" class="form-control"
+                      id="fechaRealizacion" required />
+                  </div>
+                  <div id="error_fechaRealizacion">
+                    <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                      Introduzca una
+                      fecha posterior a la actual</p>
+                  </div>
+
+                  <div class="input-group mt-2">
+                    <label class="col-2 col-form-label">Foto </label>
+                    <input type="file" th:name="file" class="form-control" required
+                      accept="image/png, image/jpeg, image/jpg" onchange="validateImage(this)" />
+                  </div>
+
+                  <div class="btn-form">
+                    <button class="btn" type="submit" id="btn-part">Guardar</button>
+                  </div>
+
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="layout-actividades">

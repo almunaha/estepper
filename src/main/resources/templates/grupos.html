@@ -95,6 +95,7 @@
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <a th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
@@ -114,7 +115,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                <a class="dropdown-item" th:href="@{'/chatCordAdmin/' + ${administrador.id}}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -203,8 +204,8 @@
                                             data-bs-toggle="tooltip" title="Editar grupo"
                                             th:href="@{'/grupos/editar/' + ${lis.id}} "></a>
 
-                                        <a style="cursor: pointer;" class="eliminarGrupo" id="btn-icono" data-bs-toggle="tooltip"
-                                            th:data-id="${lis.id}" title="Eliminar grupo"><i
+                                        <a style="cursor: pointer;" class="eliminarGrupo" id="btn-icono"
+                                            data-bs-toggle="tooltip" th:data-id="${lis.id}" title="Eliminar grupo"><i
                                                 class="fa-solid fa-trash-can fa-2x"></i></a>
 
 

@@ -176,16 +176,28 @@
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
                     id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{/img/logo.png}" />
-                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                <a onclick="notificaciones()"><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
             </div>
+
+            <div class="desplegable-notificaciones">
+                <h6>Notificaciones</h6>
+                <div class="dropdown-divider"></div>
+                <div style="overflow: auto; max-height: 250px;">
+                  <div th:each="notif : ${notificaciones}">
+                    <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
+                    <div class="dropdown-divider"></div>
+                  </div>
+                </div>
+              </div>
 
             <!-- encabezado -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
@@ -224,8 +236,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
-                                        width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil"
-                                        id="avatar-header" />
+                                        width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil" id="avatar-header" />
                                     <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
                                         width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
 
@@ -235,7 +246,8 @@
                                 <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi
                                         Perfil</a>
-                                    <a class="dropdown-item" th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                    <a class="dropdown-item"
+                                        th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</a>

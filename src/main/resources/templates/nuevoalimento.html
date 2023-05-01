@@ -120,19 +120,32 @@
 
         <div id="contenido">
             <div class="header-movil">
-                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}"
-                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" >
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()">
                 <img width="35" th:src="@{img/logo.png}" alt="">
-                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                <a onclick="notificaciones()"><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
+
+            <div class="desplegable-notificaciones">
+                <h6>Notificaciones</h6>
+                <div class="dropdown-divider"></div>
+                <div style="overflow: auto; max-height: 250px;">
+                  <div th:each="notif : ${notificaciones}">
+                    <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
+                    <div class="dropdown-divider"></div>
+                  </div>
+                </div>
+              </div>
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="burger"><a class="btn" onclick="desplazar()"><i class="fa-solid fa-bars"></i></a></div>
@@ -166,14 +179,14 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil"
-                                        id="avatar-header" >
+                                    <img width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil" id="avatar-header">
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
 
                                 <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                    <a class="dropdown-item" th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                    <a class="dropdown-item"
+                                        th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</button>
@@ -187,7 +200,7 @@
                 </div>
             </nav>
 
-            <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
+            <div style="margin: 1%; margin-top: 75px" class="bg-white border border-1 p-2 rounded-4 ">
                 <div style="display: flex; justify-content: center; flex-direction: column;">
                     <div>
                         <h3 style="text-align: center;">¡Crea un alimento nuevo!</h3>
@@ -201,13 +214,13 @@
 
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Nombre: </label>
-                            <input type="text" th:field="*{nombre}" class="form-control" required >
+                            <input type="text" th:field="*{nombre}" class="form-control" required>
                         </div>
 
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Porción: </label>
                             <input type="number" id="porcion" th:field="*{porcion}" class="form-control" step="any"
-                                min="0" max="999999999" required >
+                                min="0" max="999999999" required>
                             <label style="margin-left: 5%;" class="col-4 col-form-label">Unidad: </label>
                             <select class="form-control" th:field="*{unidad}" required>
                                 <option value="">Opciones:</option>
@@ -220,31 +233,31 @@
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Sal (g): </label>
                             <input type="number" step="any" min="0" max="999999999" th:field="*{sal}"
-                                class="form-control" required >
+                                class="form-control" required>
                         </div>
 
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Fibra alimentaria (g): </label>
                             <input type="number" step="any" min="0" max="999999999" th:field="*{fibra_alimentaria}"
-                                class="form-control" required >
+                                class="form-control" required>
                         </div>
 
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Grasas saturadas (g): </label>
                             <input type="number" step="any" min="0" max="999999999" th:field="*{grasas_saturadas}"
-                                class="form-control" required >
+                                class="form-control" required>
                         </div>
 
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Hidratos de carbono (g): </label>
                             <input type="number" step="any" min="0" max="999999999" th:field="*{hidratos_de_carbono}"
-                                class="form-control" required >
+                                class="form-control" required>
                         </div>
 
                         <div class="input-group mt-2">
                             <label class="col-4 col-form-label">Proteinas (g): </label>
                             <input type="number" step="any" min="0" max="999999999" th:field="*{proteinas}"
-                                class="form-control" required >
+                                class="form-control" required>
                         </div>
 
 

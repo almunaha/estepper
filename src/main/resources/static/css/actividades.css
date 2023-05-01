@@ -11,10 +11,10 @@
     align-items: center;
 }
 
-.btn-invit {
+.btn-invit, .btn-asis-movil{
     background-color: rgb(221, 171, 99);
     color: white;
-    padding: 1%;
+    padding: 8%;
     border-radius: 8px;
     font-size: 17px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
@@ -23,8 +23,12 @@
     text-align: center;
 }
 
-.btn-invit:hover {
+.btn-invit:hover, .btn-asis-movil:hover {
     transform: scale(1.1);
+}
+
+.btn-asis-movil{
+    display: none;
 }
 
 .flex-act {
@@ -364,6 +368,7 @@
     border-radius: 12px;
     padding: 10px;
     margin-top: 3%;
+    margin-bottom: 15%;
 }
 
 .layout-editar {
@@ -378,6 +383,16 @@
 .form-dato {
     width: 50%;
     margin-right: 4%;
+}
+
+#buscadorActi{
+    width: 70%;
+    margin-top: 25px;
+}
+
+#busqueda-actividad{
+   width: 71.5%; 
+   margin-top: 1.5%;
 }
 
 #tabla-asistencia{
@@ -404,6 +419,7 @@
     justify-content: center;
 }
 
+
 /* RESPONSIVE */
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
@@ -415,19 +431,57 @@
     .actividades-part {
         flex-direction: row;
         align-content: space-around;
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .flex-act{
+        justify-content: center;
+    }
+
+    .actividad-info{
+        height: 300px;
+    }
+
+    .eventos-movil{
+        width: 100%;
+        background-color: white;
+        margin-right: 2%;
     }
 
     .eventos{
         display: none;
     }
 
+    .layout-asis{
+        padding: 0;
+        padding-top: 3%;
+        padding-right: 1%;
+    }
+
+    #buscadorActi{
+        width: 100%;
+        margin-top: 0;
+    }
+
     .actividad {
-        width: 84%;
+        width: 90%;
         margin-bottom: 3.5%;
+    }
+
+    .atras-info{
+        width: 20%;
     }
 
     .flex-act{
         margin-bottom:15%;
+    }
+
+    #busqueda-actividad{
+        width: 90%;
+        align-items: center;
+        margin-bottom: 3%;
     }
 
     .form-actividad label{
@@ -442,6 +496,38 @@
         width: 100%;
     }
 
+    .categoria-actividad{
+        display: none;
+    }
 
+    .actividad-info{
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+    }
+
+    .botones-info button{
+        font-size: 1.2rem;
+    }
+
+    .atras-info{
+        margin-left: 2.5%;
+    }
+
+    .inscripcion a{
+        width: 50%;
+    }
+
+    .btn-invit, .btn-asis-movil{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+    }
+
+    .btn-funcion{
+        display: flex;
+        flex-direction: column;
+    }
 
 }

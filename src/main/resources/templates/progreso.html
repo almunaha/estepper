@@ -134,19 +134,33 @@
 
         <div id="contenido">
             <div class="header-movil">
-                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}"
-                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{/img/logo.png}" />
-                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                <a onclick="notificaciones()"><i class="fa-solid fa-bell"
+                        style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
             </div>
+
+            <div class="desplegable-notificaciones">
+                <h6>Notificaciones</h6>
+                <div class="dropdown-divider"></div>
+                <div style="overflow: auto; max-height: 250px;">
+                    <div th:each="notif : ${notificaciones}">
+                        <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
+            </div>
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -188,7 +202,8 @@
 
                                 <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                    <a class="dropdown-item" th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                    <a class="dropdown-item"
+                                        th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -317,8 +332,9 @@
                     <div class="progreso-datos">
                         <div class="header-progreso">
                             <h4>Peso</h4>
-                            <a class="btn-plus" data-bs-toggle="tooltip" title="Registrar peso"><i
-                                    class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
+                            <a class="btn-plus" data-bs-toggle="tooltip" title="Registrar peso"
+                                onclick="abrirIframe('registrarPeso')"><i class="fa-solid fa-circle-plus"
+                                    style="cursor: pointer; float:right;"></i></a>
                         </div>
 
                         <!-- Ver registros peso -->
@@ -352,44 +368,58 @@
                             </div>
                         </div>
 
-                        <!-- Registar peso -->
-                        <div class="bg-white p-5" id="form-peso">
-                            <form method="post" th:action="@{/process_peso}" th:object="${progreso}"
-                                id="form-registroPeso">
-                                <div class="mb-3">
-                                    <label for="fechaPeso">Fecha</label>
-                                    <input type="datetime-local" th:field="*{fecha}" name="fechaPeso" id="fechaPeso"
-                                        class="form-control" required>
-                                </div>
-                                <div id="error_fechaPeso">
-                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca
-                                        una fecha actual o anterior</p>
-                                </div>
+                        <!--Modal registrar peso -->
+                        <div class="modal fade" id="registrarPeso" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Registrar peso</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" th:action="@{/process_peso}" th:object="${progreso}"
+                                            id="form-registroPeso">
+                                            <div class="mb-3">
+                                                <label for="fechaPeso">Fecha</label>
+                                                <input type="datetime-local" th:field="*{fecha}" name="fechaPeso"
+                                                    id="fechaPeso" class="form-control" required>
+                                            </div>
+                                            <div id="error_fechaPeso">
+                                                <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                                    Introduzca
+                                                    una fecha actual o anterior</p>
+                                            </div>
 
-                                <div class="mb-3">
-                                    <label for="datoPeso">Peso (kg)</label>
-                                    <input type="number" step="any" th:field="*{dato}" id="datoPeso"
-                                        class="form-control" required>
-                                </div>
-                                <div id="error_datoPeso">
-                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un
-                                        número mayor a 0</p>
-                                </div>
+                                            <div class="mb-3">
+                                                <label for="datoPeso">Peso (kg)</label>
+                                                <input type="number" step="any" th:field="*{dato}" id="datoPeso"
+                                                    class="form-control" required>
+                                            </div>
+                                            <div id="error_datoPeso">
+                                                <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                                    Introduzca un
+                                                    número mayor a 0</p>
+                                            </div>
 
-                                <div class="btn-form">
-                                    <a id="cancelar-pes" class="btn btn-primary">Cancelar</a>
-                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                            <div class="btn-form">
+                                                <button type="submit" class="btn-reg-progreso">Registrar</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
+
                     </div>
 
                     <!-- PERÍMETRO ABDOMINAL -->
                     <div class="progreso-datos">
                         <div class="header-progreso">
                             <h4>Perímetro</h4>
-                            <a class="btn-plus2" data-bs-toggle="tooltip" title="Registrar perímetro"><i
-                                    class="fa-solid fa-circle-plus" style="cursor: pointer; float:right;"></i></a>
+                            <a class="btn-plus" data-bs-toggle="tooltip" title="Registrar perímetro"><i
+                                    class="fa-solid fa-circle-plus" onclick="abrirIframe('registrarPerimetro')"
+                                    style="cursor: pointer; float:right;"></i></a>
                         </div>
 
                         <!-- Ver registros perímetro -->
@@ -423,41 +453,55 @@
                             </div>
                         </div>
 
-                        <!-- Registar perímetro -->
-                        <div class="bg-white p-5" id="form-perimetro">
-                            <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}"
-                                id="form-registroPerimetro">
-                                <div class="mb-3">
-                                    <label>Fecha</label>
-                                    <input type="datetime-local" th:field="*{fecha}" id="fechaPerimetro"
-                                        class="form-control" required>
-                                </div>
-                                <div id="error_fechaPerimetro">
-                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca
-                                        una fecha actual o anterior</p>
-                                </div>
+                        <!--Modal registrar perimetro -->
+                        <div class="modal fade" id="registrarPerimetro" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Registrar perímetro</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" th:action="@{/process_perimetro}" th:object="${progreso}"
+                                            id="form-registroPerimetro">
+                                            <div class="mb-3">
+                                                <label>Fecha</label>
+                                                <input type="datetime-local" th:field="*{fecha}" id="fechaPerimetro"
+                                                    class="form-control" required>
+                                            </div>
+                                            <div id="error_fechaPerimetro">
+                                                <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                                    Introduzca
+                                                    una fecha actual o anterior</p>
+                                            </div>
 
-                                <div class="mb-3">
-                                    <label>Perímetro (cm)</label>
-                                    <input type="number" step="any" th:field="*{dato}" id="datoPerimetro"
-                                        class="form-control" required>
-                                </div>
-                                <div id="error_datoPerimetro">
-                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Introduzca un
-                                        número mayor a 0</p>
-                                </div>
+                                            <div class="mb-3">
+                                                <label>Perímetro (cm)</label>
+                                                <input type="number" step="any" th:field="*{dato}" id="datoPerimetro"
+                                                    class="form-control" required>
+                                            </div>
+                                            <div id="error_datoPerimetro">
+                                                <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                                    Introduzca un
+                                                    número mayor a 0</p>
+                                            </div>
 
-                                <div class="btn-form">
-                                    <a id="cancelar-per" class="btn btn-primary">Cancelar</a>
-                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                            <div class="btn-form">
+                                                <button type="submit" class="btn-reg-progreso">Registrar</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
 
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 </body>

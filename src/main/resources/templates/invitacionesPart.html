@@ -141,18 +141,31 @@
         <div id="contenido">
 
             <div class="header-movil">
-                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}"
-                    alt="imagenPerfil" id="avatar-header" onclick="desplegable()" />
+                <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
+                    id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{img/logo.png}" />
-                <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                <a onclick="notificaciones()"><i class="fa-solid fa-bell"
+                        style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <a th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</a>
                 </form>
+            </div>
+
+            <div class="desplegable-notificaciones">
+                <h6>Notificaciones</h6>
+                <div class="dropdown-divider"></div>
+                <div style="overflow: auto; max-height: 250px;">
+                    <div th:each="notif : ${notificaciones}">
+                        <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- encabezado -->
@@ -198,7 +211,8 @@
                                 <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi
                                         Perfil</a>
-                                    <a class="dropdown-item" th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Escribir al administrador</a>
+                                    <a class="dropdown-item"
+                                        th:href="@{'/chatPartAdmin/' + ${administrador.id}}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -226,34 +240,37 @@
                     <div style="min-height: 130px;" th:unless="${#lists.isEmpty(pendientes)}">
 
                         <div class="tabla-cont">
-                            <table class="table" id="tabla-invit">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">Actividad</th>
-                                        <th scope="col">Fecha realización</th>
-                                        <th scope="col">Coordinador</th>
-                                        <th scope="col"></th>
+                            <div class="table-responsive">
+                                <table class="table" id="tabla-invit">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Actividad</th>
+                                            <th scope="col">Fecha realización</th>
+                                            <th scope="col">Coordinador</th>
+                                            <th scope="col"></th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="lis:${pendientes}">
-                                        <td><a th:text="${lis.actividad.nombre}"
-                                                th:href="@{'/actividad/' + ${lis.actividad.id}}" class="nombre-act"></a>
-                                        </td>
-                                        <td
-                                            th:text="${#temporals.format(lis.actividad.fechaRealizacion, 'dd MMM yyyy HH:mm')}">
-                                        </td>
-                                        <td th:text="${lis.coordinador.nickname}"></td>
-                                        <td>
-                                            <a th:href="@{'/confirmar_invitacion/' + ${lis.id}}" class="btn-resp"
-                                                style="background-color: rgb(162, 210, 162);">Aceptar</a>
-                                            <a th:href="@{'/rechazar_invitacion/' + ${lis.id}}" class="btn-resp"
-                                                style="background-color: rgb(234, 116, 102);">Rechazar</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="lis:${pendientes}">
+                                            <td><a th:text="${lis.actividad.nombre}"
+                                                    th:href="@{'/actividad/' + ${lis.actividad.id}}"
+                                                    class="nombre-act"></a>
+                                            </td>
+                                            <td
+                                                th:text="${#temporals.format(lis.actividad.fechaRealizacion, 'dd MMM yyyy HH:mm')}">
+                                            </td>
+                                            <td th:text="${lis.coordinador.nickname}"></td>
+                                            <td>
+                                                <a th:href="@{'/confirmar_invitacion/' + ${lis.id}}" class="btn-resp"
+                                                    style="background-color: rgb(162, 210, 162);">Aceptar</a>
+                                                <a th:href="@{'/rechazar_invitacion/' + ${lis.id}}" class="btn-resp"
+                                                    style="background-color: rgb(234, 116, 102);">Rechazar</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

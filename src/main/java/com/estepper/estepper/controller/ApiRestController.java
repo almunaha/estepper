@@ -1,5 +1,9 @@
 package com.estepper.estepper.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +38,92 @@ public class ApiRestController {
     @Autowired
     private ProgresoService progreso;
 
-    @GetMapping("/progreso/peso/{id}") 
-    public List<Progreso> datosPeso(@PathVariable Integer id) {
-        Participante p =  part.findById(id).get();
-        return progreso.datos(p, TipoProgreso.PESO);
+    // Función que realiza una petición http devolviendo un json con los datos de
+    // progreso del participante correspondiente
+    // Además según los valores de ini o fin, que son fecha de inicio y fecha de
+    // fin, se filtrarán los datos del progreso
+    // pueden venir vacíos por lo que se mostrarán todos los datos
+    @GetMapping("/progreso/peso/{id}/{ini}/{fin}")
+    public List<Progreso> datosPeso(@PathVariable Integer id, @PathVariable String ini, @PathVariable String fin) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Define el formato del string
+        LocalDate fechaIni, fechaFin;
+
+        Participante p = part.findById(id).get();
+
+        if (ini.equals("0") && fin.equals("0")) { // ninguna fecha seleccionada -> no se aplica filtro
+            return progreso.datos(p, TipoProgreso.PESO);
+        }
+
+        else if (ini != "0" && fin.equals("0")) { // fecha ini seleccionada
+            fechaIni = LocalDate.parse(ini, formatter); // Convierte el string a LocalDate
+            LocalDateTime iniDate = fechaIni.atStartOfDay();
+
+            return progreso.PesoPorFecha(iniDate, TipoProgreso.PESO, p);
+        }
+
+        else if (ini.equals("0") && fin != "0") { // fecha fin seleccionada
+            fechaFin = LocalDate.parse(fin, formatter); // Convierte el string a LocalDate
+            LocalDateTime finDate = fechaFin.atStartOfDay().with(LocalTime.MAX); // para coger valores hasta las
+                                                                                 // 23:59:59
+
+            return progreso.PesoPorFechaAntes(finDate, TipoProgreso.PESO, p);
+        }
+
+        else { // los dos filtros
+            fechaIni = LocalDate.parse(ini, formatter); // Convierte el string a LocalDate
+            LocalDateTime iniDate = fechaIni.atStartOfDay();
+
+            fechaFin = LocalDate.parse(fin, formatter); // Convierte el string a LocalDate
+            LocalDateTime finDate = fechaFin.atStartOfDay().with(LocalTime.MAX); // para coger valores hasta las
+                                                                                 // 23:59:59
+
+            return progreso.datoFechas(p, TipoProgreso.PESO, iniDate, finDate);
+        }
+
     }
 
-    @GetMapping("/progreso/perimetro/{id}") 
-    public List<Progreso> datosPerimetro(@PathVariable Integer id) {
-        Participante p =  part.findById(id).get();
-        return progreso.datos(p, TipoProgreso.PERIMETRO);
+    // Función que realiza una petición http devolviendo un json con los datos de
+    // perímetro del participante correspondiente
+    // Además según los valores de ini o fin, que son fecha de inicio y fecha de
+    // fin, se filtrarán los datos del perímetro
+    // pueden venir vacíos por lo que se mostrarán todos los datos
+    @GetMapping("/progreso/perimetro/{id}/{ini}/{fin}")
+    public List<Progreso> datosPerimetro(@PathVariable Integer id, @PathVariable String ini, @PathVariable String fin) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Define el formato del string
+        LocalDate fechaIni, fechaFin;
+
+        Participante p = part.findById(id).get();
+
+        if (ini.equals("0") && fin.equals("0")) { // ninguna fecha seleccionada -> no se aplica filtro
+            return progreso.datos(p, TipoProgreso.PERIMETRO);
+        }
+
+        else if (ini != "0" && fin.equals("0")) { // fecha ini seleccionada
+            fechaIni = LocalDate.parse(ini, formatter); // Convierte el string a LocalDate
+            LocalDateTime iniDate = fechaIni.atStartOfDay();
+
+            return progreso.PesoPorFecha(iniDate, TipoProgreso.PERIMETRO, p);
+        }
+
+        else if (ini.equals("0") && fin != "0") { // fecha fin seleccionada
+            fechaFin = LocalDate.parse(fin, formatter); // Convierte el string a LocalDate
+            LocalDateTime finDate = fechaFin.atStartOfDay().with(LocalTime.MAX); // para coger valores hasta las
+                                                                                 // 23:59:59
+
+            return progreso.PesoPorFechaAntes(finDate, TipoProgreso.PERIMETRO, p);
+        }
+
+        else { // los dos filtros
+            fechaIni = LocalDate.parse(ini, formatter); // Convierte el string a LocalDate
+            LocalDateTime iniDate = fechaIni.atStartOfDay();
+
+            fechaFin = LocalDate.parse(fin, formatter); // Convierte el string a LocalDate
+            LocalDateTime finDate = fechaFin.atStartOfDay().with(LocalTime.MAX); // para coger valores hasta las
+                                                                                 // 23:59:59
+
+            return progreso.datoFechas(p, TipoProgreso.PERIMETRO, iniDate, finDate);
+        }
+
     }
 
     public Usuario getUsuario() {
@@ -65,18 +145,14 @@ public class ApiRestController {
 
     @GetMapping("/index/sesiones")
     public Participante getParticipante() {
- 
+
         Usuario u = getUsuario();
-        if(u instanceof Participante){
+        if (u instanceof Participante) {
             Participante p = part.findById(u.getId()).get();
             return p;
         }
 
         return null;
     }
-
-
-
-    
 
 }

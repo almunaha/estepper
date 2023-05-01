@@ -139,11 +139,12 @@ public class AdminController {
                     grupoS.update(p.getGrupo());
                 }
             } else if (usuario.findById(id).get() instanceof Coordinador) {
-                Coordinador c = (Coordinador) usuario.findById(id).get();
+                Coordinador c = coordinador.getCoordinador(id);
+
                 mensajeS.deleteByCoordinadorMensajePrivado(c);
                 obs.deleteByCoordinador(c);
                 List<Grupo> listgrupos = grupoS.getGrupos();
-               // Coordinador c = coordinador.getCoordinador(id); VER CUÁL DE LOS DOS ERA EL BUENO
+
                 for (int i = 0; i < listgrupos.size(); i++) {
                     if (listgrupos.get(i).getIdCoordinador() == id) {
                         materialS.deleteByGrupo(listgrupos.get(i));
@@ -154,7 +155,7 @@ public class AdminController {
                         // grupoS.delete(id);
                     }
                 }
-                invitacion.eliminarPorCoordinador((Coordinador) usuario.findById(id).get());
+                invitacion.eliminarPorCoordinador(coordinador.getCoordinador(id));
                 usuario.eliminar(id);
             } else
                 usuario.eliminar(id);
@@ -166,18 +167,6 @@ public class AdminController {
         }
 
         return "redirect:/";
-    }
-
-    @GetMapping("/nuevoCoordinador")
-    public String nuevoCoordinador(Model model) {
-        Usuario u = usuarioLogueado();
-
-        if (u instanceof Administrador) {
-            model.addAttribute("user", u);
-            model.addAttribute("coordinador", new Coordinador());
-            return "nuevoCoordinador";
-        } else
-            return "redirect:/";
     }
 
     @PostMapping("/process_coordinador")
@@ -207,7 +196,7 @@ public class AdminController {
             List<Usuario> lista = listadoUsuarios();
             model.addAttribute("usuarios", lista);
 
-            return "admin";
+            return "redirect:/";
         } else
             return "redirect:/";
 

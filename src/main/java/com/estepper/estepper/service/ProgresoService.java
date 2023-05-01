@@ -15,6 +15,10 @@ public interface ProgresoService {
     
     public List<Progreso> datos(Participante participante, TipoProgreso tipo); //datos de un tipo de progreso
     public List<Progreso> PesoPorFecha(LocalDateTime fecha, TipoProgreso tipo, Participante participante);
+    public List<Progreso> PesoPorFechaAntes(LocalDateTime fecha, TipoProgreso tipo, Participante participante);
+
+    public List<Progreso> datoFechas(Participante participante, TipoProgreso tipo, LocalDateTime fechaInicial, LocalDateTime fechaFinal);
+
     public void deleteByParticipante(Participante p);
     public Progreso pesoAntiguo(Participante participante, TipoProgreso tipo);
     public Progreso primerPeso(Participante participante, TipoProgreso tipo);

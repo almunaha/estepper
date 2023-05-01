@@ -19,6 +19,9 @@ public interface ProgresoRepository extends JpaRepository<Progreso, Integer>{
 
     List<Progreso> findByParticipanteAndTipoOrderByFechaAsc(Participante participante, TipoProgreso tipo);
     List<Progreso> findByFechaAfterAndTipoAndParticipante(LocalDateTime fecha, TipoProgreso tipo, Participante participante);
+    List<Progreso> findByFechaLessThanEqualAndTipoAndParticipante(LocalDateTime fecha, TipoProgreso tipo, Participante participante);
+    List<Progreso> findByParticipanteAndTipoAndFechaBetween(Participante participante, TipoProgreso tipo, LocalDateTime fechaInicial, LocalDateTime fechaFinal);
+
 
     @Modifying
     @Transactional
@@ -27,5 +30,8 @@ public interface ProgresoRepository extends JpaRepository<Progreso, Integer>{
 
     Progreso findFirstByParticipanteAndTipoOrderByFechaDesc(Participante participante, TipoProgreso tipo);
     Progreso findFirstByParticipanteAndTipoOrderByFechaAsc(Participante participante, TipoProgreso tipo);
+
+    List<Progreso> findByFechaGreaterThanEqualAndTipo(LocalDateTime fecha, TipoProgreso tipo);
+
 
 }
