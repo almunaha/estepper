@@ -586,7 +586,9 @@ public class HomeController {
         lista.remove(user);
         MensajeAdmin menAdmin = new MensajeAdmin();
         Administrador admin = (Administrador) user;
-        List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin(admin);
+        //List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin(admin);
+        List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesUsuario(user);
+
 
         /*System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
 
@@ -621,7 +623,8 @@ public class HomeController {
     public String getUserMessages(@PathVariable Integer userId, RedirectAttributes redirAttrs) {
 
         Administrador admin = (Administrador) getUsuario();
-        List<MensajeAdmin> messages = mensaje.obtenerMensajesAdminyUsuario(admin, usuario.findById(userId).get());
+        //List<MensajeAdmin> messages = mensaje.obtenerMensajesAdminyUsuario(admin, usuario.findById(userId).get());
+        List<MensajeAdmin> messages = mensaje.obtenerMensajesUsuario(getUsuario());
 
        // redirAttrs.addFlashAttribute("mensajesConAdministrador", messages);
         //redirAttrs.addAttribute("userId", userId);
@@ -630,22 +633,25 @@ public class HomeController {
         return "redirect:/mensajesAdmin";
     }
 
-    @GetMapping("/chatCordAdmin/{id}") // vista coordinador
-    public String chatCordAdmin(@PathVariable("id") Integer idAdministrador, Model model) {
+    @GetMapping("/chatCordAdmin") // vista coordinador
+    public String chatCordAdmin(Model model) {
 
         Usuario u = getUsuario();
         model.addAttribute("user", u);
-        Administrador admin = administrador.getAdministrador(idAdministrador);
+        //Administrador admin = administrador.getAdministrador(idAdministrador);
 
         if (u instanceof Coordinador) { // revisar esto
 
             MensajeAdmin menAdmin = new MensajeAdmin();
-            List<MensajeAdmin> mensajesAdministrador = mensaje.obtenerMensajesAdmin(admin);
-            List<MensajeAdmin> mensajesAdminyCoordinador = mensaje.obtenerMensajesAdminyUsuario(admin, u);
-            model.addAttribute("administrador", admin);
+            //List<MensajeAdmin> mensajesAdministrador = mensaje.obtenerMensajesAdmin(admin);
+            List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesUsuario(u);
+            //List<MensajeAdmin> mensajesAdminyCoordinador = mensaje.obtenerMensajesAdminyUsuario(admin, u);
+            //model.addAttribute("administrador", admin);
             model.addAttribute("messageAdmin", menAdmin);
-            model.addAttribute("mensajesAdministrador", mensajesAdministrador);
-            model.addAttribute("mensajesAdminyCoordinador", mensajesAdminyCoordinador);
+            model.addAttribute("mensajesAdministrador", mensajesAdmin);
+
+            //model.addAttribute("mensajesAdministrador", mensajesAdministrador);
+            //model.addAttribute("mensajesAdminyCoordinador", mensajesAdminyCoordinador);
 
             return "chatCordAdmin";
         } else
@@ -653,28 +659,52 @@ public class HomeController {
             return "redirect:/";
     }
 
-    @GetMapping("/chatPartAdmin/{id}") // vista participante --> MEZCLARLA LUEGO CO NLA DEL COORDINADOR PARA TENER SOLO
+    @GetMapping("/chatPartAdmin") // vista participante --> MEZCLARLA LUEGO CO NLA DEL COORDINADOR PARA TENER SOLO
                                        // 1 Y NO DOS IGUALES
-    public String chatPartAdmin(@PathVariable("id") Integer idAdministrador, Model model) {
+    public String chatPartAdmin(Model model) {
 
         Usuario u = getUsuario();
         model.addAttribute("user", u);
-        Administrador admin = administrador.getAdministrador(idAdministrador);
+        //Administrador admin = administrador.getAdministrador(idAdministrador);
 
         if (u instanceof Participante) { // revisar esto
 
             MensajeAdmin menAdmin = new MensajeAdmin();
-            List<MensajeAdmin> mensajesAdministrador = mensaje.obtenerMensajesAdmin(admin);
-            List<MensajeAdmin> mensajesAdminyParticipante = mensaje.obtenerMensajesAdminyUsuario(admin, u);
-            model.addAttribute("administrador", admin);
+            List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesUsuario(u);
             model.addAttribute("messageAdmin", menAdmin);
-            model.addAttribute("mensajesAdministrador", mensajesAdministrador);
-            model.addAttribute("mensajesAdminyParticipante", mensajesAdminyParticipante);
+            model.addAttribute("mensajesAdministrador", mensajesAdmin);
+
+
+            //List<MensajeAdmin> mensajesAdministrador = mensaje.obtenerMensajesAdmin(admin);
+            //List<MensajeAdmin> mensajesAdminyParticipante = mensaje.obtenerMensajesAdminyUsuario(admin, u);
+            //model.addAttribute("administrador", admin);
+            //model.addAttribute("mensajesAdministrador", mensajesAdministrador);
+            //model.addAttribute("mensajesAdminyParticipante", mensajesAdminyParticipante);
 
             return "chatPartAdmin";
         } else
 
             return "redirect:/";
+    }
+
+    @GetMapping("/ayuda")
+    public String ayuda(Model model) {
+
+        Usuario u = getUsuario();
+        model.addAttribute("user", u);
+
+        if (u instanceof Participante || u instanceof Coordinador) { 
+
+            
+            List<MensajeAdmin> mensajes = mensaje.obtenerMensajesUsuario(u);
+            MensajeAdmin menAdmin = new MensajeAdmin();
+            model.addAttribute("mensajes", mensajes);
+            model.addAttribute("messageAdmin", menAdmin);
+
+
+            return "ayuda";
+        } else
+        return "redirect:/";
     }
 
 }
