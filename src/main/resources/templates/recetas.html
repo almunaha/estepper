@@ -322,7 +322,7 @@
                                 <div class="col-sm-6 mb-2"
                                     style="display: flex; flex-direction: column; align-items: start;">
                                     <select style="margin-left: 8%;" th:field="*{ingredientes}" class="form-control"
-                                        multiple id="lista-alimentos1" required>
+                                        multiple id="lista-alimentos2" required>
                                         <option th:each="ing : ${listaIng}" th:value="${ing.id}"
                                             th:text="${ing.nombre} + ' (' + ${ing.porcion} + ' ' + ${ing.unidad} + ')'">
                                         </option>

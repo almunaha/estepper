@@ -31,6 +31,38 @@ $(document).ready(function () {
          $("#lista-alimentos").empty().append(opciones);
      });
      
+     // Obtener la lista de opciones del select
+     var opciones = $("#lista-alimentos2 option");
+
+     // Crear un input de búsqueda
+     var inputBusqueda = $('<input style="margin-right:15%;" type="text" class="form-control mt-2" placeholder="Buscar...">');
+
+     // Agregar el input de búsqueda antes del select
+     $("#lista-alimentos2").before(inputBusqueda);
+
+     // Escuchar el evento keyup del input de búsqueda
+     inputBusqueda.keyup(function () {
+         // Obtener el término de búsqueda
+         var term = $(this).val().toLowerCase();
+
+         // Filtrar las opciones que contengan el término de búsqueda
+         var opcionesFiltradas = opciones.filter(function () {
+             return $(this).text().toLowerCase().indexOf(term) > -1;
+         });
+
+         // Actualizar las opciones del select con las opciones filtradas
+         $("#lista-alimentos2").empty().append(opcionesFiltradas);
+     });
+
+     // Restaurar todas las opciones del select cuando se cierre
+     $("#lista-alimentos2").on("hidden.bs.select", function () {
+         $("#lista-alimentos2").empty().append(opciones);
+     });
+
+     $("#lista-alimentos2").keydown("hidden.bs.select", function () {
+         $("#lista-alimentos2").empty().append(opciones);
+     });
+
     // Obtener los elementos de la lista de materiales
     var materiales = $('.material');
 
@@ -87,38 +119,38 @@ $(document).ready(function () {
     });
 
     var recetas = $('.material');
-                                    var noResultadosBtn = $('#no-resultados-btn');
-                                    var want = [];
-                                    var dontWant = [];
-                                    var wantI = [];
-                                    var dontwantI = [];
+    var noResultadosBtn = $('#no-resultados-btn');
+    var want = [];
+    var dontWant = [];
+    var wantI = [];
+    var dontWantI = [];
 
-                                    $('#filter-button').click(function () {
-                                        want = $('#want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
-                                        dontWant = $('#dont-want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
-                                        wantI = $('#want-select').val().map(function (val) { return val.toLowerCase(); });
-                                        dontWantI = $('#dont-want-select').val().map(function (val) { return val.toLowerCase(); });
+    $('#filter-button').click(function () {
+        want = $('#want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
+        dontWant = $('#dont-want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
+        wantI = $('#want-select').val().map(function (val) { return val.toLowerCase(); });
+        dontWantI = $('#dont-want-select').val().map(function (val) { return val.toLowerCase(); });
 
-                                        var resultados = recetas.filter(function () {
-                                            var ingredients = $(this).find('.ingredientes').text().toLowerCase();
-                                            return want.some(function (want) { return ingredients.includes(want); }) &&
-                                                !dontWant.some(function (dontWant) { return ingredients.includes(dontWant); });
+        var resultados = recetas.filter(function () {
+            var ingredients = $(this).find('.ingredientes').text().toLowerCase();
+            return want.some(function (want) { return ingredients.includes(want); }) &&
+                !dontWant.some(function (dontWant) { return ingredients.includes(dontWant); });
 
-                                        });
+        });
 
-                                        recetas.hide();
-                                        resultados.show();
+        recetas.hide();
+        resultados.show();
 
-                                        noResultadosBtn.toggle(resultados.length === 0);
-                                    });
+        noResultadosBtn.toggle(resultados.length === 0);
+    });
 
-                                    $('#no-resultados-btn').click(function () {
-                                        var url = '/recetasparecidas?want=' + wantI.join() + '&dontwant=' + dontWantI.join();
-                                        window.location.href = url;
-                                    });
+    $('#no-resultados-btn').click(function () {
+        var url = '/recetasparecidas?want=' + wantI.join() + '&dontWant=' + dontWantI.join();
+        window.location.href = url;
+    });
 
-                                    // Mostrar todas las recetas al cargar la página
-                                    recetas.show();
+    // Mostrar todas las recetas al cargar la página
+    recetas.show();
 });
 
 
