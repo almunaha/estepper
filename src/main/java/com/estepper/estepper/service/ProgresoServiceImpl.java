@@ -36,6 +36,11 @@ public class ProgresoServiceImpl implements ProgresoService{
     }
 
     @Override
+    public List<Progreso> PesoPorFechaAntes(LocalDateTime fecha, TipoProgreso tipo, Participante participante){
+        return repo.findByFechaLessThanEqualAndTipoAndParticipante(fecha, tipo, participante);
+    }
+
+    @Override
     public void deleteByParticipante(Participante p) {
         repo.deleteAllByParticipante(p);
     }
@@ -48,6 +53,11 @@ public class ProgresoServiceImpl implements ProgresoService{
     @Override
     public Progreso primerPeso(Participante participante, TipoProgreso tipo){
         return repo.findFirstByParticipanteAndTipoOrderByFechaAsc(participante, tipo);
+    }
+
+    @Override
+    public List<Progreso> datoFechas(Participante participante, TipoProgreso tipo, LocalDateTime fechaInicial, LocalDateTime fechaFinal){
+        return repo.findByParticipanteAndTipoAndFechaBetween(participante, tipo, fechaInicial, fechaFinal);
     }
 
     

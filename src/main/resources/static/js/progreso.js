@@ -19,7 +19,7 @@ $(document).ready(function () {
         $(".pesoTabla").hide();
     });
 
-    $("#cancelar-pes").click(function(){
+    $("#cancelar-pes").click(function () {
         $("#grafica").show();
         $(".pesoTabla").hide();
         $("#registroPeso").show();
@@ -58,22 +58,50 @@ $(document).ready(function () {
             }
         }
     })
-    let url = baseUrl + '/progreso/peso/' + idUser; //petición http
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            for (i in data) {
-                var fecha = new Date(data[i].fecha);
-                var dia = fecha.getDate();
-                var mes = fecha.getMonth();
-                var anio = fecha.getFullYear();
-                var dato = dia + " " + meses[mes] + " " + anio;
 
-                peso.data['labels'].push(dato);
-                peso.data['datasets'][0].data.push(data[i].dato);
-            }
-            peso.update();
-        });
+
+    let url;
+    //Coger filtro de fecha de peso, fecha ini y fecha fin
+    var iniPeso = 0;
+    var finPeso = 0;
+
+    function actualizarPeso() {
+
+        url = baseUrl + '/progreso/peso/' + idUser + '/' + iniPeso + '/' + finPeso; //petición http
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                for (i in data) {
+                    var fecha = new Date(data[i].fecha);
+                    var dia = fecha.getDate();
+                    var mes = fecha.getMonth();
+                    var anio = fecha.getFullYear();
+                    var dato = dia + " " + meses[mes] + " " + anio;
+
+                    peso.data['labels'].push(dato);
+                    peso.data['datasets'][0].data.push(data[i].dato);
+                }
+                peso.update();
+            });
+    }
+
+    actualizarPeso();
+
+    $("#iniPeso").change(function () {
+        iniPeso = $(this).val();
+        peso.data.labels = [];
+        peso.data['datasets'][0].data = [];
+        actualizarPeso();
+    });
+
+    $("#finPeso").change(function () {
+        finPeso = $(this).val();
+        peso.data.labels = [];
+        peso.data['datasets'][0].data = [];
+        actualizarPeso();
+    });
+
 
     //Gráfica PERÍMETRO
     let graficaPerimetro = document.getElementById("grafica2").getContext("2d");
@@ -100,22 +128,47 @@ $(document).ready(function () {
         }
     })
 
-    let url2 = baseUrl + '/progreso/perimetro/' + idUser; //petición http
-    fetch(url2)
-        .then(response => response.json())
-        .then(data => {
-            for (i in data) {
-                var fecha = new Date(data[i].fecha);
-                var dia = fecha.getDate();
-                var mes = fecha.getMonth();
-                var anio = fecha.getFullYear();
-                var dato = dia + " " + meses[mes] + " " + anio;
+    let url2;
+    //Coger filtro de fecha de peso, fecha ini y fecha fin
+    var iniPerimetro = 0;
+    var finPerimetro = 0;
 
-                perimetro.data['labels'].push(dato);
-                perimetro.data['datasets'][0].data.push(data[i].dato);
-            }
-            perimetro.update();
-        });
+    function actualizarPerimetro() {
+        url2 = baseUrl + '/progreso/perimetro/' + idUser + "/" + iniPerimetro + "/" + finPerimetro; //petición http
+        fetch(url2)
+            .then(response => response.json())
+            .then(data => {
+                for (i in data) {
+                    var fecha = new Date(data[i].fecha);
+                    var dia = fecha.getDate();
+                    var mes = fecha.getMonth();
+                    var anio = fecha.getFullYear();
+                    var dato = dia + " " + meses[mes] + " " + anio;
+
+                    perimetro.data['labels'].push(dato);
+                    perimetro.data['datasets'][0].data.push(data[i].dato);
+                }
+                perimetro.update();
+            });
+
+    }
+
+    actualizarPerimetro();
+
+    $("#iniPerimetro").change(function () {
+        iniPerimetro = $(this).val();
+        perimetro.data.labels = [];
+        perimetro.data['datasets'][0].data = [];
+        actualizarPerimetro();
+    });
+
+    $("#finPerimetro").change(function () {
+        finPerimetro = $(this).val();
+        perimetro.data.labels = [];
+        perimetro.data['datasets'][0].data = [];
+        actualizarPerimetro();
+    });
+
 
     //Botones del PERÍMETRO
     $(".perimetroTabla").hide();
@@ -179,92 +232,5 @@ $(document).ready(function () {
             }
         }
     });
-
-    // Progreso participante: vista coordinador
-
-    // GRÁFICA PESO
-    let graficaPesoCoor = document.getElementById("graficaPesoCoor").getContext("2d");
-
-    var pesoCoor = new Chart(graficaPesoCoor, {
-        type: "line",
-        data: {
-            datasets: [
-                {
-                    label: "Peso",
-                    borderColor: 'rgb(75, 192, 192)',
-                }
-            ]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    display: false
-                }
-            }
-        }
-    })
-
-    let url3 = baseUrl + '/progreso/peso'; //petición http
-    fetch(url3)
-        .then(response => response.json())
-        .then(data => {
-            for (i in data) {
-                var fecha = new Date(data[i].fecha);
-                var dia = fecha.getDate();
-                var mes = fecha.getMonth();
-                var anio = fecha.getFullYear();
-                var dato = dia + " " + meses[mes] + " " + anio;
-
-                pesoCoor.data['labels'].push(dato);
-                pesoCoor.data['datasets'][0].data.push(data[i].dato);
-            }
-            pesoCoor.update();
-        });
-
-    // GRÁFICA PERÍMETRO
-    let graficaPerimetroCoor = document.getElementById("graficaPerCoor").getContext("2d");
-
-    var perimetroCoor = new Chart(graficaPerimetroCoor, {
-        type: "line",
-        data: {
-            datasets: [
-                {
-                    label: "Perimetro",
-                    borderColor: 'rgb(75, 192, 192)',
-                }
-            ]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    display: false
-                }
-            }
-        }
-    })
-
-    let url4 = baseUrl + '/progreso/perimetro'; //petición http
-    fetch(url4)
-        .then(response => response.json())
-        .then(data => {
-            for (i in data) {
-                var fecha = new Date(data[i].fecha);
-                var dia = fecha.getDate();
-                var mes = fecha.getMonth();
-                var anio = fecha.getFullYear();
-                var dato = dia + " " + meses[mes] + " " + anio;
-
-                perimetroCoor.data['labels'].push(dato);
-                perimetroCoor.data['datasets'][0].data.push(data[i].dato);
-            }
-            perimetroCoor.update();
-        });
-
 
 });

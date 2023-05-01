@@ -1,4 +1,4 @@
-function showAlertWithLink(link) {
+/*function showAlertWithLink(link) {
     var alertMessage = "El usuario aún no pertenece a ningún grupo";
     var linkText = "Haga click aquí para agregarlo a un grupo";
     var alertHTML = '<div>' + alertMessage + '<br><a style="color: blue;" href="' + link + '">' + linkText + '</a></div>';
@@ -12,7 +12,13 @@ function showAlertWithLink(link) {
             }
         }
     });
+}*/
+
+function abrirIframe(modalInst) {
+    const modal = new bootstrap.Modal(document.getElementById(modalInst));
+    modal.show();
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const btn_part = document.getElementById('btn-part1');
@@ -26,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!grupo) {
             e.preventDefault();
             var link = '/unirAgrupo/' + id;
-            showAlertWithLink(link);
+            abrirIframe('alertaActivar');
 
         } else if (estado === 'ALTA') {
             e.preventDefault();
@@ -42,6 +48,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 $(document).ready(function () {
+
+    const enlaceGrupo = $('.enlace-grupo');
+
+    enlaceGrupo.on('click', function () {
+        // Obtener el id del grupo desde el href del enlace
+        const grupoId = $(this).attr('href');
+      
+        // Cerrar el modal
+        const modal = new bootstrap.Modal(document.getElementById('miModal'));
+        modal.hide();
+      
+        // Redirigir al usuario a la página con el id del grupo
+        window.location.href = `https://ejemplo.com/unir-a-grupo${grupoId}`;
+      });
+    
 
     $('.eliminar').click(function () {
         var id = $(this).data('id');
