@@ -227,8 +227,8 @@ input[type=number]::-webkit-outer-spin-button {
 .filtro {
     gap: 1%;
     display: flex;
-    vertical-align: middle;
     width: 50%;
+    align-items: center;
 }
 
 /* Progreso indivual (vista coordinador) */
