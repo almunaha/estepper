@@ -80,7 +80,7 @@ INSERT INTO `alimentosintercambio` (`id`, `grupo`, `gramos`, `nombre`) VALUES
 (57, 'PROTEÍNA', 50, 'queso fresco'),
 (58, 'PROTEÍNA', 50, 'jamón hervido'),
 (59, 'PROTEÍNA', 50, 'conejo'),
-(60, 'PROTEÍNA', NULL, 'huevo'),
+(60, 'PROTEÍNA', 50, 'huevo'),
 (61, 'PROTEÍNA', 50, 'jamón serrano'),
 (62, 'PROTEÍNA', 50, 'pato'),
 (63, 'PROTEÍNA', 50, 'ganso'),
