@@ -225,9 +225,9 @@ public class GruposController {
             model.addAttribute("participantesExistentes", participantesExistentes);
             model.addAttribute("grupo", new Grupo());
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             
             return "grupos";
         } else
@@ -251,9 +251,9 @@ public class GruposController {
             model.addAttribute("user", getUsuario());
             model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(gr));
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "editar_grupo";
         }
@@ -285,9 +285,9 @@ public class GruposController {
             List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "unirAgrupo";
         } else
@@ -312,9 +312,9 @@ public class GruposController {
             List<Observaciones> listaObservaciones = observaciones.findByIdGrupo(idGrupo);
             model.addAttribute("listaObservaciones", listaObservaciones);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "unGrupo";
         } else
@@ -334,9 +334,9 @@ public class GruposController {
             model.addAttribute("material", material);
             model.addAttribute("id", id);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "materialesGrupo";
         } else
@@ -467,9 +467,9 @@ public class GruposController {
             model.addAttribute("messagePriv", menPriv);
             model.addAttribute("mensajesPrivados", mensajesPrivados);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "chatPrivado";
         } else

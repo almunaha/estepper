@@ -127,9 +127,9 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
             model.addAttribute("listado", listado);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "participantes";
         }
@@ -191,9 +191,9 @@ public class CoordinadorController {
                 }
             }
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "redirect:/listaGrupos";
         }
@@ -229,9 +229,9 @@ public class CoordinadorController {
              * }
              */
 
-             Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+             /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
              Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-             model.addAttribute("administrador", admin);
+             model.addAttribute("administrador", admin);*/
 
             return "redirect:/grupos/editar/{idG}";
         }
@@ -341,9 +341,9 @@ public class CoordinadorController {
         if (elusuario instanceof Coordinador) {
             model.addAttribute("actividad", act.actividad(id));
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "editar_actividad";
         } else
             return "redirect:/";
@@ -406,8 +406,8 @@ public class CoordinadorController {
             List<Invitacion> invitaciones = inv.listadoCoordAct(c, actividad);
             model.addAttribute("invitaciones", invitaciones);
 
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            /*Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            model.addAttribute("administrador", admin);*/
 
             return "invitaciones";
         }
@@ -486,9 +486,9 @@ public class CoordinadorController {
             // 2. Eliminar la actividad
             act.borrar(actividad);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "redirect:/actividades";
         }

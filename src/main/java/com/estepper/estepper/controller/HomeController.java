@@ -129,9 +129,9 @@ public class HomeController {
         model.addAttribute("user", user);
         if (user instanceof Coordinador) {
 
-            Coordinador c = coordinador.getCoordinador(user.getId());
+            /*Coordinador c = coordinador.getCoordinador(user.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "coordinador";
         }
 
@@ -286,9 +286,9 @@ public class HomeController {
         if (elusuario instanceof Participante && elusuario.getEstadoCuenta().equals(Estado.ALTA)) {
             Participante p = participante.findById(id).get();
 
-            Coordinador c = coordinador.getCoordinador(p.getIdCoordinador());
+            /*Coordinador c = coordinador.getCoordinador(p.getIdCoordinador());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             model.addAttribute("participante", participante.findById(id).get());
 
@@ -298,9 +298,9 @@ public class HomeController {
 
             return "editarperfilParticipante";
         } else if (elusuario instanceof Coordinador) {
-            Coordinador c = coordinador.getCoordinador(elusuario.getId());
+            /*Coordinador c = coordinador.getCoordinador(elusuario.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "editarperfil";
         } else {
@@ -322,9 +322,9 @@ public class HomeController {
             Participante p = participante.findById(id).get();
             model.addAttribute("participante", p);
 
-            Coordinador c = coordinador.getCoordinador(p.getIdCoordinador());
+            /*Coordinador c = coordinador.getCoordinador(p.getIdCoordinador());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             // Nombre del grupo
             String grupo = "No asignado";
@@ -357,9 +357,9 @@ public class HomeController {
 
             return "mostrarperfilParticipante";
         } else if (elusuario instanceof Coordinador) {
-            Coordinador c = coordinador.getCoordinador(elusuario.getId());
+            /*Coordinador c = coordinador.getCoordinador(elusuario.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "mostrarperfil";
         } else {
@@ -503,9 +503,9 @@ public class HomeController {
             model.addAttribute("material", material);
             model.addAttribute("id", id);
 
-            Coordinador c = coordinador.getCoordinador(elusuario.getId());
+            /*Coordinador c = coordinador.getCoordinador(elusuario.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "materialesCoor";
         } else if (elusuario instanceof Participante && getUsuario().getId() == id
                 && getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {

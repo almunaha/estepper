@@ -272,9 +272,9 @@ public class ParticipanteController {
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
             Exploracion exploracion = null;
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             for (int i = 0; i < formularios.size(); i++) {
                 if (formularios.get(i) instanceof Exploracion) {
                     exploracion = (Exploracion) formularios.get(i);
@@ -325,9 +325,9 @@ public class ParticipanteController {
             model.addAttribute("user", getUsuario());
             model.addAttribute("idparticipante", id);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "valoracion";
         }
 
@@ -344,9 +344,9 @@ public class ParticipanteController {
             model.addAttribute("participante", part);
             model.addAttribute("user", getUsuario());
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "expediente";
         }
 
@@ -371,9 +371,9 @@ public class ParticipanteController {
 
             model.addAttribute("findrisc", findrisc);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "findriscPart";
         } else
             return "redirect:/";
@@ -436,9 +436,9 @@ public class ParticipanteController {
             model.addAttribute("exploracion", exploracion);
             model.addAttribute("findrisc", findrisc);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "clasificacion";
         } else
             return "redirect:/";
@@ -473,9 +473,9 @@ public class ParticipanteController {
 
             model.addAttribute("antecedentes", antecedentes);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             return "antecedentes";
         } else
             return "redirect:/";
@@ -510,9 +510,9 @@ public class ParticipanteController {
 
             model.addAttribute("alimentacionval", alimentacionval);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "alimentacionval";
         } else
@@ -549,9 +549,9 @@ public class ParticipanteController {
 
             model.addAttribute("actfisica", actfisica);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             return "actfisica";
         } else
@@ -611,8 +611,8 @@ public class ParticipanteController {
                     EstadoNotificacion.PENDIENTE, "/");
             noti.guardar(notificacion);
 
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
 
             return "redirect:/listado";
         } else
@@ -655,9 +655,9 @@ public class ParticipanteController {
                 return "redirect:/login";
             fasevaloracion.eliminarcuenta(p);
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
         }
         return "redirect:/";
@@ -1086,9 +1086,9 @@ public class ParticipanteController {
         if (user instanceof Coordinador) { // todas las actividades
             List<Actividad> listado = act.listado();
 
-            Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
             model.addAttribute("listado", listado);
             model.addAttribute("actividad", new Actividad());
 
@@ -1131,11 +1131,11 @@ public class ParticipanteController {
             model.addAttribute("administrador", admin);
         }*/
 
-        if (user instanceof Coordinador) {
+        /*if (user instanceof Coordinador) {
             Coordinador c = coordinador.getCoordinador(user.getId());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
             model.addAttribute("administrador", admin);
-        }
+        }*/
 
         if (user instanceof Participante || user instanceof Coordinador) {
             Actividad acti = act.actividad(id);
@@ -1177,8 +1177,8 @@ public class ParticipanteController {
             // Coordinador del participante
             Coordinador c = coordinador.getCoordinador(participante.findById(user.getId()).get().getIdCoordinador());
 
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+           // Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
 
             Actividad acti = act.actividad(id);
             Participante parti = participante.findById(user.getId()).get();
@@ -1288,9 +1288,9 @@ public class ParticipanteController {
 
         if (user instanceof Participante) {
             //administrador del participante
-            Coordinador c = coordinador.getCoordinador(participante.findById(user.getId()).get().getIdCoordinador());
+           /* Coordinador c = coordinador.getCoordinador(participante.findById(user.getId()).get().getIdCoordinador());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             Invitacion invitacion = invi.findById(id);
 
@@ -1314,9 +1314,9 @@ public class ParticipanteController {
 
         if (user instanceof Participante) {
 
-            Coordinador c = coordinador.getCoordinador(participante.findById(user.getId()).get().getIdCoordinador());
+            /*Coordinador c = coordinador.getCoordinador(participante.findById(user.getId()).get().getIdCoordinador());
             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            model.addAttribute("administrador", admin);*/
 
             List<Invitacion> pendientes = invi.invitacionesPartAndEstado(participante.findById(user.getId()).get(),
                     EstadoInvitacion.PENDIENTE);
