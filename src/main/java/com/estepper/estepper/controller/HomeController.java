@@ -186,8 +186,8 @@ public class HomeController {
                             ObjetivoAgua objetivoAgua = obj.findByFechaAndParticipanteAgua(new Date(), p);
                             Integer contadorObjetivos = 0;
 
-                            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-                            model.addAttribute("administrador", admin);
+                            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+                            //model.addAttribute("administrador", admin);
 
                             if (objetivoAgua == null) {
                                 objetivoAgua = new ObjetivoAgua();
@@ -388,7 +388,7 @@ public class HomeController {
 
                 participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), part.getGrupo(),
                         part.getAsistencia(),
-                        part.getIdCoordinador(), part.getIdAdministrador(), part.getPerdidaDePeso(),
+                        part.getIdCoordinador(), part.getPerdidaDePeso(),
                         part.getSesionesCompletas(),
                         part.getPerdidacmcintura(), id);
             }
@@ -516,8 +516,8 @@ public class HomeController {
             model.addAttribute("notificaciones", notificaciones);
 
             Participante p = (Participante) elusuario;
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
 
             return "materialesPart";
         } else if (elusuario instanceof Participante && getUsuario().getId() == id) {

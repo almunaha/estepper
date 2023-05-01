@@ -25,6 +25,6 @@ public interface FaseValoracionService {
     public void updateActividadFisica(ActividadFisica actfisica, Participante participante);
     public Exploracion findByParticipante(Participante participante);
     public void actualizarFindrisc(Exploracion exploracion, Findrisc findrisc);
-    public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id, Integer idCoor, Integer idAdmin);
+    public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id, Integer idCoor);
     public void eliminarcuenta(Participante participante);
 }

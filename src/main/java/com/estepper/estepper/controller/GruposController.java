@@ -124,7 +124,7 @@ public class GruposController {
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
                 part.update(participante.edad, participante.getSexo(), participante.getFotoUsuario(), g,
-                        participante.getAsistencia(), participante.getIdCoordinador(),participante.getIdAdministrador(), participante.getPerdidaDePeso(),
+                        participante.getAsistencia(), participante.getIdCoordinador(), participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(participantesSeleccionadosList.size());
@@ -168,7 +168,7 @@ public class GruposController {
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
                 part.update(participante.getEdad(), participante.getSexo(), participante.getFotoUsuario(), g,
-                        participante.getAsistencia(), participante.getIdCoordinador(),participante.getIdAdministrador(), participante.getPerdidaDePeso(),
+                        participante.getAsistencia(), participante.getIdCoordinador(),participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(g.getNumParticipantes() + participantesSeleccionadosList.size());
@@ -444,8 +444,8 @@ public class GruposController {
             List<Notificacion> notificaciones = noti.notificaciones(part.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            model.addAttribute("administrador", admin);
+            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
+            //model.addAttribute("administrador", admin);
 
             return "chat";
         } else
