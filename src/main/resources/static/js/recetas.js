@@ -91,7 +91,7 @@ $(document).ready(function () {
                                     var want = [];
                                     var dontWant = [];
                                     var wantI = [];
-                                    var dontwantI = [];
+                                    var dontWantI = [];
 
                                     $('#filter-button').click(function () {
                                         want = $('#want-select option:selected').map(function () { return $(this).text().toLowerCase(); }).get();
@@ -113,7 +113,7 @@ $(document).ready(function () {
                                     });
 
                                     $('#no-resultados-btn').click(function () {
-                                        var url = '/recetasparecidas?want=' + wantI.join() + '&dontwant=' + dontWantI.join();
+                                        var url = '/recetasparecidas?want=' + wantI.join() + '&dontWant=' + dontWantI.join();
                                         window.location.href = url;
                                     });
 
