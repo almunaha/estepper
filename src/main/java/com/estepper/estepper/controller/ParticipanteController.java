@@ -1465,6 +1465,11 @@ public class ParticipanteController {
             Participante p = (Participante) user;
             Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
             model.addAttribute("administrador", admin);
+
+            // buscar notificaciones
+            List<Notificacion> notificaciones = noti.notificaciones(p);
+            model.addAttribute("notificaciones", notificaciones);
+
             return "nutrientes";
         } else
             return "acceso";
