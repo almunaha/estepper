@@ -49,7 +49,7 @@ $(document).ready(function () {
         }
     })
 
-    let url3 = baseUrl + '/progreso/peso/' + idPart; //petición http
+    let url3 = baseUrl + '/progreso/peso/' + idPart + "/" + 0 + "/" + 0; //petición http
     fetch(url3)
         .then(response => response.json())
         .then(data => {
@@ -107,7 +107,7 @@ $(document).ready(function () {
         }
     })
 
-    let url4 = baseUrl + '/progreso/perimetro/' + idPart; //petición http
+    let url4 = baseUrl + '/progreso/perimetro/' + idPart + "/" + 0 + "/" + 0; //petición http
     fetch(url4)
         .then(response => response.json())
         .then(data => {
