@@ -38,11 +38,29 @@
     color: white;
 }
 
+#peso, #altura, #imc{
+    width: 6%;
+    margin-right: 5px
+}
+
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 
     #login, #proyecto, #registro {
       width: 90%;
+    }
+
+    #peso, #altura, #imc{
+        width: 11%;
+    }
+
+    #elemento{
+        display: flex;
+        justify-content: center;
+    }
+
+    #recomendaciones{
+        padding: 3%;
     }
   
 }

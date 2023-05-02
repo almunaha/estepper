@@ -29,6 +29,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="/js/out.js"></script>
+    <link rel="stylesheet" th:href="@{/css/out.css}">
+
 
 </head>
 
@@ -58,16 +60,20 @@
                         <!-- Calculadora IMC -->
                         <div class="mb-3">
 
-                            <label for="peso">Peso (kg): </label>
-                            <input type="number" id="peso" step="1" style="width: 6%; margin-right: 5px;">
+                            <div style="width: 100%;">
+                                <label for="peso">Peso (kg): </label>
+                                <input type="number" id="peso" step="1">
 
-                            <label for="altura">Altura (cm): </label>
-                            <input type="number" id="altura" step="1" style="width: 6%; margin-right: 5px;">
+                                <label for="altura">Altura (cm): </label>
+                                <input type="number" id="altura" step="1">
+                        
+                                <input type="button" value="Calcular" onclick="imc()" style="margin-right: 15px;">
+                            </div>
 
-                            <input type="button" value="Calcular" onclick="imc()" style="margin-right: 15px">
-
-                            <label for="imc">Resultado (IMC): </label>
-                            <input type="float" name="imc" id="imc" readonly="" style="width: 6%;">
+                            <div>
+                                <label for="imc" style="margin-top: 1%;">Resultado (IMC): </label>
+                                <input type="float" name="imc" id="imc" readonly="" >
+                            </div>
                         </div>
                         <!-------->
 
