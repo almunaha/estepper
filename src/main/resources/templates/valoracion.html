@@ -206,7 +206,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <p>El usuario aún no pertenece a ningún grupo</p>
-                                        <a class="enlace-grupo">Haga click aquí para agregarlo a un grupo</a>
+                                        <a class="enlace-grupo" th:href="@{'/unirAgrupo/' + ${participante.id}}">Haga click aquí para agregarlo a un grupo</a>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                             style="float:right">Cerrar</button>
                                     </div>
