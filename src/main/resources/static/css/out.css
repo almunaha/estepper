@@ -26,7 +26,7 @@
 
 .contactos{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 60%;
 }
 
@@ -36,6 +36,7 @@
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     background-color: rgb(71, 126, 149);
     color: white;
+    margin-right: 5px;
 }
 
 #peso, #altura, #imc{
@@ -70,7 +71,7 @@
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 
-    #login, #proyecto, #registro {
+    #login, #proyecto, #registro, #success {
       width: 90%;
     }
 
@@ -94,5 +95,14 @@
     .btn-out{
         height: 100%;
     }
-  
+
+    .codigo{
+        width: 100%;
+    }
+
+    .contactos{
+        width: 100%;
+    }
+
+     
 }
