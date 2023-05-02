@@ -9,25 +9,26 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/out.css}">
 
     <title>Recuperar código - Estepper</title>
 </head>
 
-<body>
-    <div style="margin: 1%;" class="bg-white border border-1 p-2 rounded-4 ">
+<body class="bg-light">
+    <div style=" display: block; margin: auto; margin-top: 9%; margin-bottom: 1%;" id="recuperar" class="bg-white border border-1 p-2 rounded-4 ">
         <div style="display: flex; justify-content: center; flex-direction: column;">
             <div>
-                <h3 style="text-align: center;">Recuperar contraseña o código</h3>
+                <h4 style="text-align: center;">Recuperar contraseña o código</h4>
             </div>
 
         </div>
     </div>
-    <div style="margin: 1%;" class="bg-white border border-1 p-5 rounded-4 ">
+    <div style="display: block; margin: auto" id="recuperar" class="bg-white border border-1 p-5 rounded-4 ">
         <div style="display: flex; justify-content: center; flex-direction: column;">
             <form class="form-perfil" method="post" th:action="@{'/process_recuperarCodigo'}">
                 <div class="input-group mt-2">
                     <label class="col-4 col-form-label">Correo electrónico: </label>
-                    <input type="text" id="correo" placeholder="Correo electronico" th:name="correo"
+                    <input type="text" id="correo" placeholder="example@gmail.com" th:name="correo"
                         class="form-control" required>
                 </div>
                 <div class="input-group mt-2">

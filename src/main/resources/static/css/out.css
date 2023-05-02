@@ -43,6 +43,10 @@
     margin-right: 5px
 }
 
+#recuperar{
+    width: 50%;
+}
+
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 
@@ -61,6 +65,10 @@
 
     #recomendaciones{
         padding: 3%;
+    }
+
+    #recuperar{
+        width: 95%;
     }
   
 }
