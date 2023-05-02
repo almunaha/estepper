@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 
@@ -29,12 +31,20 @@ public class Observaciones implements Serializable{
     private Integer id;
 
 
-    @Column(unique=false, nullable=true)
-    private Integer idCoordinador;
+    /*@Column(unique=false, nullable=true)
+    private Integer idCoordinador;*/
+
+    @ManyToOne 
+    @JoinColumn(name="id_coordinador", nullable=false)
+    private Coordinador coordinador;
      
     
-    @Column(unique=false, nullable=true)
-    private Integer idGrupo;
+    /*@Column(unique=false, nullable=true)
+    private Integer idGrupo;*/
+
+    @ManyToOne 
+    @JoinColumn(name="id_grupo", nullable=false)
+    private Grupo grupo;
 
     private String nota;
    
@@ -45,10 +55,10 @@ public class Observaciones implements Serializable{
 
 
 
-    public Observaciones(Integer id, Integer idCoordinador, Integer idGrupo, String nota, Date fecha) {
+    public Observaciones(Integer id, Coordinador coordinador, Grupo grupo, String nota, Date fecha) {
         this.id = id;
-        this.idCoordinador = idCoordinador;
-        this.idGrupo = idGrupo;
+        this.coordinador = coordinador;
+        this.grupo = grupo;
         this.nota = nota;
         this.fecha = fecha;
     }
@@ -66,20 +76,20 @@ public class Observaciones implements Serializable{
         this.id = id;
     }
 
-    public Integer getIdCoordinador() {
-        return idCoordinador;
+    public Coordinador getCoordinador() {
+        return coordinador;
     }
 
-    public void setIdCoordinador(Integer idCoordinador) {
-        this.idCoordinador = idCoordinador;
+    public void setCoordinador(Coordinador coordinador) {
+        this.coordinador = coordinador;
     }
 
-    public Integer getIdGrupo() {
-        return idGrupo;
+    public Grupo getGrupo() {
+        return grupo;
     }
 
-    public void setIdGrupo(Integer idGrupo) {
-        this.idGrupo = idGrupo;
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 
     public String getNota() {

@@ -106,7 +106,7 @@ public class CoordinadorController {
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
             PageRequest pageable = PageRequest.of(page, 6); // define página solicitada y tamaño de la página, se
                                                             // inicializa a cero
-            Page<Participante> paginaPart = part.paginas(pageable, getUsuario().getId(), Estado.BAJA); // listado de
+            Page<Participante> paginaPart = part.paginas(pageable, coordinador.getCoordinador(getUsuario().getId()), Estado.BAJA); // listado de
                                                                                                        // páginas de 6
                                                                                                        // participantes
                                                                                                        // cada una
@@ -162,12 +162,12 @@ public class CoordinadorController {
             Model model) {
         Grupo g = grupo.getGrupo(idG);
 
-        if (getUsuario() instanceof Coordinador && g.getIdCoordinador() == getUsuario().getId()) {
+        if (getUsuario() instanceof Coordinador && g.getCoordinador().getId() == getUsuario().getId()) {
             Participante usuario = part.findById(idP).get();
             model.addAttribute("user", getUsuario());
 
             part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoUsuario(), g, usuario.getAsistencia(),
-                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
+                    usuario.getCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
                     usuario.getPerdidacmcintura(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
             g.setNumParticipantes(participantes);
@@ -213,7 +213,7 @@ public class CoordinadorController {
 
             part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoUsuario(), null,
                     usuario.getAsistencia(),
-                    usuario.getIdCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
+                    usuario.getCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
                     usuario.getPerdidacmcintura(), idP);
 
             user.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), Estado.BAJA, idP);
@@ -270,7 +270,7 @@ public class CoordinadorController {
             // O Es Participante: si el participante logueado no tiene el mismo id que el
             // dueño del material
             // O es Administrador
-            if (u instanceof Coordinador && u.getId() != p.getIdCoordinador()
+            if (u instanceof Coordinador && u.getId() != p.getCoordinador().getId()
                     || u instanceof Participante && p.getId() != u.getId() || u instanceof Administrador) {
                 RedirectView inicio = new RedirectView("/");
                 return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, inicio.getUrl()).build();

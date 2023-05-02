@@ -1063,3 +1063,14 @@ th {
   }
   
 }
+
+.botonMenDesactivado{
+  /*background-color: #38444e;*/
+  background-color: #cccccc;
+  color: #999999;
+  cursor: not-allowed;
+}
+
+.botonMenDesactivado:hover {
+  background-color: #cccccc;
+}

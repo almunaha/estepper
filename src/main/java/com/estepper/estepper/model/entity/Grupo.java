@@ -13,6 +13,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.FetchType;
@@ -26,8 +28,12 @@ public class Grupo implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY) //porque va a ser incrementable
     private Integer id;
 
-    @Column(unique=false, nullable=true)
-    private Integer idCoordinador;
+    /*@Column(unique=false, nullable=true)
+    private Integer idCoordinador;*/
+
+    @ManyToOne 
+    @JoinColumn(name="id_coordinador", nullable=false)
+    private Coordinador coordinador;
 
     @Column(unique=true)
     private String codigo;
@@ -54,9 +60,9 @@ public class Grupo implements Serializable{
     private EstadoGrupo estadoGrupo;
 
     
-    public Grupo(Integer id, Integer idCoordinador, String codigo, String nombre, Integer numParticipantes, LocalDate fechaInicioGrupo, LocalDate fechaFinGrupo, List<Participante> participantes, String fotoGrupo, EstadoGrupo estadoGrupo) {
+    public Grupo(Integer id, Coordinador coordinador, String codigo, String nombre, Integer numParticipantes, LocalDate fechaInicioGrupo, LocalDate fechaFinGrupo, List<Participante> participantes, String fotoGrupo, EstadoGrupo estadoGrupo) {
         this.id = id;
-        this.idCoordinador = idCoordinador;
+        this.coordinador = coordinador;
         this.codigo = codigo;
         this.nombre = nombre;
         this.numParticipantes = numParticipantes;
@@ -118,12 +124,12 @@ public class Grupo implements Serializable{
         this.fechaFinGrupo = fecha;
     }
 
-    public Integer getIdCoordinador() {
-        return idCoordinador;
+    public Coordinador getCoordinador() {
+        return coordinador;
     }
 
-    public void setIdCoordinador(Integer idCoordinador) {
-        this.idCoordinador = idCoordinador;
+    public void setCoordinador(Coordinador coordinador) {
+        this.coordinador = coordinador;
     }
 
     public String getFotoGrupo() {

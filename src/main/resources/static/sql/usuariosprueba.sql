@@ -43,25 +43,25 @@ INSERT INTO `administradores` (`id`) VALUES
 -- Volcado de datos para la tabla `coordinadores`
 --
 
-INSERT INTO `coordinadores` (`id`, `id_administrador`) VALUES
-(6, 5);
+INSERT INTO `coordinadores` (`id`) VALUES
+(6);
 
 --
 -- Volcado de datos para la tabla `grupos`
 --
 
-INSERT INTO `grupos` (`id`, `codigo`, `estado`, `fecha_fin_grupo`, `fecha_inicio_grupo`, `foto_grupo`, `id_coordinador`, `nombre`, `num_participantes`) VALUES
-(1, 'CM3SEOCFTBD02G2', 'ACTIVO', NULL, '2023-04-13', '/img/grupos/grupo1.png', 6, 'Clase A', 2),
-(2, 'CFH7QMBDW2SCI66', 'ACTIVO', '2023-04-21', '2023-04-13', '/img/grupos/grupo1.png', 6, 'Clase B', 1);
+INSERT INTO `grupos` (`id`, `codigo`, `estado`, `fecha_fin_grupo`, `fecha_inicio_grupo`, `foto_grupo`,`nombre`, `num_participantes`,`id_coordinador`) VALUES
+(1, 'CM3SEOCFTBD02G2', 'ACTIVO', NULL, '2023-04-13', '/img/grupos/grupo1.png','Clase A', 2,6),
+(2, 'CFH7QMBDW2SCI66', 'ACTIVO', '2023-04-21', '2023-04-13', '/img/grupos/grupo1.png','Clase B', 1,6);
 
 --
 -- Volcado de datos para la tabla `participantes`
 --
 
-INSERT INTO `participantes` (`asistencia`, `edad`, `id_coordinador`, `perdida_de_peso`, `perdidacmcintura`, `sesiones_completas`, `sexo`, `id`, `id_grupo`, `id_administrador`) VALUES
-(0, 40, 6, 0, 0, 0, 'FEMENINO', 2, 1, 5),
-(0, 52, 6, 0, 0, 0, 'FEMENINO', 3, 2, 5),
-(0, NULL, NULL, 0, 0, 0, NULL, 4, 1, 5);
+INSERT INTO `participantes` (`asistencia`, `edad`, `id_coordinador`, `perdida_de_peso`, `perdidacmcintura`, `sesiones_completas`, `sexo`, `id`, `id_grupo`) VALUES
+(0, 40, 6, 0, 0, 0, 'FEMENINO', 2, 1),
+(0, 52, 6, 0, 0, 0, 'FEMENINO', 3, 2),
+(0, NULL, NULL, 0, 0, 0, NULL, 4, 1);
 
 --
 -- Volcado de datos para la tabla `fasevaloracion`

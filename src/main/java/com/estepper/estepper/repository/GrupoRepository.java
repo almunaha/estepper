@@ -11,18 +11,20 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 
 public interface GrupoRepository extends JpaRepository<Grupo, Integer>{
         
     Grupo findByNombre(String nombre); //select * from grupo where nombre = g.nombre 
     Grupo findByCodigo(String codigo); 
-    List<Grupo> findByIdCoordinador(Integer idCoordinador);
+    Grupo findById(String idGrupo);
+    List<Grupo> findByCoordinador(Coordinador coordinador);
     
     @Modifying
     @Transactional
-    @Query("update Grupo SET nombre = :nombre, codigo = :codigo, idCoordinador = :idCoordinador, numParticipantes = :numParticipantes WHERE id = :idGrupo")
-    void update(String nombre, String codigo, Integer idCoordinador, Integer numParticipantes, Integer idGrupo);
+    @Query("update Grupo SET nombre = :nombre, codigo = :codigo, coordinador = :coordinador, numParticipantes = :numParticipantes WHERE id = :idGrupo")
+    void update(String nombre, String codigo, Coordinador coordinador, Integer numParticipantes, Integer idGrupo);
      
 
     @Modifying
@@ -31,8 +33,8 @@ public interface GrupoRepository extends JpaRepository<Grupo, Integer>{
     void update(Integer idGrupo, Integer numParticipantes);
 
 
-    @Query("SELECT g FROM Grupo g WHERE g.idCoordinador = :idCoordinador")
-    public Page<Grupo> findByIdCoordinador(Pageable pageable, Integer idCoordinador);
+    @Query("SELECT g FROM Grupo g WHERE g.coordinador = :coordinador")
+    public Page<Grupo> findByIdCoordinador(Pageable pageable, Coordinador coordinador);
 
 }
 

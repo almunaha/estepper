@@ -16,8 +16,12 @@ import jakarta.persistence.Table;
 @Table(name = "participantes")
 public class Participante extends Usuario{
     
-    @Column(unique=false, nullable=true)
-    private Integer idCoordinador;
+    /*@Column(unique=false, nullable=true)
+    private Integer idCoordinador;*/
+
+    @ManyToOne 
+    @JoinColumn(name="id_coordinador", nullable=false)
+    private Coordinador coordinador;
 
     @Column(nullable=true)
     private Double perdidaDePeso;
@@ -52,10 +56,10 @@ public class Participante extends Usuario{
         perdidacmcintura = 0.0;
     }
 
-    public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Integer idCoordinador,Grupo grupo,Double perdidaDePeso,Integer asistencia,
+    public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Coordinador coordinador,Grupo grupo,Double perdidaDePeso,Integer asistencia,
     Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante, Double perdidacmcintura, String fotoUsuario){
         super(id, codigo, nickname, email, contrasenia, estadoCuenta,fotoUsuario);
-        this.idCoordinador=idCoordinador;
+        this.coordinador=coordinador;
         this.grupo=grupo;
         this.perdidaDePeso=perdidaDePeso;
         this.asistencia=asistencia;
@@ -68,11 +72,11 @@ public class Participante extends Usuario{
 
     }
 
-    public Integer getIdCoordinador() {
-        return idCoordinador;
+    public Coordinador getCoordinador() {
+        return coordinador;
     }
-    public void setIdCoordinador(Integer idCoordinador) {
-        this.idCoordinador = idCoordinador;
+    public void setCoordinador(Coordinador coordinador) {
+        this.coordinador = coordinador;
     }
 
     public Sexo getSexo() {

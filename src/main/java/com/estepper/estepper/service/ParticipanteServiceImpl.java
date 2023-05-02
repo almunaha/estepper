@@ -10,10 +10,12 @@ import org.springframework.data.domain.Page;
 
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.enums.Sexo;
+import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.enums.Estado;
 
 import com.estepper.estepper.repository.ParticipanteRepository;
+import com.estepper.estepper.repository.CoordinadorRepository;
 import com.estepper.estepper.repository.GrupoRepository;
 
 @Service
@@ -25,9 +27,12 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     @Autowired
     private GrupoRepository repoG;
 
+    @Autowired
+    private CoordinadorRepository repoCoord;
+
     @Override
     public List<Participante> listado(Integer idCoordinador, Estado estadoCuenta){ 
-        return(List<Participante>) repo.findByIdCoordinadonOrEstado(idCoordinador, estadoCuenta);
+        return(List<Participante>) repo.findByIdCoordinadonOrEstado(repoCoord.findById(idCoordinador).get(), estadoCuenta);
     }
 
     @Override
@@ -40,8 +45,8 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }   
 
     @Override
-    public void update(Integer edad, Sexo sexo, String fotoUsuario, Grupo grupo, Integer asistencia, Integer idCoor, Double perdidadepeso, Integer sesionescompletas, Double perdcmcintura, Integer id){
-        repo.update(edad, sexo, fotoUsuario, grupo, asistencia, idCoor, perdidadepeso, sesionescompletas, perdcmcintura, id);
+    public void update(Integer edad, Sexo sexo, String fotoUsuario, Grupo grupo, Integer asistencia, Coordinador coordinador, Double perdidadepeso, Integer sesionescompletas, Double perdcmcintura, Integer id){
+        repo.update(edad, sexo, fotoUsuario, grupo, asistencia, coordinador, perdidadepeso, sesionescompletas, perdcmcintura, id);
     }
 
     @Override
@@ -50,8 +55,8 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     }
 
     @Override
-    public Page<Participante> paginas(Pageable pageable, Integer idCoordinador, Estado estadoCuenta){
-        return(Page<Participante>) repo.findByIdCoordinadonOrEstado(pageable, idCoordinador, estadoCuenta);
+    public Page<Participante> paginas(Pageable pageable, Coordinador coordinador, Estado estadoCuenta){
+        return(Page<Participante>) repo.findByIdCoordinadonOrEstado(pageable, coordinador, estadoCuenta);
     }
 
     @Override
@@ -59,9 +64,9 @@ public class ParticipanteServiceImpl implements ParticipanteService{
         Participante p = repo.findById(id).get();
         Grupo grup = p.getGrupo();
         if(grup.getNumParticipantes() >0) grup.setNumParticipantes(grup.getNumParticipantes()-1);
-        repoG.update(grup.getNombre(), grup.getCodigo(), grup.getIdCoordinador(), grup.getNumParticipantes(), grup.getId());
+        repoG.update(grup.getNombre(), grup.getCodigo(), grup.getCoordinador(), grup.getNumParticipantes(), grup.getId());
         p.setGrupo(null);
-        repo.update(p.getEdad(),p.getSexo(), p.getFotoUsuario(), null, p.getAsistencia(), p.getIdCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), id);
+        repo.update(p.getEdad(),p.getSexo(), p.getFotoUsuario(), null, p.getAsistencia(), p.getCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), id);
     }
 
     
