@@ -47,6 +47,26 @@
     width: 50%;
 }
 
+.btn-out{
+    color: white;
+    background-color: rgb(122, 184, 212);
+    width: 100%;
+    margin-top: 4%;
+    font-size: 1.08rem;
+    height: 2.5vw;
+    border-radius: 5px;
+    border: none;
+    padding: 0.8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-out:hover{
+    background-color: rgb(99, 150, 173);
+
+}
+
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 
