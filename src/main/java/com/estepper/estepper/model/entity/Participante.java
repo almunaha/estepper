@@ -20,7 +20,7 @@ public class Participante extends Usuario{
     private Integer idCoordinador;*/
 
     @ManyToOne 
-    @JoinColumn(name="id_coordinador", nullable=false)
+    @JoinColumn(name="id_coordinador", nullable=true)
     private Coordinador coordinador;
 
     @Column(nullable=true)
