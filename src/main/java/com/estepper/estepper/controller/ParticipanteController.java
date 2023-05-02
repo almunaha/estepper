@@ -1617,7 +1617,7 @@ public class ParticipanteController {
     }
 
     @GetMapping("/unareceta/{link}")
-    public String process_alimento(@PathVariable("link") String link, Model model) {
+    public String unareceta(@PathVariable("link") String link, Model model) {
         if (getUsuario().getEstadoCuenta().equals(Estado.ALTA)) {
             model.addAttribute("link", link);
             model.addAttribute("user", getUsuario());
