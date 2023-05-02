@@ -65,13 +65,16 @@ function notificaciones() {
 }
 
 function mostrarRecordatorio() {
+
   setTimeout(function () { //temporizador, al pasar un segundo salta la alerta
+    var idUser = $("#idUser").val();
+
     Swal.fire({
       position: 'top',
       title: '<h5>¡Hace más de una semana que no te pesas!</h5>',
       showConfirmButton: true,
       showCancelButton: true,
-      confirmButtonText: '<a href="/progreso" id="enlace">Registrar</a>',
+      confirmButtonText: '<a href="/progreso/' + idUser + '" id="enlace">Registrar</a>',
       cancelButtonText: "Cerrar",
       confirmButtonColor: "#6ca4c7",
 
