@@ -256,12 +256,16 @@
 
 /* COORDINADOR */
 .header-act {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 12%;
+    margin-left: 2%;
     margin-top: 2%;
-    margin-right: 12%;
+    margin-right: 2%;
     margin-bottom: 1%;
+    display: grid; 
+    justify-content: center; 
+    align-items: center; 
+    background-color:rgb(122, 184, 212);
+    border-radius: 5px;
+    padding: 0.5%;
 }
 
 .btn-act {
@@ -276,9 +280,7 @@
 }
 
 .btn-act:hover {
-    background-color: white;
-    color: rgb(224, 176, 94);
-    border-color: rgb(224, 176, 94);
+    transform: scale(1.1);
 }
 
 .layout-actividades {
@@ -295,8 +297,6 @@
     justify-content: space-around;
     align-items: center;
     border-radius: 10px;
-    margin-left: 10%;
-    margin-right: 10%;
 }
 
 .act-coor i {

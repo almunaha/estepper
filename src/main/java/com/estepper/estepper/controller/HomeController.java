@@ -494,8 +494,9 @@ public class HomeController {
     public String mostrarMateriales(@PathVariable("id") Integer id, Model model) {
         Usuario elusuario = getUsuario();
         model.addAttribute("user", elusuario);
+        Participante p = participante.findById(id).get();
 
-        if (elusuario instanceof Coordinador && (participante.findById(id).get().getCoordinador().getId() == elusuario.getId()
+        if (elusuario instanceof Coordinador && ((p.getCoordinador()!=null && p.getCoordinador().getId() == elusuario.getId())
                 || participante.findById(id).get().getEstadoCuenta().equals(Estado.BAJA))) {
             model.addAttribute("listado", materialS.materiales(id));
             Materiales material = new Materiales();
@@ -514,7 +515,6 @@ public class HomeController {
             List<Notificacion> notificaciones = noti.notificaciones(participante.getParticipante(elusuario.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            Participante p = (Participante) elusuario;
             //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
             //model.addAttribute("administrador", admin);
 
@@ -530,7 +530,7 @@ public class HomeController {
     public String procesoMaterial(@PathVariable("id") Integer id, @ModelAttribute Materiales material,
             @RequestParam("file") MultipartFile file) {
         Participante p = participante.findById(id).get();
-        if (getUsuario().getId() == p.getCoordinador().getId() || getUsuario().getId() == id
+        if ((p.getCoordinador()!=null && getUsuario().getId() == p.getCoordinador().getId()) || getUsuario().getId() == id
                 || p.getEstadoCuenta().equals(Estado.BAJA)) {
             material.setParticipante(p);
             material.setGrupo(null);

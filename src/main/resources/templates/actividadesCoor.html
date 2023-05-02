@@ -129,10 +129,30 @@
 
       <div style="padding-top: 75px;">
         <div class="header-act">
-          <h3>Actividades</h3>
-          <a class="btn-act" onclick="abrirIframe('nuevaActividad')" href="#">Nueva actividad</a>
+          <h4 style="color:azure; margin: auto;">Actividades</h4>
         </div>
 
+
+        <!-- Buscador de actividades -->
+        <div class="d-flex" id="busqueda-actividad">
+          <form id="buscadorActi">
+            <div style="display: flex; justify-content: center; align-items: center;" class="input-group">
+              <input style="height: 5%;" id="filtrarActividades" class="form-control light-table-filter"
+                data-table="tableActi" type="text" placeholder="Buscar actividad...">
+            </div>
+          </form>
+          <div style="margin-left: 2%;">
+            <label class="categoria-actividad" for="categoria">Filtrar por categoría </label>
+            <select name="categoria" class="form-select" style="width:110%" id="categoria">
+              <option th:value="TODAS" th:text="TODAS"></option>
+              <div th:each="cat : ${T(com.estepper.estepper.model.enums.Categoria).values()}">
+                <option th:value="${cat}" th:text="${cat}"></option>
+              </div>
+            </select>
+          </div>
+          <a class="btn-act" onclick="abrirIframe('nuevaActividad')" href="#">Nueva actividad</a>
+
+        </div>
         <!-- Modal de nueva activiad -->
         <div class="modal fade" id="nuevaActividad" tabindex="-1" aria-hidden="true">
           <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -207,10 +227,6 @@
                   </div>
 
                 </form>
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>
