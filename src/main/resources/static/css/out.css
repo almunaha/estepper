@@ -90,5 +90,9 @@
     #recuperar{
         width: 95%;
     }
+
+    .btn-out{
+        height: 100%;
+    }
   
 }

@@ -57,13 +57,13 @@ $(document).ready(function () {
     $(".inscripcion").hide();
     $(".asistentes").hide();
 
-    $("#descripcion").css("background-color", "rgb(98, 207, 234)");
+    $("#descripcion").css("background-color", "rgb(122, 184, 212)");
 
     $("#descripcion").click(function () {
-        $(this).css("background-color", "rgb(98, 207, 234)");
-        $("#detalles").css("background-color", "rgb(175, 198, 204)");
-        $("#inscripcion").css("background-color", "rgb(175, 198, 204)");
-        $("#asistentes").css("background-color", "rgb(175, 198, 204)");
+        $(this).css("background-color", "rgb(122, 184, 212)");
+        $("#detalles").css("background-color", "rgb(191, 216, 222)");
+        $("#inscripcion").css("background-color", "rgb(191, 216, 222)");
+        $("#asistentes").css("background-color", "rgb(191, 216, 222)");
 
         $(".descripcion").show();
         $(".detalles").hide();
@@ -73,10 +73,10 @@ $(document).ready(function () {
     });
 
     $("#detalles").click(function () {
-        $(this).css("background-color", "rgb(98, 207, 234)");
-        $("#inscripcion").css("background-color", "rgb(175, 198, 204)");
-        $("#descripcion").css("background-color", "rgb(175, 198, 204)");
-        $("#asistentes").css("background-color", "rgb(175, 198, 204)");
+        $(this).css("background-color", "rgb(122, 184, 212)");
+        $("#inscripcion").css("background-color", "rgb(191, 216, 222)");
+        $("#descripcion").css("background-color", "rgb(191, 216, 222)");
+        $("#asistentes").css("background-color", "rgb(191, 216, 222)");
 
         $(".descripcion").hide();
         $(".detalles").show();
@@ -85,10 +85,10 @@ $(document).ready(function () {
     });
 
     $("#inscripcion").click(function () {
-        $(this).css("background-color", "rgb(98, 207, 234)");
-        $("#detalles").css("background-color", "rgb(175, 198, 204)");
-        $("#descripcion").css("background-color", "rgb(175, 198, 204)");
-        $("#asistentes").css("background-color", "rgb(175, 198, 204)");
+        $(this).css("background-color", "rgb(122, 184, 212)");
+        $("#detalles").css("background-color", "rgb(191, 216, 222)");
+        $("#descripcion").css("background-color", "rgb(191, 216, 222)");
+        $("#asistentes").css("background-color", "rgb(191, 216, 222)");
 
         $(".descripcion").hide();
         $(".detalles").hide();
@@ -98,10 +98,10 @@ $(document).ready(function () {
     });
 
     $("#asistentes").click(function () {
-        $(this).css("background-color", "rgb(98, 207, 234)");
-        $("#detalles").css("background-color", "rgb(175, 198, 204)");
-        $("#descripcion").css("background-color", "rgb(175, 198, 204)");
-        $("#inscripcion").css("background-color", "rgb(175, 198, 204)");
+        $(this).css("background-color", "rgb(122, 184, 212)");
+        $("#detalles").css("background-color", "rgb(191, 216, 222)");
+        $("#descripcion").css("background-color", "rgb(191, 216, 222)");
+        $("#inscripcion").css("background-color", "rgb(191, 216, 222)");
 
         $(".descripcion").hide();
         $(".detalles").hide();

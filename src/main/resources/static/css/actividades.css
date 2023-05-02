@@ -132,13 +132,13 @@
 }
 
 .btn-info {
-    background-color: rgb(175, 198, 204);
+    background-color: rgb(191, 216, 222);
     color: white;
     padding: 0.5%;
     font-size: 1.3rem;
     border: 0px;
     width: 40%;
-    border-right: 0.5px solid rgb(170, 170, 170);
+    border-right: 0.5px solid rgb(191, 216, 222);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
@@ -300,7 +300,7 @@
 }
 
 .act-coor i {
-    color: rgb(94, 191, 224);
+    color: rgb(122, 184, 212);
 }
 
 .btn-form {
@@ -311,7 +311,7 @@
 .btn-gest,
 .btn-gest-eliminar {
     padding: 2.3%;
-    background-color: rgb(79, 161, 188);
+    background-color: rgb(122, 184, 212);
     color: white;
     width: 50px;
     text-align: center;

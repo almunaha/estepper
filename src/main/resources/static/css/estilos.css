@@ -315,7 +315,7 @@ a {
 #btn-part,
 #btn-admi, #btn-accion {
     color: white;
-    background-color: #6ca4c7;
+    background-color: rgb(122, 184, 212);
 }
 
 #tablePart thead {
@@ -383,7 +383,7 @@ th {
 /*BOTONCITOS ICONOS CON LO DE ARRIBA*/
 
 #btn-icono {
-    color: #6ca4c7;
+    color: rgb(122, 184, 212);
 }
 
 .btn-icono:hover {
@@ -530,7 +530,7 @@ th {
 
 #btn-edit {
     color: white;
-    background-color: #6ca4c7;
+    background-color: rgb(122, 184, 212);
     width: 150px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     font-size: 18px;
@@ -733,7 +733,7 @@ input[type="date"] {
 
 #btn-coord {
     color: white;
-    background-color: #6ca4c7;
+    background-color: rgb(122, 184, 212);
     height: 100%;
 }
 
@@ -769,9 +769,9 @@ input[type="date"] {
 }
 
 .tit-coord {
-    background-color: #6ca4c7;
+    background-color: rgb(122, 184, 212);
     color: white;
-    border-left: 0.8px solid #6ca4c7;
+    border-left: 0.8px solid rgb(122, 184, 212);
     border-radius: 10px 0 0 10px;
     padding: 2%;
     flex-basis: 35%;

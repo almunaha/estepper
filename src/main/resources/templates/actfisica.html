@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/out.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
     <script src="/js/menu.js"></script>
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
@@ -129,13 +130,13 @@
                 <div th:unless="${actfisica == null}" class="bg-white border border-1 p-5 rounded-4"
                     style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
                     <div
-                        style="display: grid; justify-content: center; align-items: center; background-color:#0dcaf0;border-radius: 12px;">
+                        style="display: grid; justify-content: center; align-items: center; background-color:rgb(122, 184, 212);border-radius: 5px;">
                         <h4 style="margin-top: 8%; color:azure">Actividad física</h4>
                     </div>
                     <form class="form-perfil" method="post" th:action="@{'/process_actfisica/' + ${participante.id}}"
                         th:object="${actfisica}">
 
-                        <div><label style="font-size: large;" class="col-20 col-form-label">
+                        <div><label style="font-size: large; font-weight: bold" class="col-20 col-form-label mt-2">
                                 ACTIVIDAD FÍSICA VIGOROSA (A.F.V)
                             </label></div>
                         <div><label class="col-20 col-form-label">Piense acerca de todas aquellas actividades vigorosas
@@ -157,20 +158,22 @@
 
                             <input id="horaafv" type="number" th:field="*{horaafv}" class="form-control">
                         </div>
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">Nº minutos/día: </label>
 
-                            <input style="border-color: blue;" id="minafv" type="number" th:field="*{minafv}"
+                            <input style="border-color: rgb(250, 226, 196);" id="minafv" type="number" th:field="*{minafv}"
                                 class="form-control" readonly>
                         </div>
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">Vigorosa METS-minuto/semana: </label>
 
-                            <input style="border-color: blue;" id="metsafv" type="number" th:field="*{metsafv}"
+                            <input style="border-color: rgb(250, 226, 196);" id="metsafv" type="number" th:field="*{metsafv}"
                                 class="form-control" readonly>
                         </div>
 
-                        <div><label style="font-size: large;" class="col-20 col-form-label">
+                        <div><label style="font-size: large; font-weight: bold" class="col-20 col-form-label mt-2">
                                 ACTIVIDAD FÍSICA MODERADA (A.F.M)
                             </label></div>
                         <div><label class="col-20 col-form-label">Piense acerca de todas aquellas actividades vigorosas
@@ -192,20 +195,22 @@
 
                             <input id="horaafm" type="number" th:field="*{horaafm}" class="form-control">
                         </div>
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">Nº minutos/día: </label>
 
-                            <input style="border-color: blue;" id="minafm" type="number" th:field="*{minafm}"
+                            <input style="border-color: rgb(250, 226, 196);" id="minafm" type="number" th:field="*{minafm}"
                                 class="form-control" readonly>
                         </div>
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">Moderada METS-minuto/semana: </label>
 
-                            <input style="border-color: blue;" id="metsafm" type="number" th:field="*{metsafm}"
+                            <input style="border-color: rgb(250, 226, 196);" id="metsafm" type="number" th:field="*{metsafm}"
                                 class="form-control" readonly>
                         </div>
 
-                        <div><label style="font-size: large;" class="col-20 col-form-label">
+                        <div><label style="font-size: large; font-weight: bold" class="col-20 col-form-label mt-2">
                                 CAMINANDO
                             </label></div>
                         <div><label class="col-20 col-form-label">Piense acerca del tiempo que usted dedicó a caminar en
@@ -226,22 +231,24 @@
 
                             <input id="horacaminar" type="number" th:field="*{horacaminar}" class="form-control">
                         </div>
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">Nº minutos/día: </label>
 
-                            <input style="border-color: blue;" id="mincaminar" type="number" th:field="*{mincaminar}"
+                            <input style="border-color: rgb(250, 226, 196);" id="mincaminar" type="number" th:field="*{mincaminar}"
                                 class="form-control" readonly>
                         </div>
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">Caminar METS-minuto/semana: </label>
 
-                            <input style="border-color: blue;" id="metscaminar" type="number" th:field="*{metscaminar}"
+                            <input style="border-color: rgb(250, 226, 196);" id="metscaminar" type="number" th:field="*{metscaminar}"
                                 class="form-control" readonly>
                         </div>
 
 
 
-                        <div><label style="font-size: large;" class="col-20 col-form-label">
+                        <div><label style="font-size: large; font-weight: bold" class="col-20 col-form-label mt-2">
                                 SENTADO
                             </label></div>
                         <div><label class="col-20 col-form-label">La última pregunta se refieree al tiemppo que usted
@@ -256,33 +263,36 @@
 
                             <input id="horasentado" type="number" th:field="*{horasentado}" class="form-control">
                         </div>
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">Nº minutos/día: </label>
 
-                            <input style="border-color: blue;" id="minsentado" type="number" th:field="*{minsentado}"
+                            <input style="border-color: rgb(250, 226, 196);" id="minsentado" type="number" th:field="*{minsentado}"
                                 class="form-control" readonly>
                         </div>
 
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">METs totales: </label>
 
-                            <input style="border-color: blue;" id="metstotales" type="number" th:field="*{metstotales}"
+                            <input style="border-color: rgb(250, 226, 196);" id="metstotales" type="number" th:field="*{metstotales}"
                                 class="form-control" readonly>
                         </div>
 
-                        <label style=" font-size: large;" class="col-4 col-form-label">
+                        <label style=" font-size: large; font-weight: bold" class="col-4 col-form-label mt-3">
                             NIVEL DE ACTIVIDAD FÍSICA
                         </label>
-                        <div class="input-group mt-2">
+                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label class="col-4 col-form-label">Clasificación nivel actividad física</label>
-                            <select style="border-color: blue;" id="clasificacion" th:field="*{clasificacion}"
+                            <select style="border-color: rgb(250, 226, 196);" id="clasificacion" th:field="*{clasificacion}"
                                 class="form-control" disabled>
                                 <option value="moderada">Moderada</option>
                                 <option value="vigorosa">Vigorosa</option>
                             </select>
                         </div>
 
-                        <button class="btn btn-info text-white mt-4 w-100" type="submit"
+                        <button class="btn-out" type="submit"
                             onclick=myFunction()>Guardar</button>
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
