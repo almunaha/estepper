@@ -586,7 +586,7 @@ public class HomeController {
         MensajeAdmin menAdmin = new MensajeAdmin();
         Administrador admin = (Administrador) user;
         //List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin(admin);
-        List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesUsuario(user);
+        List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin();
 
 
         /*System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola

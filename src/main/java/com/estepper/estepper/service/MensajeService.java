@@ -30,7 +30,7 @@ public interface MensajeService {
     //MENSAJE ADMINISTRADOR
     public MensajeAdmin getMensajeAdmin(Integer id);
     public void saveMensajeAdmin(MensajeAdmin mensaje);
-    //public List<MensajeAdmin> obtenerMensajesAdmin(Administrador administrador);
+    public List<MensajeAdmin> obtenerMensajesAdmin();
     //public List<MensajeAdmin> obtenerMensajesAdminyUsuario(Administrador administrador, Usuario usuario);
     public List<MensajeAdmin> obtenerMensajesUsuario(Usuario usuario);
     public void deleteByUsuarioMensajeAdmin(Usuario u);

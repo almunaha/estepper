@@ -101,11 +101,11 @@ public class MensajeServiceImpl implements MensajeService {
        repoAdmin.save(mensaje);
    }
 
-   /*@Override
-   public List<MensajeAdmin> obtenerMensajesAdmin(Administrador administrador){
-       return repoAdmin.findByAdministrador(administrador);
+   @Override
+   public List<MensajeAdmin> obtenerMensajesAdmin(){
+       return repoAdmin.findAll();
    }
-
+   /*
    @Override
    public List<MensajeAdmin> obtenerMensajesAdminyUsuario(Administrador administrador,Usuario usuario){
        return repoAdmin.findByAdministradorAndUsuario(administrador,usuario);
