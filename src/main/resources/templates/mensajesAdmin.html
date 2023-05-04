@@ -158,8 +158,9 @@
                                     </header>
                                     <div class="chat-box">
                                         <div th:each="m : ${mensajesAdmin}" class="contenedor-mensaje mb-2">
-                                           <!-- <div th:if="${m.usuario.id == ${idDelUsuario}}"> -->
-                                                <div id="bloque-condicion" th:if="${m.emisor.id != user.id}"
+                                            <div th:if="${m.usuario.id == 2}" id="mensajeUsuario">
+                                                <!--problema de la comparación-->
+                                                <div th:if="${m.emisor.id != user.id}"
                                                     class="mensaje d-flex justify-content-start align-items-end">
                                                     <img th:src="${m.usuario.fotoUsuario}" style="width: 40px;"
                                                         class="avatar" alt="m.usuario.nickname" />
@@ -182,7 +183,7 @@
                                                             class="fecha text-end"></div>
                                                     </div>
                                                 </div>
-                                           <!--</div>--> 
+                                            </div>
 
                                         </div>
                                     </div>
@@ -204,18 +205,21 @@
                                         </div>
                                     </form>
                                     <script>
-
+                                        
+                                        function updateMensajeUsuario(id) { //nunca llega a cambiarse la expresión
+                                            const comparacion = `m.usuario.id == ${id}`;
+                                            $('#mensajeUsuario').attr('th:if', comparacion);
+                                        }
+                                        
                                         function abrirChat(url) {
                                             const [chatId, nickname, listaMensajes] = url.split('&');
                                             const id = chatId.split('=')[0];
                                             const name = nickname.split('=')[1];
                                             const mensajes = listaMensajes.split('=')[2];
 
-                                            document.getElementById("idDelUsuario").innerHTML = id;
+                                            document.getElementById("idDelUsuario").innerText = id;
                                             document.getElementById("nombreDelUsuario").innerHTML = name;
-                                            const idDelUsuario = document.getElementById("idDelUsuario").innerHTML;
-
-
+                                            updateMensajeUsuario(id);
                                             const elemento = document.getElementById('derechaAdmin');
                                             elemento.style.display = 'block';
 
@@ -226,7 +230,6 @@
                                             $.get('/messages/' + id);
 
                                         }
-
                                     </script>
                                 </section>
                             </div>
