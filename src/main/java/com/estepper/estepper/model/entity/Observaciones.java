@@ -2,7 +2,6 @@ package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +15,6 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -24,36 +22,26 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "observaciones")
-public class Observaciones implements Serializable{
+public class Observaciones implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-    /*@Column(unique=false, nullable=true)
-    private Integer idCoordinador;*/
-
-    @ManyToOne 
-    @JoinColumn(name="id_coordinador", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "id_coordinador", nullable = false)
     private Coordinador coordinador;
-     
-    
-    /*@Column(unique=false, nullable=true)
-    private Integer idGrupo;*/
 
-    @ManyToOne 
-    @JoinColumn(name="id_grupo", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "id_grupo", nullable = false)
     private Grupo grupo;
 
     private String nota;
-   
+
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = ISO.DATE)
     @NotNull
     private Date fecha;
-
-
 
     public Observaciones(Integer id, Coordinador coordinador, Grupo grupo, String nota, Date fecha) {
         this.id = id;
@@ -66,7 +54,6 @@ public class Observaciones implements Serializable{
     public Observaciones() {
         fecha = new Date();
     }
-
 
     public Integer getId() {
         return id;
@@ -108,6 +95,4 @@ public class Observaciones implements Serializable{
         this.fecha = fecha;
     }
 
-  
-    
 }

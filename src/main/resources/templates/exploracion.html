@@ -121,7 +121,8 @@
 
                 <div class="bg-white border border-1 p-5 rounded-4"
                     style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
-                    <div style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5px;">
+                    <div
+                        style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5px;">
                         <h4 style="margin-top: 8%; color:azure">Exploración</h4>
                     </div>
                     <form class="form-perfil" method="post" th:action="@{'/process_exploracion/' + ${participante.id}}"
@@ -166,15 +167,15 @@
                             <input type="number" th:field="*{edad}" class="form-control">
                         </div>
 
-                        <div class="input-group mt-5" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        <div class="input-group mt-5"
+                            style="background-color:rgb(250, 236, 215) ; padding: 12px; 
                         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label style="font-weight: bold; color: black" class="col-4 col-form-label">IMC: </label>
                             <input style="border-color: rgb(250, 226, 196);" id="imc" type="number" th:field="*{imc}"
                                 class="form-control" readonly>
                         </div>
 
-                        <button class="btn-out" type="submit"
-                            onclick=myFunction()>Guardar</button>
+                        <button class="btn-out" type="submit" onclick=myFunction()>Guardar</button>
 
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"

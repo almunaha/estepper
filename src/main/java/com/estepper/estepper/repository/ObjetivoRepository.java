@@ -12,24 +12,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-
 public interface ObjetivoRepository extends JpaRepository<Objetivo, Integer> {
 
     List<Objetivo> findByParticipante(Participante participante);
-    /// List<Objetivo> findByFechaAfteryEstadoObjetivoyParticipante(Date fecha,
-    /// EstadoObjetivo estado, Participante participante);
-    // Objetivo findByIdObjetivo(Integer id);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM Objetivo o WHERE o.participante = :p")
     void deleteAllByParticipante(Participante p);
 
-
     @Query("SELECT o FROM Objetivo o WHERE ((YEAR(o.fechaInicio) = :anio AND MONTH(o.fechaInicio) <= :mes) OR (YEAR(o.fechaVencimiento) = :anio AND MONTH(o.fechaVencimiento) >= :mes) OR (YEAR(o.fechaInicio) < :anio AND YEAR(o.fechaVencimiento) > :anio)) AND o.participante = :p")
     List<Objetivo> findByParticipanteyMesyAnio(Participante p, Integer mes, Integer anio);
-
-
-
 
 }

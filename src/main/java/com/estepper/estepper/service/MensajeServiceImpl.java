@@ -1,6 +1,5 @@
 package com.estepper.estepper.service;
 
-import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Mensaje;
@@ -20,7 +19,7 @@ import com.estepper.estepper.repository.MensajeRepository;
 
 @Service
 public class MensajeServiceImpl implements MensajeService {
- 
+
     @Autowired
     private MensajeRepository repo;
 
@@ -30,23 +29,21 @@ public class MensajeServiceImpl implements MensajeService {
     @Autowired
     private MensajeAdminRepository repoAdmin;
 
-
-    //MENSAJES GRUPALES
+    // MENSAJES GRUPALES
     @Override
-    public Mensaje getMensaje(Integer id){
+    public Mensaje getMensaje(Integer id) {
         return repo.findById(id).get();
-    } 
-    
+    }
+
     @Override
     public void save(Mensaje mensaje) {
         repo.save(mensaje);
     }
 
     @Override
-    public List<Mensaje> obtenerMensajes (Grupo grupo){
+    public List<Mensaje> obtenerMensajes(Grupo grupo) {
         return repo.findByGrupo(grupo);
     }
-
 
     @Override
     public void deleteByParticipante(Usuario p) {
@@ -60,23 +57,22 @@ public class MensajeServiceImpl implements MensajeService {
         repo.deleteAllByGrupo(g);
     }
 
-    //MENSAJES PRIVADOS
+    // MENSAJES PRIVADOS
 
-   @Override
-    public MensajePrivado getMensajePrivado(Integer id){
+    @Override
+    public MensajePrivado getMensajePrivado(Integer id) {
         return repoPrivado.findById(id).get();
-    } 
-    
+    }
+
     @Override
     public void saveMensajePrivado(MensajePrivado mensaje) {
         repoPrivado.save(mensaje);
     }
 
     @Override
-    public List<MensajePrivado> obtenerMensajesPrivados(Participante participante){
+    public List<MensajePrivado> obtenerMensajesPrivados(Participante participante) {
         return repoPrivado.findByParticipante(participante);
     }
-
 
     @Override
     public void deleteByParticipanteMensajePrivado(Participante p) {
@@ -88,40 +84,31 @@ public class MensajeServiceImpl implements MensajeService {
         repoPrivado.deleteAllByCoordinador(c);
     }
 
+    // MENSAJES ADMINISTRADOR
 
-    //MENSAJES ADMINISTRADOR
+    @Override
+    public MensajeAdmin getMensajeAdmin(Integer id) {
+        return repoAdmin.findById(id).get();
+    }
 
-   @Override
-   public MensajeAdmin getMensajeAdmin(Integer id){
-       return repoAdmin.findById(id).get();
-   } 
-   
-   @Override
-   public void saveMensajeAdmin(MensajeAdmin mensaje) {
-       repoAdmin.save(mensaje);
-   }
+    @Override
+    public void saveMensajeAdmin(MensajeAdmin mensaje) {
+        repoAdmin.save(mensaje);
+    }
 
-   @Override
-   public List<MensajeAdmin> obtenerMensajesAdmin(){
-       return repoAdmin.findAll();
-   }
-   /*
-   @Override
-   public List<MensajeAdmin> obtenerMensajesAdminyUsuario(Administrador administrador,Usuario usuario){
-       return repoAdmin.findByAdministradorAndUsuario(administrador,usuario);
-   }*/
+    @Override
+    public List<MensajeAdmin> obtenerMensajesAdmin() {
+        return repoAdmin.findAll();
+    }
 
-   @Override
+    @Override
     public List<MensajeAdmin> obtenerMensajesUsuario(Usuario usuario) {
         return repoAdmin.findByUsuario(usuario);
     }
 
-   @Override
-   public void deleteByUsuarioMensajeAdmin(Usuario u) {
+    @Override
+    public void deleteByUsuarioMensajeAdmin(Usuario u) {
         repoAdmin.deleteAllByUsuario(u);
-   }
-
-
-
+    }
 
 }

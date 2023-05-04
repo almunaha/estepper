@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "mensajePrivado")
-public class MensajePrivado implements Serializable{
+public class MensajePrivado implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,20 +26,20 @@ public class MensajePrivado implements Serializable{
     @Column
     private String mensaje;
 
-    @ManyToOne 
-    @JoinColumn(name="idCoordinador", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idCoordinador", nullable = false)
     private Coordinador coordinador;
 
-    @ManyToOne 
-    @JoinColumn(name="idParticipante", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idParticipante", nullable = false)
     private Participante participante;
 
-    @ManyToOne 
-    @JoinColumn(name="idUsuario", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
-
-    public MensajePrivado(Integer id, LocalDateTime fechayHoraEnvio, String mensaje, Coordinador coordinador, Participante participante, Usuario usuario) {
+    public MensajePrivado(Integer id, LocalDateTime fechayHoraEnvio, String mensaje, Coordinador coordinador,
+            Participante participante, Usuario usuario) {
         this.id = id;
         this.fechayHoraEnvio = fechayHoraEnvio;
         this.mensaje = mensaje;
@@ -47,7 +47,7 @@ public class MensajePrivado implements Serializable{
         this.participante = participante;
         this.usuario = usuario;
     }
-    
+
     public MensajePrivado() {
     }
 

@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "mensaje")
-public class Mensaje implements Serializable{
+public class Mensaje implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +26,12 @@ public class Mensaje implements Serializable{
     @Column
     private String mensaje;
 
-    @ManyToOne 
-    @JoinColumn(name="idGrupo", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idGrupo", nullable = false)
     private Grupo grupo;
 
-    @ManyToOne 
-    @JoinColumn(name="idUsuario", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
     public Mensaje(Integer id, LocalDateTime fechayHoraEnvio, String mensaje, Grupo grupo, Usuario usuario) {
@@ -41,7 +41,7 @@ public class Mensaje implements Serializable{
         this.grupo = grupo;
         this.usuario = usuario;
     }
-    
+
     public Mensaje() {
     }
 

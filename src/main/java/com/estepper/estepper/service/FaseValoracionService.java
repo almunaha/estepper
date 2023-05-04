@@ -15,16 +15,31 @@ import java.util.List;
 
 public interface FaseValoracionService {
     public List<FaseValoracion> faseValoracion(Participante participante);
+
     public void crearFormularios(Participante participante);
+
     public void crearFormulariosNuevos(Participante participante);
-    public void updateExploracion(String primeravez, Sexo sexo, Double peso, Integer talla, Double cmcintura, Integer edad, Integer imc, Participante participante);
-    public void updateFindrisc(Participante participante,Integer puntosedad, Integer puntosimc, Integer puntoscmcintura, Integer ptosactfisica, Integer ptosfrecfruta, Integer ptosmedicacion, Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion, String escalarriesgo);
+
+    public void updateExploracion(String primeravez, Sexo sexo, Double peso, Integer talla, Double cmcintura,
+            Integer edad, Integer imc, Participante participante);
+
+    public void updateFindrisc(Participante participante, Integer puntosedad, Integer puntosimc,
+            Integer puntoscmcintura, Integer ptosactfisica, Integer ptosfrecfruta, Integer ptosmedicacion,
+            Integer ptosglucosa, Integer ptosdiabetes, Integer puntuacion, String escalarriesgo);
+
     public void updateClasificacion(Clasificacion clasificacion, Participante participante);
+
     public void updateAntecedentes(Antecedentes antecedentes, Participante participante);
+
     public void updateAlimentacionVal(AlimentacionVal alimentacion, Participante participante);
+
     public void updateActividadFisica(ActividadFisica actfisica, Participante participante);
+
     public Exploracion findByParticipante(Participante participante);
+
     public void actualizarFindrisc(Exploracion exploracion, Findrisc findrisc);
+
     public void activarcuenta(Exploracion exploracion, Findrisc findrisc, Integer id, Integer idCoor);
+
     public void eliminarcuenta(Participante participante);
 }

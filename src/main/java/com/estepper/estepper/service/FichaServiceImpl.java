@@ -14,15 +14,15 @@ import com.estepper.estepper.repository.FichaTallerRepository;
 import com.estepper.estepper.repository.FichaRepository;
 
 @Service
-public class FichaServiceImpl implements FichaService{
+public class FichaServiceImpl implements FichaService {
 
     @Autowired
     private FichaEleccionRepository repoE;
 
-    @Autowired 
+    @Autowired
     private FichaRepository repo;
 
-    @Autowired 
+    @Autowired
     private FichaTallerRepository repoT;
 
     @Autowired
@@ -40,7 +40,7 @@ public class FichaServiceImpl implements FichaService{
 
     @Override
     public void crearFichas(Participante participante) {
-        //CREAR FICHAS ELECCION
+        // CREAR FICHAS ELECCION
         FichaEleccion ficha = new FichaEleccion(0, participante, "", 1);
         repoE.save(ficha);
         ficha = new FichaEleccion(0, participante, "", 2);
@@ -50,11 +50,11 @@ public class FichaServiceImpl implements FichaService{
         ficha = new FichaEleccion(0, participante, "", 4);
         repoE.save(ficha);
 
-        //CREAR FICHAS SALUD
+        // CREAR FICHAS SALUD
         FichaTaller fichaT = new FichaTaller(0, participante, "", "", "", 0, 0);
         repoT.save(fichaT);
 
-        //CREAR FICHAS PESO SALUDABLE
+        // CREAR FICHAS PESO SALUDABLE
         FichaObjetivo fichaO = new FichaObjetivo(0, participante, null, null);
         repoO.save(fichaO);
     }
@@ -76,11 +76,12 @@ public class FichaServiceImpl implements FichaService{
 
     @Override
     public void updateFichaTaller(FichaTaller ficha) {
-        repoT.update(ficha.getDificultades(), ficha.getCapacidad(), ficha.getImportancia(), ficha.getRazones(), ficha.getTemores(), ficha.getId());
+        repoT.update(ficha.getDificultades(), ficha.getCapacidad(), ficha.getImportancia(), ficha.getRazones(),
+                ficha.getTemores(), ficha.getId());
     }
 
     @Override
-    public FichaObjetivo getFichaObjetivo(Participante participante){
+    public FichaObjetivo getFichaObjetivo(Participante participante) {
         return repoO.findByParticipante(participante);
     }
 
@@ -93,5 +94,5 @@ public class FichaServiceImpl implements FichaService{
     public void deleteByParticipante(Participante p) {
         repo.deleteAllByParticipante(p);
     }
-    
+
 }

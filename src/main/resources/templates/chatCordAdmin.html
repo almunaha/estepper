@@ -117,11 +117,7 @@
 
                 <div class="encabezado-grupo">
 
-                    <!-- <h3 th:text="'MENSAJES PRIVADOS CON : ' + ${participante.nickname}"></h3>-->
-                    <!--<h3 th:text="'MENSAJES PRIVADOS CON : ' + ${administrador.nickname}"></h3>-->
-
                     <div class="encabezadoMensajes">
-                        <!--<h3 th:text="'Mensajes privados con ' + ${administrador.nickname}"></h3>-->
                         <h3 th:text="'Mensajes privados con el administrador'"></h3>
                     </div>
 
@@ -129,8 +125,6 @@
                     <div class="bordes-chat" style="width: 90%;">
                         <section class="chat-area">
                             <header>
-                                <!--<img th:src="${administrador.fotoUsuario}" alt="">
-                                <h4 th:text="${administrador.nickname}"></h4>-->
                                 <h4>Administrador</h4>
 
                             </header>
@@ -160,8 +154,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <form th:action="@{/mensajesAdmin2/guardar}"
-                                th:object="${messageAdmin}" method="post" class="typing-area">
+                            <form th:action="@{/mensajesAdmin2/guardar}" th:object="${messageAdmin}" method="post"
+                                class="typing-area">
 
                                 <input type="text" th:field="*{mensaje}" class="input-field"
                                     placeholder="Escribe un mensaje aquí ..." autocomplete="off">

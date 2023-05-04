@@ -14,7 +14,7 @@ import com.estepper.estepper.repository.AlimentosConsumidosRepository;
 import com.estepper.estepper.repository.RecetaRepository;
 
 @Service
-public class AlimentacionServiceImpl implements AlimentacionService{
+public class AlimentacionServiceImpl implements AlimentacionService {
 
     @Autowired
     private AlimentacionRepository repoA;
@@ -68,14 +68,14 @@ public class AlimentacionServiceImpl implements AlimentacionService{
 
     @Override
     public void borraralconSem(Participante p) {
-       List<AlimentosConsumidos> lista = repoAC.getWeek(p);
-       for(int i = 0; i < lista.size(); i++) deleteAlCon(lista.get(i).getId());
+        List<AlimentosConsumidos> lista = repoAC.getWeek(p);
+        for (int i = 0; i < lista.size(); i++)
+            deleteAlCon(lista.get(i).getId());
     }
 
     @Override
     public Receta getRecetasById(Integer id) {
-       return repoR.findById(id).get();
+        return repoR.findById(id).get();
     }
 
-    
 }

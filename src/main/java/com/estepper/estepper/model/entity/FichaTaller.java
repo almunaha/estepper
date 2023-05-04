@@ -19,11 +19,12 @@ public class FichaTaller extends Ficha {
     private Integer importancia;
     private Integer capacidad;
 
-    public FichaTaller(){
+    public FichaTaller() {
         super();
     }
 
-    public FichaTaller(Integer id, Participante participante, String razones, String dificultades, String temores, Integer importancia, Integer capacidad){
+    public FichaTaller(Integer id, Participante participante, String razones, String dificultades, String temores,
+            Integer importancia, Integer capacidad) {
         super(id, participante);
         this.razones = razones;
         this.dificultades = dificultades;
@@ -79,6 +80,5 @@ public class FichaTaller extends Ficha {
     public void setCapacidad(Integer capacidad) {
         this.capacidad = capacidad;
     }
-    
-    
+
 }

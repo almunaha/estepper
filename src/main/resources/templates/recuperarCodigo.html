@@ -15,7 +15,8 @@
 </head>
 
 <body class="bg-light">
-    <div style=" display: block; margin: auto; margin-top: 9%; margin-bottom: 1%;" id="recuperar" class="bg-white border border-1 p-2 rounded-4 ">
+    <div style=" display: block; margin: auto; margin-top: 9%; margin-bottom: 1%;" id="recuperar"
+        class="bg-white border border-1 p-2 rounded-4 ">
         <div style="display: flex; justify-content: center; flex-direction: column;">
             <div>
                 <h4 style="text-align: center;">Recuperar contraseña o código</h4>
@@ -28,8 +29,8 @@
             <form class="form-perfil" method="post" th:action="@{'/process_recuperarCodigo'}">
                 <div class="input-group mt-2">
                     <label class="col-4 col-form-label">Correo electrónico: </label>
-                    <input type="text" id="correo" placeholder="example@gmail.com" th:name="correo"
-                        class="form-control" required>
+                    <input type="text" id="correo" placeholder="example@gmail.com" th:name="correo" class="form-control"
+                        required>
                 </div>
                 <div class="input-group mt-2">
                     <button class="btn-out" type="submit">Enviar</button>

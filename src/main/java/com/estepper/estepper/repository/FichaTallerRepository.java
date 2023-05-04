@@ -16,6 +16,7 @@ public interface FichaTallerRepository extends JpaRepository<FichaTaller, Intege
     @Modifying
     @Transactional
     @Query("UPDATE FichaTaller t SET t.dificultades = :dificultades, t.capacidad = :capacidad, t.importancia = :importancia, t.razones = :razones, t.temores = :temores WHERE t.id = :id")
-    void update(String dificultades, Integer capacidad, Integer importancia, String razones, String temores, Integer id);
-    
+    void update(String dificultades, Integer capacidad, Integer importancia, String razones, String temores,
+            Integer id);
+
 }

@@ -9,8 +9,8 @@ import com.estepper.estepper.model.entity.Participante;
 
 import jakarta.transaction.Transactional;
 
-public interface FichaEleccionRepository extends JpaRepository<FichaEleccion, Integer>{
-    FichaEleccion findByParticipanteAndNumEleccion(Participante participante,Integer numEleccion);
+public interface FichaEleccionRepository extends JpaRepository<FichaEleccion, Integer> {
+    FichaEleccion findByParticipanteAndNumEleccion(Participante participante, Integer numEleccion);
 
     @Modifying
     @Transactional

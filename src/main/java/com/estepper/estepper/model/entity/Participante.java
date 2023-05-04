@@ -14,41 +14,35 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "participantes")
-public class Participante extends Usuario{
-    
-    /*@Column(unique=false, nullable=true)
-    private Integer idCoordinador;*/
+public class Participante extends Usuario {
 
-    @ManyToOne 
-    @JoinColumn(name="id_coordinador", nullable=true)
+    @ManyToOne
+    @JoinColumn(name = "id_coordinador", nullable = true)
     private Coordinador coordinador;
 
-    @Column(nullable=true)
+    @Column(nullable = true)
     private Double perdidaDePeso;
-    @Column(nullable=true)
+    @Column(nullable = true)
     private Double perdidacmcintura;
-    @Column(nullable=true)
+    @Column(nullable = true)
     private Integer asistencia;
-    @Column(nullable=true)
+    @Column(nullable = true)
     public Integer edad;
-    @Column(nullable=true)
+    @Column(nullable = true)
     private Integer sesionesCompletas;
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "sexo", columnDefinition = "ENUM('MASCULINO', 'FEMENINO')")
     private Sexo sexo;
-    
+
     @Column
-    private Integer id; 
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="idGrupo")
+    @JoinColumn(name = "idGrupo")
     @JsonIgnore
-    private Grupo grupo; 
+    private Grupo grupo;
 
-    /*@Column(unique=false, nullable=true)
-    private Integer idAdministrador;*/
-    
-    public Participante(){
+    public Participante() {
         super();
         sesionesCompletas = 0;
         perdidaDePeso = 0.0;
@@ -56,25 +50,26 @@ public class Participante extends Usuario{
         perdidacmcintura = 0.0;
     }
 
-    public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,Coordinador coordinador,Grupo grupo,Double perdidaDePeso,Integer asistencia,
-    Integer edad, Integer sesionesCompletas,Sexo sexo, String fotoParticipante, Double perdidacmcintura, String fotoUsuario){
-        super(id, codigo, nickname, email, contrasenia, estadoCuenta,fotoUsuario);
-        this.coordinador=coordinador;
-        this.grupo=grupo;
-        this.perdidaDePeso=perdidaDePeso;
-        this.asistencia=asistencia;
-        this.edad=edad;
-        this.sesionesCompletas=sesionesCompletas;
-        this.sexo=sexo;
-        //this.fotoParticipante=fotoParticipante;
+    public Participante(Integer id, Integer codigo, String nickname, String email, String contrasenia,
+            Estado estadoCuenta, Coordinador coordinador, Grupo grupo, Double perdidaDePeso, Integer asistencia,
+            Integer edad, Integer sesionesCompletas, Sexo sexo, String fotoParticipante, Double perdidacmcintura,
+            String fotoUsuario) {
+        super(id, codigo, nickname, email, contrasenia, estadoCuenta, fotoUsuario);
+        this.coordinador = coordinador;
+        this.grupo = grupo;
+        this.perdidaDePeso = perdidaDePeso;
+        this.asistencia = asistencia;
+        this.edad = edad;
+        this.sesionesCompletas = sesionesCompletas;
+        this.sexo = sexo;
         this.perdidacmcintura = perdidacmcintura;
-        //this.idAdministrador = idAdministrador;
 
     }
 
     public Coordinador getCoordinador() {
         return coordinador;
     }
+
     public void setCoordinador(Coordinador coordinador) {
         this.coordinador = coordinador;
     }
@@ -119,7 +114,7 @@ public class Participante extends Usuario{
         this.sesionesCompletas = sesionesCompletas;
     }
 
-    public Integer getId(){
+    public Integer getId() {
         return id;
     }
 
@@ -132,12 +127,11 @@ public class Participante extends Usuario{
     }
 
     public Integer getIdGrupo() {
-        if(grupo == null){
+        if (grupo == null) {
             return 0;
-        }
-        else{
+        } else {
             return grupo.getId();
-        } 
+        }
     }
 
     public Double getPerdidacmcintura() {
@@ -148,11 +142,4 @@ public class Participante extends Usuario{
         this.perdidacmcintura = perdidacmcintura;
     }
 
-    /*public Integer getIdAdministrador() {
-        return idAdministrador;
-    }
-    public void setIdAdministrador(Integer idAdministrador) {
-        this.idAdministrador = idAdministrador;
-    }*/
-    
 }

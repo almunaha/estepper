@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="exploracion")
+@Table(name = "exploracion")
 public class Exploracion extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,16 +23,17 @@ public class Exploracion extends FaseValoracion {
     private Double cmcintura;
     private Integer talla;
     private Integer edad;
-    private Integer imc;  
+    private Integer imc;
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "sexo", columnDefinition = "ENUM('MASCULINO', 'FEMENINO')")
     private Sexo sexo;
 
-    public Exploracion(){
+    public Exploracion() {
         super();
     }
 
-    public Exploracion(Integer id, Participante participante, Sexo sexo, String primeravez, Double peso, Double cmcintura, Integer talla, Integer edad, Integer imc ){
+    public Exploracion(Integer id, Participante participante, Sexo sexo, String primeravez, Double peso,
+            Double cmcintura, Integer talla, Integer edad, Integer imc) {
         super(id, participante);
         this.primeravez = primeravez;
         this.peso = peso;
@@ -43,7 +44,6 @@ public class Exploracion extends FaseValoracion {
         this.sexo = sexo;
     }
 
-    
     public Integer getId() {
         return id;
     }
@@ -108,5 +108,4 @@ public class Exploracion extends FaseValoracion {
         this.sexo = sexo;
     }
 
-    
 }

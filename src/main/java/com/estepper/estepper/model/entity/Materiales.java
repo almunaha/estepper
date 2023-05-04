@@ -12,26 +12,28 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "materiales")
-public class Materiales implements Serializable{
+public class Materiales implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="idParticipante")
+    @JoinColumn(name = "idParticipante")
     private Participante participante;
 
     @ManyToOne
-    @JoinColumn(name="idGrupo", nullable = true)
+    @JoinColumn(name = "idGrupo", nullable = true)
     private Grupo grupo;
-    
+
     private String link;
     private String titulo;
     private String descripcion;
 
-    public Materiales(){}
+    public Materiales() {
+    }
 
-    public Materiales(Integer id, Participante participante, Grupo grupo, String link, String titulo, String descripcion){
+    public Materiales(Integer id, Participante participante, Grupo grupo, String link, String titulo,
+            String descripcion) {
         this.id = id;
         this.participante = participante;
         this.grupo = grupo;
@@ -88,5 +90,4 @@ public class Materiales implements Serializable{
         this.grupo = grupo;
     }
 
-    
 }

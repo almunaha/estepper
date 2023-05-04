@@ -10,23 +10,23 @@ import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.repository.NotificacionRepository;
 
 @Service
-public class NotificacionServiceImpl implements NotificacionService{
-    
+public class NotificacionServiceImpl implements NotificacionService {
+
     @Autowired
     private NotificacionRepository repo;
 
     @Override
-    public void guardar(Notificacion n){
-        repo.save(n); 
+    public void guardar(Notificacion n) {
+        repo.save(n);
     }
 
     @Override
-    public List<Notificacion> notificaciones(Participante p){
+    public List<Notificacion> notificaciones(Participante p) {
         return (List<Notificacion>) repo.findByParticipanteOrderByFechaEnvioDesc(p);
     }
 
     @Override
-    public void eliminar(Notificacion n){
+    public void eliminar(Notificacion n) {
         repo.delete(n);
     }
 }

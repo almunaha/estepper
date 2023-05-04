@@ -22,21 +22,22 @@ public class AlimentosConsumidos {
     private Integer id;
     private float raciones;
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
-    @JoinColumn(name="idAlimento")
+    @JoinColumn(name = "idAlimento")
     private Alimentacion alimento;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
-    @JoinColumn(name="idParticipante")
+    @JoinColumn(name = "idParticipante")
     private Participante participante;
 
     @Column(name = "fecha_consumicion", columnDefinition = "DATETIME")
     private LocalDateTime fecha_consumicion;
 
-    public AlimentosConsumidos(){
+    public AlimentosConsumidos() {
         this.raciones = 1;
     }
 
-    public AlimentosConsumidos(Integer id, Alimentacion alimento, Participante participante, float raciones, LocalDateTime fecha_consumicion){
+    public AlimentosConsumidos(Integer id, Alimentacion alimento, Participante participante, float raciones,
+            LocalDateTime fecha_consumicion) {
         this.id = id;
         this.alimento = alimento;
         this.participante = participante;
@@ -83,6 +84,5 @@ public class AlimentosConsumidos {
     public void setRaciones(float raciones) {
         this.raciones = raciones;
     }
-    
-    
+
 }

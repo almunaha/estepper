@@ -98,7 +98,8 @@ public class UsuarioServiceImpl implements UserDetailsService, UsuarioService {
         if (usuario != null) {
 
             usuario.setContrasenia(encodedPasword);
-            repo.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), usuario.getEstadoCuenta(), usuario.getId());
+            repo.update(usuario.getNickname(), usuario.getEmail(), usuario.getContrasenia(), usuario.getEstadoCuenta(),
+                    usuario.getId());
             texto = "Le remitimos sus datos: Código --> " + usuario.getCodigo() + " Su nueva contraseña --> "
                     + contrasenia;
         } else {

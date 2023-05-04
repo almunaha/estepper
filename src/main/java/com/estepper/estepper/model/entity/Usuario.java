@@ -13,15 +13,15 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Table(name="usuarios")
-public class Usuario implements Serializable{
-    
+@Table(name = "usuarios")
+public class Usuario implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique=true)
+    @Column(unique = true)
     private Integer codigo;
     private String nickname;
     private String email;
@@ -31,8 +31,9 @@ public class Usuario implements Serializable{
     @Enumerated(value = EnumType.STRING)
     @Column(columnDefinition = "ENUM('BAJA', 'ALTA')")
     private Estado estadoCuenta;
-    
-    public Usuario(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta, String fotoUsuario) {
+
+    public Usuario(Integer id, Integer codigo, String nickname, String email, String contrasenia, Estado estadoCuenta,
+            String fotoUsuario) {
         this.id = id;
         this.codigo = codigo;
         this.nickname = nickname;
@@ -41,25 +42,30 @@ public class Usuario implements Serializable{
         this.estadoCuenta = estadoCuenta;
         this.fotoUsuario = fotoUsuario;
     }
-    
+
     public Usuario() {
     }
 
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public Integer getCodigo() {
         return codigo;
     }
+
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
+
     public String getNickname() {
         return nickname;
     }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -67,18 +73,23 @@ public class Usuario implements Serializable{
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getContrasenia() {
         return contrasenia;
     }
+
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
+
     public Estado getEstadoCuenta() {
         return estadoCuenta;
     }
+
     public void setEstadoCuenta(Estado estadoCuenta) {
         this.estadoCuenta = estadoCuenta;
     }
@@ -91,5 +102,3 @@ public class Usuario implements Serializable{
         this.fotoUsuario = fotoUsuario;
     }
 }
-
-    

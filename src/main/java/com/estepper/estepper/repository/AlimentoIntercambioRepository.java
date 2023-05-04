@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.estepper.estepper.model.entity.AlimentoIntercambio;
 
-public interface AlimentoIntercambioRepository  extends JpaRepository<AlimentoIntercambio, Integer>{
+public interface AlimentoIntercambioRepository extends JpaRepository<AlimentoIntercambio, Integer> {
 
-    
 }

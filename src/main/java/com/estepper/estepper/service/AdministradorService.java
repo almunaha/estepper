@@ -4,6 +4,6 @@ import com.estepper.estepper.model.entity.Administrador;
 
 public interface AdministradorService {
 
-    public Administrador getAdministrador(Integer id); 
+    public Administrador getAdministrador(Integer id);
 
 }

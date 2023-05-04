@@ -22,15 +22,13 @@ public class Receta {
     private String link;
     private String nombre;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "receta_alimentacion",
-           joinColumns = @JoinColumn(name = "receta_id"),
-           inverseJoinColumns = @JoinColumn(name = "alimentacion_id"))
+    @JoinTable(name = "receta_alimentacion", joinColumns = @JoinColumn(name = "receta_id"), inverseJoinColumns = @JoinColumn(name = "alimentacion_id"))
     private List<Alimentacion> ingredientes;
 
-    public Receta(){
+    public Receta() {
     }
 
-    public Receta(Integer id, String link, String nombre, List<Alimentacion> ingredientes){
+    public Receta(Integer id, String link, String nombre, List<Alimentacion> ingredientes) {
         this.id = id;
         this.nombre = nombre;
         this.ingredientes = ingredientes;
@@ -68,6 +66,4 @@ public class Receta {
         this.nombre = nombre;
     }
 
-
-    
 }

@@ -26,14 +26,14 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ObjetivoEstadoAnimo")
-public class ObjetivoEstadoAnimo implements Serializable{
+public class ObjetivoEstadoAnimo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne 
-    @JoinColumn(name="idParticipante", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idParticipante", nullable = false)
     private Participante participante;
 
     @Temporal(TemporalType.DATE)
@@ -41,13 +41,11 @@ public class ObjetivoEstadoAnimo implements Serializable{
     @NotNull
     private Date fecha;
 
-    
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "estadoAnimo", columnDefinition = "ENUM('CONTENTO', 'FELIZ', 'TRISTE', 'DEPRIMIDO','CANSADO','ENFADADO','SERIO','ENAMORADO','NERVIOSO')")
     private EstadoAnimo estadoAnimo;
-    
 
-    public ObjetivoEstadoAnimo(Integer id, Participante participante, Date fecha, EstadoAnimo estadoAnimo ) {
+    public ObjetivoEstadoAnimo(Integer id, Participante participante, Date fecha, EstadoAnimo estadoAnimo) {
         this.id = id;
         this.participante = participante;
         this.fecha = fecha;
@@ -57,7 +55,6 @@ public class ObjetivoEstadoAnimo implements Serializable{
     public ObjetivoEstadoAnimo() {
         fecha = new Date();
     }
-
 
     public Integer getId() {
         return id;
@@ -75,7 +72,6 @@ public class ObjetivoEstadoAnimo implements Serializable{
         this.participante = participante;
     }
 
-
     public Date getFecha() {
         return fecha;
     }
@@ -92,8 +88,4 @@ public class ObjetivoEstadoAnimo implements Serializable{
         this.estadoAnimo = estadoAnimo;
     }
 
-
-
-
-    
 }

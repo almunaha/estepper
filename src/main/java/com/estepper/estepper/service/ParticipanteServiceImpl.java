@@ -19,10 +19,10 @@ import com.estepper.estepper.repository.CoordinadorRepository;
 import com.estepper.estepper.repository.GrupoRepository;
 
 @Service
-public class ParticipanteServiceImpl implements ParticipanteService{
+public class ParticipanteServiceImpl implements ParticipanteService {
 
     @Autowired
-    private ParticipanteRepository repo; //inyección de dependencias del participante dao api
+    private ParticipanteRepository repo; // inyección de dependencias del participante dao api
 
     @Autowired
     private GrupoRepository repoG;
@@ -31,48 +31,55 @@ public class ParticipanteServiceImpl implements ParticipanteService{
     private CoordinadorRepository repoCoord;
 
     @Override
-    public List<Participante> listado(Integer idCoordinador, Estado estadoCuenta){ 
-        return(List<Participante>) repo.findByIdCoordinadonOrEstado(repoCoord.findById(idCoordinador).get(), estadoCuenta);
+    public List<Participante> listado(Integer idCoordinador, Estado estadoCuenta) {
+        return (List<Participante>) repo.findByIdCoordinadonOrEstado(repoCoord.findById(idCoordinador).get(),
+                estadoCuenta);
     }
 
     @Override
     public Optional<Participante> findById(Integer id) {
         return repo.findById(id);
     }
-    @Override
-    public Participante getParticipante(Integer id){
-        return repo.findById(id).get();
-    }   
 
     @Override
-    public void update(Integer edad, Sexo sexo, String fotoUsuario, Grupo grupo, Integer asistencia, Coordinador coordinador, Double perdidadepeso, Integer sesionescompletas, Double perdcmcintura, Integer id){
-        repo.update(edad, sexo, fotoUsuario, grupo, asistencia, coordinador, perdidadepeso, sesionescompletas, perdcmcintura, id);
+    public Participante getParticipante(Integer id) {
+        return repo.findById(id).get();
     }
 
     @Override
-    public List<Participante> listadoGrupo (Grupo grupo){
+    public void update(Integer edad, Sexo sexo, String fotoUsuario, Grupo grupo, Integer asistencia,
+            Coordinador coordinador, Double perdidadepeso, Integer sesionescompletas, Double perdcmcintura,
+            Integer id) {
+        repo.update(edad, sexo, fotoUsuario, grupo, asistencia, coordinador, perdidadepeso, sesionescompletas,
+                perdcmcintura, id);
+    }
+
+    @Override
+    public List<Participante> listadoGrupo(Grupo grupo) {
         return repo.findByGrupo(grupo);
     }
 
     @Override
-    public Page<Participante> paginas(Pageable pageable, Coordinador coordinador, Estado estadoCuenta){
-        return(Page<Participante>) repo.findByIdCoordinadonOrEstado(pageable, coordinador, estadoCuenta);
+    public Page<Participante> paginas(Pageable pageable, Coordinador coordinador, Estado estadoCuenta) {
+        return (Page<Participante>) repo.findByIdCoordinadonOrEstado(pageable, coordinador, estadoCuenta);
     }
 
     @Override
-    public void quitargrupo(Integer id){
+    public void quitargrupo(Integer id) {
         Participante p = repo.findById(id).get();
         Grupo grup = p.getGrupo();
-        if(grup.getNumParticipantes() >0) grup.setNumParticipantes(grup.getNumParticipantes()-1);
-        repoG.update(grup.getNombre(), grup.getCodigo(), grup.getCoordinador(), grup.getNumParticipantes(), grup.getId());
+        if (grup.getNumParticipantes() > 0)
+            grup.setNumParticipantes(grup.getNumParticipantes() - 1);
+        repoG.update(grup.getNombre(), grup.getCodigo(), grup.getCoordinador(), grup.getNumParticipantes(),
+                grup.getId());
         p.setGrupo(null);
-        repo.update(p.getEdad(),p.getSexo(), p.getFotoUsuario(), null, p.getAsistencia(), p.getCoordinador(), p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), id);
+        repo.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), null, p.getAsistencia(), p.getCoordinador(),
+                p.getPerdidaDePeso(), p.getSesionesCompletas(), p.getPerdidacmcintura(), id);
     }
 
-    
     @Override
     public void save(Participante participante) {
         repo.save(participante);
     }
-    
+
 }

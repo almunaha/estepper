@@ -11,8 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-
-public interface ObjetivoEstadoAnimoRepository extends JpaRepository<ObjetivoEstadoAnimo, Integer>{
+public interface ObjetivoEstadoAnimoRepository extends JpaRepository<ObjetivoEstadoAnimo, Integer> {
 
     @Modifying
     @Transactional
@@ -20,13 +19,7 @@ public interface ObjetivoEstadoAnimoRepository extends JpaRepository<ObjetivoEst
     void deleteAllByParticipante(Participante p);
 
     ObjetivoEstadoAnimo findByFechaAndParticipante(Date fecha, Participante p);
-    ObjetivoEstadoAnimo findByParticipante(Participante p);
-    //List<ObjetivoEstadoAnimo> findByFechaAndParticipante(Date fecha, Participante p);
 
+    ObjetivoEstadoAnimo findByParticipante(Participante p);
 
 }
-
-
-
-
-

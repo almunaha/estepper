@@ -13,14 +13,15 @@ import jakarta.transaction.Transactional;
 
 //Los repository son los DAO, que acceden a la bd  -> los que hacen las consultas a PHPYMYADMIN
 //Hacen los métodos CRUD
-public interface SesionRepository extends JpaRepository<Sesion, Integer>{
+public interface SesionRepository extends JpaRepository<Sesion, Integer> {
 
     Sesion findByParticipanteAndNumSesion(Participante participante, Integer numSesion);
+
     List<Sesion> findByParticipante(Participante participante);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM Sesion s WHERE s.participante = :p")
     void deleteAllByParticipante(Participante p);
- 
+
 }

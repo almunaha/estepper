@@ -5,28 +5,27 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Sesion;
 
 import com.estepper.estepper.repository.SesionRepository;
 
 @Service
-public class SesionServiceImpl implements SesionService{
+public class SesionServiceImpl implements SesionService {
 
     @Autowired
-    private SesionRepository repo;  //inyección de dependencia
+    private SesionRepository repo; // inyección de dependencia
 
-    public void guardar(Sesion s){
-        repo.save(s); 
+    public void guardar(Sesion s) {
+        repo.save(s);
     }
 
-    public Sesion buscarSesion(Participante participante, Integer numSesion){ 
+    public Sesion buscarSesion(Participante participante, Integer numSesion) {
         return repo.findByParticipanteAndNumSesion(participante, numSesion);
     }
 
     @Override
-    public List<Sesion> sesiones(Participante participante){
+    public List<Sesion> sesiones(Participante participante) {
         return repo.findByParticipante(participante);
     }
 
@@ -35,6 +34,4 @@ public class SesionServiceImpl implements SesionService{
         repo.deleteAllByParticipante(p);
     }
 
-    
-    
 }

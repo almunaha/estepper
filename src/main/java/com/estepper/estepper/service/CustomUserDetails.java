@@ -7,13 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.estepper.estepper.model.entity.Usuario;
 
-public class CustomUserDetails implements UserDetails{
+public class CustomUserDetails implements UserDetails {
 
     private Usuario user;
-    
-    public CustomUserDetails(Usuario user){
-        this.user=user;
+
+    public CustomUserDetails(Usuario user) {
+        this.user = user;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -26,8 +27,8 @@ public class CustomUserDetails implements UserDetails{
 
     @Override
     public String getUsername() {
-        
-        String s=Integer.toString(user.getCodigo());
+
+        String s = Integer.toString(user.getCodigo());
         return s;
     }
 
@@ -58,5 +59,5 @@ public class CustomUserDetails implements UserDetails{
     public String getEstadoCuenta() {
         return user.getEstadoCuenta().toString();
     }
-    
+
 }

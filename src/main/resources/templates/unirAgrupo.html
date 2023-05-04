@@ -122,35 +122,33 @@
 
 
                     <div>
-                        <h4
-                            th:text="'Añadir a ' + ${participante.nickname} + ' a un grupo'  ">
-                            <!--th:text="'AÑADIR A UN GRUPO A: ' +${participante.nickname} + ' (' + ${participante.codigo} + ')'">-->
+                        <h4 th:text="'Añadir a ' + ${participante.nickname} + ' a un grupo'  ">
                         </h4>
                     </div>
 
 
                     <div class="table-responsive">
-                    <table class="table tablePart" id="tableAnadirAGrupo">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Número de participantes</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="buscarGrupos">
+                        <table class="table tablePart" id="tableAnadirAGrupo">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Número de participantes</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="buscarGrupos">
 
-                            <tr th:each="lis:${listaGrupos}">
-                                <td th:text="${lis.nombre}"></td>
-                                <td th:text="${lis.numParticipantes}" class="numPartAniadirAGrupo"></td>
-                                <td><a class="btn" id="btn-part"
-                                        th:href="@{'/actualizarGrupos/' + ${participante.id} + '/' + ${lis.id}}">Seleccionar</a>
-                                </td>
+                                <tr th:each="lis:${listaGrupos}">
+                                    <td th:text="${lis.nombre}"></td>
+                                    <td th:text="${lis.numParticipantes}" class="numPartAniadirAGrupo"></td>
+                                    <td><a class="btn" id="btn-part"
+                                            th:href="@{'/actualizarGrupos/' + ${participante.id} + '/' + ${lis.id}}">Seleccionar</a>
+                                    </td>
 
-                            </tr>
-                        </tbody>
+                                </tr>
+                            </tbody>
 
-                    </table>
+                        </table>
                     </div>
 
                 </div>

@@ -12,25 +12,26 @@ import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.repository.MaterialesRepository;
 import com.estepper.estepper.repository.ParticipanteRepository;
 
-
 @Service
 public class MaterialServiceImpl implements MaterialService {
-    
+
     @Autowired
     private MaterialesRepository repoM;
 
     @Autowired
     private ParticipanteRepository repoP;
 
-    public Materiales getMaterial(Integer id){
+    public Materiales getMaterial(Integer id) {
         return repoM.findById(id).get();
     }
 
     @Override
-    public List<Materiales> materialesGrupo(Grupo grupo){
+    public List<Materiales> materialesGrupo(Grupo grupo) {
         List<Materiales> todos = repoM.findByGrupo(grupo);
-        for(int i = todos.size()-1; i > 0 ; i--){
-            if(todos.get(i-1).getLink().equals(todos.get(i).getLink()) && todos.get(i-1).getTitulo().equals(todos.get(i).getTitulo()) && todos.get(i-1).getDescripcion().equals(todos.get(i).getDescripcion()) ){
+        for (int i = todos.size() - 1; i > 0; i--) {
+            if (todos.get(i - 1).getLink().equals(todos.get(i).getLink())
+                    && todos.get(i - 1).getTitulo().equals(todos.get(i).getTitulo())
+                    && todos.get(i - 1).getDescripcion().equals(todos.get(i).getDescripcion())) {
                 todos.remove(i);
             }
         }
@@ -38,14 +39,15 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public void eliminarMaterial(Integer id){
+    public void eliminarMaterial(Integer id) {
         repoM.deleteById(id);
     }
 
     @Override
-    public void eliminarMaterialGrupo(Integer id){
+    public void eliminarMaterialGrupo(Integer id) {
         Materiales material = repoM.findById(id).get();
-        repoM.deleteByGrupoAndLinkAndDescripcionAndTitulo(material.getGrupo(), material.getLink(), material.getDescripcion(), material.getTitulo());
+        repoM.deleteByGrupoAndLinkAndDescripcionAndTitulo(material.getGrupo(), material.getLink(),
+                material.getDescripcion(), material.getTitulo());
     }
 
     @Override
@@ -54,7 +56,7 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public List<Materiales> materiales(Integer id){
+    public List<Materiales> materiales(Integer id) {
         return repoM.findByParticipante(repoP.findById(id).get());
     }
 

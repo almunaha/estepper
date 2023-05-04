@@ -128,11 +128,6 @@
                 <div class="encabezado-grupo">
 
                     <h3 th:text="'GRUPO: ' + ${grupo.nombre}"></h3>
-                    <!--  <h5 th:text="'Código: ' + ${grupo.codigo}"></h5>-->
-                    <!--   <strong th:text="'Número total de participantes: ' + ${grupo.numParticipantes}"></strong>-->
-                    <!--<strong th:text="'Fecha inicio grupo: ' + ${grupo.fechaInicioGrupo}"></strong>
-                    <strong th:text="'Fecha fin grupo: ' + ${mensaje}" th:if="${grupo.fechaFinGrupo == null}"></strong>
-                    <strong th:text="'Fecha fin grupo: ' + ${grupo.fechaFinGrupo}" th:unless="${grupo.fechaFinGrupo == null}"></strong>-->
                 </div>
 
                 <div class="valores-progreso">
@@ -178,7 +173,6 @@
                                 <i class="fa-solid fa-weight-scale" style="color: rgb(221, 175, 100)"></i>
                             </div>
                             <div class="der-valor">
-                                <!--<div class="dato-valor"><span th:text="${grupo.id} + kg"></span></div>-->
                                 <div class="dato-valor"><span id="perdida-peso-media"></span></div>
                                 <div class="bottom-valor"><span>Peso perdido </span></div>
                             </div>
@@ -248,7 +242,7 @@
 
                                         </div>
 
-                                        <!--SON PRUEBAS-->
+                                        <!--DISPLAY: NONE;-->
                                         <div class="listaDeParticipantes mb-2">
                                             <div class="perdida-peso-individual"
                                                 style="text-align: center;display: none; "

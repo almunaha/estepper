@@ -1,4 +1,5 @@
 package com.estepper.estepper.model.entity;
+
 import com.estepper.estepper.model.enums.TipoProgreso;
 
 import java.io.Serializable;
@@ -18,14 +19,14 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 @Table(name = "progreso")
-public class Progreso implements Serializable{
+public class Progreso implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="idParticipante", nullable=false)
+    @JoinColumn(name = "idParticipante", nullable = false)
     private Participante participante;
 
     private Double dato;
@@ -46,7 +47,6 @@ public class Progreso implements Serializable{
 
     public Progreso() {
     }
-
 
     public Integer getId() {
         return id;
@@ -88,9 +88,4 @@ public class Progreso implements Serializable{
         this.tipo = tipo;
     }
 
-
-    
-
-
-    
 }

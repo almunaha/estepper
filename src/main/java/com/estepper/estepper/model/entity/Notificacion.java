@@ -18,8 +18,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="notificaciones")
-public class Notificacion implements Serializable{
+@Table(name = "notificaciones")
+public class Notificacion implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,15 +36,15 @@ public class Notificacion implements Serializable{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "categoria", columnDefinition = "ENUM('VISTO', 'PENDIENTE')")
-    private EstadoNotificacion estado; 
+    private EstadoNotificacion estado;
 
     private String enlace;
-    
 
     public Notificacion() {
     }
 
-    public Notificacion(Integer id, Participante participante, String mensaje, LocalDateTime fechaEnvio, EstadoNotificacion estado,
+    public Notificacion(Integer id, Participante participante, String mensaje, LocalDateTime fechaEnvio,
+            EstadoNotificacion estado,
             String enlace) {
         this.id = id;
         this.participante = participante;
@@ -102,7 +102,4 @@ public class Notificacion implements Serializable{
         this.enlace = enlace;
     }
 
-    
-
-    
 }
