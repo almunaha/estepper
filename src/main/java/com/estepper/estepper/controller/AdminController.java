@@ -1,7 +1,9 @@
 package com.estepper.estepper.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.ui.Model;
@@ -187,7 +189,7 @@ public class AdminController {
             coordinador.setCodigo(elcodigo);
             coordinador.setEstadoCuenta(Estado.ALTA);
             coordinador.setFotoUsuario("/img/p1.png");
-            //coordinador.setIdAdministrador(usuarioLogueado().getId());
+            // coordinador.setIdAdministrador(usuarioLogueado().getId());
 
             usuario.guardar(coordinador);
 
@@ -245,31 +247,76 @@ public class AdminController {
     @PostMapping("/mensajesAdmin/guardar/{idUsuario}")
     public String guardarMensajeAdmin(@ModelAttribute("mensajeAdmin") MensajeAdmin elmensajeAdmin,
             @PathVariable("idUsuario") Integer idUsuario) {
-        
+                if (elmensajeAdmin.getMensaje() != "") {
+                    String elmensaje1 = elmensajeAdmin.getMensaje();
+                    Map<String, String> filtros = new HashMap<>();
+                    filtros.put("puta", "******");
+                    filtros.put("puto", "******");
+                    filtros.put("gilipollas", "******");
+                    filtros.put("joder", "******");
+                    filtros.put("coño", "******");
+                    filtros.put("cabrón", "******");
+                    filtros.put("maricón", "******");
+                    filtros.put("chinga tu madre", "******");
+                    filtros.put("hijueputa", "******");
+                    filtros.put("bastardo", "******");
+                    filtros.put("perra", "******");
+                    filtros.put("malparido", "******");
+                    filtros.put("mamón", "******");
+                    filtros.put("zorra", "******");
+                    filtros.put("pendejo", "******");
+                    filtros.put("conchatumadre", "******");
+                    filtros.put("imbécil", "******");
+                    filtros.put("idiota", "******");
+                    filtros.put("estúpido", "******");
+                    for (String palabra : elmensaje1.split("\\s+")) {
+                        if (filtros.containsKey(palabra.toLowerCase())) {
+                            elmensaje1 = elmensaje1.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
+                        }
+                    }
+                    elmensajeAdmin.setMensaje(elmensaje1);
+                }
         Usuario u = usuarioLogueado();
-        Administrador a = (Administrador) u;
-        
-        //elmensajeAdmin.setAdministrador(a);
         elmensajeAdmin.setEmisor(u);
         elmensajeAdmin.setFechayHoraEnvio(LocalDateTime.now());
         elmensajeAdmin.setUsuario(usuario.findById(idUsuario).get());
 
         mensajeS.saveMensajeAdmin(elmensajeAdmin);
-
-       /*  if (getUsuario() instanceof Coordinador)
-            return "redirect:/chatPrivado/{idParticipante}";
-        else if (getUsuario() instanceof Participante)
-            return "redirect:/chat";*/
-        return "redirect:/mensajesAdmin";
+        return "redirect:/mensajesAdmin?id=" + idUsuario;
     }
 
     @PostMapping("/mensajesAdmin2/guardar")
     public String guardarMensajeAdmin2(@ModelAttribute("mensajeAdmin") MensajeAdmin elmensajeAdmin) {
-        
+        if (elmensajeAdmin.getMensaje() != "") {
+            String elmensaje1 = elmensajeAdmin.getMensaje();
+            Map<String, String> filtros = new HashMap<>();
+            filtros.put("puta", "******");
+            filtros.put("puto", "******");
+            filtros.put("gilipollas", "******");
+            filtros.put("joder", "******");
+            filtros.put("coño", "******");
+            filtros.put("cabrón", "******");
+            filtros.put("maricón", "******");
+            filtros.put("chinga tu madre", "******");
+            filtros.put("hijueputa", "******");
+            filtros.put("bastardo", "******");
+            filtros.put("perra", "******");
+            filtros.put("malparido", "******");
+            filtros.put("mamón", "******");
+            filtros.put("zorra", "******");
+            filtros.put("pendejo", "******");
+            filtros.put("conchatumadre", "******");
+            filtros.put("imbécil", "******");
+            filtros.put("idiota", "******");
+            filtros.put("estúpido", "******");
+            for (String palabra : elmensaje1.split("\\s+")) {
+                if (filtros.containsKey(palabra.toLowerCase())) {
+                    elmensaje1 = elmensaje1.replaceAll("(?i)" + palabra, filtros.get(palabra.toLowerCase()));
+                }
+            }
+            elmensajeAdmin.setMensaje(elmensaje1);
+        }
         Usuario u = usuarioLogueado();
-        //Administrador a = administrador.getAdministrador(idAdministrador);
-        
-       // elmensajeAdmin.setAdministrador(a);
         elmensajeAdmin.setEmisor(u);
         elmensajeAdmin.setFechayHoraEnvio(LocalDateTime.now());
         elmensajeAdmin.setUsuario(u);

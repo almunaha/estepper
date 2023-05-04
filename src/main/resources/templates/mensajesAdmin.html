@@ -135,12 +135,9 @@
                                         <td><span th:text="${lis.nickname}"></span></td>
                                         <td><span th:text="${lis.codigo}"></span></td>
                                         <td>
-                                            <a class="btn btn-primary"
-                                                th:attr="data-chatid=${lis.id} + '&nickname=' + ${lis.nickname} + '&listaMensajes=' + ${mensajesAdmin}"
-                                                onclick="abrirChat(this.getAttribute('data-chatid'))">
+                                            <a class="btn btn-primary" th:href="@{'/mensajesAdmin?id=' + ${lis.id}}" data-bs-toggle="tooltip">
                                                 <i title="Mensaje" class="fa-solid fa-envelope"></i>
                                             </a>
-
                                         </td>
 
                                     </tr>
@@ -149,17 +146,15 @@
                         </div>
 
                         <div class="mitadDerechaAdmin" id="derechaAdmin"
-                            style="margin-left: 3%; width:50%; display:none">
+                            style="margin-left: 3%; width:50%; display:block">
                             <div class="bordes-chatADMIN" style="width: 90%;">
                                 <section class="chat-area">
                                     <header style="flex-direction: column;">
-                                        <h4 id="nombreDelUsuario"></h4>
-                                        <h4 id="idDelUsuario"></h4>
+                                        <h4 th:text="${mensajero.nickname}"></h4>
                                     </header>
                                     <div class="chat-box">
                                         <div th:each="m : ${mensajesAdmin}" class="contenedor-mensaje mb-2">
-                                            <div th:if="${m.usuario.id == 2}" id="mensajeUsuario">
-                                                <!--problema de la comparación-->
+                                            <div th:if="${m.usuario.id == mensajero.id}">
                                                 <div th:if="${m.emisor.id != user.id}"
                                                     class="mensaje d-flex justify-content-start align-items-end">
                                                     <img th:src="${m.usuario.fotoUsuario}" style="width: 40px;"
@@ -188,7 +183,7 @@
                                         </div>
                                     </div>
 
-                                    <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}"
+                                    <form th:action="@{'/mensajesAdmin/guardar/' + ${mensajero.id}}" th:object="${mensajeAdmin}"
                                         method="post" enctype="multipart/form-data">
                                         <div class="m-3" style="display:flex">
 
@@ -204,33 +199,6 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <script>
-                                        
-                                        function updateMensajeUsuario(id) { //nunca llega a cambiarse la expresión
-                                            const comparacion = `m.usuario.id == ${id}`;
-                                            $('#mensajeUsuario').attr('th:if', comparacion);
-                                        }
-                                        
-                                        function abrirChat(url) {
-                                            const [chatId, nickname, listaMensajes] = url.split('&');
-                                            const id = chatId.split('=')[0];
-                                            const name = nickname.split('=')[1];
-                                            const mensajes = listaMensajes.split('=')[2];
-
-                                            document.getElementById("idDelUsuario").innerText = id;
-                                            document.getElementById("nombreDelUsuario").innerHTML = name;
-                                            updateMensajeUsuario(id);
-                                            const elemento = document.getElementById('derechaAdmin');
-                                            elemento.style.display = 'block';
-
-                                            const form = document.querySelector('#derechaAdmin form');
-                                            form.action = '/mensajesAdmin/guardar/' + id;
-
-
-                                            $.get('/messages/' + id);
-
-                                        }
-                                    </script>
                                 </section>
                             </div>
                         </div>
@@ -240,29 +208,6 @@
                 </div>
             </div>
 
-        </div>
-    </div>
-
-    <div class="modal fade" id="ModalNuevoMensaje" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Nuevo mensaje</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}" method="post"
-                        enctype="multipart/form-data">
-                        <div class="m-3">
-
-                            <div class="text-center p">
-                                <button type="submit" class="btn" id="btn-part">Enviar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
         </div>
     </div>
 

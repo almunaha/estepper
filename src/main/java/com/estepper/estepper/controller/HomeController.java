@@ -578,58 +578,27 @@ public class HomeController {
     }
 
     @GetMapping("/mensajesAdmin")
-    public String mensajesAdmin(Model model, @RequestParam(required = false) List<MensajeAdmin> mensajesConAdministrador) {
+    public String mensajesAdmin(Model model, @RequestParam(required = false) Integer id) {
 
         Usuario user = getUsuario();
         List<Usuario> lista = usuario.listadoTotal();
         lista.remove(user); 
         MensajeAdmin menAdmin = new MensajeAdmin();
-        Administrador admin = (Administrador) user;
-        //List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin(admin);
         List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin();
-
-
-        /*System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
-
-        System.out.println("Valor de userId: " + userId); // Imprime el valor de userId en la consola // Imprime el valor de userId en la consola
-
-        List<MensajeAdmin> alvaro = null;
-        if (userId != null) {
-            alvaro = mensaje.obtenerMensajesAdminyUsuario(admin, usuario.findById(userId).get());
-        } 
-        System.out.println(mensajesAdmin);
-        System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
-        System.out.println(alvaro);*/
+        if(id != null){
+            model.addAttribute("mensajero", usuario.findById(id).get());
+        } else {
+            model.addAttribute("mensajero", lista.get(0));
+        }
 
         model.addAttribute("user", user);
         model.addAttribute("usuarios", lista);
         model.addAttribute("mensajeAdmin", menAdmin);
         model.addAttribute("mensajesAdmin", mensajesAdmin);
-        model.addAttribute("mensajesConAdministrador", mensajesConAdministrador);
-        
-        System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
-        System.out.println(mensajesConAdministrador);
-        System.out.println("--------------------------------------------------------------------"); // Imprime el valor de userId en la consola
-
-        //List<MensajeAdmin> mensajesConAdministrador = (List<MensajeAdmin>) redirAttrs.getFlashAttributes().get("mensajesConAdministrador");
     
 
         return "mensajesAdmin";
 
-    }
-
-    @GetMapping("/messages/{userId}")
-    public String getUserMessages(@PathVariable Integer userId, RedirectAttributes redirAttrs) {
-
-        Administrador admin = (Administrador) getUsuario();
-        //List<MensajeAdmin> messages = mensaje.obtenerMensajesAdminyUsuario(admin, usuario.findById(userId).get());
-        List<MensajeAdmin> messages = mensaje.obtenerMensajesUsuario(getUsuario());
-
-       // redirAttrs.addFlashAttribute("mensajesConAdministrador", messages);
-        //redirAttrs.addAttribute("userId", userId);
-        redirAttrs.addAttribute("mensajesConAdministrador", messages);
-
-        return "redirect:/mensajesAdmin";
     }
 
     @GetMapping("/chatCordAdmin") // vista coordinador
