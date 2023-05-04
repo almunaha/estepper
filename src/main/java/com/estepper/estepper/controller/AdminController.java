@@ -149,14 +149,15 @@ public class AdminController {
                         mensajeS.deleteByGrupo(listgrupos.get(i));
                         obs.deleteByGrupo(listgrupos.get(i));
                         grupoS.delete(listgrupos.get(i).getId());
-
-                        // grupoS.delete(id);
                     }
                 }
+                participante.borrarCoordinador(c);
                 invitacion.eliminarPorCoordinador(coordinador.getCoordinador(id));
                 usuario.eliminar(id);
-            } else
+            } else{
+                mensajeS.deleteByUsuarioMensajeAdmin(usuario.findById(id).get());
                 usuario.eliminar(id);
+            }      
 
             // pasar usuario logueado y listado
             model.addAttribute("user", usuarioLogueado());

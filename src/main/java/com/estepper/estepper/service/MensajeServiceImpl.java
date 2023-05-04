@@ -50,6 +50,7 @@ public class MensajeServiceImpl implements MensajeService {
         repo.deleteAllByUsuario(p);
         repoPrivado.deleteAllByUsuario(p);
         repoPrivado.deleteAllByParticipante((Participante) p);
+        repoAdmin.deleteAllByUsuario(p);
     }
 
     @Override
@@ -82,6 +83,7 @@ public class MensajeServiceImpl implements MensajeService {
     @Override
     public void deleteByCoordinadorMensajePrivado(Coordinador c) {
         repoPrivado.deleteAllByCoordinador(c);
+        repoAdmin.deleteAllByUsuario(c);
     }
 
     // MENSAJES ADMINISTRADOR

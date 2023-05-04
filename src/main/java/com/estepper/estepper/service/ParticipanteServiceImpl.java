@@ -82,4 +82,13 @@ public class ParticipanteServiceImpl implements ParticipanteService {
         repo.save(participante);
     }
 
+    @Override
+    public void borrarCoordinador(Coordinador coordinador) {
+        List<Participante> lista = repo.findByCoordinador(coordinador);
+        for(int i = 0; i < lista.size(); i++){
+            Participante este = lista.get(i);
+            repo.update(este.getEdad(), este.getSexo(), este.getFotoUsuario(), este.getGrupo(), este.getAsistencia(), null, este.getPerdidaDePeso(), este.getSesionesCompletas(), este.getPerdidacmcintura(), este.getId());
+        }
+    }
+
 }

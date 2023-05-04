@@ -26,6 +26,8 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
 
     List<Participante> findByGrupo(Grupo grupo);
 
+    List<Participante> findByCoordinador(Coordinador coordinador);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Participante m WHERE m.id = :participante")

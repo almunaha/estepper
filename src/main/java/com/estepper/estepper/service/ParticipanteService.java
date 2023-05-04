@@ -29,4 +29,6 @@ public interface ParticipanteService {
     public void quitargrupo(Integer id);
 
     public void save(Participante participante);
+
+    public void borrarCoordinador(Coordinador coordinador);
 }
