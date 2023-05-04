@@ -1540,7 +1540,7 @@ public class ParticipanteController {
 
     @GetMapping("/recetasparecidas")
     public String recetasParecidas(@RequestParam(required = false) String[] want,
-            @RequestParam(required = false) String[] dontwant, Model model) {
+            @RequestParam(required = false) String[] dontWant, Model model) {
         Usuario u = getUsuario();
         model.addAttribute("user", u);
 
@@ -1551,7 +1551,7 @@ public class ParticipanteController {
             // EN PYTHON:
             else {
                 List<String> recetas = new ArrayList<String>();
-                String[] recetasArray = service.recetasparecidas(want, dontwant);
+                String[] recetasArray = service.recetasparecidas(want, dontWant);
                 recetas = Arrays.asList(recetasArray);
                 String[] recetaArray = recetas.get(0).split(",");
                 for (String idReceta : recetaArray) {
