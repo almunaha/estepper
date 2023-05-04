@@ -381,7 +381,7 @@ public class HomeController {
         Cookie cookie = new Cookie("consentimiento", userId.toString());
         cookie.setMaxAge(Integer.MAX_VALUE);
         response.addCookie(cookie);
-        return "redirect:/";
+        return "login";
     }
 
     @PostMapping("/process_register") // Procesar el registro

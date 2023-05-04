@@ -1956,9 +1956,9 @@ public class ParticipanteController {
     @GetMapping("/analitica/{id}")
     public String analitica(@PathVariable Integer id, Model model) {
         Participante p = participante.findById(id).get();
-
-        if (getUsuario() instanceof Coordinador
-                && (p.getCoordinador().getId() == getUsuario().getId() || p.getEstadoCuenta() == Estado.BAJA)) {
+        if(p.getEstadoCuenta() == Estado.BAJA) usuario.mandarAnalitica(p);
+        else if (getUsuario() instanceof Coordinador
+                && (p.getCoordinador().getId() == getUsuario().getId())) {
             usuario.mandarAnalitica(p);
         }
         return "redirect:/expediente/{id}";

@@ -240,13 +240,10 @@ public class CoordinadorController {
         Participante p = part.getParticipante(m.getParticipante().getId()); // participante DUEÑO del material
 
         try {
-            // Es Coordinador: si el idCoordinador del dueño del material es distinto que el
-            // del coordinador: si no es un participante del coordinador
-            // O Es Participante: si el participante logueado no tiene el mismo id que el
+            // Es Participante: si el participante logueado no tiene el mismo id que el
             // dueño del material
             // O es Administrador
-            if (u instanceof Coordinador && u.getId() != p.getCoordinador().getId()
-                    || u instanceof Participante && p.getId() != u.getId() || u instanceof Administrador) {
+            if (u instanceof Participante && p.getId() != u.getId() || u instanceof Administrador) {
                 RedirectView inicio = new RedirectView("/");
                 return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, inicio.getUrl()).build();
             }
