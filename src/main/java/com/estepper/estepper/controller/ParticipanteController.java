@@ -303,7 +303,8 @@ public class ParticipanteController {
     public String processExploracion(@PathVariable("id") Integer id, @ModelAttribute Exploracion exploracion) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
             Findrisc findrisc = null;
             for (int i = 0; i < formularios.size(); i++) {
@@ -388,10 +389,11 @@ public class ParticipanteController {
 
     @GetMapping("/findrisc/{id}")
     public String findrisc(@PathVariable Integer id, Model model) {
-        
+
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             model.addAttribute("user", getUsuario());
             model.addAttribute("participante", p);
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
@@ -418,7 +420,8 @@ public class ParticipanteController {
     public String processFindrisc(@PathVariable("id") Integer id, @ModelAttribute Findrisc findrisc) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             fasevaloracion.updateFindrisc(p, findrisc.getPuntosedad(), findrisc.getPuntosimc(),
                     findrisc.getPuntoscmcintura(),
                     findrisc.getPtosactfisica(),
@@ -449,7 +452,8 @@ public class ParticipanteController {
     public String clasificacion(@PathVariable Integer id, Model model) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             model.addAttribute("user", getUsuario());
             model.addAttribute("participante", p);
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
@@ -485,7 +489,8 @@ public class ParticipanteController {
     public String processClasificacion(@PathVariable("id") Integer id, @ModelAttribute Clasificacion clasificacion) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             fasevaloracion.updateClasificacion(clasificacion, p);
 
             return "redirect:/valoracion/{id}";
@@ -497,7 +502,8 @@ public class ParticipanteController {
     public String antecedentes(@PathVariable Integer id, Model model) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             model.addAttribute("user", getUsuario());
             model.addAttribute("participante", p);
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
@@ -524,7 +530,8 @@ public class ParticipanteController {
     public String processantecedentes(@PathVariable("id") Integer id, @ModelAttribute Antecedentes antecedentes) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             fasevaloracion.updateAntecedentes(antecedentes, p);
 
             return "redirect:/valoracion/{id}";
@@ -536,7 +543,8 @@ public class ParticipanteController {
     public String alimentacionval(@PathVariable Integer id, Model model) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             model.addAttribute("user", getUsuario());
             model.addAttribute("participante", p);
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
@@ -565,7 +573,8 @@ public class ParticipanteController {
             @ModelAttribute AlimentacionVal alimentacionval) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             fasevaloracion.updateAlimentacionVal(alimentacionval, p);
 
             return "redirect:/valoracion/{id}";
@@ -577,7 +586,8 @@ public class ParticipanteController {
     public String actfisica(@PathVariable Integer id, Model model) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             model.addAttribute("user", getUsuario());
             model.addAttribute("participante", p);
             List<FaseValoracion> formularios = fasevaloracion.faseValoracion(p);
@@ -605,7 +615,8 @@ public class ParticipanteController {
     public String processactfisica(@PathVariable("id") Integer id, @ModelAttribute ActividadFisica actfisica) {
         Participante p = participante.findById(id).get();
         if (getUsuario() instanceof Coordinador
-                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId()) || p.getEstadoCuenta() == Estado.BAJA)) {
+                && ((p.getCoordinador() != null && p.getCoordinador().getId() == getUsuario().getId())
+                        || p.getEstadoCuenta() == Estado.BAJA)) {
             fasevaloracion.updateActividadFisica(actfisica, p);
 
             return "redirect:/valoracion/{id}";
@@ -1193,7 +1204,9 @@ public class ParticipanteController {
             model.addAttribute("user", user);
             model.addAttribute("actividad", acti);
 
-            if (user instanceof Participante) { // si es participante comprobar asistencia confirmada a actividad
+            if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) { // si es participante
+                                                                                              // comprobar asistencia
+                                                                                              // confirmada a actividad
                 boolean asiste = false;
                 Integer asistencia = act.asistencia(acti.getId(), getUsuario().getId());
 
@@ -1224,36 +1237,33 @@ public class ParticipanteController {
     public String confirmar(@PathVariable Integer id, Model model) {
         Usuario user = getUsuario();
 
-        if (user instanceof Participante) {
-            // Coordinador del participante
-            Coordinador c = coordinador
-                    .getCoordinador(participante.findById(user.getId()).get().getCoordinador().getId());
-
-            // Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            // model.addAttribute("administrador", admin);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
 
             Actividad acti = act.actividad(id);
-            Participante parti = participante.findById(user.getId()).get();
 
-            acti.getParticipantes().add(parti);
-            acti.setNumParticipantes(acti.getNumParticipantes() + 1);
-            acti.setPlazas(acti.getPlazas() - 1);
-            act.guardar(acti);
+            if (acti.getPlazas() > 0) { // comprobar que haya plazas disponibles
+                Participante parti = participante.findById(user.getId()).get();
 
-            // comprobar si las plazas se han quedado a cero
-            List<Invitacion> invitaciones = invi.listadoByAct(acti);
-            if (acti.getPlazas() == 0) {
-                for (Invitacion invitacion : invitaciones) {
-                    if (invitacion.getEstado().equals(EstadoInvitacion.PENDIENTE)) {
-                        invi.borrar(invitacion);
+                acti.getParticipantes().add(parti);
+                acti.setNumParticipantes(acti.getNumParticipantes() + 1);
+                acti.setPlazas(acti.getPlazas() - 1);
+                act.guardar(acti);
 
-                        // notificsción invitación a la que ya no hay disponibilidad
-                        Notificacion notificacion = new Notificacion(0, invitacion.getParticipante(),
-                                "Invitación eliminada a " + acti.getNombre() + "Se han acabado las plazas",
-                                LocalDateTime.now(),
-                                EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
-                        noti.guardar(notificacion);
+                // comprobar si las plazas se han quedado a cero
+                List<Invitacion> invitaciones = invi.listadoByAct(acti);
+                if (acti.getPlazas() == 0) {
+                    for (Invitacion invitacion : invitaciones) {
+                        if (invitacion.getEstado().equals(EstadoInvitacion.PENDIENTE)) {
+                            invi.borrar(invitacion);
 
+                            // notificsción invitación a la que ya no hay disponibilidad
+                            Notificacion notificacion = new Notificacion(0, invitacion.getParticipante(),
+                                    "Invitación eliminada a " + acti.getNombre() + "Se han acabado las plazas",
+                                    LocalDateTime.now(),
+                                    EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
+                            noti.guardar(notificacion);
+
+                        }
                     }
                 }
             }
@@ -1269,22 +1279,29 @@ public class ParticipanteController {
     @GetMapping("/eliminar_inscripcion/{id}")
     public String process_invitacion(@PathVariable(name = "id") Integer id, Model model) {
 
-        Participante p = participante.getParticipante(getUsuario().getId());
-        Actividad actividad = act.actividad(id);
+        Usuario user = getUsuario();
 
-        // 1. Eliminar participante de la actividad
-        actividad.getParticipantes().remove(p);
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
 
-        // 2. Eliminar asistente del número de participantes
-        actividad.setNumParticipantes(actividad.getNumParticipantes() - 1);
+            Participante p = participante.getParticipante(getUsuario().getId());
+            Actividad actividad = act.actividad(id);
 
-        // 3. Aumentar número de plazas
-        actividad.setPlazas(actividad.getPlazas() + 1);
+            // 1. Eliminar participante de la actividad
+            actividad.getParticipantes().remove(p);
 
-        // 4. Guardar actividad
-        act.guardar(actividad);
+            // 2. Eliminar asistente del número de participantes
+            actividad.setNumParticipantes(actividad.getNumParticipantes() - 1);
 
-        return "redirect:/actividades";
+            // 3. Aumentar número de plazas
+            actividad.setPlazas(actividad.getPlazas() + 1);
+
+            // 4. Guardar actividad
+            act.guardar(actividad);
+            return "redirect:/actividades";
+
+        } else
+            return "redirect:/";
+
     }
 
     @GetMapping("/confirmar_invitacion/{id}")
@@ -1295,7 +1312,7 @@ public class ParticipanteController {
         // Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
         // model.addAttribute("administrador", admin);
 
-        if (user instanceof Participante) {
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
             Invitacion invitacion = invi.findById(id);
 
             Actividad acti = invitacion.getActividad();
@@ -1338,7 +1355,7 @@ public class ParticipanteController {
     public String rechazarInvitacion(@PathVariable Integer id, Model model) {
         Usuario user = getUsuario();
 
-        if (user instanceof Participante) {
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
             // administrador del participante
             /*
              * Coordinador c =
@@ -1368,7 +1385,7 @@ public class ParticipanteController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        if (user instanceof Participante) {
+        if (user instanceof Participante && user.getEstadoCuenta().equals(Estado.ALTA)) {
 
             /*
              * Coordinador c =

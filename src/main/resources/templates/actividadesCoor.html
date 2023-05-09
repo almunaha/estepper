@@ -17,7 +17,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script src="/js/menu.js"></script>
-  <script src="/js/actividades.js"></script>
   <script src="/js/validaciones.js"></script>
 
 
@@ -29,6 +28,8 @@
   <script src="sweetalert2.min.js"></script>
   <link rel="stylesheet" href="sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="/js/actividades.js"></script>
+
 
   <title>Actividades - Estepper</title>
 </head>
@@ -134,10 +135,10 @@
 
 
         <!-- Buscador de actividades -->
-        <div class="d-flex" id="busqueda-actividad">
+        <div class="d-flex" id="busqueda-actividad" style="margin-bottom: 12px; width: 98%;">
           <form id="buscadorActi">
             <div style="display: flex; justify-content: center; align-items: center;" class="input-group">
-              <input style="height: 5%;" id="filtrarActividades" class="form-control light-table-filter"
+              <input style="height: 5%;" id="filtroActividades" class="form-control light-table-filter"
                 data-table="tableActi" type="text" placeholder="Buscar actividad...">
             </div>
           </form>
@@ -150,8 +151,9 @@
               </div>
             </select>
           </div>
-          <a class="btn-act" onclick="abrirIframe('nuevaActividad')" href="#">Nueva actividad</a>
-
+          <div style="margin-left: 10%;">
+            <a class="btn-act" onclick="abrirIframe('nuevaActividad')" href="#">Nueva actividad</a>
+          </div>
         </div>
         <!-- Modal de nueva activiad -->
         <div class="modal fade" id="nuevaActividad" tabindex="-1" aria-hidden="true">
@@ -234,11 +236,15 @@
 
         <div class="layout-actividades">
           <div class="act-coor" th:each="lis:${listado}">
+            <div id="categoria-acti" th:data-categoria="${lis.categoria}" hidden></div>
 
-            <!-- Datos actividad -->
+            <div class="foto-act-coord">
+              <img th:src="${lis.foto}" />
+            </div>            
+          <!-- Datos actividad -->
             <div class="datos-coor">
               <div class="iz-datos">
-                <div th:text="${lis.nombre}"></div>
+                <div th:text="${lis.nombre}" class="nombre-act"></div>
                 <div class="mt-3">
                   <i class="fa-solid fa-calendar-days"></i>
                   <span th:text="${#temporals.format(lis.fechaRealizacion, 'dd MMM')}"></span>&nbsp
@@ -252,7 +258,7 @@
               </div>
 
               <div class="medio-datos">
-                <span th:text="'Plazas disponibles: '+ ${lis.plazas}"></span>&nbsp
+                <span th:text="'Plazas: '+ ${lis.plazas}"></span>&nbsp
                 <span th:text="'Asistentes: '+ ${lis.numParticipantes}"></span>
               </div>
             </div>
@@ -260,8 +266,15 @@
             <!-- Botones actividad -->
             <div class="der-datos">
               <div class="botones-coor">
-                <a class="btn-gest" id="enlace" th:href="@{'/actividad/' + ${lis.id}}">Información</i></a>
-                <a class="btn-gest" id="enlace" th:href="@{'/invitaciones/' + ${lis.id}}">Invitaciones</a>
+                <a class="btn-gest" id="enlace" th:href="@{'/actividad/' + ${lis.id}}">
+                  <span class="texto">Información</span>
+                  <span class="icono"><i class="fa-solid fa-circle-info"></i></span>
+                </a>
+
+                <a class="btn-gest" id="enlace" th:href="@{'/invitaciones/' + ${lis.id}}">
+                  <span class="texto">Invitaciones</span>
+                  <span class="icono"><i class="fa-solid fa-paper-plane"></i></span>
+                </a>
                 <a class="btn-gest" th:href="@{'/editarActividad/' + ${lis.id}}"><i class="fa-solid fa-pen"></i></a>
                 <a class="btn-gest-eliminar" style="cursor: pointer" th:data-id="${lis.id}"><i
                     class="fa-solid fa-trash"></i></a>

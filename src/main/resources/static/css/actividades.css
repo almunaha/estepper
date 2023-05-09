@@ -67,6 +67,13 @@
     overflow: hidden;
 }
 
+.foto-act-coord{
+    height: 70px;
+    width: 9%;
+    overflow: hidden;
+    margin-left: 1%;
+}
+
 .foto-act img {
     width: 100%;
     height: 100%;
@@ -75,6 +82,15 @@
     border-top-right-radius: 12px;
     border-top-left-radius: 12px;
 }
+
+.foto-act-coord img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 4px;
+}
+
 
 .datos-actividad {
     padding-left: 8%;
@@ -273,14 +289,19 @@
     border: 2px solid;
     color: white;
     border-color: rgb(224, 176, 94);
-    font-size: 115%;
+    font-size: 110%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-    padding: 0.8%;
+    padding: 5%;
     border-radius: 10px;
+    display: block;
+    width: 120%;
+    text-align: center;
+    float: right;
+    margin-top: 16%;
 }
 
 .btn-act:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 .layout-actividades {
@@ -419,6 +440,10 @@
     justify-content: center;
 }
 
+.btn-gest .icono {
+    display: none;
+}
+
 
 /* RESPONSIVE */
 @media (max-width: 767px) {
@@ -528,6 +553,18 @@
     .btn-funcion{
         display: flex;
         flex-direction: column;
+    }
+
+    .btn-gest .texto {
+        display: none;
+    }
+
+    .btn-gest .icono {
+        display: inline-block;
+    }
+
+    .foto-act-coord{
+        display: none;
     }
 
 }

@@ -106,10 +106,11 @@ public class CoordinadorController {
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
             PageRequest pageable = PageRequest.of(page, 6); // define página solicitada y tamaño de la página, se
                                                             // inicializa a cero
-            Page<Participante> paginaPart = part.paginas(pageable, coordinador.getCoordinador(getUsuario().getId()), Estado.BAJA); // listado de
-                                                                                                       // páginas de 6
-                                                                                                       // participantes
-                                                                                                       // cada una
+            Page<Participante> paginaPart = part.paginas(pageable, coordinador.getCoordinador(getUsuario().getId()),
+                    Estado.BAJA); // listado de
+            // páginas de 6
+            // participantes
+            // cada una
             int totalPags = paginaPart.getTotalPages(); // total de páginas
 
             if (totalPags > 0) {
@@ -127,9 +128,11 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
             model.addAttribute("listado", listado);
 
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
+            /*
+             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+             * model.addAttribute("administrador", admin);
+             */
 
             return "participantes";
         }
@@ -191,9 +194,11 @@ public class CoordinadorController {
                 }
             }
 
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
+            /*
+             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+             * model.addAttribute("administrador", admin);
+             */
 
             return "redirect:/listaGrupos";
         }
@@ -229,9 +234,11 @@ public class CoordinadorController {
              * }
              */
 
-             /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-             Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-             model.addAttribute("administrador", admin);*/
+            /*
+             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+             * model.addAttribute("administrador", admin);
+             */
 
             return "redirect:/grupos/editar/{idG}";
         }
@@ -341,9 +348,11 @@ public class CoordinadorController {
         if (elusuario instanceof Coordinador) {
             model.addAttribute("actividad", act.actividad(id));
 
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
+            /*
+             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+             * model.addAttribute("administrador", admin);
+             */
             return "editar_actividad";
         } else
             return "redirect:/";
@@ -375,7 +384,7 @@ public class CoordinadorController {
             // foto
             if (!file.isEmpty())
                 subirFoto(file, actividad);
-            else{
+            else {
                 actividad.setFoto(orig.getFoto());
             }
 
@@ -393,7 +402,7 @@ public class CoordinadorController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        if(user instanceof Coordinador){
+        if (user instanceof Coordinador) {
 
             Actividad actividad = act.actividad(id);
             model.addAttribute("actividad", actividad);
@@ -406,13 +415,16 @@ public class CoordinadorController {
             List<Invitacion> invitaciones = inv.listadoCoordAct(c, actividad);
             model.addAttribute("invitaciones", invitaciones);
 
-            /*Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
+            /*
+             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+             * model.addAttribute("administrador", admin);
+             */
 
             return "invitaciones";
         }
 
-        else return "redirect:/";
+        else
+            return "redirect:/";
     }
 
     @PostMapping("/process_invitacion/{id}")
@@ -421,7 +433,7 @@ public class CoordinadorController {
             RedirectAttributes redirAttrs) {
 
         Actividad actividad = act.actividad(id);
-        Coordinador c= coordinador.getCoordinador(getUsuario().getId());
+        Coordinador c = coordinador.getCoordinador(getUsuario().getId());
 
         if (tipo.equals("GRUPAL")) {
             // grupo
@@ -437,7 +449,7 @@ public class CoordinadorController {
                 if (invitacion == null) {
                     inv.guardar(new Invitacion(0, actividad, p, c, EstadoInvitacion.PENDIENTE));
                     Notificacion notificacion = new Notificacion(0, p,
-                            "Nueva invitación a la actividad: " + actividad.getNombre(), LocalDateTime.now(),
+                            "Nueva invitación grupal a la actividad: " + actividad.getNombre(), LocalDateTime.now(),
                             EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
                     noti.guardar(notificacion);
                 }
@@ -452,8 +464,13 @@ public class CoordinadorController {
 
                 if (p != null) {
                     Invitacion invitacion = inv.invitacionByPartAndActi(p, actividad);
-                    if (invitacion == null)
+                    if (invitacion == null) {
                         inv.guardar(new Invitacion(0, actividad, p, c, EstadoInvitacion.PENDIENTE));
+                        Notificacion notificacion = new Notificacion(0, p,
+                                "Nueva invitación a la actividad: " + actividad.getNombre(), LocalDateTime.now(),
+                                EstadoNotificacion.PENDIENTE, "/panel_invitaciones");
+                        noti.guardar(notificacion);
+                    }
                 }
             }
 
@@ -474,7 +491,7 @@ public class CoordinadorController {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
 
-        if(user instanceof Coordinador){
+        if (user instanceof Coordinador) {
             Actividad actividad = act.actividad(id);
 
             // 1. Eliminar las invitaciones a esa actividad
@@ -486,14 +503,17 @@ public class CoordinadorController {
             // 2. Eliminar la actividad
             act.borrar(actividad);
 
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
+            /*
+             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
+             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
+             * model.addAttribute("administrador", admin);
+             */
 
             return "redirect:/actividades";
         }
 
-        else return "redirect:/";
+        else
+            return "redirect:/";
     }
 
 }

@@ -226,8 +226,43 @@ $(document).ready(function () {
             }
 
         })
-
     });
+
+    //filtros actividades coordinador
+    // Filtros
+    $('#filtroActividades').on('keyup', function () {
+        var buscado = $('#filtroActividades').val().toLowerCase();
+        var categSeleccionada = $('#categoria').val().toLowerCase();
+        const actividades = $('.act-coor');
+
+        console.log(actividades);
+
+        for (var i = 0; i < actividades.length; i++) {
+            var nombre = actividades.eq(i).find('.nombre-act').text().toLowerCase();
+            var categoria = actividades.eq(i).find('#categoria-acti').data('categoria').toLowerCase();
+
+            if (buscado === '' && categSeleccionada === 'todas' || buscado === '' && categSeleccionada === categoria) {
+                actividades.eq(i).show();
+            }
+
+            else if (nombre.includes(buscado) && categSeleccionada === 'todas') {
+                actividades.eq(i).show();
+            }
+
+            else if (nombre.includes(buscado) && categoria === categSeleccionada) {
+                actividades.eq(i).show();
+            }
+            else {
+                actividades.eq(i).hide();
+            }
+        }
+    });
+
+    $('#categoria').on('change', function () { //cuando se cambia la categoria vuelve a hacer el keyup
+        $('#filtroActividades').trigger('keyup');
+    });
+
+
 
 
 
