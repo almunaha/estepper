@@ -16,7 +16,7 @@ public class ActividadFisica extends FaseValoracion {
     private Integer vecesafv;
     private Integer horaafv;
     private Integer minafv;
-    private Integer metsafv; 
+    private Integer metsafv;
     private Integer vecesafm;
     private Integer horaafm;
     private Integer minafm;
@@ -30,11 +30,14 @@ public class ActividadFisica extends FaseValoracion {
     private Integer metstotales;
     private String clasificacion;
 
-    public ActividadFisica(){
+    public ActividadFisica() {
         super();
     }
 
-    public ActividadFisica(Integer id, Participante participante, Integer vecesafv, Integer horaafv, Integer minafv, Integer metsafv, Integer vecesafm, Integer horaafm, Integer minafm, Integer metsafm, Integer vecescaminar, Integer horacaminar, Integer mincaminar, Integer metscaminar, Integer horasentado, Integer minsentado, Integer metstotales, String clasificacion){
+    public ActividadFisica(Integer id, Participante participante, Integer vecesafv, Integer horaafv, Integer minafv,
+            Integer metsafv, Integer vecesafm, Integer horaafm, Integer minafm, Integer metsafm, Integer vecescaminar,
+            Integer horacaminar, Integer mincaminar, Integer metscaminar, Integer horasentado, Integer minsentado,
+            Integer metstotales, String clasificacion) {
         super(id, participante);
         this.vecesafv = vecesafv;
         this.horaafv = horaafv;
@@ -190,6 +193,4 @@ public class ActividadFisica extends FaseValoracion {
         this.clasificacion = clasificacion;
     }
 
-    
-    
 }

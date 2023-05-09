@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="clasificacion")
+@Table(name = "clasificacion")
 public class Clasificacion extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,14 @@ public class Clasificacion extends FaseValoracion {
     private String motivotaller;
     private String actividadfisica;
 
-    public Clasificacion(){
+    public Clasificacion() {
         super();
     }
 
-    public Clasificacion(Integer id, Participante participante, String analiticahecha, Integer glucemia, Integer colesterol, Integer ldl, Integer sog, Integer hdl, Integer trigliceridos, float hbA1c, String pediranalitica, Integer clasificacionusuario, String montesa, String motivomontesa, String taller, String motivotaller, String actividadfisica){
+    public Clasificacion(Integer id, Participante participante, String analiticahecha, Integer glucemia,
+            Integer colesterol, Integer ldl, Integer sog, Integer hdl, Integer trigliceridos, float hbA1c,
+            String pediranalitica, Integer clasificacionusuario, String montesa, String motivomontesa, String taller,
+            String motivotaller, String actividadfisica) {
         super(id, participante);
         this.analiticahecha = analiticahecha;
         this.glucemia = glucemia;
@@ -180,5 +183,4 @@ public class Clasificacion extends FaseValoracion {
         this.actividadfisica = actividadfisica;
     }
 
-    
 }

@@ -15,14 +15,13 @@ public class EstepperApplication {
 	}
 
 	@Bean(name = "PythonServiceFactory")
-    public PythonServiceFactory PythonFactory() {
-    	return new PythonServiceFactory();
-    }
-    
-    @Bean(name = "PythonServiceImpl")
-    public PythonService PythonServiceImpl() throws Exception {
-        return PythonFactory().getObject();
+	public PythonServiceFactory PythonFactory() {
+		return new PythonServiceFactory();
 	}
-    
+
+	@Bean(name = "PythonServiceImpl")
+	public PythonService PythonServiceImpl() throws Exception {
+		return PythonFactory().getObject();
+	}
 
 }

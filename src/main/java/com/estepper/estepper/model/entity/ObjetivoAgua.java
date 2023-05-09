@@ -26,14 +26,14 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "objetivoAgua")
-public class ObjetivoAgua implements Serializable{
+public class ObjetivoAgua implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne //Asegurarme de que sea asi
-    @JoinColumn(name="idParticipante", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idParticipante", nullable = false)
     private Participante participante;
 
     @Temporal(TemporalType.DATE)
@@ -48,7 +48,8 @@ public class ObjetivoAgua implements Serializable{
     @Column(nullable = true, name = "estado", columnDefinition = "ENUM('COMPLETADO', 'PENDIENTE')")
     private EstadoObjetivo estado;
 
-    public ObjetivoAgua(Integer id, Participante participante, Date fecha, Integer cantidadObjetivo, Integer vasos, EstadoObjetivo estado) {
+    public ObjetivoAgua(Integer id, Participante participante, Date fecha, Integer cantidadObjetivo, Integer vasos,
+            EstadoObjetivo estado) {
         this.id = id;
         this.participante = participante;
         this.fecha = fecha;
@@ -60,11 +61,10 @@ public class ObjetivoAgua implements Serializable{
     public ObjetivoAgua() {
         estado = EstadoObjetivo.PENDIENTE;
         fecha = new Date();
-        cantidadObjetivo = 8; //2 litros
+        cantidadObjetivo = 8; // 2 litros
         vasos = 0;
 
     }
-
 
     public Integer getId() {
         return id;
@@ -82,7 +82,6 @@ public class ObjetivoAgua implements Serializable{
         this.participante = participante;
     }
 
-
     public Date getFecha() {
         return fecha;
     }
@@ -90,7 +89,6 @@ public class ObjetivoAgua implements Serializable{
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
 
     public Integer getCantidadObjetivo() {
         return cantidadObjetivo;
@@ -100,7 +98,6 @@ public class ObjetivoAgua implements Serializable{
         this.cantidadObjetivo = cantidadObjetivo;
     }
 
-    
     public Integer getVasos() {
         return vasos;
     }
@@ -117,6 +114,4 @@ public class ObjetivoAgua implements Serializable{
         this.estado = estado;
     }
 
-
-    
 }

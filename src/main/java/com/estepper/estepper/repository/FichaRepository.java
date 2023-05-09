@@ -9,7 +9,7 @@ import com.estepper.estepper.model.entity.Participante;
 
 import jakarta.transaction.Transactional;
 
-public interface FichaRepository extends JpaRepository<Ficha, Integer>{
+public interface FichaRepository extends JpaRepository<Ficha, Integer> {
     boolean existsByParticipante(Participante participante);
 
     @Modifying

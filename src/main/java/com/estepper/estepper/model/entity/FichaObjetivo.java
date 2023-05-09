@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "fichaObjetivo")
-public class FichaObjetivo extends Ficha{
+public class FichaObjetivo extends Ficha {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class FichaObjetivo extends Ficha{
         super(id, participante);
         this.objetivo = objetivo;
         this.perdida = perdida;
-    }    
+    }
 
     public Integer getId() {
         return id;
@@ -51,6 +51,4 @@ public class FichaObjetivo extends Ficha{
         this.perdida = perdida;
     }
 
-
-    
 }

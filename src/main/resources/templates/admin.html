@@ -131,7 +131,7 @@
                             </div>
                         </form>
                         <div style="margin-left: 5%;"><a class="btn" id="btn-admi"
-                            onclick="abrirIframe('nuevoCoordinador')" href="#">Nuevo coordinador</a></div>
+                                onclick="abrirIframe('nuevoCoordinador')" href="#">Nuevo coordinador</a></div>
                     </div>
 
                     <!-- Modal nuevo coordinador -->
@@ -214,8 +214,8 @@
 
 
                                         <div class="btn-form">
-                                            <button class="btn"  type="submit" id="btn-part">Guardar</button>
-                                          </div>
+                                            <button class="btn" type="submit" id="btn-part">Guardar</button>
+                                        </div>
                                     </form>
                                 </div>
 
@@ -258,16 +258,16 @@
                                             <span class="editable-state" th:text="${lis.estadoCuenta}"></span>
                                         </td>
                                         <td>
-                                            <a class="btn" id="btn-accion"><i title="Editar"
+                                            <a class="btn edit-button" id="btn-accion"><i title="Editar"
                                                     class="fa-solid fa-user-pen"></i></a>
-                                            <a class="btn" id="btn-accion" style="display: none;"><i
-                                                    title="Cancelar" class="fa-solid fa-times"></i></a>
+                                            <a class="btn cancel-button" id="btn-accion" style="display: none;"><i title="Cancelar"
+                                                    class="fa-solid fa-times"></i></a>
                                             <a class="btn" id="btn-accion" th:attr="data-modalid=${lis.id}"
                                                 onclick="abrirIframe2(this.getAttribute('data-modalid'))">
                                                 <i title="Mensaje" class="fa-solid fa-envelope"></i>
                                             </a>
-                                            <a class="btn" id="btn-accion" th:data-id="${lis.id}"><i
-                                                    title="Eliminar" class="fa-solid fa-trash"></i></a>
+                                            <a class="btn eliminar" id="btn-accion" th:data-id="${lis.id}"><i title="Eliminar"
+                                                    class="fa-solid fa-trash"></i></a>
 
                                         </td>
 

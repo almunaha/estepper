@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "mensajeAdmin")
-public class MensajeAdmin implements Serializable{
+public class MensajeAdmin implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,26 +26,22 @@ public class MensajeAdmin implements Serializable{
     @Column
     private String mensaje;
 
-    @ManyToOne 
-    @JoinColumn(name="idUsuario", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
-    /*@ManyToOne 
-    @JoinColumn(name="idAdministrador", nullable=false)
-    private Administrador administrador;*/
-
-    @ManyToOne 
-    @JoinColumn(name="idEmisor", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idEmisor", nullable = false)
     private Usuario emisor;
 
-    public MensajeAdmin(Integer id, LocalDateTime fechayHoraEnvio, String mensaje, Usuario usuario,Usuario emisor) {
+    public MensajeAdmin(Integer id, LocalDateTime fechayHoraEnvio, String mensaje, Usuario usuario, Usuario emisor) {
         this.id = id;
         this.fechayHoraEnvio = fechayHoraEnvio;
         this.mensaje = mensaje;
         this.usuario = usuario;
         this.emisor = emisor;
     }
-    
+
     public MensajeAdmin() {
     }
 
@@ -80,14 +76,6 @@ public class MensajeAdmin implements Serializable{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-    /*public Administrador getAdministrador() {
-        return administrador;
-    }
-
-    public void setAdministrador(Administrador administrador) {
-        this.administrador = administrador;
-    }*/
 
     public Usuario getEmisor() {
         return emisor;

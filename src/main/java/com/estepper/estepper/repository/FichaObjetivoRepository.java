@@ -9,12 +9,12 @@ import com.estepper.estepper.model.entity.Participante;
 
 import jakarta.transaction.Transactional;
 
-public interface FichaObjetivoRepository extends JpaRepository<FichaObjetivo, Integer>{
+public interface FichaObjetivoRepository extends JpaRepository<FichaObjetivo, Integer> {
     FichaObjetivo findByParticipante(Participante participante);
 
     @Modifying
     @Transactional
     @Query("UPDATE FichaObjetivo o SET o.objetivo = :objetivo, o.perdida = :perdida WHERE o.id = :id")
     void update(Double objetivo, Double perdida, Integer id);
-    
+
 }

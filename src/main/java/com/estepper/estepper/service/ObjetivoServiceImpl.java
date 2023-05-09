@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ObjetivoServiceImpl implements ObjetivoService {
-    
+
     @Autowired
     private ObjetivoRepository repo;
 
@@ -38,25 +38,23 @@ public class ObjetivoServiceImpl implements ObjetivoService {
     private ObjetivoEstadoAnimoRepository repoEstadoAnimo;
 
     @Override
-    public void guardar(Objetivo obj){
+    public void guardar(Objetivo obj) {
         repo.save(obj);
     }
 
-
     @Override
-    public List<Objetivo> getObjetivos(){
+    public List<Objetivo> getObjetivos() {
         return repo.findAll();
     }
 
-
     @Override
     public List<Objetivo> listaObjetivos(Participante p) {
-        return(List<Objetivo>) repo.findByParticipante(p);    
+        return (List<Objetivo>) repo.findByParticipante(p);
     }
 
     @Override
     public List<Objetivo> listaObjetivosPorMes(Participante p, Integer mes, Integer anio) {
-        return(List<Objetivo>) repo.findByParticipanteyMesyAnio(p, mes, anio);    
+        return (List<Objetivo>) repo.findByParticipanteyMesyAnio(p, mes, anio);
     }
 
     @Override
@@ -66,7 +64,7 @@ public class ObjetivoServiceImpl implements ObjetivoService {
 
     @Override
     public Objetivo getObjetivo(Integer id) {
-        return repo.findById(id).get();    
+        return repo.findById(id).get();
     }
 
     @Override
@@ -78,9 +76,9 @@ public class ObjetivoServiceImpl implements ObjetivoService {
         repoEjercicio.deleteAllByParticipante(p);
     }
 
-    //AGUA
+    // AGUA
     @Override
-    public void guardarAgua(ObjetivoAgua obj){
+    public void guardarAgua(ObjetivoAgua obj) {
         repoAgua.save(obj);
     }
 
@@ -91,21 +89,17 @@ public class ObjetivoServiceImpl implements ObjetivoService {
 
     @Override
     public ObjetivoAgua getObjetivoAgua(Integer id) {
-        return repoAgua.findById(id).get();    
+        return repoAgua.findById(id).get();
     }
 
     @Override
-    public ObjetivoAgua findByFechaAndParticipanteAgua(Date fecha,Participante p){
-        return repoAgua.findByFechaAndParticipante(fecha,p);
-    }
-    @Override
-    public void deleteAguaByParticipante(Participante p) {
-        repoAgua.deleteAllByParticipante(p);
+    public ObjetivoAgua findByFechaAndParticipanteAgua(Date fecha, Participante p) {
+        return repoAgua.findByFechaAndParticipante(fecha, p);
     }
 
-    //DESCANSO
+    // DESCANSO
     @Override
-    public void guardarDescanso(ObjetivoDescanso obj){
+    public void guardarDescanso(ObjetivoDescanso obj) {
         repoDescanso.save(obj);
     }
 
@@ -116,27 +110,22 @@ public class ObjetivoServiceImpl implements ObjetivoService {
 
     @Override
     public ObjetivoDescanso getObjetivoDescanso(Integer id) {
-        return repoDescanso.findById(id).get();    
+        return repoDescanso.findById(id).get();
     }
 
     @Override
-    public ObjetivoDescanso findByFechaAndParticipanteDescanso(Date fecha,Participante p){
-        return repoDescanso.findByFechaAndParticipante(fecha,p);
+    public ObjetivoDescanso findByFechaAndParticipanteDescanso(Date fecha, Participante p) {
+        return repoDescanso.findByFechaAndParticipante(fecha, p);
     }
 
     @Override
-    public ObjetivoDescanso findByParticipanteDescanso(Participante p){
+    public ObjetivoDescanso findByParticipanteDescanso(Participante p) {
         return repoDescanso.findByParticipante(p);
     }
 
+    // EJERCICIO
     @Override
-    public void deleteDescansoByParticipante(Participante p) {
-        repoDescanso.deleteAllByParticipante(p);
-    }
-
-    //EJERCICIO
-    @Override
-    public void guardarEjercicio(ObjetivoEjercicio obj){
+    public void guardarEjercicio(ObjetivoEjercicio obj) {
         repoEjercicio.save(obj);
     }
 
@@ -147,27 +136,22 @@ public class ObjetivoServiceImpl implements ObjetivoService {
 
     @Override
     public ObjetivoEjercicio getObjetivoEjercicio(Integer id) {
-        return repoEjercicio.findById(id).get();    
+        return repoEjercicio.findById(id).get();
     }
 
     @Override
-    public ObjetivoEjercicio findByParticipanteEjercicio(Participante p){
+    public ObjetivoEjercicio findByParticipanteEjercicio(Participante p) {
         return repoEjercicio.findByParticipante(p);
     }
 
     @Override
     public List<ObjetivoEjercicio> listaEjercicio(Date fecha, Participante p) {
-        return(List<ObjetivoEjercicio>) repoEjercicio.findByFechaAndParticipante(fecha,p);
+        return (List<ObjetivoEjercicio>) repoEjercicio.findByFechaAndParticipante(fecha, p);
     }
 
+    // ESTADO ANIMO
     @Override
-    public void deleteEjercicioByParticipante(Participante p) {
-        repoEjercicio.deleteAllByParticipante(p);
-    }
-
-    //ESTADO ANIMO
-    @Override
-    public void guardarEstadoAnimo(ObjetivoEstadoAnimo obj){
+    public void guardarEstadoAnimo(ObjetivoEstadoAnimo obj) {
         repoEstadoAnimo.save(obj);
     }
 
@@ -178,23 +162,17 @@ public class ObjetivoServiceImpl implements ObjetivoService {
 
     @Override
     public ObjetivoEstadoAnimo getObjetivoEstadoAnimo(Integer id) {
-        return repoEstadoAnimo.findById(id).get();    
+        return repoEstadoAnimo.findById(id).get();
     }
 
     @Override
-    public ObjetivoEstadoAnimo findByFechaAndParticipanteEstadoAnimo(Date fecha,Participante p){
-        return repoEstadoAnimo.findByFechaAndParticipante(fecha,p);
+    public ObjetivoEstadoAnimo findByFechaAndParticipanteEstadoAnimo(Date fecha, Participante p) {
+        return repoEstadoAnimo.findByFechaAndParticipante(fecha, p);
     }
 
     @Override
-    public ObjetivoEstadoAnimo findByParticipanteEstadoAnimo(Participante p){
+    public ObjetivoEstadoAnimo findByParticipanteEstadoAnimo(Participante p) {
         return repoEstadoAnimo.findByParticipante(p);
     }
 
-    @Override
-    public void deleteEstadoAnimoByParticipante(Participante p) {
-        repoEstadoAnimo.deleteAllByParticipante(p);
-    }
-
 }
-

@@ -124,7 +124,8 @@
         <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
           id="avatar-header" onclick="desplegable()" />
         <img width="35" th:src="@{img/logo.png}" />
-        <a onclick="notificaciones()"><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+        <a onclick="notificaciones()"><i class="fa-solid fa-bell"
+            style="font-size: 1.5rem; padding-right: 4px;"></i></a>
       </div>
 
       <div class="desplegable-perfil">
@@ -199,7 +200,7 @@
         </div>
       </nav>
 
-      <div class="chatito" >
+      <div class="chatito">
         <div class="chatitoEnc"
           style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);margin-right: 10%;margin-bottom: 2%; border-radius: 5px;">
           <h4 style="margin-top: 4%; color:azure" th:text=" 'GRUPO: ' + ${user.grupo.nombre}"></h4>
@@ -357,18 +358,21 @@
                   </div>
 
                   <div class="layout-participantes2">
-                    <i class="fa-solid fa-weight-scale iconoPeso" style="color: rgb(221, 175, 100);font-size: 50px;"></i>
+                    <i class="fa-solid fa-weight-scale iconoPeso"
+                      style="color: rgb(221, 175, 100);font-size: 50px;"></i>
                     <p>Pérdida de peso media del grupo: <span id="perdida-peso-media"></span></p>
                   </div>
 
 
                   <div class="layout-participantes2">
-                    <i class="fa-solid fa-calendar-days iconoPeso" style="color: rgb(115, 77, 165);font-size: 50px;"></i>
+                    <i class="fa-solid fa-calendar-days iconoPeso"
+                      style="color: rgb(115, 77, 165);font-size: 50px;"></i>
                     <p>Asistencia media del grupo: <span id="asistencia-media"></span></p>
                   </div>
 
                   <div class="layout-participantes2">
-                    <i class="fa-solid fa-child-reaching iconoPeso" style="color: rgb(77, 165, 77);font-size: 50px;"></i>
+                    <i class="fa-solid fa-child-reaching iconoPeso"
+                      style="color: rgb(77, 165, 77);font-size: 50px;"></i>
                     <p>Pérdida cintura media del grupo: <span id="perdida-cmcintura-media"></span></p>
                   </div>
 

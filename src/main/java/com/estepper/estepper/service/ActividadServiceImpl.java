@@ -11,45 +11,44 @@ import com.estepper.estepper.model.entity.Actividad;
 import com.estepper.estepper.repository.ActividadRepository;
 
 @Service
-public class ActividadServiceImpl implements ActividadService{
+public class ActividadServiceImpl implements ActividadService {
 
     @Autowired
     private ActividadRepository repo;
 
     @Override
-    public void guardar(Actividad a){
-        repo.save(a); 
+    public void guardar(Actividad a) {
+        repo.save(a);
     }
 
     @Override
     public List<Actividad> listado() {
-        return(List<Actividad>) repo.findAll();
+        return (List<Actividad>) repo.findAll();
     }
 
     @Override
-    public Actividad actividad(Integer id){
+    public Actividad actividad(Integer id) {
         return repo.findById(id).get();
     }
 
     @Override
-    public List<Actividad> asistenciaParticipante(Integer id){
-        return(List<Actividad>) repo.findByParticipantesIdOrderByFechaRealizacionAsc(id);
+    public List<Actividad> asistenciaParticipante(Integer id) {
+        return (List<Actividad>) repo.findByParticipantesIdOrderByFechaRealizacionAsc(id);
     }
 
     @Override
-    public void borrar(Actividad act){
+    public void borrar(Actividad act) {
         repo.delete(act);
     }
 
     @Override
-    public Integer asistencia(Integer idActividad, Integer idParticipante){
+    public Integer asistencia(Integer idActividad, Integer idParticipante) {
         return repo.asistencia(idActividad, idParticipante);
     }
 
     @Override
-    public List<Actividad> actividadesPendientes(LocalDateTime fechaActual){
+    public List<Actividad> actividadesPendientes(LocalDateTime fechaActual) {
         return repo.findActividadesPendientes(fechaActual);
     }
 
-    
 }

@@ -20,19 +20,18 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "objetivo")
-public class Objetivo implements Serializable{
+public class Objetivo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne 
-    @JoinColumn(name="idParticipante", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idParticipante", nullable = false)
     private Participante participante;
 
     private String titulo;
-    //private String descripcion;  LA QUITO PORQUE ES MUY SIMILAR A LO DE TÍTULO
-   
+
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "repeticion", columnDefinition = "ENUM('NINGUNA', 'DIARIAMENTE', 'SEMANALMENTE', 'MENSUALMENTE', 'ANUALMENTE')")
     private Repeticion repeticion;
@@ -47,7 +46,8 @@ public class Objetivo implements Serializable{
     @Column(nullable = true, name = "estado", columnDefinition = "ENUM('COMPLETADO', 'PENDIENTE')")
     private EstadoObjetivo estado;
 
-    public Objetivo(Integer id, Participante participante, String titulo, Repeticion repeticion,LocalDate fechaInicio, LocalDate fechaVencimiento, EstadoObjetivo estado) {
+    public Objetivo(Integer id, Participante participante, String titulo, Repeticion repeticion, LocalDate fechaInicio,
+            LocalDate fechaVencimiento, EstadoObjetivo estado) {
         this.id = id;
         this.participante = participante;
         this.titulo = titulo;
@@ -61,7 +61,6 @@ public class Objetivo implements Serializable{
         estado = EstadoObjetivo.PENDIENTE;
         fechaInicio = LocalDate.now();
     }
-
 
     public Integer getId() {
         return id;
@@ -86,7 +85,6 @@ public class Objetivo implements Serializable{
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
 
     public Repeticion getRepeticion() {
         return repeticion;
@@ -120,6 +118,4 @@ public class Objetivo implements Serializable{
         this.estado = estado;
     }
 
-
-    
 }

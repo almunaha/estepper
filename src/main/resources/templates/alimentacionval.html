@@ -341,15 +341,18 @@
                                     th:field="*{ptosracsofrito}" class="form-control" readonly>
                             </div>
                         </div>
-                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        <div class="input-group mt-2"
+                            style="background-color:rgb(250, 236, 215) ; padding: 12px; 
                         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
-                            <label style="font-weight: bold; color:black;" class="col-4 col-form-label">Puntuación total:
+                            <label style="font-weight: bold; color:black;" class="col-4 col-form-label">Puntuación
+                                total:
                             </label>
 
-                            <input style="border-color: rgb(250, 226, 196);" id="puntuacion" type="number" th:field="*{puntuacion}"
-                                class="form-control" readonly>
+                            <input style="border-color: rgb(250, 226, 196);" id="puntuacion" type="number"
+                                th:field="*{puntuacion}" class="form-control" readonly>
                         </div>
-                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        <div class="input-group mt-2"
+                            style="background-color:rgb(250, 236, 215) ; padding: 12px; 
                         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label style="font-weight: bold; color:black;" class="col-4 col-form-label">Adherencia a la
                                 dieta mediterránea: </label>
@@ -359,8 +362,7 @@
                                 <option value="alta">Alta</option>
                             </select>
                         </div>
-                        <button class="btn-out" type="submit"
-                            onclick=myFunction()>Guardar</button>
+                        <button class="btn-out" type="submit" onclick=myFunction()>Guardar</button>
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
                                 onclick="window.print();">

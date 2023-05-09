@@ -125,24 +125,20 @@
                             <table class="table tablePart" id="tablePart">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">idMensaje</th>
-                                        <th scope="col">idAdmin</th>
-                                        <th scope="col">idUsuario</th>
+                                        <th scope="col">Nickname</th>
+                                        <th scope="col">Código</th>
                                         <th scope="col">Chatear</th>
                                     </tr>
                                 </thead>
                                 <tbody class="buscarUsuarios">
-                                    <tr th:each="lis:${mensajesAdmin}">
-                                        <td><span class="editable" th:text="${lis.id}"></span></td>
-                                        <td><span class="editable" th:text="${lis.administrador.id}"></span></td>
-                                        <td><span class="editable" th:text="${lis.usuario.id}"></span></td>
+                                    <tr th:each="lis:${usuarios}">
+                                        <td><span th:text="${lis.nickname}"></span></td>
+                                        <td><span th:text="${lis.codigo}"></span></td>
                                         <td>
-                                            <a class="btn btn-primary"
-                                                th:attr="data-chatid=${lis.usuario.id} + '&nickname=' + ${lis.usuario.nickname} + '&listaMensajes=' + ${mensajesAdmin}"
-                                                onclick="abrirChat(this.getAttribute('data-chatid'))">
+                                            <a class="btn btn-primary" th:href="@{'/mensajesAdmin?id=' + ${lis.id}}"
+                                                data-bs-toggle="tooltip">
                                                 <i title="Mensaje" class="fa-solid fa-envelope"></i>
                                             </a>
-
                                         </td>
 
                                     </tr>
@@ -151,45 +147,45 @@
                         </div>
 
                         <div class="mitadDerechaAdmin" id="derechaAdmin"
-                            style="margin-left: 3%; width:50%; display:none">
+                            style="margin-left: 3%; width:50%; display:block">
                             <div class="bordes-chatADMIN" style="width: 90%;">
-                                <section class="chat-area" >
+                                <section class="chat-area">
                                     <header style="flex-direction: column;">
-                                        <h4 id="nombreDelUsuario"></h4>
-                                        <h4 id="idDelUsuario" hidden></h4>
+                                        <h4 th:text="${mensajero.nickname}"></h4>
                                     </header>
-                                    <!-- <div class="chat-box">
-                                        <div th:each="m : ${mensajesConAdministrador}" class="contenedor-mensaje mb-2">-->
                                     <div class="chat-box">
                                         <div th:each="m : ${mensajesAdmin}" class="contenedor-mensaje mb-2">
-                                            <div id="bloque-condicion" th:if="${m.emisor.id != user.id}"
-                                                class="mensaje d-flex justify-content-start align-items-end">
-                                                <img th:src="${m.usuario.fotoUsuario}" style="width: 40px;"
-                                                    class="avatar" alt="m.usuario.nickname" />
-                                                <div class="contenido-mensaje grey ms-2 p-2">
-                                                    <div th:text="${m.usuario.nickname}" class="nickname"></div>
-                                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
-                                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
-                                                        class="fecha text-end"></div>
+                                            <div th:if="${m.usuario.id == mensajero.id}">
+                                                <div th:if="${m.emisor.id != user.id}"
+                                                    class="mensaje d-flex justify-content-start align-items-end">
+                                                    <img th:src="${m.usuario.fotoUsuario}" style="width: 40px;"
+                                                        class="avatar" alt="m.usuario.nickname" />
+                                                    <div class="contenido-mensaje grey ms-2 p-2">
+                                                        <div th:text="${m.usuario.nickname}" class="nickname"></div>
+                                                        <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                                        <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                                            class="fecha text-end"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div th:unless="${m.emisor.id != user.id}"
+                                                    class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
+                                                    <img th:src="${user.fotoUsuario}" style="width: 40px;"
+                                                        class="avatar" alt="m.user.nickname" />
+                                                    <div class="contenido-mensaje green me-2 p-2">
+                                                        <div class="nickname">Yo</div>
+                                                        <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                                        <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                                            class="fecha text-end"></div>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div th:unless="${m.emisor.id != user.id}"
-                                                class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
-                                                <img th:src="${user.fotoUsuario}" style="width: 40px;" class="avatar"
-                                                    alt="m.user.nickname" />
-                                                <div class="contenido-mensaje green me-2 p-2">
-                                                    <div class="nickname">Yo</div>
-                                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
-                                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
-                                                        class="fecha text-end"></div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
-                                    <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}"
-                                        method="post" enctype="multipart/form-data">
+                                    <form th:action="@{'/mensajesAdmin/guardar/' + ${mensajero.id}}"
+                                        th:object="${mensajeAdmin}" method="post" enctype="multipart/form-data">
                                         <div class="m-3" style="display:flex">
 
                                             <div class="col-sm-10 mb-2" style="margin-left:3%">
@@ -204,35 +200,6 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <script>
-
-                                        function abrirChat(url) {
-                                            const [modalId, nickname, listaMensajes] = url.split('&');
-                                            const id = modalId.split('=')[0];
-                                            const name = nickname.split('=')[1];
-                                            const mensajes = listaMensajes.split('=')[1];
-                                            //console.log(mensajes);
-                                            //console.log(typeof mensajes);
-                                           // var bloqueCondicion = document.getElementById("bloque-condicion");
-                                           // bloqueCondicion.setAttribute("data-id-comparar", idComparar);
-
-                                            document.getElementById("idDelUsuario").innerHTML = id;
-                                            document.getElementById("nombreDelUsuario").innerHTML = name;
-
-
-                                            const elemento = document.getElementById('derechaAdmin');
-                                            elemento.style.display = 'block';
-
-                                            const form = document.querySelector('#derechaAdmin form');
-                                            form.action = '/mensajesAdmin/guardar/' + id;
-
-
-                                            $.get('/messages/' + id);
-
-                                            //console.log(mensajes);
-                                        }
-
-                                    </script>
                                 </section>
                             </div>
                         </div>
@@ -242,29 +209,6 @@
                 </div>
             </div>
 
-        </div>
-    </div>
-
-    <div class="modal fade" id="ModalNuevoMensaje" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Nuevo mensaje</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <form th:action="@{'/mensajesAdmin/guardar/'}" th:object="${mensajeAdmin}" method="post"
-                        enctype="multipart/form-data">
-                        <div class="m-3">
-
-                            <div class="text-center p">
-                                <button type="submit" class="btn" id="btn-part">Enviar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
         </div>
     </div>
 

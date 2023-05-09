@@ -16,7 +16,7 @@ import jakarta.persistence.Id;
 
 @Entity
 @Table(name = "alimentosintercambio")
-public class AlimentoIntercambio implements Serializable{
+public class AlimentoIntercambio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,6 @@ public class AlimentoIntercambio implements Serializable{
     @Enumerated(EnumType.STRING)
     @Column(name = "grupo", columnDefinition = "ENUM('LÁCTEO', 'PROTEÍNA', 'VERDURA', 'FÉCULA', 'FRUTA', 'GRASA')")
     private GrupoAlimento categoria;
-
 
     public AlimentoIntercambio() {
     }
@@ -71,9 +70,6 @@ public class AlimentoIntercambio implements Serializable{
 
     public void setCategoria(GrupoAlimento categoria) {
         this.categoria = categoria;
-    } 
+    }
 
-    
-
-    
 }

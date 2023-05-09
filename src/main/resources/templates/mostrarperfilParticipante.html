@@ -103,7 +103,8 @@
                 <img class="menu-icon" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil" id="avatar-header"
                     onclick="desplegable()">
                 <img width="35" th:src="@{/img/logo.png}" alt="">
-                <a onclick="notificaciones()"><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                <a onclick="notificaciones()"><i class="fa-solid fa-bell"
+                        style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
@@ -118,12 +119,12 @@
                 <h6>Notificaciones</h6>
                 <div class="dropdown-divider"></div>
                 <div style="overflow: auto; max-height: 250px;">
-                  <div th:each="notif : ${notificaciones}">
-                    <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
-                    <div class="dropdown-divider"></div>
-                  </div>
+                    <div th:each="notif : ${notificaciones}">
+                        <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
+                        <div class="dropdown-divider"></div>
+                    </div>
                 </div>
-              </div>
+            </div>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -163,8 +164,7 @@
 
                                 <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                    <a class="dropdown-item"
-                                        th:href="@{/chatPartAdmin}">Ayuda</a>
+                                    <a class="dropdown-item" th:href="@{/chatPartAdmin}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</button>

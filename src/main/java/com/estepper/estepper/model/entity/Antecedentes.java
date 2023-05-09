@@ -31,9 +31,11 @@ public class Antecedentes extends FaseValoracion {
         super();
     }
 
-    public Antecedentes(Integer id, Participante participante, String hta, String tiroides, String patmental, String dislipemias, String patmuscesq, String medicacion, String ecv, String patsensorial, String especificar, String fuma, String dejardefumar, Integer tasistolica, Integer tadiastolica) {
+    public Antecedentes(Integer id, Participante participante, String hta, String tiroides, String patmental,
+            String dislipemias, String patmuscesq, String medicacion, String ecv, String patsensorial,
+            String especificar, String fuma, String dejardefumar, Integer tasistolica, Integer tadiastolica) {
         super(id, participante);
-        this.hta = hta; 
+        this.hta = hta;
         this.tiroides = tiroides;
         this.patmental = patmental;
         this.dislipemias = dislipemias;
@@ -159,7 +161,5 @@ public class Antecedentes extends FaseValoracion {
     public void setEspecificar(String especificar) {
         this.especificar = especificar;
     }
-
-    
 
 }

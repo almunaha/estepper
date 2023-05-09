@@ -17,7 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="invitaciones")
+@Table(name = "invitaciones")
 public class Invitacion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,7 +62,7 @@ public class Invitacion implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public Actividad getActividad() {
         return actividad;
     }
@@ -93,7 +93,6 @@ public class Invitacion implements Serializable {
 
     public void setEstado(EstadoInvitacion estado) {
         this.estado = estado;
-    } 
+    }
 
-    
 }

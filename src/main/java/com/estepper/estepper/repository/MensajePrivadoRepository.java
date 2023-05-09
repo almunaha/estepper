@@ -14,11 +14,11 @@ import com.estepper.estepper.model.entity.Usuario;
 
 import jakarta.transaction.Transactional;
 
-public interface MensajePrivadoRepository extends JpaRepository<MensajePrivado, Integer>{
-    
+public interface MensajePrivadoRepository extends JpaRepository<MensajePrivado, Integer> {
+
     Optional<MensajePrivado> findById(Integer id);
+
     List<MensajePrivado> findByParticipante(Participante participante);
-    //List<Mensaje> findByIdUsuario(Integer idUsuario);
 
     @Modifying
     @Transactional
@@ -35,5 +35,4 @@ public interface MensajePrivadoRepository extends JpaRepository<MensajePrivado, 
     @Query("DELETE FROM MensajePrivado m WHERE m.usuario = :u")
     void deleteAllByUsuario(Usuario u);
 
-    
 }

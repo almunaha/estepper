@@ -26,14 +26,14 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ObjetivoDescanso")
-public class ObjetivoDescanso implements Serializable{
+public class ObjetivoDescanso implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne 
-    @JoinColumn(name="idParticipante", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idParticipante", nullable = false)
     private Participante participante;
 
     @Temporal(TemporalType.DATE)
@@ -44,13 +44,13 @@ public class ObjetivoDescanso implements Serializable{
     private Integer horasSuenio;
     private Integer minutosSuenio;
     private Integer horasSuenioObjetivo;
-  
+
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "estado", columnDefinition = "ENUM('COMPLETADO', 'PENDIENTE')")
     private EstadoObjetivo estado;
 
-
-    public ObjetivoDescanso(Integer id, Participante participante, Date fecha, Integer horasSuenio,Integer minutosSuenio, Integer horasSuenioObjetivo ,EstadoObjetivo estado) {
+    public ObjetivoDescanso(Integer id, Participante participante, Date fecha, Integer horasSuenio,
+            Integer minutosSuenio, Integer horasSuenioObjetivo, EstadoObjetivo estado) {
         this.id = id;
         this.participante = participante;
         this.fecha = fecha;
@@ -63,9 +63,8 @@ public class ObjetivoDescanso implements Serializable{
     public ObjetivoDescanso() {
         estado = EstadoObjetivo.PENDIENTE;
         fecha = new Date();
-        horasSuenioObjetivo = 8; //Cambiarlo más adelante
+        horasSuenioObjetivo = 8;
     }
-
 
     public Integer getId() {
         return id;
@@ -83,7 +82,6 @@ public class ObjetivoDescanso implements Serializable{
         this.participante = participante;
     }
 
-
     public Date getFecha() {
         return fecha;
     }
@@ -91,7 +89,6 @@ public class ObjetivoDescanso implements Serializable{
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
 
     public Integer getHorasSuenio() {
         return horasSuenio;
@@ -109,7 +106,6 @@ public class ObjetivoDescanso implements Serializable{
         this.minutosSuenio = minutosSuenio;
     }
 
-    
     public Integer getHorasSuenioObjetivo() {
         return horasSuenioObjetivo;
     }
@@ -126,7 +122,4 @@ public class ObjetivoDescanso implements Serializable{
         this.estado = estado;
     }
 
-
-
-    
 }

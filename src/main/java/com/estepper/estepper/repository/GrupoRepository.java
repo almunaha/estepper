@@ -14,27 +14,27 @@ import java.util.List;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
 
-public interface GrupoRepository extends JpaRepository<Grupo, Integer>{
-        
-    Grupo findByNombre(String nombre); //select * from grupo where nombre = g.nombre 
-    Grupo findByCodigo(String codigo); 
+public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
+
+    Grupo findByNombre(String nombre); // select * from grupo where nombre = g.nombre
+
+    Grupo findByCodigo(String codigo);
+
     Grupo findById(String idGrupo);
+
     List<Grupo> findByCoordinador(Coordinador coordinador);
-    
+
     @Modifying
     @Transactional
     @Query("update Grupo SET nombre = :nombre, codigo = :codigo, coordinador = :coordinador, numParticipantes = :numParticipantes WHERE id = :idGrupo")
     void update(String nombre, String codigo, Coordinador coordinador, Integer numParticipantes, Integer idGrupo);
-     
 
     @Modifying
     @Transactional
     @Query("update Grupo SET numParticipantes = :numParticipantes WHERE id = :idGrupo")
     void update(Integer idGrupo, Integer numParticipantes);
 
-
     @Query("SELECT g FROM Grupo g WHERE g.coordinador = :coordinador")
     public Page<Grupo> findByIdCoordinador(Pageable pageable, Coordinador coordinador);
 
 }
-

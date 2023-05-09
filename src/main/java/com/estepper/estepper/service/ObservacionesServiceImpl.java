@@ -9,13 +9,12 @@ import com.estepper.estepper.model.entity.Observaciones;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ObservacionesServiceImpl implements ObservacionesService {
-    
+
     @Autowired
     private ObservacionesRepository repo;
 
@@ -27,60 +26,42 @@ public class ObservacionesServiceImpl implements ObservacionesService {
 
     @Override
     public List<Observaciones> findByIdCoordinador(Integer idCoordinador) {
-        return(List<Observaciones>) repo.findByCoordinador(repoC.findById(idCoordinador).get());
-    }  
+        return (List<Observaciones>) repo.findByCoordinador(repoC.findById(idCoordinador).get());
+    }
 
     @Override
     public List<Observaciones> findByIdGrupo(Integer idGrupo) {
-        return(List<Observaciones>) repo.findByGrupo(repoG.findById(idGrupo).get());
-    }  
-
+        return (List<Observaciones>) repo.findByGrupo(repoG.findById(idGrupo).get());
+    }
 
     @Override
-    public Observaciones getObservacion(Integer idObservacion){
+    public Observaciones getObservacion(Integer idObservacion) {
         return repo.findById(idObservacion).get();
     }
 
-
-    /* 
-     * 
-     * 
     @Override
-    public List<Observaciones> listaObservacionesGrupoCoordinador(Integer idCoordinador, Integer idGrupo) {
-        return(List<Observaciones>) repo.findByIdCoordinadoryIdGrupo(idCoordinador,idGrupo);    
-    }
-    */
-
-
-    @Override
-    public void guardar(Observaciones o){
+    public void guardar(Observaciones o) {
         repo.save(o);
     }
-
 
     @Override
     public void borrar(Integer id) {
         repo.delete(repo.findById(id).get());
     }
 
-
     @Override
     public void deleteByGrupo(Grupo g) {
         repo.deleteAllByGrupo(g);
     }
 
-
     @Override
-    public void actualizar(Observaciones o){
-        repo.update(o.getNota(),o.getId());
+    public void actualizar(Observaciones o) {
+        repo.update(o.getNota(), o.getId());
     }
 
     @Override
     public void deleteByCoordinador(Coordinador c) {
         repo.deleteAllByCoordinador(c);
     }
-
-
-
 
 }

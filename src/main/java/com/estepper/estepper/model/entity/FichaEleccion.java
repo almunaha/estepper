@@ -15,11 +15,11 @@ public class FichaEleccion extends Ficha {
     private String texto;
     private Integer numEleccion;
 
-    public FichaEleccion(){
+    public FichaEleccion() {
         super();
     }
 
-    public FichaEleccion(Integer id, Participante participante, String texto, Integer numEleccion){
+    public FichaEleccion(Integer id, Participante participante, String texto, Integer numEleccion) {
         super(id, participante);
         this.texto = texto;
         this.numEleccion = numEleccion;
@@ -49,5 +49,4 @@ public class FichaEleccion extends Ficha {
         this.numEleccion = numEleccion;
     }
 
-    
 }

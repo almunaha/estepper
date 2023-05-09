@@ -128,7 +128,8 @@
                 </div>
                 <div th:unless="${antecedentes == null}" class="bg-white border border-1 p-5 rounded-4"
                     style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
-                    <div style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5px;">
+                    <div
+                        style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5px;">
                         <h4 style="margin-top: 8%; color:azure">Antecedentes</h4>
                     </div>
                     <form class="form-perfil" method="post" th:action="@{'/process_antecedentes/' + ${participante.id}}"
@@ -239,8 +240,7 @@
                             <input id="tadiastolica" type="number" th:field="*{tadiastolica}" class="form-control">
                         </div>
 
-                        <button class="btn-out" type="submit"
-                            onclick=myFunction()>Guardar</button>
+                        <button class="btn-out" type="submit" onclick=myFunction()>Guardar</button>
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
                                 onclick="window.print();">

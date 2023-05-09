@@ -58,7 +58,6 @@ import com.estepper.estepper.service.ParticipanteService;
 import com.estepper.estepper.service.SesionService;
 import com.estepper.estepper.service.UsuarioService;
 import com.estepper.estepper.service.ActividadService;
-import com.estepper.estepper.service.AdministradorService;
 import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.InvitacionService;
@@ -76,9 +75,6 @@ public class CoordinadorController {
 
     @Autowired
     private CoordinadorService coordinador;
-
-    @Autowired
-    private AdministradorService administrador;
 
     @Autowired // inyectar recursos de la clase GrupoService
     private GrupoService grupo;
@@ -128,12 +124,6 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
             model.addAttribute("listado", listado);
 
-            /*
-             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-             * model.addAttribute("administrador", admin);
-             */
-
             return "participantes";
         }
 
@@ -149,8 +139,6 @@ public class CoordinadorController {
         } else {
             model.addAttribute("user", getUsuario());
             Participante p = part.findById(id).get();
-            // CONTROLAR ESTADO ALTA O BAJA. SI BAJA MOSTRAR QUE ESTÁ DE BAJA Y NO HA
-            // COMENZADO SESIONES
             Sesion lasesion = sesion.buscarSesion(p, num); // cambiar segun sesion
             model.addAttribute("sesion", lasesion);
             model.addAttribute("lasesion", lasesion);
@@ -193,13 +181,6 @@ public class CoordinadorController {
                     sesion.guardar(s);
                 }
             }
-
-            /*
-             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-             * model.addAttribute("administrador", admin);
-             */
-
             return "redirect:/listaGrupos";
         }
 
@@ -225,20 +206,6 @@ public class CoordinadorController {
 
             Integer participantes = g.getNumParticipantes() - 1;
             grupo.updateParticipantes(idG, participantes);
-            /*
-             * LO HE COMENTADO PERO FUNCIONA, ES SEGÚN QUERAMOS, POR SI QUEREMOS QUE CUANDO
-             * SEA 0 EL NÚMERO DE PARTICIPANTES SE BORRE O NO EL GRUPO
-             * if (g.getNumParticipantes() <= 1) {
-             * grupo.delete(idG);
-             * return "redirect:/listaGrupos";
-             * }
-             */
-
-            /*
-             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-             * model.addAttribute("administrador", admin);
-             */
 
             return "redirect:/grupos/editar/{idG}";
         }
@@ -272,13 +239,10 @@ public class CoordinadorController {
         Participante p = part.getParticipante(m.getParticipante().getId()); // participante DUEÑO del material
 
         try {
-            // Es Coordinador: si el idCoordinador del dueño del material es distinto que el
-            // del coordinador: si no es un participante del coordinador
-            // O Es Participante: si el participante logueado no tiene el mismo id que el
+            // Es Participante: si el participante logueado no tiene el mismo id que el
             // dueño del material
             // O es Administrador
-            if (u instanceof Coordinador && u.getId() != p.getCoordinador().getId()
-                    || u instanceof Participante && p.getId() != u.getId() || u instanceof Administrador) {
+            if (u instanceof Participante && p.getId() != u.getId() || u instanceof Administrador) {
                 RedirectView inicio = new RedirectView("/");
                 return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, inicio.getUrl()).build();
             }
@@ -348,11 +312,6 @@ public class CoordinadorController {
         if (elusuario instanceof Coordinador) {
             model.addAttribute("actividad", act.actividad(id));
 
-            /*
-             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-             * model.addAttribute("administrador", admin);
-             */
             return "editar_actividad";
         } else
             return "redirect:/";
@@ -414,11 +373,6 @@ public class CoordinadorController {
 
             List<Invitacion> invitaciones = inv.listadoCoordAct(c, actividad);
             model.addAttribute("invitaciones", invitaciones);
-
-            /*
-             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-             * model.addAttribute("administrador", admin);
-             */
 
             return "invitaciones";
         }
@@ -502,12 +456,6 @@ public class CoordinadorController {
 
             // 2. Eliminar la actividad
             act.borrar(actividad);
-
-            /*
-             * Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-             * Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-             * model.addAttribute("administrador", admin);
-             */
 
             return "redirect:/actividades";
         }

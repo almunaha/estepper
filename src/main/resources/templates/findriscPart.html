@@ -121,18 +121,20 @@
             <div style="padding-top: 75px; margin-bottom: 15%;">
                 <div class="bg-white border border-1 p-5 rounded-4"
                     style="margin-left: 45px; margin-right: 45px; margin-top: 20px">
-                    <div style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5px;">
+                    <div
+                        style="display: grid;justify-content: center;background-color:rgb(122, 184, 212);border-radius: 5px;">
                         <h4 style="margin-top: 8%; color:azure">Findrisc</h4>
                     </div>
 
                     <form class="form-perfil" method="post" th:action="@{'/process_findrisc/' + ${participante.id}}"
                         th:object="${findrisc}">
 
-                        <div class="input-group mt-2" style="background-color:rgb(251, 246, 238) ; padding: 12px; 
+                        <div class="input-group mt-2"
+                            style="background-color:rgb(251, 246, 238) ; padding: 12px; 
                         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label style="font-weight: bold;" class="col-4 col-form-label">Edad: </label>
-                            <select style="border-color: rgb(250, 226, 196);" id="edad" th:field="*{puntosedad}" class="form-control"
-                                disabled>
+                            <select style="border-color: rgb(250, 226, 196);" id="edad" th:field="*{puntosedad}"
+                                class="form-control" disabled>
                                 <option value=0>Menos de 45 años (0 puntos)</option>
                                 <option value=2>Entre 45-54 años (2 puntos)</option>
                                 <option value=3>Entre 55-64 años (3 puntos)</option>
@@ -140,23 +142,25 @@
                             </select>
                         </div>
 
-                        <div class="input-group mt-2" style="background-color:rgb(251, 246, 238) ; padding: 12px; 
+                        <div class="input-group mt-2"
+                            style="background-color:rgb(251, 246, 238) ; padding: 12px; 
                         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label style="font-weight: bold;" class="col-4 col-form-label">Perímetro de cintura (cm):
                             </label>
-                            <select style="border-color: rgb(250, 226, 196);" id="cmcintura" th:field="*{puntoscmcintura}"
-                                class="form-control" disabled>
+                            <select style="border-color: rgb(250, 226, 196);" id="cmcintura"
+                                th:field="*{puntoscmcintura}" class="form-control" disabled>
                                 <option value=0>Menos de 94cm (MASCULINO)/80cm (FEMENINO)</option>
                                 <option value=3>Entre 94 y 102cm (MASCULINO)/80 y 88cm (FEMENINO)</option>
                                 <option value=4>Más de 102cm (MASCULINO)/88cm (FEMENINO)</option>
                             </select>
                         </div>
 
-                        <div class="input-group mt-2" style="background-color:rgb(251, 246, 238) ; padding: 12px; 
+                        <div class="input-group mt-2"
+                            style="background-color:rgb(251, 246, 238) ; padding: 12px; 
                         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label style="font-weight: bold; color:black" class="col-4 col-form-label">IMC: </label>
-                            <select style="border-color: rgb(250, 226, 196);" id="imc" th:field="*{puntosimc}" class="form-control"
-                                disabled>
+                            <select style="border-color: rgb(250, 226, 196);" id="imc" th:field="*{puntosimc}"
+                                class="form-control" disabled>
                                 <option value=0>Menos de 25 kg/m2</option>
                                 <option value=1>Entre 25 y 30 kg/m2</option>
                                 <option value=3>Más de 30kg/m2</option>
@@ -210,15 +214,17 @@
                             </select>
                         </div>
 
-                        <div class="input-group mt-5" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        <div class="input-group mt-5"
+                            style="background-color:rgb(250, 236, 215) ; padding: 12px; 
                         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label style="font-weight: bold; color:black" class="col-4 col-form-label">Puntuación de
                                 Findrisc </label>
-                            <input style="border-color: rgb(250, 226, 196);" id="puntuacion" type="number" th:field="*{puntuacion}"
-                                class="form-control" readonly>
+                            <input style="border-color: rgb(250, 226, 196);" id="puntuacion" type="number"
+                                th:field="*{puntuacion}" class="form-control" readonly>
                         </div>
 
-                        <div class="input-group mt-2" style="background-color:rgb(250, 236, 215) ; padding: 12px; 
+                        <div class="input-group mt-2"
+                            style="background-color:rgb(250, 236, 215) ; padding: 12px; 
                         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; border-radius: 5px; ">
                             <label style="font-weight: bold; color:black" class="col-4 col-form-label">Escala de riesgo
                             </label>
@@ -231,8 +237,7 @@
                                 <option th:value="|Muy alto|" th:text="|Muy alto|"></option>
                             </select>
                         </div>
-                        <button class="btn-out" type="submit"
-                            onclick=myFunction()>Guardar</button>
+                        <button class="btn-out" type="submit" onclick=myFunction()>Guardar</button>
                         <div style="float: right; margin-top: 1%;">
                             <input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
                                 onclick="window.print();">

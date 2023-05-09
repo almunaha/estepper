@@ -27,11 +27,6 @@ public class GrupoServiceImpl implements GrupoService {
     @Autowired
     CoordinadorRepository repoC;
 
-    /*@Override
-    public List<Grupo> listaGrupos(Integer id) {
-        return (List<Grupo>) repo.findByIdCoordinador(id);
-    }*/
-
     @Override
     public List<Grupo> listaGrupos(Integer id) {
         return (List<Grupo>) repo.findByCoordinador(repoC.findById(id).get());
@@ -57,7 +52,6 @@ public class GrupoServiceImpl implements GrupoService {
     public Grupo getGrupo(Integer id) {
         return repo.findById(id).get();
     }
-
 
     @Override
     public void delete(Integer id) {

@@ -12,7 +12,7 @@ public class AlimentacionVal extends FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     private Integer ptosaceite;
     private Integer racaceite;
     private Integer ptosracaceite;

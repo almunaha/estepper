@@ -13,11 +13,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface MaterialesRepository extends JpaRepository<Materiales, Integer>{
+public interface MaterialesRepository extends JpaRepository<Materiales, Integer> {
     List<Materiales> findByParticipante(Participante participante);
+
     List<Materiales> findByGrupo(Grupo grupo);
+
     Optional<Materiales> findById(Integer id);
+
     void deleteByParticipanteAndId(Participante participante, Integer id);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Materiales m WHERE m.grupo = :grupo AND m.link =:link AND m.descripcion = :descripcion AND m.titulo = :titulo")
@@ -27,7 +31,7 @@ public interface MaterialesRepository extends JpaRepository<Materiales, Integer>
     @Transactional
     @Query("DELETE FROM Materiales m WHERE m.participante = :p")
     void deleteAllByParticipante(Participante p);
-    
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Materiales m WHERE m.grupo = :g")

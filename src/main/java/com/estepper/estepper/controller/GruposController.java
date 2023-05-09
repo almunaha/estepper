@@ -32,7 +32,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.estepper.estepper.model.entity.Grupo;
 import com.estepper.estepper.model.entity.Materiales;
-import com.estepper.estepper.model.entity.Administrador;
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Participante;
 import com.estepper.estepper.model.entity.Usuario;
@@ -43,7 +42,6 @@ import com.estepper.estepper.model.entity.Observaciones;
 import com.estepper.estepper.model.enums.Estado;
 import com.estepper.estepper.model.enums.EstadoGrupo;
 import com.estepper.estepper.model.enums.EstadoNotificacion;
-import com.estepper.estepper.service.AdministradorService;
 import com.estepper.estepper.service.CoordinadorService;
 import com.estepper.estepper.service.GrupoService;
 import com.estepper.estepper.service.ParticipanteService;
@@ -55,7 +53,6 @@ import com.estepper.estepper.service.UsuarioService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-//yo pasaria todo esto a CoordinadorController para no tener tantos
 @Controller
 public class GruposController {
 
@@ -67,9 +64,6 @@ public class GruposController {
 
     @Autowired
     private CoordinadorService cord;
-
-    @Autowired
-    private AdministradorService administrador;
 
     @Autowired
     private UsuarioService user;
@@ -97,12 +91,9 @@ public class GruposController {
             @RequestParam(value = "participantes", required = false) List<Integer> participantes,
             Model model) {
 
-        //elgrupo.setIdCoordinador(getUsuario().getId());
         Coordinador c = coordinador.getCoordinador(getUsuario().getId());
         elgrupo.setCoordinador(c);
 
-
-        // FUNCIONA PERO FALTA CONSEGUIR QUE SALGA LA ALERTA CON EL MENSAJITO
         if (grupo.findByNombre(elgrupo.getNombre()) != null) {
 
             return "redirect:/listaGrupos";
@@ -144,8 +135,7 @@ public class GruposController {
 
         if (elgrupo.getFechaFinGrupo() == null) {
             elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
-        } else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) { // Si quiero tmb que sea la misma: ||
-            // elgrupo.getFechaFinGrupo().isEqual(LocalDate.now())
+        } else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) {
             elgrupo.setEstadoGrupo(EstadoGrupo.TERMINADO);
         } else {
             elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
@@ -160,10 +150,8 @@ public class GruposController {
             @RequestParam(value = "participantes", required = false) List<Integer> participantes,
             Model model) {
 
-        //elgrupo.setIdCoordinador(getUsuario().getId());
         Coordinador c = coordinador.getCoordinador(getUsuario().getId());
         elgrupo.setCoordinador(c);
-    
 
         if (participantes != null) {
             List<Participante> participantesSeleccionadosList = new ArrayList<>();
@@ -174,7 +162,7 @@ public class GruposController {
                 Grupo g = grupo.getGrupo(elgrupo.getId());
 
                 part.update(participante.getEdad(), participante.getSexo(), participante.getFotoUsuario(), g,
-                        participante.getAsistencia(), participante.getCoordinador(),participante.getPerdidaDePeso(),
+                        participante.getAsistencia(), participante.getCoordinador(), participante.getPerdidaDePeso(),
                         participante.getSesionesCompletas(), participante.getPerdidacmcintura(), participanteId);
 
                 elgrupo.setNumParticipantes(g.getNumParticipantes() + participantesSeleccionadosList.size());
@@ -186,8 +174,7 @@ public class GruposController {
 
         if (elgrupo.getFechaFinGrupo() == null) {
             elgrupo.setEstadoGrupo(EstadoGrupo.ACTIVO);
-        } else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) { // Si quiero tmb que sea la misma: ||
-            // elgrupo.getFechaFinGrupo().isEqual(LocalDate.now())
+        } else if (elgrupo.getFechaFinGrupo().isBefore(LocalDate.now())) {
             elgrupo.setEstadoGrupo(EstadoGrupo.TERMINADO);
 
         } else {
@@ -202,7 +189,7 @@ public class GruposController {
     public String grupos(@RequestParam Map<String, Object> params, Model model) {
 
         if (getUsuario() instanceof Coordinador) {
-            
+
             List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);
 
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
@@ -210,7 +197,7 @@ public class GruposController {
                                                             // inicializa a cero
             Coordinador c = coordinador.getCoordinador(getUsuario().getId());
             Page<Grupo> paginaGrupo = grupo.paginas(pageable, c); // listado de páginas de 6 grupos
-                                                                                     // cada una
+                                                                  // cada una
             int totalPags = paginaGrupo.getTotalPages(); // total de páginas
 
             if (totalPags > 0) {
@@ -225,17 +212,12 @@ public class GruposController {
             }
 
             List<Grupo> listaGrupos = paginaGrupo.getContent();
-            // List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
             model.addAttribute("user", getUsuario());
             model.addAttribute("mensajito", "No asignada");
             model.addAttribute("participantesExistentes", participantesExistentes);
             model.addAttribute("grupo", new Grupo());
 
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
-            
             return "grupos";
         } else
             return "redirect:/";
@@ -246,26 +228,25 @@ public class GruposController {
 
         Usuario user = getUsuario();
 
-        if(user instanceof Coordinador){
+        if (user instanceof Coordinador) {
             Grupo gr = grupo.getGrupo(id);
 
-            List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener lista de
-                                                                                                        // participantes de
-                                                                                                        // la base de
+            List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);// obtener
+                                                                                                         // lista de
+                                                                                                         // participantes
+                                                                                                         // de
+                                                                                                         // la base de
             model.addAttribute("participantesExistentes", participantesExistentes);
 
             model.addAttribute("grupo", gr);
             model.addAttribute("user", getUsuario());
             model.addAttribute("listadoParticipantesGrupo", part.listadoGrupo(gr));
 
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
-
             return "editar_grupo";
         }
 
-        else return "redirect:/";
+        else
+            return "redirect:/";
     }
 
     @GetMapping("/grupos/eliminar/{id}")
@@ -292,10 +273,6 @@ public class GruposController {
             List<Grupo> listaGrupos = grupo.listaGrupos(getUsuario().getId());
             model.addAttribute("listaGrupos", listaGrupos);
 
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
-
             return "unirAgrupo";
         } else
             return "redirect:/";
@@ -319,10 +296,6 @@ public class GruposController {
             List<Observaciones> listaObservaciones = observaciones.findByIdGrupo(idGrupo);
             model.addAttribute("listaObservaciones", listaObservaciones);
 
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
-
             return "unGrupo";
         } else
 
@@ -340,10 +313,6 @@ public class GruposController {
             Materiales material = new Materiales();
             model.addAttribute("material", material);
             model.addAttribute("id", id);
-
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
 
             return "materialesGrupo";
         } else
@@ -451,9 +420,6 @@ public class GruposController {
             List<Notificacion> notificaciones = noti.notificaciones(part.getParticipante(u.getId()));
             model.addAttribute("notificaciones", notificaciones);
 
-            //Administrador admin = administrador.getAdministrador(p.getIdAdministrador());
-            //model.addAttribute("administrador", admin);
-
             return "chat";
         } else
             return "acceso";
@@ -466,17 +432,13 @@ public class GruposController {
         model.addAttribute("user", u);
         Participante p = part.getParticipante(idParticipante);
 
-        if (u instanceof Coordinador && p != null) { //revisar
+        if (u instanceof Coordinador && p != null) { // revisar
 
             MensajePrivado menPriv = new MensajePrivado();
             List<MensajePrivado> mensajesPrivados = mensaje.obtenerMensajesPrivados(p);
             model.addAttribute("participante", p);
             model.addAttribute("messagePriv", menPriv);
             model.addAttribute("mensajesPrivados", mensajesPrivados);
-
-            /*Coordinador c = coordinador.getCoordinador(getUsuario().getId());
-            Administrador admin = administrador.getAdministrador(c.getIdAdministrador());
-            model.addAttribute("administrador", admin);*/
 
             return "chatPrivado";
         } else
@@ -559,7 +521,8 @@ public class GruposController {
             }
         }
         elmensajePrivado.setMensaje(elmensaje);
-        elmensajePrivado.setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getCoordinador().getId()));
+        elmensajePrivado
+                .setCoordinador(cord.getCoordinador(part.getParticipante(idParticipante).getCoordinador().getId()));
         elmensajePrivado.setParticipante(part.getParticipante(idParticipante));
         elmensajePrivado.setId(0);
         elmensajePrivado.setFechayHoraEnvio(LocalDateTime.now());

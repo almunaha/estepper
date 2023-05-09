@@ -22,45 +22,42 @@ import jakarta.persistence.CascadeType;
 
 @Entity
 @Table(name = "grupos")
-public class Grupo implements Serializable{
-    
+public class Grupo implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //porque va a ser incrementable
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // porque va a ser incrementable
     private Integer id;
 
-    /*@Column(unique=false, nullable=true)
-    private Integer idCoordinador;*/
-
-    @ManyToOne 
-    @JoinColumn(name="id_coordinador", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "id_coordinador", nullable = false)
     private Coordinador coordinador;
 
-    @Column(unique=true)
+    @Column(unique = true)
     private String codigo;
-    @Column(unique=true)
+    @Column(unique = true)
     private String nombre;
     @Column
-    private Integer numParticipantes; 
+    private Integer numParticipantes;
 
     @OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Participante> participantes;
 
     @Column
-    private LocalDate fechaInicioGrupo; 
+    private LocalDate fechaInicioGrupo;
 
     @Column
-    private LocalDate fechaFinGrupo; 
+    private LocalDate fechaFinGrupo;
 
-    @Column(nullable=true)
+    @Column(nullable = true)
     private String fotoGrupo;
 
-    
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "estado", columnDefinition = "ENUM('ACTIVO', 'TERMINADO')")
     private EstadoGrupo estadoGrupo;
 
-    
-    public Grupo(Integer id, Coordinador coordinador, String codigo, String nombre, Integer numParticipantes, LocalDate fechaInicioGrupo, LocalDate fechaFinGrupo, List<Participante> participantes, String fotoGrupo, EstadoGrupo estadoGrupo) {
+    public Grupo(Integer id, Coordinador coordinador, String codigo, String nombre, Integer numParticipantes,
+            LocalDate fechaInicioGrupo, LocalDate fechaFinGrupo, List<Participante> participantes, String fotoGrupo,
+            EstadoGrupo estadoGrupo) {
         this.id = id;
         this.coordinador = coordinador;
         this.codigo = codigo;
@@ -72,31 +69,38 @@ public class Grupo implements Serializable{
         this.fotoGrupo = fotoGrupo;
         this.estadoGrupo = estadoGrupo;
     }
-    
+
     public Grupo() {
     }
 
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getCodigo() {
         return codigo;
     }
+
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     public Integer getNumParticipantes() {
         return numParticipantes;
     }
+
     public void setNumParticipantes(Integer numParticipantes) {
         this.numParticipantes = numParticipantes;
     }
@@ -112,6 +116,7 @@ public class Grupo implements Serializable{
     public LocalDate getFechaInicioGrupo() {
         return fechaInicioGrupo;
     }
+
     public void setFechaInicioGrupo(LocalDate fecha) {
         this.fechaInicioGrupo = fecha;
     }
@@ -140,7 +145,6 @@ public class Grupo implements Serializable{
         this.fotoGrupo = fotoGrupo;
     }
 
-    
     public EstadoGrupo getEstadoGrupo() {
         return estadoGrupo;
     }
@@ -148,12 +152,5 @@ public class Grupo implements Serializable{
     public void setEstadoGrupo(EstadoGrupo estadoGrupo) {
         this.estadoGrupo = estadoGrupo;
     }
-    
 
-  
 }
-
-    
-
-
-

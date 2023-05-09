@@ -138,7 +138,8 @@
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
                     id="avatar-header" onclick="desplegable()" />
                 <img width="35" th:src="@{img/logo.png}" />
-                <a onclick="notificaciones()"><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
+                <a onclick="notificaciones()"><i class="fa-solid fa-bell"
+                        style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
             <div class="desplegable-perfil">
@@ -154,12 +155,12 @@
                 <h6>Notificaciones</h6>
                 <div class="dropdown-divider"></div>
                 <div style="overflow: auto; max-height: 250px;">
-                  <div th:each="notif : ${notificaciones}">
-                    <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
-                    <div class="dropdown-divider"></div>
-                  </div>
+                    <div th:each="notif : ${notificaciones}">
+                        <a style="font-size: 0.85rem;" th:href="${notif.enlace}" th:text="${notif.mensaje}"></a>
+                        <div class="dropdown-divider"></div>
+                    </div>
                 </div>
-              </div>
+            </div>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
 
@@ -202,8 +203,7 @@
 
                                 <div class="dropdown-menu" id="menu-desplegable" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                    <a class="dropdown-item"
-                                        th:href="@{/chatPartAdmin}">Ayuda</a>
+                                    <a class="dropdown-item" th:href="@{/chatPartAdmin}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
                                         <button class="dropdown-item" type="submit">Cerrar sesión</a>
@@ -222,12 +222,7 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <!--<div class="objetivos-container">-->
-                            <!-- <div class="titulo">-->
                             <h1 style="padding: 10px;">Mis Objetivos</h1>
-                            <!--</div>-->
-
-                            <!--</div>-->
 
                             <div class="objetivosRecomendados-container">
                                 <h2>Objetivos recomendados</h2>
@@ -435,7 +430,6 @@
                                                 <a class="btn-descanso" style="padding: 2%;"
                                                     th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar
                                                     registro</a>
-                                                <!--<a th:href="@{'/editar_descanso/' + ${user.id} + ${objetivoDescanso.horasSuenio}}">Editar registro de sueño</a>-->
                                             </div>
                                             <div
                                                 th:if="${objetivoDescanso.horasSuenio >= objetivoDescanso.horasSuenioObjetivo}">
@@ -446,7 +440,6 @@
                                                 <a class="btn-descanso"
                                                     th:href="@{'/eliminar_descanso/' + ${user.id}}">Eliminar
                                                     registro</a>
-                                                <!--<a th:href="@{'/editar_descanso/' + ${user.id}}">Editar registro de sueño</a> -->
                                             </div>
                                         </div>
 
@@ -545,7 +538,8 @@
                                         <div th:if="${objetivoEstadoAnimo.estadoAnimo == null}">
                                             <strong>Todavía no has registrado cómo te sientes</strong>
                                         </div>
-                                        <div class="estAnim" th:unless="${objetivoEstadoAnimo.estadoAnimo == null}" style="width:70%">
+                                        <div class="estAnim" th:unless="${objetivoEstadoAnimo.estadoAnimo == null}"
+                                            style="width:70%">
                                             <p th:text="'Hoy estás ' + ${objetivoEstadoAnimo.estadoAnimo}"></p>
                                             <a class="btn-estadoAnimo"
                                                 th:href="@{'/eliminar_estadoAnimo/' + ${user.id}}">Eliminar registro
@@ -563,13 +557,6 @@
                         <div class="objetivosRecomendados-container" style="margin-top: 2%;">
                             <h2>Objetivos personalizados</h2>
                         </div>
-                        <!--<div class="botones-container d-flex justify-content">
-                        <a class="btn my-4" id="btn-part" th:href="@{/objetivos/nuevo}">Crear un objetivo
-                                nuevo</a>
-                            <a class="btn" id="btn-part" title="Crear" href="#"
-                                onclick="abrirIframe('modalNuevoObjetivo')">
-                                Crear un objetivo nuevo</a>
-                        </div>-->
 
                         <div class="modal fade" id="modalNuevoObjetivo" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -586,14 +573,16 @@
                                             <div class="m-3">
                                                 <div class="form-group row">
 
-                                                    <label class="col-form-label col-sm-4 nuevoObjetivito">Título del nuevo
+                                                    <label class="col-form-label col-sm-4 nuevoObjetivito">Título del
+                                                        nuevo
                                                         objetivo:</label>
                                                     <div class="col-sm-8 mb-2">
                                                         <input type="text" th:field="*{titulo}" class="form-control"
                                                             required id="titulo" />
                                                     </div>
 
-                                                    <label class="col-form-label col-sm-4 nuevoObjetivito">Fecha tope para
+                                                    <label class="col-form-label col-sm-4 nuevoObjetivito">Fecha tope
+                                                        para
                                                         cumplirlo:</label>
                                                     <div class="col-sm-8 mb-2">
                                                         <input type="date" th:field="*{fechaVencimiento}"
@@ -602,7 +591,8 @@
                                                             th:min="${#dates.format(fechaActual1, 'yyyy-MM-dd')}" />
                                                     </div>
 
-                                                    <label class="col-form-label col-sm-4 nuevoObjetivito">Repetición:</label>
+                                                    <label
+                                                        class="col-form-label col-sm-4 nuevoObjetivito">Repetición:</label>
                                                     <div class="col-sm-8 mb-2">
                                                         <select id="repeticion" th:field="*{repeticion}"
                                                             class="form-control" required>

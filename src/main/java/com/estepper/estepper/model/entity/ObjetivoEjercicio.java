@@ -27,14 +27,14 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ObjetivoEjercicio")
-public class ObjetivoEjercicio implements Serializable{
+public class ObjetivoEjercicio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne 
-    @JoinColumn(name="idParticipante", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "idParticipante", nullable = false)
     private Participante participante;
 
     @Temporal(TemporalType.DATE)
@@ -43,18 +43,17 @@ public class ObjetivoEjercicio implements Serializable{
     private Date fecha;
 
     private Integer duracionEjercicio;
-  
+
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "estado", columnDefinition = "ENUM('COMPLETADO', 'PENDIENTE')")
     private EstadoObjetivo estado;
 
-    
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "ejercicio", columnDefinition = "ENUM('NINGUNO', 'ANDAR', 'CORRER','NATACION','BICICLETA','GIMNASIO','FUTBOL','BALONCESTO','TENIS','PADEL', 'BOXEO', 'BAILE', 'YOGA', 'PILATES', 'OTRO')")
     private Ejercicio ejercicio;
-    
 
-    public ObjetivoEjercicio(Integer id, Participante participante, Date fecha, Integer duracionEjercicio ,EstadoObjetivo estado, Ejercicio ejercicio ) {
+    public ObjetivoEjercicio(Integer id, Participante participante, Date fecha, Integer duracionEjercicio,
+            EstadoObjetivo estado, Ejercicio ejercicio) {
         this.id = id;
         this.participante = participante;
         this.fecha = fecha;
@@ -69,7 +68,6 @@ public class ObjetivoEjercicio implements Serializable{
         fecha = new Date();
         duracionEjercicio = 0;
     }
-
 
     public Integer getId() {
         return id;
@@ -87,7 +85,6 @@ public class ObjetivoEjercicio implements Serializable{
         this.participante = participante;
     }
 
-
     public Date getFecha() {
         return fecha;
     }
@@ -95,7 +92,6 @@ public class ObjetivoEjercicio implements Serializable{
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
 
     public Integer getDuracionEjercicio() {
         return duracionEjercicio;
@@ -121,7 +117,4 @@ public class ObjetivoEjercicio implements Serializable{
         this.ejercicio = ejercicio;
     }
 
-
-
-    
 }

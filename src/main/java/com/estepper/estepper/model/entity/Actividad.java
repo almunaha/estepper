@@ -21,7 +21,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="actividades")
+@Table(name = "actividades")
 public class Actividad implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class Actividad implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "categoria", columnDefinition = "ENUM('DEPORTE', 'ALIMENTACIÓN', 'SALUDMENTAL', 'EDUCACIÓN')")
-    private Categoria categoria; 
+    private Categoria categoria;
 
     private Integer numParticipantes;
 
@@ -46,15 +46,14 @@ public class Actividad implements Serializable {
     private String foto;
 
     @ManyToAny
-    @JoinTable(
-        name = "asistencia_actividades",
-        joinColumns = @JoinColumn(name = "id_actividad"),
-        inverseJoinColumns = @JoinColumn(name = "id_participante"))
+    @JoinTable(name = "asistencia_actividades", joinColumns = @JoinColumn(name = "id_actividad"), inverseJoinColumns = @JoinColumn(name = "id_participante"))
     private Set<Participante> participantes = new HashSet<>();
 
-    public Actividad(){}
+    public Actividad() {
+    }
 
-    public Actividad(Integer id, String nombre, String ubicacion, String descripcion, Categoria categoria, Integer numParticipantes,
+    public Actividad(Integer id, String nombre, String ubicacion, String descripcion, Categoria categoria,
+            Integer numParticipantes,
             Integer plazas, LocalDateTime fechaRealizacion, String foto, Set<Participante> participantes) {
         this.id = id;
         this.nombre = nombre;
@@ -147,6 +146,5 @@ public class Actividad implements Serializable {
     public void setFechaRealizacion(LocalDateTime fechaRealizacion) {
         this.fechaRealizacion = fechaRealizacion;
     }
-
 
 }

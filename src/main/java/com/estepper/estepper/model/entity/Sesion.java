@@ -1,8 +1,6 @@
 package com.estepper.estepper.model.entity;
 
-
 import java.io.Serializable;
-
 
 import com.estepper.estepper.model.enums.Asistencia;
 import com.estepper.estepper.model.enums.EstadoSesion;
@@ -17,16 +15,15 @@ import jakarta.persistence.FetchType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="sesiones")
-public class Sesion implements Serializable{
-    
+@Table(name = "sesiones")
+public class Sesion implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -35,8 +32,8 @@ public class Sesion implements Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="idParticipante", nullable=false)
-    private Participante participante; 
+    @JoinColumn(name = "idParticipante", nullable = false)
+    private Participante participante;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, name = "estado", columnDefinition = "ENUM('COMPLETA', 'ENCURSO')")
@@ -52,14 +49,13 @@ public class Sesion implements Serializable{
 
     private double pesoPerdido;
 
+    public Sesion() {
 
-    public Sesion(){
-    
     }
 
     public Sesion(Integer id, Integer numSesion, Participante participante, EstadoSesion estado, String observaciones,
 
-     Asistencia asistencia, double cmsPerdidos, double pesoPerdido){
+            Asistencia asistencia, double cmsPerdidos, double pesoPerdido) {
         this.id = id;
         this.numSesion = numSesion;
         this.participante = participante;
@@ -78,7 +74,7 @@ public class Sesion implements Serializable{
         this.id = id;
     }
 
-     public Integer getNumSesion() {
+    public Integer getNumSesion() {
         return numSesion;
     }
 
@@ -94,7 +90,7 @@ public class Sesion implements Serializable{
         this.participante = participante;
     }
 
-    public Integer getIdParticipante(){
+    public Integer getIdParticipante() {
         return participante.getId();
     }
 
@@ -138,6 +134,4 @@ public class Sesion implements Serializable{
         this.pesoPerdido = pesoPerdido;
     }
 
-    
 }
-

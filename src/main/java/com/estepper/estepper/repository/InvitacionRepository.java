@@ -1,4 +1,5 @@
 package com.estepper.estepper.repository;
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,14 +14,18 @@ import com.estepper.estepper.model.enums.EstadoInvitacion;
 
 import jakarta.transaction.Transactional;
 
-public interface InvitacionRepository extends JpaRepository<Invitacion, Integer>{
+public interface InvitacionRepository extends JpaRepository<Invitacion, Integer> {
 
     List<Invitacion> findByCoordinador(Coordinador c);
+
     List<Invitacion> findByCoordinadorAndActividad(Coordinador c, Actividad actividad);
+
     List<Invitacion> findByActividad(Actividad a);
+
     List<Invitacion> findByParticipanteAndEstado(Participante p, EstadoInvitacion e);
+
     Invitacion findByParticipanteAndActividad(Participante p, Actividad a);
-    
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Invitacion i WHERE i.participante = :participante")
@@ -35,4 +40,3 @@ public interface InvitacionRepository extends JpaRepository<Invitacion, Integer>
     Integer countByActividadAndEstado(Actividad actividad, EstadoInvitacion estado);
 
 }
-

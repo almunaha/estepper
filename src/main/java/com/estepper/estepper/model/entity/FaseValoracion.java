@@ -12,21 +12,22 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Table(name="fasevaloracion")
+@Table(name = "fasevaloracion")
 public class FaseValoracion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
-    @JoinColumn(name="idParticipante")
-    private Participante participante; 
+    @JoinColumn(name = "idParticipante")
+    private Participante participante;
 
-    public FaseValoracion(){}
+    public FaseValoracion() {
+    }
 
-    public FaseValoracion(Integer id, Participante participante){
+    public FaseValoracion(Integer id, Participante participante) {
         this.id = id;
         this.participante = participante;
     }
@@ -43,7 +44,7 @@ public class FaseValoracion {
         return participante.getId();
     }
 
-    public Participante getParticipante(){
+    public Participante getParticipante() {
         return participante;
     }
 
@@ -51,5 +52,4 @@ public class FaseValoracion {
         this.participante = participante;
     }
 
-    
 }

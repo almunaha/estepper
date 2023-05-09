@@ -12,8 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-
-public interface ObjetivoAguaRepository extends JpaRepository<ObjetivoAgua, Integer>{
+public interface ObjetivoAguaRepository extends JpaRepository<ObjetivoAgua, Integer> {
 
     @Modifying
     @Transactional
@@ -23,8 +22,3 @@ public interface ObjetivoAguaRepository extends JpaRepository<ObjetivoAgua, Inte
     ObjetivoAgua findByFechaAndParticipante(Date fecha, Participante p);
 
 }
-
-
-
-
-
