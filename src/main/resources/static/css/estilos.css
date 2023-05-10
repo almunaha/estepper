@@ -903,6 +903,7 @@ input[type="date"] {
     #contenido {
         width: 100%;
         margin-left: 0px;
+        margin-bottom: 60px;
     }
 
     #sidebar-container {
@@ -1056,6 +1057,21 @@ input[type="date"] {
         padding-bottom: 1%;
         gap: 1%;
     }
+
+    .span-coord{
+        overflow-x: auto;
+    }
+
+    .span-coord::-webkit-scrollbar {
+        height: 8px; 
+      }
+
+    .perfil-coord{
+        margin: 5% 5%;
+
+    }
+
+    
 
 
 }
