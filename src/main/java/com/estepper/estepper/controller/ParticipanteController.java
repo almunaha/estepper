@@ -754,6 +754,9 @@ public class ParticipanteController {
                     model.addAttribute("participante", p);
                     List<Progreso> peso = pro.datos(p, TipoProgreso.PESO);
                     model.addAttribute("peso", peso);
+
+                    List<Progreso> perimetro = pro.datos(p, TipoProgreso.PERIMETRO);
+                    model.addAttribute("perimetro", perimetro);
                     model.addAttribute("idPart", id);
 
                     return "progresoCoor";
