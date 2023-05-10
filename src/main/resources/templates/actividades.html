@@ -295,7 +295,7 @@
                     </div>
                 </div>
 
-                <!-- Actividades y calendario -->
+                <!-- Actividades -->
                 <div class="flex-act">
 
                     <!-- Layout actividades -->
@@ -345,34 +345,9 @@
                         </div>
                     </div>
 
-                    <!-- Calendario o asistencia confirmada -->
-                    <div class="eventos">
-                        <div class="asistencia">
-                            <h5>Asistencia confirmada</h5>
-                        </div>
-
-                        <p>Recordatorio de actividades inscritas</p>
-
-                        <div class="layout-asis">
-                            <div class="asis-indi" th:each="asis:${asistencia}">
-                                <div class="iz-asis">
-                                    <div style="font-size: 1.3rem"
-                                        th:text="${#temporals.format(asis.fechaRealizacion, 'dd')}"></div>
-                                    <div th:text="${#temporals.format(asis.fechaRealizacion, 'MMM')}"></div>
-                                </div>
-                                <div class="der-asis">
-                                    <div th:text="${asis.nombre}"></div>
-                                    <div th:text="${#temporals.format(asis.fechaRealizacion, 'HH:mm')}"></div>
-                                </div>
-                                <a class="desinscripcion" th:data-id="${asis.id}"><i class="fa-solid fa-xmark"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
-
         </div>
 
 </body>

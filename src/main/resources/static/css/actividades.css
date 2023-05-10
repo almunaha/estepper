@@ -19,16 +19,12 @@
     font-size: 17px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     width: 120px;
-    height: 50px;
+    height: 45px;
     text-align: center;
 }
 
 .btn-invit:hover, .btn-asis-movil:hover {
     transform: scale(1.1);
-}
-
-.btn-asis-movil{
-    display: none;
 }
 
 .flex-act {
@@ -49,11 +45,11 @@
     gap: 1.2%;
     flex-wrap: wrap;
     /* para cambiar de fila */
-    width: 71.5%
+    width: 100%
 }
 
 .actividad {
-    width: 31.7%;
+    width: 23.6%;
     height: 370px;
     border-radius: 12px;
     background-color: white;
@@ -407,13 +403,13 @@
 }
 
 #buscadorActi{
-    width: 70%;
+    width: 40%;
     margin-top: 25px;
 }
 
 #busqueda-actividad{
-   width: 71.5%; 
    margin-top: 1.5%;
+   justify-content: center;
 }
 
 #tabla-asistencia{
@@ -444,6 +440,18 @@
     display: none;
 }
 
+.btn-funcion{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.eventos-movil{
+    width: 100%;
+    background-color: white;
+    margin-right: 2%;
+}
+
 
 /* RESPONSIVE */
 @media (max-width: 767px) {
@@ -467,16 +475,6 @@
 
     .actividad-info{
         height: 300px;
-    }
-
-    .eventos-movil{
-        width: 100%;
-        background-color: white;
-        margin-right: 2%;
-    }
-
-    .eventos{
-        display: none;
     }
 
     .layout-asis{
@@ -544,15 +542,9 @@
 
     .btn-invit, .btn-asis-movil{
         display: flex;
-        text-align: center;
         justify-content: center;
         align-items: center;
         height: 40px;
-    }
-
-    .btn-funcion{
-        display: flex;
-        flex-direction: column;
     }
 
     .btn-gest .texto {
