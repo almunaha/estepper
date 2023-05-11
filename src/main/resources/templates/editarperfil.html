@@ -195,6 +195,9 @@
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <a th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
                     th:href="@{/chatPartAdmin}">Ayuda</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
+                </form>
             </div>
             <div class="dropdown-divider"></div>
             <form th:action="@{/logout}" method="post">
