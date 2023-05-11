@@ -379,7 +379,10 @@ public class HomeController {
     @PostMapping("/aceptar-cookie")
     public String aceptarCookie(HttpServletResponse response, @RequestParam("userId") Integer userId) {
         Cookie cookie = new Cookie("consentimiento", userId.toString());
-        cookie.setMaxAge(Integer.MAX_VALUE);
+        int tiempoExpiracion = 365 * 24 * 60 * 60; // 1 año en segundos
+        cookie.setMaxAge(tiempoExpiracion);
+        cookie.setHttpOnly(true); // Para proteger la cookie de ataques XSS
+        cookie.setSecure(true); // Para que la cookie solo se envíe a través de HTTPS
         response.addCookie(cookie);
         return "login";
     }
@@ -408,7 +411,10 @@ public class HomeController {
         // COOKIES
         if (request.getParameter("consentimiento") != null) {
             Cookie cookie = new Cookie("consentimiento", user.getId().toString());
-            cookie.setMaxAge(Integer.MAX_VALUE);
+            int tiempoExpiracion = 365 * 24 * 60 * 60; // 1 año en segundos
+            cookie.setMaxAge(tiempoExpiracion);
+            cookie.setHttpOnly(true); // Para proteger la cookie de ataques XSS
+            cookie.setSecure(true); // Para que la cookie solo se envíe a través de HTTPS
             response.addCookie(cookie);
         }
 
