@@ -298,10 +298,12 @@
 
                     <div class="asistentes">
                         <h5>Listado de asistentes confirmados</h5>
-                        <h6 style="color: rgb(49, 107, 127)"
+                        <h6 th:if="${actividad.numParticipantes > 0}" style="color: rgb(49, 107, 127)"
                             th:text="'Total asistentes: ' + ${actividad.numParticipantes}"></h6>
+                        <h6 th:unless="${actividad.numParticipantes > 0}" style="color: rgb(49, 107, 127)"
+                            th:text="'Actualmente no hay asistentes'"></h6>
 
-                        <div class="table-responsive" style="margin-top: 3%;">
+                        <div th:if="${actividad.numParticipantes > 0}" class="table-responsive" style="margin-top: 3%;">
                             <table class="table" id="tabla-asistencia">
                                 <thead class="thead-dark">
                                     <tr>
@@ -319,7 +321,6 @@
                                 </tbody>
                             </table>
                         </div>
-
 
                     </div>
 

@@ -145,7 +145,7 @@
                     <div class="iz-gestion">
                         <h5>Invitaciones enviadas</h5>
 
-                        <div class="tabla-cont">
+                        <div th:if="${invitaciones.size() > 0}" class="tabla-cont">
                             <table class="table" id="tabla-invit">
                                 <thead class="thead-dark">
                                     <tr>
@@ -162,6 +162,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div th:unless="${invitaciones.size() > 0}" class="tabla-cont" style="text-align: center;">
+                                No has realizado invitaciones
                         </div>
                     </div>
 
