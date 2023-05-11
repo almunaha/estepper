@@ -243,24 +243,21 @@
             </div>            
           <!-- Datos actividad -->
             <div class="datos-coor">
-              <div class="iz-datos">
-                <div th:text="${lis.nombre}" class="nombre-act"></div>
+                <a th:text="${lis.nombre}" class="nombre-act" th:href="@{'/actividad/' + ${lis.id}}"></a>
                 <div class="mt-3">
                   <i class="fa-solid fa-calendar-days"></i>
                   <span th:text="${#temporals.format(lis.fechaRealizacion, 'dd MMM')}"></span>&nbsp
-
+                  
                   <i class="fa-solid fa-clock"></i>
                   <span th:text="${#temporals.format(lis.fechaRealizacion, 'HH:mm')}"></span>&nbsp
-
+                  
                   <i class="fa-solid fa-location-dot"></i>
-                  <span th:text="${lis.ubicacion}"></span>
+                  <span th:text="${lis.ubicacion}"></span>&nbsp
+                  
+                  <span th:text="'Plazas: '+ ${lis.plazas}" style="margin-left: 16%;"></span>&nbsp
+                  <span th:text="'Asistentes: '+ ${lis.numParticipantes}"></span>
+                  
                 </div>
-              </div>
-
-              <div class="medio-datos">
-                <span th:text="'Plazas: '+ ${lis.plazas}"></span>&nbsp
-                <span th:text="'Asistentes: '+ ${lis.numParticipantes}"></span>
-              </div>
             </div>
 
             <!-- Botones actividad -->

@@ -64,8 +64,8 @@
 }
 
 .foto-act-coord{
-    height: 70px;
-    width: 9%;
+    height: 80px;
+    width: 10%;
     overflow: hidden;
     margin-left: 1%;
 }
@@ -314,6 +314,8 @@
     justify-content: space-around;
     align-items: center;
     border-radius: 10px;
+    padding-top: 4.5%;
+    padding-bottom: 4.5%;
 }
 
 .act-coor i {
@@ -352,17 +354,8 @@
 }
 
 .datos-coor {
-    display: flex;
+    width: 500px;
     align-items: center;
-}
-
-
-.iz-datos {
-    width: 60%;
-}
-
-.medio-datos {
-    width: 65%;
 }
 
 .der-datos {
@@ -452,7 +445,6 @@
     margin-right: 2%;
 }
 
-
 /* RESPONSIVE */
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
@@ -467,7 +459,7 @@
         width: 100%;
         justify-content: center;
         margin-left: 0;
-        margin-top: 18%;
+        margin-top: 33%;
     }
 
     .flex-act{
@@ -558,6 +550,13 @@
 
     .foto-act-coord{
         display: none;
+    }
+
+    .act-coor{
+        padding-top: 15%;
+        padding-bottom: 15%;
+        padding-left: 5%;
+        padding-right: 5%;
     }
 
 }
