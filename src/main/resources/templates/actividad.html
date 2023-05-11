@@ -175,8 +175,9 @@
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
                     id="avatar-header" onclick="desplegable()" />
+                <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"></div>
                 <img width="35" th:src="@{/img/logo.png}" />
-                <a onclick="notificaciones()"><i class="fa-solid fa-bell"
+                <a th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" onclick="notificaciones()"><i class="fa-solid fa-bell"
                         style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
 
