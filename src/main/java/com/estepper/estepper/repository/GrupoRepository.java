@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.estepper.estepper.model.entity.Coordinador;
 import com.estepper.estepper.model.entity.Grupo;
+import com.estepper.estepper.model.enums.EstadoGrupo;
 
 public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
 
@@ -26,8 +27,8 @@ public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
 
     @Modifying
     @Transactional
-    @Query("update Grupo SET nombre = :nombre, codigo = :codigo, coordinador = :coordinador, numParticipantes = :numParticipantes WHERE id = :idGrupo")
-    void update(String nombre, String codigo, Coordinador coordinador, Integer numParticipantes, Integer idGrupo);
+    @Query("update Grupo SET nombre = :nombre, codigo = :codigo, coordinador = :coordinador, numParticipantes = :numParticipantes, estadoGrupo = :estado WHERE id = :idGrupo")
+    void update(String nombre, String codigo, Coordinador coordinador, Integer numParticipantes, EstadoGrupo estado, Integer idGrupo);
 
     @Modifying
     @Transactional

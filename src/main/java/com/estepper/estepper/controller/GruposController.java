@@ -186,7 +186,18 @@ public class GruposController {
     public String grupos(@RequestParam Map<String, Object> params, Model model) {
 
         if (getUsuario() instanceof Coordinador) {
-
+            //editar grupos por si alguno está terminado
+            List<Grupo> lista = grupo.getGrupos();
+            for (int i = 0; i < lista.size(); i++){
+                if (lista.get(i).getFechaFinGrupo() == null) {
+                    lista.get(i).setEstadoGrupo(EstadoGrupo.ACTIVO);
+                } else if (lista.get(i).getFechaFinGrupo().isBefore(LocalDate.now())) {
+                    lista.get(i).setEstadoGrupo(EstadoGrupo.TERMINADO);
+                } else {
+                    lista.get(i).setEstadoGrupo(EstadoGrupo.ACTIVO);
+                }
+                grupo.update(lista.get(i));
+            }
             List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);
 
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;

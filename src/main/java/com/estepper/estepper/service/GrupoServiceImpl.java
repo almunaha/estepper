@@ -34,8 +34,7 @@ public class GrupoServiceImpl implements GrupoService {
 
     @Override
     public void update(Grupo grupo) {
-        repo.update(grupo.getNombre(), grupo.getCodigo(), grupo.getCoordinador(), grupo.getNumParticipantes(),
-                grupo.getId());
+        repo.update(grupo.getNombre(), grupo.getCodigo(), grupo.getCoordinador(), grupo.getNumParticipantes(), grupo.getEstadoGrupo(), grupo.getId());
     }
 
     @Override

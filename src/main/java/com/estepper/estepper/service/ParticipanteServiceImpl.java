@@ -70,7 +70,7 @@ public class ParticipanteServiceImpl implements ParticipanteService {
         Grupo grup = p.getGrupo();
         if (grup.getNumParticipantes() > 0)
             grup.setNumParticipantes(grup.getNumParticipantes() - 1);
-        repoG.update(grup.getNombre(), grup.getCodigo(), grup.getCoordinador(), grup.getNumParticipantes(),
+        repoG.update(grup.getNombre(), grup.getCodigo(), grup.getCoordinador(), grup.getNumParticipantes(), grup.getEstadoGrupo(),
                 grup.getId());
         p.setGrupo(null);
         repo.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), null, p.getAsistencia(), p.getCoordinador(),
