@@ -275,7 +275,7 @@ $(document).ready(function () {
             renderTabla();
 
         } else {
-            document.getElementById('datos').innerHTML = '<div class="sin-datos"><h5>Aún no tienes objetivos para este mes</h5></div>';
+            document.getElementById('datos').innerHTML = '<div class="sin-datos"><h5>No se han encontrado objetivos con estas características</h5></div>';
         }
 
     }
