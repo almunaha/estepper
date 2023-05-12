@@ -111,7 +111,15 @@ public class HomeController {
     public String index(Model model, HttpServletRequest request) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Coordinador) {
+        if((user instanceof Coordinador || user instanceof Administrador) && user.getEstadoCuenta().equals(Estado.BAJA)){
+            MensajeAdmin menAdmin = new MensajeAdmin();
+            List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesUsuario(user);
+            model.addAttribute("messageAdmin", menAdmin);
+            model.addAttribute("mensajesAdministrador", mensajesAdmin);
+
+            return "bajaUsuario";
+        }
+        else if (user instanceof Coordinador) {
             return "coordinador";
         }
 

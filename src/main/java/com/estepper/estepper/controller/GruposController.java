@@ -100,8 +100,6 @@ public class GruposController {
 
         }
 
-        System.out.println(elgrupo.getNombre());
-
         String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
         while (grupo.findByCodigo(elcodigo) != null) {
             elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
@@ -112,7 +110,6 @@ public class GruposController {
             List<Participante> participantesSeleccionadosList = new ArrayList<>();
             for (Integer participanteId : participantes) {
                 Participante participante = part.findById(participanteId).get();
-                System.out.println(participante.getNickname());
                 participantesSeleccionadosList.add(participante);
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
