@@ -219,11 +219,17 @@ public class HomeController {
                                 FichaObjetivo fichaObjetivo = f
                                         .getFichaObjetivo(participante.findById(part.get().getId()).get());
                                 model.addAttribute("ficha", fichaObjetivo);
-                                Double porcentajeProgreso = 0.00;
-                                if (f.getFichaObjetivo(part.get()).getPerdida() != null)
-                                    porcentajeProgreso = f.getFichaObjetivo(part.get()).getPerdida() * 100
-                                            / f.getFichaObjetivo(part.get()).getObjetivo();
 
+                                // cálculo de porcentaje de progreso
+                                Double porcentajeProgreso = 0.00;
+                                if (f.getFichaObjetivo(part.get()).getPerdida() != null && part.get().getPerdidaDePeso() != null){
+                                    if(f.getFichaObjetivo(part.get()).getPerdida() <= -part.get().getPerdidaDePeso())
+                                        porcentajeProgreso = 100.00;
+                                    else {
+                                    porcentajeProgreso = -part.get().getPerdidaDePeso() * 100
+                                            / f.getFichaObjetivo(part.get()).getPerdida();
+                                    }
+                                }
                                 String progresoPer = String.format("%.2f", porcentajeProgreso).replace(",", "."); // Formatear
                                                                                                                   // a
                                                                                                                   // dos
