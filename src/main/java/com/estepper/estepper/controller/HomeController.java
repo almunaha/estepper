@@ -613,22 +613,5 @@ public class HomeController {
             return "redirect:/";
     }
 
-    @GetMapping("/ayuda")
-    public String ayuda(Model model) {
-
-        Usuario u = getUsuario();
-        model.addAttribute("user", u);
-
-        if (u instanceof Participante || u instanceof Coordinador) {
-
-            List<MensajeAdmin> mensajes = mensaje.obtenerMensajesUsuario(u);
-            MensajeAdmin menAdmin = new MensajeAdmin();
-            model.addAttribute("mensajes", mensajes);
-            model.addAttribute("messageAdmin", menAdmin);
-
-            return "ayuda";
-        } else
-            return "redirect:/";
-    }
 
 }

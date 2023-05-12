@@ -72,9 +72,6 @@ public class GruposController {
     private CoordinadorService coordinador;
 
     @Autowired
-    private ObservacionesService obs;
-
-    @Autowired
     private MaterialService materialS;
 
     @Autowired
@@ -263,7 +260,7 @@ public class GruposController {
         if (getUsuario() instanceof Coordinador && gr.getCoordinador().getId() == getUsuario().getId()) {
             materialS.deleteByGrupo(gr);
             mensaje.deleteByGrupo(gr);
-            obs.deleteByGrupo(gr);
+            observaciones.deleteByGrupo(gr);
             grupo.delete(id);
 
             return "redirect:/listaGrupos";

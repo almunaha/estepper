@@ -440,7 +440,7 @@ public class CoordinadorController {
     }
 
     @GetMapping("/eliminar_actividad/{id}")
-    public String process_invitacion(@PathVariable(name = "id") Integer id, Model model) {
+    public String eliminarActividad(@PathVariable(name = "id") Integer id, Model model) {
 
         Usuario user = getUsuario();
         model.addAttribute("user", user);
