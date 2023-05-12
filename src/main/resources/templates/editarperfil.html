@@ -192,17 +192,16 @@
             </div>
 
             <div class="desplegable-perfil">
-                <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
-                <a th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
+                <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
+                <a class="dropdown-item"  th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
+                    th:href="@{/chatCordAdmin}">Ayuda</a>
+                <a class="dropdown-item" th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
                     th:href="@{/chatPartAdmin}">Ayuda</a>
+                <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
-            <div class="dropdown-divider"></div>
-            <form th:action="@{/logout}" method="post">
-                <button class="dropdown-item" type="submit">Cerrar sesión</button>
-            </form>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
 
@@ -219,9 +218,10 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
-                                    class="dropdown-item" th:href="@{/chatPartAdmin}">Ayuda</a>
-
+                                <a class="dropdown-item" th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
+                                    th:href="@{/chatCordAdmin}">Ayuda</a>
+                                <a class="dropdown-item" th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
+                                    th:href="@{/chatPartAdmin}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
                                     <button class="dropdown-item" type="submit">Cerrar sesión</button>
