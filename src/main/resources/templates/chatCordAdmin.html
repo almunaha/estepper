@@ -118,15 +118,15 @@
                 <div class="encabezado-grupo">
 
                     <div class="encabezadoMensajes">
-                        <h3 th:text="'Mensajes privados con el administrador'"></h3>
-                    </div>
+                        <h4 style="color:azure" th:text="'Mensajes privados con el administrador'"></h4>
+                      </div>
 
 
                     <div class="bordes-chat" style="width: 90%;">
                         <section class="chat-area">
                             <header>
+                                <img src="img/p1.png" alt="Foto de administrador">
                                 <h4>Administrador</h4>
-
                             </header>
                             <div class="chat-box">
                                 <div th:each="m : ${mensajesAdministrador}" class="contenedor-mensaje mb-2">

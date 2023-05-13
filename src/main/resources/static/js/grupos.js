@@ -23,10 +23,7 @@ function cambiarChat(){
 }
 
 $(document).ready(function () {
-
-  var almacenado = localStorage.getItem("chat");
-  console.log("Al refrescar:",almacenado);
-
+  
   cambiarChat();
 
   $('.eliminarGrupo').click(function () {
