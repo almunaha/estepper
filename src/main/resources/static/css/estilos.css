@@ -514,10 +514,16 @@ input[type="date"] {
     margin-right: 2%;
 }
 
+.contBaja{
+    display: flex;
+    align-items: center;
+    padding: 5%;
+}
 .column-baja {
     flex-basis: 50%;
     background-color: white;
-    height: 50%;
+    height: 30%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     /* verticalmente */
@@ -526,7 +532,8 @@ input[type="date"] {
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     border-radius: 12px;
-
+    margin-left: 10%;
+    margin-top: 100px;
 }
 
 .top-baja {
@@ -934,7 +941,13 @@ input[type="date"] {
     }
 
     .column-baja{
-        width: 100%;
+        width: 90%;
+        margin-top: 40px;
+        margin-left: 1%;
+    }
+
+    .contBaja{
+        flex-direction: column;
     }
 
     .top-baja{
