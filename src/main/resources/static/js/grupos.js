@@ -1,4 +1,33 @@
+var almacenado = localStorage.getItem("chat");
+
+function iniciarChat(){
+  if(almacenado == null){//iniciar variable global chat
+    localStorage.setItem("chat","grupal");
+  }
+}
+
+function cambiarChat(){
+  var almacenado = localStorage.getItem("chat");
+  if(almacenado == "grupal"){
+    $('#chatGrupal').css("background-color", "rgb(98, 216, 110)");
+    $("#chatCoordinador").css("background-color", "rgb(175, 204, 185)");
+    $(".chatGrupal").show();
+    $(".chatCoordinador").hide();
+  }
+  else if (almacenado == "coordinador"){
+    $('#chatCoordinador').css("background-color", "rgb(98, 216, 110)");
+    $("#chatGrupal").css("background-color", "rgb(175, 204, 185)");
+    $(".chatGrupal").hide();
+    $(".chatCoordinador").show();
+  }
+}
+
 $(document).ready(function () {
+
+  var almacenado = localStorage.getItem("chat");
+  console.log("Al refrescar:",almacenado);
+
+  cambiarChat();
 
   $('.eliminarGrupo').click(function () {
     var id = $(this).data('id');
@@ -42,24 +71,16 @@ $(document).ready(function () {
     })
   }(jQuery));
 
-  //Botones objetivos recomendados
-  $(".chatGrupal").show();
-  $(".chatCoordinador").hide();
 
-  $("#chatGrupal").css("background-color", "rgb(98, 216, 110)");
 
   $("#chatGrupal").click(function () {
-    $(this).css("background-color", "rgb(98, 216, 110)");
-    $("#chatCoordinador").css("background-color", "rgb(175, 204, 185)");
-    $(".chatGrupal").show();
-    $(".chatCoordinador").hide();
+    localStorage.setItem("chat","grupal");
+    cambiarChat();
   });
 
   $("#chatCoordinador").click(function () {
-    $(this).css("background-color", "rgb(98, 216, 110)");
-    $("#chatGrupal").css("background-color", "rgb(175, 204, 185)");
-    $(".chatGrupal").hide();
-    $(".chatCoordinador").show();
+    localStorage.setItem("chat","coordinador");
+    cambiarChat();
   });
 
 
