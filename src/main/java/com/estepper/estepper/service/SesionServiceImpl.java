@@ -16,10 +16,12 @@ public class SesionServiceImpl implements SesionService {
     @Autowired
     private SesionRepository repo; // inyección de dependencia
 
+    @Override
     public void guardar(Sesion s) {
         repo.save(s);
     }
 
+    @Override
     public Sesion buscarSesion(Participante participante, Integer numSesion) {
         return repo.findByParticipanteAndNumSesion(participante, numSesion);
     }
