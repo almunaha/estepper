@@ -1,18 +1,88 @@
+.cuerpoPerfil {
+    padding-top: 100px;
+}
+
+
+.cardi2 {
+    width: 90%;
+    height: 400px;
+    background: #fff;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.13);
+}
+
+.cardi2::before {
+    content: "";
+    position: absolute;
+    top: 5%;
+    width: 95%;
+    height: 160px;
+    border-radius: 20px 20px 0 0;
+    background: #13405d;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.13);
+
+}
+
+.cardi2 .imagenPerfil {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    z-index: 10;
+    transform: translateY(50px);
+    border: 10px solid #fff;
+    overflow: hidden;
+    position: absolute;
+    background: #fff;
+}
+
+.cardi2 .imagenPerfil .img {
+    width: 120%;
+    height: 120%;
+    transform: translate(-8%, -8%);
+    border-right: 5px solid white;
+}
+
+.contenidoPerfil {
+    width: 95%;
+    height: 40%;
+    transform: translateY(170px);
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+    align-items: center;
+    /*background-color: #bdd2e0;*/
+    border-radius: 0px 0px 20px 20px;
+    margin-top: 3%;
+}
+
+
+.box {
+    padding: 10px 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 90%; 
+}
+
+
 .datos {
     display: flex;
-    flex-wrap: wrap;
-    margin-left: 4%;
+    flex-wrap: nowrap;
+    margin-left: -15%;
 }
 
 .dato {
     display: flex;
-    flex-basis: calc(100% / 5);
+    flex-basis: calc(100% / 4);
     align-items: center;
     border: 1px solid #ccc;
     justify-content: space-around;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     padding: 4%;
     margin: 2%;
+    height: 60%;
 }
 
 .dato h5 {
