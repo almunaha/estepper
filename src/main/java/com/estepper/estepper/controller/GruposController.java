@@ -72,9 +72,6 @@ public class GruposController {
     private CoordinadorService coordinador;
 
     @Autowired
-    private ObservacionesService obs;
-
-    @Autowired
     private MaterialService materialS;
 
     @Autowired
@@ -100,8 +97,6 @@ public class GruposController {
 
         }
 
-        System.out.println(elgrupo.getNombre());
-
         String elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
         while (grupo.findByCodigo(elcodigo) != null) {
             elcodigo = RandomStringUtils.randomAlphanumeric(15).toUpperCase();
@@ -112,7 +107,6 @@ public class GruposController {
             List<Participante> participantesSeleccionadosList = new ArrayList<>();
             for (Integer participanteId : participantes) {
                 Participante participante = part.findById(participanteId).get();
-                System.out.println(participante.getNickname());
                 participantesSeleccionadosList.add(participante);
                 grupo.save(elgrupo);
                 Grupo g = grupo.getGrupo(elgrupo.getId());
@@ -189,7 +183,18 @@ public class GruposController {
     public String grupos(@RequestParam Map<String, Object> params, Model model) {
 
         if (getUsuario() instanceof Coordinador) {
-
+            //editar grupos por si alguno está terminado
+            List<Grupo> lista = grupo.getGrupos();
+            for (int i = 0; i < lista.size(); i++){
+                if (lista.get(i).getFechaFinGrupo() == null) {
+                    lista.get(i).setEstadoGrupo(EstadoGrupo.ACTIVO);
+                } else if (lista.get(i).getFechaFinGrupo().isBefore(LocalDate.now())) {
+                    lista.get(i).setEstadoGrupo(EstadoGrupo.TERMINADO);
+                } else {
+                    lista.get(i).setEstadoGrupo(EstadoGrupo.ACTIVO);
+                }
+                grupo.update(lista.get(i));
+            }
             List<Participante> participantesExistentes = part.listado(getUsuario().getId(), Estado.BAJA);
 
             int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
@@ -255,7 +260,7 @@ public class GruposController {
         if (getUsuario() instanceof Coordinador && gr.getCoordinador().getId() == getUsuario().getId()) {
             materialS.deleteByGrupo(gr);
             mensaje.deleteByGrupo(gr);
-            obs.deleteByGrupo(gr);
+            observaciones.deleteByGrupo(gr);
             grupo.delete(id);
 
             return "redirect:/listaGrupos";

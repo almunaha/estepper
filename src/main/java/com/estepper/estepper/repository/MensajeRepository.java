@@ -18,7 +18,6 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Integer> {
     Optional<Mensaje> findById(Integer id);
 
     List<Mensaje> findByGrupo(Grupo grupo);
-    // List<Mensaje> findByIdUsuario(Integer idUsuario);
 
     @Modifying
     @Transactional

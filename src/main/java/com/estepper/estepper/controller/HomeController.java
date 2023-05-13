@@ -111,7 +111,15 @@ public class HomeController {
     public String index(Model model, HttpServletRequest request) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if (user instanceof Coordinador) {
+        if((user instanceof Coordinador || user instanceof Administrador) && user.getEstadoCuenta().equals(Estado.BAJA)){
+            MensajeAdmin menAdmin = new MensajeAdmin();
+            List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesUsuario(user);
+            model.addAttribute("messageAdmin", menAdmin);
+            model.addAttribute("mensajesAdministrador", mensajesAdmin);
+
+            return "bajaUsuario";
+        }
+        else if (user instanceof Coordinador) {
             return "coordinador";
         }
 
@@ -211,11 +219,17 @@ public class HomeController {
                                 FichaObjetivo fichaObjetivo = f
                                         .getFichaObjetivo(participante.findById(part.get().getId()).get());
                                 model.addAttribute("ficha", fichaObjetivo);
-                                Double porcentajeProgreso = 0.00;
-                                if (f.getFichaObjetivo(part.get()).getPerdida() != null)
-                                    porcentajeProgreso = f.getFichaObjetivo(part.get()).getPerdida() * 100
-                                            / f.getFichaObjetivo(part.get()).getObjetivo();
 
+                                // cálculo de porcentaje de progreso
+                                Double porcentajeProgreso = 0.00;
+                                if (f.getFichaObjetivo(part.get()).getPerdida() != null && part.get().getPerdidaDePeso() != null){
+                                    if(f.getFichaObjetivo(part.get()).getPerdida() <= -part.get().getPerdidaDePeso())
+                                        porcentajeProgreso = 100.00;
+                                    else {
+                                    porcentajeProgreso = -part.get().getPerdidaDePeso() * 100
+                                            / f.getFichaObjetivo(part.get()).getPerdida();
+                                    }
+                                }
                                 String progresoPer = String.format("%.2f", porcentajeProgreso).replace(",", "."); // Formatear
                                                                                                                   // a
                                                                                                                   // dos
@@ -599,22 +613,5 @@ public class HomeController {
             return "redirect:/";
     }
 
-    @GetMapping("/ayuda")
-    public String ayuda(Model model) {
-
-        Usuario u = getUsuario();
-        model.addAttribute("user", u);
-
-        if (u instanceof Participante || u instanceof Coordinador) {
-
-            List<MensajeAdmin> mensajes = mensaje.obtenerMensajesUsuario(u);
-            MensajeAdmin menAdmin = new MensajeAdmin();
-            model.addAttribute("mensajes", mensajes);
-            model.addAttribute("messageAdmin", menAdmin);
-
-            return "ayuda";
-        } else
-            return "redirect:/";
-    }
 
 }

@@ -318,7 +318,10 @@ public class AdminController {
         elmensajeAdmin.setUsuario(u);
         mensajeS.saveMensajeAdmin(elmensajeAdmin);
 
-        if (u instanceof Coordinador) {
+        if ((u instanceof Coordinador || u instanceof Administrador) && u.getEstadoCuenta().equals(Estado.BAJA)) {
+            return "redirect:/";
+        }
+        else if(u instanceof Coordinador){    
             return "redirect:/chatCordAdmin";
         } else {
             return "redirect:/chatPartAdmin";
