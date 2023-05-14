@@ -194,6 +194,7 @@ $(document).ready(function () {
     });
 
     $('#categoria').on('change', function () { //cuando se cambia la categoria vuelve a hacer el keyup
+        //Disparar el evento keyup del id filtrarActividades implementado arriba
         $('#filtrarActividades').trigger('keyup');
     });
 

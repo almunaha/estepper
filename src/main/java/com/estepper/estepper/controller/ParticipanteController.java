@@ -780,7 +780,11 @@ public class ParticipanteController {
     @PostMapping("/process_peso")
     public String process_peso(Progreso progreso, Model model) {
         Participante p = participante.findById(getUsuario().getId()).get();
+
+        //Crear el nuevo registro del peso al participante correspondiente
         progreso.setParticipante(p);
+
+        //Indicar el tipo de progreso, en este cao PESO
         progreso.setTipo(TipoProgreso.PESO);
 
         // Coger formulario de exploración:
@@ -792,22 +796,26 @@ public class ParticipanteController {
             }
         }
 
+        // Se necesita el formulario de exploración para obtener el dato del peso introducido inicialmente
         if (exploracion != null) {
             Double pe = exploracion.getPeso().doubleValue();
 
             Double pesoPerdido = null;
 
-            // positivo -> ha ganado, negativo -> ha perdido
+            // Se actualiza el atributo de pesoPerdido: positivo -> ha ganado, negativo -> ha perdido
             if (progreso.getDato() - pe > 0)
                 pesoPerdido = 0.0;
             else
                 pesoPerdido = progreso.getDato() - pe;
 
             p.setPerdidaDePeso(pesoPerdido);
+
+            // Se guarda el participante con los datos actualizados
             participante.update(p.getEdad(), p.getSexo(), p.getFotoUsuario(), p.getGrupo(), p.getAsistencia(),
                     p.getCoordinador(), pesoPerdido, p.getSesionesCompletas(),
                     p.getPerdidacmcintura(), p.getId());
 
+            // Se guarda el registro del peso        
             pro.guardar(progreso);
         }
         return "redirect:/progreso/" + getUsuario().getId();
