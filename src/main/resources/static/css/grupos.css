@@ -850,18 +850,17 @@ th {
 }
 
 .encabezadoMensajes{
-  background-color: white;
-  padding: 10px;
-  border: 2px solid #ccc;
+  background-color: rgb(122, 184, 212);
   border-radius: 5px;
   margin-bottom: 2%;
   margin-right: 10%;
   text-align: center;
 }
 
-.encabezadoMensajes h3{
-  font-weight: bold;
+.encabezadoMensajes h4{
   color: #333;
+  padding-top:1%;
+  padding-bottom: 1%;
 }
 
 .chatito{

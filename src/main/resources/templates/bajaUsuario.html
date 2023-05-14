@@ -107,59 +107,64 @@
                 </div>
             </nav>
 
-            <div class="column-baja" id="contactar">
-                <div class="tit-info">
-                  <i class="fa-solid fa-circle-info"></i>
-                  <h4>Información importante</h4>
+            <div class="contBaja">
+
+                <div class="column-baja" id="contactar">
+                    <div class="tit-info">
+                      <i class="fa-solid fa-circle-info"></i>
+                      <h4>Información importante</h4>
+                    </div>
+                    <p>Actualmente tu cuenta está desactivada, para que pueda volver a activarla
+                      debe contactar con un administrador.
+                    </p>
                 </div>
-                <p>Actualmente tu cuenta está desactivada, para que pueda volver a activarla
-                  debe contactar con un administrador.
-                </p>
-            </div>
-
-            <div class="bordes-chat" style="width: 90%; margin-top: 5%; margin-left: 5%;">
-                <section class="chat-area">
-                    <header>
-                        <h4>Administrador</h4>
-
-                    </header>
-                    <div class="chat-box">
-                        <div th:each="m : ${mensajesAdministrador}" class="contenedor-mensaje mb-2">
-                            <div th:if="${m.emisor.id != user.id}"
-                                class="mensaje d-flex justify-content-start align-items-end">
-                                <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;" class="avatar"
-                                    alt="m.emisor.nickname" />
-                                <div class="contenido-mensaje grey ms-2 p-2">
-                                    <div th:text="${m.emisor.nickname}" class="nickname"></div>
-                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
-                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
-                                        class="fecha text-end"></div>
+    
+                <div class="bordes-chat" style="width: 90%; margin-top: 5%; margin-left: 5%;">
+                    <section class="chat-area">
+                        <header>
+                            <img src="img/p1.png" alt="Foto de administrador">
+                            <h4>Administrador</h4>
+                        </header>
+                        <div class="chat-box">
+                            <div th:each="m : ${mensajesAdministrador}" class="contenedor-mensaje mb-2">
+                                <div th:if="${m.emisor.id != user.id}"
+                                    class="mensaje d-flex justify-content-start align-items-end">
+                                    <img th:src="${m.emisor.fotoUsuario}" style="width: 40px;" class="avatar"
+                                        alt="m.emisor.nickname" />
+                                    <div class="contenido-mensaje grey ms-2 p-2">
+                                        <div th:text="${m.emisor.nickname}" class="nickname"></div>
+                                        <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                        <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                            class="fecha text-end"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div th:unless="${m.emisor.id != user.id}"
-                                class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
-                                <img th:src="${user.fotoUsuario}" style="width: 40px;" class="avatar"
-                                    alt="m.usuario.nickname" />
-                                <div class="contenido-mensaje green me-2 p-2">
-                                    <div class="nickname">Yo</div>
-                                    <div th:text="${m.mensaje}" class="mensaje my-1"></div>
-                                    <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
-                                        class="fecha text-end"></div>
+                                <div th:unless="${m.emisor.id != user.id}"
+                                    class="mensaje d-flex flex-row-reverse justify-content-start align-items-end">
+                                    <img th:src="${user.fotoUsuario}" style="width: 40px;" class="avatar"
+                                        alt="m.usuario.nickname" />
+                                    <div class="contenido-mensaje green me-2 p-2">
+                                        <div class="nickname">Yo</div>
+                                        <div th:text="${m.mensaje}" class="mensaje my-1"></div>
+                                        <div th:text="${#temporals.format(m.fechayHoraEnvio, 'dd/MM/YY HH:mm') + 'h'}"
+                                            class="fecha text-end"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <form th:action="@{/mensajesAdmin2/guardar}" th:object="${messageAdmin}" method="post"
-                        class="typing-area">
+                        <form th:action="@{/mensajesAdmin2/guardar}" th:object="${messageAdmin}" method="post"
+                            class="typing-area">
+    
+                            <input type="text" th:field="*{mensaje}" class="input-field"
+                                placeholder="Escribe un mensaje aquí ..." autocomplete="off">
+    
+                            <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+    
+                        </form>
+                    </section>
+                </div>
 
-                        <input type="text" th:field="*{mensaje}" class="input-field"
-                            placeholder="Escribe un mensaje aquí ..." autocomplete="off">
-
-                        <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
-
-                    </form>
-                </section>
             </div>
+            
 
         </div>
     </div>
