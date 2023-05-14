@@ -193,7 +193,7 @@ $(document).ready(function () {
     $('#error_datoPeso').hide();
     $('#error_datoPerimetro').hide();
 
-    //Validar formulario REGISTRO
+    //Validar formulario REGISTRO y formulario Nuevo coordinador
     $("#form-registro #nickname").change(validarFormulario);
     $("#form-registro #email").change(validarFormulario);
     $("#form-registro #pass1").keyup(validarFormulario);
