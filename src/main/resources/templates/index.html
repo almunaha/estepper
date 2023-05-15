@@ -14,7 +14,6 @@
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
   <!-- para jquery-->
-  <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <!--PARA GRÁFICOS-->
@@ -24,9 +23,6 @@
 
   <!-- Para la alerta del peso -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="sweetalert2.all.min.js"></script>
-  <script src="sweetalert2.min.js"></script>
-  <link rel="stylesheet" href="sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   <script src="/js/menu.js"></script>
@@ -220,11 +216,8 @@
           </div>
         </div>
       </nav>
-
-      <div th:if="${recordatorio}">
-        <script>mostrarRecordatorio();</script>
-      </div>
-      <div id="idUser" th:value="${user.id}" hidden></div>
+      <div id="idUser" th:value="${user.id}" data-idUser="${user.id}" hidden></div>
+      
 
       <div class="utilidades">
 
@@ -347,6 +340,10 @@
           <div>Alimentación</div>
         </a>
 
+      </div>
+
+      <div th:if="${recordatorio}">
+        <script>mostrarRecordatorio();</script>
       </div>
 
     </div>

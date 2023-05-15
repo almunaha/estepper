@@ -138,14 +138,21 @@
                                     </div>
                                     <div id="error_nombreActividad">
                                         <p style="margin-left: 24%; color: red"><i
-                                                class="fa-solid fa-triangle-exclamation"></i> Máximo 25
-                                            caracteres</p>
+                                                class="fa-solid fa-triangle-exclamation"></i>
+                                            Debe introducir de 3 a 25 caracteres</p>
+                                        </p>
                                     </div>
 
                                     <div class="input-group mt-2">
                                         <label class="col-3 col-form-label">Descripción </label>
-                                        <textarea style="resize: none" id="descripcionAct" th:field="*{descripcion}"
-                                            rows="4" class="form-control"></textarea>
+                                        <textarea name="descripcionAct" style="resize: none" id="descripcionAct"
+                                            th:field="*{descripcion}" rows="4" class="form-control"></textarea>
+                                    </div>
+                                    <div id="error_descripcionAct">
+                                        <p style="margin-left: 16%; color: red"><i
+                                                class="fa-solid fa-triangle-exclamation"></i>
+                                            Máximo 100
+                                            caracteres</p>
                                     </div>
 
                                     <div class="input-group mt-2">
@@ -172,8 +179,13 @@
                                 <div class="form-dato">
                                     <div class="input-group mt-2">
                                         <label class="col-4 col-form-label">Ubicación </label>
-                                        <input type="text" th:field="*{ubicacion}" class="form-control">
+                                        <input type="text" th:field="*{ubicacion}" id="ubicacion" class="form-control">
                                     </div>
+                                    <div id="error_ubicacion">
+                                        <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                                          Máximo 25
+                                          caracteres</p>
+                                      </div>
 
                                     <div class="input-group mt-2">
                                         <label class="col-4 col-form-label">Fecha seleccionada: </label>
@@ -181,7 +193,7 @@
                                     </div>
                                     <div class="input-group mt-2">
                                         <label class="col-4 col-form-label">¿Desea cambiarla?</label>
-                                        <input name="fecha" type="datetime-local" id="fechaRealizacion"
+                                        <input name="fechaRealizacion" type="datetime-local" id="fechaRealizacion"
                                             class="form-control">
                                     </div>
                                     <div id="error_fechaRealizacion">

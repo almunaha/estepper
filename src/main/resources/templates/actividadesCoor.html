@@ -12,23 +12,19 @@
   <link rel="stylesheet" th:href="@{/css/actividades.css}">
   <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
-  <!-- para jquery-->
-  <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-  <script src="/js/menu.js"></script>
-  <script src="/js/validaciones.js"></script>
-
-
   <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
   <!-- Para la alerta de eliminar actividad -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="sweetalert2.all.min.js"></script>
-  <script src="sweetalert2.min.js"></script>
-  <link rel="stylesheet" href="sweetalert2.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <script src="/js/actividades.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" /> 
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- para jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/menu.js"></script>
+    <script src="/js/validaciones.js"></script>
+    <script src="/js/actividades.js"></script>
 
 
   <title>Actividades - Estepper</title>
@@ -172,14 +168,18 @@
                   </div>
                   <div id="error_nombreActividad">
                     <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
-                      Máximo 25
-                      caracteres</p>
+                      Debe introducir de 3 a 25 caracteres</p>
                   </div>
 
                   <div class="input-group mt-2">
                     <label class="col-2 col-form-label">Descripción </label>
-                    <textarea style="resize: none" id="descripcionAct" th:field="*{descripcion}" rows="4"
+                    <textarea name="descripcionAct" style="resize: none" id="descripcionAct" th:field="*{descripcion}" rows="4"
                       class="form-control" required></textarea>
+                  </div>
+                  <div id="error_descripcionAct">
+                    <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                      Máximo 100
+                      caracteres</p>
                   </div>
 
                   <div class="input-group mt-2">
@@ -194,7 +194,12 @@
 
                   <div class="input-group mt-2">
                     <label class="col-2 col-form-label">Ubicación </label>
-                    <input type="text" th:field="*{ubicacion}" class="form-control" required />
+                    <input type="text" if="ubicacion" th:field="*{ubicacion}" class="form-control" required />
+                  </div>
+                  <div id="error_ubicacion">
+                    <p style="margin-left: 16%; color: red"><i class="fa-solid fa-triangle-exclamation"></i>
+                      Máximo 25
+                      caracteres</p>
                   </div>
 
                   <div class="input-group mt-2">
@@ -250,9 +255,6 @@
                   
                   <i class="fa-solid fa-clock"></i>
                   <span th:text="${#temporals.format(lis.fechaRealizacion, 'HH:mm')}"></span>&nbsp
-                  
-                  <i class="fa-solid fa-location-dot"></i>
-                  <span th:text="${lis.ubicacion}"></span>&nbsp
                   
                   <span th:text="'Plazas: '+ ${lis.plazas}" style="margin-left: 16%;"></span>&nbsp
                   <span th:text="'Asistentes: '+ ${lis.numParticipantes}"></span>

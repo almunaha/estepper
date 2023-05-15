@@ -15,6 +15,11 @@
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
+    <!-- para jquery-->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/validaciones.js"></script>
+
     <title>Editar Perfil - Estepper</title>
 </head>
 
@@ -193,7 +198,7 @@
 
             <div class="desplegable-perfil">
                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
-                <a class="dropdown-item"  th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
+                <a class="dropdown-item" th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
                     th:href="@{/chatCordAdmin}">Ayuda</a>
                 <a class="dropdown-item" th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
                     th:href="@{/chatPartAdmin}">Ayuda</a>
@@ -218,9 +223,11 @@
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{'/mostrarperfil/' + ${user.id}}">Mi Perfil</a>
-                                <a class="dropdown-item" th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
+                                <a class="dropdown-item"
+                                    th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
                                     th:href="@{/chatCordAdmin}">Ayuda</a>
-                                <a class="dropdown-item" th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
+                                <a class="dropdown-item"
+                                    th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
                                     th:href="@{/chatPartAdmin}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
@@ -242,21 +249,42 @@
                     <div style="display:flex; justify-content: center;" class="row">
                         <div class="col-md-8">
                             <form class="form-perfil" method="post" th:action="@{'/process_perfil/' + ${user.id}}"
-                                th:object="${user}">
+                                th:object="${user}" id="form-perfil">
                                 <div class="mb-3">
                                     <label class="form-label">Alias</label>
-                                    <input type="text" th:field="*{nickname}" class="form-control" required>
+                                    <input type="text" th:field="*{nickname}" class="form-control" id="nickname"
+                                        required>
+                                </div>
+                                <div id="error_nick">
+                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Mínimo de 3
+                                        caracteres
+                                        obligatorios</p>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Correo</label>
-                                    <input type="email" th:field="*{email}" class="form-control" required>
+                                    <input type="email" th:field="*{email}" class="form-control" id="email" required>
                                 </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Contraseña</label>
+                                <div id="error_email">
+                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> El correo
+                                        electrónico no es
+                                        válido</p>
+                                </div>
+                                
+                                <label class="form-label" >Contraseña</label>
+                                <div class="input-group mb-3">
                                     <input type="password" class="form-control" placeholder="**********"
-                                        th:field="*{contrasenia}">
+                                        th:field="*{contrasenia}" id="pass1" style="margin-left: 0">
+                                    <span class="input-group-text"
+                                        style="background-color:white; border-left-style: none; cursor: pointer"
+                                        id="ojo"><i class="fa-solid fa-eye" id="iconoOjo1"
+                                            onmouseover="this.style.color = '#aaa'"
+                                            onmouseout="this.style.color = '#000'"></i></span>
+                                </div>
+                                <div id="error_pass1">
+                                    <p style="color: red"><i class="fa-solid fa-triangle-exclamation"></i> Mínimo de 8
+                                        caracteres
+                                        obligatorios</p>
                                 </div>
 
                                 <div style="display: flex; justify-content: center;">

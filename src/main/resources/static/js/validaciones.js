@@ -13,20 +13,32 @@ $(document).ready(function () {
         fechaPerimetro: false,
         datoPeso: false,
         datoPerimetro: false,
+        edad: false,
+        descripcionAct: false,
+        ubicacion: false,
     }
 
     if ($("#form-editarActividad").length > 0) {
-		for (var campo in campos) {
-			campos[campo] = true;
-		}
-	}
+        for (var campo in campos) {
+            campos[campo] = true;
+        }
+    }
+
+    //inicializar todo a true
+    if ($("#form-perfil").length > 0) {
+        for (var campo in campos) {
+            campos[campo] = true;
+        }
+    }
 
     //expresiones regulares
     const expresiones = {
         nickname: /^.{3,20}/, //de 3 a 20 caracteres
         email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
         password: /^.{8,}$/, //minimo 8 caracteres -> consultar como de segura la quieren
-        nombreActividad: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{0,25}$/, //de 0 a 25 caracteres, alfanumerico
+        nombreActividad: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{3,25}$/, //de 3 a 25 caracteres, alfanumerico
+        descripcion: /^.{1,100}/, //de 1 a 100 caracteres
+        ubicacion: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{3,25}$/, //de 3 a 25 caracteres, alfanumerico
     }
 
     //validar campo
@@ -71,6 +83,15 @@ $(document).ready(function () {
                 break;
             case "dato":
                 validarDatoProgreso();
+                break;
+            case "edad":
+                validarEdad();
+                break;
+            case "descripcion":
+                validarCampo(expresiones.descripcion, e.target, 'descripcionAct');
+                break;
+            case "ubicacion":
+                validarCampo(expresiones.ubicacion, e.target, 'ubicacion');
                 break;
         }
     }
@@ -176,16 +197,36 @@ $(document).ready(function () {
         }
     }
 
-    //ocultar errores REGISTRO
+    const validarEdad = () => {
+        var edad = $('#edad').val();
+
+        if (edad >= 35 && edad <= 120) {
+            $('#error_edad').hide();
+            campos['edad'] = true;
+        }
+        else {
+            $('#error_edad').show();
+            campos['edad'] = false;
+        }
+    }
+
+
+    //ocultar errores REGISTRO y EDITAR PERFIL
     $('#error_nick').hide();
     $('#error_email').hide();
     $('#error_pass1').hide();
     $('#error_pass2').hide();
 
+    //ocultar error EDITAR PERFIL
+    $('#error_edad').hide();
+
     //ocultar errores NUEVA ACTIVIDAD
     $('#error_fechaRealizacion').hide();
     $('#error_nombreActividad').hide();
     $('#error_plazas').hide();
+    $('#error_descripcionAct').hide();
+    $('#error_ubicacion').hide();
+
 
     //ocultar errores PROGRESO
     $('#error_fechaPeso').hide();
@@ -203,21 +244,38 @@ $(document).ready(function () {
     $("#form-actividad #fechaRealizacion").change(validarFormulario);
     $("#form-actividad #nombreActividad").keyup(validarFormulario);
     $("#form-actividad #plazas").keyup(validarFormulario);
+    $("#form-actividad #descripcionAct").keyup(validarFormulario);
+    $("#form-actividad #ubicacion").change(validarFormulario);
+
 
     //Validar formulario EDITAR ACTIVIDAD
     $("#form-editarActividad #fechaRealizacion").change(validarFormulario);
     $("#form-editarActividad #nombreActividad").on('keyup input', validarFormulario);
     $("#form-editarActividad #plazas").on('keyup input', validarFormulario);
-    
+    $("#form-editarActividad #descripcionAct").keyup(validarFormulario);
+    $("#form-editarActividad #ubicacion").change(validarFormulario);
+
+
     //validar formularios PROGRESO
     $("#form-registroPeso #fechaPeso").change(validarFormulario);
     $("#form-registroPerimetro #fechaPerimetro").change(validarFormulario);
     $("#form-registroPeso #datoPeso").keyup(validarFormulario);
     $("#form-registroPerimetro #datoPerimetro").keyup(validarFormulario);
 
-    $("#form-registro").submit(function (event) {
-        //faltaría validar que ese correo no exista
+    //validar formulario EDITAR PERFIL
+    $("#form-perfil #nickname").change(validarFormulario);
+    $("#form-perfil #email").change(validarFormulario);
+    $("#form-perfil #edad").change(validarFormulario);
+    $("#form-perfil #pass1").keyup(validarFormulario);
+    $("#form-perfil #pass1").on('keyup', function () {
+        if ($(this).val() == '') {
+            campos.pass1 = true;
+            $('#error_pass1').hide();
+        }
+    });
 
+
+    $("#form-registro").submit(function (event) {
         event.preventDefault();
 
         if (campos.nick && campos.email && campos.pass1) {  //si está todo bien
@@ -228,15 +286,16 @@ $(document).ready(function () {
 
     $("#form-actividad").submit(function (event) {
         event.preventDefault();
-        if (campos.nombreActividad && campos.plazas && campos.fechaRealizacion) {  //si está todo bien
+        if (campos.nombreActividad && campos.plazas && campos.fechaRealizacion && campos.descripcionAct && campos.ubicacion) {  //si está todo bien
             event.currentTarget.submit();
+            location.reload;
         }
 
     });
 
     $("#form-editarActividad").submit(function (event) {
         event.preventDefault();
-        if (campos.nombreActividad && campos.plazas && campos.fechaRealizacion) {  //si está todo bien
+        if (campos.nombreActividad && campos.plazas && campos.fechaRealizacion && campos.descripcionAct && campos.ubicacion) {  //si está todo bien
             event.currentTarget.submit();
         }
 
@@ -254,6 +313,14 @@ $(document).ready(function () {
         event.preventDefault();
 
         if (campos.fechaPerimetro && campos.datoPerimetro) {  //si está todo bien
+            event.currentTarget.submit();
+        }
+    });
+
+    $("#form-perfil").submit(function (event) {
+        event.preventDefault();
+
+        if (campos.nick && campos.email && campos.pass1 && campos.edad) {  //si está todo bien
             event.currentTarget.submit();
         }
     });

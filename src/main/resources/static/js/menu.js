@@ -67,7 +67,7 @@ function notificaciones() {
 function mostrarRecordatorio() {
 
   setTimeout(function () { //temporizador, al pasar un segundo salta la alerta
-    var idUser = $("#idUser").val();
+    var idUser = $("#idUser").attr("value");
 
     Swal.fire({
       position: 'top',
