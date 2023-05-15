@@ -1013,5 +1013,16 @@ input[type="date"] {
         height: 550px !important;
     }
 
+    .conversacionesAdmin{
+        flex-direction: column;
+    }
+
+    .mitadIzquierdaAdmin{
+        width: 100% !important;
+    }
+
+    .mitadDerechaAdmin{
+        width: 100% !important;
+    }
 
 }

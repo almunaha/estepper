@@ -152,7 +152,8 @@
                             style="margin-left: 3%; width:50%; display:block">
                             <div class="bordes-chatADMIN" style="width: 90%;">
                                 <section class="chat-area">
-                                    <header style="flex-direction: column;">
+                                    <header>
+                                        <img width="40" th:src="${mensajero.fotoUsuario}" alt="imagenPerfil" id="avatar-header" />
                                         <h4 th:text="${mensajero.nickname}"></h4>
                                     </header>
                                     <div class="chat-box">
