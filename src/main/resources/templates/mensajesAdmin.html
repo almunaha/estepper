@@ -122,28 +122,30 @@
 
                     <div class="conversacionesAdmin" style="display: flex;">
                         <div class="mitadIzquierdaAdmin" style="width: 50%;">
-                            <table class="table tablePart" id="tablePart">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">Nickname</th>
-                                        <th scope="col">Código</th>
-                                        <th scope="col">Chatear</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="buscarUsuarios">
-                                    <tr th:each="lis:${usuarios}">
-                                        <td><span th:text="${lis.nickname}"></span></td>
-                                        <td><span th:text="${lis.codigo}"></span></td>
-                                        <td>
-                                            <a class="btn btn-primary" th:href="@{'/mensajesAdmin?id=' + ${lis.id}}"
-                                                data-bs-toggle="tooltip">
-                                                <i title="Mensaje" class="fa-solid fa-envelope"></i>
-                                            </a>
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table tablePart" id="tablePart">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Nickname</th>
+                                            <th scope="col">Código</th>
+                                            <th scope="col">Chatear</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="buscarUsuarios">
+                                        <tr th:each="lis:${usuarios}">
+                                            <td><span th:text="${lis.nickname}"></span></td>
+                                            <td><span th:text="${lis.codigo}"></span></td>
+                                            <td>
+                                                <a class="btn btn-primary" th:href="@{'/mensajesAdmin?id=' + ${lis.id}}"
+                                                    data-bs-toggle="tooltip">
+                                                    <i title="Mensaje" class="fa-solid fa-envelope"></i>
+                                                </a>
+                                            </td>
+    
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>    
                         </div>
 
                         <div class="mitadDerechaAdmin" id="derechaAdmin"

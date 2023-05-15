@@ -257,8 +257,8 @@
                                                     class="fa-solid fa-user-pen"></i></a>
                                             <a class="btn cancel-button" id="btn-accion" style="display: none;"><i title="Cancelar"
                                                     class="fa-solid fa-times"></i></a>
-                                            <a class="btn" id="btn-accion" th:attr="data-modalid=${lis.id}"
-                                                onclick="abrirIframe2(this.getAttribute('data-modalid'))">
+                                            <a class="btn" id="btn-accion" th:attr="data-modalid=${lis.id}" th:data-nickname="${lis.nickname}"
+                                                onclick="abrirIframe2(this.getAttribute('data-modalid'), this.getAttribute('data-nickname'))">
                                                 <i title="Mensaje" class="fa-solid fa-envelope"></i>
                                             </a>
                                             <a class="btn eliminar" id="btn-accion" th:data-id="${lis.id}"><i title="Eliminar"
@@ -272,12 +272,17 @@
                                 <script>
 
                                     // Función que abre el modal solicitado
-                                    function abrirIframe2(modalId) {
+                                    function abrirIframe2(modalId, modalNickname) {
                                         console.log(modalId);
+                                        console.log(modalNickname);
                                         const modal = new bootstrap.Modal(document.getElementById('ModalNuevoMensaje'));
                                         const idElementoP = document.querySelector('#ModalNuevoMensaje p');
                                         const formulario = document.querySelector('#ModalNuevoMensaje form');
                                         formulario.action = '/mensajesAdmin/guardar/' + modalId;
+
+
+                                        const modalNicknameSpan = document.querySelector('#modalNicknameSpan');
+                                        modalNicknameSpan.textContent = modalNickname;
 
                                         modal.show();
                                     }
@@ -299,7 +304,9 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Nuevo mensaje</h5>
+                    <h5 class="modal-title">Nuevo mensaje a</h5>
+                    <span>&nbsp;</span>
+                    <h5 id="modalNicknameSpan" class="modal-title"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">

@@ -292,6 +292,7 @@ $(document).ready(function () {
 
     function renderTabla() {
 
+
         if(objetivos.length > 0){
             let tabla = '';
             tabla += '<div class="tabla-responsive" style="margin-top: 3%;">'
@@ -362,88 +363,6 @@ $(document).ready(function () {
     })
 
 
-
-    /*PARA AÑADIR EL EVENTO AL CALENDARIO */
-    /*
-        // Lista de eventos
-        let eventos = [];
-    
-        // Función para agregar un evento al calendario
-        function agregarEvento(evento) {
-            const fecha = evento.fecha.toISOString().slice(0, 10); // Convertir fecha a formato ISO
-            const dia = document.querySelector(`[data-fecha="${fecha}"]`);
-            if (dia) {
-                const eventoHTML = `<div class="evento" data-id="${evento.id}">
-                              <span class="titulo">${evento.titulo}</span>
-                              <span class="fechaVencimiento">${evento.fechaVencimiento}</span>
-                              <span class="descripcion">${evento.descripcion}</span>
-                            </div>`;
-                dia.innerHTML += eventoHTML;
-            }
-        }
-    
-    
-        // Función para agregar un evento
-        function agregarNuevoEvento(objetivo) {
-            objetivo.preventDefault();
-           /* const form = document.getElementById('form-evento');
-            const titulo = form.titulo.value;
-            const fecha = new Date(form.fechaVencimiento.value);
-            const estado = form.hora.estado;
-            const repeticion = form.repeticion.value;
-            const titulo = objetivo.titulo;
-            const fecha = objetivo.fechaVencimiento;
-            const descripcion = objetivo.descripcion;
-            const id = eventos.length + 1; // Generar un ID único para el evento
-    
-            const evento = { id, titulo, fecha, descripcion };
-            eventos.push(evento);
-            agregarEvento(evento);
-        }
-    
-        // Asignar eventos a botones
-        document.getElementById('agregar-evento').addEventListener('submit', agregarNuevoEvento);
-    
-    */
-
-
-    /*NUEVO INTENTO */
-
-
-    var calendar = document.getElementById('calendario');
-
-    function agregarObjetivo() {
-
-        //console.log("Agregar objetivo ejecutado");
-        //System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-        // obtener los valores del formulario
-        //var titulo = document.getElementById("titulo").value;
-        //var descripcion = document.getElementById("descripcion").value;
-        //var fechaVencimiento = document.getElementById("fechaVencimiento").value;
-
-
-        // crear el objeto de evento
-        /*var event = {
-            title: titulo,
-            descripcion: descripcion,
-            start: fechaVencimiento
-        };*/
-
-        // agregar el evento al calendario
-        //calendar.addEvent(event);
-        //calendar.render();
-
-        /*// agregar el evento al calendario (usando FullCalendar)
-        $('#calendario').fullCalendar('renderEvent', {
-          title: titulo,
-          description: descripcion,
-          start: fechaVencimiento
-        });*/
-
-        //document.getElementById("formNuevoObjetivo").submit();
-    }
-
     function changeMonth(timestamp) {
         const fechaTemporal = new Date(timestamp);
         anioUsado = fechaTemporal.getFullYear();
@@ -453,10 +372,6 @@ $(document).ready(function () {
         console.log(1, mesUsado, anioUsado);
         seleccionarObjetivosDelDia(1, mesUsado, anioUsado);
     }
-
-
-    agregarObjetivo();
-
 
 
     //Botones objetivos recomendados
@@ -519,19 +434,6 @@ $(document).ready(function () {
 
     });
 
-
-    /*function mostrarFormularioDescanso() {
-        var formulario = document.getElementById("formularioDescanso");
-        if (formulario.style.display === "none") {
-            formulario.style.display = "block";
-        } else {
-            formulario.style.display = "none";
-        }
-    }
-    
-    document.getElementById("btnDescanso").addEventListener("click", function(){
-        mostrarFormularioDescanso();
-    });*/
 
 
 });
