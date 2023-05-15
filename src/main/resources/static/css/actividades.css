@@ -459,11 +459,7 @@
         width: 100%;
         justify-content: center;
         margin-left: 0;
-        margin-top: 33%;
-    }
-
-    .flex-act{
-        justify-content: center;
+        margin-top: 10%;
     }
 
     .actividad-info{
@@ -491,13 +487,14 @@
     }
 
     .flex-act{
-        margin-bottom:15%;
+        justify-content: center;
     }
 
     #busqueda-actividad{
         width: 90%;
         align-items: center;
         margin-bottom: 3%;
+        margin-top: 3%;
     }
 
     .form-actividad label{

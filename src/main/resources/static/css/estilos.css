@@ -416,6 +416,10 @@ th {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
+#foto-perfil{
+    width: 180px;
+}
+
 .col-edit{
     padding: 10px;
 }
@@ -956,7 +960,10 @@ input[type="date"] {
     }
 
     #foto-perfil{
-        width: 20%;
+        padding-top: 4%;
+        width: 40%;
+        display: block; 
+        margin: 0 auto;
     }
 
     /*NUTRIENTES*/
