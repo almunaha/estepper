@@ -95,12 +95,27 @@ $(document).ready(function () {
         actualizarPeso();
     });
 
+    $("#iniPeso2").change(function () {
+        iniPeso = $(this).val();
+        peso.data.labels = [];
+        peso.data['datasets'][0].data = [];
+        actualizarPeso();
+    });
+
     $("#finPeso").change(function () {
         finPeso = $(this).val();
         peso.data.labels = [];
         peso.data['datasets'][0].data = [];
         actualizarPeso();
     });
+
+    $("#finPeso2").change(function () {
+        finPeso = $(this).val();
+        peso.data.labels = [];
+        peso.data['datasets'][0].data = [];
+        actualizarPeso();
+    });
+
 
 
     //Gráfica PERÍMETRO
@@ -162,7 +177,21 @@ $(document).ready(function () {
         actualizarPerimetro();
     });
 
+    $("#iniPerimetro2").change(function () {
+        iniPerimetro = $(this).val();
+        perimetro.data.labels = [];
+        perimetro.data['datasets'][0].data = [];
+        actualizarPerimetro();
+    });
+
     $("#finPerimetro").change(function () {
+        finPerimetro = $(this).val();
+        perimetro.data.labels = [];
+        perimetro.data['datasets'][0].data = [];
+        actualizarPerimetro();
+    });
+
+    $("#finPerimetro2").change(function () {
         finPerimetro = $(this).val();
         perimetro.data.labels = [];
         perimetro.data['datasets'][0].data = [];

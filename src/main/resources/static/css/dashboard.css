@@ -271,6 +271,10 @@ input[type=number]::-webkit-outer-spin-button {
     height: 360px;
 }
 
+#filtro-mobile{
+    display: none;
+}
+
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
 
@@ -346,5 +350,19 @@ input[type=number]::-webkit-outer-spin-button {
 
     .progreso-datos-coor{
         height: 290px;
+    }
+
+    #filtro-mobile{
+        display: inline-block;
+        display: flex;
+        width: 100%;
+    }
+
+    .filtro-fechas{
+        display: none;
+    }
+
+    .filtro-fechas .filtro{
+        display: none;
     }
 }
