@@ -228,7 +228,7 @@
                                             <h5 th:text="${lis.nickname}"></h5>
                                             <h5 th:text="${lis.codigo}"></h5>
                                             <p th:unless="${lis.edad == null}" th:text="${lis.edad} + ' ' + años"></p>
-                                            <p th:if="${lis.edad == null}">Edad no añadida</p>
+                                            <p th:if="${lis.edad == null}">Sin asignar</p>
                                             <div
                                                 style="display: flex; justify-content: space-around; flex-direction: column;">
                                                 <a class="botonGr"
