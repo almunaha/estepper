@@ -158,13 +158,32 @@
                                     <input type="text" th:field="*{nombre}" class="form-control" required />
                                 </div>
 
-                                <div th:if="${grupo.fechaFinGrupo != null}" style="display:flex">
+                                <div th:if="${grupo.fechaFinGrupo != null}" style="display:flex;">
                                     <label class="col-form-label col-sm-4 nuevoGrupito">Fecha de finalización del
                                         grupo:</label>
-                                    <div class="col-sm-8 mb-2">
-                                        <p th:text="${#temporals.format(grupo.fechaFinGrupo, 'dd/MM/yyyy')}"></p>
+                                    <div class="fechita">
+                                        <div class="row fechaAnterior">
+                                            <div class="col">
+                                                <input type="text" th:value="${#temporals.format(grupo.fechaFinGrupo, 'dd/M/yy')}"
+                                                    class="form-control" readonly="readonly"
+                                                    style="background-color: #f2f2f2; cursor: not-allowed;" />
+                                            </div>
+                                        </div>
+                                        <div class="row cambiarFecha">
+                                            <div class="col">
+                                                <label>¿Desea cambiarla?</label>
+                                            </div>
+                                        </div>
+                                        <div class="row fechaNueva">
+                                            <div class="col">
+                                                    <input type="date" style="background-color: white;"
+                                                    th:name="fechaFinGrupo" 
+                                                    class="form-control" id="fechaFinGrupo" th:value="${#temporals.format(grupo.fechaFinGrupo, 'yyyy-MM-dd')}"
+                                                    th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label class="col-form-label col-sm-4">¿Desea cambiarla?</label>
+
                                 </div>
                                 <div th:if="${grupo.fechaFinGrupo == null}" class="fechaFinGrupito"
                                     style="display:flex">
@@ -289,7 +308,7 @@
 
 
                             </div>
-                           
+
                             <div style="display: flex; justify-content: center;">
                                 <a th:href="@{/listaGrupos}" class="btn mt-4" id="btn-cancel"
                                     style="margin-right: 15px;">Cancelar</a>

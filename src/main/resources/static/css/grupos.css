@@ -869,6 +869,28 @@ th {
   padding-top: 75px;
 }
 
+.fechita{
+  display:flex; 
+  align-items: center;
+  align-content: center;
+  width: 100%;
+}
+
+.fechaAnterior{
+  width: 25%;
+  margin-left: 0px;
+  margin-right: 1%;
+}
+
+.cambiarFecha{
+  width: 30%;
+}
+
+.fechaNueva{
+  width: 70%;
+  margin-bottom: 1%;
+}
+
 @media (max-width: 768px) {
   .valores-progreso {
     flex-wrap: wrap;

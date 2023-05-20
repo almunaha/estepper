@@ -112,12 +112,12 @@ $(document).ready(function () {
                 }
             }
             if (objetivo.repeticion === 'SEMANALMENTE') {
-                if (fechaDate.getDay() === fechaInicioDate.getDay() && fechaDate <= fechaVencimientoDate) {
+                if (fechaInicioDate <= fechaDate && fechaDate.getDay() === fechaInicioDate.getDay() && fechaVencimientoDate >= fechaDate) {
                     objetivosAux.push(objetivo);
                 }
-            } 
+            }
             if (objetivo.repeticion === 'MENSUALMENTE') {
-                if (fechaDate.getDate() === fechaInicioDate.getDate()) {
+                if (fechaInicioDate <= fechaDate && fechaDate.getDate() === fechaInicioDate.getDate() && fechaVencimientoDate >= fechaDate) {
                     objetivosAux.push(objetivo);
                 }
             }
@@ -167,12 +167,12 @@ $(document).ready(function () {
                 }
             }
             if (objetivo.repeticion === 'SEMANALMENTE') {
-                if (fechaDate.getDay() === fechaInicioDate.getDay() && fechaDate <= fechaVencimientoDate) {
+                if (fechaInicioDate <= fechaDate && fechaDate.getDay() === fechaInicioDate.getDay() && fechaVencimientoDate >= fechaDate) {
                     resultado = true;
                 }
             }
             if (objetivo.repeticion === 'MENSUALMENTE') {
-                if (fechaDate.getDate() === fechaInicioDate.getDate()) {
+                if (fechaInicioDate <= fechaDate && fechaDate.getDate() === fechaInicioDate.getDate() && fechaVencimientoDate >= fechaDate) {
                     resultado = true;
                 }
             }
@@ -292,8 +292,12 @@ $(document).ready(function () {
 
     function renderTabla() {
 
+        let fecha = dateToString(mesUsado.toString(), anioUsado.toString());
+        fechaDate = new Date(fecha);
+        console.log('Hello guapita');
+        console.log(fechaDate);
 
-        if(objetivos.length > 0){
+        if (objetivos.length > 0) {
             let tabla = '';
             tabla += '<div class="tabla-responsive" style="margin-top: 3%;">'
             tabla += '<table class="table tableObj mt-4" id ="tablaObjetivos"><thead class="thead-dark"><tr>';
@@ -307,59 +311,67 @@ $(document).ready(function () {
             tabla += '<tbody class="buscarObjetivos">';
 
             for (let i = 0; i < objetivos.length; i++) {
-                tabla += '<tr>';
-                tabla += '<td contObj>' + objetivos[i].titulo + '</td>';
-                tabla += '<td>' + objetivos[i].fechaInicio + '</td>';
-                tabla += '<td>' + objetivos[i].fechaVencimiento + '</td>';
-                tabla += '<td>' + objetivos[i].estadoObjetivo + '</td>';
-                tabla += '<td>' + objetivos[i].repeticion + '</td>';
-                tabla += '<td class="btnsObj">';
-                tabla += '<a class="fa-solid fa-pen-to-square fa-1x ps-4 pe-2" style="color:rgba(127, 179, 120, 0.903)" id="btn-icono" data-bs-toggle="tooltip" title="Editar objetivo" href="/objetivos/editar/' + objetivos[i].id + '"></a>';
-                tabla += '<a class="eliminarObjetivo" style="color:rgb(201, 101, 101); cursor: pointer" id="btn-icono" data-id="' + objetivos[i].id + '" data-bs-toggle="tooltip" title="Eliminar objetivo"><i class="fa-solid fa-trash-can fa-1x  pe-2"></i></a>'
-                tabla += '</td></tr>';
+                const fechaInicioDate = new Date(objetivos[i].fechaInicio);
+                const fechaVencimientoDate = new Date(objetivos[i].fechaVencimiento);
+                console.log(objetivos[i]);   
+                console.log(fechaInicioDate);   
+                console.log(fechaVencimientoDate);
+
+                if (fechaInicioDate.getMonth() <= fechaDate.getMonth() && fechaVencimientoDate >= fechaDate) {
+                    tabla += '<tr>';
+                    tabla += '<td contObj>' + objetivos[i].titulo + '</td>';
+                    tabla += '<td>' + objetivos[i].fechaInicio + '</td>';
+                    tabla += '<td>' + objetivos[i].fechaVencimiento + '</td>';
+                    tabla += '<td>' + objetivos[i].estadoObjetivo + '</td>';
+                    tabla += '<td>' + objetivos[i].repeticion + '</td>';
+                    tabla += '<td class="btnsObj">';
+                    tabla += '<a class="fa-solid fa-pen-to-square fa-1x ps-4 pe-2" style="color:rgba(127, 179, 120, 0.903)" id="btn-icono" data-bs-toggle="tooltip" title="Editar objetivo" href="/objetivos/editar/' + objetivos[i].id + '"></a>';
+                    tabla += '<a class="eliminarObjetivo" style="color:rgb(201, 101, 101); cursor: pointer" id="btn-icono" data-id="' + objetivos[i].id + '" data-bs-toggle="tooltip" title="Eliminar objetivo"><i class="fa-solid fa-trash-can fa-1x  pe-2"></i></a>'
+                    tabla += '</td></tr>';
+                }
             }
-            
+
 
             tabla += '</tbody></table></div>';
-            document.getElementById('datos').innerHTML = tabla;    
+            document.getElementById('datos').innerHTML = tabla;
         } else {
             document.getElementById('datos').innerHTML = '<div class="sin-datos"><h5>Aún no tienes objetivos para este mes</h5></div>';
         }
-        
+
     }
 
 
     actualizarCalendario();
 
-    $(document).on('click', '.eliminarObjetivo', function() {
+    $(document).on('click', '.eliminarObjetivo', function () {
         var id = $(this).data('id');
         console.log("hola");
         Swal.fire({
-          position: 'center',
-          title: '<h4>¿Estás seguro de eliminar el objetivo?</h4>',
-          showConfirmButton: true,
-          showCancelButton: true,
-          cancelButtonText: 'Cancelar',
-          confirmButtonColor: "rgb(218, 77, 73)",
-          confirmButtonText: '<a href="/objetivos/eliminar/' + id + '" id ="conf">Eliminar</a>',
-    
-          didRender: function () {
-            const confirm = document.querySelector('#conf');
-    
-            if (confirm) {
-              confirm.style.color = 'white';
+            position: 'center',
+            title: '<h4>¿Estás seguro de eliminar el objetivo?</h4>',
+            showConfirmButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: "rgb(218, 77, 73)",
+            confirmButtonText: '<a href="/objetivos/eliminar/' + id + '" id ="conf">Eliminar</a>',
+
+            didRender: function () {
+                const confirm = document.querySelector('#conf');
+
+                if (confirm) {
+                    confirm.style.color = 'white';
+                }
+            },
+
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
             }
-          },
-    
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          }
-    
+
         })
-    
+
     })
 
 
