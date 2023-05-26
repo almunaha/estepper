@@ -42,7 +42,7 @@ public interface ParticipanteRepository extends JpaRepository<Participante, Inte
     void update(Integer edad, Sexo sexo, String fotoUsuario, Grupo grupo, Integer asistencia, Coordinador coordinador,
             Double perdidadepeso, Integer sesionescompletas, Double percmcintura, Integer id);
 
-    @Query("SELECT p FROM Participante p WHERE p.coordinador = :coordinador OR p.estadoCuenta = :estadoCuenta")
+    @Query("SELECT p FROM Participante p WHERE p.coordinador = :coordinador OR (p.estadoCuenta = :estadoCuenta AND p.coordinador IS NULL)")
     public Page<Participante> findByIdCoordinadonOrEstado(Pageable pageable, Coordinador coordinador,
             Estado estadoCuenta);
 }

@@ -30,33 +30,40 @@ $(document).ready(function () {
         var id = row.find('.eliminar').attr('data-id');
         var state = row.find('.editable-state').val();
 
-        Swal.fire({
-        position: 'center',
-        title: '<h4>¿Estás seguro de editar el usuario?</h4>',
-        showConfirmButton: true,
-        showCancelButton: true,
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: "rgb(218, 77, 73)",
-        confirmButtonText: '<a href="/actualizar-usuario/' + id + '?estado=' + state + '&nickname=' + nickname + '&email=' + email + '" id ="conf">Editar</a>',
-
-
-
-        didRender: function () {
-            const confirm = document.querySelector('#conf');
-
-            if (confirm) {
-                confirm.style.color = 'white';
-            }
-        },
-
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
+        // Validación del email
+        var emailvalidacion = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+        if (!emailvalidacion.test(email)) {
+            alert('Email introducido incorrecto');
+            return;
         }
 
-    })
+        Swal.fire({
+            position: 'center',
+            title: '<h4>¿Estás seguro de editar el usuario?</h4>',
+            showConfirmButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: "rgb(218, 77, 73)",
+            confirmButtonText: '<a href="/actualizar-usuario/' + id + '?estado=' + state + '&nickname=' + nickname + '&email=' + email + '" id ="conf">Editar</a>',
+
+
+
+            didRender: function () {
+                const confirm = document.querySelector('#conf');
+
+                if (confirm) {
+                    confirm.style.color = 'white';
+                }
+            },
+
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+
+        })
     }
 
     function cancelarEdicion(row) {
