@@ -158,7 +158,7 @@ public class CoordinadorController {
             model.addAttribute("user", getUsuario());
 
             part.update(usuario.getEdad(), usuario.getSexo(), usuario.getFotoUsuario(), g, usuario.getAsistencia(),
-                    usuario.getCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
+                    g.getCoordinador(), usuario.getPerdidaDePeso(), usuario.getSesionesCompletas(),
                     usuario.getPerdidacmcintura(), idP);
             Integer participantes = g.getNumParticipantes() + 1;
             g.setNumParticipantes(participantes);
