@@ -547,6 +547,7 @@ public class GruposController {
 
         observacion.setCoordinador(coordinador.getCoordinador(getUsuario().getId()));
         observacion.setGrupo(grupo.getGrupo(id));
+        observacion.setFecha(LocalDate.now());
         String nota = request.getParameter("nota");
         observacion.setNota(nota);
         observaciones.guardar(observacion);

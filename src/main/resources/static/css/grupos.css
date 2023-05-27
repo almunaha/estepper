@@ -645,6 +645,27 @@ input[type=number]::-webkit-outer-spin-button {
   .chat-area form button {
     width: 45px;
   }
+
+  #inputMenAdmin{
+    height: 40px;
+    font-size: 10px;
+    width: fit-content;
+  }
+
+  #formMenAdmin{
+    padding: 0px;
+  }
+
+  #btn-grNuevo{
+    margin-top: 10px;
+  }
+
+  .gruposMovil{
+    padding-top: 20px !important;
+  }
+
+  
+
 }
 
 
@@ -947,11 +968,6 @@ th {
     font-size: 15px;
   }
 
-  /*  REVISAR SI LO CAMNBIA EN OTROS SITIOS */
-  /*.chat-area {
-    margin-bottom: 20%;
-  }*/
-
   .input-group {
     width: 250px;
     margin-left: -10% !important;
@@ -971,7 +987,7 @@ th {
   }
 
   #grupos {
-    margin-bottom: 20%;
+    margin-bottom: 5%;
   }
 
   .nuevoGrupito {
@@ -990,6 +1006,33 @@ th {
     width: 40px !important;
     height: 40px !important;
     padding: 1%;
+  }
+
+  .editFechaGr{
+    flex-direction: column;
+  }
+
+  .fechita{
+   flex-direction: column;
+  }
+
+
+
+  .fechaAnterior{
+    width: 110%;
+  }
+  
+  .cambiarFecha{
+    /*width: 30%;*/
+    width: 110%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .fechaNueva{
+    /*width: 70%;*/
+    width: 110%;
+    margin-bottom: 1%;
   }
 
   .participantesGrupo {

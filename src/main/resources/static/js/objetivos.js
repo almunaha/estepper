@@ -317,18 +317,17 @@ $(document).ready(function () {
                 console.log(fechaInicioDate);   
                 console.log(fechaVencimientoDate);
 
-                if (fechaInicioDate.getMonth() <= fechaDate.getMonth() && fechaVencimientoDate >= fechaDate) {
                     tabla += '<tr>';
                     tabla += '<td contObj>' + objetivos[i].titulo + '</td>';
-                    tabla += '<td>' + objetivos[i].fechaInicio + '</td>';
-                    tabla += '<td>' + objetivos[i].fechaVencimiento + '</td>';
-                    tabla += '<td>' + objetivos[i].estadoObjetivo + '</td>';
-                    tabla += '<td>' + objetivos[i].repeticion + '</td>';
+                    tabla += '<td style="text-align:center;">' + new Date(objetivos[i].fechaInicio).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</td>';
+                    tabla += '<td style="text-align:center;">' + new Date(objetivos[i].fechaVencimiento).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</td>';
+                    tabla += '<td style="text-align:center;">' + objetivos[i].estadoObjetivo + '</td>';
+                    tabla += '<td style="text-align:center;">' + objetivos[i].repeticion + '</td>';
                     tabla += '<td class="btnsObj">';
-                    tabla += '<a class="fa-solid fa-pen-to-square fa-1x ps-4 pe-2" style="color:rgba(127, 179, 120, 0.903)" id="btn-icono" data-bs-toggle="tooltip" title="Editar objetivo" href="/objetivos/editar/' + objetivos[i].id + '"></a>';
-                    tabla += '<a class="eliminarObjetivo" style="color:rgb(201, 101, 101); cursor: pointer" id="btn-icono" data-id="' + objetivos[i].id + '" data-bs-toggle="tooltip" title="Eliminar objetivo"><i class="fa-solid fa-trash-can fa-1x  pe-2"></i></a>'
+                    tabla += '<a class="btn" id="btn-editObj" data-bs-toggle="tooltip" title="Editar objetivo" href="/objetivos/editar/' + objetivos[i].id + '"><i class="fa-solid fa-pen-to-square "></i></a>'
+                    tabla += '<a class="btn" id="btn-elimObj" data-bs-toggle="tooltip" title="Eliminar objetivo" data-id="' + objetivos[i].id + '"><i class="fa-solid fa-trash-can "></i></a>'
                     tabla += '</td></tr>';
-                }
+              
             }
 
 
@@ -343,7 +342,7 @@ $(document).ready(function () {
 
     actualizarCalendario();
 
-    $(document).on('click', '.eliminarObjetivo', function () {
+    $(document).on('click', '#btn-elimObj', function () {
         var id = $(this).data('id');
         console.log("hola");
         Swal.fire({

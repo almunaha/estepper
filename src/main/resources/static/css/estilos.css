@@ -310,12 +310,53 @@ a {
     background-color: white;
     margin: 0 auto;
     width: 90%;
+    border-radius: 12px;
 }
 
 #btn-part,
 #btn-admi, #btn-accion {
     color: white;
     background-color: rgb(122, 184, 212);
+}
+
+#btn-menNuevo {
+    color: white;
+    background-color: rgb(122, 184, 212);
+}
+
+#btn-menNuevo:hover {
+    transform: scale(1.1);
+}
+
+#btn-grNuevo {
+    color: white;
+    background-color: rgb(122, 184, 212);
+}
+
+#btn-grNuevo:hover {
+    transform: scale(1.1);
+}
+
+#btn-editObj {
+    color: white;
+    background-color: rgb(89, 146, 93);
+    margin-left: 1%;
+    margin:3%;
+}
+
+#btn-editObj:hover {
+    background-color: rgba(89, 146, 93, 0.704);
+    transform: scale(1.1);
+}
+
+#btn-elimObj {
+    color: white;
+    background-color: rgb(193, 79, 79);
+}
+
+#btn-elimObj:hover {
+    background-color: rgba(193, 79, 79, 0.707);
+    transform: scale(1.1);
 }
 
 #tablePart thead {
@@ -456,6 +497,19 @@ th {
     font-size: 18px;
     background-color: rgb(232, 232, 232);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+
+#btn-atras {
+    color: black;
+    width: 150px;
+    font-size: 18px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+#btn-atras:hover {
+    transform: scale(1.1);
 }
 
 .avatares {

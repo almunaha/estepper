@@ -18,13 +18,10 @@
   justify-content: center;
   flex-direction: column;
   max-width: 600px;
-  /* ajusta el valor según tus necesidades */
   margin: 0 auto;
-  /* centra horizontalmente */
 }
 
 .listaObj {
-  /*background-color: #c7b66c;*/
   padding: 5px;
   border-radius: 12px;
   margin-top: 3%;
@@ -400,12 +397,35 @@ input[type="radio"]:checked+label {
   border-top: 2px solid #e7e7e7;
 }
 
+.fechitaObjetivo{
+  display: flex;
+}
+
+.fechaObjAnterior{
+  width: 25%;
+  margin-left: 0px;
+  margin-right: 1%;
+}
+
+.cambiarFechaObj{
+  width: 30%;
+}
+
+.fechaObjNueva{
+  width: 70%;
+  margin-bottom: 1%;
+}
+
+.btnsObj{
+  text-align:center;
+}
+
 
 @media (max-width: 767px) {
 
   .pequeno {
     font-size: 30px;
- }
+  }
 
  #finalAgua{
   display: flex;
@@ -492,5 +512,26 @@ label[for="duracionEjercicio"] {
 .nuevoObjetivito{
   font-size: medium;
 }
+
+.fechitaObjetivo{
+  flex-direction: column;
+}
+
+.fechaObjAnterior{
+  width: 110%;
+  margin-left: -5%;
+}
+
+.cambiarFechaObj{
+  width: 110%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.fechaObjNueva{
+  width: 110%;
+  margin-bottom: 1%;
+}
+
 
 }

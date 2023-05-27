@@ -1,7 +1,9 @@
 package com.estepper.estepper.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -10,15 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "observaciones")
@@ -38,12 +34,10 @@ public class Observaciones implements Serializable {
 
     private String nota;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = ISO.DATE)
-    @NotNull
-    private Date fecha;
+    @Column
+    private LocalDate fecha;
 
-    public Observaciones(Integer id, Coordinador coordinador, Grupo grupo, String nota, Date fecha) {
+    public Observaciones(Integer id, Coordinador coordinador, Grupo grupo, String nota, LocalDate fecha) {
         this.id = id;
         this.coordinador = coordinador;
         this.grupo = grupo;
@@ -52,7 +46,6 @@ public class Observaciones implements Serializable {
     }
 
     public Observaciones() {
-        fecha = new Date();
     }
 
     public Integer getId() {
@@ -87,11 +80,11 @@ public class Observaciones implements Serializable {
         this.nota = nota;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

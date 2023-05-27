@@ -409,7 +409,7 @@
                                                         max="24" required placeholder="horas">
 
                                                     <input type="number" id="minutosSuenio" name="minutosSuenio" min="0"
-                                                        max="59" placeholder="minutos" required style="width: 21%;">
+                                                        max="59" placeholder="minutos" required style="width: 26%;">
 
                                                     <button type="submit" class="btn-descanso"
                                                         style="margin-left:3%">Registrar</button>
@@ -606,9 +606,11 @@
                                                 </div>
 
                                             </div>
-                                            <div class="text-center p">
-                                                <button type="submit" class="btn" id="btn-part"
-                                                    onclick="agregarObjetivo()">Añadir</button>
+                                        
+                                            <div style="display: flex; justify-content: center;">
+                                                <a th:href="@{/objetivos}" class="btn mt-4" id="btn-cancel"
+                                                    style="margin-right: 15px;">Cancelar</a>
+                                                <button class="btn mt-4" id="btn-edit" type="submit"  onclick="agregarObjetivo()">Crear</button>
                                             </div>
                                         </form>
                                     </div>
@@ -643,7 +645,7 @@
                                 </div>
                             </div>
 
-                            <a class="btn" style="margin-top: 2%;" id="btn-part" title="Crear" href="#"
+                            <a class="btn" style="margin-top: 2%;" id="btn-grNuevo" title="Crear" href="#"
                                 onclick="abrirIframe('modalNuevoObjetivo')">
                                 Crear un objetivo nuevo</a>
 
@@ -653,11 +655,22 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
+                        <div style="display: flex; margin-left: 1%; margin-top: 1%; margin-bottom: 2%;">
+                            <a th:href="@{/}" class="btn mt-4" id="btn-atras"
+                                style="margin-right: 15px;">Atrás</a>
+                        </div>
+
+                    </div>
+
+              
+                </div>
+        
+            
             </div>
         </div>
+
+
 
     </div>
     </div>

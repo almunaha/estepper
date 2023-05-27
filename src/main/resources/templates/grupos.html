@@ -23,9 +23,6 @@
 
     <!--ALERTA ELIMINAR-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.all.min.js"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <script src="/js/grupos.js"></script>
@@ -127,7 +124,7 @@
                 </div>
             </nav>
 
-            <div style="padding-top: 75px;">
+            <div class="gruposMovil" style="padding-top: 75px;">
                 <div class="p-4 mt-5" id="grupos">
                     <div style="display: flex; justify-content: center; justify-items: center;">
                         <h4>Listado de grupos</h4>
@@ -231,7 +228,7 @@
                         <div class="col-4 text-start">
 
                             <div>
-                                <a class="btn" id="btn-part" title="Crear" href="#"
+                                <a class="btn" id="btn-grNuevo" title="Crear" href="#"
                                     onclick="abrirIframe('modalNuevoGrupo')">
                                     Crear un grupo nuevo
                                 </a>
@@ -255,7 +252,7 @@
                                                     <label class="col-form-label col-sm-4 nuevoGrupito">Nombre del nuevo
                                                         grupo:</label>
                                                     <div class="col-sm-8 mb-2">
-                                                        <input type="text" th:field="*{nombre}" class="form-control"
+                                                        <input type="text" style="color:black" th:field="*{nombre}" class="form-control"
                                                             required />
                                                     </div>
 
@@ -279,8 +276,13 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="text-center p">
+                                                <!--<div class="text-center p">
                                                     <button type="submit" class="btn" id="btn-part">Añadir</button>
+                                                </div>-->
+                                                <div style="display: flex; justify-content: center;">
+                                                    <a th:href="@{/listaGrupos}" class="btn mt-4" id="btn-cancel"
+                                                        style="margin-right: 15px;">Cancelar</a>
+                                                    <button class="btn mt-4" id="btn-edit" type="submit">Crear</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -330,9 +332,18 @@
                         </div>
                     </div>
 
+
                 </div>
+                
             </div>
+
+            <div style="display: flex; margin-left: 5%; margin-top: 1%; margin-bottom: 2%;">
+                <a th:href="@{/}" class="btn mt-4" id="btn-atras"
+                    style="margin-right: 15px;">Atrás</a>
+            </div>
+
         </div>
+        
     </div>
 
 </body>

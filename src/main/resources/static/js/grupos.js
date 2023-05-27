@@ -24,6 +24,7 @@ function cambiarChat(){
 
 $(document).ready(function () {
   
+  iniciarChat();
   cambiarChat();
 
   $('.eliminarGrupo').click(function () {

@@ -120,7 +120,7 @@
             <div style="padding-top: 75px;">
                 <div class="p-4 mt-4" id="grupos">
                     <div>
-                        <h4>Editar un grupo</h4>
+                        <h3 style="text-align: center;" class="p-4">Editar grupo</h3>
                     </div>
 
                     <form th:action="@{/grupos/guardar2}" th:object="${grupo}" method="post"
@@ -154,11 +154,11 @@
 
 
                                 <label class="col-form-label col-sm-4 nuevoGrupito">Nombre del grupo:</label>
-                                <div class="col-sm-8 mb-2">
-                                    <input type="text" th:field="*{nombre}" class="form-control" required />
+                                <div class="col-sm-8 mb-2" >
+                                    <input type="text" style="color:black" th:field="*{nombre}" class="form-control" required />
                                 </div>
 
-                                <div th:if="${grupo.fechaFinGrupo != null}" style="display:flex;">
+                                <div class="editFechaGr" th:if="${grupo.fechaFinGrupo != null}" style="display:flex;">
                                     <label class="col-form-label col-sm-4 nuevoGrupito">Fecha de finalización del
                                         grupo:</label>
                                     <div class="fechita">

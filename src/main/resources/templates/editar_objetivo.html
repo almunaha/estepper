@@ -11,6 +11,7 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/objetivos.css}">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
     <script src="/js/menu.js"></script>
@@ -214,7 +215,7 @@
             <div style="padding-top: 75px;">
                 <div class="p-4 mt-5" id="grupos">
                     <div>
-                        <h4>Editar un objetivo</h4>
+                        <h3 style="text-align: center;" class="p-4">Editar objetivo</h3>
                     </div>
 
                     <form th:action="@{'/objetivos/guardar/' + ${objetivo.id}}" th:object="${objetivo}" method="post">
@@ -228,11 +229,30 @@
                                     <input type="text" th:field="*{titulo}" class="form-control" required />
                                 </div>
 
-                                <label class="col-sm-4">Fecha tope para cumplir mi objetivo:</label>
-                                <div class="col-sm-8 mb-2">
-                                    <input type="date" th:field="*{fechaVencimiento}" class="form-control" id="fecha"
-                                        name="fecha" required
-                                        th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+
+                                <div class="fechitaObjetivo">
+                                    <label class="col-form-label col-sm-4 nuevoObjetivito">Fecha tope para cumplir mi objetivo:</label>
+                                    <div class="row fechaObjAnterior">
+                                        <div class="col">
+                                            <input type="text"
+                                                th:value="${#temporals.format(objetivo.fechaVencimiento, 'dd/MM/yyyy')}"
+                                                class="form-control" readonly="readonly"
+                                                style="background-color: #f2f2f2; cursor: not-allowed;" />
+                                        </div>
+                                    </div>
+                                    <div class="row cambiarFechaObj">
+                                        <div class="col">
+                                            <label>¿Desea cambiarla?</label>
+                                        </div>
+                                    </div>
+                                    <div class="row fechaObjNueva">
+                                        <div class="col">
+                                            <input type="date" style="background-color: white;" th:id="fechaVencimiento"
+                                                th:name="fechaVencimiento" class="form-control"
+                                                th:value="${#temporals.format(objetivo.fechaVencimiento, 'yyyy-MM-dd')}"
+                                                th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+                                        </div>
+                                    </div>
                                 </div>
 
 
@@ -257,12 +277,15 @@
                                 </div>
 
                             </div>
-                            <div class="text-center p">
-                                <button type="submit" class="btn" id="btn-part">Editar</button>
+
+                            <div style="display: flex; justify-content: center;">
+                                <a th:href="@{/objetivos}" class="btn mt-4" id="btn-cancel"
+                                    style="margin-right: 15px;">Cancelar</a>
+                                <button class="btn mt-4" id="btn-edit" type="submit">Editar</button>
                             </div>
 
                         </div>
-
+                    </form>
                 </div>
             </div>
 

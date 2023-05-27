@@ -320,8 +320,11 @@
                                 </div>
 
                             </div>
-                            <div class="text-center p">
-                                <button type="submit" class="btn" id="btn-part">Enviar</button>
+
+                            <div style="display: flex; justify-content: center;">
+                                <a th:href="@{/}" class="btn mt-4" id="btn-cancel"
+                                    style="margin-right: 15px;">Cancelar</a>
+                                <button class="btn mt-4" id="btn-edit" type="submit">Enviar</button>
                             </div>
                         </div>
                     </form>
