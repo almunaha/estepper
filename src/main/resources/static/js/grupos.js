@@ -62,14 +62,20 @@ $(document).ready(function () {
   (function ($) {
     $('#filtrarGrupos').keyup(function () {
       var rex = new RegExp($(this).val(), 'i');
+      var btnEstado = document.getElementById('estadoGrupo');
+
       $('.buscarGrupos tr').hide();
       $('.buscarGrupos tr').filter(function () {
-        return rex.test($(this).text());
+        var columnaEstado = $(this).find('td:eq(6)').text(); 
+  
+        if(btnEstado.value == columnaEstado ||btnEstado.value == "TODOS"){
+          return rex.test($(this).text());
+        }
+      
       }).show();
+      
     })
   }(jQuery));
-
-
 
   $("#chatGrupal").click(function () {
     localStorage.setItem("chat","grupal");
@@ -80,7 +86,6 @@ $(document).ready(function () {
     localStorage.setItem("chat","coordinador");
     cambiarChat();
   });
-
 
 
   const listadoParticipantesGrupoPeso = document.querySelectorAll('.listaDeParticipantes .perdida-peso-individual');
