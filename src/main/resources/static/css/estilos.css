@@ -547,7 +547,6 @@ th {
     transform: scale(1.1);
 }
 
-/*COSILLAS INDEX GRÁFICOS*/
 
 .fondoGraficas {
     width: 60%;
@@ -555,7 +554,7 @@ th {
     margin-left: 20%;
 }
 
-/*COSILLAS DE OBJETIVOS*/
+
 
 input[type="date"] {
     background-color: #f2f2f2;
@@ -567,7 +566,6 @@ input[type="date"] {
     padding: 5px;
     display: flex;
     gap: 3%;
-    /* espacio entre elementos */
     margin-left: 2%;
     margin-right: 2%;
 }

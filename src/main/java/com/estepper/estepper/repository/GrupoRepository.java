@@ -17,7 +17,7 @@ import com.estepper.estepper.model.enums.EstadoGrupo;
 
 public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
 
-    Grupo findByNombre(String nombre); // select * from grupo where nombre = g.nombre
+    Grupo findByNombre(String nombre);
 
     Grupo findByCodigo(String codigo);
 

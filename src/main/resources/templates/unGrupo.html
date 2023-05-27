@@ -471,15 +471,14 @@
                 modal.show();
             }
 
-            // Cargamos los eventos de los botones DELETE NOTA
+            // Cargar los eventos de los botones DELETE NOTA
             const deleteButtons = document.getElementsByClassName('note-delete-button');
             Array.prototype.forEach.call(deleteButtons, function (button) {
                 button.addEventListener('click', function () {
-                    // Obtendremos el id del grupo y de la nota
+                    // Obtener el id del grupo y de la nota
                     const notaInfo = this.getAttribute('id').split('-');
                     const id = notaInfo[1];
                     const idGrupo = notaInfo[2];
-                    console.log(id, idGrupo);
 
                     Swal.fire({
                         position: 'center',
@@ -510,17 +509,15 @@
                 })
             });
 
-            // Cargamos los eventos de los botones EDIT NOTA
+            // Cargar los eventos de los botones EDIT NOTA
             const editButtons = document.getElementsByClassName('note-edit-button');
             Array.prototype.forEach.call(editButtons, function (button) {
                 button.addEventListener('click', function () {
-                    // Obtendremos el id del grupo y de la nota
+                    // Obtener el id del grupo y de la nota
                     const notaInfo = this.getAttribute('id').split('-');
                     const id = notaInfo[1];
                     const idGrupo = notaInfo[2];
                     const mensaje = this.getAttribute('data-message');
-                    console.log(id, idGrupo);
-                    console.log(mensaje);
 
                     document.getElementById('nota-cargada').value = mensaje;
                     document.getElementById('nota-id').value = id;
@@ -528,9 +525,7 @@
 
                     // Obtiene el objeto de la observación como una cadena JSON
                     const observacion = this.getAttribute('data-observacion');
-                    console.log(observacion);
                     const observacionObj = JSON.parse(observacion);
-                    console.log(observacionObj);
 
                     // Asigna el objeto completo de la observación al formulario del modal
                     $('unaObservacion').data('data-observacion', observacionObj);

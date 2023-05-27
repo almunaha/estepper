@@ -25,12 +25,10 @@
 
 
 .container-cards {
-  /* max-width: 90%;*/
   margin: auto;
   margin-top: 1%;
   display: flex;
   flex-wrap: wrap;
-  /*Para que cuando no quepa se ponga debajo*/
   justify-content: center;
 
 }
@@ -91,7 +89,6 @@
 .cardi .descripcion {
   padding: 10%;
   word-wrap: break-word;
-  /* border-radius: 0px 0px 20px 20px;*/
   transition: all 300ms;
   border-radius: 2%;
   background-color: #ddedfd;
@@ -127,8 +124,6 @@
   background: #2f5b80;
 }
 
-/*PARA LA PARTE DE EDITAR, MUY REPETITIVO, VER CÓMO HACERLO DIFERENTE DE MOMENTO LO DEJO ASI*/
-
 
 .container-participantes {
   display: flex;
@@ -140,7 +135,6 @@
 
 .participantesGrupo {
   padding: 2%;
-  /* min-width: 40%;*/
   width: 25%;
 
 }
@@ -230,7 +224,6 @@
   display: flex;
   width: 100%;
   height: 180px;
-  /*PARA LA ALTURA DE LOS 4 DE ARRIBA*/
   justify-content: space-between;
   padding-left: 3%;
   padding-right: 5%;
@@ -678,7 +671,6 @@ input[type=number]::-webkit-outer-spin-button {
   height: 100%;
   display: flex;
   gap: 2%;
-  /*margin-right: 10%;*/
 }
 
 .zonasMiGrupoIzq {
@@ -695,7 +687,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .zonasMiGrupoProgreso {
   width: 100%;
-  /*height: 63%;*/
   align-items: center;
   margin-right: 10%;
   margin-top: 3%;
@@ -783,7 +774,6 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 0 1px 4px rgb(0 0 0 / 16%);
   align-items: center;
   background-color: rgb(255, 255, 255);
-  /*border-radius: 12px;*/
   margin-bottom: 5%;
 }
 
@@ -1023,14 +1013,12 @@ th {
   }
   
   .cambiarFecha{
-    /*width: 30%;*/
     width: 110%;
     margin-top: 5px;
     margin-bottom: 5px;
   }
   
   .fechaNueva{
-    /*width: 70%;*/
     width: 110%;
     margin-bottom: 1%;
   }
@@ -1076,11 +1064,6 @@ th {
   }
 
   .container-cards{
-    /*display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;*/
-
-
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -1129,7 +1112,6 @@ th {
 }
 
 .botonMenDesactivado{
-  /*background-color: #38444e;*/
   background-color: #cccccc;
   color: #999999;
   cursor: not-allowed;

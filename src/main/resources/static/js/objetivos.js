@@ -122,8 +122,7 @@ $(document).ready(function () {
                 }
             }
             if (objetivo.repeticion === 'ANUALMENTE') {
-                console.log(fechaDate.getDate(), fechaInicioDate.getDate());
-                console.log(fechaDate.getMonth(), fechaInicioDate.getMonth());
+               
                 if ((fechaDate.getDate() === fechaInicioDate.getDate()) && (fechaDate.getMonth() === fechaInicioDate.getMonth())) {
                     objetivosAux.push(objetivo);
                 }
@@ -135,10 +134,9 @@ $(document).ready(function () {
             }
         });
 
-        // Renderizaremos los objetivos a la derecha
+        // Renderizar los objetivos a la derecha
         const tablaResultado = document.getElementById('objetivos');
         let contenido = '<h3 class="text-center">' + dia + '/' + mes + '/' + anio + '</h3>';
-        console.log(objetivosAux);
         if (objetivosAux.length === 0) {
             contenido += '<div class="d-flex justify-content-center align-items-center py-4"><div class="sin-datos"><h5>No tienes ningún objetivo marcado para este día</h5></div></div>';
         } else {
@@ -264,9 +262,6 @@ $(document).ready(function () {
                                 return objetivo;
                             }
                         });
-
-                        console.log(objetivos);
-
                         renderTabla();
 
                     });
@@ -294,9 +289,7 @@ $(document).ready(function () {
 
         let fecha = dateToString(mesUsado.toString(), anioUsado.toString());
         fechaDate = new Date(fecha);
-        console.log('Hello guapita');
-        console.log(fechaDate);
-
+       
         if (objetivos.length > 0) {
             let tabla = '';
             tabla += '<div class="tabla-responsive" style="margin-top: 3%;">'
@@ -313,9 +306,7 @@ $(document).ready(function () {
             for (let i = 0; i < objetivos.length; i++) {
                 const fechaInicioDate = new Date(objetivos[i].fechaInicio);
                 const fechaVencimientoDate = new Date(objetivos[i].fechaVencimiento);
-                console.log(objetivos[i]);   
-                console.log(fechaInicioDate);   
-                console.log(fechaVencimientoDate);
+                
 
                     tabla += '<tr>';
                     tabla += '<td contObj>' + objetivos[i].titulo + '</td>';
@@ -344,7 +335,6 @@ $(document).ready(function () {
 
     $(document).on('click', '#btn-elimObj', function () {
         var id = $(this).data('id');
-        console.log("hola");
         Swal.fire({
             position: 'center',
             title: '<h4>¿Estás seguro de eliminar el objetivo?</h4>',
@@ -380,7 +370,6 @@ $(document).ready(function () {
         mesUsado = fechaTemporal.getMonth() + 1;
         fechaUsada = new Date(anioUsado + '-' + mesUsado + '-01');
         actualizarCalendario();
-        console.log(1, mesUsado, anioUsado);
         seleccionarObjetivosDelDia(1, mesUsado, anioUsado);
     }
 

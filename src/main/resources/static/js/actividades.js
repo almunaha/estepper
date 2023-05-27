@@ -236,8 +236,6 @@ $(document).ready(function () {
         var categSeleccionada = $('#categoria').val().toLowerCase();
         const actividades = $('.act-coor');
 
-        console.log(actividades);
-
         for (var i = 0; i < actividades.length; i++) {
             var nombre = actividades.eq(i).find('.nombre-act').text().toLowerCase();
             var categoria = actividades.eq(i).find('#categoria-acti').data('categoria').toLowerCase();

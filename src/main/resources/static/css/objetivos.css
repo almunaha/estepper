@@ -180,7 +180,6 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
-/*VER PARA QUE ES*/
 .btn-objRec>*:last-child {
   border-right: none;
 }
@@ -323,7 +322,6 @@ input[type="radio"]:checked+label {
   text-align: center;
   font-size: 15px;
   padding: 10px 0px 10px 30px;
-  /*width: 55%;*/
   align-items: center;
   align-content: center;
 }
@@ -349,7 +347,6 @@ input[type="radio"]:checked+label {
   text-align: center;
   font-size: 15px;
   padding: 10px 30px 10px 30px;
- /* width: 70%;*/
   align-items: center;
   align-content: center;
 }
@@ -374,9 +371,7 @@ input[type="radio"]:checked+label {
   background-color: #fc86f038;
   text-align: center;
   font-size: 15px;
-  /*padding: 10px 10px 10px 30px;*/
   padding: 10px 30px 10px 30px;
-  /*width: 55%;*/
   align-items: center;
   align-content: center;
 }
@@ -386,13 +381,11 @@ input[type="radio"]:checked+label {
 }
 
 .encabezadoDescanso-suenio {
-  /*padding: 20px 30px 20px 5px;*/
   padding: 20px;
 }
 
 #finalDescanso {
   display: flex;
-  /*width: 55%;*/
   justify-content: space-between;
   border-top: 2px solid #e7e7e7;
 }
