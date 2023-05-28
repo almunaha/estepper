@@ -1,20 +1,20 @@
 var almacenado = localStorage.getItem("chat");
 
-function iniciarChat(){
-  if(almacenado == null){//iniciar variable global chat
-    localStorage.setItem("chat","grupal");
+function iniciarChat() {
+  if (almacenado == null) {//iniciar variable global chat
+    localStorage.setItem("chat", "grupal");
   }
 }
 
-function cambiarChat(){
+function cambiarChat() {
   var almacenado = localStorage.getItem("chat");
-  if(almacenado == "grupal"){
+  if (almacenado == "grupal") {
     $('#chatGrupal').css("background-color", "rgb(98, 216, 110)");
     $("#chatCoordinador").css("background-color", "rgb(175, 204, 185)");
     $(".chatGrupal").show();
     $(".chatCoordinador").hide();
   }
-  else if (almacenado == "coordinador"){
+  else if (almacenado == "coordinador") {
     $('#chatCoordinador').css("background-color", "rgb(98, 216, 110)");
     $("#chatGrupal").css("background-color", "rgb(175, 204, 185)");
     $(".chatGrupal").hide();
@@ -22,8 +22,14 @@ function cambiarChat(){
   }
 }
 
-$(document).ready(function () {
+function abrirIframe(modalId) {
+  const modal = new bootstrap.Modal(document.getElementById(modalId));
+  modal.show();
+}
   
+
+$(document).ready(function () {
+
   iniciarChat();
   cambiarChat();
 
@@ -66,24 +72,25 @@ $(document).ready(function () {
 
       $('.buscarGrupos tr').hide();
       $('.buscarGrupos tr').filter(function () {
-        var columnaEstado = $(this).find('td:eq(6)').text(); 
-  
-        if(btnEstado.value == columnaEstado ||btnEstado.value == "TODOS"){
+        var columnaEstado = $(this).find('td:eq(6)').text();
+
+        if (btnEstado.value == columnaEstado || btnEstado.value == "TODOS") {
           return rex.test($(this).text());
         }
-      
+
       }).show();
-      
+
     })
   }(jQuery));
 
+
   $("#chatGrupal").click(function () {
-    localStorage.setItem("chat","grupal");
+    localStorage.setItem("chat", "grupal");
     cambiarChat();
   });
 
   $("#chatCoordinador").click(function () {
-    localStorage.setItem("chat","coordinador");
+    localStorage.setItem("chat", "coordinador");
     cambiarChat();
   });
 
@@ -120,34 +127,98 @@ $(document).ready(function () {
   document.querySelector('#asistencia-media').textContent = asistenciaMedia + '%';
   document.querySelector('#perdida-cmcintura-media').textContent = perdidaCmCinturaMedia + ' cm';
 
+
+  const deleteButtons = document.getElementsByClassName('note-delete-button');
+Array.prototype.forEach.call(deleteButtons, function (button) {
+  button.addEventListener('click', function () {
+    // Obtener el id del grupo y de la nota
+    const notaInfo = this.getAttribute('id').split('-');
+    const id = notaInfo[1];
+    const idGrupo = notaInfo[2];
+
+    console.log("HOOOOOOLAAAAA");
+
+    Swal.fire({
+      position: 'center',
+      title: '<h4>¿Estás seguro de eliminar la nota?</h4>',
+      showConfirmButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: "rgb(218, 77, 73)",
+      confirmButtonText: '<a href="/eliminarNota/' + id + '/' + idGrupo + '" id ="conf">Eliminar</a>',
+
+      didRender: function () {
+        const confirm = document.querySelector('#conf');
+
+        if (confirm) {
+          confirm.style.color = 'white';
+        }
+      },
+
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+
+    });
+
+  })
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  var btnEstado = document.getElementById('estadoGrupo');
-  const tablaGrupos = document.querySelector('.tablePart tbody');
 
-  btnEstado.addEventListener('change', function () {
-    if (btnEstado.value == "TODOS") {
-      for (let i = 0; i < tablaGrupos.rows.length; i++) {
-        tablaGrupos.rows[i].style.display = "";
-      }
-    }
-    else if (btnEstado.value == "ACTIVO" || btnEstado.value == "TERMINADO") {
-      for (let i = 0; i < tablaGrupos.rows.length; i++) {
-        const estadoTabla = tablaGrupos.rows[i].cells[6].textContent;
-        if (estadoTabla == btnEstado.value) {
+// Cargar los eventos de los botones EDIT NOTA
+const editButtons = document.getElementsByClassName('note-edit-button');
+Array.prototype.forEach.call(editButtons, function (button) {
+  button.addEventListener('click', function () {
+    // Obtener el id del grupo y de la nota
+    const notaInfo = this.getAttribute('id').split('-');
+    const id = notaInfo[1];
+    const idGrupo = notaInfo[2];
+    const mensaje = this.getAttribute('data-message');
+
+    document.getElementById('nota-cargada').value = mensaje;
+    document.getElementById('nota-id').value = id;
+    abrirIframe('mi-modal2');
+
+    // Obtiene el objeto de la observación como una cadena JSON
+    const observacion = this.getAttribute('data-observacion');
+    const observacionObj = JSON.parse(observacion);
+
+    // Asigna el objeto completo de la observación al formulario del modal
+    $('unaObservacion').data('data-observacion', observacionObj);
+
+  })
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var btnEstado = document.getElementById('estadoGrupo');
+    const tablaGrupos = document.querySelector('.tablePart tbody');
+  
+    btnEstado.addEventListener('change', function () {
+      if (btnEstado.value == "TODOS") {
+        for (let i = 0; i < tablaGrupos.rows.length; i++) {
           tablaGrupos.rows[i].style.display = "";
-        } else {
-          tablaGrupos.rows[i].style.display = "none";
         }
       }
-    }
+      else if (btnEstado.value == "ACTIVO" || btnEstado.value == "TERMINADO") {
+        for (let i = 0; i < tablaGrupos.rows.length; i++) {
+          const estadoTabla = tablaGrupos.rows[i].cells[6].textContent;
+          if (estadoTabla == btnEstado.value) {
+            tablaGrupos.rows[i].style.display = "";
+          } else {
+            tablaGrupos.rows[i].style.display = "none";
+          }
+        }
+      }
+    });
+  
+  
   });
+
 
 });
 
-function abrirIframe(modalId) {
-  const modal = new bootstrap.Modal(document.getElementById(modalId));
-  modal.show();
-}
+
+});
 
