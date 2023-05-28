@@ -3,6 +3,20 @@ function abrirIframe(modalInst) {
     modal.show();
 }
 
+function abrirIframe2(modalId, modalNickname) {
+                                        
+    const modal = new bootstrap.Modal(document.getElementById('ModalNuevoMensaje'));
+    const idElementoP = document.querySelector('#ModalNuevoMensaje p');
+    const formulario = document.querySelector('#ModalNuevoMensaje form');
+    formulario.action = '/mensajesAdmin/guardar/' + modalId;
+
+
+    const modalNicknameSpan = document.querySelector('#modalNicknameSpan');
+    modalNicknameSpan.textContent = modalNickname;
+
+    modal.show();
+}
+
 $(document).ready(function () {
 
     (function ($) {
