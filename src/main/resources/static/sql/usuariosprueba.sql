@@ -207,6 +207,16 @@ INSERT INTO `sesiones` (`id`, `asistencia`, `cms_perdidos`, `estado`, `num_sesio
 (19, 'NO', 0, 'ENCURSO', 9, '', 0, 3),
 (20, 'NO', 0, 'ENCURSO', 10, '', 0, 3);
 
+--
+-- Volcado de datos para la tabla `actividades`
+--
+
+INSERT INTO `actividades` (`id`, `categoria`, `descripcion`, `fecha_realizacion`, `foto`, `nombre`, `num_participantes`, `plazas`, `ubicacion`) VALUES
+(18, 'DEPORTE', 'Disfruta de una activa caminata a lo largo del famoso parque Madrid Río, explorando sus hermosos senderos junto al río Manzanares. Sumérgete en la naturaleza urbana mientras te ejercitas y admiras las vistas panorámicas de la ciudad.', '2023-06-10 17:30:00', '/actividades/marcha.jpg', 'Marcha', 0, 18, 'Madrid Río'),
+(19, 'ALIMENTACIÓN', 'El taller de alimentación en el centro de salud es una actividad educativa diseñada para proporcionar información y orientación sobre hábitos alimentarios saludables. ', '2023-06-12 11:00:00', '/actividades/taller.jpg', 'Taller de alimentación', 0, 10, 'Centro de Salud Madrid'),
+(20, 'SALUDMENTAL', 'Actividad educativa donde se proporciona información y se promueve la conciencia sobre la importancia de cuidar y mantener una buena salud mental. ', '2023-06-30 21:00:00', '/actividades/salud.jpg', 'Charla de salud mental', 0, 15, 'Centro de Salud'),
+(21, 'DEPORTE', 'Esta charla es un taller de nutrición y ejercicio diseñado para brindar conocimientos sobre hábitos saludables, proporcionar pautas de alimentación equilibrada y fomentar la práctica regular de actividad física. ', '2023-06-26 17:00:00', '/actividades/deporte.jpg', 'Charla deportiva', 0, 10, 'Centro de Salud');
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

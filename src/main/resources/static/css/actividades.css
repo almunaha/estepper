@@ -445,6 +445,10 @@
     margin-right: 2%;
 }
 
+.espacio{
+    margin-left: 16%;
+}
+
 /* RESPONSIVE */
 @media (max-width: 767px) {
     /* Pantallas de menos de 768 píxeles de ancho */
@@ -554,6 +558,15 @@
         padding-bottom: 15%;
         padding-left: 5%;
         padding-right: 5%;
+    }
+
+    .espacio{
+        margin-left: 0;
+    }
+    .btn-gest,
+    .btn-gest-eliminar{
+        padding-left: 6%;
+        padding-right: 6%;
     }
 
 }

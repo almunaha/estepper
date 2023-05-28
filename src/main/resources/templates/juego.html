@@ -41,7 +41,7 @@
 
 
             <div class="logo">
-                <img width="75" th:src="@{img/logo.png}" />
+                <img width="75" th:src="@{img/logo.png}" alt="logo"/>
                 <h4>Estepper</h4>
             </div>
 
@@ -134,7 +134,7 @@
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
                     id="avatar-header" onclick="desplegable()" />
-                <img width="35" th:src="@{/img/logo.png}" />
+                <img width="35" th:src="@{/img/logo.png}" alt="logo"/>
                 <a onclick="notificaciones()"><i class="fa-solid fa-bell"
                         style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
@@ -144,7 +144,7 @@
                 <a th:href="@{/chatPartAdmin}">Ayuda</a>
                 <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
 
@@ -202,7 +202,7 @@
                                     <a class="dropdown-item" th:href="@{/chatPartAdmin}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
-                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                     </form>
                                 </div>
                             </li>
@@ -437,17 +437,17 @@
                     <div class="verRes">
                         <a class="comprobar">Comprobar</a>
                         <div class="resultado">
-                            <span id="correcto">
-                                <p>Resultado: CORRECTO</p>
-                                <p>¡Enhorabuena, has creado correctamente la dieta! Pincha en "Imprimir" para
-                                    guardártela.</p>
+                            <div id="correcto">
+                                <div>Resultado: CORRECTO</div>
+                                <div>¡Enhorabuena, has creado correctamente la dieta! Pincha en "Imprimir" para
+                                    guardártela.</div>
                                 <span><input type="button" class="btn" id="btn-part" name="imprimir" value="Imprimir"
                                         onclick="window.print();"></span>
-                            </span>
-                            <span id="incorrecto">
-                                <p>Resultado: INCORRECTO</p>
-                                <p>Tienes errores, revisa las celdas que aparecen en color rojo y amarillo.</p>
-                            </span>
+                            </div>
+                            <div id="incorrecto">
+                                <div>Resultado: INCORRECTO</div>
+                                <div>Tienes errores, revisa las celdas que aparecen en color rojo y amarillo.</div>
+                            </div>
                             <span id="falta">
                                 ¡Continúa arrastrando alimentos para llegar a las calorías seleccionadas!
                             </span>

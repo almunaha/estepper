@@ -30,7 +30,7 @@
     <div id="sidebar-container">
 
       <div class="logo">
-        <img width="75" th:src="@{img/logo.png}" />
+        <img width="75" th:src="@{img/logo.png}" alt="logo" />
         <h4>Estepper</h4>
       </div>
 
@@ -123,7 +123,7 @@
       <div class="header-movil">
         <img class="menu-icon" style="cursor:pointer" width="35" th:src="${user.fotoUsuario}" alt="imagenPerfil"
           id="avatar-header" onclick="desplegable()" />
-        <img width="35" th:src="@{img/logo.png}" />
+        <img width="35" th:src="@{img/logo.png}" alt="logo"/>
         <a><i class="fa-solid fa-bell" style="font-size: 1.5rem; padding-right: 4px;"></i></a>
       </div>
 
@@ -132,7 +132,7 @@
         <a th:href="@{/chatPartAdmin}">Ayuda</a>
         <div class="dropdown-divider"></div>
         <form th:action="@{/logout}" method="post">
-          <button class="dropdown-item" type="submit">Cerrar sesión</a>
+          <button class="dropdown-item" type="submit">Cerrar sesión</button>
         </form>
       </div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
@@ -175,7 +175,7 @@
                   <a class="dropdown-item" th:href="@{/chatPartAdmin}">Ayuda</a>
                   <div class="dropdown-divider"></div>
                   <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                   </form>
                 </div>
               </li>
@@ -206,7 +206,7 @@
                 <i class="icono fas fa-key"></i>
                 <span>Código</span>
               </div>
-              <div class="span-baja"><span th:text="${user.codigo}" /></div>
+              <div class="span-baja"><span th:text="${user.codigo}"></span></div>
             </div>
 
             <div class="dato-baja">
@@ -214,7 +214,7 @@
                 <i class="icono fas fa-envelope"></i>
                 <span>Email</span>
               </div>
-              <div class="span-baja"><span th:text="${user.email}" /></div>
+              <div class="span-baja"><span th:text="${user.email}"></span></div>
             </div>
 
             <div class="dato-baja">
@@ -222,7 +222,7 @@
                 <i class="icono fas fa-thumbtack"></i>
                 <span>Estado cuenta</span>
               </div>
-              <div class="span-baja"><span th:text="${user.estadoCuenta}" /></div>
+              <div class="span-baja"><span th:text="${user.estadoCuenta}"></span></div>
             </div>
 
           </div>

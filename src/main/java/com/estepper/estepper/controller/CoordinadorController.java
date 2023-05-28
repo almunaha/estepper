@@ -321,7 +321,7 @@ public class CoordinadorController {
     @PostMapping("/guardar_actividad")
     public String guardarActividad(@ModelAttribute Actividad actividad,
             @RequestParam(name = "plazas", required = false) Integer plazas,
-            @RequestParam(name = "fecha", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime fechaRealizacion,
+            @RequestParam(name = "fechaRealizacion", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime fechaRealizacion,
             @RequestParam("file") MultipartFile file) {
         Usuario elusuario = getUsuario();
 

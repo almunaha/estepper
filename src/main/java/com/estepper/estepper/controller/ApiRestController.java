@@ -25,7 +25,6 @@ import com.estepper.estepper.service.ProgresoService;
 //Controlador de recursos
 //Controlador para API REST que se encarga de las solicitudes HTTP entrantes para luego llamar a un servicio
 //y coger los datos de la base de datos
-//se necesita estar logueado hay que mirar eso
 @RestController
 public class ApiRestController {
 

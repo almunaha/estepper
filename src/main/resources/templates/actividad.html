@@ -10,7 +10,7 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="stylesheet" th:href="@{/css/actividades.css}">
-    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}" alt="logo">
 
     <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
 
@@ -28,9 +28,6 @@
 
     <!-- Para la alerta del peso -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.all.min.js"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <title>Actividad - Estepper</title>
@@ -48,7 +45,7 @@
 
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="logo" >
                 <h4>Estepper</h4>
             </div>
 
@@ -174,9 +171,9 @@
 
             <div class="header-movil">
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
-                    id="avatar-header" onclick="desplegable()" />
+                    id="avatar-header" onclick="desplegable()" >
                 <div th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"></div>
-                <img width="35" th:src="@{/img/logo.png}" />
+                <img width="35" th:src="@{/img/logo.png}" alt="logo">
                 <a th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}" onclick="notificaciones()"><i class="fa-solid fa-bell"
                         style="font-size: 1.5rem; padding-right: 4px;"></i></a>
             </div>
@@ -186,7 +183,7 @@
                 <a th:href="@{/chatPartAdmin}">Ayuda</a>
                 <div class="dropdown-divider"></div>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
 
@@ -238,9 +235,9 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Participante)}"
-                                        width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil" id="avatar-header" />
+                                        width="40" th:src="${user.fotoUsuario}" alt="imagenPerfil" id="avatar-header" >
                                     <img th:if="${user instanceof T(com.estepper.estepper.model.entity.Coordinador)}"
-                                        width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" />
+                                        width="40" th:src="@{/img/p1.png}" alt="imagenPerfil" id="avatar-header" >
 
                                     <span sec:authentication="principal.nombre"></span>
                                 </a>
@@ -251,7 +248,7 @@
                                     <a class="dropdown-item" th:href="@{/chatPartAdmin}">Ayuda</a>
                                     <div class="dropdown-divider"></div>
                                     <form th:action="@{/logout}" method="post">
-                                        <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                        <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                     </form>
                                 </div>
                             </li>
@@ -343,6 +340,7 @@
                 <a class="atras-info" th:href="@{/actividades}">Atrás</a>
             </div>
         </div>
+    </div>
 
 </body>
 
