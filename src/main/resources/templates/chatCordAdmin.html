@@ -31,7 +31,7 @@
         <div id="sidebar-container">
 
             <div class="logo">
-                <img width="75" th:src="@{/img/logo.png}" />
+                <img width="75" th:src="@{/img/logo.png}" alt="" />
                 <h4>Estepper</h4>
             </div>
 
@@ -76,14 +76,14 @@
                 <img class="menu-icon" style="cursor:pointer" width="35" th:src="@{/img/p1.png}" alt="imagenPerfil"
                     id="avatar-header" onclick="desplegable()" />
                 <div></div>
-                <img width="35" th:src="@{/img/logo.png}" />
+                <img width="35" th:src="@{/img/logo.png}" alt="" />
             </div>
 
             <div class="desplegable-perfil">
                 <a th:href="@{'/mostrarperfil/' + ${user.id}}">Mi perfil</a>
                 <a th:href="@{/chatCordAdmin}">Ayuda</a>
                 <form th:action="@{/logout}" method="post">
-                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                 </form>
             </div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light mr-3" id="header">
@@ -104,7 +104,7 @@
                                 <a class="dropdown-item" th:href="@{chatCordAdmin}">Ayuda</a>
                                 <div class="dropdown-divider"></div>
                                 <form th:action="@{/logout}" method="post">
-                                    <button class="dropdown-item" type="submit">Cerrar sesión</a>
+                                    <button class="dropdown-item" type="submit">Cerrar sesión</button>
                                 </form>
                             </div>
                         </li>
@@ -119,7 +119,7 @@
 
                     <div class="encabezadoMensajes">
                         <h4 style="color:azure" th:text="'Mensajes privados con el administrador'"></h4>
-                      </div>
+                    </div>
 
 
                     <div class="bordes-chat" style="width: 90%;">
@@ -177,7 +177,7 @@
 
             </div>
         </div>
-
+    </div>
 
 </body>
 
