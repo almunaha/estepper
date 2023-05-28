@@ -435,5 +435,10 @@ $(document).ready(function () {
     });
 
 
-
 });
+
+function abrirIframe(modalId) {
+    const modal = new bootstrap.Modal(document.getElementById(modalId));
+    modal.show();
+}
+
