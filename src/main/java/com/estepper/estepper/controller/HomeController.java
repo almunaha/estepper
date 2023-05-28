@@ -111,15 +111,15 @@ public class HomeController {
     public String index(Model model, HttpServletRequest request) {
         Usuario user = getUsuario();
         model.addAttribute("user", user);
-        if((user instanceof Coordinador || user instanceof Administrador) && user.getEstadoCuenta().equals(Estado.BAJA)){
+        if ((user instanceof Coordinador || user instanceof Administrador)
+                && user.getEstadoCuenta().equals(Estado.BAJA)) {
             MensajeAdmin menAdmin = new MensajeAdmin();
             List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesUsuario(user);
             model.addAttribute("messageAdmin", menAdmin);
             model.addAttribute("mensajesAdministrador", mensajesAdmin);
 
             return "bajaUsuario";
-        }
-        else if (user instanceof Coordinador) {
+        } else if (user instanceof Coordinador) {
             return "coordinador";
         }
 
@@ -222,12 +222,13 @@ public class HomeController {
 
                                 // cálculo de porcentaje de progreso
                                 Double porcentajeProgreso = 0.00;
-                                if (f.getFichaObjetivo(part.get()).getPerdida() != null && part.get().getPerdidaDePeso() != null){
-                                    if(f.getFichaObjetivo(part.get()).getPerdida() <= -part.get().getPerdidaDePeso())
+                                if (f.getFichaObjetivo(part.get()).getPerdida() != null
+                                        && part.get().getPerdidaDePeso() != null) {
+                                    if (f.getFichaObjetivo(part.get()).getPerdida() <= -part.get().getPerdidaDePeso())
                                         porcentajeProgreso = 100.00;
                                     else {
-                                    porcentajeProgreso = -part.get().getPerdidaDePeso() * 100
-                                            / f.getFichaObjetivo(part.get()).getPerdida();
+                                        porcentajeProgreso = -part.get().getPerdidaDePeso() * 100
+                                                / f.getFichaObjetivo(part.get()).getPerdida();
                                     }
                                 }
                                 String progresoPer = String.format("%.2f", porcentajeProgreso).replace(",", "."); // Formatear
@@ -556,23 +557,26 @@ public class HomeController {
     public String mensajesAdmin(Model model, @RequestParam(required = false) Integer id) {
 
         Usuario user = getUsuario();
-        List<Usuario> lista = usuario.listadoTotal();
-        lista.remove(user);
-        MensajeAdmin menAdmin = new MensajeAdmin();
-        List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin();
-        if (id != null) {
-            model.addAttribute("mensajero", usuario.findById(id).get());
-        } else {
-            model.addAttribute("mensajero", lista.get(0));
-        }
+        if (user instanceof Administrador) {
+            List<Usuario> lista = usuario.listadoTotal();
+            lista.remove(user);
+            MensajeAdmin menAdmin = new MensajeAdmin();
+            List<MensajeAdmin> mensajesAdmin = mensaje.obtenerMensajesAdmin();
+            if (id != null) {
+                if(usuario.findById(id).isPresent()) model.addAttribute("mensajero", usuario.findById(id).get());
+                else model.addAttribute("mensajero", lista.get(0));
+            } else {
+                model.addAttribute("mensajero", lista.get(0));
+            }
 
-        model.addAttribute("user", user);
-        model.addAttribute("usuarios", lista);
-        model.addAttribute("mensajeAdmin", menAdmin);
-        model.addAttribute("mensajesAdmin", mensajesAdmin);
+            model.addAttribute("user", user);
+            model.addAttribute("usuarios", lista);
+            model.addAttribute("mensajeAdmin", menAdmin);
+            model.addAttribute("mensajesAdmin", mensajesAdmin);
 
-        return "mensajesAdmin";
-
+            return "mensajesAdmin";
+        } else
+            return "redirect:/";
     }
 
     @GetMapping("/chatCordAdmin") // vista coordinador
@@ -612,6 +616,5 @@ public class HomeController {
 
             return "redirect:/";
     }
-
 
 }
