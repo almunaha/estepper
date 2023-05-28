@@ -112,7 +112,7 @@ function calcular() {
         grasasText.style.color = 'green';
     } else {
         grasasIcon.innerHTML = '<i class="fas fa-times" style="color:red"></i>';
-        grasasText.innerText = 'Vaya, has consumido demasiadas grasas: ' + grasas / 9 + ' gramos (' + grasas + ' Kcal). Según tu ICDR lo recomendado es ingerir menos de ' + grasasMax / 9 + ' gramos (' + grasasMax + ' Kcal) de grasas saturadas';
+        grasasText.innerText = 'Vaya, has consumido demasiadas grasas: ' + (grasas / 9).toFixed(2) + ' gramos (' + grasas.toFixed(2) + ' Kcal). Según tu ICDR lo recomendado es ingerir menos de ' + (grasasMax / 9).toFixed(2) + ' gramos (' + grasasMax.toFixed(2) + ' Kcal) de grasas saturadas';
         grasasText.style.color = 'red';
     }
 
@@ -130,11 +130,11 @@ function calcular() {
             var proteinaNecesaria = proteinaMin - proteina;
 
             proteinasIcon.innerHTML = '<i class="fas fa-times" style="color:orange"></i>';
-            proteinasText.innerText = 'Acorde con tu ICDR, necesitas consumir  ' + proteinaNecesaria / 4 + ' gramos (' + proteinaNecesaria + ' Kcal) más para llegar al mínimo recomendado (10% del ICDR)';
+            proteinasText.innerText = 'Acorde con tu ICDR, necesitas consumir  ' + (proteinaNecesaria / 4).toFixed(2) + ' gramos (' + proteinaNecesaria.toFixed(2) + ' Kcal) más para llegar al mínimo recomendado (10% del ICDR)';
             proteinasText.style.color = 'orange';
         } else {
             proteinasIcon.innerHTML = '<i class="fas fa-times" style="color:red"></i>';
-            proteinasText.innerText = 'Vaya, has consumido demasiadas proteínas: ' + proteina / 4 + ' gramos (' + proteina + ' Kcal). Según tu ICDR lo recomendado es ingerir entre ' + proteinaMin / 4 + ' gramos (' + proteinaMin + ' Kcal) y ' + proteinaMAx / 4 + ' gramos (' + proteinaMAx + ' Kcal) de proteínas';
+            proteinasText.innerText = 'Vaya, has consumido demasiadas proteínas: ' + (proteina / 4).toFixed(2) + ' gramos (' + proteina.toFixed(2) + ' Kcal). Según tu ICDR lo recomendado es ingerir entre ' + (proteinaMin / 4).toFixed(2) + ' gramos (' + proteinaMin.toFixed(2) + ' Kcal) y ' + (proteinaMAx / 4).toFixed(2) + ' gramos (' + proteinaMAx.toFixed(2) + ' Kcal) de proteínas';
             proteinasText.style.color = 'red';
 
         }
@@ -152,11 +152,11 @@ function calcular() {
         if (hidratos < hidratosMin) {
             var hidratosNecesarios = ICDR * 0.45 - hidratos;
             hidratosIcon.innerHTML = '<i class="fas fa-times" style="color:orange"></i>';
-            hidratosText.innerText = 'Acorde con tu ICDR, necesitas consumir  ' + hidratosNecesarios / 4 + ' gramos (' + hidratosNecesarios + ' Kcal) más para llegar al mínimo recomendado (45% del ICDR)';
+            hidratosText.innerText = 'Acorde con tu ICDR, necesitas consumir  ' + (hidratosNecesarios / 4).toFixed(2) + ' gramos (' + hidratosNecesarios.toFixed(2) + ' Kcal) más para llegar al mínimo recomendado (45% del ICDR)';
             hidratosText.style.color = 'orange';
         } else {
             hidratosIcon.innerHTML = '<i class="fas fa-times" style="color:red"></i>';
-            hidratosText.innerText = 'Vaya, has consumido demasiados hidratos de carbono: ' + hidratos / 4 + ' gramos (' + hidratos + ' Kcal). Según tu ICDR lo recomendado es ingerir entre ' + hidratosMin / 4 + ' gramos (' + hidratosMin + ' Kcal) y ' + hidratosMax / 4 + ' gramos (' + hidratosMax + ' Kcal) de hidratos de carbono';
+            hidratosText.innerText = 'Vaya, has consumido demasiados hidratos de carbono: ' + (hidratos / 4).toFixed(2) + ' gramos (' + hidratos.toFixed(2) + ' Kcal). Según tu ICDR lo recomendado es ingerir entre ' + (hidratosMin / 4).toFixed(2) + ' gramos (' + hidratosMin.toFixed(2) + ' Kcal) y ' + (hidratosMax / 4).toFixed(2) + ' gramos (' + hidratosMax.toFixed(2) + ' Kcal) de hidratos de carbono';
             hidratosText.style.color = 'red';
         }
     }
@@ -164,7 +164,7 @@ function calcular() {
 
     // Mostrar el resultado al usuario
     //alert("El resultado del ICDR es: " + ICDR);
-    document.getElementById('resultadoICDR').innerHTML = 'Tu ICDR es: ' + ICDR + ' Kcal';
+    document.getElementById('resultadoICDR').innerHTML = 'Tu ICDR es: ' + ICDR.toFixed(2) + ' Kcal';
     document.getElementById('resultadoICDR').style.display = "block";
 
 
