@@ -56,5 +56,26 @@
       .material:hover {
         width: 100%;
       }
+
+      #buscadorquerer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #filtroquiero {
+        width: 100%;
+        margin-top: 2%;
+      }
+
+      #filtronoquiero {
+        margin-top: 2%;
+        margin-bottom: 2%;
+        width: 100%;
+      }
+
+      #filter-button {
+        width: 100%;
+      }
       
       }
