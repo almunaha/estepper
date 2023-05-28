@@ -26,7 +26,32 @@ function abrirIframe(modalId) {
   const modal = new bootstrap.Modal(document.getElementById(modalId));
   modal.show();
 }
-  
+
+document.addEventListener('DOMContentLoaded', function () {
+  var btnEstado = document.getElementById('estadoGrupo');
+  const tablaGrupos = document.querySelector('.tablePart tbody');
+
+  btnEstado.addEventListener('change', function () {
+    if (btnEstado.value == "TODOS") {
+      for (let i = 0; i < tablaGrupos.rows.length; i++) {
+        tablaGrupos.rows[i].style.display = "";
+      }
+    }
+    else if (btnEstado.value == "ACTIVO" || btnEstado.value == "TERMINADO") {
+      for (let i = 0; i < tablaGrupos.rows.length; i++) {
+        const estadoTabla = tablaGrupos.rows[i].cells[6].textContent;
+        if (estadoTabla == btnEstado.value) {
+          tablaGrupos.rows[i].style.display = "";
+        } else {
+          tablaGrupos.rows[i].style.display = "none";
+        }
+      }
+    }
+  });
+
+
+});
+
 
 $(document).ready(function () {
 
@@ -129,95 +154,68 @@ $(document).ready(function () {
 
 
   const deleteButtons = document.getElementsByClassName('note-delete-button');
-Array.prototype.forEach.call(deleteButtons, function (button) {
-  button.addEventListener('click', function () {
-    // Obtener el id del grupo y de la nota
-    const notaInfo = this.getAttribute('id').split('-');
-    const id = notaInfo[1];
-    const idGrupo = notaInfo[2];
+  Array.prototype.forEach.call(deleteButtons, function (button) {
+    button.addEventListener('click', function () {
+      // Obtener el id del grupo y de la nota
+      const notaInfo = this.getAttribute('id').split('-');
+      const id = notaInfo[1];
+      const idGrupo = notaInfo[2];
 
-    console.log("HOOOOOOLAAAAA");
+      Swal.fire({
+        position: 'center',
+        title: '<h4>¿Estás seguro de eliminar la nota?</h4>',
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: "rgb(218, 77, 73)",
+        confirmButtonText: '<a href="/eliminarNota/' + id + '/' + idGrupo + '" id ="conf">Eliminar</a>',
 
-    Swal.fire({
-      position: 'center',
-      title: '<h4>¿Estás seguro de eliminar la nota?</h4>',
-      showConfirmButton: true,
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: "rgb(218, 77, 73)",
-      confirmButtonText: '<a href="/eliminarNota/' + id + '/' + idGrupo + '" id ="conf">Eliminar</a>',
+        didRender: function () {
+          const confirm = document.querySelector('#conf');
 
-      didRender: function () {
-        const confirm = document.querySelector('#conf');
-
-        if (confirm) {
-          confirm.style.color = 'white';
-        }
-      },
-
-      showClass: {
-        popup: 'animate__animated animate__fadeInDown'
-      },
-      hideClass: {
-        popup: 'animate__animated animate__fadeOutUp'
-      }
-
-    });
-
-  })
-});
-
-
-// Cargar los eventos de los botones EDIT NOTA
-const editButtons = document.getElementsByClassName('note-edit-button');
-Array.prototype.forEach.call(editButtons, function (button) {
-  button.addEventListener('click', function () {
-    // Obtener el id del grupo y de la nota
-    const notaInfo = this.getAttribute('id').split('-');
-    const id = notaInfo[1];
-    const idGrupo = notaInfo[2];
-    const mensaje = this.getAttribute('data-message');
-
-    document.getElementById('nota-cargada').value = mensaje;
-    document.getElementById('nota-id').value = id;
-    abrirIframe('mi-modal2');
-
-    // Obtiene el objeto de la observación como una cadena JSON
-    const observacion = this.getAttribute('data-observacion');
-    const observacionObj = JSON.parse(observacion);
-
-    // Asigna el objeto completo de la observación al formulario del modal
-    $('unaObservacion').data('data-observacion', observacionObj);
-
-  })
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var btnEstado = document.getElementById('estadoGrupo');
-    const tablaGrupos = document.querySelector('.tablePart tbody');
-  
-    btnEstado.addEventListener('change', function () {
-      if (btnEstado.value == "TODOS") {
-        for (let i = 0; i < tablaGrupos.rows.length; i++) {
-          tablaGrupos.rows[i].style.display = "";
-        }
-      }
-      else if (btnEstado.value == "ACTIVO" || btnEstado.value == "TERMINADO") {
-        for (let i = 0; i < tablaGrupos.rows.length; i++) {
-          const estadoTabla = tablaGrupos.rows[i].cells[6].textContent;
-          if (estadoTabla == btnEstado.value) {
-            tablaGrupos.rows[i].style.display = "";
-          } else {
-            tablaGrupos.rows[i].style.display = "none";
+          if (confirm) {
+            confirm.style.color = 'white';
           }
+        },
+
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
         }
-      }
-    });
-  
-  
+
+      });
+
+    })
   });
 
 
-});
+  // Cargar los eventos de los botones EDIT NOTA
+  const editButtons = document.getElementsByClassName('note-edit-button');
+  Array.prototype.forEach.call(editButtons, function (button) {
+    button.addEventListener('click', function () {
+      // Obtener el id del grupo y de la nota
+      const notaInfo = this.getAttribute('id').split('-');
+      const id = notaInfo[1];
+      const idGrupo = notaInfo[2];
+      const mensaje = this.getAttribute('data-message');
+
+      document.getElementById('nota-cargada').value = mensaje;
+      document.getElementById('nota-id').value = id;
+      abrirIframe('mi-modal2');
+
+      // Obtiene el objeto de la observación como una cadena JSON
+      const observacion = this.getAttribute('data-observacion');
+      const observacionObj = JSON.parse(observacion);
+
+      // Asigna el objeto completo de la observación al formulario del modal
+      $('unaObservacion').data('data-observacion', observacionObj);
+
+    })
+
+
+  });
 
 
 });
