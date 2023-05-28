@@ -8,4 +8,4 @@ Almudena Naharro Muñoz,
 Inés Hernández Hurtado,
 Patricia Plata Barroso
 
-Para más información sobre su contenido o uso leer el pdf llamado MemoriaEstepper.pdf adjunto en el código. 
+Para más información sobre su contenido o uso leer el pdf llamado TFG_Actividad_Física.pdf adjunto en el código. 
