@@ -10,21 +10,28 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="stylesheet" th:href="@{/css/grupos.css}">
-
-
     <link rel="icon" type="image/x-icon" th:href="@{/img/logo.png}">
 
-    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
-    <script src="/js/menu.js"></script>
-    <script src="/js/grupos.js"></script>
-    <th:import namespace="com.estepper.estepper.model.enums" />
-    <!--PARA EL BUSCADOR-->
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- para jquery-->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- PARA EL MODAL DE ELIMINAR NOTA -->
+    <!-- PARA EL MODAL -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+
+    <!--Importar Js y iconos-->
+    <script src="https://kit.fontawesome.com/6dc9bb4522.js" crossorigin="anonymous"></script>
+    <script src="/js/menu.js"></script>
+    <script src="/js/grupos.js"></script>
+
+    <th:import namespace="com.estepper.estepper.model.enums" />
 
 
     <title>Grupo - Estepper</title>
@@ -141,13 +148,15 @@
                                 </div>
                                 <div class="bottom-valor1">
                                     <i class="fa-solid fa-calendar-plus" style="color: rgb(122, 184, 212)"></i>
-                                    <span th:text="'Fecha creación: ' + ${#temporals.format(grupo.fechaInicioGrupo, 'dd/MM/yyyy')}"></span>
+                                    <span
+                                        th:text="'Fecha creación: ' + ${#temporals.format(grupo.fechaInicioGrupo, 'dd/MM/yyyy')}"></span>
                                 </div>
                                 <div class="bottom-valor1">
                                     <i class="fa-solid fa-calendar-minus" style="color: rgb(122, 184, 212)"></i>
                                     <span th:text="'Fecha finalización: ' + ${mensajito}"
                                         th:if="${grupo.fechaFinGrupo == null}"></span>
-                                    <span th:text="'Fecha finalización: ' + ${#temporals.format(grupo.fechaFinGrupo, 'dd/MM/yyyy')}"
+                                    <span
+                                        th:text="'Fecha finalización: ' + ${#temporals.format(grupo.fechaFinGrupo, 'dd/MM/yyyy')}"
                                         th:unless="${grupo.fechaFinGrupo == null}"></span>
                                 </div>
 
@@ -321,7 +330,7 @@
                             <h4>Notas y observaciones</h4>
                         </div>
 
-                        <div><a class="btn" id="btn-grNuevo"title="Crear" href="#" onclick="abrirIframe('mi-modal')">
+                        <div><a class="btn" id="btn-grNuevo" title="Crear" href="#" onclick="abrirIframe('mi-modal')">
                                 Crear una nota nueva</a>
                         </div>
 
@@ -337,10 +346,11 @@
                             <tbody class="buscarGrupos">
 
                                 <tr th:each="lis:${listaObservaciones}">
-                                    <td th:text="${#temporals.format(lis.fecha, 'dd/MM/yyyy')}" class="tablaNotitasFecha"></td>
+                                    <td th:text="${#temporals.format(lis.fecha, 'dd/MM/yyyy')}"
+                                        class="tablaNotitasFecha"></td>
                                     <td th:text="${lis.nota}"></td>
                                     <td>
-                                        
+
                                         <div class="botonesNotitas">
                                             <button class="btn note-delete-button"
                                                 style="background-color:rgb(221, 116, 100); color:white;"
@@ -362,7 +372,7 @@
 
                         </table>
 
-                      
+
 
                         <!--Modal-->
                         <div class="modal fade" id="mi-modal2" tabindex="-1" aria-hidden="true">
@@ -388,10 +398,10 @@
                                                     </div>
                                                 </div>
                                                 <input type="hidden" name="idNota" id="nota-id" />
-                                               
+
                                                 <div style="display: flex; justify-content: center;">
-                                                    <a th:href="@{'/unGrupo/' + ${grupo.id}}" class="btn mt-4" id="btn-cancel"
-                                                        style="margin-right: 15px;">Cancelar</a>
+                                                    <a th:href="@{'/unGrupo/' + ${grupo.id}}" class="btn mt-4"
+                                                        id="btn-cancel" style="margin-right: 15px;">Cancelar</a>
                                                     <button class="btn mt-4" id="btn-edit" type="submit">Editar</button>
                                                 </div>
                                             </div>
@@ -431,8 +441,8 @@
 
                                                 </div>
                                                 <div style="display: flex; justify-content: center;">
-                                                    <a th:href="@{'/unGrupo/' + ${grupo.id}}" class="btn mt-4" id="btn-cancel"
-                                                        style="margin-right: 15px;">Cancelar</a>
+                                                    <a th:href="@{'/unGrupo/' + ${grupo.id}}" class="btn mt-4"
+                                                        id="btn-cancel" style="margin-right: 15px;">Cancelar</a>
                                                     <button class="btn mt-4" id="btn-edit" type="submit">Crear</button>
                                                 </div>
                                             </div>
@@ -456,120 +466,13 @@
 
 
                 <div style="display: flex; margin-left: 3%; margin-top: -4%; margin-bottom: 2%;">
-                    <a th:href="@{/listaGrupos}" class="btn mt-4" id="btn-atras"
-                        style="margin-right: 15px;">Atrás</a>
+                    <a th:href="@{/listaGrupos}" class="btn mt-4" id="btn-atras" style="margin-right: 15px;">Atrás</a>
                 </div>
 
-                
+
             </div>
         </div>
-        <script> 
 
-            // Función que abre el modal solicitado
-            function abrirIframe(modalId) {
-                const modal = new bootstrap.Modal(document.getElementById(modalId));
-                modal.show();
-            }
-
-            // Cargar los eventos de los botones DELETE NOTA
-            const deleteButtons = document.getElementsByClassName('note-delete-button');
-            Array.prototype.forEach.call(deleteButtons, function (button) {
-                button.addEventListener('click', function () {
-                    // Obtener el id del grupo y de la nota
-                    const notaInfo = this.getAttribute('id').split('-');
-                    const id = notaInfo[1];
-                    const idGrupo = notaInfo[2];
-
-                    Swal.fire({
-                        position: 'center',
-                        title: '<h4>¿Estás seguro de eliminar la nota?</h4>',
-                        showConfirmButton: true,
-                        showCancelButton: true,
-                        cancelButtonText: 'Cancelar',
-                        confirmButtonColor: "rgb(218, 77, 73)",
-                        confirmButtonText: '<a href="/eliminarNota/' + id + '/' + idGrupo + '" id ="conf">Eliminar</a>',
-
-                        didRender: function () {
-                            const confirm = document.querySelector('#conf');
-
-                            if (confirm) {
-                                confirm.style.color = 'white';
-                            }
-                        },
-
-                        showClass: {
-                            popup: 'animate__animated animate__fadeInDown'
-                        },
-                        hideClass: {
-                            popup: 'animate__animated animate__fadeOutUp'
-                        }
-
-                    });
-
-                })
-            });
-
-            // Cargar los eventos de los botones EDIT NOTA
-            const editButtons = document.getElementsByClassName('note-edit-button');
-            Array.prototype.forEach.call(editButtons, function (button) {
-                button.addEventListener('click', function () {
-                    // Obtener el id del grupo y de la nota
-                    const notaInfo = this.getAttribute('id').split('-');
-                    const id = notaInfo[1];
-                    const idGrupo = notaInfo[2];
-                    const mensaje = this.getAttribute('data-message');
-
-                    document.getElementById('nota-cargada').value = mensaje;
-                    document.getElementById('nota-id').value = id;
-                    abrirIframe('mi-modal2');
-
-                    // Obtiene el objeto de la observación como una cadena JSON
-                    const observacion = this.getAttribute('data-observacion');
-                    const observacionObj = JSON.parse(observacion);
-
-                    // Asigna el objeto completo de la observación al formulario del modal
-                    $('unaObservacion').data('data-observacion', observacionObj);
-
-                })
-
-
-            });
-
-            const listadoParticipantesGrupoPeso = document.querySelectorAll('.listaDeParticipantes .perdida-peso-individual');
-            const listadoParticipantesGrupoAsistencia = document.querySelectorAll('.listaDeParticipantes .asistencia-individual');
-            const listadoParticipantesGrupoCmCintura = document.querySelectorAll('.listaDeParticipantes .perdida-cmcintura-individual');
-
-            var perdidaPesoIndividual = document.getElementsByClassName("perdida-peso-individual");
-            var asistenciaIndividual = document.getElementsByClassName("asistencia-individual");
-            var perdidaCmCinturaIndividual = document.getElementsByClassName("perdida-cmcintura-individual");
-            var totalPerdidaPeso = 0;
-            var totalAsistencia = 0;
-            var totalPerdidaCmCintura = 0;
-
-            for (var i = 0; i < perdidaPesoIndividual.length; i++) {
-                var pesoIndividual = parseFloat(perdidaPesoIndividual[i].innerText);
-                var asistIndividual = parseFloat(asistenciaIndividual[i].innerText);
-                var cmCinIndividual = parseFloat(perdidaCmCinturaIndividual[i].innerText);
-
-                if (!isNaN(pesoIndividual)) {
-                    totalPerdidaPeso += pesoIndividual;
-                    totalAsistencia += asistIndividual;
-                    totalPerdidaCmCintura += cmCinIndividual;
-                }
-            }
-
-            const perdidaPesoMedia = (totalPerdidaPeso / listadoParticipantesGrupoPeso.length).toFixed(2);
-            const asistenciaMedia = (totalAsistencia / listadoParticipantesGrupoAsistencia.length).toFixed(2);
-            const perdidaCmCinturaMedia = (totalPerdidaCmCintura / listadoParticipantesGrupoCmCintura.length).toFixed(2);
-
-
-            document.querySelector('#perdida-peso-media').textContent = perdidaPesoMedia + ' kg';
-            document.querySelector('#asistencia-media').textContent = asistenciaMedia + '%';
-            document.querySelector('#perdida-cmcintura-media').textContent = perdidaCmCinturaMedia + ' cm';
-
-
-
-        </script>
 </body>
 
 </html>
