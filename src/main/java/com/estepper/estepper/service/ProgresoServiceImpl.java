@@ -58,7 +58,7 @@ public class ProgresoServiceImpl implements ProgresoService {
     @Override
     public List<Progreso> datoFechas(Participante participante, TipoProgreso tipo, LocalDateTime fechaInicial,
             LocalDateTime fechaFinal) {
-        return repo.findByParticipanteAndTipoAndFechaBetween(participante, tipo, fechaInicial, fechaFinal);
+        return repo.findByParticipanteAndTipoAndFechaBetweenOrderByFechaAsc(participante, tipo, fechaInicial, fechaFinal);
     }
 
 }

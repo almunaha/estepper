@@ -348,9 +348,6 @@ input[type=number]::-webkit-outer-spin-button {
         padding: 0.6%;
     }
 
-    .progreso-datos-coor{
-        height: 290px;
-    }
 
     #filtro-mobile{
         display: inline-block;
