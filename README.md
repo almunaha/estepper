@@ -1,7 +1,7 @@
 # Estepper
 
 Trabajo de Fin de Grado:
-Aplicación Web Estepper.
+Aplicación web para la mejora de la alimentación y la promoción de la actividad física.
 
 Realizado por:
 Almudena Naharro Muñoz,
